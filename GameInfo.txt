@@ -1,0 +1,12 @@
+Name: Example 2
+Byline: by Tomas ��berg
+HtmlByline: by <a href="mailto:tomaserikoberg@gmail.com">Tomas ��berg</a>
+AuthorEmail: Tomas ��berg tomaserikoberg@gmail.com
+Desc: Example 2
+HtmlDesc: Example 2
+Version: 1
+ReleaseDate: 2021-03-01
+Language: en-US
+LicenseType: Freeware
+CopyingRules: Nominal cost only; compilations allowed
+PresentationProfile: Default
