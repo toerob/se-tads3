@@ -18,26 +18,25 @@
 # this will treat Warnings as Errors and will only run the 
 # frob interpreter if there are no compile Warnings and no Errors.
 
--I /Users/tomasoberg/code/tads3/swe
--I /Users/tomasoberg/code/tads3/swe/lib/adv3
--I /Users/tomasoberg/code/tads3/swe/lib/adv3/se
-
 -nodef
 -we
--D LANGUAGE=se
+-D LANGUAGE=sv_se
 -D MESSAGESTYLE=neu
 -Fy obj
 -Fo obj
 -v
 -D
--FI/Users/tomasoberg/code/tads3/swe/include
--FL/Users/tomasoberg/code/tads3/swe/lib
+-FIinclude
+-FLlib
 -o svenska.t3
 
 ##sources
 -lib system.tl
 -lib adv3/adv3
 -source svenska
+-source plats/labbet
+-source karaktar/professor
+-source plats/korridor
 
 -res
 GameInfo.txt

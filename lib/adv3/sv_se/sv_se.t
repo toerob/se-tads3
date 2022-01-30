@@ -1,4 +1,4 @@
-#charset "us-ascii"
+#charset "utf-8"
 
 /*
  *   Copyright 2000, 2006 Michael J. Roberts.  All Rights Reserved.
@@ -39,7 +39,7 @@
 #include "tads.h"
 #include "tok.h"
 #include "adv3.h"
-#include "se.h"
+#include "sv_se.h"
 #include <vector.h>
 #include <dict.h>
 #include <gramprod.h>
@@ -51,7 +51,7 @@
  *   Fill in the default language for the GameInfo metadata class.
  */
 modify GameInfoModuleID
-    languageCode = 'en-US'
+    languageCode = 'sv-SE'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -135,7 +135,7 @@ languageGlobals: object
      *   formatting, but this information can be passed when calling
      *   BigNumber formatting routines.
      */
-    digitGroupSeparator = ','
+    digitGroupSeparator = '.'
 
     /*
      *   The decimal point to display in floating-point numbers.  US
@@ -145,7 +145,7 @@ languageGlobals: object
      *   formatting, but this information can be passed when calling
      *   BigNumber formatting routines.
      */
-    decimalPointCharacter = '.'
+    decimalPointCharacter = ','
 
     /* the main dictionary's string comparator */
     dictComparator = nil
@@ -380,13 +380,18 @@ modify VocabObject
     {
         /* initialize our vocabulary words from vocabWords */
         initializeVocab();
-
+        
         /* add our vocabulary words to the dictionary */
         addToDictionary(&noun);
         addToDictionary(&adjective);
         addToDictionary(&plural);
         addToDictionary(&adjApostS);
         addToDictionary(&literalAdjective);
+        
+        
+        //addToDictionary(&theName); -> hjälper inte
+
+
     }
 
     /* add the words from a dictionary property to the global dictionary */
@@ -594,6 +599,8 @@ modify VocabObject
                         cur = cur.substr(1, cur.length() - 2);
                     }
 
+
+
                     /* add the word to our own list for this part of speech */
                     if (self.(wordPart) == nil)
                         self.(wordPart) = [cur];
@@ -666,6 +673,8 @@ modify VocabObject
     }
 ;
 
+enum neuter, uter;
+
 /* ------------------------------------------------------------------------ */
 /*
  *   Language-specific modifications for Thing.  This class contains the
@@ -682,6 +691,10 @@ modify VocabObject
  *   the English system.  
  */
 modify Thing
+
+    isUter = nil // uter/neuter
+    article = 'ett'
+
     /*
      *   Flag that this object's name is rendered as a plural (this
      *   applies to both a singular noun with plural usage, such as
@@ -971,8 +984,9 @@ modify Thing
     countNameFrom(count, singularStr, pluralStr)
     {
         /* if the count is one, use 'one' plus the singular name */
-        if (count == 1)
-            return 'one ' + singularStr;
+        if (count == 1) {
+            return (isUter?'en':'ett') + ' ' + singularStr;
+        }
 
         /*
          *   Get the number followed by a space - spell out numbers below
@@ -999,25 +1013,32 @@ modify Thing
      *   nominative case, objective case, possessive adjective, possessive
      *   noun
      */
-    itNom { return ['it', 'he', 'she', 'they'][pronounSelector]; }
-    itObj { return ['it', 'him', 'her', 'them'][pronounSelector]; }
-    itPossAdj { return ['its', 'his', 'her', 'their'][pronounSelector]; }
-    itPossNoun { return ['its', 'his', 'hers', 'theirs'][pronounSelector]; }
+    itNom { return [ (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
+    itObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector]; }
+    
+    //itPossAdj { return ['its', 'his', 'her', 'their'][pronounSelector]; }
+    //itPossNoun { return ['its', 'his', 'hers', 'theirs'][pronounSelector]; }
+    itPossAdj { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
+    itPossNoun { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
 
     /* get the object reflexive pronoun (itself, etc) */
     itReflexive
     {
-        return ['itself', 'himself', 'herself', 'themselves']
+        return [(isUter?'den':'det')+' själv', 'han själv', 'hon själv', 'de själva']
                [pronounSelector];
     }
 
     /* demonstrative pronouns ('that' or 'those') */
-    thatNom { return ['that', 'he', 'she', 'those'][pronounSelector]; }
+    //thatNom { return ['that', 'he', 'she', 'those'][pronounSelector]; }
+    thatNom { return [ (isUter?'den':'det'), 'honom', 'henne', 'dessa'][pronounSelector]; }
+
+
     thatIsContraction
     {
-        return thatNom + tSel(isPlural ? ' are' : '&rsquo;s', ' ' + verbToBe);
+        return thatNom + tSel('är', ' ' + verbToBe);
     }
-    thatObj { return ['that', 'him', 'her', 'those'][pronounSelector]; }
+    //thatObj { return ['that', 'him', 'her', 'those'][pronounSelector]; }
+    thatObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dessa'][pronounSelector]; }
 
     /*
      *   get a string with the appropriate pronoun for the object plus the
@@ -1028,8 +1049,9 @@ modify Thing
     /* get a pronoun plus a 'to be' contraction */
     itIsContraction
     {
-        return itNom
-            + tSel(isPlural ? '&rsquo;re' : '&rsquo;s', ' ' + verbToBe);
+        //"\nTODO: itIsContraction(): Fixa]\n";
+        //return itNom + tSel(isPlural ? '&rsquo;re' : '&rsquo;s', ' ' + verbToBe);
+        return itNom + ' ' + verbToBe;
     }
 
     /*
@@ -1077,6 +1099,7 @@ modify Thing
      */
     conjugateRegularVerb(verb)
     {
+
         /*
          *   Which tense are we currently using?
          */
@@ -1135,7 +1158,8 @@ modify Thing
                 else if (rexMatch(esEndingPat, verb))
                     return verb + 'es';
                 else
-                    return verb + 's';
+                    return verb;
+                    //return verb + 's';
             }
         }
     }
@@ -1170,7 +1194,146 @@ modify Thing
      *   If my name is already qualified, don't add an article; otherwise,
      *   add a 'the' as the prefixed definite article.
      */
-    theNameFrom(str) { return (isQualifiedName ? '' : 'the ') + str; }
+    //theNameFrom(str) { return (isQualifiedName ? '' : 'the') + str ; }
+
+    swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
+
+    theNameFrom(str) { 
+        // TODO: this is WIP - obiously not yet satisfying algorithm.. override theName property 
+        // /whenever it fails to properly create a definitive name for a swedish word. There are 
+        // probably many cases where this needs to happen
+        // TODO: also make it more efficient. The array should'nt need to be in here.
+
+        /*local lastChar = str.substr(str.length);
+        local isLastCharAVocal = swedishVocals.indexOf(lastChar);
+
+        if(isProperName) {
+            return str;
+        }
+
+        if(isUter) {
+            if(!isLastCharAVocal) {
+                // T ex: påse påsarna påsen
+                return str + (isPlural?'na': 'en');
+            } else {
+                // T ex: stuga stugorna stugan
+                return str.substr(0, str.length) + (isPlural?'orna': 'n');
+            }
+        } else {
+            if(!isLastCharAVocal) {
+                // T ex: svärd, svärdena svärdet
+                // T ex: skal, skalena skalet
+                return str + (isPlural?'ena': 'et');
+            } else {
+                return str + (isPlural?'ena': 't');
+            }
+        }*/
+        // "<<str>>";
+       
+       
+        /*if (isPlural) {
+            str = replacePluralEndings(str);
+        }
+        else {*/
+            //str = replaceEndings(str);
+        //}
+        /*if (isYours)
+        {
+            str = yourAkkPossAdj + str;              
+        }*/
+
+
+        return str;
+    }
+
+      
+    // #################################################
+    // ## central function to replace all the special ##
+    // ## endings, like 'Äppl[-et]', 'Stol[-en]' etc. ##
+    // #################################################
+    
+    replaceEndings(txt) {
+        //"org:[<<txt>>]";
+
+        local idx=0;
+        
+        txt = txt.findReplace('[-et]', 'et', ReplaceAll, idx);   // -- print noun genitive endings
+        txt = txt.findReplace('[-en]', 'en', ReplaceAll, idx);   // -- print noun genitive endings
+
+        //txt = txt.findReplace('[^]', self.adjEnding, ReplaceAll); // -- replace adjective endings
+        /*if (curcase.isGen) {
+            txt = txt.findReplace('[-s]', 's', ReplaceAll);   // -- print noun genitive endings
+            txt = txt.findReplace('[-es]', 'es', ReplaceAll); // -- print noun genitive endings
+            txt = txt.findReplace('[-ses]', 'ses', ReplaceAll); // -- print noun genitive endings
+            txt = txt.findReplace('[-n]', 'n', ReplaceAll);    // -- print noun genitive endings
+            txt = txt.findReplace('[-en]', 'en', ReplaceAll); // -- print noun genitive endings
+        }
+        else if (curcase.isDat || curcase.isAkk){
+            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+            txt = txt.findReplace('[-n]', 'n', ReplaceAll);   // -- print noun accusative/dative endings
+            txt = txt.findReplace('[-en]', 'en', ReplaceAll);   // -- print noun accusative/dative endings
+        }
+        else { // -- we have the nominative
+            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+            txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- reomve noun accusative/dative endings
+            txt = txt.findReplace('[-en]', '', ReplaceAll);   // -- remove noun genitive endings
+        }*/
+        return txt;
+    }
+
+    
+    // #################################################
+    // ## central function to replace all the special ##
+    // ## endings, like 'kärn[-orna]', 'Stolar[-na]' etc. ##
+    // #################################################
+
+    replacePluralEndings(txt) {
+        txt = txt.findReplace('[-orna]', 'orna', ReplaceAll);   // -- print noun genitive endings
+        txt = txt.findReplace('[-na]', 'na', ReplaceAll);   // -- print noun genitive endings
+
+        /*txt = txt.findReplace('[^]', self.adjPluralEnding, ReplaceAll); // -- replace adjective endings
+        if (curcase.isGen) {
+            txt = txt.findReplace('[-s]', 's', ReplaceAll);   // -- print noun genitive endings
+            txt = txt.findReplace('[-es]', 'es', ReplaceAll); // -- print noun genitive endings
+            txt = txt.findReplace('[-ses]', 'ses', ReplaceAll); // -- print noun genitive endings
+            txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- remove noun accusative/dative endings
+        }
+        else if (curcase.isDat){
+            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+            txt = txt.findReplace('[-n]', 'n', ReplaceAll);   // -- print noun accusative/dative endings
+        }
+        else if (curcase.isAkk){
+            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+            txt = txt.findReplace('[-n]', '', ReplaceAll);   // -- print noun accusative/dative endings
+        }
+        else { // -- we have the nominative
+            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+            txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- reomve noun accusative/dative endings
+        }*/
+        return txt;
+    }
+    
+
+    cutEndings(txt) {
+        txt = txt.findReplace('[-s]', '', ReplaceAll);   // ##### remove noun genitive endings
+        txt = txt.findReplace('[-es]', '', ReplaceAll);  // ##### remove noun genitive endings
+        txt = txt.findReplace('[-ses]', '', ReplaceAll); // ##### remove noun genitive endings
+        txt = txt.findReplace('[-n]', '', ReplaceAll);   // ##### remove noun accusative/dative endings
+        txt = txt.findReplace('[-en]', '', ReplaceAll);  // ##### remove noun genitive endings
+        return txt;
+    }
+
+
 
     /*
      *   theName as a possessive adjective (Bob's book, your book).  If the
@@ -1237,7 +1400,7 @@ modify Thing
     /*
      *   Default preposition to use when an object is in/on this object.
      *   By default, we use 'in' as the preposition; subclasses can
-     *   override to use others (such as 'on' for a surface).
+     *   override to use others (such as 'på' for a surface).
      */
     objInPrep = 'in'
 
@@ -1255,8 +1418,8 @@ modify Thing
     /* preposition to use when an actor is being moved into this location */
     actorIntoPrep
     {
-        if (actorInPrep is in ('in', 'on'))
-            return actorInPrep + 'to';
+        if (actorInPrep is in ('in', 'på'))
+            return actorInPrep + 'till';
         else
             return actorInPrep;
     }
@@ -1506,61 +1669,18 @@ modify Thing
      *   man").  We simply always use 'an' for a word starting with 'u',
      *   but this will have to be overridden when the 'u' sounds like 'y'.
      */
+
+     /**
+      * en eller ett i svenskan, TODO: använd artikel istället
+      */
     aNameFrom(str)
     {
+
         /* remember the original source string */
-        local inStr = str;
+        local inStr = cutEndings(str);
 
-        /*
-         *   The complete list of unaccented, accented, and ligaturized
-         *   Latin vowels from the Unicode character set.  (The Unicode
-         *   database doesn't classify characters as vowels or the like,
-         *   so it seems the only way we can come up with this list is
-         *   simply to enumerate the vowels.)
-         *
-         *   These are all lower-case letters; all of these are either
-         *   exclusively lower-case or have upper-case equivalents that
-         *   map to these lower-case letters.
-         *
-         *   (Note an implementation detail: the compiler will append all
-         *   of these strings together at compile time, so we don't have
-         *   to perform all of this concatenation work each time we
-         *   execute this method.)
-         *
-         *   Note that we consider any word starting with an '8' to start
-         *   with a vowel, since 'eight' and 'eighty' both take 'an'.
-         */
-        local vowels = '8aeiou\u00E0\u00E1\u00E2\u00E3\u00E4\u00E5\u00E6'
-                       + '\u00E8\u00E9\u00EA\u00EB\u00EC\u00ED\u00EE\u00EF'
-                       + '\u00F2\u00F3\u00F4\u00F5\u00F6\u00F8\u00F9\u00FA'
-                       + '\u00FB\u00FC\u0101\u0103\u0105\u0113\u0115\u0117'
-                       + '\u0119\u011B\u0129\u012B\u012D\u012F\u014D\u014F'
-                       + '\u0151\u0169\u016B\u016D\u016F\u0171\u0173\u01A1'
-                       + '\u01A3\u01B0\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8'
-                       + '\u01DA\u01DC\u01DF\u01E1\u01E3\u01EB\u01ED\u01FB'
-                       + '\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B'
-                       + '\u020D\u020F\u0215\u0217\u0254\u025B\u0268\u0289'
-                       + '\u1E01\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E2D\u1E2F'
-                       + '\u1E4D\u1E4F\u1E51\u1E53\u1E73\u1E75\u1E77\u1E79'
-                       + '\u1E7B\u1E9A\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB'
-                       + '\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB'
-                       + '\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB'
-                       + '\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB'
-                       + '\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB'
-                       + '\u1EED\u1EEF\u1EF1\uFF41\uFF4F\uFF55';
+        //" **(aNameFrom: [<<inStr>>])** ";
 
-        /*
-         *   A few upper-case vowels in unicode don't have lower-case
-         *   mappings - consider them separately.
-         */
-        local vowelsUpperOnly = '\u0130\u019f';
-
-        /*
-         *   the various accented forms of the letter 'y' - these are all
-         *   lower-case versions; the upper-case versions all map to these
-         */
-        local ys = 'y\u00FD\u00FF\u0177\u01B4\u1E8F\u1E99\u1EF3'
-                   + '\u1EF5\u1EF7\u1EF9\u24B4\uFF59';
 
         /* if the name is already qualified, don't add an article at all */
         if (isQualifiedName)
@@ -1570,16 +1690,15 @@ modify Thing
         if (isPlural || isMassNoun)
         {
             /* use "some" as the article */
-            return 'some ' + str;
-        }
-        else
-        {
+            return 'några ' + str;
+        } else {
+
+            // The rest is unneccessary in swedish
             local firstChar;
-            local firstCharLower;
 
             /* if it's empty, just use "a" */
             if (inStr == '')
-                return 'a';
+                return 'ett';
 
             /* get the first character of the name */
             firstChar = inStr.substr(1, 1);
@@ -1607,83 +1726,7 @@ modify Thing
                     firstChar = inStr.substr(1, 1);
                 }
             }
-
-            /* get the lower-case version of the first character */
-            firstCharLower = firstChar.toLower();
-
-            /*
-             *   if the first word of the name is only one letter long,
-             *   treat it specially
-             */
-            if (rexMatch(patOneLetterWord, inStr) != nil)
-            {
-                /*
-                 *   We have a one-letter first word, such as "I-beam" or
-                 *   "M-ray sensor", or just "A".  Choose the article based
-                 *   on the pronunciation of the letter as a letter.
-                 */
-                return (rexMatch(patOneLetterAnWord, inStr) != nil
-                        ? 'an ' : 'a ') + str;
-            }
-
-            /*
-             *   look for the first character in the lower-case and
-             *   upper-case-only vowel lists - if we find it, it takes
-             *   'an'
-             */
-            if (vowels.find(firstCharLower) != nil
-                || vowelsUpperOnly.find(firstChar) != nil)
-            {
-                /* it starts with a vowel */
-                return 'an ' + str;
-            }
-            else if (ys.find(firstCharLower) != nil)
-            {
-                local secondChar;
-
-                /* get the second character, if there is one */
-                secondChar = inStr.substr(2, 1);
-
-                /*
-                 *   It starts with 'y' - if the second letter is a
-                 *   consonant, assume the 'y' is a vowel sound, hence we
-                 *   should use 'an'; otherwise assume the 'y' is a
-                 *   diphthong 'ei' sound, which means we should use 'a'.
-                 *   If there's no second character at all, or the second
-                 *   character isn't alphabetic, use 'a' - "a Y" or "a
-                 *   Y-connector".
-                 */
-                if (secondChar == ''
-                    || rexMatch(patIsAlpha, secondChar) == nil
-                    || vowels.find(secondChar.toLower()) != nil
-                    || vowelsUpperOnly.find(secondChar) != nil)
-                {
-                    /*
-                     *   it's just one character, or the second character
-                     *   is non-alphabetic, or the second character is a
-                     *   vowel - in any of these cases, use 'a'
-                     */
-                    return 'a ' + str;
-                }
-                else
-                {
-                    /* the second character is a consonant - use 'an' */
-                    return 'an ' + str;
-                }
-            }
-            else if (rexMatch(patElevenEighteen, inStr) != nil)
-            {
-                /*
-                 *   it starts with '11' or '18', so it takes 'an' ('an
-                 *   11th-hour appeal', 'an 18-hole golf course')
-                 */
-                return 'an ' + str;
-            }
-            else
-            {
-                /* it starts with a consonant */
-                return 'a ' + str;
-            }
+            return (isUter?'en':'ett') + ' ' + str;
         }
     }
 
@@ -1841,34 +1884,49 @@ modify Thing
     /* being verb agreeing with this object as subject */
     verbToBe
     {
-        return tSel(isPlural ? 'are' : 'is', isPlural ? 'were' : 'was');
+        //return tSel(isPlural ? 'are' : 'is', isPlural ? 'were' : 'was');
+        return tSel('är', 'var');
     }
 
+    verbToTake { return tSel('tar', 'tog');}
+
+    verbHere {return tSel('här', 'där'); }
+
+    verbToSeem { return tSel('verkar', 'verkade'); }
+    verbToPut { return tSel('sätter', 'satte'); }
+    
+
     /* past tense being verb agreeing with object as subject */
-    verbWas { return tSel(isPlural ? 'were' : 'was', 'had been'); }
+    //verbWas { return tSel(isPlural ? 'were' : 'was', 'had been'); }
+    verbWas { return tSel('var', 'hade varit'); }
 
     /* 'have' verb agreeing with this object as subject */
-    verbToHave { return tSel(isPlural ? 'have' : 'has', 'had'); }
+    verbToHave { return tSel('har' , 'hade'); }
 
     /*
      *   A few common irregular verbs and name-plus-verb constructs,
      *   defined for convenience.
      */
-    verbToDo = (tSel('do' + verbEndingEs, 'did'))
+    verbToDo = (tSel('gör' + verbEndingEs, 'gjorde'))
     nameDoes = (theName + ' ' + verbToDo)
-    verbToGo = (tSel('go' + verbEndingEs, 'went'))
-    verbToCome = (tSel('come' + verbEndingS, 'came'))
-    verbToLeave = (tSel('leave' + verbEndingS, 'left'))
-    verbToSee = (tSel('see' + verbEndingS, 'saw'))
+    verbToGo = (tSel('går' + verbEndingEs, 'gick'))
+    verbToCome = (tSel('kommer' + verbEndingS, 'kom'))
+    verbToLeave = (tSel('lämnar' + verbEndingS, 'lämnade'))
+    
+    //verbToSee = (tSel('ser' + verbEndingS, 'såg'))
+    verbToSee = (tSel('ser' + verbEndingS, 'såg'))
+
+
     nameSees = (theName + ' ' + verbToSee)
-    verbToSay = (tSel('say' + verbEndingS, 'said'))
+    nameSeem = (theName + ' ' + verbToSeem)
+    verbToSay = (tSel('säger' + verbEndingS, 'sade'))
     nameSays = (theName + ' ' + verbToSay)
-    verbMust = (tSel('must', 'had to'))
-    verbCan = (tSel('can', 'could'))
-    verbCannot = (tSel('cannot', 'could not'))
-    verbCant = (tSel('can&rsquo;t', 'couldn&rsquo;t'))
-    verbWill = (tSel('will', 'would'))
-    verbWont = (tSel('won&rsquo;t', 'wouldn&rsquo;t'))
+    verbMust = (tSel('måste', 'var tvungen'))
+    verbCan = (tSel('kan', 'kunde'))
+    verbCannot = (tSel('kan inte', 'kunde inte'))
+    verbCant = (tSel('kan inte', 'kunde inte'))
+    verbWill = (tSel('ska', 'skulle'))
+    verbWont = (tSel('ska inte', 'skulle inte'))
 
     /*
      *   Verb endings for regular '-s' verbs, agreeing with this object as
@@ -1897,11 +1955,46 @@ modify Thing
      *   stored in langMessageBuilder.pastEnding_.  It is used as part of
      *   the string parameter substitution mechanism.
      */
-    verbEndingS { return isPlural ? '' : 's'; }
+    verbEndingS { return isPlural ? '' : ''; }
     verbEndingSD = (tSel(verbEndingS, 'd'))
     verbEndingSEd = (tSel(verbEndingS, 'ed'))
+   
+
+    //---------------------------------------------------
+    // TODO:
+    //  hoppar/hoppade
+
+    
+    verbEndingR { return 'r'; }
+    
+    verbEndingAR { return 'ar'; }
+    
+    verbEndingRDe = (tSel(verbEndingR, 'de'))
+    
+    verbEndingARDe = (tSel(verbEndingAR, 'ade'))
+
+    verbEndingRMessageBuilder_ =
+        (tSel(verbEndingR, langMessageBuilder.pastEnding_))
+
+
+
+
+
+    //---------------------------------------------------
+
+
     verbEndingSMessageBuilder_ =
         (tSel(verbEndingS, langMessageBuilder.pastEnding_))
+
+
+    
+    /**
+     * Verb som slutar på '-er/-te', t ex: tryck{er/te} 
+     * 
+     */
+    verbEndingEr { return tSel('er', 'te'); }
+    verbEndingErE { return tSel('er', 'e'); }
+
 
     /*
      *   Verb endings (present or past) for regular '-es/-ed' and
@@ -2045,6 +2138,7 @@ class NameAsOther: object
     verbEndingSEd = (targetObj.verbEndingSEd)
     verbEndingEs = (targetObj.verbEndingEs)
     verbEndingIes = (targetObj.verbEndingIes)
+
 ;
 
 /*
@@ -2099,21 +2193,21 @@ modify Surface
      *   objects contained in a Surface are described as being on the
      *   Surface
      */
-    objInPrep = 'on'
-    actorInPrep = 'on'
-    actorOutOfPrep = 'off of'
+    objInPrep = 'på'
+    actorInPrep = 'på'
+    actorOutOfPrep = 'av från'
 ;
 
 modify Underside
     objInPrep = 'under'
     actorInPrep = 'under'
-    actorOutOfPrep = 'from under'
+    actorOutOfPrep = 'från undersidan'
 ;
 
 modify RearContainer
-    objInPrep = 'behind'
-    actorInPrep = 'behind'
-    actorOutOfPrep = 'from behind'
+    objInPrep = 'bakom'
+    actorInPrep = 'bakom'
+    actorOutOfPrep = 'från baksidan'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2177,33 +2271,33 @@ modify Actor
      */
     itNom
     {
-        return ['I', 'I', 'I', 'we',
-               'you', 'you', 'you', 'you',
-               'it', 'he', 'she', 'they'][pronounSelector];
+        return ['Jag', 'Jag', 'Jag', 'vi',
+               'du', 'du', 'du', 'du',
+               'den', 'han', 'hon', 'de'][pronounSelector];
     }
     itObj
     {
-        return ['me', 'me', 'me', 'us',
-               'you', 'you', 'you', 'you',
-               'it', 'him', 'her', 'them'][pronounSelector];
+        return ['mig', 'mig', 'mig', 'us',
+               'dig', 'dig', 'dig', 'dig',
+               'den', 'han', 'henne', 'dem'][pronounSelector];
     }
     itPossAdj
     {
-        return ['my', 'my', 'my', 'our',
-               'your', 'your', 'your', 'your',
-               'its', 'his', 'her', 'their'][pronounSelector];
+        return ['min', 'min', 'min', 'våran',
+               'din', 'din', 'din', 'din',
+               'dess', 'hans', 'hennes', 'deras'][pronounSelector];
     }
     itPossNoun
     {
-        return ['mine', 'mine', 'mine', 'ours',
-               'yours', 'yours', 'yours', 'yours',
-               'its', 'his', 'hers', 'theirs'][pronounSelector];
+        return ['min', 'min', 'min', 'våran',
+               'din', 'din', 'din', 'din',
+               'dess', 'hans', 'hennes', 'deras'][pronounSelector];
     }
     itReflexive
     {
-        return ['myself', 'myself', 'myself', 'ourselves',
-               'yourself', 'yourself', 'yourself', 'yourselves',
-               'itself', 'himself', 'herself', 'themselves'][pronounSelector];
+        return ['jag själv', 'jag själv', 'jag själv', 'oss själva',
+               'du själv', 'du själv', 'du själv', 'er själva',
+               'den själv', 'han själv', 'hon själv', 'dem själva'][pronounSelector];
     }
 
     /*
@@ -2214,17 +2308,17 @@ modify Actor
      */
     thatNom
     {
-        return ['I', 'I', 'I', 'we',
-               'you', 'you', 'you', 'you',
-               'that', 'he', 'she', 'those'][pronounSelector];
+        return ['Jag', 'Jag', 'Jag', 'vi',
+               'du', 'du', 'du', 'du',
+               (isUter?'den':'det'), 'han', 'henne', 'de'][pronounSelector];
     }
 
     /* demonstrative pronoun, objective case */
     thatObj
     {
-        return ['me', 'me', 'me', 'us',
-               'you', 'you', 'you', 'you',
-               'that', 'him', 'her', 'those'][pronounSelector];
+        return ['jag', 'jag', 'jag', 'oss',
+               'du', 'du', 'du', 'du',
+               (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector];
     }
 
     /* demonstrative pronoun, nominative case with 'is' contraction */
@@ -2244,10 +2338,8 @@ modify Actor
     /* get my pronoun with a being verb contraction ("the box's") */
     itIsContraction
     {
-        return itNom + tSel(
-            '&rsquo;'
-            + ['m', 're', 's', 're', 're', 're'][conjugationSelector],
-            ' ' + verbToBe);
+        return itNom + tSel('&rsquo;' + ['m', 're', 's', 're', 're', 're'][conjugationSelector], ' ' + verbToBe);
+        //return itNom + ' ' + verbToBe;
     }
 
     /*
@@ -2321,23 +2413,23 @@ modify Actor
     /* being verb agreeing with this object as subject */
     verbToBe
     {
-        return tSel(['am', 'are', 'is', 'are', 'are', 'are'],
-                    ['was', 'were', 'was', 'were', 'were', 'were'])
+        return tSel(['är', 'är', 'är', 'är', 'är', 'är'],
+                    ['var', 'var', 'var', 'var', 'var', 'var'])
                [conjugationSelector];
     }
 
     /* past tense being verb agreeing with this object as subject */
     verbWas
     {
-        return tSel(['was', 'were', 'was', 'were', 'were', 'were']
-                    [conjugationSelector], 'had been');
+        return tSel(['var', 'var', 'var', 'var', 'var', 'var']
+                    [conjugationSelector], 'hade varit');
     }
 
     /* 'have' verb agreeing with this object as subject */
     verbToHave
     {
-        return tSel(['have', 'have', 'has', 'have', 'have', 'have']
-                    [conjugationSelector], 'had');
+        return tSel(['hade', 'hade', 'har', 'hade', 'hade', 'hade']
+                    [conjugationSelector], 'hade');
     }
 
     /*
@@ -2346,7 +2438,7 @@ modify Actor
      */
     verbEndingS
     {
-        return ['', '', 's', '', '', ''][conjugationSelector];
+        return ['', '', 'r', '', '', ''][conjugationSelector];
     }
     verbEndingEs
     {
@@ -2489,6 +2581,7 @@ modify Actor
          *   with 'him' and 'her'.  If there are no objects that can match
          *   a given pronoun, leave that pronoun unchanged.  
          */
+
         if ((subLst = lst.subset({x: x.canMatchIt})).length() > 0)
             setIt(subLst);
         if ((subLst = lst.subset({x: x.canMatchHim})).length() > 0)
@@ -2626,27 +2719,27 @@ modify Posture
 ;
 
 modify standing
-    msgVerbIPresent = 'stand{s} up'
-    msgVerbIPast = 'stood up'
-    msgVerbTPresent = 'stand{s}'
-    msgVerbTPast = 'stood'
-    participle = 'standing'
+    msgVerbIPresent = 'stå{r} up'
+    msgVerbIPast = 'stod upp'
+    msgVerbTPresent = 'stå{r}'
+    msgVerbTPast = 'stod'
+    participle = 'står'
 ;
 
 modify sitting
-    msgVerbIPresent = 'sit{s} down'
-    msgVerbIPast = 'sat down'
-    msgVerbTPresent = 'sit{s}'
-    msgVerbTPast = 'sat'
-    participle = 'sitting'
+    msgVerbIPresent = 'sitt{er} ner'
+    msgVerbIPast = 'satt ner'
+    msgVerbTPresent = 'sitt{er}'
+    msgVerbTPast = 'satt'
+    participle = 'sittandes'
 ;
 
 modify lying
-    msgVerbIPresent = 'lie{s} down'
-    msgVerbIPast = 'lay down'
-    msgVerbTPresent = 'lie{s}'
-    msgVerbTPast = 'lay'
-    participle = 'lying'
+    msgVerbIPresent = 'ligg{er} ner'
+    msgVerbIPast = 'lade {sig} ner'
+    msgVerbTPresent = 'ligg{er}'
+    msgVerbTPast = 'lade {sig}'
+    participle = 'liggandes'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2752,7 +2845,7 @@ modify SpecialTopic
     }
 
     /*
-     *   Our "weak" strings - 'i', 'l', 'look': these are weak because a
+     *   Our "weak" strings - 'i', 'l', 'titta': these are weak because a
      *   user typing one of these strings by itself is probably actually
      *   trying to enter the command of the same name, rather than entering
      *   a special topic.  These come up in cases where the special topic
@@ -2779,7 +2872,7 @@ modify Traveler
         local nm = location.getDestName(gPlayerChar, gPlayerChar.location);
 
         /* if there's a name, return it; otherwise, use "the area" */
-        return (nm != nil ? nm : 'the area');
+        return (nm != nil ? nm : 'platsen');
     }
 
     /*
@@ -2888,23 +2981,23 @@ modify AskConnector
  */
 modify BasicChair
     /* by default, one sits *on* a chair */
-    objInPrep = 'on'
-    actorInPrep = 'on'
-    actorOutOfPrep = 'off of'
+    objInPrep = 'på'
+    actorInPrep = 'på'
+    actorOutOfPrep = 'av från'
 ;
 
 modify BasicPlatform
     /* by default, one stands *on* a platform */
-    objInPrep = 'on'
-    actorInPrep = 'on'
-    actorOutOfPrep = 'off of'
+    objInPrep = 'på'
+    actorInPrep = 'på'
+    actorOutOfPrep = 'av från'
 ;
 
 modify Booth
     /* by default, one is *in* a booth */
-    objInPrep = 'in'
-    actorInPrep = 'in'
-    actorOutOfPrep = 'out of'
+    objInPrep = 'i'
+    actorInPrep = 'i'
+    actorOutOfPrep = 'ut från'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2923,11 +3016,11 @@ modify Matchstick
  *   Match state objects.  We show "lit" as the state for a lit match,
  *   nothing for an unlit match.
  */
-matchStateLit: ThingState 'lit'
-    stateTokens = ['lit']
+matchStateLit: ThingState 'tänd'
+    stateTokens = ['tänd']
 ;
 matchStateUnlit: ThingState
-    stateTokens = ['unlit']
+    stateTokens = ['släckt']
 ;
 
 
@@ -3017,33 +3110,35 @@ modify Room
 
 /* ------------------------------------------------------------------------ */
 /*
- *   English-specific modifications for the default room parts.
+ *   Swedish-specific modifications for the default room parts.
  */
 
 modify Floor
-    childInNameGen(childName, myName) { return childName + ' on ' + myName; }
-    objInPrep = 'on'
-    actorInPrep = 'on'
-    actorOutOfPrep = 'off of'
+    childInNameGen(childName, myName) { return childName + ' på ' + myName; }
+    objInPrep = 'på'
+    actorInPrep = 'på'
+    actorOutOfPrep = 'ut ur'
 ;
 
 modify defaultFloor
-    noun = 'floor' 'ground'
-    name = 'floor'
+    noun = 'golv' 'grund'
+    name = 'golv'
+    theName = 'golvet'
 ;
 
 modify defaultGround
-    noun = 'ground' 'floor'
-    name = 'ground'
+    noun = 'mark' 'grund'
+    name = 'mark'
+    theName = 'marken'
 ;
 
-modify DefaultWall noun='wall' plural='walls' name='wall';
-modify defaultCeiling noun='ceiling' 'roof' name='ceiling';
-modify defaultNorthWall adjective='n' 'north' name='north wall';
-modify defaultSouthWall adjective='s' 'south' name='south wall';
-modify defaultEastWall adjective='e' 'east' name='east wall';
-modify defaultWestWall adjective='w' 'west' name='west wall';
-modify defaultSky noun='sky' name='sky';
+modify DefaultWall noun='vägg' 'väggen' plural='väggar' name='vägg' theName = 'väggen' isUter=true;
+modify defaultCeiling noun='tak' plural='taket' name='tak' theName = 'taket';
+modify defaultNorthWall adjective='n' 'norr' 'nordlig' 'norra' noun = 'vägg' 'väggen' name='nordlig vägg' theName = 'norra väggen' isUter=true;
+modify defaultSouthWall adjective='s' 'syd' 'sydlig' 'söder' 'södra' noun = 'vägg' 'väggen' name='sydlig vägg' theName = 'södra väggen' isUter=true;
+modify defaultEastWall adjective='ö' 'öster' 'östlig' 'östra' noun = 'vägg' 'väggen' name='östlig vägg'  theName = 'östra väggen' isUter=true;
+modify defaultWestWall adjective='v' 'väster' 'västlig' 'västra' noun = 'vägg' 'väggen' name='västlig vägg' theName = 'västra väggen' isUter=true;
+modify defaultSky noun='himmel' name='himmel' theName = 'himlen' isUter=true;
 
 
 /* ------------------------------------------------------------------------ */
@@ -3099,18 +3194,34 @@ modify root##Direction \
    name = #@root \
    backToPrefix = backPre
 
-DefineLangDir(north, 'north' | 'n', 'back to the');
-DefineLangDir(south, 'south' | 's', 'back to the');
-DefineLangDir(east, 'east' | 'e', 'back to the');
-DefineLangDir(west, 'west' | 'w', 'back to the');
-DefineLangDir(northeast, 'northeast' | 'ne', 'back to the');
-DefineLangDir(northwest, 'northwest' | 'nw', 'back to the');
-DefineLangDir(southeast, 'southeast' | 'se', 'back to the');
-DefineLangDir(southwest, 'southwest' | 'sw', 'back to the');
-DefineLangDir(up, 'up' | 'u', 'back');
-DefineLangDir(down, 'down' | 'd', 'back');
-DefineLangDir(in, 'in', 'back');
-DefineLangDir(out, 'out', 'back');
+
+DefineLangDir(north, 'norr' | 'n' | 'norr' |'norrut', 'tillbaka från');
+DefineLangDir(south, 'söder' | 's'| 'syd'|'söderut', 'tillbaka från');
+DefineLangDir(east,  'öster' | 'ö' |'öst'|'österut', 'tillbaka från');
+DefineLangDir(west, 'väst' | 'v'|'väst'|'västerut', 'tillbaka från');
+DefineLangDir(northeast, 'nordöst'|'nordösterut' | 'nö', 'tillbaka från');
+DefineLangDir(northwest, 'nordväst'|'nordvästerut' | 'nv', 'tillbaka från');
+DefineLangDir(southeast,  'sydöst'|'sydösterut'| 'sö', 'tillbaka från');
+DefineLangDir(southwest,  'sydväst'|'sydvästerut'| 'sv', 'tillbaka från');
+DefineLangDir(up, 'upp'|'uppåt'|'u', 'tillbaka');
+DefineLangDir(down, 'ner'|'nedåt'|'n', 'tillbaka');
+DefineLangDir(in,  'in', 'tillbaka');
+DefineLangDir(out, 'ut', 'tillbaka');
+
+
+modify northDirection name = 'norr';
+modify southDirection name = 'söder';
+modify eastDirection name = 'öst';
+modify westDirection name = 'väst';
+modify northwestDirection name = 'nordväst';
+modify northeastDirection name = 'nordöst';
+modify southwestDirection name = 'sydväst';
+modify southeastDirection name = 'sydöst';
+modify upDirection name = 'upp';
+modify downDirection name = 'ner';
+modify inDirection name = 'in';
+modify outDirection name = 'ut';
+
 
 /*
  *   The English-specific shipboard direction modifications.  Certain of
@@ -3122,27 +3233,27 @@ DefineLangDir(out, 'out', 'back');
  *   below.
  */
 
-DefineLangDir(port, 'port' | 'p', 'back to')
+DefineLangDir(port, 'babord' | 'p', 'back to')
     sayArriving(trav)
-        { gLibMessages.sayArrivingShipDir(trav, 'the port direction'); }
+        { gLibMessages.sayArrivingShipDir(trav, 'babord'); }
     sayDeparting(trav)
-        { gLibMessages.sayDepartingShipDir(trav, 'port'); }
+        { gLibMessages.sayDepartingShipDir(trav, 'babord'); }
 ;
 
-DefineLangDir(starboard, 'starboard' | 'sb', 'back to')
+DefineLangDir(starboard, 'styrbord' | 'sb', 'tillbaka till')
     sayArriving(trav)
-        { gLibMessages.sayArrivingShipDir(trav, 'starboard'); }
+        { gLibMessages.sayArrivingShipDir(trav, 'styrbord'); }
     sayDeparting(trav)
-        { gLibMessages.sayDepartingShipDir(trav, 'starboard'); }
+        { gLibMessages.sayDepartingShipDir(trav, 'styrbord'); }
 ;
 
-DefineLangDir(aft, 'aft' | 'a', 'back to')
-    sayArriving(trav) { gLibMessages.sayArrivingShipDir(trav, 'aft'); }
+DefineLangDir(aft,  'akterut' | 'a', 'tillbaka till')
+    sayArriving(trav) { gLibMessages.sayArrivingShipDir(trav, 'aktern'); }
     sayDeparting(trav) { gLibMessages.sayDepartingAft(trav); }
 ;
 
-DefineLangDir(fore, 'fore' | 'forward' | 'f', 'back to')
-    sayArriving(trav) { gLibMessages.sayArrivingShipDir(trav, 'forward'); }
+DefineLangDir(fore, 'föröver' 'för' | 'fören' | 'forward' | 'f', 'tillbaka till')
+    sayArriving(trav) { gLibMessages.sayArrivingShipDir(trav, 'fören'); }
     sayDeparting(trav) { gLibMessages.sayDepartingFore(trav); }
 ;
 
@@ -3173,7 +3284,7 @@ class MessageHelper: object
              *   last, add an "or" as well
               */
             if (i == len)
-                ", or ";
+                ", eller ";
             else if (i != 1)
                 ", ";
 
@@ -3583,7 +3694,7 @@ modify litUnlitDistinguisher
  */
 modify LightSource
     /* provide lit/unlit names for litUnlitDistinguisher */
-    nameLit = ((isLit ? 'lit ' : 'unlit ') + name)
+    nameLit = ((isLit ? 'tänd ' : 'otänd ') + name)
     aNameLit()
     {
         /*
@@ -3591,12 +3702,15 @@ modify LightSource
          *   with lit/unlit; otherwise, add "a"
          */
         if (isPlural || isMassNoun)
-            return (isLit ? 'lit ' : 'unlit ') + name;
+            return (isLit ? 'tänd ' : 'otänd ') + name;
         else
-            return (isLit ? 'a lit ' : 'an unlit ') + name;
+            //TODO: Rätt artikel en/ett
+            //return (isLit ? 'en tänd ' : 'en otänd ') + name;
+            return (isLit ? 'ett tänt ' : 'ett otänt ') + name;
     }
-    theNameLit = ((isLit ? 'the lit ' : 'the unlit ') + name)
-    pluralNameLit = ((isLit ? 'lit ' : 'unlit ') + pluralName)
+    //TODO: den/det
+    theNameLit = ((isLit ? 'tända ' : 'släckta ') + name)
+    pluralNameLit = ((isLit ? 'tända ' : 'släckta ') + pluralName)
 
     /*
      *   Allow 'lit' and 'unlit' as adjectives - but even though we define
@@ -3604,7 +3718,7 @@ modify LightSource
      *   one appropriate for our current state, thanks to our state
      *   objects.
      */
-    adjective = 'lit' 'unlit'
+    adjective = 'tänd' 'otänd'
 ;
 
 /*
@@ -3612,11 +3726,11 @@ modify LightSource
  *   status as "providing light"; an unlit light source shows no extra
  *   status.
  */
-lightSourceStateOn: ThingState 'providing light'
-    stateTokens = ['lit']
+lightSourceStateOn: ThingState 'avger ljus'
+    stateTokens = ['tänd']
 ;
 lightSourceStateOff: ThingState
-    stateTokens = ['unlit']
+    stateTokens = ['otänd']
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -3625,7 +3739,7 @@ lightSourceStateOff: ThingState
  */
 
 /* "worn" */
-wornState: ThingState 'being worn'
+wornState: ThingState 'påklädd'
     /*
      *   In listings of worn items, don't bother mentioning our 'worn'
      *   status, as the entire list consists of items being worn - it
@@ -3713,7 +3827,7 @@ typographicalOutputFilter: OutputFilter
      *
      *   If a lower-case letter follows the space, though, we won't
      *   consider it a sentence ending.  This applies most commonly after
-     *   quoted passages ending with what would normally be sentence-ending
+     *   quoted passages ending med vad would normally be sentence-ending
      *   punctuation: "'Who are you?' he asked."  In these cases, the
      *   enclosing sentence isn't ending, so we don't want the extra space.
      *   We can tell the enclosing sentence isn't ending because a
@@ -3748,7 +3862,7 @@ typographicalOutputFilter: OutputFilter
      *   this property at start-up, and doesn't re-evaluate it while the
      *   game is running.  
      */
-    abbreviations = 'mr|mrs|ms|dr|prof'
+    abbreviations = 'hr|fru|fröken|dr|prof' //TODO: prof?
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -3777,8 +3891,8 @@ langMessageBuilder: MessageBuilder
     paramList_ =
     [
         /* parameters that imply the actor as the target object */
-        ['you/he', &theName, 'actor', nil, true],
-        ['you/she', &theName, 'actor', nil, true],
+        ['du/han', &theName, 'actor', nil, true],
+        ['du/hon', &theName, 'actor', nil, true],
         ['you\'re/he\'s', &itIsContraction, 'actor', nil, true],
         ['you\'re/she\'s', &itIsContraction, 'actor', nil, true],
         ['you\'re', &itIsContraction, 'actor', nil, true],
@@ -3793,6 +3907,10 @@ langMessageBuilder: MessageBuilder
         ['yourself/himself', &itReflexive, 'actor', nil, nil],
         ['yourself/herself', &itReflexive, 'actor', nil, nil],
         ['yourself', &itReflexive, 'actor', nil, nil],
+
+
+        // TODO: Gör om alla dessa till:
+        // den/han den/honom den/henne
 
         /* parameters that don't imply any target object */
         ['the/he', &theName, nil, nil, true],
@@ -3811,33 +3929,67 @@ langMessageBuilder: MessageBuilder
          */
         ['s', &verbEndingS, nil, nil, true],
         ['s/d', &verbEndingSD, nil, nil, true],
+        
         ['s/ed', &verbEndingSEd, nil, nil, true],
         ['s/?ed', &verbEndingSMessageBuilder_, nil, nil, true],
 
+        // Swedish adaptation begins here
+        ['r', &verbEndingR, nil, nil, true],
+        ['r/de', &verbEndingRDe, nil, nil, true],
+        ['r/?de', &verbEndingRMessageBuilder_, nil, nil, true],
+        ['ar/ade', &verbEndingARDe, nil, nil, true],
+        ['kan', &verbCan, nil, nil, true],
+        ['are', &verbToBe, nil, nil, true],
+        ['här', &verbHere, nil, nil, true],
+
+
+
+
+        ['verkar', &verbToSeem, nil, nil, true],
+        
+        ['sätter', &verbToPut, nil, nil, true],
+
+        // TODO: {be|have been}  '{vara|varit}'
+
+        ['ser', &verbToSee, nil, nil, true],
+        ['se', &verbToSee, nil, nil, true],
+
+        // Swedish adaptation ends here
+
         ['es', &verbEndingEs, nil, nil, true],
         ['es/ed', &verbEndingEs, nil, nil, true],
+
+        ['er/te', &verbEndingEr, nil, nil, true],
+        ['er/e', &verbEndingErE, nil, nil, true],
+        
         ['ies', &verbEndingIes, nil, nil, true],
         ['ies/ied', &verbEndingIes, nil, nil, true],
-        ['is', &verbToBe, nil, nil, true],
-        ['are', &verbToBe, nil, nil, true],
-        ['was', &verbWas, nil, nil, true],
-        ['were', &verbWas, nil, nil, true],
+        
+        ['är', &verbToBe, nil, nil, true],
+        ['tar', &verbToTake, nil, nil, true],
+        //['are', &verbToBe, nil, nil, true],
+
+        //['was', &verbWas, nil, nil, true],
+        //['were', &verbWas, nil, nil, true],
+        ['har', &verbToHave, nil, nil, true],
+
         ['has', &verbToHave, nil, nil, true],
         ['have', &verbToHave, nil, nil, true],
         ['does', &verbToDo, nil, nil, true],
         ['do', &verbToDo, nil, nil, true],
         ['goes', &verbToGo, nil, nil, true],
-        ['go', &verbToGo, nil, nil, true],
+        ['gå', &verbToGo, nil, nil, true],
         ['comes', &verbToCome, nil, nil, true],
         ['come', &verbToCome, nil, nil, true],
         ['leaves', &verbToLeave, nil, nil, true],
         ['leave', &verbToLeave, nil, nil, true],
-        ['sees', &verbToSee, nil, nil, true],
-        ['see', &verbToSee, nil, nil, true],
+
+        //['sees', &verbToSee, nil, nil, true],
+        //['see', &verbToSee, nil, nil, true],
+
         ['says', &verbToSay, nil, nil, true],
-        ['say', &verbToSay, nil, nil, true],
+        ['säg', &verbToSay, nil, nil, true],
         ['must', &verbMust, nil, nil, true],
-        ['can', &verbCan, nil, nil, true],
         ['cannot', &verbCannot, nil, nil, true],
         ['can\'t', &verbCant, nil, nil, true],
         ['will', &verbWill, nil, nil, true],
@@ -3867,7 +4019,11 @@ langMessageBuilder: MessageBuilder
         ['it\'s/he\'s', &itIsContraction, nil, nil, true],
         ['it\'s/she\'s', &itIsContraction, nil, nil, true],
         ['it\'s', &itIsContraction, nil, nil, true],
+        
+        //FIXME: ['den/he', &thatNom, nil, nil, true],
         ['that/he', &thatNom, nil, nil, true],
+
+
         ['that/she', &thatNom, nil, nil, true],
         ['that/him', &thatObj, nil, &itReflexive, nil],
         ['that/her', &thatObj, nil, &itReflexive, nil],
@@ -3877,7 +4033,7 @@ langMessageBuilder: MessageBuilder
         ['itself/herself', &itReflexive, nil, nil, nil],
 
         /* default preposition for standing in/on something */
-        ['on', &actorInName, nil, nil, nil],
+        ['på', &actorInName, nil, nil, nil],
         ['in', &actorInName, nil, nil, nil],
         ['outof', &actorOutOfName, nil, nil, nil],
         ['offof', &actorOutOfName, nil, nil, nil],
@@ -4427,10 +4583,10 @@ spellIntExt(val, flags)
     local str;
     local trailingSpace;
     local needAnd;
-    local powers = [1000000000, ' billion ',
-                    1000000,    ' million ',
-                    1000,       ' thousand ',
-                    100,        ' hundred '];
+    local powers = [1000000000, ' biljon ',
+                    1000000,    ' miljon ',
+                    1000,       ' tusen ',
+                    100,        ' hundra '];
 
     /* start with an empty string */
     str = '';
@@ -4439,7 +4595,7 @@ spellIntExt(val, flags)
 
     /* if it's zero, it's a special case */
     if (val == 0)
-        return 'zero';
+        return 'noll';
 
     /*
      *   if the number is negative, note it in the string, and use the
@@ -4447,7 +4603,7 @@ spellIntExt(val, flags)
      */
     if (val < 0)
     {
-        str = 'negative ';
+        str = 'minus ';
         val = -val;
     }
 
@@ -4468,7 +4624,7 @@ spellIntExt(val, flags)
                 str = str.substr(1, str.length() - 1) + ', ';
 
             /* spell it out as a number of hundreds */
-            str += spellIntExt(val / 100, flags) + ' hundred ';
+            str += spellIntExt(val / 100, flags) + 'hundra ';
 
             /* take off the hundreds */
             val %= 100;
@@ -4529,8 +4685,8 @@ spellIntExt(val, flags)
     if (val >= 20)
     {
         /* anything above the teens is nice and regular */
-        str += ['twenty', 'thirty', 'forty', 'fifty', 'sixty',
-                'seventy', 'eighty', 'ninety'][val/10 - 1];
+        str += ['tjugo', 'trettio', 'fyrtio', 'femtio', 'sextio',
+                'sjuttio', 'åttio', 'nittio'][val/10 - 1];
         val %= 10;
 
         /* if it's non-zero, we'll add the units, so add a hyphen */
@@ -4543,9 +4699,9 @@ spellIntExt(val, flags)
     else if (val >= 10)
     {
         /* we have a teen */
-        str += ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
-                'fifteen', 'sixteen', 'seventeen', 'eighteen',
-                'nineteen'][val - 9];
+        str += ['tio', 'elva', 'tolv', 'tretton', 'fjorton',
+                'femton', 'sexton', 'sjutton', 'arton',
+                'nitton'][val - 9];
 
         /* we've finished with the number */
         val = 0;
@@ -4558,8 +4714,8 @@ spellIntExt(val, flags)
     if (val != 0)
     {
         /* add the units name */
-        str += ['one', 'two', 'three', 'four', 'five',
-                'six', 'seven', 'eight', 'nine'][val];
+        str += ['en', 'två', 'tre', 'fyra', 'fem',
+                'sex', 'sju', 'åtta', 'nio'][val];
 
         /* we have no trailing space now */
         trailingSpace = nil;
@@ -4588,7 +4744,7 @@ intOrdinal(n)
     if (n >= 10 && n <= 19)
     {
         /* the teens all end in 'th' */
-        return s + 'th';
+        return s + ':e';
     }
     else
     {
@@ -4602,17 +4758,15 @@ intOrdinal(n)
          */
         switch(n % 10)
         {
+            
         case 1:
-            return s + 'st';
+            return s + ':a';
 
         case 2:
-            return s + 'nd';
-
-        case 3:
-            return s + 'rd';
+            return s + ':a';
 
         default:
-            return s + 'th';
+            return s + ':e';
         }
     }
 }
@@ -4647,24 +4801,28 @@ spellIntOrdinalExt(n, flags)
      *   'zeroeth'.  For everything else, just add 'th' to the spelled-out
      *   name
      */
-    if (s == 'zero')
-        return 'zeroeth';
-    if (s.endsWith('one'))
-        return s.substr(1, s.length() - 3) + 'first';
-    else if (s.endsWith('two'))
-        return s.substr(1, s.length() - 3) + 'second';
-    else if (s.endsWith('three'))
-        return s.substr(1, s.length() - 5) + 'third';
-    else if (s.endsWith('five'))
-        return s.substr(1, s.length() - 4) + 'fifth';
-    else if (s.endsWith('eight'))
-        return s.substr(1, s.length() - 5) + 'eighth';
-    else if (s.endsWith('nine'))
-        return s.substr(1, s.length() - 4) + 'ninth';
-    else if (s.endsWith('y'))
-        return s.substr(1, s.length() - 1) + 'ieth';
+    if (s == 'noll')
+        return 'nollte';
+    if (s.endsWith('ett'))
+        return s.substr(1, s.length() - 3) + 'första';
+    else if (s.endsWith('två'))
+        return s.substr(1, s.length() - 3) + 'andra';
+    else if (s.endsWith('tre'))
+        return s.substr(1, s.length() - 5) + 'tredje';
+    else if (s.endsWith('fem'))
+        return s.substr(1, s.length() - 4) + 'femte';
+    else if (s.endsWith('sex'))
+        return s.substr(1, s.length() - 4) + 'sjätte';
+    else if (s.endsWith('sju'))
+        return s.substr(1, s.length() - 4) + 'sjunde';
+    else if (s.endsWith('åtta'))
+        return s.substr(1, s.length() - 5) + 'åttonde';
+    else if (s.endsWith('nio'))
+        return s.substr(1, s.length() - 4) + 'nioende';
+    else if (s.endsWith('o'))
+        return s.substr(1, s.length() - 1) + 'nde [TODO: test me]';
     else
-        return s + 'th';
+        return s + 'nde [TODO: test me]';
 }
 
 /* ------------------------------------------------------------------------ */
@@ -4776,9 +4934,9 @@ cmdTokenizer: Tokenizer
          *   the digits word as separate tokens.
          */
         ['spelled number',
-         new RexPattern('<NoCase>(twenty|thirty|forty|fifty|sixty|'
-                        + 'seventy|eighty|ninety)-'
-                        + '(one|two|three|four|five|six|seven|eight|nine)'
+         new RexPattern('<NoCase>(tjugo|trettio|fyrtio|femtio|sextio|'
+                        + 'sjuttio|åttio|nittio)-'
+                        + '(en|två|tre|fyra|fem|sex|sju|åtta|nio)'
                         + '(?!<AlphaNum>)'),
          tokWord, &tokCvtSpelledNumber, nil],
 
@@ -5104,9 +5262,10 @@ grammar firstCommandPhrase(withActor):
     }
 ;
 
+// TODO: var lite lat här... fixa en till grammar rad
 grammar firstCommandPhrase(askTellActorTo):
-    ('ask' | 'tell' | 'a' | 't') singleNounOnly->actor_
-    'to' commandPhrase->cmd_
+    ('fråga' | 'berätta' | 'f') singleNounOnly->actor_
+    ('om'|'till'|'för') commandPhrase->cmd_
     : FirstCommandProdWithActor
 
     /* "execute" the target actor phrase */
@@ -5146,7 +5305,7 @@ grammar firstCommandPhrase(askTellActorTo):
  */
 grammar actorBadCommandPhrase(main):
     singleNounOnly->actor_ ',' miscWordList
-    | ('ask' | 'tell' | 'a' | 't') singleNounOnly->actor_ 'to' miscWordList
+    | ('fråga' | 'berätta' | 'f' | 'b') singleNounOnly->actor_ ('om'|'till'|'för')  miscWordList
     : FirstCommandProdWithActor
 
     /* to resolve nouns, we merely resolve the actor */
@@ -5173,10 +5332,10 @@ grammar commandOnlyConjunction(sentenceEnding):
 ;
 
 grammar commandOnlyConjunction(nonSentenceEnding):
-    'then'
-    | 'and' 'then'
-    | ',' 'then'
-    | ',' 'and' 'then'
+    'sen'
+    | 'och' 'sen'
+    | ',' 'sen'
+    | ',' 'och' 'sen'
     | ';'
     : BasicProd
 
@@ -5192,8 +5351,8 @@ grammar commandOnlyConjunction(nonSentenceEnding):
  */
 grammar commandOrNounConjunction(main):
     ','
-    | 'and'
-    | ',' 'and'
+    | 'och'
+    | ',' 'och'
     : BasicProd
 
     /* these do not end a sentence */
@@ -5211,8 +5370,8 @@ grammar commandOrNounConjunction(main):
  */
 grammar nounConjunction(main):
     ','
-    | 'and'
-    | ',' 'and'
+    | 'och'
+    | ',' 'och'
     : BasicProd
 
     /* these conjunctions do not end a sentence */
@@ -5487,46 +5646,46 @@ class PrepSingleTopicProd: TopicProd
 ;
 
 grammar inSingleNoun(main):
-     singleNoun->np_ | ('in' | 'into' | 'in' 'to') singleNoun->np_
+     singleNoun->np_ | ('i' | 'in' 'i' | 'in' 'till') singleNoun->np_
     : PrepSingleNounProd
 ;
 
 grammar forSingleNoun(main):
-   singleNoun->np_ | 'for' singleNoun->np_ : PrepSingleNounProd
+   singleNoun->np_ | 'efter' singleNoun->np_ : PrepSingleNounProd
 ;
 
 grammar toSingleNoun(main):
-   singleNoun->np_ | 'to' singleNoun->np_ : PrepSingleNounProd
+   singleNoun->np_ | 'till' singleNoun->np_ : PrepSingleNounProd
 ;
 
 grammar throughSingleNoun(main):
-   singleNoun->np_ | ('through' | 'thru') singleNoun->np_
+   singleNoun->np_ | 'genom' singleNoun->np_
    : PrepSingleNounProd
 ;
 
 grammar fromSingleNoun(main):
-   singleNoun->np_ | 'from' singleNoun->np_ : PrepSingleNounProd
+   singleNoun->np_ | 'från' singleNoun->np_ : PrepSingleNounProd
 ;
 
 grammar onSingleNoun(main):
-   singleNoun->np_ | ('on' | 'onto' | 'on' 'to') singleNoun->np_
+   singleNoun->np_ | ('på' | ('upp' 'på') | 'på' 'till') singleNoun->np_
     : PrepSingleNounProd
 ;
 
 grammar withSingleNoun(main):
-   singleNoun->np_ | 'with' singleNoun->np_ : PrepSingleNounProd
+   singleNoun->np_ | 'med' singleNoun->np_ : PrepSingleNounProd
 ;
 
 grammar atSingleNoun(main):
-   singleNoun->np_ | 'at' singleNoun->np_ : PrepSingleNounProd
+   singleNoun->np_ | 'på' singleNoun->np_ : PrepSingleNounProd
 ;
 
 grammar outOfSingleNoun(main):
-   singleNoun->np_ | 'out' 'of' singleNoun->np_ : PrepSingleNounProd
+   singleNoun->np_ | 'ut' 'ur' singleNoun->np_ : PrepSingleNounProd
 ;
 
 grammar aboutTopicPhrase(main):
-   topicPhrase->np_ | 'about' topicPhrase->np_
+   topicPhrase->np_ | 'om' topicPhrase->np_
    : PrepSingleTopicProd
 ;
 
@@ -5553,8 +5712,8 @@ grammar completeNounPhrase(main):
  */
 grammar completeNounPhrase(miscPrep):
     [badness 100] completeNounPhrase->np1_
-        ('with' | 'into' | 'in' 'to' | 'through' | 'thru' | 'for' | 'to'
-         | 'onto' | 'on' 'to' | 'at' | 'under' | 'behind')
+        ('med' | 'in' 'i' | 'in' 'till' | 'genom' | 'thru' | 'for' | 'till'
+         | ('upp' 'på') | 'på' 'till' | 'på' | 'under' | 'bakom')
         completeNounPhrase->np2_
     : NounPhraseProd
     resolveNouns(resolver, results)
@@ -5583,24 +5742,24 @@ grammar completeNounPhraseWithoutAll(qualified): qualifiedNounPhrase->np_
  *   Pronoun rules.  A pronoun is a complete noun phrase; it does not allow
  *   further qualification.  
  */
-grammar completeNounPhraseWithoutAll(it):   'it' : ItProd;
-grammar completeNounPhraseWithoutAll(them): 'them' : ThemProd;
-grammar completeNounPhraseWithoutAll(him):  'him' : HimProd;
-grammar completeNounPhraseWithoutAll(her):  'her' : HerProd;
+grammar completeNounPhraseWithoutAll(it):   'det'|'den' : ItProd;
+grammar completeNounPhraseWithoutAll(them): 'de'|'dem'|'dom' : ThemProd;
+grammar completeNounPhraseWithoutAll(him):  'honom' : HimProd;
+grammar completeNounPhraseWithoutAll(her):  'henne' : HerProd;
 
 /*
  *   Reflexive second-person pronoun, for things like "bob, look at
  *   yourself"
  */
 grammar completeNounPhraseWithoutAll(yourself):
-    'yourself' | 'yourselves' | 'you' : YouProd
+    'du själv' | 'ni själva' | 'du' : YouProd
 ;
 
 /*
  *   Reflexive third-person pronouns.  We accept these in places such as
  *   the indirect object of a two-object verb.
  */
-grammar completeNounPhraseWithoutAll(itself): 'itself' : ItselfProd
+grammar completeNounPhraseWithoutAll(itself): 'det själv' : ItselfProd
     /* check agreement of our binding */
     checkAgreement(lst)
     {
@@ -5610,7 +5769,7 @@ grammar completeNounPhraseWithoutAll(itself): 'itself' : ItselfProd
 ;
 
 grammar completeNounPhraseWithoutAll(themselves):
-    'themself' | 'themselves' : ThemselvesProd
+    'de själv' | 'de själva' : ThemselvesProd
 
     /* check agreement of our binding */
     checkAgreement(lst)
@@ -5628,7 +5787,7 @@ grammar completeNounPhraseWithoutAll(themselves):
     }
 ;
 
-grammar completeNounPhraseWithoutAll(himself): 'himself' : HimselfProd
+grammar completeNounPhraseWithoutAll(himself): 'han själv' : HimselfProd
     /* check agreement of our binding */
     checkAgreement(lst)
     {
@@ -5637,7 +5796,7 @@ grammar completeNounPhraseWithoutAll(himself): 'himself' : HimselfProd
     }
 ;
 
-grammar completeNounPhraseWithoutAll(herself): 'herself' : HerselfProd
+grammar completeNounPhraseWithoutAll(herself): 'hon själv' : HerselfProd
     /* check agreement of our binding */
     checkAgreement(lst)
     {
@@ -5649,7 +5808,7 @@ grammar completeNounPhraseWithoutAll(herself): 'herself' : HerselfProd
 /*
  *   First-person pronoun, for referring to the speaker: "bob, look at me"
  */
-grammar completeNounPhraseWithoutAll(me): 'me' | 'myself' : MeProd;
+grammar completeNounPhraseWithoutAll(me): 'mig' | 'mig själv' : MeProd;
 
 /*
  *   "All" and "all but".
@@ -5668,12 +5827,12 @@ grammar completeNounPhraseWithoutAll(me): 'me' | 'myself' : MeProd;
  *   including b as a separate list.  
  */
 grammar completeNounPhraseWithAll(main):
-    'all' | 'everything'
+    'allt'|'alla'|'allting'
     : EverythingProd
 ;
 
 grammar terminalNounPhrase(allBut):
-    ('all' | 'everything') ('but' | 'except' | 'except' 'for')
+    ('allt'|'alla'|'allting') 'förutom'|'bortsett' ('från'|)
         exceptList->except_
     : EverythingButProd
 ;
@@ -5684,7 +5843,8 @@ grammar terminalNounPhrase(allBut):
  */
 grammar terminalNounPhrase(pluralExcept):
     (qualifiedPluralNounPhrase->np_ | detPluralNounPhrase->np_)
-    ('except' | 'except' 'for' | 'but' | 'but' 'not') exceptList->except_
+    ('förutom'|'bortsett' ('från'|)
+    | 'men' 'inte') exceptList->except_
     : ListButProd
 ;
 
@@ -5692,8 +5852,9 @@ grammar terminalNounPhrase(pluralExcept):
  *   Qualified singular with an exception
  */
 grammar terminalNounPhrase(anyBut):
-    'any' nounPhrase->np_
-    ('but' | 'except' | 'except' 'for' | 'but' 'not') exceptList->except_
+    ('vad' 'som' 'helst' |'någon'|'något'|'valfri') nounPhrase->np_
+    ('förutom'|'bortsett' ('från'|)
+    | 'men' 'inte') exceptList->except_
     : IndefiniteNounButProd
 ;
 
@@ -5735,7 +5896,7 @@ grammar qualifiedNounPhrase(main):
  *   interpret "take box" as though it were "take the box").
  */
 grammar qualifiedSingularNounPhrase(definite):
-    ('the' | 'the' 'one' | 'the' '1' | ) indetSingularNounPhrase->np_
+    ('den' | 'den' 'enda' | 'den' '1' | ) indetSingularNounPhrase->np_
     : DefiniteNounProd
 ;
 
@@ -5743,7 +5904,7 @@ grammar qualifiedSingularNounPhrase(definite):
  *   A singular qualified noun phrase with an explicit indefinite article.
  */
 grammar qualifiedSingularNounPhrase(indefinite):
-    ('a' | 'an') indetSingularNounPhrase->np_
+    ('en' | 'ett') indetSingularNounPhrase->np_
     : IndefiniteNounProd
 ;
 
@@ -5752,7 +5913,8 @@ grammar qualifiedSingularNounPhrase(indefinite):
  *   determiner.
  */
 grammar qualifiedSingularNounPhrase(arbitrary):
-    ('any' | 'one' | '1' | 'any' ('one' | '1')) indetSingularNounPhrase->np_
+    //('any' | 'one' | '1' | 'any' ('one' | '1')) indetSingularNounPhrase->np_
+    ('någon' |'en'|'ett' | '1' | ('någon'|'vilken' 'som' 'helst') 'av' ('en'|'ett' | '1')) indetSingularNounPhrase->np_
     : ArbitraryNounProd
 ;
 
@@ -5770,7 +5932,9 @@ grammar qualifiedSingularNounPhrase(possessive):
  *   is plural, because we're explicitly selecting one item.
  */
 grammar qualifiedSingularNounPhrase(anyPlural):
-    'any' 'of' explicitDetPluralNounPhrase->np_
+    //'any' 'of' explicitDetPluralNounPhrase->np_
+    //'vilken' 'som' 'helst' 'av' explicitDetPluralNounPhrase->np_
+    ('någon'|'vilken' 'som' 'helst') 'av' explicitDetPluralNounPhrase->np_
     : ArbitraryNounProd
 ;
 
@@ -5780,7 +5944,7 @@ grammar qualifiedSingularNounPhrase(anyPlural):
  */
 grammar qualifiedSingularNounPhrase(theOneIn):
     'the' 'one' ('that' ('is' | 'was') | 'that' tokApostropheS | )
-    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')
+    ('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : VagueContainerDefiniteNounPhraseProd
 
@@ -5797,7 +5961,7 @@ grammar qualifiedSingularNounPhrase(theOneIn):
  */
 grammar qualifiedSingularNounPhrase(anyOneIn):
     ('anything' | 'one') ('that' ('is' | 'was') | 'that' tokApostropheS | )
-    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')
+    ('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : VagueContainerIndefiniteNounPhraseProd
 ;
@@ -5842,7 +6006,7 @@ grammar indetSingularNounPhrase(locational):
      | 'that' tokApostropheS
      | 'that' ('are' | 'were')
      | )
-    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')
+    ('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : ContainerNounPhraseProd
 ;
@@ -5859,44 +6023,44 @@ grammar indetSingularNounPhrase(locational):
  *   underlying phrase here - we can't accept an adjective phrase.
  */
 grammar qualifiedPluralNounPhrase(determiner):
-    ('any' | ) detPluralOnlyNounPhrase->np_
+    ('någon'|'en'| ) detPluralOnlyNounPhrase->np_
     : LayeredNounPhraseProd
 ;
 
 /* plural phrase qualified with a number and optional "any" */
 grammar qualifiedPluralNounPhrase(anyNum):
-    ('any' | ) numberPhrase->quant_ indetPluralNounPhrase->np_
-    | ('any' | ) numberPhrase->quant_ 'of' explicitDetPluralNounPhrase->np_
+    ('någon'|'en'| ) numberPhrase->quant_ indetPluralNounPhrase->np_
+    | ('någon'|'en'| ) numberPhrase->quant_ 'av' explicitDetPluralNounPhrase->np_
     : QuantifiedPluralProd
 ;
 
 /* plural phrase qualified with a number and "all" */
 grammar qualifiedPluralNounPhrase(allNum):
-    'all' numberPhrase->quant_ indetPluralNounPhrase->np_
-    | 'all' numberPhrase->quant_ 'of' explicitDetPluralNounPhrase->np_
+    ('allt'|'alla') numberPhrase->quant_ indetPluralNounPhrase->np_
+    | ('allt'|'alla') numberPhrase->quant_ ('av'|'från') explicitDetPluralNounPhrase->np_
     : ExactQuantifiedPluralProd
 ;
 
 /* plural phrase qualified with "both" */
 grammar qualifiedPluralNounPhrase(both):
-    'both' detPluralNounPhrase->np_
-    | 'both' 'of' explicitDetPluralNounPhrase->np_
+    'båda' detPluralNounPhrase->np_
+    | 'båda' 'av' explicitDetPluralNounPhrase->np_
     : BothPluralProd
 ;
 
 /* plural phrase qualified with "all" */
 grammar qualifiedPluralNounPhrase(all):
-    'all' detPluralNounPhrase->np_
-    | 'all' 'of' explicitDetPluralNounPhrase->np_
+    ('allt'|'alla') detPluralNounPhrase->np_
+    | ('allt'|'alla') 'av' explicitDetPluralNounPhrase->np_
     : AllPluralProd
 ;
 
 /* vague plural phrase with location specified */
 grammar qualifiedPluralNounPhrase(theOnesIn):
-    ('the' 'ones' ('that' ('are' | 'were') | )
-     | ('everything' | 'all')
-       ('that' ('is' | 'was') | 'that' tokApostropheS | ))
-    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')
+    ('de' ('där'|) ('som' ('är' | 'var') | )
+     | ('allting' | 'allt')
+       ('som' ('är' | 'var') | ('det'|'den') tokApostropheS | ))
+    ('i' | 'inuti' | 'insidan' 'av' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : AllInContainerNounPhraseProd
 ;
@@ -5950,13 +6114,13 @@ grammar implicitDetPluralOnlyNounPhrase(main):
 
 /* a plural noun phrase with a definite article */
 grammar explicitDetPluralNounPhrase(definite):
-    'the' indetPluralNounPhrase->np_
+    'de' indetPluralNounPhrase->np_
     : DefinitePluralProd
 ;
 
 /* a plural noun phrase with a definite article and a number */
 grammar explicitDetPluralNounPhrase(definiteNumber):
-    'the' numberPhrase->quant_ indetPluralNounPhrase->np_
+    'de' numberPhrase->quant_ indetPluralNounPhrase->np_
     : ExactQuantifiedPluralProd
 ;
 
@@ -5979,12 +6143,12 @@ grammar explicitDetPluralNounPhrase(possessiveNumber):
  *   explicitly plural underlying phrase.
  */
 grammar explicitDetPluralOnlyNounPhrase(definite):
-    'the' indetPluralOnlyNounPhrase->np_
+    'de' indetPluralOnlyNounPhrase->np_
     : AllPluralProd
 ;
 
 grammar explicitDetPluralOnlyNounPhrase(definiteNumber):
-    'the' numberPhrase->quant_ indetPluralNounPhrase->np_
+    'de' numberPhrase->quant_ indetPluralNounPhrase->np_
     : ExactQuantifiedPluralProd
 ;
 
@@ -6022,8 +6186,8 @@ grammar indetPluralNounPhrase(basic):
  *   phrase is plural), the location phrase itself must always be singular.
  */
 grammar indetPluralNounPhrase(locational):
-    (pluralPhrase->np_ | adjPhrase->np_) ('that' ('are' | 'were') | )
-    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')
+    (pluralPhrase->np_ | adjPhrase->np_) ('de' ('är' | 'var') | )
+    ('i' | 'inuti' | 'insidan' 'av' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : ContainerNounPhraseProd
 ;
@@ -6037,8 +6201,8 @@ grammar indetPluralOnlyNounPhrase(basic):
 ;
 
 grammar indetPluralOnlyNounPhrase(locational):
-    pluralPhrase->np_ ('that' ('are' | 'were') | )
-    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')
+    pluralPhrase->np_ ('de' ('är' | 'var') | )
+    ('i' | 'inuti' | 'insidan' 'av' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : ContainerNounPhraseProd
 ;
@@ -6094,8 +6258,8 @@ grammar compoundNounPhrase(simple): simpleNounPhrase->np_
 ;
 
 grammar compoundNounPhrase(of):
-    simpleNounPhrase->np1_ 'of'->of_ compoundNounPhrase->np2_
-    | simpleNounPhrase->np1_ 'of'->of_ 'the'->the_ compoundNounPhrase->np2_
+    simpleNounPhrase->np1_ 'av'->of_ compoundNounPhrase->np2_
+    | simpleNounPhrase->np1_ 'av'->of_ 'de'->the_ compoundNounPhrase->np2_
     : NounPhraseWithVocab
     getVocabMatchList(resolver, results, extraFlags)
     {
@@ -6154,8 +6318,8 @@ grammar compoundPluralPhrase(simple): simplePluralPhrase->np_
  *   <plural-phrase> of <noun-phrase>
  */
 grammar compoundPluralPhrase(of):
-    simplePluralPhrase->np1_ 'of'->of_ compoundNounPhrase->np2_
-    | simplePluralPhrase->np1_ 'of'->of_ 'the'->the_ compoundNounPhrase->np2_
+    simplePluralPhrase->np1_ 'av'->of_ compoundNounPhrase->np2_
+    | simplePluralPhrase->np1_ 'av'->of_ 'de'->the_ compoundNounPhrase->np2_
     : NounPhraseWithVocab
     getVocabMatchList(resolver, results, extraFlags)
     {
@@ -6376,7 +6540,7 @@ grammar simpleNounPhrase(adj): adjWord->adj_ : NounPhraseWithVocab
     }
 ;
 
-grammar simpleNounPhrase(adjAndOne): adjective->adj_ 'one'
+grammar simpleNounPhrase(adjAndOne): adjective->adj_ 'en'
     : NounPhraseWithVocab
     /* generate a list of my resolved objects */
     getVocabMatchList(resolver, results, extraFlags)
@@ -6720,37 +6884,38 @@ grammar adjWord(adjAbbr): adjective->adj_ tokAbbrPeriod->period_
  *   only when the phrase can be ambiguous, so pronouns don't need it since
  *   they are inherently unambiguous.  
  */
-grammar possessiveAdjPhrase(its): 'its' : ItsAdjProd
+grammar possessiveAdjPhrase(its): 'dess' : ItsAdjProd
     /* we only agree with a singular ungendered noun */
     checkAnaphorAgreement(lst)
         { return lst.length() == 1 && lst[1].obj_.canMatchIt; }
 ;
-grammar possessiveAdjPhrase(his): 'his' : HisAdjProd
+grammar possessiveAdjPhrase(his): 'hans' : HisAdjProd
     /* we only agree with a singular masculine noun */
     checkAnaphorAgreement(lst)
         { return lst.length() == 1 && lst[1].obj_.canMatchHim; }
 ;
-grammar possessiveAdjPhrase(her): 'her' : HerAdjProd
+grammar possessiveAdjPhrase(her): 'hennes' : HerAdjProd
     /* we only agree with a singular feminine noun */
     checkAnaphorAgreement(lst)
         { return lst.length() == 1 && lst[1].obj_.canMatchHer; }
 ;
-grammar possessiveAdjPhrase(their): 'their' : TheirAdjProd
+grammar possessiveAdjPhrase(their): 'deras' : TheirAdjProd
     /* we only agree with a single noun that has plural usage */
     checkAnaphorAgreement(lst)
         { return lst.length() == 1 && lst[1].obj_.isPlural; }
 ;
-grammar possessiveAdjPhrase(your): 'your' : YourAdjProd
+grammar possessiveAdjPhrase(your): 'din' : YourAdjProd
     /* we are non-anaphoric */
     checkAnaphorAgreement(lst) { return nil; }
 ;
-grammar possessiveAdjPhrase(my): 'my' : MyAdjProd
+grammar possessiveAdjPhrase(my): 'min' : MyAdjProd
     /* we are non-anaphoric */
     checkAnaphorAgreement(lst) { return nil; }
 ;
 
 grammar possessiveAdjPhrase(npApostropheS):
-    ('the' | ) nounPhrase->np_ tokApostropheS->apost_ : LayeredNounPhraseProd
+    //('the' | ) nounPhrase->np_ tokApostropheS->apost_ : LayeredNounPhraseProd
+    ('den' | ) nounPhrase->np_ tokApostropheS->apost_ : LayeredNounPhraseProd
 
     /* get the original text without the "'s" suffix */
     getOrigMainText()
@@ -6761,7 +6926,8 @@ grammar possessiveAdjPhrase(npApostropheS):
 ;
 
 grammar possessiveAdjPhrase(ppApostropheS):
-    ('the' | ) pluralPhrase->np_
+    //('the' | ) pluralPhrase->np_
+    ('den' | ) pluralPhrase->np_
        (tokApostropheS->apost_ | tokPluralApostrophe->apost_)
     : LayeredNounPhraseProd
 
@@ -6798,15 +6964,30 @@ grammar possessiveAdjPhrase(ppApostropheS):
  *   because the two have different grammatical uses, and some of the words
  *   do differ ("her" vs "hers", for example).  
  */
-grammar possessiveNounPhrase(its): 'its': ItsNounProd;
-grammar possessiveNounPhrase(his): 'his': HisNounProd;
-grammar possessiveNounPhrase(hers): 'hers': HersNounProd;
-grammar possessiveNounPhrase(theirs): 'theirs': TheirsNounProd;
-grammar possessiveNounPhrase(yours): 'yours' : YoursNounProd;
-grammar possessiveNounPhrase(mine): 'mine' : MineNounProd;
+grammar possessiveNounPhrase(its): 'dess': ItsNounProd;
+grammar possessiveNounPhrase(his): 'hans': HisNounProd;
+grammar possessiveNounPhrase(hers): 'hennes': HersNounProd;
+grammar possessiveNounPhrase(theirs): 'deras': TheirsNounProd;
+grammar possessiveNounPhrase(yours): 'din' : YoursNounProd;
+grammar possessiveNounPhrase(mine): 'min' : MineNounProd;
+
+/*
+//FIXME: Runtime error: wrong number of arguments 
+>x stol
+Vilket stol menar du, din stol, eller professorns stol?
+
+
+>min
+[Runtime error: wrong number of arguments
+]
+*/
+
+
+
 
 grammar possessiveNounPhrase(npApostropheS):
-    ('the' | )
+    //('the' | )
+    ('den' | )
     (nounPhrase->np_ tokApostropheS->apost_
      | pluralPhrase->np (tokApostropheS->apost_ | tokPluralApostrophe->apost_))
     : LayeredNounPhraseProd
@@ -6930,15 +7111,18 @@ grammar simplePluralPhrase(poundNum):
     }
 ;
 
+
 /*
+ * TODO: svenska motsvarigheten... om den finns
  *   A simple plural phrase can end with an adjective and "ones," as in
  *   "the red ones."
  */
+ /*
 grammar simplePluralPhrase(adjAndOnes): adjective->adj_ 'ones'
     : NounPhraseWithVocab
     getVocabMatchList(resolver, results, extraFlags)
     {
-        /* generate a list of objects matching the adjective */
+        // generate a list of objects matching the adjective 
         return getWordMatches(adj_, &adjective, resolver,
                               extraFlags | EndsWithAdj, VocabTruncated);
     }
@@ -6947,22 +7131,25 @@ grammar simplePluralPhrase(adjAndOnes): adjective->adj_ 'ones'
         return [adj_, &adjective];
     }
 ;
+*/
 
 /*
+ * TODO: svenska motsvarigheten... om den finns
  *   If the command has qualifiers that require a plural, but omits
  *   everything else, we can have an empty simple noun phrase.
  */
+ /*
 grammar simplePluralPhrase(empty): [badness 600] : NounPhraseWithVocab
     getVocabMatchList(resolver, results, extraFlags)
     {
-        /* we have an empty noun phrase */
+        // we have an empty noun phrase 
         return results.emptyNounPhrase(resolver);
     }
     getAdjustedTokens()
     {
         return [];
     }
-;
+;*/
 
 /*
  *   A simple plural phrase can match unknown words as a last resort.
@@ -7315,7 +7502,7 @@ grammar mainDisambigPhrase(main):
  *   as an ordinal in our own list.  
  */
 grammar disambigPhrase(all):
-    'all' | 'everything' | 'all' 'of' 'them' : DisambigProd
+    'allt' | 'allting' | 'alla' 'dem' : DisambigProd
     resolveNouns(resolver, results)
     {
         /* they want everything we proposed - return the whole list */
@@ -7326,7 +7513,7 @@ grammar disambigPhrase(all):
     getResponseList() { return [self]; }
 ;
 
-grammar disambigPhrase(both): 'both' | 'both' 'of' 'them' : DisambigProd
+grammar disambigPhrase(both): 'båda' | 'båda' 'av' 'dem' : DisambigProd
     resolveNouns(resolver, results)
     {
         /*
@@ -7341,7 +7528,7 @@ grammar disambigPhrase(both): 'both' | 'both' 'of' 'them' : DisambigProd
     getResponseList() { return [self]; }
 ;
 
-grammar disambigPhrase(any): 'any' | 'any' 'of' 'them' : DisambigProd
+grammar disambigPhrase(any): 'någon' | 'någon' 'av' 'dem' : DisambigProd
     resolveNouns(resolver, results)
     {
         local lst;
@@ -7374,6 +7561,8 @@ grammar disambigPhrase(list): disambigList->lst_ : DisambigProd
     getResponseList() { return lst_.getResponseList(); }
 ;
 
+/*
+TODO: svenska motsvarigheten
 grammar disambigPhrase(ordinalList):
     disambigOrdinalList->lst_ 'ones'
     | 'the' disambigOrdinalList->lst_ 'ones'
@@ -7381,13 +7570,13 @@ grammar disambigPhrase(ordinalList):
 
     resolveNouns(resolver, results)
     {
-        /* return the list with the ambiguity flags removed */
+        // return the list with the ambiguity flags removed
         return removeAmbigFlags(lst_.resolveNouns(resolver, results));
     }
 
-    /* the response list consists of my single ordinal list item */
+    //the response list consists of my single ordinal list item
     getResponseList() { return [lst_]; }
-;
+;*/
 
 /*
  *   A disambig list consists of one or more disambig list items, connected
@@ -7484,9 +7673,9 @@ class DisambigVocabProd: DisambigProd
 
 grammar disambigListItem(ordinal):
     ordinalWord->ord_
-    | ordinalWord->ord_ 'one'
-    | 'the' ordinalWord->ord_
-    | 'the' ordinalWord->ord_ 'one'
+    | ordinalWord->ord_ 'av' 'dem'
+    | ('den'|'det') ordinalWord->ord_
+    | ('den'|'det') ordinalWord->ord_ 'av' 'dem'
     : DisambigOrdProd
 ;
 
@@ -7545,7 +7734,7 @@ grammar disambigListItem(possessive): possessiveNounPhrase->poss_
  *   of two entries in the list.
  */
 grammar disambigOrdinalList(tail):
-    ordinalWord->ord1_ ('and' | ',') ordinalWord->ord2_ : DisambigOrdProd
+    ordinalWord->ord1_ ('och' | ',') ordinalWord->ord2_ : DisambigOrdProd
     resolveNouns(resolver, results)
     {
         /* note the pair of ordinal matches */
@@ -7559,7 +7748,7 @@ grammar disambigOrdinalList(tail):
 ;
 
 grammar disambigOrdinalList(head):
-    ordinalWord->ord_ ('and' | ',') disambigOrdinalList->lst_
+    ordinalWord->ord_ ('och' | ',') disambigOrdinalList->lst_
     : DisambigOrdProd
     resolveNouns(resolver, results)
     {
@@ -7767,7 +7956,7 @@ grammar spelledSmallNumber(tensAndUnits):
     }
 ;
 
-grammar spelledSmallNumber(zero): 'zero' : NumberProd
+grammar spelledSmallNumber(zero): 'noll' : NumberProd
     getval() { return 0; }
 ;
 
@@ -7775,78 +7964,78 @@ grammar spelledHundred(small): spelledSmallNumber->num_ : NumberProd
     getval() { return num_.getval(); }
 ;
 
-grammar spelledHundred(hundreds): spelledSmallNumber->hun_ 'hundred'
+grammar spelledHundred(hundreds): spelledSmallNumber->hun_ 'hundra'
     : NumberProd
     getval() { return hun_.getval() * 100; }
 ;
 
 grammar spelledHundred(hundredsPlus):
-    spelledSmallNumber->hun_ 'hundred' spelledSmallNumber->num_
-    | spelledSmallNumber->hun_ 'hundred' 'and'->and_ spelledSmallNumber->num_
+    spelledSmallNumber->hun_ 'hundra' spelledSmallNumber->num_
+    | spelledSmallNumber->hun_ 'hundra' 'och'->and_ spelledSmallNumber->num_
     : NumberProd
     getval() { return hun_.getval() * 100 + num_.getval(); }
 ;
 
-grammar spelledHundred(aHundred): 'a' 'hundred' : NumberProd
+grammar spelledHundred(aHundred): 'ett' 'hundra' : NumberProd
     getval() { return 100; }
 ;
 
 grammar spelledHundred(aHundredPlus):
-    'a' 'hundred' 'and' spelledSmallNumber->num_
+    'ett' 'hundra' 'och' spelledSmallNumber->num_
     : NumberProd
     getval() { return 100 + num_.getval(); }
 ;
 
-grammar spelledThousand(thousands): spelledHundred->thou_ 'thousand'
+grammar spelledThousand(thousands): spelledHundred->thou_ 'tusen'
     : NumberProd
     getval() { return thou_.getval() * 1000; }
 ;
 
 grammar spelledThousand(thousandsPlus):
-    spelledHundred->thou_ 'thousand' spelledHundred->num_
+    spelledHundred->thou_ 'tusen' spelledHundred->num_
     : NumberProd
     getval() { return thou_.getval() * 1000 + num_.getval(); }
 ;
 
 grammar spelledThousand(thousandsAndSmall):
-    spelledHundred->thou_ 'thousand' 'and' spelledSmallNumber->num_
+    spelledHundred->thou_ 'tusen' 'och' spelledSmallNumber->num_
     : NumberProd
     getval() { return thou_.getval() * 1000 + num_.getval(); }
 ;
 
-grammar spelledThousand(aThousand): 'a' 'thousand' : NumberProd
+grammar spelledThousand(aThousand): 'ett' 'tusen' : NumberProd
     getval() { return 1000; }
 ;
 
 grammar spelledThousand(aThousandAndSmall):
-    'a' 'thousand' 'and' spelledSmallNumber->num_
+    'ett' 'tusen' 'och' spelledSmallNumber->num_
     : NumberProd
     getval() { return 1000 + num_.getval(); }
 ;
 
-grammar spelledMillion(millions): spelledHundred->mil_ 'million': NumberProd
+grammar spelledMillion(millions): spelledHundred->mil_ 'miljon': NumberProd
     getval() { return mil_.getval() * 1000000; }
 ;
 
 grammar spelledMillion(millionsPlus):
-    spelledHundred->mil_ 'million'
+    spelledHundred->mil_ 'miljon'
     (spelledThousand->nxt_ | spelledHundred->nxt_)
     : NumberProd
     getval() { return mil_.getval() * 1000000 + nxt_.getval(); }
 ;
 
-grammar spelledMillion(aMillion): 'a' 'million' : NumberProd
+grammar spelledMillion(aMillion): 'en' 'miljon' : NumberProd
     getval() { return 1000000; }
 ;
 
 grammar spelledMillion(aMillionAndSmall):
-    'a' 'million' 'and' spelledSmallNumber->num_
+    'en' 'miljon' 'och' spelledSmallNumber->num_
     : NumberProd
     getval() { return 1000000 + num_.getval(); }
 ;
 
 grammar spelledMillion(millionsAndSmall):
-    spelledHundred->mil_ 'million' 'and' spelledSmallNumber->num_
+    spelledHundred->mil_ 'miljon' 'och' spelledSmallNumber->num_
     : NumberProd
     getval() { return mil_.getval() * 1000000 + num_.getval(); }
 ;
@@ -7870,8 +8059,8 @@ grammar oopsCommand(main):
 ;
 
 grammar oopsPhrase(main):
-    'oops' miscWordList->lst_
-    | 'oops' ',' miscWordList->lst_
+    'oj' miscWordList->lst_
+    | 'oj' ',' miscWordList->lst_
     | 'o' miscWordList->lst_
     | 'o' ',' miscWordList->lst_
     : BasicProd
@@ -7879,7 +8068,7 @@ grammar oopsPhrase(main):
 ;
 
 grammar oopsPhrase(missing):
-    'oops' | 'o'
+    'oj' | 'o'
     : BasicProd
     getNewTokens() { return nil; }
 ;
@@ -7899,63 +8088,63 @@ grammar oopsPhrase(missing):
  *   more highlighting within the hyperlink starts to look awfully busy.  
  */
 modify finishOptionQuit
-    desc = "<<aHrefAlt('quit', 'QUIT', '<b>Q</b>UIT', 'Leave the story')>>"
-    responseKeyword = 'quit'
-    responseChar = 'q'
+    desc = "<<aHrefAlt('avsluta', 'AVSLUTA', '<b>A</b>VSLUTA', 'Lämna berättelsen')>>"
+    responseKeyword = 'avsluta'
+    responseChar = 'a'
 ;
 
 modify finishOptionRestore
-    desc = "<<aHrefAlt('restore', 'RESTORE', '<b>R</b>ESTORE',
-            'Restore a saved position')>> a saved position"
-    responseKeyword = 'restore'
-    responseChar = 'r'
+    desc = "<<aHrefAlt('ladda', 'LADDA', '<b>L</b>ADDA',
+            'Ladda en sparad position')>> en sparad position"
+    responseKeyword = 'ladda'
+    responseChar = 'l'
 ;
 
 modify finishOptionRestart
-    desc = "<<aHrefAlt('restart', 'RESTART', 'RE<b>S</b>TART',
-            'Start the story over from the beginning')>> the story"
+    desc = "<<aHrefAlt('omstart', 'OMSTART', 'OM<b>S</b>TART',
+            'Starta om spelet från början')>> the story"
     responseKeyword = 'restart'
     responseChar = 's'
 ;
 
 modify finishOptionUndo
-    desc = "<<aHrefAlt('undo', 'UNDO', '<b>U</b>NDO',
-            'Undo the last move')>> the last move"
-    responseKeyword = 'undo'
-    responseChar = 'u'
+    desc = "<<aHrefAlt('ångra', 'ÅNGRA', '<b>Å</b>NGRA',
+            'Ångra senaste draget')>> det senaste draget"
+    responseKeyword = 'ångra'
+    responseChar = 'å'
 ;
 
 modify finishOptionCredits
-    desc = "see the <<aHrefAlt('credits', 'CREDITS', '<b>C</b>REDITS',
-            'Show credits')>>"
-    responseKeyword = 'credits'
-    responseChar = 'c'
+    desc = "Se <<aHrefAlt('omnämnanden', 'OMNÄMNDANDEN', '<b>O</b>MNÄMNDANDEN',
+            'Visa omnämnanden')>>"
+    responseKeyword = 'omnämnanden'
+    responseChar = 'o'
 ;
 
 modify finishOptionFullScore
-    desc = "see your <<aHrefAlt('full score', 'FULL SCORE',
-            '<b>F</b>ULL SCORE', 'Show full score')>>"
-    responseKeyword = 'full score'
+    desc = "Se <<aHrefAlt('fullständiga poäng', 'FULLSTÄNDIG POÄNG',
+            '<b>F</b>ULLSTÄNDIG POÄNG', 'Visa fullständig poäng')>>"
+    responseKeyword = 'fullständig poäng'
     responseChar = 'f'
 ;
 
 modify finishOptionAmusing
-    desc = "see some <<aHrefAlt('amusing', 'AMUSING', '<b>A</b>MUSING',
-            'Show some amusing things to try')>> things to try"
-    responseKeyword = 'amusing'
-    responseChar = 'a'
+    desc = "se några <<aHrefAlt('roande', 'ROANDE', '<b>R</b>OANDE',
+            'Se några roande saker att testa')>> saker att testa"
+    responseKeyword = 'roande'
+    responseChar = 'r'
 ;
 
 modify restoreOptionStartOver
-    desc = "<<aHrefAlt('start', 'START', '<b>S</b>TART',
-            'Start from the beginning')>> the game from the beginning"
-    responseKeyword = 'start'
+    desc = "<<aHrefAlt('starta', 'STARTA', '<b>S</b>TARTA',
+            'Starta spelet från början')>> spelet från början"
+    responseKeyword = 'starta'
     responseChar = 's'
 ;
 
 modify restoreOptionRestoreAnother
-    desc = "<<aHrefAlt('restore', 'RESTORE', '<b>R</b>ESTORE',
-            'Restore a saved position')>> a different saved position"
+    desc = "<<aHrefAlt('ladda', 'LADDA', '<b>L</b>ADDA',
+            'Ladda en sparad position')>> en annan sparad position"
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -8010,6 +8199,9 @@ class ImplicitAnnouncementContext: object
      *   form for generating the announcement?  By default, use use the
      *   participle form: "(first OPENING THE BOX)".
      */
+
+     // NOTE: useInfPhrase=true: "först öppna dörr"
+     // NOTE: useInfPhrase=nil: "först öppnandes dörr"
     useInfPhrase = nil
 
     /* is this message going in a list? */
@@ -8018,7 +8210,7 @@ class ImplicitAnnouncementContext: object
     /*
      *   Are we in a sublist of 'just trying' or 'just asking' messages?
      *   (We can only have sublist groupings one level deep, so we don't
-     *   need to worry about what kind of sublist we're in.)
+     *   need to worry om vad kind of sublist we're in.)
      */
     isInSublist = nil
 
@@ -8028,9 +8220,12 @@ class ImplicitAnnouncementContext: object
     /* generate the announcement message given the action description */
     buildImplicitAnnouncement(txt)
     {
+        // TODO: konstig mening plus avsaknad av definitiv form:
+        // "först öppnandes dörr (-en)"
+
         /* if we're not in a list, make it a full, stand-alone message */
         if (!isInList)
-            txt = '<./p0>\n<.assume>first ' + txt + '<./assume>\n';
+            txt = '<./p0>\n<.assume>först ' + txt + '<./assume>\n';
 
         /* return the result */
         return txt;
@@ -8057,8 +8252,10 @@ tryingImpCtx: ImplicitAnnouncementContext
          *   necessary if we're in a 'trying' list, since the list itself
          *   will have the 'trying' part.
          */
-        if (!isInSublist)
-            txt = 'trying to ' + txt;
+        if (!isInSublist) {
+            // FIXME: "Först försökandes öppna dörren", låter inte helt rätt
+            txt = 'försökandes ' + txt;
+        }
 
         /* now build the message into the full text as usual */
         return inherited(txt);
@@ -8187,8 +8384,10 @@ modify Action
         local resolvedNumber;
 
         /* if there's no object list at all, just use 'it' */
-        if (objList == nil || objList == [])
-            return 'it';
+        if (objList == nil || objList == []) {
+            //return 'it';
+            return isUter? 'den' : 'det';
+        }
 
         /* note the number of objects in the resolved list */
         resolvedNumber = objList.length();
@@ -8213,7 +8412,7 @@ modify Action
          *   more than one object, simply say 'them'
          */
         if (objList.length() > 1 && resolvedNumber > 1)
-            return 'them';
+            return 'de';
 
         /*
          *   singular cardinality - count masculine and feminine objects,
@@ -8242,6 +8441,11 @@ modify Action
             /* if it's second person usage, count it */
             if (cur.obj_.referralPerson == SecondPerson)
                 ++SecondPersonCnt;
+
+            /* if it's second person usage, count it */
+            if (cur.obj_.referralPerson == SecondPerson)
+                ++SecondPersonCnt;
+
         }
 
         /*
@@ -8250,19 +8454,20 @@ modify Action
          *   all neuter, show "it"; otherwise, show "them"
          */
         if (themCnt == objList.length())
-            return 'them';
+            return 'dem';
         else if (FirstPersonCnt == objList.length())
-            return 'myself';
+            return 'mig själv';
         else if (SecondPersonCnt == objList.length())
-            return 'yourself';
+            return 'du själv';
         else if (himCnt == objList.length() && herCnt == 0)
-            return 'him';
+            return 'honom';
         else if (herCnt == objList.length() && himCnt == 0)
-            return 'her';
-        else if (herCnt == 0 && himCnt == 0)
-            return 'it';
+            return 'henne';
+        else if (herCnt == 0 && himCnt == 0) {
+            return (objList[1].obj_.isUter)?'den':'det';
+        }
         else
-            return 'them';
+            return 'dem';
     }
 
     /*
@@ -8379,7 +8584,6 @@ modify Action
          *   slash, and any additional text following the slash part
          */
         rexMatch('(.*)/(<alphanum|-|squote>+)(.*)', verbPhrase);
-
         /* return the appropriate parts */
         if (inf)
         {
@@ -8435,7 +8639,7 @@ modify TAction
     {
         /*
          *   get any direct object preposition - this is the part inside
-         *   the "(what)" specifier parens, excluding the last word
+         *   the "(vad)" specifier parens, excluding the last word
          */
         rexSearch('<lparen>(.*<space>+)?<alpha>+<rparen>', verbPhrase);
         local prep = (rexGroup(1) == nil ? '' : rexGroup(1)[3]);
@@ -8479,7 +8683,7 @@ modify TAction
          *   Show the present-tense verb form (removing the participle
          *   part - the "/xxxing" part).  Include any prepositions
          *   attached to the verb itself or to the direct object (inside
-         *   the "(what)" parens).
+         *   the "(vad)" parens).
          */
         rexSearch('(.*)/<alphanum|-|squote>+(.*?)<space>+'
                   + '<lparen>(.*?)<space>*?<alpha>+<rparen>',
@@ -8539,8 +8743,8 @@ modify TAction
 
         /*
          *   parse the verbPhrase: pick out the 'infinitive/participle'
-         *   part, the complementizer part up to the '(what)' direct
-         *   object placeholder, and any preposition within the '(what)'
+         *   part, the complementizer part up to the '(vad)' direct
+         *   object placeholder, and any preposition within the '(vad)'
          *   specifier
          */
         rexMatch('(.*)/(<alphanum|-|squote>+)(.*) '
@@ -8669,7 +8873,7 @@ modify TIAction
              *   match for the non-prepositional phrasing.  Otherwise, it's
              *   suspect, so rank it accordingly.
              */
-            if (rexMatch('(a|an|the|some|any)<space>',
+            if (rexMatch('(en|att|den|några|någon)<space>',
                          dobjMatch.getOrigText()) == nil)
             {
                 /* note this as weak phrasing level 100 */
@@ -8738,13 +8942,13 @@ modify TIAction
         switch(whichObj)
         {
         case DirectObject:
-            /* use the preposition in the first "(what)" phrase */
+            /* use the preposition in the first "(vad)" phrase */
             rexSearch('<lparen>(.*?)<space>*<alpha>+<rparen>', verbPhrase);
             prep = rexGroup(1)[3];
             break;
 
         case IndirectObject:
-            /* use the preposition in the second "(what)" phrase */
+            /* use the preposition in the second "(vad)" phrase */
             rexSearch('<rparen>.*<lparen>(.*?)<space>*<alpha>+<rparen>',
                       verbPhrase);
             prep = rexGroup(1)[3];
@@ -8790,7 +8994,7 @@ modify TIAction
          *   complementizer, if any (e.g., the 'up' in 'pick up'); 'dprep'
          *   is the direct object preposition (the 'in' in 'dig in x with
          *   y'); and 'iprep' is the indirect object preposition (the
-         *   'with' in 'dig in x with y').
+         *   'med' in 'dig in x with y').
          *
          *   asking for dobj: verb vcomp dprep iprep it ('what do you want
          *   to <open with it>?', '<dig in with it>', '<look up in it>').
@@ -8818,6 +9022,7 @@ modify TIAction
         /* pull out the direct and indirect object prepositions */
         dprep = rexGroup(3)[3];
         iprep = rexGroup(4)[3];
+
 
         /* get the pronoun for the other object phrase */
         pro = getOtherMessageObjectPronoun(which);
@@ -8984,7 +9189,7 @@ modify TIAction
  */
 modify LiteralAction
     /* provide a base verbPhrase, in case an instance leaves it out */
-    verbPhrase = 'verb/verbing (what)'
+    verbPhrase = 'verb/verbing (vad)'
 
     /* get an interrogative word for an object of the action */
     whatObj(which)
@@ -9076,7 +9281,7 @@ modify LiteralTAction
              *   pronoun is for the literal phrase: always use 'that' to
              *   refer to the literal phrase.
              */
-            return 'that';
+            return 'that (TODO:var används detta?)';
         }
     }
 
@@ -9194,7 +9399,8 @@ modify TopicTAction
         else
         {
             /* return a generic pronoun for the topic */
-            return 'that';
+            //return 'that';
+            return 'that (TODO:var används detta?)';
         }
     }
 
@@ -9246,92 +9452,90 @@ modify TopicTAction
  */
 
 VerbRule(Take)
-    ('take' | 'pick' 'up' | 'get') dobjList
-    | 'pick' dobjList 'up'
+    ('ta' | 'tag' | 'plocka' 'upp' | 'hämta' ('upp'|)) dobjList
     : TakeAction
-    verbPhrase = 'take/taking (what)'
+    verbPhrase = 'ta/tagandes (vad)'
 ;
 
 VerbRule(TakeFrom)
-    ('take' | 'get') dobjList
-        ('from' | 'out' 'of' | 'off' | 'off' 'of') singleIobj
-    | 'remove' dobjList 'from' singleIobj
+    ('ta' | 'tag') dobjList
+        ('från' | 'ut' 'ur' | 'bort' | 'av' | 'av' 'från') singleIobj
+    | 'ta' 'bort' dobjList 'från' singleIobj
     : TakeFromAction
-    verbPhrase = 'take/taking (what) (from what)'
+    verbPhrase = 'ta/tagandes (vad) (från vad)'
 ;
 
 VerbRule(Remove)
-    'remove' dobjList
+    'ta' 'bort' dobjList
     : RemoveAction
-    verbPhrase = 'remove/removing (what)'
+    verbPhrase = 'ta bort/borttagandes (vad)'
 ;
 
 VerbRule(Drop)
-    ('drop' | 'put' 'down' | 'set' 'down') dobjList
-    | ('put' | 'set') dobjList 'down'
+    ('släpp' | 'sätt' 'ner' | 'sätt' 'ner') dobjList
     : DropAction
-    verbPhrase = 'drop/dropping (what)'
+    verbPhrase = 'släpp/släppandes (vad)'
 ;
 
 VerbRule(Examine)
-    ('examine' | 'inspect' | 'x'
-     | 'look' 'at' | 'l' 'at' | 'look' | 'l') dobjList
+    ('undersök' | 'inspektera' | 'x'
+     | 'titta' 'på' | 'l' 'på' | 'titta' | 'l') dobjList
     : ExamineAction
-    verbPhrase = 'examine/examining (what)'
+    verbPhrase = 'undersöka/undersökandes (vad)'
 ;
 
 VerbRule(Read)
-    'read' dobjList
+    'läs' dobjList
     : ReadAction
-    verbPhrase = 'read/reading (what)'
+    verbPhrase = 'läsa/läsandes (vad)'
 ;
 
 VerbRule(LookIn)
-    ('look' | 'l') ('in' | 'inside') dobjList
+    ('se'|'titta' | 'l') ('in' | 'inside') dobjList
     : LookInAction
-    verbPhrase = 'look/looking (in what)'
+    verbPhrase = 'titta/tittandes (i vad)'
 ;
 
 VerbRule(Search)
-    'search' dobjList
+    'sök' dobjList
     : SearchAction
-    verbPhrase = 'search/searching (what)'
+    verbPhrase = 'sök/sökandes (vad)'
 ;
 
 VerbRule(LookThrough)
-    ('look' | 'l') ('through' | 'thru' | 'out') dobjList
+    ('titta' | 'l') ('genom' | 'ut') dobjList
     : LookThroughAction
-    verbPhrase = 'look/looking (through what)'
+    verbPhrase = 'titta/tittandes (genom vad)'
 ;
 
 VerbRule(LookUnder)
-    ('look' | 'l') 'under' dobjList
+    ('titta' | 'l') 'under' dobjList
     : LookUnderAction
-    verbPhrase = 'look/looking (under what)'
+    verbPhrase = 'titta/tittandes (under vad)'
 ;
 
 VerbRule(LookBehind)
-    ('look' | 'l') 'behind' dobjList
+    ('titta' | 'l') 'bakom' dobjList
     : LookBehindAction
-    verbPhrase = 'look/looking (behind what)'
+    verbPhrase = 'titta/tittandes (behind vad)'
 ;
 
 VerbRule(Feel)
-    ('feel' | 'touch') dobjList
+    ('känn' | 'rör') dobjList
     : FeelAction
-    verbPhrase = 'touch/touching (what)'
+    verbPhrase = 'rör/rörandes (vad)'
 ;
 
 VerbRule(Taste)
-    'taste' dobjList
+    'smaka' dobjList
     : TasteAction
-    verbPhrase = 'taste/tasting (what)'
+    verbPhrase = 'smaka/smakandes (vad)'
 ;
 
 VerbRule(Smell)
-    ('smell' | 'sniff') dobjList
+    ('lukta' | 'vädra' | 'lukta' 'på') dobjList
     : SmellAction
-    verbPhrase = 'smell/smelling (what)'
+    verbPhrase = 'lukta/luktandes (vad)'
 
     /*
      *   use the "not aware" version of the no-match message - the object
@@ -9342,15 +9546,15 @@ VerbRule(Smell)
 ;
 
 VerbRule(SmellImplicit)
-    'smell' | 'sniff'
+    'lukta' | 'vädra'
     : SmellImplicitAction
-    verbPhrase = 'smell/smelling'
+    verbPhrase = 'lukta/luktandes'
 ;
 
 VerbRule(ListenTo)
-    ('hear' | 'listen' 'to' ) dobjList
+    ('hör' | 'lyssna' 'till' ) dobjList
     : ListenToAction
-    verbPhrase = 'listen/listening (to what)'
+    verbPhrase = 'lyssna/lyssnandes (till vad)'
 
     /*
      *   use the "not aware" version of the no-match message - the object
@@ -9361,44 +9565,44 @@ VerbRule(ListenTo)
 ;
 
 VerbRule(ListenImplicit)
-    'listen' | 'hear'
+    'lyssna' | 'hör'
     : ListenImplicitAction
-    verbPhrase = 'listen/listening'
+    verbPhrase = 'lyssna/lyssnandes'
 ;
 
 VerbRule(PutIn)
-    ('put' | 'place' | 'set') dobjList
-        ('in' | 'into' | 'in' 'to' | 'inside' | 'inside' 'of') singleIobj
+    ('lägg' | 'placera' | 'sätt' ) dobjList
+        ('in' | 'in' 'i' | 'in' 'till' | 'insidan' | 'insidan' 'av') singleIobj
     : PutInAction
-    verbPhrase = 'put/putting (what) (in what)'
+    verbPhrase = 'sät/sättandes (vad) (in i vad)'
     askIobjResponseProd = inSingleNoun
 ;
 
 VerbRule(PutOn)
-    ('put' | 'place' | 'drop' | 'set') dobjList
-        ('on' | 'onto' | 'on' 'to' | 'upon') singleIobj
-    | 'put' dobjList 'down' 'on' singleIobj
+    ('lägg' | 'placera' | 'släpp' | 'sätt') dobjList
+        ('på' | ('upp' 'på') | 'på' 'till' | 'uppe' 'på') singleIobj
+    | 'sätt' dobjList 'ner' 'på' singleIobj
     : PutOnAction
-    verbPhrase = 'put/putting (what) (on what)'
+    verbPhrase = 'sätt/sättandes (vad) (på vad)'
     askIobjResponseProd = onSingleNoun
 ;
 
 VerbRule(PutUnder)
-    ('put' | 'place' | 'set') dobjList 'under' singleIobj
+    ('lägg' | 'placera' |'sätt') dobjList 'under' singleIobj
     : PutUnderAction
-    verbPhrase = 'put/putting (what) (under what)'
+    verbPhrase = 'sätt/sättandes (vad) (under vad)'
 ;
 
 VerbRule(PutBehind)
-    ('put' | 'place' | 'set') dobjList 'behind' singleIobj
+    ('lägg' | 'placera' |'sätt') dobjList 'bakom' singleIobj
     : PutBehindAction
-    verbPhrase = 'put/putting (what) (behind what)'
+    verbPhrase = 'sätt/sättandes (vad) (bakom vad)'
 ;
 
 VerbRule(PutInWhat)
-    [badness 500] ('put' | 'place') dobjList
+    [badness 500] ('lägg' | 'placera' |'sätt') dobjList
     : PutInAction
-    verbPhrase = 'put/putting (what) (in what)'
+    verbPhrase = 'sätt/sättandes (vad) (i vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -9407,40 +9611,39 @@ VerbRule(PutInWhat)
     }
 ;
 
+/*
 VerbRule(Wear)
-    ('wear' | 'don' | 'put' 'on') dobjList
-    | 'put' dobjList 'on'
+    ('ta'|'ikläd'|'klä'|'kläd') ('på'|) dobjList
     : WearAction
-    verbPhrase = 'wear/wearing (what)'
+    verbPhrase = 'kläd på/iklädandes (vad)'
 ;
 
 VerbRule(Doff)
-    ('doff' | 'take' 'off') dobjList
-    | 'take' dobjList 'off'
+    ('tag'|'ta'|'klä'|'kläd') 'av' dobjList
     : DoffAction
-    verbPhrase = 'take/taking off (what)'
-;
+    verbPhrase = 'klä av/avklädandes (vad)'
+;*/
 
 VerbRule(Kiss)
-    'kiss' singleDobj
+    'kyss' singleDobj
     : KissAction
-    verbPhrase = 'kiss/kissing (whom)'
+    verbPhrase = 'kyss/kyssandes (vem)'
 ;
 
 VerbRule(AskFor)
-    ('ask' | 'a') singleDobj 'for' singleTopic
-    | ('ask' | 'a') 'for' singleTopic 'from' singleDobj
+    ('fråga' | 'f') singleDobj 'efter' singleTopic
+    | ('fråga' | 'f') 'efter' singleTopic 'av' singleDobj
     : AskForAction
-    verbPhrase = 'ask/asking (whom) (for what)'
+    verbPhrase = 'fråga/frågandes (vem) (efter vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = forSingleNoun
 ;
 
 VerbRule(AskWhomFor)
-    ('ask' | 'a') 'for' singleTopic
+    ('fråga' | 'f') 'efter' singleTopic
     : AskForAction
-    verbPhrase = 'ask/asking (whom) (for what)'
+    verbPhrase = 'fråga/frågandes (vem) (efter vad)'
     omitIobjInDobjQuery = true
     construct()
     {
@@ -9451,17 +9654,17 @@ VerbRule(AskWhomFor)
 ;
 
 VerbRule(AskAbout)
-    ('ask' | 'a') singleDobj 'about' singleTopic
+    ('fråga' | 'f') singleDobj 'om' singleTopic
     : AskAboutAction
-    verbPhrase = 'ask/asking (whom) (about what)'
+    verbPhrase = 'fråga/frågandes (vem) (om vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(AskAboutImplicit)
-    'a' singleTopic
+    'f' singleTopic
     : AskAboutAction
-    verbPhrase = 'ask/asking (whom) (about what)'
+    verbPhrase = 'fråga/frågandes (vem) (om vad)'
     omitIobjInDobjQuery = true
     construct()
     {
@@ -9472,9 +9675,9 @@ VerbRule(AskAboutImplicit)
 ;
 
 VerbRule(AskAboutWhat)
-    [badness 500] 'ask' singleDobj
+    [badness 500] 'fråga' singleDobj
     : AskAboutAction
-    verbPhrase = 'ask/asking (whom) (about what)'
+    verbPhrase = 'fråga/frågandes (vem) (om vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
     construct()
@@ -9487,17 +9690,17 @@ VerbRule(AskAboutWhat)
 
 
 VerbRule(TellAbout)
-    ('tell' | 't') singleDobj 'about' singleTopic
+    ('berätta' | 'b') singleDobj 'om' singleTopic
     : TellAboutAction
-    verbPhrase = 'tell/telling (whom) (about what)'
+    verbPhrase = 'berätta/berättandes (vem) (om vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
 ;
 
 VerbRule(TellAboutImplicit)
-    't' singleTopic
+    'b' singleTopic
     : TellAboutAction
-    verbPhrase = 'tell/telling (whom) (about what)'
+    verbPhrase = 'berätta/berättandes (vem) (om vad)'
     omitIobjInDobjQuery = true
     construct()
     {
@@ -9508,9 +9711,9 @@ VerbRule(TellAboutImplicit)
 ;
 
 VerbRule(TellAboutWhat)
-    [badness 500] 'tell' singleDobj
+    [badness 500] 'berätta' singleDobj
     : TellAboutAction
-    verbPhrase = 'tell/telling (whom) (about what)'
+    verbPhrase = 'berätta/berättandes (vem) (om vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
     construct()
@@ -9522,28 +9725,28 @@ VerbRule(TellAboutWhat)
 ;
 
 VerbRule(AskVague)
-    [badness 500] 'ask' singleDobj singleTopic
+    [badness 500] 'fråga' singleDobj singleTopic
     : AskVagueAction
-    verbPhrase = 'ask/asking (whom)'
+    verbPhrase = 'fråga/frågandes (vem)'
 ;
 
 VerbRule(TellVague)
-    [badness 500] 'tell' singleDobj singleTopic
+    [badness 500] 'berätta' singleDobj singleTopic
     : AskVagueAction
-    verbPhrase = 'tell/telling (whom)'
+    verbPhrase = 'berätta/berättandes (vem)'
 ;
 
 VerbRule(TalkTo)
-    ('greet' | 'say' 'hello' 'to' | 'talk' 'to') singleDobj
+    ('hälsa' | 'säg' 'hej' 'till' | 'prata' ('till'|'med')) singleDobj
     : TalkToAction
-    verbPhrase = 'talk/talking (to whom)'
+    verbPhrase = 'prata/pratandes (till vem)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(TalkToWhat)
-    [badness 500] 'talk'
+    [badness 500] 'prata'
     : TalkToAction
-    verbPhrase = 'talk/talking (to whom)'
+    verbPhrase = 'prata/pratandes (till vem)'
     askDobjResponseProd = singleNoun
 
     construct()
@@ -9555,52 +9758,52 @@ VerbRule(TalkToWhat)
 ;
 
 VerbRule(Topics)
-    'topics'
+    ('ämne' | 'ämnen')
     : TopicsAction
-    verbPhrase = 'show/showing topics'
+    verbPhrase = 'visa/visandes ämnen'
 ;
 
 VerbRule(Hello)
-    ('say' | ) ('hello' | 'hallo' | 'hi')
+    ('säg' | ) ('hej' | 'hallå' | 'tjena' | 'tja')
     : HelloAction
-    verbPhrase = 'say/saying hello'
+    verbPhrase = 'säg/sägandes hej'
 ;
 
 VerbRule(Goodbye)
-    ('say' | ()) ('goodbye' | 'good-bye' | 'good' 'bye' | 'bye')
+    ('säg' | ()) ('adjö' | 'hejdå' | 'hej' 'då'| 'farväl')
     : GoodbyeAction
-    verbPhrase = 'say/saying goodbye'
+    verbPhrase = 'säg/sägandes adjö'
 ;
 
 VerbRule(Yes)
-    'yes' | 'affirmative' | 'say' 'yes'
+    'ja' | 'bekräfta' | 'säg' 'ja'
     : YesAction
-    verbPhrase = 'say/saying yes'
+    verbPhrase = 'säg/sägandes ja'
 ;
 
 VerbRule(No)
-    'no' | 'negative' | 'say' 'no'
+    'nej' | 'neka' | 'säg' 'nej'
     : NoAction
-    verbPhrase = 'say/saying no'
+    verbPhrase = 'säg/sägandes nej'
 ;
 
 VerbRule(Yell)
-    'yell' | 'scream' | 'shout' | 'holler'
+    'skrik' | 'vråla' | 'skräna'
     : YellAction
-    verbPhrase = 'yell/yelling'
+    verbPhrase = 'skrika/skrikandes'
 ;
 
 VerbRule(GiveTo)
-    ('give' | 'offer') dobjList 'to' singleIobj
+    ('ge' | 'erbjud') dobjList 'till' singleIobj
     : GiveToAction
-    verbPhrase = 'give/giving (what) (to whom)'
+    verbPhrase = 'ge/givandes (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 ;
 
 VerbRule(GiveToType2)
-    ('give' | 'offer') singleIobj dobjList
+    ('ge' | 'erbjud') singleIobj dobjList
     : GiveToAction
-    verbPhrase = 'give/giving (what) (to whom)'
+    verbPhrase = 'ge/givandes (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 
     /* this is a non-prepositional phrasing */
@@ -9608,9 +9811,9 @@ VerbRule(GiveToType2)
 ;
 
 VerbRule(GiveToWhom)
-    ('give' | 'offer') dobjList
+    ('ge' | 'erbjud') dobjList
     : GiveToAction
-    verbPhrase = 'give/giving (what) (to whom)'
+    verbPhrase = 'ge/givandes (vad) (till vem)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -9620,16 +9823,16 @@ VerbRule(GiveToWhom)
 ;
 
 VerbRule(ShowTo)
-    'show' dobjList 'to' singleIobj
+    'visa' dobjList 'för' singleIobj
     : ShowToAction
-    verbPhrase = 'show/showing (what) (to whom)'
+    verbPhrase = 'visa/visandes (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 ;
 
 VerbRule(ShowToType2)
-    'show' singleIobj dobjList
+    'visa' singleIobj dobjList
     : ShowToAction
-    verbPhrase = 'show/showing (what) (to whom)'
+    verbPhrase = 'visa/visandes (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 
     /* this is a non-prepositional phrasing */
@@ -9637,9 +9840,9 @@ VerbRule(ShowToType2)
 ;
 
 VerbRule(ShowToWhom)
-    'show' dobjList
+    'visa' dobjList
     : ShowToAction
-    verbPhrase = 'show/showing (what) (to whom)'
+    verbPhrase = 'visa/visandes (vad) (till vem)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -9649,29 +9852,29 @@ VerbRule(ShowToWhom)
 ;
 
 VerbRule(Throw)
-    ('throw' | 'toss') dobjList
+    ('kasta' | 'släng') dobjList
     : ThrowAction
-    verbPhrase = 'throw/throwing (what)'
+    verbPhrase = 'kasta/kastandes (vad)'
 ;
 
 VerbRule(ThrowAt)
-    ('throw' | 'toss') dobjList 'at' singleIobj
+    ('kasta' | 'släng') dobjList ('på'|'mot') singleIobj
     : ThrowAtAction
-    verbPhrase = 'throw/throwing (what) (at what)'
+    verbPhrase = 'kasta/kastandes (vad) (mot vad)'
     askIobjResponseProd = atSingleNoun
 ;
 
 VerbRule(ThrowTo)
-    ('throw' | 'toss') dobjList 'to' singleIobj
+    ('kasta' | 'släng') dobjList 'till' singleIobj
     : ThrowToAction
-    verbPhrase = 'throw/throwing (what) (to whom)'
+    verbPhrase = 'kasta/kastandes (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 ;
 
 VerbRule(ThrowToType2)
-    'throw' singleIobj dobjList
+    'kasta' singleIobj dobjList
     : ThrowToAction
-    verbPhrase = 'throw/throwing (what) (to whom)'
+    verbPhrase = 'kasta/kastandes (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 
     /* this is a non-prepositional phrasing */
@@ -9679,295 +9882,299 @@ VerbRule(ThrowToType2)
 ;
 
 VerbRule(ThrowDir)
-    ('throw' | 'toss') dobjList ('to' ('the' | ) | ) singleDir
+    ('kasta' | 'släng') dobjList ('till' | ) singleDir
     : ThrowDirAction
-    verbPhrase = ('throw/throwing (what) ' + dirMatch.dir.name)
+    verbPhrase = ('kasta/kastandes (vad) ' + dirMatch.dir.name)
 ;
 
 /* a special rule for THROW DOWN <dobj> */
 VerbRule(ThrowDirDown)
-    'throw' ('down' | 'd') dobjList
+    'kasta' 'ner' dobjList
     : ThrowDirAction
-    verbPhrase = ('throw/throwing (what) down')
+    verbPhrase = ('kasta/kastandes (vad) ner')
 
-    /* the direction is fixed as 'down' for this phrasing */
+    /* the direction is fixed as 'ner' for this phrasing */
     getDirection() { return downDirection; }
 ;
 
 VerbRule(Follow)
-    'follow' singleDobj
+    'följ' singleDobj
     : FollowAction
-    verbPhrase = 'follow/following (whom)'
+    verbPhrase = 'följ/följandes (vem)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(Attack)
-    ('attack' | 'kill' | 'hit' | 'kick' | 'punch') singleDobj
+    ('attackera' | 'döda' | 'slå' | 'sparka') singleDobj
     : AttackAction
-    verbPhrase = 'attack/attacking (whom)'
+    verbPhrase = 'attackera/attackerandes (vem)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(AttackWith)
-    ('attack' | 'kill' | 'hit' | 'kick' | 'punch' | 'strike')
+    ('attackera' | 'döda' | 'slå' | 'sparka')
         singleDobj
-        'with' singleIobj
+        'med' singleIobj
     : AttackWithAction
-    verbPhrase = 'attack/attacking (whom) (with what)'
+    verbPhrase = 'attackera/attackerandes (vem) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(Inventory)
-    'i' | 'inventory' | 'take' 'inventory'
+    'l' | 'lista' | ('lista'|'ta'|'tag') ('inventarie'|'inventarier')
     : InventoryAction
-    verbPhrase = 'take/taking inventory'
+    verbPhrase = 'lista/listande inventarier'
 ;
 
 VerbRule(InventoryTall)
-    'i' 'tall' | 'inventory' 'tall'
+    'l' 'högt' | 'lista' 'högt'
     : InventoryTallAction
-    verbPhrase = 'take/taking "tall" inventory'
+    verbPhrase = 'lista/listande inventarie "hög"'
 ;
 
 VerbRule(InventoryWide)
-    'i' 'wide' | 'inventory' 'wide'
+    'l' 'brett' | 'inventarier' 'brett'
     : InventoryWideAction
-    verbPhrase = 'take/taking "wide" inventory'
+    verbPhrase = 'lista/listande inventarier "brett"'
 ;
 
 VerbRule(Wait)
-    'z' | 'wait'
+    'z' | 'vänta'
     : WaitAction
-    verbPhrase = 'wait/waiting'
+    verbPhrase = 'vänta/väntandes'
 ;
 
 VerbRule(Look)
-    'look' | 'look' 'around' | 'l' | 'l' 'around'
+    'se' | 'titta' | ('titta'|'se'|'t') ('omkring'|'runt') 
     : LookAction
-    verbPhrase = 'look/looking around'
+    verbPhrase = 'titta/tittandess omkring'
 ;
 
 VerbRule(Quit)
-    'quit' | 'q'
+    'avsluta' | 'a'
     : QuitAction
-    verbPhrase = 'quit/quitting'
+    verbPhrase = 'avsluta/avslutandes'
 ;
 
 VerbRule(Again)
-    'again' | 'g'
+    'igen' | 'g'
     : AgainAction
-    verbPhrase = 'repeat/repeating the last command'
+    verbPhrase = 'reptera/repeterandes det sista kommandot'
 ;
 
 VerbRule(Footnote)
-    ('footnote' | 'note') singleNumber
+    ('fotnot' | 'not') singleNumber
     : FootnoteAction
-    verbPhrase = 'show/showing a footnote'
+    verbPhrase = 'visa/visandes a fotnoter'
 ;
 
 VerbRule(FootnotesFull)
-    'footnotes' 'full'
+    'fotnoter' 'full'
     : FootnotesFullAction
-    verbPhrase = 'enable/enabling all footnotes'
+    verbPhrase = 'tillåt/tillåtande alla fotnoter'
 ;
 
 VerbRule(FootnotesMedium)
-    'footnotes' 'medium'
+    'fotnoter' 'medium'
     : FootnotesMediumAction
-    verbPhrase = 'enable/enabling new footnotes'
+    verbPhrase = 'tillåt/tillåtande nya fotnoter'
 ;
 
 VerbRule(FootnotesOff)
-    'footnotes' 'off'
+    'fotnoter' 'av'
     : FootnotesOffAction
-    verbPhrase = 'hide/hiding footnotes'
+    verbPhrase = 'göm/gömmandes fotnoter'
 ;
 
 VerbRule(FootnotesStatus)
-    'footnotes'
+    'fotnoter'
     : FootnotesStatusAction
-    verbPhrase = 'show/showing footnote status'
+    verbPhrase = 'visa/visandes fotnoter status'
 ;
 
 VerbRule(TipsOn)
-    ('tips' | 'tip') 'on'
+    'tips' 'på'
     : TipModeAction
 
     stat_ = true
 
-    verbPhrase = 'turn/turning tips on'
+    verbPhrase = 'aktivera/aktiverandes tips'
 ;
 
 VerbRule(TipsOff)
-    ('tips' | 'tip') 'off'
+    'tips' 'av'
     : TipModeAction
 
     stat_ = nil
 
-    verbPhrase = 'turn/turning tips off'
+    verbPhrase = 'inaktivera/inaktiverandes tips'
 ;
 
 VerbRule(Verbose)
-    'verbose'
+    'ordrik' | 'verbose'
     : VerboseAction
     verbPhrase = 'enter/entering VERBOSE mode'
 ;
 
 VerbRule(Terse)
-    'terse' | 'brief'
+    'kortfattad' | 'terse' | 'brief'
     : TerseAction
     verbPhrase = 'enter/entering BRIEF mode'
 ;
 
 VerbRule(Score)
-    'score' | 'status'
+    'poäng' | 'status'
     : ScoreAction
-    verbPhrase = 'show/showing score'
+    verbPhrase = 'visa/visandes poäng'
 ;
 
 VerbRule(FullScore)
-    'full' 'score' | 'fullscore' | 'full'
+    'full' 'poäng' | 'full'
     : FullScoreAction
-    verbPhrase = 'show/showing full score'
+    verbPhrase = 'visa/visandes full poäng'
 ;
 
 VerbRule(Notify)
-    'notify'
+    'notifiering'
     : NotifyAction
-    verbPhrase = 'show/showing notification status'
+    verbPhrase = 'visa/visandes notifieringsstatus'
 ;
 
 VerbRule(NotifyOn)
-    'notify' 'on'
+    'notifiering' 'på'
     : NotifyOnAction
-    verbPhrase = 'turn/turning on score notification'
+    verbPhrase = 'slå på/påslagandes poängnotifikation'
 ;
 
 VerbRule(NotifyOff)
-    'notify' 'off'
+    'notifiering' 'av'
     : NotifyOffAction
-    verbPhrase = 'turn/turning off score notification'
+    verbPhrase = 'stäng av/avstängandes poängnotifikation'
 ;
 
 VerbRule(Save)
-    'save'
+    'spara'
     : SaveAction
-    verbPhrase = 'save/saving'
+    verbPhrase = 'spara/sparandes'
 ;
 
 VerbRule(SaveString)
-    'save' quotedStringPhrase->fname_
+    'spara' quotedStringPhrase->fname_
     : SaveStringAction
-    verbPhrase = 'save/saving'
+    verbPhrase = 'spara/sparandes'
 ;
 
 VerbRule(Restore)
-    'restore'
+    ('ladda'|'återskapa')
     : RestoreAction
-    verbPhrase = 'restore/restoring'
+    verbPhrase = 'ladda/laddandes'
 ;
 
 VerbRule(RestoreString)
-    'restore' quotedStringPhrase->fname_
+    ('ladda'|'återskapa') quotedStringPhrase->fname_
     : RestoreStringAction
-    verbPhrase = 'restore/restoring'
+    verbPhrase = 'ladda/laddandes'
 ;
 
 VerbRule(SaveDefaults)
-    'save' 'defaults'
+    'spara' 'förvalt'
     : SaveDefaultsAction
-    verbPhrase = 'save/saving defaults'
+    verbPhrase = 'spara/sparandes förvalt'
 ;
 
 VerbRule(RestoreDefaults)
-    'restore' 'defaults'
+    'restore' 'förvalt'
     : RestoreDefaultsAction
-    verbPhrase = 'restore/restoring defaults'
+    verbPhrase = 'restore/restoring förvalt'
 ;
 
 VerbRule(Restart)
-    'restart'
+    'omstart' ('starta' 'om')
     : RestartAction
-    verbPhrase = 'restart/restarting'
+    verbPhrase = 'omstarta/omstartandes'
 ;
 
 VerbRule(Pause)
-    'pause'
+    'pausa'
     : PauseAction
-    verbPhrase = 'pause/pausing'
+    verbPhrase = 'pausa/pausandes'
 ;
 
 VerbRule(Undo)
-    'undo'
+    'ångra'
     : UndoAction
-    verbPhrase = 'undo/undoing'
+    verbPhrase = 'ångra/ångrandes'
 ;
 
 VerbRule(Version)
     'version'
     : VersionAction
-    verbPhrase = 'show/showing version'
+    verbPhrase = 'visa/visandes version'
 ;
 
 VerbRule(Credits)
-    'credits'
+    ('omnämnande'|'omnämnanden')
     : CreditsAction
-    verbPhrase = 'show/showing credits'
+    verbPhrase = 'visa/visandes omnämnanden'
 ;
 
 VerbRule(About)
-    'about'
+    'om'
     : AboutAction
-    verbPhrase = 'show/showing story information'
+    verbPhrase = 'visa/visandes information om berättelse'
 ;
 
+
+// TODO: hitta bättre ord för scriptande etc....
+// ..........................................................
+
 VerbRule(Script)
-    'script' | 'script' 'on'
+    'script' | 'script' 'på'
     : ScriptAction
-    verbPhrase = 'start/starting scripting'
+    verbPhrase = 'starta/startandes scriptande'
 ;
 
 VerbRule(ScriptString)
     'script' quotedStringPhrase->fname_
     : ScriptStringAction
-    verbPhrase = 'start/starting scripting'
+    verbPhrase = 'starta/startandes scriptande'
 ;
 
 VerbRule(ScriptOff)
-    'script' 'off' | 'unscript'
+    'script' 'av' | 'unscript'
     : ScriptOffAction
-    verbPhrase = 'end/ending scripting'
+    verbPhrase = 'sluta/slutandes scriptande'
 ;
 
 VerbRule(Record)
-    'record' | 'record' 'on'
+    'record' | 'record' 'på'
     : RecordAction
-    verbPhrase = 'start/starting command recording'
+    verbPhrase = 'starta/startandes kommandoinspelning'
 ;
 
 VerbRule(RecordString)
     'record' quotedStringPhrase->fname_
     : RecordStringAction
-    verbPhrase = 'start/starting command recording'
+    verbPhrase = 'starta/startandes kommandoinspelning'
 ;
 
 VerbRule(RecordEvents)
-    'record' 'events' | 'record' 'events' 'on'
+    'record' 'events' | 'record' 'events' 'på'
     : RecordEventsAction
-    verbPhrase = 'start/starting event recording'
+    verbPhrase = 'starta/startandes event recording'
 ;
 
 VerbRule(RecordEventsString)
     'record' 'events' quotedStringPhrase->fname_
     : RecordEventsStringAction
-    verbPhrase = 'start/starting command recording'
+    verbPhrase = 'starta/startandes kommandoinspelning'
 ;
 
 VerbRule(RecordOff)
-    'record' 'off'
+    'record' 'av'
     : RecordOffAction
-    verbPhrase = 'end/ending command recording'
+    verbPhrase = 'sluta/slutandes kommandoinspelning'
 ;
 
 VerbRule(ReplayString)
@@ -9987,14 +10194,19 @@ VerbRule(ReplayQuiet)
     scriptOptionFlags = ScriptFileQuiet
 ;
 
-VerbRule(VagueTravel) 'go' | 'walk' : VagueTravelAction
-    verbPhrase = 'go/going'
+
+// ..........................................................
+
+
+
+VerbRule(VagueTravel) 'gå' | 'vandra' : VagueTravelAction
+    verbPhrase = 'gå/gåendes'
 ;
 
 VerbRule(Travel)
-    'go' singleDir | singleDir
+    'gå' singleDir | singleDir
     : TravelAction
-    verbPhrase = ('go/going ' + dirMatch.dir.name)
+    verbPhrase = ('gå/gåendes ' + dirMatch.dir.name)
 ;
 
 /*
@@ -10007,191 +10219,192 @@ VerbRule(Travel)
  *   to get found.)  
  */
 class EnTravelVia: TravelViaAction
-    verbPhrase = 'use/using (what)'
+    verbPhrase = 'använd/användandes (vad)'
 ;
 
 VerbRule(Port)
-    'go' 'to' ('port' | 'p')
+    'gå' 'till' ('babord' | 'b')
     : PortAction
     dirMatch: DirectionProd { dir = portDirection }
-    verbPhrase = 'go/going to port'
+    verbPhrase = 'gå/gåendes till babord'
 ;
 
 VerbRule(Starboard)
-    'go' 'to' ('starboard' | 'sb')
+    'gå' 'till' ('styrbord' | 'sb')
     : StarboardAction
     dirMatch: DirectionProd { dir = starboardDirection }
-    verbPhrase = 'go/going to starboard'
+    verbPhrase = 'gå/gåendes till styrbord'
 ;
 
 VerbRule(In)
-    'enter'
+    'gå' 'in'
     : InAction
     dirMatch: DirectionProd { dir = inDirection }
-    verbPhrase = 'enter/entering'
+    verbPhrase = 'gå in/gåendes in'
 ;
 
 VerbRule(Out)
-    'exit' | 'leave'
+    'gå' 'ut' | 'lämna'
     : OutAction
     dirMatch: DirectionProd { dir = outDirection }
-    verbPhrase = 'exit/exiting'
+    verbPhrase = 'lämna/lämnandes'
 ;
 
 VerbRule(GoThrough)
-    ('walk' | 'go' ) ('through' | 'thru')
+    ('vandra' | 'gå' ) ('genom')
         singleDobj
     : GoThroughAction
-    verbPhrase = 'go/going (through what)'
+    verbPhrase = 'gå/gåendes (genom vad)'
     askDobjResponseProd = singleNoun
 ;
 
+//TODO: adaptera
 VerbRule(Enter)
-    ('enter' | 'in' | 'into' | 'in' 'to'
-     | ('walk' | 'go') ('to' | 'in' | 'in' 'to' | 'into'))
+    ('enter' | 'in' | 'in' 'till'
+     | ('vandra' | 'gå') ('till' | 'in' | 'in' 'till'))
     singleDobj
     : EnterAction
-    verbPhrase = 'enter/entering (what)'
+    verbPhrase = 'enter/entering (vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(GoBack)
-    'back' | 'go' 'back' | 'return'
+    'tillbaka' | 'gå' 'tillbaka' | 'återvänd'
     : GoBackAction
-    verbPhrase = 'go/going back'
+    verbPhrase = 'gå/gåendes tillbaka'
 ;
 
 VerbRule(Dig)
-    ('dig' | 'dig' 'in') singleDobj
+    ('gräv' | 'gräv' 'i') singleDobj
     : DigAction
-    verbPhrase = 'dig/digging (in what)'
+    verbPhrase = 'gräv/grävandes (i vad)'
     askDobjResponseProd = inSingleNoun
 ;
 
 VerbRule(DigWith)
-    ('dig' | 'dig' 'in') singleDobj 'with' singleIobj
+    ('gräv' | 'gräv' 'i') singleDobj 'med' singleIobj
     : DigWithAction
-    verbPhrase = 'dig/digging (in what) (with what)'
+    verbPhrase = 'dig/digging (i vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = inSingleNoun
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(Jump)
-    'jump'
+    'hoppa'
     : JumpAction
-    verbPhrase = 'jump/jumping'
+    verbPhrase = 'hoppa/hoppandes'
 ;
 
 VerbRule(JumpOffI)
-    'jump' 'off'
+    'hoppa' 'av'
     : JumpOffIAction
-    verbPhrase = 'jump/jumping off'
+    verbPhrase = 'hoppa/hoppandes av'
 ;
 
 VerbRule(JumpOff)
-    'jump' 'off' singleDobj
+    'hoppa' 'av' singleDobj
     : JumpOffAction
-    verbPhrase = 'jump/jumping (off what)'
+    verbPhrase = 'hoppa/hoppandes (av vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(JumpOver)
-    ('jump' | 'jump' 'over') singleDobj
+    ('hoppa' | 'hoppa' 'över') singleDobj
     : JumpOverAction
-    verbPhrase = 'jump/jumping (over what)'
+    verbPhrase = 'hoppa/hoppandes (över vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(Push)
-    ('push' | 'press') dobjList
+    ('tryck' |'knuffa' | 'pressa') dobjList
     : PushAction
-    verbPhrase = 'push/pushing (what)'
+    verbPhrase = 'trycka/tryckandes (vad)'
 ;
 
 VerbRule(Pull)
-    'pull' dobjList
+    'dra' dobjList
     : PullAction
-    verbPhrase = 'pull/pulling (what)'
+    verbPhrase = 'dra/dragandes (vad)'
 ;
 
 VerbRule(Move)
-    'move' dobjList
+    'flytta'|'knuffa' dobjList
     : MoveAction
-    verbPhrase = 'move/moving (what)'
+    verbPhrase = 'flytta/flyttandes (vad)'
 ;
 
 VerbRule(MoveTo)
-    ('push' | 'move') dobjList ('to' | 'under') singleIobj
+    ('tryck' | 'flytta') dobjList ('till' | 'under') singleIobj
     : MoveToAction
-    verbPhrase = 'move/moving (what) (to what)'
+    verbPhrase = 'flytta/flyttandes (vad) (till vad)'
     askIobjResponseProd = toSingleNoun
     omitIobjInDobjQuery = true
 ;
 
 VerbRule(MoveWith)
-    'move' singleDobj 'with' singleIobj
+    'flytta' singleDobj 'med' singleIobj
     : MoveWithAction
-    verbPhrase = 'move/moving (what) (with what)'
+    verbPhrase = 'flytta/flyttandes (vad) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
     omitIobjInDobjQuery = true
 ;
 
 VerbRule(Turn)
-    ('turn' | 'twist' | 'rotate') dobjList
+    ('vrid' | 'rotera') dobjList
     : TurnAction
-    verbPhrase = 'turn/turning (what)'
+    verbPhrase = 'vrid/vridandes (vad)'
 ;
 
 VerbRule(TurnWith)
-    ('turn' | 'twist' | 'rotate') singleDobj 'with' singleIobj
+    ('vrid' | 'rotera') singleDobj 'med' singleIobj
     : TurnWithAction
-    verbPhrase = 'turn/turning (what) (with what)'
+    verbPhrase = 'vrid/vridandes (vad) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(TurnTo)
-    ('turn' | 'twist' | 'rotate') singleDobj
-        'to' singleLiteral
+    ('vrid' | 'rotera') singleDobj
+        'till' singleLiteral
     : TurnToAction
-    verbPhrase = 'turn/turning (what) (to what)'
+    verbPhrase = 'vrid/vridandes (vad) (till vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
 ;
 
 VerbRule(Set)
-    'set' dobjList
+    'sätt' dobjList
     : SetAction
-    verbPhrase = 'set/setting (what)'
+    verbPhrase = 'sätt/sättandes (vad)'
 ;
 
 VerbRule(SetTo)
-    'set' singleDobj 'to' singleLiteral
+    'sätt' singleDobj 'till' singleLiteral
     : SetToAction
-    verbPhrase = 'set/setting (what) (to what)'
+    verbPhrase = 'sätt/sättandes (vad) (till vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
 ;
 
 VerbRule(TypeOn)
-    'type' 'on' singleDobj
+    'skriv' 'på' singleDobj
     : TypeOnAction
-    verbPhrase = 'type/typing (on what)'
+    verbPhrase = 'skriv/skrivandes (på vad)'
 ;
 
 VerbRule(TypeLiteralOn)
-    'type' singleLiteral 'on' singleDobj
+    'skriv' singleLiteral 'på' singleDobj
     : TypeLiteralOnAction
-    verbPhrase = 'type/typing (what) (on what)'
+    verbPhrase = 'skriv/skrivandes (vad) (på vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(TypeLiteralOnWhat)
-    [badness 500] 'type' singleLiteral
+    [badness 500] 'skriv' singleLiteral
     : TypeLiteralOnAction
-    verbPhrase = 'type/typing (what) (on what)'
+    verbPhrase = 'skriv/skrivandes (vad) (på vad)'
     construct()
     {
         /* set up the empty direct object phrase */
@@ -10201,17 +10414,17 @@ VerbRule(TypeLiteralOnWhat)
 ;
 
 VerbRule(EnterOn)
-    'enter' singleLiteral
-        ('on' | 'in' | 'in' 'to' | 'into' | 'with') singleDobj
+    ('kliv'|'gå') singleLiteral
+        ('på' | 'in' | 'in' 'till' | 'med') singleDobj
     : EnterOnAction
-    verbPhrase = 'enter/entering (what) (on what)'
+    verbPhrase = 'kliv/klivandes (vad) (på vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(EnterOnWhat)
-    'enter' singleLiteral
+    'kliv' 'på' singleLiteral
     : EnterOnAction
-    verbPhrase = 'enter/entering (what) (on what)'
+    verbPhrase = 'kliv/klivandes (vad) (på vad)'
     construct()
     {
         /*
@@ -10251,40 +10464,41 @@ enterOnWhatAsker: ResolveAsker
          *   start over with the new phrasing.
          */
         throw new ReplacementCommandStringException(
-            'get in ' + action.getLiteral(), gIssuingActor, gActor);
+            'gå in i ' + action.getLiteral(), gIssuingActor, gActor);
     }
 ;
 
+
 VerbRule(Consult)
-    'consult' singleDobj : ConsultAction
-    verbPhrase = 'consult/consulting (what)'
+    'konsultera' singleDobj : ConsultAction
+    verbPhrase = 'konsultera/konsulterandes (vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ConsultAbout)
-    'consult' singleDobj ('on' | 'about') singleTopic
-    | 'search' singleDobj 'for' singleTopic
-    | (('look' | 'l') ('up' | 'for')
-       | 'find'
-       | 'search' 'for'
-       | 'read' 'about')
-         singleTopic 'in' singleDobj
-    | ('look' | 'l') singleTopic 'up' 'in' singleDobj
+    'konsultera' singleDobj ('på' | 'om') singleTopic
+    | 'sök' singleDobj 'efter' singleTopic
+    | (('titta' | 'se' | 't' | 'slå') ('upp' | 'efter')
+       | 'hitta'
+       | 'sök' 'efter'
+       | 'läs' 'om')
+         singleTopic 'i' singleDobj
+    | ('titta' | 'l') singleTopic 'upp' 'i' singleDobj
     : ConsultAboutAction
-    verbPhrase = 'consult/consulting (what) (about what)'
+    verbPhrase = 'konsultera/konsulterandes (vad) (om vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ConsultWhatAbout)
-    (('look' | 'l') ('up' | 'for')
-     | 'find'
-     | 'search' 'for'
-     | 'read' 'about')
+    (('titta' | 'se' | 't' | 'slå') ('upp' | 'efter')
+     | 'hitta'
+     | 'sök' 'efter'
+     | 'läs' 'om')
     singleTopic
-    | ('look' | 'l') singleTopic 'up'
+    | ('titta' | 't') singleTopic 'upp'
     : ConsultAboutAction
-    verbPhrase = 'look/looking up (what) (in what)'
+    verbPhrase = 'slå/slåendes upp (vad) (i vad)'
     whichMessageTopic = DirectObject
     construct()
     {
@@ -10294,78 +10508,82 @@ VerbRule(ConsultWhatAbout)
     }
 ;
 
+/*
+TODO: adaptera
 VerbRule(Switch)
     'switch' dobjList
     : SwitchAction
-    verbPhrase = 'switch/switching (what)'
+    verbPhrase = 'switch/switching (vad)'
 ;
 
 VerbRule(Flip)
     'flip' dobjList
     : FlipAction
-    verbPhrase = 'flip/flipping (what)'
+    verbPhrase = 'flip/flipping (vad)'
 ;
+*/
+
 
 VerbRule(TurnOn)
-    ('activate' | ('turn' | 'switch') 'on') dobjList
-    | ('turn' | 'switch') dobjList 'on'
+    ('aktivera' | ('vrid' | 'slå') 'på') dobjList
+    | ('vrid' | 'slå') dobjList 'på'
     : TurnOnAction
-    verbPhrase = 'turn/turning on (what)'
+    verbPhrase = 'vrid/vridandes on (vad)'
 ;
 
 VerbRule(TurnOff)
-    ('deactivate' | ('turn' | 'switch') 'off') dobjList
-    | ('turn' | 'switch') dobjList 'off'
+    ('deaktivera' | ('vrid' | 'slå') 'av') dobjList
+    | ('vrid' | 'slå') dobjList 'av'
     : TurnOffAction
-    verbPhrase = 'turn/turning off (what)'
+    verbPhrase = 'vrid/vridandes av (vad)'
 ;
 
 VerbRule(Light)
-    'light' dobjList
+    'tänd' dobjList
     : LightAction
-    verbPhrase = 'light/lighting (what)'
+    verbPhrase = 'tänd/tändandes (vad)'
 ;
 
 DefineTAction(Strike);
 VerbRule(Strike)
-    'strike' dobjList
+    'slå' dobjList
     : StrikeAction
-    verbPhrase = 'strike/striking (what)'
+    verbPhrase = 'slå/slående (vad)'
 ;
 
 VerbRule(Burn)
-    ('burn' | 'ignite' | 'set' 'fire' 'to') dobjList
+    ('tänd' | 'bränn' | 'sätt' 'eld' 'på') dobjList
     : BurnAction
-    verbPhrase = 'light/lighting (what)'
+    verbPhrase = 'tänd/tändandes (vad)'
 ;
 
 VerbRule(BurnWith)
-    ('light' | 'burn' | 'ignite' | 'set' 'fire' 'to') singleDobj
-        'with' singleIobj
+    ('tänd' | 'bränn' | 'sätt' 'eld' 'på') singleDobj
+        'med' singleIobj
     : BurnWithAction
-    verbPhrase = 'light/lighting (what) (with what)'
+    verbPhrase = 'tänd/tändandes (vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(Extinguish)
-    ('extinguish' | 'douse' | 'put' 'out' | 'blow' 'out') dobjList
-    | ('blow' | 'put') dobjList 'out'
+    ('släck' | 'släck ut' | 'blås' 'ut') dobjList
+    
     : ExtinguishAction
-    verbPhrase = 'extinguish/extinguishing (what)'
+    verbPhrase = 'släck/släckandes (vad)'
 ;
 
 VerbRule(Break)
-    ('break' | 'ruin' | 'destroy' | 'wreck') dobjList
+    ('förstör' | 'ha' 'sönder') dobjList
     : BreakAction
-    verbPhrase = 'break/breaking (what)'
+    verbPhrase = 'förstör/förstandes (vad)'
 ;
 
 VerbRule(CutWithWhat)
-    [badness 500] 'cut' singleDobj
+    [badness 500] 'klipp' singleDobj
     : CutWithAction
-    verbPhrase = 'cut/cutting (what) (with what)'
+    verbPhrase = 'klipp/klippandes (vad) (med vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -10375,63 +10593,63 @@ VerbRule(CutWithWhat)
 ;
 
 VerbRule(CutWith)
-    'cut' singleDobj 'with' singleIobj
+    'klipp' ('av'|) singleDobj 'med' singleIobj
     : CutWithAction
-    verbPhrase = 'cut/cutting (what) (with what)'
+    verbPhrase = 'klipp/klippandes (vad) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(Eat)
-    ('eat' | 'consume') dobjList
+    ('ät' | 'konsumera') dobjList
     : EatAction
-    verbPhrase = 'eat/eating (what)'
+    verbPhrase = 'äta/ätandes (vad)'
 ;
 
 VerbRule(Drink)
-    ('drink' | 'quaff' | 'imbibe') dobjList
+    ('drick' ) dobjList
     : DrinkAction
-    verbPhrase = 'drink/drinking (what)'
+    verbPhrase = 'drick/drickandes (vad)'
 ;
 
 VerbRule(Pour)
-    'pour' dobjList
+    'häll' dobjList
     : PourAction
-    verbPhrase = 'pour/pouring (what)'
+    verbPhrase = 'häll/hällandes (vad)'
 ;
 
 VerbRule(PourInto)
-    'pour' dobjList ('in' | 'into' | 'in' 'to') singleIobj
+    'häll' dobjList ('i') singleIobj
     : PourIntoAction
-    verbPhrase = 'pour/pouring (what) (into what)'
+    verbPhrase = 'häll/hällandes (vad) (i vad)'
     askIobjResponseProd = inSingleNoun
 ;
 
 VerbRule(PourOnto)
-    'pour' dobjList ('on' | 'onto' | 'on' 'to') singleIobj
+    'häll' dobjList ('på' | 'på' 'till') singleIobj
     : PourOntoAction
-    verbPhrase = 'pour/pouring (what) (onto what)'
+    verbPhrase = 'häll/hällandes (vad) (på vad)'
     askIobjResponseProd = onSingleNoun
 ;
 
 VerbRule(Climb)
-    'climb' singleDobj
+    'klättra' singleDobj
     : ClimbAction
-    verbPhrase = 'climb/climbing (what)'
+    verbPhrase = 'klättra/klättrandes (vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ClimbUp)
-    ('climb' | 'go' | 'walk') 'up' singleDobj
+    ('kliv' | 'gå' | 'vandra') 'upp' singleDobj
     : ClimbUpAction
-    verbPhrase = 'climb/climbing (up what)'
+    verbPhrase = 'kliv/klivandes (upp vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ClimbUpWhat)
-    [badness 200] ('climb' | 'go' | 'walk') 'up'
+    [badness 200] ('kliv' | 'gå' | 'vandra') 'upp'
     : ClimbUpAction
-    verbPhrase = 'climb/climbing (up what)'
+    verbPhrase = 'kliv/klivandes  (upp vad)'
     askDobjResponseProd = singleNoun
     construct()
     {
@@ -10441,16 +10659,16 @@ VerbRule(ClimbUpWhat)
 ;
 
 VerbRule(ClimbDown)
-    ('climb' | 'go' | 'walk') 'down' singleDobj
+    ('climb' | 'gå' | 'vandra') 'ner' singleDobj
     : ClimbDownAction
-    verbPhrase = 'climb/climbing (down what)'
+    verbPhrase = 'kliv/klivandes  (ner vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ClimbDownWhat)
-    [badness 200] ('climb' | 'go' | 'walk') 'down'
+    [badness 200] ('climb' | 'gå' | 'vandra') 'ner'
     : ClimbDownAction
-    verbPhrase = 'climb/climbing (down what)'
+    verbPhrase = 'kliv/klivandes (ner vad)'
     askDobjResponseProd = singleNoun
     construct()
     {
@@ -10460,30 +10678,34 @@ VerbRule(ClimbDownWhat)
 ;
 
 VerbRule(Clean)
-    'clean' dobjList
+    'rengör' dobjList
     : CleanAction
-    verbPhrase = 'clean/cleaning (what)'
+    verbPhrase = 'rengör/rengörandes (vad)'
 ;
 
 VerbRule(CleanWith)
-    'clean' dobjList 'with' singleIobj
+    'rengör' dobjList 'med' singleIobj
     : CleanWithAction
-    verbPhrase = 'clean/cleaning (what) (with what)'
+    verbPhrase = 'rengör/rengörandes (vad) (med vad)'
     askIobjResponseProd = withSingleNoun
     omitIobjInDobjQuery = true
 ;
 
 VerbRule(AttachTo)
-    ('attach' | 'connect') dobjList 'to' singleIobj
+    (
+      ('koppla'|'sätt') ('ihop'|'fast'|'fast'|'samman')
+      | ('sammansätt') 
+    )
+    dobjList 'med' singleIobj
     : AttachToAction
     askIobjResponseProd = toSingleNoun
-    verbPhrase = 'attach/attaching (what) (to what)'
+    verbPhrase = 'sätt fast/sättandes fast (vad) (med vad)'
 ;
 
 VerbRule(AttachToWhat)
-    [badness 500] ('attach' | 'connect') dobjList
+    [badness 500] ('koppla') dobjList
     : AttachToAction
-    verbPhrase = 'attach/attaching (what) (to what)'
+    verbPhrase = 'koppla/kopplandes ihop (vad) (med vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -10493,65 +10715,65 @@ VerbRule(AttachToWhat)
 ;
 
 VerbRule(DetachFrom)
-    ('detach' | 'disconnect') dobjList 'from' singleIobj
+    ('koppla' 'från')| ('ta'|'tag') 'loss' | 'lossa' ('på'|) dobjList 'från' singleIobj
     : DetachFromAction
-    verbPhrase = 'detach/detaching (what) (from what)'
+    verbPhrase = 'ta loss/lossa på (vad) (från vad)'
     askIobjResponseProd = fromSingleNoun
 ;
 
 VerbRule(Detach)
-    ('detach' | 'disconnect') dobjList
+    ('koppla' 'från')| ('ta'|'tag') 'loss' | 'lossa' ('på'|) dobjList
     : DetachAction
-    verbPhrase = 'detach/detaching (what)'
+    verbPhrase = 'ta loss/lossa på (vad)'
 ;
 
 VerbRule(Open)
-    'open' dobjList
+    'öppna' dobjList
     : OpenAction
-    verbPhrase = 'open/opening (what)'
+    verbPhrase = 'öppna/öppnandes (vad)'
 ;
 
 VerbRule(Close)
-    ('close' | 'shut') dobjList
+    ('stäng' | ('slå'|'stäng') 'igen') dobjList
     : CloseAction
-    verbPhrase = 'close/closing (what)'
+    verbPhrase = 'stänga/stängandes (vad)'
 ;
 
 VerbRule(Lock)
-    'lock' dobjList
+    'lås' dobjList
     : LockAction
-    verbPhrase = 'lock/locking (what)'
+    verbPhrase = 'låsa/låsandes (vad)'
 ;
 
 VerbRule(Unlock)
-    'unlock' dobjList
+    'lås' 'upp' dobjList
     : UnlockAction
-    verbPhrase = 'unlock/unlocking (what)'
+    verbPhrase = 'låsa/låsandes upp (vad)'
 ;
 
 VerbRule(LockWith)
-    'lock' singleDobj 'with' singleIobj
+    'lås' singleDobj 'med' singleIobj
     : LockWithAction
-    verbPhrase = 'lock/locking (what) (with what)'
+    verbPhrase = 'låsa/låsandes (vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(UnlockWith)
-    'unlock' singleDobj 'with' singleIobj
+    'lås' 'upp' singleDobj 'med' singleIobj
     : UnlockWithAction
-    verbPhrase = 'unlock/unlocking (what) (with what)'
+    verbPhrase = 'låsa upp/upplåsandes (vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(SitOn)
-    'sit' ('on' | 'in' | 'down' 'on' | 'down' 'in')
+    'sitt' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
         singleDobj
     : SitOnAction
-    verbPhrase = 'sit/sitting (on what)'
+    verbPhrase = 'sitt/sittandes (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -10560,15 +10782,15 @@ VerbRule(SitOn)
 ;
 
 VerbRule(Sit)
-    'sit' ( | 'down') : SitAction
-    verbPhrase = 'sit/sitting down'
+    'sitt' ( | 'ner') : SitAction
+    verbPhrase = 'sit/sittandes ner'
 ;
 
 VerbRule(LieOn)
-    'lie' ('on' | 'in' | 'down' 'on' | 'down' 'in')
+    'ligg' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
         singleDobj
     : LieOnAction
-    verbPhrase = 'lie/lying (on what)'
+    verbPhrase = 'ligg/liggandes (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -10577,16 +10799,16 @@ VerbRule(LieOn)
 ;
 
 VerbRule(Lie)
-    'lie' ( | 'down') : LieAction
-    verbPhrase = 'lie/lying down'
+    'ligg' ( | 'ner') : LieAction
+    verbPhrase = 'ligg/liggandes ner'
 ;
 
 VerbRule(StandOn)
-    ('stand' ('on' | 'in' | 'onto' | 'on' 'to' | 'into' | 'in' 'to')
-     | 'climb' ('on' | 'onto' | 'on' 'to'))
+    ('stå' ('på' | 'in' | ('upp' 'på') | 'på' 'till' | 'into' | 'in' 'till')
+     | 'climb' ('på' | ('upp' 'på') | 'på' 'till'))
     singleDobj
     : StandOnAction
-    verbPhrase = 'stand/standing (on what)'
+    verbPhrase = 'kliv/klivandes (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -10595,16 +10817,16 @@ VerbRule(StandOn)
 ;
 
 VerbRule(Stand)
-    'stand' | 'stand' 'up' | 'get' 'up'
+    'stå' | 'stå' 'upp' | 'kliv' 'upp'
     : StandAction
-    verbPhrase = 'stand/standing up'
+    verbPhrase = 'kliv/klivandes upp'
 ;
 
 VerbRule(GetOutOf)
-    ('out' 'of' | 'get' 'out' 'of' | 'climb' 'out' 'of' | 'leave' | 'exit')
+    ('ut' 'ur' | 'kliv' 'ut' 'ur' | 'climb' 'ut' 'ur' | 'lämna' | 'gå' 'ut')
     singleDobj
     : GetOutOfAction
-    verbPhrase = 'get/getting (out of what)'
+    verbPhrase = 'kliva/klivandes (ut ur vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorOutOfPrep, if there's a direct object available */
@@ -10613,9 +10835,9 @@ VerbRule(GetOutOf)
 ;
 
 VerbRule(GetOffOf)
-    'get' ('off' | 'off' 'of' | 'down' 'from') singleDobj
+    'kliv' ('av' | 'av' 'of' | 'ner' 'från') singleDobj
     : GetOffOfAction
-    verbPhrase = 'get/getting (off of what)'
+    verbPhrase = 'kliv/klivandes av (från vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorOutOfPrep, if there's a direct object available */
@@ -10624,68 +10846,68 @@ VerbRule(GetOffOf)
 ;
 
 VerbRule(GetOut)
-    'get' 'out'
-    | 'get' 'off'
-    | 'get' 'down'
-    | 'disembark'
-    | 'climb' 'out'
+    'kliv' 'ut'
+    | 'kliv' 'av'
+    | 'kliv' 'ner'
+    | 'gå' 'i' 'land'
+    | 'kliv' 'ut'
     : GetOutAction
-    verbPhrase = 'get/getting out'
+    verbPhrase = 'gå/gåendes ut'
 ;
 
 VerbRule(Board)
-    ('board'
-     | ('get' ('in' | 'into' | 'in' 'to' | 'on' | 'onto' | 'on' 'to'))
-     | ('climb' ('in' | 'into' | 'in' 'to')))
+    ('borda'
+     | ('hoppa' ('i' | 'in' 'till' | 'på' | ('upp' 'på') | 'på' 'till'))
+     | ('kliv' ('in' | 'i' | 'in' 'till')))
     singleDobj
     : BoardAction
-    verbPhrase = 'get/getting (in what)'
+    verbPhrase = 'gå/gåendes (in till vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(Sleep)
-    'sleep'
+    'sova'
     : SleepAction
-    verbPhrase = 'sleep/sleeping'
+    verbPhrase = 'sova/sovandes'
 ;
 
 VerbRule(Fasten)
-    ('fasten' | 'buckle' | 'buckle' 'up') dobjList
+    'fäst' | ('koppla' 'fast') dobjList
     : FastenAction
-    verbPhrase = 'fasten/fastening (what)'
+    verbPhrase = 'fäst/fästandes (vad)'
 ;
 
 VerbRule(FastenTo)
-    ('fasten' | 'buckle') dobjList 'to' singleIobj
+    ('fäst' | 'koppla') dobjList ('till'|'i') singleIobj
     : FastenToAction
-    verbPhrase = 'fasten/fastening (what) (to what)'
+    verbPhrase = 'fäst/fästandes (vad) (i vad)'
     askIobjResponseProd = toSingleNoun
 ;
 
 VerbRule(Unfasten)
-    ('unfasten' | 'unbuckle') dobjList
+    'koppla' ('loss'|'lös') | 'avfäst' dobjList
     : UnfastenAction
-    verbPhrase = 'unfasten/unfastening (what)'
+    verbPhrase = 'koppla lös/kopplandes lös (vad)'
 ;
 
 VerbRule(UnfastenFrom)
-    ('unfasten' | 'unbuckle') dobjList 'from' singleIobj
+    'koppla' ('loss'|'lös') | 'avfäst'  dobjList 'från' singleIobj
     : UnfastenFromAction
-    verbPhrase = 'unfasten/unfastening (what) (from what)'
+    verbPhrase = 'koppla lös/kopplandes lös (vad) (från vad)'
     askIobjResponseProd = fromSingleNoun
 ;
 
 VerbRule(PlugInto)
-    'plug' dobjList ('in' | 'into' | 'in' 'to') singleIobj
+    'koppla'|'anslut' dobjList ('i' | 'in' ('till'|'i'|)) singleIobj
     : PlugIntoAction
-    verbPhrase = 'plug/plugging (what) (into what)'
+    verbPhrase = 'koppla in/inkopplandes (vad) (i vad)'
     askIobjResponseProd = inSingleNoun
 ;
 
 VerbRule(PlugIntoWhat)
-    [badness 500] 'plug' dobjList
+    [badness 500] 'koppla' 'in' dobjList
     : PlugIntoAction
-    verbPhrase = 'plug/plugging (what) (into what)'
+    verbPhrase = 'koppla in/inkopplandes (vad) (i vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -10695,135 +10917,134 @@ VerbRule(PlugIntoWhat)
 ;
 
 VerbRule(PlugIn)
-    'plug' dobjList 'in'
-    | 'plug' 'in' dobjList
+    'koppla' ('i'|'in') dobjList
     : PlugInAction
-    verbPhrase = 'plug/plugging (what)'
+    verbPhrase = 'koppla in/inkopplandes (vad)'
 ;
 
 VerbRule(UnplugFrom)
-    'unplug' dobjList 'from' singleIobj
+    'koppla' ('ner' | 'loss' | 'lös') dobjList 'från' singleIobj
     : UnplugFromAction
-    verbPhrase = 'unplug/unplugging (what) (from what)'
+    verbPhrase = 'koppla lös/kopplandes lös (vad) (från vad)'
     askIobjResponseProd = fromSingleNoun
 ;
 
 VerbRule(Unplug)
-    'unplug' dobjList
+    'koppla' ('ner' | 'loss' | 'lös') dobjList
     : UnplugAction
-    verbPhrase = 'unplug/unplugging (what)'
+    verbPhrase = 'koppla lös/kopplandes lös (vad)'
 ;
 
 VerbRule(Screw)
-    'screw' dobjList
+    'skruva' dobjList
     : ScrewAction
-    verbPhrase = 'screw/screwing (what)'
+    verbPhrase = 'skruva/skruvandes (vad)'
 ;
 
 VerbRule(ScrewWith)
-    'screw' dobjList 'with' singleIobj
+    'skruva' dobjList 'med' singleIobj
     : ScrewWithAction
-    verbPhrase = 'screw/screwing (what) (with what)'
+    verbPhrase = 'skruva/skruvandes (vad) (med vad)'
     omitIobjInDobjQuery = true
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(Unscrew)
-    'unscrew' dobjList
+    'skruva' ('loss'|'lös') dobjList
     : UnscrewAction
-    verbPhrase = 'unscrew/unscrewing (what)'
+    verbPhrase = 'skruva loss/avskruvandes (vad)'
 ;
 
 VerbRule(UnscrewWith)
-    'unscrew' dobjList 'with' singleIobj
+    'skruva' ('loss'|'lös')  dobjList 'med' singleIobj
     : UnscrewWithAction
-    verbPhrase = 'unscrew/unscrewing (what) (with what)'
+    verbPhrase = 'skruva loss/avskruvandes (vad) (med vad)'
     omitIobjInDobjQuery = true
     askIobjResponseProd = withSingleNoun
 ;
 
 VerbRule(PushTravelDir)
-    ('push' | 'pull' | 'drag' | 'move') singleDobj singleDir
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
     : PushTravelDirAction
-    verbPhrase = ('push/pushing (what) ' + dirMatch.dir.name)
+    verbPhrase = ('tryck/tryckandes (vad) ' + dirMatch.dir.name)
 ;
 
 VerbRule(PushTravelThrough)
-    ('push' | 'pull' | 'drag' | 'move') singleDobj
-    ('through' | 'thru') singleIobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('genom') singleIobj
     : PushTravelThroughAction
-    verbPhrase = 'push/pushing (what) (through what)'
+    verbPhrase = 'tryck/tryckandes (vad) (genom vad)'
 ;
 
 VerbRule(PushTravelEnter)
-    ('push' | 'pull' | 'drag' | 'move') singleDobj
-    ('in' | 'into' | 'in' 'to') singleIobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('in' ('till'|'i') ) singleIobj
     : PushTravelEnterAction
-    verbPhrase = 'push/pushing (what) (into what)'
+    verbPhrase = 'tryck/tryckandes (vad) (in i vad)'
 ;
 
 VerbRule(PushTravelGetOutOf)
-    ('push' | 'pull' | 'drag' | 'move') singleDobj
-    'out' ('of' | ) singleIobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    'ut' ('of' | ) singleIobj
     : PushTravelGetOutOfAction
-    verbPhrase = 'push/pushing (what) (out of what)'
+    verbPhrase = 'tryck/tryckandes (vad) (ut ur vad)'
 ;
 
 
 VerbRule(PushTravelClimbUp)
-    ('push' | 'pull' | 'drag' | 'move') singleDobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     'up' singleIobj
     : PushTravelClimbUpAction
-    verbPhrase = 'push/pushing (what) (up what)'
+    verbPhrase = 'tryck/tryckandes (vad) (up vad)'
     omitIobjInDobjQuery = true
 ;
 
 VerbRule(PushTravelClimbDown)
-    ('push' | 'pull' | 'drag' | 'move') singleDobj
-    'down' singleIobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    'ner' singleIobj
     : PushTravelClimbDownAction
-    verbPhrase = 'push/pushing (what) (down what)'
+    verbPhrase = 'tryck/tryckandes (vad) (ner vad)'
 ;
 
 VerbRule(Exits)
-    'exits'
+    'utgångar'
     : ExitsAction
-    verbPhrase = 'exits/showing exits'
+    verbPhrase = 'utgångar/visar utgångar'
 ;
 
 VerbRule(ExitsMode)
-    'exits' ('on'->on_ | 'all'->on_
-             | 'off'->off_ | 'none'->off_
-             | ('status' ('line' | ) | 'statusline') 'look'->on_
-             | 'look'->on_ ('status' ('line' | ) | 'statusline')
-             | 'status'->stat_ ('line' | ) | 'statusline'->stat_
-             | 'look'->look_)
+    'utgångar' ('på'->on_ | 'alla'->on_
+             | 'av'->off_ | 'ingen'->off_
+             | ('status' ('rad' | ) | 'statuslinje') 'titta'->on_
+             | 'titta'->on_ ('status' ('rad' | ) | 'statusrad')
+             | 'status'->stat_ ('rad' | ) | 'statusrad'->stat_
+             | 'titta'->look_)
     : ExitsModeAction
-    verbPhrase = 'turn/turning off exits display'
+    verbPhrase = 'stäng av/avstängandes visning av utgångar'
 ;
 
 VerbRule(HintsOff)
-    'hints' 'off'
+    'ledtrådar' 'av'
     : HintsOffAction
-    verbPhrase = 'disable/disabling hints'
+    verbPhrase = 'stäng av/avstängandes ledtrådar'
 ;
 
 VerbRule(Hint)
-    'hint' | 'hints'
+    'ledtrådar'
     : HintAction
-    verbPhrase = 'show/showing hints'
+    verbPhrase = 'visa/visandes ledtrådar'
 ;
 
 VerbRule(Oops)
-    ('oops' | 'o') singleLiteral
+    ('oops'|'o'|'oj'|'hoppsan') singleLiteral
     : OopsAction
-    verbPhrase = 'oops/correcting (what)'
+    verbPhrase = 'oops/correcting (vad)'
 ;
 
 VerbRule(OopsOnly)
-    ('oops' | 'o')
+    ('oops'|'o'|'oj'|'hoppsan')
     : OopsIAction
-    verbPhrase = 'oops/correcting'
+    verbPhrase = 'hoppsan/tillrättandes'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -10842,3 +11063,100 @@ VerbRule(Debug)
 
 #endif /* __DEBUG */
 
+
+
+
+
+
+
+
+
+
+/******************************************************************************
+ *** Additionals ***
+ *****************************************************************************/
+
+
+DefineTIAction(WearPerson)
+;
+
+/**
+ * Define new grammar for the swedish cases
+ */
+VerbRule(DoffPerson)
+    ('tag'|'ta'|'klä'|'kläd') 'av' singleIobj dobjList
+    : DoffAction
+    verbPhrase = 'klä av/avklädandes (vad)'
+;
+
+
+VerbRule(WearPerson)
+    ('ta'|'ikläd'|'klä'|'kläd') ('på'|) singleIobj dobjList
+    : WearAction
+    verbPhrase = 'kläd på/iklädandes (vad)'
+;
+
+
+/**
+ *  "WearPerson"
+ * Denna behövs, då det i svenskan är vanligast uttrycket är "ta på mig/dig jackan", inte "ta på jackan"
+ */
+ /*
+modify Wearable 
+    dobjFor(WearPerson)
+    {
+        preCond = [objHeld]
+        verify()
+        {
+            "HEKJ";
+            //"<<self.theName>>";
+            //"<<gActor.theName>>";
+            //make sure the actor isn't already wearing the item 
+            if (isWornBy(gActor)) {
+                illogicalAlready(&alreadyWearingMsg);
+            }
+        }
+        
+        action()
+        {
+            "<<gActor.theName>>";
+            "<<self.theName>>";
+            // make the item worn and describe what happened 
+            makeWornBy(gActor);
+            defaultReport(&okayWearMsg);
+        }
+    }
+;*/
+
+/*
+
+VerbRule(WearWhat)
+    [badness 500] ('ta'|'ikläd'|'klä'|'kläd') ('på'|) singleNoun
+    : WearAction
+    verbPhrase = 'kläd på/iklädandes (vad)'
+    construct()
+    {
+        //set up the empty indirect object phrase
+        iobjMatch = new EmptyNounPhraseProd();
+        iobjMatch.responseProd = inSingleNoun;
+    }
+;
+*/
+
+
+
+/*
+VerbRule(AskAboutWhat)
+    [badness 500] 'fråga' singleDobj
+    : AskAboutAction
+    verbPhrase = 'fråga/frågandes (vem) (om vad)'
+    askDobjResponseProd = singleNoun
+    omitIobjInDobjQuery = true
+    construct()
+    {
+        // set up the empty topic phrase
+        topicMatch = new EmptyNounPhraseProd();
+        topicMatch.responseProd = aboutTopicPhrase;
+    }
+;
+*/

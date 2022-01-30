@@ -1,4 +1,4 @@
-#charset "us-ascii"
+#charset "UTF-8"
 
 /*
  *   Copyright (c) 1999, 2002 by Michael J. Roberts.  Permission is
@@ -9,26 +9,32 @@
  */
 
 #include <adv3.h>
-#include "se.h" //en_us.t
+
+#include "sv_se.h" //en_us.t
+
 
 gameMain: GameMainDef
     initialPlayerChar = me
+    showIntro() {
+
+    }
+
+    
 ;
 
 versionInfo: GameID
     IFID = '' // obtain IFID from http://www.tads.org/ifidgen/ifidgen
-    name = 'Example 2'
-    byline = 'by Tomas Öberg'
-    htmlByline = 'by <a href="mailto:tomaserikoberg@gmail.com">Tomas Öberg</a>'
+    name = 'Exempel 1'
+    byline = 'av Tomas Öberg'
+    htmlByline = 'av <a href="mailto:tomaserikoberg@gmail.com">Tomas Öberg</a>'
     version = '1'
     authorEmail = 'Tomas Öberg tomaserikoberg@gmail.com'
-    desc = 'Example 2'
-    htmlDesc = 'Example 2'
+    desc = 'Exempel 2'
+    htmlDesc = 'Exempel 2'
 ;
 
-firstRoom: Room 'Starting Room'
-    "Add your description here. "
+me: Actor 'du' 'du' @labbet
 ;
 
-+me: Actor
-;
+
+//FIXME: x stol (om det finns flera att välja på)

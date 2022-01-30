@@ -2779,7 +2779,7 @@ modify Traveler
         local nm = location.getDestName(gPlayerChar, gPlayerChar.location);
 
         /* if there's a name, return it; otherwise, use "the area" */
-        return (nm != nil ? nm : 'the area');
+        return (nm != nil ? nm : 'platsen');
     }
 
     /*

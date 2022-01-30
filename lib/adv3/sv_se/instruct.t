@@ -1,4 +1,4 @@
-#charset "us-ascii"
+#charset "utf-8"
 
 /* 
  *   Copyright (c) 2000, 2006 Michael J. Roberts.  All Rights Reserved. 
@@ -71,7 +71,7 @@
  */
 
 #include "adv3.h"
-#include "se.h"
+#include "sv_se.h"
 
 /*
  *   The INSTRUCTIONS command.  Make this a "system" action, because it's
