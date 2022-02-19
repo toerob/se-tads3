@@ -1482,8 +1482,7 @@ libMessages: MessageHelper
      */
     sayTravelingRemotely(traveler, dest)
     {
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToGo>> till 
-        <<traveler.travelerLocName>>. ";
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToGo>> {hit}  <<traveler.travelerLocName>>. ";
     }
 
     /* a traveler is arriving from a compass direction */
@@ -1506,8 +1505,7 @@ libMessages: MessageHelper
     /* a traveler is arriving from a shipboard direction */
     sayArrivingShipDir(traveler, dirName)
     {
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till
-        <<traveler.travelerRemoteLocName>> från <<dirName>>. ";
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerRemoteLocName>> från <<dirName>>. ";
     }
 
     /* a traveler is leaving in a given shipboard direction */
@@ -1549,7 +1547,7 @@ libMessages: MessageHelper
     /* a traveler is arriving via a passage */
     sayArrivingThroughPassage(traveler, passage)
     {
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till 
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> in 
         <<traveler.travelerRemoteLocName>> genom <<passage.theNameObj>>. ";
     }
 
@@ -3434,8 +3432,7 @@ playerActionMessages: MessageHelper
     okayYellMsg = '{Du/han} {skriker|skrek} så högt som {it actor/he} bara {kan}. '
 
     /* "jump" */
-    okayJumpMsg = '{Du/han} hoppa{r/de} lite, och land{ar/ade} där 
-        {it actor/he} {|hade} börjat. '
+    okayJumpMsg = '{Du/han} hoppa{r/de} och land{ar/ade} på samma ställe. '
 
     /* cannot hoppa over object */
     cannotJumpOverMsg = '{Du/han} {kan} inte hoppa över {that dobj/him}. '

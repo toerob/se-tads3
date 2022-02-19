@@ -14,13 +14,90 @@
 
 
 gameMain: GameMainDef
-    initialPlayerChar = me
+    //initialPlayerChar = me
+    initialPlayerChar = maria
     showIntro() {
 
     }
+;
 
+
+translateManager: PreinitObject
+    //execAfterMe = [adv3LibPreinit]
+    execute() {
+
+        //local result = readDataFile('swedish.aff');
+
+        /*local result = readDictionaryFile('Swedish.dic');
+
+        "<<result['badrum']>>";
+        "<<result['backstugusittare']>>";
+        "<<result['badlakan']>>";
+        */
+
+    }
+
+    readDictionaryFile(filename) {
+        local result = new LookupTable();
+        try {
+            local file = File.openTextFile(filename, FileAccessRead);
+            if(file) {
+                local row;
+                while((row = file.readFile()) != nil) {
+                    if(row) {
+                        local information = row.split('/');
+                        if(information.length==2) {
+                            result[information[1]] = information[2];
+                        }
+                        //"<<row>>";
+                    }
+                }
+               
+                file.closeFile();
+            }
+        }
+        catch(FileNotFoundException e) {
+        // Noop - since no file has been created yet, this exception is expected first time around.
+        } catch(FileException e) {
+            "File expection occured when trying read last location from <<filename>>: <<e.exceptionMessage>> ";
+        }
+        return result;
+    }
+
+
+    readDataFile(filename) {
+        local result = [];
+        try {
+            local file = File.openTextFile(filename, FileAccessRead);
+            if(file) {
+                local row;
+                while((row = file.readFile()) != nil) {
+                    if(!row.startsWith('#')) {
+
+                        if(row.startsWith('SFX')) {
+                            result += row;
+
+                            local column = row.split(' ');
+                            if(column.length >= 1) {
+                                "<<column[2]>>";
+                            }
+                        }
+                    }
+                }
+               
+                file.closeFile();
+            }
+        }
+        catch(FileNotFoundException e) {
+        // Noop - since no file has been created yet, this exception is expected first time around.
+        } catch(FileException e) {
+            "File expection occured when trying read last location from <<filename>>: <<e.exceptionMessage>> ";
+        }
+        return result;
+    }
     
 ;
+
 
 versionInfo: GameID
     IFID = '' // obtain IFID from http://www.tads.org/ifidgen/ifidgen
@@ -33,8 +110,8 @@ versionInfo: GameID
     htmlDesc = 'Exempel 2'
 ;
 
-me: Actor 'du' 'du' @labbet
-;
+me: Actor 'du' 'du' @labbet;
+
 
 
 //FIXME: x stol (om det finns flera att välja på)

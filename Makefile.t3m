@@ -19,7 +19,7 @@
 # frob interpreter if there are no compile Warnings and no Errors.
 
 -nodef
--we
+#-we
 -D LANGUAGE=sv_se
 -D MESSAGESTYLE=neu
 -Fy obj
@@ -37,6 +37,12 @@
 -source plats/labbet
 -source karaktar/professor
 -source plats/korridor
+-source mailman
+-source karaktar/maria
+-source plats/naturen
+-source _gameTrackerAdv3
+
+#-source SwedishDictionary
 
 -res
 GameInfo.txt

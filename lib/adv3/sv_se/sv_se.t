@@ -440,8 +440,46 @@ modify VocabObject
          *   only if it's our own - not if it's only inherited, as we'll
          *   pick up the inherited ones explicitly in a bit) 
          */
-        if (propDefined(&vocabWords, PropDefDirectly))
+        if (propDefined(&vocabWords, PropDefDirectly)) {
+
+            // Determine utrum/neutrum from defintive name/vocabWords 
+            // and add the correct forms to vocabWords before initializing
+            if( name
+            //&& name == 'sommardag[-en]' || name == 'stuga[-n]'  || name == 'hink[-en]' || name == 'äpple[-et]'
+            ) {
+                local mutableName = name;
+
+                isPlural = name.endsWith('[-na]')? true : nil;
+
+                name = cutEndings(mutableName);   // Spara undan namnet utan [-ändelsen]
+
+                // Om vi inte slutar på a så kan vi lägga på en
+                local nameDefinitive = mutableName
+                    .findReplace('[-en]', 'en', ReplaceAll)
+                    .findReplace('[-n]', 'n', ReplaceAll)
+                    .findReplace('[-t]', 't', ReplaceAll)
+                    .findReplace('[-et]', 'et', ReplaceAll)
+                    .findReplace('[-na]', 'na', ReplaceAll)
+                    ;
+
+                local backupVocabWords = vocabWords;    // Preserve the plural words(delimeted by*) by placing this last 
+
+                vocabWords = name;
+                vocabWords += nameDefinitive ? ('/' + nameDefinitive) : '';
+                vocabWords += backupVocabWords ? ('/' + backupVocabWords) : ''; 
+
+                //local endsWithA = name.match(R'a$');
+
+                isUter = nameDefinitive.endsWith('n');
+                theName = nameDefinitive;
+                "Bestämd form: <<nameDefinitive>>  <<isPlural?'(pluralis)':''>>\n";
+                "Obestämd form: <<name>>\n";
+                "vocabWords: <<vocabWords>>\b";
+
+            }
             target.initializeVocabWith(vocabWords);
+
+        }
 
         /* add vocabulary from each of our superclasses */
         foreach (local sc in getSuperclassList())
@@ -1325,11 +1363,11 @@ modify Thing
     
 
     cutEndings(txt) {
-        txt = txt.findReplace('[-s]', '', ReplaceAll);   // ##### remove noun genitive endings
-        txt = txt.findReplace('[-es]', '', ReplaceAll);  // ##### remove noun genitive endings
-        txt = txt.findReplace('[-ses]', '', ReplaceAll); // ##### remove noun genitive endings
-        txt = txt.findReplace('[-n]', '', ReplaceAll);   // ##### remove noun accusative/dative endings
-        txt = txt.findReplace('[-en]', '', ReplaceAll);  // ##### remove noun genitive endings
+        txt = txt.findReplace('[-en]', '', ReplaceAll);   // ##### remove noun genitive endings
+        txt = txt.findReplace('[-et]', '', ReplaceAll); // ##### remove noun genitive endings
+        txt = txt.findReplace('[-n]', '', ReplaceAll);  // ##### remove noun genitive endings
+        txt = txt.findReplace('[-t]', '', ReplaceAll);   // ##### remove noun accusative/dative endings        
+        txt = txt.findReplace('[-na]', '', ReplaceAll);   // ##### remove noun accusative/dative endings        
         return txt;
     }
 
@@ -1910,8 +1948,8 @@ modify Thing
     verbToDo = (tSel('gör' + verbEndingEs, 'gjorde'))
     nameDoes = (theName + ' ' + verbToDo)
     verbToGo = (tSel('går' + verbEndingEs, 'gick'))
-    verbToCome = (tSel('kommer' + verbEndingS, 'kom'))
-    verbToLeave = (tSel('lämnar' + verbEndingS, 'lämnade'))
+    verbToCome = (tSel('kommer' , 'kom'))
+    verbToLeave = (tSel('går härifrån' , 'gick därifrån'))
     
     //verbToSee = (tSel('ser' + verbEndingS, 'såg'))
     verbToSee = (tSel('ser' + verbEndingS, 'såg'))
