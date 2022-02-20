@@ -5,7 +5,7 @@ AuthorEmail: Tomas Öberg tomaserikoberg@gmail.com
 Desc: Exempel 2
 HtmlDesc: Exempel 2
 Version: 1
-ReleaseDate: 2022-02-19
+ReleaseDate: 2022-02-27
 Language: sv-SE
 LicenseType: Freeware
 CopyingRules: Nominal cost only; compilations allowed

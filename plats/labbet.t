@@ -15,66 +15,49 @@ labbet: Room 'Labbet'
     ]}
 ;
 
-+banken: Surface 'bänk/bänken*bänkarna'  'bänk' 
-    //theName = 'bänken'
-    isUter = true
++banken: Surface 'bänk[-en]*bänkar[-na]'  'bänk' 
 ;
 
-//++fridge: OpenableContainer 'kyl[-en]' 
-++fridge: OpenableContainer 'kyl/kylen/kylskåp' 'kyl'
-    theName = 'kylen'
-    isUter = true
+++maskin: Thing, Heavy 'espressomaskin[-en]/maskin[-en]' 'espresso maskin'
+    isListed = true
 ;
 
-+++berries: Food 'bär/bären' 'bär'
-    theName = 'bären'
-    isUter = true
++++knapp: Component, Switch 'knapp[-en]' 'knapp';
+
+
+++fridge: OpenableContainer 'kyl[-en]/kylskåp[-et]*kylar[-na]' 'kyl';
+
++++berries: Food 'bär[-en]' 'bär'
     isPlural = true
 ;
-+++krut: Thing 'krut/krutet' 'krut'
-    theName = 'krutet'
++++krut: Thing 'krut[-et]' 'krut'
     isPlural = true
 ;
 
 
-++labbnyckel: Key 'nyckel/nyckeln' 'nyckel'
-    //theName = 'bänken'
-    isUter = true
-    theName = 'nyckeln'
-;
+++labbnyckel: Key 'nyckel[-n]' 'nyckel';
+++sockerbit: Thing 'sockerbit[-en]' 'sockerbit';
 
-++sockerbit: Thing 'sockerbit' 'sockerbit'
-    isUter = true
-;
-
-
-+labbetDoorInside: LockableWithKey, Door -> labbetDoorOutside 'labbdörr*dörrar dörr*dörrar' 'labbdörr'
-    isUter  = true
-    theName = 'dörren'
++labbetDoorInside: LockableWithKey, Door -> labbetDoorOutside 'labbdörr[-en]/dörr[-en]*dörrar[-na]' 'labbdörr'
     keyList = [labbnyckel]
 ;
 
 
-+professornsStol: Chair 'stol/stolen*stolar' 'stol'
++professornsStol: Chair 'stol[-en]*stolar' 'stol'
     isUter = true
     isOwnedBy = [professor]
     disambigName = 'professorns stol'
     theName = 'stolen'
 ;
 
-+minStol: Chair 'stol/stolen*stolar' 'stol'
++minStol: Chair 'stol[-en]*stolar' 'stol'
     isUter = true
     isOwnedBy = [me]
     disambigName = 'din stol'
-    theName = 'stolen'
 ;
 
-++jacka: Wearable 'jacka*jackor/jackan' 'jacka'
-    isUter = true
+++jacka: Wearable 'jacka[-n]*jackor[-na]' 'jacka'
     isOwnedBy = [me]
-    //theName = 'jackan'
 ;
-+++ficka: Container, Component 'jackficka/jackfickan' 'jackficka'
-    isUter = true
-    theName = 'jackfickan'
++++ficka: Container, Component 'jackficka[-n]' 'jackficka'
 ;

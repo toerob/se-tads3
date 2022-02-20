@@ -14,10 +14,13 @@
 
 
 gameMain: GameMainDef
-    //initialPlayerChar = me
-    initialPlayerChar = maria
-    showIntro() {
+    initialPlayerChar = me
+    //initialPlayerChar = argon
+    //initialPlayerChar = maria
+    
+    
 
+    showIntro() {
     }
 ;
 
@@ -26,15 +29,7 @@ translateManager: PreinitObject
     //execAfterMe = [adv3LibPreinit]
     execute() {
 
-        //local result = readDataFile('swedish.aff');
-
-        /*local result = readDictionaryFile('Swedish.dic');
-
-        "<<result['badrum']>>";
-        "<<result['backstugusittare']>>";
-        "<<result['badlakan']>>";
-        */
-
+        "<<stugdorrenOutside.theName>>";
     }
 
     readDictionaryFile(filename) {

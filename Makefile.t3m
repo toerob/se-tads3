@@ -40,9 +40,12 @@
 -source mailman
 -source karaktar/maria
 -source plats/naturen
--source _gameTrackerAdv3
 
+
+#-source _gameTrackerAdv3
 #-source SwedishDictionary
+
+-source argon
 
 -res
 GameInfo.txt

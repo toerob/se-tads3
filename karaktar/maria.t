@@ -2,6 +2,6 @@
 #include <adv3.h>
 #include <sv_se.h> 
 
-maria:  Actor 'maria' 'Maria' @stranden
+maria:  Actor 'maria' 'Maria' @en_strand
     proper = true
 ;

@@ -1522,7 +1522,7 @@ libMessages: MessageHelper
         local nm = traveler.travelerRemoteLocName;
         
         "\^<<traveler.travelerName(nil)>> <<traveler.verbToGo>>
-        aft<<nm != '' ? ' från ' + nm : ''>>. ";
+        akterut<<nm != '' ? ' från ' + nm : ''>>. ";
     }
 
     /* a traveler is going fore */
@@ -1531,11 +1531,11 @@ libMessages: MessageHelper
         local nm = traveler.travelerRemoteLocName;
 
         "\^<<traveler.travelerName(nil)>> <<traveler.verbToGo>>
-        forward<<nm != '' ? ' från ' + nm : ''>>. ";
+        föröver<<nm != '' ? ' från ' + nm : ''>>. ";
     }
 
     /* a shipboard direction was attempted while not onboard a ship */
-    notOnboardShip = "That direction {is|was}n&rsquo;t meaningful {här}. "
+    notOnboardShip = "Den riktningen sakna{r/de} betydelse {här}. "
 
     /* a traveler is leaving via a passage */
     sayDepartingThroughPassage(traveler, passage)
@@ -2741,7 +2741,7 @@ playerActionMessages: MessageHelper
 
     /* generic "smell" description of a Thing */
     thingSmellDescMsg(obj)
-        { return '{Du/han} känn{er/de} ingen oväntad lukt. '; }
+        { return '{Du/han} känn{er|de} ingen oväntad lukt. '; }
 
     /* default description of a non-player character */
     npcDescMsg(npc)
@@ -2774,7 +2774,7 @@ playerActionMessages: MessageHelper
         ovanligt. '
 
     /* there's nothing here with a specific odor */
-    nothingToSmellMsg = '{Du/han} känn{er/de} ingen oväntad lukt. '
+    nothingToSmellMsg = '{Du/han} känn{er|de} ingen oväntad lukt. '
 
     /* there's nothing here with a specific noise */
     nothingToHearMsg = '{Du/han} {hör|hörde} inget oväntat. '
@@ -2815,13 +2815,13 @@ playerActionMessages: MessageHelper
     okayOpenMsg = shortTMsg(
         'Öppnad. ', '{Du/han} öppna{r/de} {the dobj/him}. ')
     okayCloseMsg = shortTMsg(
-        'Stängd. ', '{Du/han} stäng{er/de} {the dobj/him}. ')
+        'Stängd. ', '{Du/han} stäng{er|de} {the dobj/him}. ')
 
     /* default response to lock/unlock */
     okayLockMsg = shortTMsg(
         'Låst. ', '{Du/han} lås{e/te} {the dobj/him}. ')
     okayUnlockMsg = shortTMsg(
-        'Olåst. ', '{Du/han} lås{er/te} upp {the dobj/him}. ')
+        'Upplåst. ', '{Du/han} lås{er/te} upp {the dobj/him}. ')
 
     /* cannot dig here */
     cannotDigMsg = '{Du/han} {have} ingen anledning att gräva i {that dobj/him}. '
@@ -3400,7 +3400,7 @@ playerActionMessages: MessageHelper
         gMessageParams(obj);
         //TODO: testa
         //return '<.p>After {du/han} {goes} through {the obj/him}, {it/he} close{s/d} behind {it actor/him}. ';
-        return '<.p>{the obj/him} stäng{er/de} bakom {it actor/him} efter att {du/han} {går|gick} igenom {it/he}. ';
+        return '<.p>{the obj/him} stäng{er|de} bakom {it actor/him} efter att {du/han} {går|gick} igenom {it/he}. ';
 
     }
 
@@ -3558,7 +3558,7 @@ playerActionMessages: MessageHelper
     /* acknowledge a 'follow' for a target that was in sight */
     okayFollowInSightMsg(loc)
     {
-        return '{Du/han} följ{er/de} {the dobj/him} '
+        return '{Du/han} följ{er|de} {the dobj/him} '
             + loc.actorIntoName + '. ';
     }
 
@@ -3654,8 +3654,8 @@ playerActionMessages: MessageHelper
     alreadySwitchedOffMsg = '{The dobj/he} {är} redan av. '
 
     /* default acknowledgment for switching on/off */
-    okayTurnOnMsg = 'Ok, {the dobj/he} {är} nu påslagen. '
-    okayTurnOffMsg = 'Ok, {the dobj/he} {är} nu avslagen. '
+    okayTurnOnMsg = 'Ok, {the dobj/he} {är} nu på. '
+    okayTurnOffMsg = 'Ok, {the dobj/he} {är} nu av. '
 
     /* flashlight is on but doesn't light up */
     flashlightOnButDarkMsg = '{Du/han} {vrider|vred} on {the dobj/him}, men ingenting verka{r/de} hända. '
@@ -3666,7 +3666,7 @@ playerActionMessages: MessageHelper
     /* object must be burning before doing that */
     mustBeBurningMsg(obj)
     {
-        return '{Du/han} behöv{er/de} tända ' + obj.theNameObj + ' före {it actor/he} {kan} göra det. ';
+        return '{Du/han} behöv{er|de} tända ' + obj.theNameObj + ' före {it actor/he} {kan} göra det. ';
     }
 
     /* match not lit */
@@ -3880,7 +3880,7 @@ playerActionMessages: MessageHelper
         '{Du/han} {kan} inte fästa {the dobj/him} i {that iobj/him}. '
 
     /* actor cannot sleep */
-    cannotSleepMsg = '{Du/han} behöv{er/de} inte sova just nu. '
+    cannotSleepMsg = '{Du/han} behöv{er|de} inte sova just nu. '
 
     /* cannot sit/lie/stand/get on/get out of */
     cannotSitOnMsg =
@@ -4114,7 +4114,7 @@ npcActionMessages: playerActionMessages
 
     /* default successful responses to open/close */
     okayOpenMsg = '{Du/han} öppna{de/r} {the dobj/him}. '
-    okayCloseMsg = '{Du/han} stäng{er/de} {the dobj/him}. '
+    okayCloseMsg = '{Du/han} stäng{er|de} {the dobj/him}. '
 
     /* default successful responses to lock/unlock */
     okayLockMsg = '{Du/han} lås{er/te} {the dobj/him}. '

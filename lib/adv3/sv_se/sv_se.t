@@ -441,50 +441,16 @@ modify VocabObject
          *   pick up the inherited ones explicitly in a bit) 
          */
         if (propDefined(&vocabWords, PropDefDirectly)) {
-
-            // Determine utrum/neutrum from defintive name/vocabWords 
-            // and add the correct forms to vocabWords before initializing
-            if( name
-            //&& name == 'sommardag[-en]' || name == 'stuga[-n]'  || name == 'hink[-en]' || name == 'äpple[-et]'
-            ) {
-                local mutableName = name;
-
-                isPlural = name.endsWith('[-na]')? true : nil;
-
-                name = cutEndings(mutableName);   // Spara undan namnet utan [-ändelsen]
-
-                // Om vi inte slutar på a så kan vi lägga på en
-                local nameDefinitive = mutableName
-                    .findReplace('[-en]', 'en', ReplaceAll)
-                    .findReplace('[-n]', 'n', ReplaceAll)
-                    .findReplace('[-t]', 't', ReplaceAll)
-                    .findReplace('[-et]', 'et', ReplaceAll)
-                    .findReplace('[-na]', 'na', ReplaceAll)
-                    ;
-
-                local backupVocabWords = vocabWords;    // Preserve the plural words(delimeted by*) by placing this last 
-
-                vocabWords = name;
-                vocabWords += nameDefinitive ? ('/' + nameDefinitive) : '';
-                vocabWords += backupVocabWords ? ('/' + backupVocabWords) : ''; 
-
-                //local endsWithA = name.match(R'a$');
-
-                isUter = nameDefinitive.endsWith('n');
-                theName = nameDefinitive;
-                "Bestämd form: <<nameDefinitive>>  <<isPlural?'(pluralis)':''>>\n";
-                "Obestämd form: <<name>>\n";
-                "vocabWords: <<vocabWords>>\b";
-
-            }
             target.initializeVocabWith(vocabWords);
-
         }
 
         /* add vocabulary from each of our superclasses */
         foreach (local sc in getSuperclassList())
             sc.inheritVocab(target, done);
     }
+
+
+    
 
     /*
      *   Initialize our vocabulary from the given string.  This parses the
@@ -595,6 +561,54 @@ modify VocabObject
                         weakTokens += cur;
                     }
 
+
+                    // TODO: Denna gäller (enklast och snabbast). 
+                    // Ta bort logik för där bestämd form togs ur name 
+                    // istället för vocabWords och rensa upp kodspill här och där. 
+                    // Diffa mot föregående commit om det 
+                    // behövs
+
+                    if(rexMatch(R'.*[\\[][-](.*)[]].*', cur) != nil) {
+                        "vocabWord: <<cur>>\n";
+                        local ending = rexGroup(1)[3];
+                        //"ending: <<ending>>\n";
+
+                        // Once we got the ending we can remove the ending syntax ([-xyz]) from the vocabWord
+                        cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
+
+                        local curWithEnding = cutEndings(cur) + ending;
+
+                        wordPart = &literalAdjective;   // TODO: not sure this will do...
+
+
+                        "Adding to dictionary: <<cur>> + definitive form: <<curWithEnding>> (-<<ending>>)\b";
+                        //cmdDict.addWord(self, cur, wordPart);
+                        cmdDict.addWord(self, curWithEnding, wordPart);
+                        
+                        // If within the noun section and an ending ends with 'n'
+                        // Assume noun is uter.
+                            if(sectPart == &noun) {
+                                // TODO: Only replace theName if its similar to name
+                                // OR in other words, unset by the user
+                                
+                                if(theName == name) {
+                                    isUter = ending.endsWith('n');
+                                    theName = curWithEnding;
+                                    "theName: <<theName>> replaced with <<curWithEnding>>\n";
+                                }
+                            }
+        
+
+                        /*if(sectPart == &plural) {
+                            isPlural = ending.endsWith('a');
+                        }*/
+
+                        //isPlural = ending.endsWith('na');
+                    }
+
+
+
+
                     /*
                      *   Check for special formats: quoted strings,
                      *   apostrophe-S words.  These formats are mutually
@@ -636,6 +650,8 @@ modify VocabObject
                         /* remove the "'s" suffix from the string */
                         cur = cur.substr(1, cur.length() - 2);
                     }
+
+ 
 
 
 
@@ -2309,7 +2325,7 @@ modify Actor
      */
     itNom
     {
-        return ['Jag', 'Jag', 'Jag', 'vi',
+        return ['jag', 'jag', 'jag', 'vi',
                'du', 'du', 'du', 'du',
                'den', 'han', 'hon', 'de'][pronounSelector];
     }
@@ -3113,7 +3129,7 @@ modify Room
      *   we're elsewhere, we might want to use a destName like "the
      *   basement hallway" or "the hallway outside the operating room".
      */
-    destName = (theName)
+    destName = (theName) 
 
     /*
      *   For top-level rooms, describe an object as being in the room by
@@ -3247,6 +3263,7 @@ DefineLangDir(in,  'in', 'tillbaka');
 DefineLangDir(out, 'ut', 'tillbaka');
 
 
+/*
 modify northDirection name = 'norr';
 modify southDirection name = 'söder';
 modify eastDirection name = 'öst';
@@ -3259,7 +3276,20 @@ modify upDirection name = 'upp';
 modify downDirection name = 'ner';
 modify inDirection name = 'in';
 modify outDirection name = 'ut';
+*/
 
+modify northDirection name = 'norrut';
+modify southDirection name = 'söderut';
+modify eastDirection name = 'österut';
+modify westDirection name = 'västerut';
+modify northwestDirection name = 'nordvästerut';
+modify northeastDirection name = 'nordösterut';
+modify southwestDirection name = 'sydvästerut';
+modify southeastDirection name = 'sydösterut';
+modify upDirection name = 'uppåt';
+modify downDirection name = 'neråt';
+modify inDirection name = 'innåt';
+modify outDirection name = 'utåt';
 
 /*
  *   The English-specific shipboard direction modifications.  Certain of
@@ -3271,7 +3301,7 @@ modify outDirection name = 'ut';
  *   below.
  */
 
-DefineLangDir(port, 'babord' | 'p', 'back to')
+DefineLangDir(port, 'babord' | 'b', 'tillbaka till')
     sayArriving(trav)
         { gLibMessages.sayArrivingShipDir(trav, 'babord'); }
     sayDeparting(trav)
@@ -3285,7 +3315,7 @@ DefineLangDir(starboard, 'styrbord' | 'sb', 'tillbaka till')
         { gLibMessages.sayDepartingShipDir(trav, 'styrbord'); }
 ;
 
-DefineLangDir(aft,  'akterut' | 'a', 'tillbaka till')
+DefineLangDir(aft,  'akterut' | 'akt', 'tillbaka till')
     sayArriving(trav) { gLibMessages.sayArrivingShipDir(trav, 'aktern'); }
     sayDeparting(trav) { gLibMessages.sayDepartingAft(trav); }
 ;
@@ -9529,15 +9559,15 @@ VerbRule(Read)
 ;
 
 VerbRule(LookIn)
-    ('se'|'titta' | 'l') ('in' | 'inside') dobjList
+    ('se'|'titta') ('in'|) ('i'|) ('inuti'|) dobjList
     : LookInAction
     verbPhrase = 'titta/tittandes (i vad)'
 ;
 
 VerbRule(Search)
-    'sök' dobjList
+    'sök' ('igenom'|) dobjList
     : SearchAction
-    verbPhrase = 'sök/sökandes (vad)'
+    verbPhrase = 'sök/sökandes igenom (vad)'
 ;
 
 VerbRule(LookThrough)
@@ -10355,7 +10385,8 @@ VerbRule(JumpOver)
 ;
 
 VerbRule(Push)
-    ('tryck' |'knuffa' | 'pressa') dobjList
+    ///('tryck' |'knuffa' | 'pressa') dobjList
+    ('flytta' |'knuffa' | 'pressa' | 'tryck') dobjList
     : PushAction
     verbPhrase = 'trycka/tryckandes (vad)'
 ;
@@ -10367,13 +10398,14 @@ VerbRule(Pull)
 ;
 
 VerbRule(Move)
-    'flytta'|'knuffa' dobjList
+    'knuffa'|'flytta' dobjList
     : MoveAction
     verbPhrase = 'flytta/flyttandes (vad)'
 ;
 
 VerbRule(MoveTo)
-    ('tryck' | 'flytta') dobjList ('till' | 'under') singleIobj
+    //('flytta' ) dobjList ('till' | 'under') singleIobj
+    ('flytta'|'tryck' ) dobjList ('till' | 'under') singleIobj
     : MoveToAction
     verbPhrase = 'flytta/flyttandes (vad) (till vad)'
     askIobjResponseProd = toSingleNoun
@@ -10546,20 +10578,19 @@ VerbRule(ConsultWhatAbout)
     }
 ;
 
-/*
-TODO: adaptera
+//TODO: adaptera
 VerbRule(Switch)
-    'switch' dobjList
+    'tryck' 'på' dobjList
     : SwitchAction
-    verbPhrase = 'switch/switching (vad)'
+    verbPhrase = 'tryck/tryckandes på (vad)'
 ;
 
+
 VerbRule(Flip)
-    'flip' dobjList
+    'vänd' dobjList
     : FlipAction
-    verbPhrase = 'flip/flipping (vad)'
+    verbPhrase = 'vänd/vändandes (vad)'
 ;
-*/
 
 
 VerbRule(TurnOn)
@@ -11002,27 +11033,31 @@ VerbRule(UnscrewWith)
 ;
 
 VerbRule(PushTravelDir)
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
+    //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
+    ('dra' | 'drag' | 'flytta') singleDobj singleDir
     : PushTravelDirAction
     verbPhrase = ('tryck/tryckandes (vad) ' + dirMatch.dir.name)
 ;
 
 VerbRule(PushTravelThrough)
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('dra' | 'drag' | 'flytta') singleDobj singleDir
     ('genom') singleIobj
     : PushTravelThroughAction
     verbPhrase = 'tryck/tryckandes (vad) (genom vad)'
 ;
 
 VerbRule(PushTravelEnter)
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('dra' | 'drag' | 'flytta') singleDobj
     ('in' ('till'|'i') ) singleIobj
     : PushTravelEnterAction
     verbPhrase = 'tryck/tryckandes (vad) (in i vad)'
 ;
 
 VerbRule(PushTravelGetOutOf)
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('dra' | 'drag' | 'flytta') singleDobj
     'ut' ('of' | ) singleIobj
     : PushTravelGetOutOfAction
     verbPhrase = 'tryck/tryckandes (vad) (ut ur vad)'
@@ -11030,7 +11065,8 @@ VerbRule(PushTravelGetOutOf)
 
 
 VerbRule(PushTravelClimbUp)
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('dra' | 'drag' | 'flytta') singleDobj
     'up' singleIobj
     : PushTravelClimbUpAction
     verbPhrase = 'tryck/tryckandes (vad) (up vad)'
@@ -11038,7 +11074,8 @@ VerbRule(PushTravelClimbUp)
 ;
 
 VerbRule(PushTravelClimbDown)
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('dra' | 'drag' | 'flytta') singleDobj
     'ner' singleIobj
     : PushTravelClimbDownAction
     verbPhrase = 'tryck/tryckandes (vad) (ner vad)'
