@@ -2793,11 +2793,11 @@ playerActionMessages: MessageHelper
 
     /* an item is not wearable */
     notWearableMsg =
-        '{That dobj/he} {är} ingenting som {du/han} {kan} klä på. '
+        '{That dobj/he} {är} inte någonting som {du/han} {kan} klä på. '
 
     /* doffing something that isn't wearable */
     notDoffableMsg =
-        '{That dobj/he} {är} ingenting som {du/han} {kan} ta av. '
+        '{That dobj/he} {är} inte någonting som {du/han} {kan} ta av. '
 
     /* already wearing item */
     alreadyWearingMsg = '{Du/han} {bär|bar} redan {it dobj/him}. '
@@ -3472,25 +3472,25 @@ playerActionMessages: MessageHelper
     giveAlreadyHasMsg = '{The iobj/he} {har} redan {that/him dobj}. '
 
     /* can't talk to yourself */
-    cannotTalkToSelfMsg = 'Att prata med {yourself/himself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotTalkToSelfMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't ask yourself about anything */
-    cannotAskSelfMsg = 'Att prata med {yourself/himself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotAskSelfMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't ask yourself for anything */
-    cannotAskSelfForMsg = 'Att prata med {yourself/himself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotAskSelfForMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't tell yourself about anything */
-    cannotTellSelfMsg = 'Att prata med {yourself/himself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotTellSelfMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't give yourself something */
-    cannotGiveToSelfMsg = 'Att ge {the dobj/him} till {yourself/himself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotGiveToSelfMsg = 'Att ge {the dobj/him} till {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
     
     /* can't give something to itself */
     cannotGiveToItselfMsg = 'Att ge {the dobj/him} till {itself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't show yourself something */
-    cannotShowToSelfMsg = 'Att visa {the dobj/him} för {yourself/himself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotShowToSelfMsg = 'Att visa {the dobj/him} för {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't show something to itself */
     cannotShowToItselfMsg = 'Att visa {the dobj/him} för {itself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
@@ -3710,15 +3710,15 @@ playerActionMessages: MessageHelper
 
     /* cannot turn object on/off */
     cannotTurnOnMsg =
-        '{That dobj/he} {är} ingenting som {du/han} {kan} slå på. '
+        '{That dobj/he} {är} inte någonting som {du/han} {kan} slå på. '
     cannotTurnOffMsg =
-        '{That dobj/he} {är} ingenting som {du/han} {kan} stänga av. '
+        '{That dobj/he} {är} inte någonting som {du/han} {kan} stänga av. '
 
     /* cannot light */
     cannotLightMsg = '{Du/han} {kan} inte tända {that dobj/him}. '
 
     /* cannot burn */
-    cannotBurnMsg = '{That dobj/he} {är} ingenting {du/han} {kan} elda. '
+    cannotBurnMsg = '{That dobj/he} {är} inte någonting {du/han} {kan} elda. '
     cannotBurnWithMsg =
         '{Du/han} {kan} inte elda någonting med {that iobj/him}. '
 
@@ -3733,7 +3733,7 @@ playerActionMessages: MessageHelper
     cannotExtinguishMsg = '{Du/han} {kan} inte släcka {that dobj/him}. '
 
     /* cannot pour/pour in/pour on */
-    cannotPourMsg = '{That dobj/he} {är} ingenting {du/han} {kan} hälla. '
+    cannotPourMsg = '{That dobj/he} {är} inte någonting {du/han} {kan} hälla. '
     cannotPourIntoMsg =
         '{Du/han} {kan} inte hälla någonting i {that iobj/him}. '
     cannotPourOntoMsg =
@@ -3802,12 +3802,12 @@ playerActionMessages: MessageHelper
     cannotCutWithMsg = '{Du/han} {kan} inte skära någonting med {the iobj/him}. '
 
     /* cannot climb object */
-    cannotClimbMsg = '{That dobj/he} {är} ingenting {du/han} {kan} klättra. '
+    cannotClimbMsg = '{That dobj/he} {är} inte någonting {du/han} {kan} klättra. '
 
     /* object is not openable/closable */
-    cannotOpenMsg = '{That dobj/he} {är} ingenting {du/han} {kan} öppna. '
+    cannotOpenMsg = '{That dobj/he} {är} inte någonting {du/han} {kan} öppna. '
     cannotCloseMsg =
-        '{That dobj/he} {är} ingenting {du/han} {kan} stänga. '
+        '{That dobj/he} {är} inte någonting {du/han} {kan} stänga. '
 
     /* already open/closed */
     alreadyOpenMsg = '{The dobj/he} {är} redan öppen. '
@@ -3822,9 +3822,9 @@ playerActionMessages: MessageHelper
 
     /* object is not lockable/unlockable */
     cannotLockMsg =
-        '{That dobj/he} {är} ingenting {du/han} {kan} låsa. '
+        '{That dobj/he} {är} inte någonting {du/han} {kan} låsa. '
     cannotUnlockMsg =
-        '{That dobj/he} {är} ingenting {du/han} {kan} låsa upp. '
+        '{That dobj/he} {är} inte någonting {du/han} {kan} låsa upp. '
 
     /* attempting to open a locked object */
     cannotOpenLockedMsg = '{The dobj/he} verka{r/de} vara låst. '
@@ -3884,9 +3884,9 @@ playerActionMessages: MessageHelper
 
     /* cannot sit/lie/stand/get on/get out of */
     cannotSitOnMsg =
-        '{That dobj/he} {är} ingenting som {du/han} {kan} sitta på. '
+        '{That dobj/he} {är} inte någonting som {du/han} {kan} sitta på. '
     cannotLieOnMsg =
-        '{That dobj/he} {är} ingenting som {du/han} {kan} ligga på. '
+        '{That dobj/he} {är} inte någonting som {du/han} {kan} ligga på. '
     cannotStandOnMsg = '{Du/han} {kan} inte stå på {that dobj/him}. '
     cannotBoardMsg = '{Du/han} {kan} inte kliva ombord på {that dobj/him}. '
     cannotUnboardMsg = '{Du/han} {kan} inte kliva ut ur {that dobj/him}. '
@@ -3927,13 +3927,14 @@ playerActionMessages: MessageHelper
 
     /* default report for standing up/sitting down/lying down */
     okayPostureChangeMsg(posture)
-        { return 'Ok, {du/han} {är} nu ' + posture.participle + '. '; }
+        { return 'Ok, {du/han} ' + posture.msgVerbI + '. '; }
 
     /* default report for standing/sitting/lying in/on something */
     roomOkayPostureChangeMsg(posture, obj)
     {
         gMessageParams(obj);
-        return 'Ok, {du/han} {är} nu ' + posture.participle + ' {on obj}. ';
+        return 'Ok, {du/han} ' + posture.msgVerbT  +' {nu|} {på obj}. ';
+        // ( {är} nu ' + posture.participle + ' {på obj}. )';
     }
 
     /* default report for getting off of a platform */
@@ -3958,8 +3959,8 @@ playerActionMessages: MessageHelper
     cannotUnscrewWithMsg = '{Du/han} {kan} inte skruva loss något med {the iobj/him}. '
 
     /* cannot enter/go through */
-    cannotEnterMsg = '{That/he dobj} {är} ingenting {du/han} {kan} gå in i. '
-    cannotGoThroughMsg = '{That/he dobj} {är} ingenting {du/han} {kan} gå genom. '
+    cannotEnterMsg = '{That/he dobj} {är} inte någonting {du/han} {kan} gå in i. '
+    cannotGoThroughMsg = '{That/he dobj} {är} inte någonting {du/han} {kan} gå genom. '
         
     /* can't throw something at itself */
     cannotThrowAtSelfMsg =
@@ -4207,7 +4208,7 @@ npcActionMessages: playerActionMessages
     roomOkayPostureChangeMsg(posture, obj)
     {
         gMessageParams(obj);
-        return '{Du/han} ' + posture.msgVerbT + ' {on obj}. ';
+        return '{Du/han} ' + posture.msgVerbT + ' {på obj}. ';
     }
 
     /* report for getting off a platform */
@@ -4248,12 +4249,12 @@ npcActionMessages: playerActionMessages
      *   the PC's responses to conversational actions applied to oneself
      *   need some reworking for NPC's 
      */
-    cannotTalkToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {yourself/himself}. '
-    cannotAskSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {yourself/himself}. '
-    cannotAskSelfForMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {yourself/himself}. '
-    cannotTellSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {yourself/himself}. '
-    cannotGiveToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att ge {the dobj/him} till {yourself/himself}. '
-    cannotShowToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att visa {the dobj/him} för {yourself/himself}. '
+    cannotTalkToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
+    cannotAskSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
+    cannotAskSelfForMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
+    cannotTellSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
+    cannotGiveToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att ge {the dobj/him} till {sigsjälv}. '
+    cannotShowToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att visa {the dobj/him} för {sigsjälv}. '
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -4520,8 +4521,7 @@ actorInventoryLister: DividedInventoryLister
     showInventoryWearingOnly(parent, wearing)
     {
         /* we're carrying nothing but wearing some items */
-        "<<buildSynthParam('The/he', parent)>> {bär|bar} på ingenting,
-        och {är} {bär|bar} på <<wearing>>. ";
+        "<<buildSynthParam('The/he', parent)>> {bär|bar} på ingenting, och {är} {bär|bar} på <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {

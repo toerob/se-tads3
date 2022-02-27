@@ -2,10 +2,11 @@
 #include <adv3.h>
 #include <sv_se.h> 
 
+//TODO: *brevbärare[#e-na]
 
-mailman:Actor 'b/brevbärare/brevbäraren*brevbärarna' 'brevbärare' @labbet
-    theName = 'brevbäraren'
+mailman:Actor 'b/brevis/brevbärare[-n]*brevbärarna' 'brevbärare' @labbet
     isHim = true
+    
 ;
 
 +mailmanState: ActorState 

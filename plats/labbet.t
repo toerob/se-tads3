@@ -14,6 +14,7 @@ labbet: Room 'Labbet'
         'Det smäller plötsligt till från ett provrör på bänken. <q>Oj!</q> skrokkar professorn. '
     ]}
 ;
++ladbil: Vehicle, Chair 'lådbil[-en]' 'lådbil';
 
 +banken: Surface 'bänk[-en]*bänkar[-na]'  'bänk' 
 ;
@@ -21,8 +22,9 @@ labbet: Room 'Labbet'
 ++maskin: Thing, Heavy 'espressomaskin[-en]/maskin[-en]' 'espresso maskin'
     isListed = true
 ;
-
 +++knapp: Component, Switch 'knapp[-en]' 'knapp';
+
+
 
 
 ++fridge: OpenableContainer 'kyl[-en]/kylskåp[-et]*kylar[-na]' 'kyl';

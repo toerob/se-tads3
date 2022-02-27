@@ -1068,12 +1068,17 @@ modify Thing
      *   noun
      */
     itNom { return [ (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
+    
+    
+
     itObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector]; }
     
     //itPossAdj { return ['its', 'his', 'her', 'their'][pronounSelector]; }
     //itPossNoun { return ['its', 'his', 'hers', 'theirs'][pronounSelector]; }
     itPossAdj { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
     itPossNoun { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
+
+
 
     /* get the object reflexive pronoun (itself, etc) */
     itReflexive
@@ -1968,7 +1973,7 @@ modify Thing
     verbToLeave = (tSel('går härifrån' , 'gick därifrån'))
     
     //verbToSee = (tSel('ser' + verbEndingS, 'såg'))
-    verbToSee = (tSel('ser' + verbEndingS, 'såg'))
+    verbToSee = (tSel('ser', 'såg'))
 
 
     nameSees = (theName + ' ' + verbToSee)
@@ -2350,7 +2355,7 @@ modify Actor
     itReflexive
     {
         return ['jag själv', 'jag själv', 'jag själv', 'oss själva',
-               'du själv', 'du själv', 'du själv', 'er själva',
+               'dig själv', 'dig själv', 'dig själv', 'dig själva',
                'den själv', 'han själv', 'hon själv', 'dem själva'][pronounSelector];
     }
 
@@ -2773,7 +2778,7 @@ modify Posture
 ;
 
 modify standing
-    msgVerbIPresent = 'stå{r} up'
+    msgVerbIPresent = 'ställer {dig} upp' //'stå{r} up'
     msgVerbIPast = 'stod upp'
     msgVerbTPresent = 'stå{r}'
     msgVerbTPast = 'stod'
@@ -2782,17 +2787,17 @@ modify standing
 
 modify sitting
     msgVerbIPresent = 'sitt{er} ner'
-    msgVerbIPast = 'satt ner'
-    msgVerbTPresent = 'sitt{er}'
+    msgVerbIPast = 'satte {själv} ner'
+    msgVerbTPresent = 'sitter'
     msgVerbTPast = 'satt'
     participle = 'sittandes'
 ;
 
 modify lying
     msgVerbIPresent = 'ligg{er} ner'
-    msgVerbIPast = 'lade {sig} ner'
-    msgVerbTPresent = 'ligg{er}'
-    msgVerbTPast = 'lade {sig}'
+    msgVerbIPast = 'lade {själv} ner'
+    msgVerbTPresent = 'ligger'
+    msgVerbTPast = 'lade {själv}'
     participle = 'liggandes'
 ;
 
@@ -3976,6 +3981,13 @@ langMessageBuilder: MessageBuilder
         ['yourself/herself', &itReflexive, 'actor', nil, nil],
         ['yourself', &itReflexive, 'actor', nil, nil],
 
+        ['dig', &itObj, 'actor', nil, nil],
+        ['sig', &itObj, 'actor', nil, nil],
+
+        // sig själv
+        ['själv', &itReflexive, 'actor', nil, nil],
+        ['själva', &itReflexive, 'actor', nil, nil],
+
 
         // TODO: Gör om alla dessa till:
         // den/han den/honom den/henne
@@ -4010,6 +4022,7 @@ langMessageBuilder: MessageBuilder
         ['are', &verbToBe, nil, nil, true],
         ['här', &verbHere, nil, nil, true],
 
+        ['sig', &verbHere, nil, nil, true],
 
 
 
@@ -4027,6 +4040,7 @@ langMessageBuilder: MessageBuilder
         ['es', &verbEndingEs, nil, nil, true],
         ['es/ed', &verbEndingEs, nil, nil, true],
 
+        ['er/te', &verbEndingEr, nil, nil, true],
         ['er/te', &verbEndingEr, nil, nil, true],
         ['er/e', &verbEndingErE, nil, nil, true],
         
@@ -9966,7 +9980,7 @@ VerbRule(ThrowDirDown)
 ;
 
 VerbRule(Follow)
-    'följ' singleDobj
+    'följ' ('efter'|) singleDobj
     : FollowAction
     verbPhrase = 'följ/följandes (vem)'
     askDobjResponseProd = singleNoun
@@ -10328,11 +10342,11 @@ VerbRule(GoThrough)
 
 //TODO: adaptera
 VerbRule(Enter)
-    ('enter' | 'in' | 'in' 'till'
+    ('gå' 'in' ('i'|) | 'in' 'till'
      | ('vandra' | 'gå') ('till' | 'in' | 'in' 'till'))
     singleDobj
     : EnterAction
-    verbPhrase = 'enter/entering (vad)'
+    verbPhrase = 'gå in i/gåendes in i (vad)'
     askDobjResponseProd = singleNoun
 ;
 
@@ -10345,14 +10359,14 @@ VerbRule(GoBack)
 VerbRule(Dig)
     ('gräv' | 'gräv' 'i') singleDobj
     : DigAction
-    verbPhrase = 'gräv/grävandes (i vad)'
+    verbPhrase = 'gräva/grävandes (i vad)'
     askDobjResponseProd = inSingleNoun
 ;
 
 VerbRule(DigWith)
     ('gräv' | 'gräv' 'i') singleDobj 'med' singleIobj
     : DigWithAction
-    verbPhrase = 'dig/digging (i vad) (med vad)'
+    verbPhrase = 'gräva/grävandes (i vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = inSingleNoun
     askIobjResponseProd = withSingleNoun
@@ -10398,7 +10412,7 @@ VerbRule(Pull)
 ;
 
 VerbRule(Move)
-    'knuffa'|'flytta' dobjList
+    'flytta'|'knuffa' dobjList
     : MoveAction
     verbPhrase = 'flytta/flyttandes (vad)'
 ;
@@ -10842,7 +10856,7 @@ VerbRule(SitOn)
     'sitt' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
         singleDobj
     : SitOnAction
-    verbPhrase = 'sitt/sittandes (på vad)'
+    verbPhrase = 'sitta/sittandes (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -10852,7 +10866,7 @@ VerbRule(SitOn)
 
 VerbRule(Sit)
     'sitt' ( | 'ner') : SitAction
-    verbPhrase = 'sit/sittandes ner'
+    verbPhrase = 'sitta/sittandes ner'
 ;
 
 VerbRule(LieOn)
