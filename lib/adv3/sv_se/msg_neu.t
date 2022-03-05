@@ -1304,7 +1304,7 @@ libMessages: MessageHelper
      */
     roomActorHereDesc(actor)
     {
-        "\^<<actor.nameIs>> <<actor.posture.participle>>
+        "\^<<actor.theName>> <<actor.posture.participle>>
         <<tSel('här', 'där')>>. ";
     }
 

@@ -2,7 +2,7 @@
 #include <adv3.h>
 #include <sv_se.h> 
 
-//TODO: *brevbärare[#e-na]
+//TODO: *brevbärare[-na], brevbärare finns redan dock i brevbärare[-n]
 
 mailman:Actor 'b/brevis/brevbärare[-n]*brevbärarna' 'brevbärare' @labbet
     isHim = true

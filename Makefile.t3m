@@ -39,6 +39,7 @@
 -source plats/korridor
 -source mailman
 -source karaktar/maria
+-source karaktar/fiskare
 -source plats/naturen
 
 

@@ -14,8 +14,8 @@
 
 
 gameMain: GameMainDef
-    initialPlayerChar = me
-    //initialPlayerChar = argon
+    //initialPlayerChar = me
+    initialPlayerChar = argon
     //initialPlayerChar = maria
     
     

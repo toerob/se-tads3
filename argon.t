@@ -2,24 +2,35 @@
 #include <adv3.h>
 #include <sv_se.h> 
 
+// Problem: Kör med debuggern
 
 /*
 
-
->x träd
-Jag ser inget ovanligt med det. 
+En fiskare står här. 
 
 
-Ånga bildas i den kyliga luften då jag andas. 
+>hälsa
+(till en fiskare)
+En fiskare svarar inte. 
 
->se in i det
-// TODO: Jag ser ingen i det här. 
+
+>
 
 */
 
-argon: Actor 'argon' 'Argon' @stranden
+
+argon: Actor 'argon' 'Argon' @fiskarensboning
     pcReferralPerson = FirstPerson
 ;
+
+
+fiskare:  Actor 'fiskare[-n]' 'fiskare' @fiskarensboning
+    ""
+    //isProperName = true
+    isHim = true
+;
+
+
 
 
 modify OutdoorRoom
@@ -97,9 +108,19 @@ huvudvagen: OutdoorRoom 'Huvudväg'
 ;
 
 byn: OutdoorRoom 'Byn'
+    "En liten fiskarby. "
     north = strandstigen
     southwest = huvudvagen
+    east = fiskarensboning
 ;
+
+fiskarensboning: Room 'fiskarens boning' 'fiskarens boning'
+    "..."
+    west = byn
+;
+
+
+
 
 
 

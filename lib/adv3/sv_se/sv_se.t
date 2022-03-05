@@ -590,9 +590,11 @@ modify VocabObject
                             if(sectPart == &noun) {
                                 // TODO: Only replace theName if its similar to name
                                 // OR in other words, unset by the user
+
+                                // TODO: verify this works
+                                isUter = ending.endsWith('n');
                                 
                                 if(theName == name) {
-                                    isUter = ending.endsWith('n');
                                     theName = curWithEnding;
                                     "theName: <<theName>> replaced with <<curWithEnding>>\n";
                                 }
@@ -1301,8 +1303,9 @@ modify Thing
             str = yourAkkPossAdj + str;              
         }*/
 
-
-        return str;
+        local article = (isUter?'en':'ett');
+        return (isQualifiedName ? '' : article + ' ') + str ; 
+        //return str;
     }
 
       
@@ -9848,19 +9851,19 @@ VerbRule(Topics)
 VerbRule(Hello)
     ('säg' | ) ('hej' | 'hallå' | 'tjena' | 'tja')
     : HelloAction
-    verbPhrase = 'säg/sägandes hej'
+    verbPhrase = 'hälsa/hälsandes hej'
 ;
 
 VerbRule(Goodbye)
     ('säg' | ()) ('adjö' | 'hejdå' | 'hej' 'då'| 'farväl')
     : GoodbyeAction
-    verbPhrase = 'säg/sägandes adjö'
+    verbPhrase = 'ta/tagandes farväl'
 ;
 
 VerbRule(Yes)
     'ja' | 'bekräfta' | 'säg' 'ja'
     : YesAction
-    verbPhrase = 'säg/sägandes ja'
+    verbPhrase = 'säga/sägandes ja'
 ;
 
 VerbRule(No)
