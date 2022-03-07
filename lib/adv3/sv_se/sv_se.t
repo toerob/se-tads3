@@ -595,6 +595,7 @@ modify VocabObject
                                 isUter = ending.endsWith('n');
                                 
                                 if(theName == name) {
+                                    name = cur;
                                     theName = curWithEnding;
                                     "theName: <<theName>> replaced with <<curWithEnding>>\n";
                                 }
@@ -1303,9 +1304,12 @@ modify Thing
             str = yourAkkPossAdj + str;              
         }*/
 
-        local article = (isUter?'en':'ett');
-        return (isQualifiedName ? '' : article + ' ') + str ; 
-        //return str;
+
+
+
+        //local article = (isUter?'en':'ett');
+        //return (isQualifiedName ? '' : article + ' ') + str ; 
+        return str;
     }
 
       
@@ -1464,7 +1468,7 @@ modify Thing
      *   By default, we use 'in' as the preposition; subclasses can
      *   override to use others (such as 'på' for a surface).
      */
-    objInPrep = 'in'
+    objInPrep = 'i'
 
     /*
      *   Default preposition to use when an actor is in/on this object (as
@@ -1475,12 +1479,12 @@ modify Thing
     actorInPrep = (objInPrep)
 
     /* preposition to use when an actor is being removed from this location */
-    actorOutOfPrep = 'out of'
+    actorOutOfPrep = 'ut ur'
 
     /* preposition to use when an actor is being moved into this location */
     actorIntoPrep
     {
-        if (actorInPrep is in ('in', 'på'))
+        if (actorInPrep is in ('i', 'på'))
             return actorInPrep + 'till';
         else
             return actorInPrep;

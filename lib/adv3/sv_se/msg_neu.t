@@ -3785,7 +3785,7 @@ playerActionMessages: MessageHelper
 
     /* no obvious way to detach a permanent attachment */
     cannotDetachPermanentMsg =
-        'Det {finns} inget uppenbart sätt att ta loss {that dobj/him}. '
+        'Det {finns|fanns} inget uppenbart sätt att ta loss {that dobj/him}. '
 
     /* dobj isn't attached to iobj */
     notAttachedToMsg = '{The dobj/he} {sitter|satt} inte fast i {that iobj/him}. '
@@ -3938,7 +3938,7 @@ playerActionMessages: MessageHelper
     }
 
     /* default report for getting off of a platform */
-    okayNotStandingOnMsg = 'Ok, {du/han} {är} ej längre {på dobj}. '
+    okayNotStandingOnMsg = 'Ok, {du/han} {är} inte längre {på dobj}. '
 
     /* cannot fasten/unfasten */
     cannotFastenMsg = '{Du/han} {kan} inte fästa {the dobj/him}. '
@@ -4170,7 +4170,7 @@ npcActionMessages: playerActionMessages
     surfaceTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att det {finns} 
+        return '{Du/han} {kan} inte göra det för att det {finns|fanns} 
             ingen plats för {the obj/him} på {the cont/him}. ';
     }
 
@@ -5324,7 +5324,7 @@ lookAroundTerseExitLister: ExitLister
 explicitExitLister: ExitLister
     showListEmpty(pov, parent)
     {
-        "Det {finns} inga uppenbara utgångar. ";
+        "Det {finns|fanns} inga uppenbara utgångar. ";
         //"There {are|were} no obvious exits. ";
     }
 ;
