@@ -1627,8 +1627,8 @@ libMessages: MessageHelper
      *   open/closed status - these are simply adjectives that can be used
      *   to describe the status of an openable object 
      */
-    openMsg(obj) { return 'öppen'; }
-    closedMsg(obj) { return 'stängd'; }
+    openMsg(obj) { return 'öppe<<obj.isUter?'n':'t'>>'; }
+    closedMsg(obj) { return 'stäng<<obj.isUter?'d':'t'>>'; }
 
     /* object is currently open/closed */
     currentlyOpen = '{It\'s dobj} för närvarande öppen. '
@@ -3818,7 +3818,7 @@ playerActionMessages: MessageHelper
     alreadyUnlockedMsg = '{The dobj/he} {är} redan olåst. '
 
     /* cannot look in container because it's closed */
-    cannotLookInClosedMsg = '{The dobj/he} {är} stängd. '
+    cannotLookInClosedMsg = '{The dobj/he} {är} stängd . '
 
     /* object is not lockable/unlockable */
     cannotLockMsg =

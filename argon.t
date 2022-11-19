@@ -34,11 +34,12 @@ fiskare:  Actor 'fiskare[-n]' 'fiskare' @fiskarensboning
 
 
 modify OutdoorRoom
-    atmosphereList: ShuffledEventList {[
+    /*atmosphereList: ShuffledEventList {[
         'Ånga bildas i den kyliga luften då jag andas. ',
         'Jag hör ett djur i skogen'
-    ]}
+    ]}*/
 ;
+
 class Coin: Thing 'mynt[-et]*mynt[-en]' 'mynt';
 
 

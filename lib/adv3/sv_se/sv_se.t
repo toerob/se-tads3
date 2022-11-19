@@ -8291,7 +8291,10 @@ class ImplicitAnnouncementContext: object
 
      // NOTE: useInfPhrase=true: "först öppna dörr"
      // NOTE: useInfPhrase=nil: "först öppnandes dörr"
-    useInfPhrase = nil
+
+     // TODO: Gör om till: "först öppnar 'du' dörren"
+
+    useInfPhrase =nil
 
     /* is this message going in a list? */
     isInList = nil
@@ -8312,9 +8315,20 @@ class ImplicitAnnouncementContext: object
         // TODO: konstig mening plus avsaknad av definitiv form:
         // "först öppnandes dörr (-en)"
 
+
+        // TODO: gör om
+        // 'först klivandes upp' till: kliver 'först' upp
+        // 'först öppnandes dörr' till: öppnar 'först' dörren
+        // 'först öppnandes dörr' till: öppnade 'först' dörren
+
+
+        //"<<txt>>";
+        //"\n[<<txt>>]\n";
+
         /* if we're not in a list, make it a full, stand-alone message */
         if (!isInList)
-            txt = '<./p0>\n<.assume>först ' + txt + '<./assume>\n';
+            //txt = '<./p0>\n<.assume>först ' + txt + '<./assume>\n';
+            txt = '<./p0>\n<.assume>' + txt + '<./assume>\n';
 
         /* return the result */
         return txt;
@@ -8343,7 +8357,7 @@ tryingImpCtx: ImplicitAnnouncementContext
          */
         if (!isInSublist) {
             // FIXME: "Först försökandes öppna dörren", låter inte helt rätt
-            txt = 'försökandes ' + txt;
+            txt = '\^<<gActor.theName>> försökte först ' + txt;
         }
 
         /* now build the message into the full text as usual */
@@ -8600,7 +8614,9 @@ modify Action
          *   Get the phrase.  Use the infinitive or participle form, as
          *   indicated in the context.
          */
-        return getVerbPhrase(ctx.useInfPhrase, ctx.getVerbCtx);
+        local mupp = getVerbPhrase(ctx.useInfPhrase, ctx.getVerbCtx);
+        //"{<<mupp>>}";
+        return mupp;
     }
 
     /*
@@ -8614,7 +8630,9 @@ modify Action
     getInfPhrase()
     {
         /* return the verb phrase in infinitive form */
-        return getVerbPhrase(true, nil);
+        local mupp = getVerbPhrase(true, nil);
+        //"[<<mupp>>]";
+        return mupp;
     }
 
     /*
@@ -8666,6 +8684,7 @@ modify Action
      *   phrases.  'ctx' can be nil if the verb phrase is being used in
      *   isolation.
      */
+     //
     getVerbPhrase(inf, ctx)
     {
         /*

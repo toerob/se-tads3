@@ -47,6 +47,9 @@
 #-source SwedishDictionary
 
 -source argon
+-source trollsommar
+-source sommarsaga
+-source julia
 
 -res
 GameInfo.txt

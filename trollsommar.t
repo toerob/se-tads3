@@ -3,6 +3,9 @@
 #include <sv_se.h> 
 
 
+
+
+
 karl:  Actor 'karl' 'Karl' @landsvagen
     isProperName = true
     posture = sitting
@@ -43,19 +46,69 @@ vidOvergivetHus: OutdoorRoom 'Vid ett övergivet hus' 'vid ett övergivet hus'
     east = husetsVeranda
 ;
 
-husetsVeranda: OutdoorRoom 'Husets veranda' 'husverandan'
+husetsVeranda: OutdoorRoom 'Husets veranda (västra sidan)' 'husverandan'
+    "Du står på husets veranda. En dörr leder in till huset till öst och man kan följa verandan till husets södra sida söderut"
     west = vidOvergivetHus
     east = husdorrOutside
     in asExit(east)
+    south = husetsSydsida
 ;
-+husdorrOutside: Door -> husdorrInside 'dörr[-en]*dörrar[-na]' 'dörr';
++husdorrOutside: LockableWithKey, Door -> husdorrInside 'dörr[-en]*dörrar[-na]' 'dörr'
+    dobjFor(Attack) {
+        action() {
+            husdorrOutside.isOpen = true;
+            husdorrOutside.moveInto(nil);
+            husdorrInside.moveInto(nil);
+            husetsVeranda.east = huset;
+            huset.west = huset;
+            flis.moveInto(huset);
+            "Du tar i hårt och sparkar in i dörren, plankorna som den bestod av blev till flis där din fot träffade. Några till sparkar får den att rasa ihop fullständigt. ";
+        }
+    }
+;
+
+husetsSydsida: OutdoorRoom 'Husets veranda (södra sidan)' 'husverandan'
+    "Du står på husets veranda på södra sidan. Verandan går tillbaka västerut till husets västra sida. Ett fönster står på halvglänt här. "
+    west = husetsVeranda
+    north = husFonsterSydsidaUtsida
+    in asExit(north)
+;
++husFonsterSydsidaUtsida: Door -> husFonsterSydsidaInsida 'fönst[-er]*fönst[-rena]' 'fönster'
+;
+
+
+husetsKok: Room 'Köket' 'köket'
+    "I kökets mitt står ett köksbord och två stolar. Köksskåp pryder västra väggen och till söder står diskhon. Ett halvöppet avställt kylskåp står här också mot östra väggen. En korridor går vidare norrut. "
+    south = husFonsterSydsidaInsida
+    north = huset
+;
+
++husFonsterSydsidaInsida: Door -> husFonsterSydsidaUtsida 'fönster/fönstret*fönster' 'fönster'
+;
 
 huset: Room 'I husets vestibul' 'husets vestibul' 
     west = husdorrInside
+    south = husetsKok
+    east = vardagsrum
     out asExit(west)
 ;
-+husdorrInside: Door -> husdorrOutside 'dörr[-en]*dörrar[-na]' 'dörr';
 
++husdorrInside: LockableWithKey, Door -> husdorrOutside 'dörr[-en]*dörrar[-na]' 'dörr'
+    isLocked = true
+;
+
+vardagsrum: Room 'vardagsrummet' 'vardagsrummet'
+    "En enkel soffa står här. "
+    west = huset
+;
++soffa: Thing 'soffa[-n]' 'soffa'
+;
+
+
+// TODO: några dörrflis,
+flis: Thing 'dörrflis' 'dörrflis'
+    isPlural = true
+;
 
 // ------------------------------
 

@@ -15,13 +15,21 @@
 
 gameMain: GameMainDef
     //initialPlayerChar = me
-    //initialPlayerChar = argon
+    initialPlayerChar = argon
     //initialPlayerChar = maria
-    initialPlayerChar = karl
-    
+    //initialPlayerChar = karl
+    //initialPlayerChar = emma
+    //initialPlayerChar = julia
+    usePastTense = true    
     
 
     showIntro() {
+        if(initialPlayerChar == emma) {
+            sommarsagaGlobal.showIntro();
+        }
+        if(initialPlayerChar == julia) {
+            juliaGlobal.showIntro();
+        }
     }
 ;
 
