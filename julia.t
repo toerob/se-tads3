@@ -1,4 +1,4 @@
-#charset "utf-8"
+#charset "UTF-8"
 #include <adv3.h>
 #include <sv_se.h> 
 
@@ -50,7 +50,7 @@ skogen: OutdoorRoom 'skogen' 'skogen'
 ;
 
 
-jagare:  Actor 'hjortjägare' 'hjortjägare'
+jagare:  Actor 'hjortjägare/jägare' 'hjortjägare'
     proper = true
 ;
 
@@ -60,6 +60,7 @@ jagare:  Actor 'hjortjägare' 'hjortjägare'
     invokeItem() {
         jagare.moveInto(gardsgard);
         "En hjortjägare kliver fram ur skogen och går fram till hjorten. Han tar tag i kronen och dra hjorten mot kärran. ";
+        isDone = true;
     }
     initiallyActive = true
 ;

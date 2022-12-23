@@ -2813,9 +2813,9 @@ playerActionMessages: MessageHelper
 
     /* default response to open/close */
     okayOpenMsg = shortTMsg(
-        'Öppnad. ', '{Du/han} öppna{r/de} {the dobj/him}. ')
+        'Öppnat. ', '{Du/han} öppna{r/de} {the dobj/him}. ')
     okayCloseMsg = shortTMsg(
-        'Stängd. ', '{Du/han} stäng{er|de} {the dobj/him}. ')
+        'Stängt. ', '{Du/han} stäng{er|de} {the dobj/him}. ')
 
     /* default response to lock/unlock */
     okayLockMsg = shortTMsg(
@@ -5468,7 +5468,8 @@ implicitAnnouncementGrouper: object
                      *   if one or the other is empty, use the non-nil one 
                      */
                     if (addTxt != '' && curTxt != '')
-                        curTxt += ' och sen ' + addTxt;
+                        //curTxt += ' och sen ' + addTxt;
+                        curTxt += ', ' + addTxt;
                     else if (addTxt != '')
                         curTxt = addTxt;
                 }
@@ -5476,7 +5477,8 @@ implicitAnnouncementGrouper: object
 
             /* add a separator before this item if it isn't the first */
             if (txt != '' && curTxt != '')
-                txt += ', sen ';
+                //txt += ', sen ';
+                txt += ' och ';
 
             /* add the current item's text */
             txt += curTxt;

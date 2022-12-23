@@ -26,6 +26,7 @@
 -Fo obj
 -v
 -D
+-d
 -FIinclude
 -FLlib
 -o svenska.t3

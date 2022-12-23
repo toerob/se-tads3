@@ -6,7 +6,7 @@
 
 
 
-karl:  Actor 'karl' 'Karl' @landsvagen
+karl:  Actor 'karl' 'Karl' @husetsVeranda //landsvagen
     isProperName = true
     posture = sitting
 ;
@@ -54,6 +54,7 @@ husetsVeranda: OutdoorRoom 'Husets veranda (västra sidan)' 'husverandan'
     south = husetsSydsida
 ;
 +husdorrOutside: LockableWithKey, Door -> husdorrInside 'dörr[-en]*dörrar[-na]' 'dörr'
+    isLocked = true
     dobjFor(Attack) {
         action() {
             husdorrOutside.isOpen = true;

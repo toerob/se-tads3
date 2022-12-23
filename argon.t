@@ -19,16 +19,11 @@ En fiskare svarar inte.
 */
 
 
-argon: Actor 'argon' 'Argon' @fiskarensboning
+argon: Actor 'argon' 'Argon' @vid_stuga //@fiskarensboning
     pcReferralPerson = FirstPerson
 ;
 
 
-fiskare:  Actor 'fiskare[-n]' 'fiskare' @fiskarensboning
-    ""
-    //isProperName = true
-    isHim = true
-;
 
 
 
@@ -121,10 +116,6 @@ fiskarensboning: Room 'fiskarens boning' 'fiskarens boning'
 ;
 
 
-
-
-
-
 vid_stuga: OutdoorRoom 'Vid en stuga'
     "..."
     northeast = huvudvagen
@@ -134,6 +125,7 @@ vid_stuga: OutdoorRoom 'Vid en stuga'
 ;
 +stugdorrenOutside: LockableWithKey, Door -> stugdorrenInside 'dörr[-en]*dörrar[-na]' 'dörr'
     keyList = [stugdorrsnyckel]
+    isLocked  = true
 ;
 
 
