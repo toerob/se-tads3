@@ -20,11 +20,15 @@
 
 -we
 -D TADS_INCLUDE_NET
--D LANGUAGE=en_us
+-D LANGUAGE=sv_se
 -D MESSAGESTYLE=neu
 -Fy obj
 -Fo obj
 -v
+-D
+-d
+-FIinclude
+-FLlib
 -o tads3-web.t3
 
 ##sources
@@ -32,7 +36,27 @@
 -lib webui
 -source tadsnet
 -lib adv3/adv3web
--source tads3
+
+-source svenska
+-source plats/labbet
+-source karaktar/professor
+-source plats/korridor
+-source mailman
+-source karaktar/maria
+-source karaktar/fiskare
+-source plats/naturen
+
+
+#-source _gameTrackerAdv3
+#-source SwedishDictionary
+
+-source argon
+-source trollsommar
+-source sommarsaga
+-source julia
+
+
+
 
 -res
 GameInfo.txt

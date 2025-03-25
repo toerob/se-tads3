@@ -2032,7 +2032,9 @@ modify Thing
 
     
     verbEndingR { return 'r'; }
-    
+
+    verbEndingA { return 'a'; }
+
     verbEndingAR { return 'ar'; }
     
     verbEndingRDe = (tSel(verbEndingR, 'de'))
@@ -4021,6 +4023,7 @@ langMessageBuilder: MessageBuilder
         ['s/?ed', &verbEndingSMessageBuilder_, nil, nil, true],
 
         // Swedish adaptation begins here
+        ['a', &verbEndingA, nil, nil, true],
         ['r', &verbEndingR, nil, nil, true],
         ['r/de', &verbEndingRDe, nil, nil, true],
         ['r/?de', &verbEndingRMessageBuilder_, nil, nil, true],
@@ -8293,10 +8296,9 @@ class ImplicitAnnouncementContext: object
      // NOTE: useInfPhrase=nil: "först öppnandes dörr"
 
      // TODO: Gör om till: "först öppnar 'du' dörren"
+        //tensePhrase = 'öppna{r|de}/öppnandes (vad)' // {du/han}
 
     useInfPhrase = true
-
-    useTensePhrase = true
 
     /* is this message going in a list? */
     isInList = nil
@@ -8311,37 +8313,15 @@ class ImplicitAnnouncementContext: object
     /* our getVerbPhrase context - by default, don't use one */
     getVerbCtx = nil
 
-
     /* generate the announcement message given the action description */
     buildImplicitAnnouncement(txt)
     {
-        //"<<getVerbCtx == nil?'yes':'no'>>";
-        // TODO: konstig mening plus avsaknad av definitiv form:
-        // "först öppnandes dörr (-en)"
-        //local parts = txt.split(' ');
-        //"[[<<parts.join(' ')>>]]";
-        //txt = 'först <<parts[1]>> {du/han} <<parts[2]>>';
-
-        // TODO: gör om
-        // 'först klivandes upp' till: kliver 'först' upp
-        // 'först öppnandes dörr' till: öppnar 'först' dörren
-        // 'först öppnandes dörr' till: öppnade 'först' dörren
-
-
-        //"<<txt>>";
-        // TODO:  fixa implicita fraser... vad händer t ex om det är imperfekt?
-        // implicit öppna/öppnar tar inte hänsyn till detta t ex
-        
-        //"\n[<<txt>>]\n";
         /* if we're not in a list, make it a full, stand-alone message */
         if (!isInList) {
-            local parts = txt.split(' ');
-            if(parts.length>1) {
-                // Lägg in namnet på verbets utförare direkt efter verbets namn:
-                txt = parts.car() + ' {du/han} ' + parts.cdr().join(' ');
-            }
-            txt = '<./p0>\n<.assume>först ' + txt + '<./assume>\n';
-            //txt = '<./p0>\n<.assume>' + txt + '<./assume>\n';
+            /* if we're not in a list, make it a full, stand-alone message */
+            if (!isInList)
+                txt = '<./p0>\n<.assume>' + txt + ' först<./assume>\n';
+            return txt;
         }
 
         /* return the result */
@@ -8359,7 +8339,6 @@ tryingImpCtx: ImplicitAnnouncementContext
      *   the announcement: "(first trying to OPEN THE BOX)".
      */
     useInfPhrase = true
-    useTensePhrase = nil
 
     /* build the announcement */
     buildImplicitAnnouncement(txt)
@@ -8370,11 +8349,21 @@ tryingImpCtx: ImplicitAnnouncementContext
          *   necessary if we're in a 'trying' list, since the list itself
          *   will have the 'trying' part.
          */
+         // TODO: Ändra här istället för ovan
         if (!isInList) {
-            local tryText = !isInSublist? 'försök{er|te} {du/han} ' : '';
-            txt = '<./p0>\n<.assume>först <<tryText>>' + txt + '<./assume>\n';
+            // Skippar så länge försöker då det inte passar in i formen på meningen:
+            txt = '{försöker|försökte} ' + txt;
+
+            
+            //local tryText = !isInSublist? 'försök{er|te} {du/han} ' : '';
+            //txt = '<./p0>\n<.assume> dffd <<tryText>>' + txt + '<./assume>\n';
+            //tadsSay(txt, '****');
         }
-        return txt;
+
+        /* now build the message into the full text as usual */
+        //return inherited(txt);
+
+        return inherited(txt);
     }
 ;
 
@@ -8628,8 +8617,9 @@ modify Action
          *   Get the phrase.  Use the infinitive or participle form, as
          *   indicated in the context.
          */
-        local mupp = getVerbPhrase(ctx.useInfPhrase, ctx.getVerbCtx, ctx.useTensePhrase);
-        return mupp;
+        local x = getVerbPhrase(ctx.useInfPhrase, ctx.getVerbCtx);
+        //tadsSay('(Get the phrase: <<x>>)');
+        return x;
     }
 
     /*
@@ -8643,9 +8633,9 @@ modify Action
     getInfPhrase()
     {
         /* return the verb phrase in infinitive form */
-        local mupp = getVerbPhrase(true, nil);
-        //"[<<mupp>>]";
-        return mupp;
+        local x = getVerbPhrase(true, nil);
+        //tadsSay('(infinitive form <<x>>)');
+        return x;
     }
 
     /*
@@ -8698,8 +8688,10 @@ modify Action
      *   isolation.
      */
      //
-    getVerbPhrase(inf, ctx, useTensePhrase = nil)
+    getVerbPhrase(inf, ctx)
     {
+        /*
+        TA BORT?
         if(useTensePhrase) {
             local predicate = getPredicate();
             if(predicate && predicate.tensePhrase) {
@@ -8707,15 +8699,13 @@ modify Action
                 //"MUPPE: <<getPredicate().tensePhrase>> ";
                 //"<<getPredicate()>>";
                 rexMatch('(.*)/(<alphanum|-|squote>+)(.*)', getPredicate().tensePhrase);
-                /*
-                *   infinitive - we want the part before the slash, plus the
-                *   extra prepositions (or whatever) after the switched part
-                */
+                //   infinitive - we want the part before the slash, plus the
+                //   extra prepositions (or whatever) after the switched part
                 return rexGroup(1)[3] + rexGroup(3)[3];
 
             }
 
-        }
+        }*/
 
         /*
         *   parse the verbPhrase into the parts before and after the
@@ -10898,32 +10888,31 @@ VerbRule(Detach)
 VerbRule(Open)
     'öppna' dobjList
     : OpenAction
-    verbPhrase = 'öppn{a|de}/öppnandes (vad)'
-    tensePhrase = 'öppn{ar|de}/öppnandes (vad)' // {du/han}
+    verbPhrase = 'öppna/öppnande (vad)'
 ;
 
 VerbRule(Close)
     ('stäng' | ('slå'|'stäng') 'igen') dobjList
     : CloseAction
-    verbPhrase = 'stäng{a|er}/stängandes (vad)'
+    verbPhrase = 'stänga/stängande (vad)'
 ;
 
 VerbRule(Lock)
     'lås' dobjList
     : LockAction
-    verbPhrase = 'lås{a|er}/låsandes (vad)'
+    verbPhrase = 'låsa/låsande (vad)'
 ;
 
 VerbRule(Unlock)
     'lås' 'upp' dobjList
     : UnlockAction
-    verbPhrase = 'lås{a|te}/låsandes upp (vad)'
+    verbPhrase = 'låsa/låsande upp (vad)'
 ;
 
 VerbRule(LockWith)
     'lås' singleDobj 'med' singleIobj
     : LockWithAction
-    verbPhrase = 'lås{a|te}/låsandes (vad) (med vad)'
+    verbPhrase = 'låsa/låsande (vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
@@ -10932,7 +10921,7 @@ VerbRule(LockWith)
 VerbRule(UnlockWith)
     'lås' 'upp' singleDobj 'med' singleIobj
     : UnlockWithAction
-    verbPhrase = 'lås{a|te} upp/upplåsandes (vad) (med vad)'
+    verbPhrase = 'låsa upp/upplåsande (vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
@@ -10942,7 +10931,7 @@ VerbRule(SitOn)
     'sitt' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
         singleDobj
     : SitOnAction
-    verbPhrase = 's{i|a}tt{a|}/sittandes (på vad)'
+    verbPhrase = 'sitta/sittande (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -10952,14 +10941,14 @@ VerbRule(SitOn)
 
 VerbRule(Sit)
     'sitt' ( | 'ner') : SitAction
-    verbPhrase = 's{i|a}tt{a|}/sittandes ner'
+    verbPhrase = 'sitta/sittande ner'
 ;
 
 VerbRule(LieOn)
     'ligg' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
         singleDobj
     : LieOnAction
-    verbPhrase = '{ligga|låg}/liggandes (på vad)'
+    verbPhrase = 'ligga/liggande (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -10969,7 +10958,7 @@ VerbRule(LieOn)
 
 VerbRule(Lie)
     'ligg' ( | 'ner') : LieAction
-    verbPhrase = 'l{igga|åg}/liggandes ner'
+    verbPhrase = 'ligga/liggande ner'
 ;
 
 VerbRule(StandOn)
@@ -11089,10 +11078,13 @@ VerbRule(PlugIntoWhat)
     }
 ;
 
+
+// TODO: gör om alla verbPhrase till utan {}
+
 VerbRule(PlugIn)
     'koppla' ('i'|'in') dobjList
     : PlugInAction
-    verbPhrase = 'koppla{|de} in/inkopplandes (vad)'
+    verbPhrase = 'koppla in/inkopplande (vad)'
 ;
 
 VerbRule(UnplugFrom)
@@ -11111,13 +11103,13 @@ VerbRule(Unplug)
 VerbRule(Screw)
     'skruva' dobjList
     : ScrewAction
-    verbPhrase = 'skruva{|de}/skruvandes (vad)'
+    verbPhrase = 'skruva/skruvande (vad)'
 ;
 
 VerbRule(ScrewWith)
     'skruva' dobjList 'med' singleIobj
     : ScrewWithAction
-    verbPhrase = 'skruva{|de}/skruvandes (vad) (med vad)'
+    verbPhrase = 'skruva/skruvande (vad) (med vad)'
     omitIobjInDobjQuery = true
     askIobjResponseProd = withSingleNoun
 ;
@@ -11125,13 +11117,13 @@ VerbRule(ScrewWith)
 VerbRule(Unscrew)
     'skruva' ('loss'|'lös') dobjList
     : UnscrewAction
-    verbPhrase = 'skruva{|de} loss/avskruvandes (vad)'
+    verbPhrase = 'skruva loss/avskruvande (vad)'
 ;
 
 VerbRule(UnscrewWith)
     'skruva' ('loss'|'lös')  dobjList 'med' singleIobj
     : UnscrewWithAction
-    verbPhrase = 'skruva{|de} loss/avskruvandes (vad) (med vad)'
+    verbPhrase = 'skruva{|de} loss/avskruvande (vad) (med vad)'
     omitIobjInDobjQuery = true
     askIobjResponseProd = withSingleNoun
 ;

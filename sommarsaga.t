@@ -50,13 +50,18 @@ emma: Actor 'Emma' 'Emma' @tradgarden
 	}
 ;
 
-vedbod: Room 'Vedboden' 'vedboden'
-	"Vedboden hade ganska lite ved kvar. Den mesta hade använts upp under vintern. "
+vedbod: Room 'Vedboden' 'vedboden' "<<one of>>När du kliver in i vedboden ser du till din överraskning en tomte som står och travar ved. Han tittar skräckslaget på dig och springer sedan raskt ut genom dörren.<<or>>Vedboden hade ganska lite ved kvar. Den mesta hade använts upp under vintern. <<stopping>>"
+	west = vedboddorrInsida
 ;
-
 +vedboddorrInsida: Door 'dörr[-en]*dörrar[-na]' 'dörr';
 
-+tomte: Actor 'tomte[-n]' 'tomte'
+// TODO: skrivs ut 'några' istället för lite.
++ ved: Thing 'lite ved[-en]' 'lite ved'
+	isPlural = true
+;
+
+
+tomte: Actor 'tomte[-n]' 'tomte'
 	isHe = true
 	isHer = nil
 	isProperName = nil // TODO: fungerar inte. "Tomte står där."

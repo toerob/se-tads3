@@ -16,11 +16,12 @@
 gameMain: GameMainDef
     //initialPlayerChar = me
     //initialPlayerChar = argon
-    //initialPlayerChar = maria
+    initialPlayerChar = maria
     //initialPlayerChar = karl
     //initialPlayerChar = emma
-    initialPlayerChar = julia
-    usePastTense = nil    
+
+    //initialPlayerChar = julia
+    usePastTense = true
     
 
     showIntro() {

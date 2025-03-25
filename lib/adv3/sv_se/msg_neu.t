@@ -4648,7 +4648,7 @@ class BaseThingContentsLister: Lister
     showListPrefixTall(itemCount, pov, parent)
         { "\^<<parent.nameVerb('innehåller')>>:"; }
     showListContentsPrefixTall(itemCount, pov, parent)
-        { "<<parent.aName>>, som innehåller<<parent.verbEndingSEd>>:"; }
+        { "<<parent.aName>>, som {innehåller|innehöll}:"; }
 ;
 
 /*
@@ -4682,7 +4682,8 @@ openableDescContentsLister: thingDescContentsLister
     }
     showListPrefixWide(itemCount, pov, parent)
     {
-        "\^<<parent.openStatus>>, och innehåller<<parent.verbEndingSEd>> ";
+        //"\^<<parent.openStatus>>, och innehåller <<parent.verbEndingSEd>> ";
+        "\^<<parent.openStatus>>, och {innehåller|innehöll} ";
     }
 ;
 
@@ -4945,7 +4946,8 @@ class BaseInlineContentsLister: ContentsLister
  */
 inlineListingContentsLister: BaseInlineContentsLister
     showListPrefixWide(cnt, pov, parent)
-        { " (som innehåller<<parent.verbEndingSEd>> "; }
+        //{ " (som innehåller<<parent.verbEndingSEd>> "; }
+        { " (som {innehåller|innehöll} "; }
 ;
 
 /* in-line contents lister for a surface */
