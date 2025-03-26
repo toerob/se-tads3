@@ -13,18 +13,20 @@
 #include "sv_se.h" //en_us.t
 
 
+   
+
 gameMain: GameMainDef
     //initialPlayerChar = me
     //initialPlayerChar = argon
-    initialPlayerChar = maria
-    //initialPlayerChar = karl
+    //initialPlayerChar = maria
+    initialPlayerChar = karl
     //initialPlayerChar = emma
-
     //initialPlayerChar = julia
-    usePastTense = true
+    usePastTense = nil    
     
 
     showIntro() {
+
         if(initialPlayerChar == emma) {
             sommarsagaGlobal.showIntro();
         }

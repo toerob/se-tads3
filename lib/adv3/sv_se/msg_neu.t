@@ -1631,8 +1631,8 @@ libMessages: MessageHelper
     closedMsg(obj) { return 'stäng<<obj.isUter?'d':'t'>>'; }
 
     /* object is currently open/closed */
-    currentlyOpen = '{It\'s dobj} för närvarande öppen. '
-    currentlyClosed = '{It\'s dobj} för närvarande stängd. '
+    currentlyOpen = '{It\'s dobj} för närvarande öppe<<obj.isUter?'n':'t'>>. '
+    currentlyClosed = '{It\'s dobj} för närvarande stäng<<obj.isUter?'d':'t'>>. '
 
     /* stand-alone independent clause describing current open status */
     openStatusMsg(obj) { return obj.itIsContraction + ' ' + obj.openDesc; }
@@ -3810,8 +3810,8 @@ playerActionMessages: MessageHelper
         '{That dobj/he} {är} inte någonting {du/han} {kan} stänga. '
 
     /* already open/closed */
-    alreadyOpenMsg = '{The dobj/he} {är} redan öppen. '
-    alreadyClosedMsg = '{The dobj/he} {är} redan stängd. '
+    alreadyOpenMsg = '{The dobj/he} {är} redan öppe<<self.isUter?'n':'t'>>. '
+    alreadyClosedMsg = '{The dobj/he} {är} redan stäng<<self.isUter?'d':'t'>>. '
 
     /* already locked/unlocked */
     alreadyLockedMsg = '{The dobj/he} {är} redan låst. '

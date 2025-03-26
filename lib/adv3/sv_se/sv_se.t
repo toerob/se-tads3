@@ -478,6 +478,27 @@ modify VocabObject
         /* start off in the adjective section */
         sectPart = &adjective;
 
+
+        //if(str.match('{')) {
+
+        local result = handleWordForms(str);
+        if(result.length>0) {
+            result.length>0 && "\n***************************************************************************\n";
+            result
+                .subset({y: y.isDefinitive && !y.isPlural})
+                .forEach(function(x) {
+                    theName = x.withEnding;
+                    "The name: <<theName>>";
+
+                    //"\n<<if x.isDefinitive>>Definitive<<end>><<if x.isPlural>> plural<<end>> form ending: <<x.withEnding>>\n";  
+                });
+            result.length>0 && "\n***************************************************************************\n";
+
+        }
+        //}
+                        
+
+
         /* scan the string until we run out of text */
         while (str != '')
         {
@@ -572,6 +593,7 @@ modify VocabObject
                         "vocabWord: <<cur>>\n";
                         local ending = rexGroup(1)[3];
                         //"ending: <<ending>>\n";
+
 
                         // Once we got the ending we can remove the ending syntax ([-xyz]) from the vocabWord
                         cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
@@ -1304,9 +1326,6 @@ modify Thing
             str = yourAkkPossAdj + str;              
         }*/
 
-
-
-
         //local article = (isUter?'en':'ett');
         //return (isQualifiedName ? '' : article + ' ') + str ; 
         return str;
@@ -1322,7 +1341,10 @@ modify Thing
         //"org:[<<txt>>]";
 
         local idx=0;
-        
+
+        // Tex: fönst[-er|-ret]
+        txt = txt.findReplace('[-er|-ret]', 'ret', ReplaceAll, idx);   // -- print noun genitive endings
+
         txt = txt.findReplace('[-et]', 'et', ReplaceAll, idx);   // -- print noun genitive endings
         txt = txt.findReplace('[-en]', 'en', ReplaceAll, idx);   // -- print noun genitive endings
 
@@ -1358,7 +1380,10 @@ modify Thing
     // #################################################
 
     replacePluralEndings(txt) {
+
+
         txt = txt.findReplace('[-orna]', 'orna', ReplaceAll);   // -- print noun genitive endings
+        txt = txt.findReplace('[-ren]', 'ren', ReplaceAll);   // -- print noun genitive endings
         txt = txt.findReplace('[-na]', 'na', ReplaceAll);   // -- print noun genitive endings
 
         /*txt = txt.findReplace('[^]', self.adjPluralEnding, ReplaceAll); // -- replace adjective endings
@@ -1391,6 +1416,7 @@ modify Thing
     
 
     cutEndings(txt) {
+        txt = txt.findReplace('[-ret]', '', ReplaceAll);   // ##### remove noun genitive endings
         txt = txt.findReplace('[-en]', '', ReplaceAll);   // ##### remove noun genitive endings
         txt = txt.findReplace('[-et]', '', ReplaceAll); // ##### remove noun genitive endings
         txt = txt.findReplace('[-n]', '', ReplaceAll);  // ##### remove noun genitive endings
@@ -11331,3 +11357,65 @@ VerbRule(AskAboutWhat)
     }
 ;
 */
+
+
+
+/**
+ * Example usage: handleWordForms('fönst{er,ret@d,ren@p,rena@dp}');
+ */
+
+
+swedishHelperGlobals: object 
+  wordFormPattern = static R'(.*)[{](.*)[}]'
+  //wordFormPattern = static R'(.*)[%](.*)[%]]'
+;
+
+
+handleWordForms(mainSentence) {
+  //"\nmain Sentence: <<mainSentence>>\n";
+  local wordEndingForms = new List();
+  local wordGroup = mainSentence.split(R'[* ]');
+  foreach(local textPart in wordGroup) {
+    //"\ntext part: <<textPart>>\n";
+    rexMatch(swedishHelperGlobals.wordFormPattern, textPart);
+    local wordStart = rexGroup(1);
+    local endingsPart = rexGroup(2);
+
+    //"wordStart: <<wordStart[3]>>";
+
+    if(endingsPart) {
+
+      local endings = endingsPart[3].split(',');      
+      endings.forEach(function(ending) {
+        //"\nEnding: <<ending>>\n";
+        if(ending.endsWith('@d')) { // definitive singular
+          ending = ending.substr(0, ending.length-2);
+          wordEndingForms += new WordEndingForm(wordStart[3], ending, true);
+        } else if(ending.endsWith('@p')) { // plural
+          ending = ending.substr(0, ending.length-2);
+          wordEndingForms += new WordEndingForm(wordStart[3], ending, nil, true);
+        } else if(ending.endsWith('@dp')) { // definitive plural
+          ending = ending.substr(0, ending.length-3);
+          wordEndingForms += new WordEndingForm(wordStart[3], ending, true, true);
+        }
+      });
+    }
+  }
+  return wordEndingForms; 
+}
+
+class WordEndingForm: object
+  wordStart = nil
+  ending = nil
+  isDefinitive = nil
+  isPlural = nil
+  construct(wordStart, ending, isDefinitive = nil, isPlural = nil) {
+    self.wordStart = wordStart;
+    self.ending = ending;
+    self.isDefinitive = isDefinitive;
+    self.isPlural = isPlural;
+  }
+  withEnding() {
+    return wordStart + ending;
+  }
+;

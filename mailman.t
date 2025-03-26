@@ -19,6 +19,9 @@ mailman:Actor 'b/brevis/brevbärare[-n]*brevbärarna' 'brevbärare' @labbet
     agendaOrder = 150
     //isReady = gPlayerChar.canSee(mailman)
     invokeItem() {
+        
+        mailman.getOutermostRoom();// TODO: Fixa detta först
+
         local facingCurrentDoor = mailman.getOutermostRoom() == labbet? labbetDoorInside: labbetDoorOutside;
 
         if(facingCurrentDoor.isLocked) {

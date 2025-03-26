@@ -4,9 +4,7 @@
 
 
 
-
-
-karl:  Actor 'karl' 'Karl' @husetsVeranda //landsvagen
+karl:  Actor 'karl' 'Karl' @huset //@husetsVeranda //landsvagen
     isProperName = true
     posture = sitting
 ;
@@ -100,10 +98,29 @@ huset: Room 'I husets vestibul' 'husets vestibul'
 
 vardagsrum: Room 'vardagsrummet' 'vardagsrummet'
     "En enkel soffa står här. "
+    roomFirstDesc {
+        "När du kliver in i vardagsrummet hör du något rassla till. Du ser en skugga röra sig bakom en grön sliten soffa. Du iaktar den försiktigt när du plötsligt ser något litet och ludet med en svans springa iväg från sitt gömställe och hoppa ut genom fönstret som står på glänt bakom soffan. ";
+    } 
     west = huset
 ;
+
 +soffa: Thing 'soffa[-n]' 'soffa'
+    initSpecialDesc = ""
 ;
+
+//TODO: behövs fönst[-er|-ret]c eller liknande också?
+/*+fonster: Openable, Fixture 'fönster[-et] fönstret*fönster' 'fönster'
+    isOpen = true
+;*/
+
++fonster: Openable, Fixture 'fonst{er,ret@d,ren@p,rena@dp}' 'fönster'
+    isOpen = true
+;
+
+//
+
+
+//+husFonsterSydsidaInsida: Door -> husFonsterSydsidaUtsida 'fönster/fönstret*fönster' 'fönster'
 
 
 // TODO: några dörrflis,
@@ -122,5 +139,3 @@ vastraSkogen: Room 'västra skogen vid vägkanten' 'västra skogen vid vägkante
 strandkant: OutdoorRoom 'Stranden' 'stranden'
     east = vastraSkogen
 ;
-
-
