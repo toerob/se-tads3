@@ -22,7 +22,7 @@ gameMain: GameMainDef
     initialPlayerChar = karl
     //initialPlayerChar = emma
     //initialPlayerChar = julia
-    usePastTense = nil    
+    usePastTense = true    
     
 
     showIntro() {
