@@ -4642,11 +4642,11 @@ actorHoldingDescInventoryListerShort: actorInventoryLister
  */
 class BaseThingContentsLister: Lister
     showListPrefixWide(itemCount, pov, parent)
-        { "\^<<parent.nameVerb('innehåller')>> "; }
+        { "\^<<parent.nameVerb('{innehåller|innehöll}')>> "; }
     showListSuffixWide(itemCount, pov, parent)
         { ". "; }
     showListPrefixTall(itemCount, pov, parent)
-        { "\^<<parent.nameVerb('innehåller')>>:"; }
+        { "\^<<parent.nameVerb('{innehåller|innehöll}')>>:"; }
     showListContentsPrefixTall(itemCount, pov, parent)
         { "<<parent.aName>>, som {innehåller|innehöll}:"; }
 ;

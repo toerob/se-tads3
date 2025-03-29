@@ -2,17 +2,56 @@
 #include <adv3.h>
 #include <sv_se.h> 
 
+tVader: Topic vocabWords = 'vädret';
+tPolitik: Topic vocabWords = 'politik';
+tMeningenMedLivet: Topic vocabWords = 'meningen/livet';
+
 //TODO: *brevbärare[-na], brevbärare finns redan dock i brevbärare[-n]
 
 mailman:Actor 'b/brevis/brevbärare[-n]*brevbärarna' 'brevbärare' @labbet
     isHim = true
-    
+    globalParamName = 'bob'
 ;
 
-+mailmanState: ActorState 
++ bobTalking: InConversationState
+    attentionSpan = 5
+    specialDesc = "Brevbäraren väntar på att du ska tala. "
+    stateDesc = "Han väntar på att du ska tala. "
+;
+
+++mailmanState: ConversationReadyState 
     isInitState = true
     specialDesc = "En brevbärare står här redo att dela ut brev. "
 ;
+
++++ HelloTopic, StopEventList [
+    '<q>Hej!</q> säger du.\b
+    <q>Hej!</q> svarar Bob och vänder sig mot dig med ett galet leende. ',
+    '<q>Hej igen,</q> hälsar du.\b
+    <q>Ja?</q> svarar han och vänder sig tillbaka mot dig. '
+];
+
++++ ByeTopic "<q>Nåväl, vi ses!</q> säger du.\b
+    <q>Hej så länge,</q> svarar brevbäraren och vänder sig från dig.";
+
++++ BoredByeTopic "Brevbäraren tröttnar på att vänta på att du ska tala och börjar kontrollera sina brev.";
++++ LeaveByeTopic "Brevbäraren ser på när du går iväg och börjar kontrollera sina brev. ";
+
++++ ActorByeTopic "<q>Oj! Är det redan så sent?</q> utbrister brevbäraren och tittar på sin klocka,
+<q>Jag måste göra annat! Hejdå!</q>.";
+
++ GiveTopic @peng 
+topicResponse() {
+    "Du ger  {the bob/him} {the dobj/he} som han accepterar med en artig nickning. ";
+    peng.moveInto(mailman);
+}
+;
+
++AskTopic @tVader
+    "<q>Hur är vädret</q> frågar du.\b
+    <q>Inte värst bra,</q> svarar brevbäraren kyligt. "
+;
+
 
 +mailmanAgenda: AgendaItem
     initiallyActive = true

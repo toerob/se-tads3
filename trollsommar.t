@@ -2,12 +2,13 @@
 #include <adv3.h>
 #include <sv_se.h> 
 
-
+// TODO: x mig
 
 karl:  Actor 'karl' 'Karl' @huset //@husetsVeranda //landsvagen
     isProperName = true
     posture = sitting
 ;
++key: Key 'nyckel[-n]*nycklar[-na]' 'nyckel';
 
 
 landsvagen: OutdoorRoom 'landsvägen' 'landsvägen'
@@ -51,8 +52,8 @@ husetsVeranda: OutdoorRoom 'Husets veranda (västra sidan)' 'husverandan'
     in asExit(east)
     south = husetsSydsida
 ;
-+husdorrOutside: LockableWithKey, Door -> husdorrInside 'dörr[-en]*dörrar[-na]' 'dörr'
-    isLocked = true
++husdorrOutside: LockableWithKey, Door 'dörr[-en]*dörrar[-na]' 'dörr'
+    keyList = [key]    
     dobjFor(Attack) {
         action() {
             husdorrOutside.isOpen = true;
@@ -81,8 +82,15 @@ husetsKok: Room 'Köket' 'köket'
     south = husFonsterSydsidaInsida
     north = huset
 ;
++diskhon: Container 'diskho[-n]' 'diskho'
+;
+
+++tallrik: Surface 'tallrik[-en]*tallrikar[-na]' 'tallrik';
++++sked: Thing 'sked[-en]*skedar[-na]' 'sked';
 
 +husFonsterSydsidaInsida: Door -> husFonsterSydsidaUtsida 'fönster/fönstret*fönster' 'fönster'
+    theName = 'fönstret'
+
 ;
 
 huset: Room 'I husets vestibul' 'husets vestibul' 
@@ -92,8 +100,27 @@ huset: Room 'I husets vestibul' 'husets vestibul'
     out asExit(west)
 ;
 
-+husdorrInside: LockableWithKey, Door -> husdorrOutside 'dörr[-en]*dörrar[-na]' 'dörr'
-    isLocked = true
++bokhylla: Container 'bokhylla[-n] hylla[-n]' 'bokhylla' 
+    initSpecialDesc = "En bokhylla står här. "
+;
+
+++bok: Thing 'bok[-en]*böcker[-na]' 'bok';
+
+++trasnidadFigur: Thing 'träsnidad figur[-en]' 'träsnidad figur' 
+"En träsnidad figur av ett troll. "
+;
+
+
++husdorrInside: LockableWithKey, Door  'dörr[-en]*dörrar[-na]' 'dörr'
+    masterObject = husdorrOutside
+    //isLocked = true
+    keyList = [key]
+    knownKeyList = [key]
+    /*makeLocked(value) {
+        // TODO: makeLocked(nil) fungerar inte (obs: körs på masterObject)
+        inherited(value);
+        tadsSay('TODO: makeLocked <<isLocked>>');
+    }*/
 ;
 
 vardagsrum: Room 'vardagsrummet' 'vardagsrummet'
@@ -103,6 +130,12 @@ vardagsrum: Room 'vardagsrummet' 'vardagsrummet'
     } 
     west = huset
 ;
++ bord: Surface, Heavy 'bord[-et]*bord[-en]' 'bord';
+++ bricka: Surface 'bricka[-n]*brickor' 'bricka';
++++ lov: Thing 'löv[-et]*löven' 'löv';
++++ matta: Surface 'matta[-n]' 'matta';
+++++ bowl: Container 'skål[-en]*skålar' 'skål';
++++++ grape: Food 'grapefrukt[-en]*grapefrukter' 'grapefrukt';
 
 +soffa: Thing 'soffa[-n]' 'soffa'
     initSpecialDesc = ""

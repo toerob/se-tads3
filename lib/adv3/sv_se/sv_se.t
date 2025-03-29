@@ -586,7 +586,7 @@ modify VocabObject
                     // TODO: Denna gäller (enklast och snabbast). 
                     // Ta bort logik för där bestämd form togs ur name 
                     // istället för vocabWords och rensa upp kodspill här och där. 
-                    // Diffa mot föregående commit om det 
+                    // Diffa mot föregår commit om det 
                     // behövs
 
                     if(rexMatch(R'.*[\\[][-](.*)[]].*', cur) != nil) {
@@ -1181,62 +1181,57 @@ modify Thing
      *   depending on the number of the object named "thing" and on the
      *   current narrative tense.
      */
-    conjugateRegularVerb(verb)
-    {
-
+    conjugateRegularVerb(verb) {
+        return verb;
         /*
-         *   Which tense are we currently using?
-         */
+         // Which tense are we currently using?
         if (gameMain.usePastTense)
         {
-            /*
-             *   We want the past tense form.
-             *
-             *   If the last letter is 'e', simply add 'd'.
-             */
+             // We want the past tense form.
+             // If the last letter is 'e', simply add 'd'.
             if (verb.endsWith('e')) return verb + 'd';
 
-            /*
-             *   Otherwise, if the verb ending would become 'ies' in the
-             *   third-person singular present, then it becomes 'ied' in
-             *   the past.
-             */
+            
+             // Otherwise, if the verb ending would become 'ies' in the
+             // third-person singular present, then it becomes 'ied' in
+             // the past.
+             
             else if (rexMatch(iesEndingPat, verb))
                     return verb.substr(1, verb.length() - 1) + 'ied';
 
-            /*
-             *   Otherwise, use 'ed' as the ending.  Don't try to determine
-             *   if the last consonant should be repeated: that's too
-             *   complicated.  We'll just ignore the possibility.
-             */
+            
+             // Otherwise, use 'ed' as the ending.  Don't try to determine
+             // if the last consonant should be repeated: that's too
+             // complicated.  We'll just ignore the possibility.
+             
             else return verb + 'ed';
         }
         else
         {
-            /*
-             *   We want the present tense form.
-             *
-             *   Check our number and person.
-             */
+            
+             // We want the present tense form.
+             //
+             // Check our number and person.
+             
             if (isPlural)
             {
-                /*
-                 *   We're plural, so simply use the base verb form ("they
-                 *   ask").
-                 */
+                
+                 // We're plural, so simply use the base verb form ("they
+                 // ask").
+                 
                 return verb;
             }
             else
             {
-                /*
-                 *   Third-person singular, so we must add the -s suffix.
-                 *   Check for special spelling cases:
-                 *
-                 *   '-y' changes to '-ies', unless the 'y' is preceded by
-                 *   a vowel
-                 *
-                 *   '-sh', '-ch', and '-o' endings add suffix '-es'
-                 */
+                
+                 // Third-person singular, so we must add the -s suffix.
+                 // Check for special spelling cases:
+                 // 
+                 // '-y' changes to '-ies', unless the 'y' is preceded by
+                 // a vowel
+                 //
+                 // '-sh', '-ch', and '-o' endings add suffix '-es'
+                 
                 if (rexMatch(iesEndingPat, verb))
                     return verb.substr(1, verb.length() - 1) + 'ies';
                 else if (rexMatch(esEndingPat, verb))
@@ -1245,7 +1240,7 @@ modify Thing
                     return verb;
                     //return verb + 's';
             }
-        }
+        }*/
     }
 
     /* verb-ending patterns for figuring out which '-s' ending to add */
@@ -8324,7 +8319,7 @@ class ImplicitAnnouncementContext: object
      // TODO: Gör om till: "först öppnar 'du' dörren"
         //
 
-    useInfPhrase = true
+    useInfPhrase = nil
 
     /* is this message going in a list? */
     isInList = nil
@@ -8344,10 +8339,7 @@ class ImplicitAnnouncementContext: object
     {
         /* if we're not in a list, make it a full, stand-alone message */
         if (!isInList) {
-            /* if we're not in a list, make it a full, stand-alone message */
-            if (!isInList)
-                txt = '<./p0>\n<.assume>' + txt + ' först<./assume>\n';
-            return txt;
+            txt = '<./p0>\n<.assume>' + txt + ' först<./assume>\n';
         }
 
         /* return the result */
@@ -8375,20 +8367,11 @@ tryingImpCtx: ImplicitAnnouncementContext
          *   necessary if we're in a 'trying' list, since the list itself
          *   will have the 'trying' part.
          */
-         // TODO: Ändra här istället för ovan
-        if (!isInList) {
-            // Skippar så länge försöker då det inte passar in i formen på meningen:
-            txt = '{försöker|försökte} ' + txt;
-
-            
-            //local tryText = !isInSublist? 'försök{er|te} {du/han} ' : '';
-            //txt = '<./p0>\n<.assume> dffd <<tryText>>' + txt + '<./assume>\n';
-            //tadsSay(txt, '****');
+        if (!isInSublist) {
+            txt = 'försöker ' + txt;
         }
 
         /* now build the message into the full text as usual */
-        //return inherited(txt);
-
         return inherited(txt);
     }
 ;
@@ -8697,6 +8680,18 @@ modify Action
      *   form, using the current command objects: "taking the watch",
      *   "putting the book on the shelf"
      */
+
+    /**
+    * Observera att i svenskan finns det ingen större nytta att använda particip-formen för att konstruera 
+    * meningar så som: "öppnande dörren" eller "tagande boken".
+    * (motsvarande "opening the door" eller "first taking the book")
+    * 
+    * Istället används metoden till att skapa meningar så som "(kliver upp och försöker låsa upp dörren först)", 
+    * "(försöker ta boken först)" eller "(tar boken först)" osv. Vi lagrar med andra ord i verbPhrase formerna "öppna/öppnar"
+    * och "ta/tar" osv.
+    * 
+    * TODO: byt namn till något mer passande för vad den gör. Infinitiv-formen används men inte particip-formen. 
+    */
     getParticiplePhrase()
     {
         /* return the verb phrase in participle form */
@@ -8716,23 +8711,6 @@ modify Action
      //
     getVerbPhrase(inf, ctx)
     {
-        /*
-        TA BORT?
-        if(useTensePhrase) {
-            local predicate = getPredicate();
-            if(predicate && predicate.tensePhrase) {
-                //"MUPPE: <<getPredicate().verbPhrase>> ";
-                //"MUPPE: <<getPredicate().tensePhrase>> ";
-                //"<<getPredicate()>>";
-                rexMatch('(.*)/(<alphanum|-|squote>+)(.*)', getPredicate().tensePhrase);
-                //   infinitive - we want the part before the slash, plus the
-                //   extra prepositions (or whatever) after the switched part
-                return rexGroup(1)[3] + rexGroup(3)[3];
-
-            }
-
-        }*/
-
         /*
         *   parse the verbPhrase into the parts before and after the
         *   slash, and any additional text following the slash part
@@ -9577,7 +9555,8 @@ modify TopicTAction
         {
             /* return a generic pronoun for the topic */
             //return 'that';
-            return 'that (TODO:var används detta?)';
+            //return 'that (TODO:var används detta?)';
+            return 'som (TODO:var används detta?)';
         }
     }
 
@@ -9631,7 +9610,7 @@ modify TopicTAction
 VerbRule(Take)
     ('ta' | 'tag' | 'plocka' 'upp' | 'hämta' ('upp'|)) dobjList
     : TakeAction
-    verbPhrase = 'ta/tagande (vad)'
+    verbPhrase = 'ta/tar (vad)'
 ;
 
 VerbRule(TakeFrom)
@@ -9639,80 +9618,80 @@ VerbRule(TakeFrom)
         ('från' | 'ut' 'ur' | 'bort' | 'av' | 'av' 'från') singleIobj
     | 'ta' 'bort' dobjList 'från' singleIobj
     : TakeFromAction
-    verbPhrase = 'ta/tagande (vad) (från vad)'
+    verbPhrase = 'ta/tar (vad) (från vad)'
 ;
 
 VerbRule(Remove)
     'ta' 'bort' dobjList
     : RemoveAction
-    verbPhrase = 'ta bort/borttagande (vad)'
+    verbPhrase = 'ta bort/tar bort (vad)'
 ;
 
 VerbRule(Drop)
     ('släpp' | 'sätt' 'ner' | 'sätt' 'ner') dobjList
     : DropAction
-    verbPhrase = 'släppa/släppande (vad)'
+    verbPhrase = 'släppa/släpper (vad)'
 ;
 
 VerbRule(Examine)
     ('undersök' | 'inspektera' | 'x'
      | 'titta' 'på' | 'l' 'på' | 'titta' | 'l') dobjList
     : ExamineAction
-    verbPhrase = 'undersöka/undersökande (vad)'
+    verbPhrase = 'undersöka/undersöker (vad)'
 ;
 
 VerbRule(Read)
     'läs' dobjList
     : ReadAction
-    verbPhrase = 'läsa/läsande (vad)'
+    verbPhrase = 'läsa/läser (vad)'
 ;
 
 VerbRule(LookIn)
     ('se'|'titta') ('in'|) ('i'|) ('inuti'|) dobjList
     : LookInAction
-    verbPhrase = 'titta/tittande (i vad)'
+    verbPhrase = 'titta/tittar (i vad)'
 ;
 
 VerbRule(Search)
     'sök' ('igenom'|) dobjList
     : SearchAction
-    verbPhrase = 'söka/sökande igenom (vad)'
+    verbPhrase = 'söka/söker igenom (vad)'
 ;
 
 VerbRule(LookThrough)
     ('titta' | 'l') ('genom' | 'ut') dobjList
     : LookThroughAction
-    verbPhrase = 'titta/tittande (genom vad)'
+    verbPhrase = 'titta/tittar (genom vad)'
 ;
 
 VerbRule(LookUnder)
     ('titta' | 'l') 'under' dobjList
     : LookUnderAction
-    verbPhrase = 'titta/tittande (under vad)'
+    verbPhrase = 'titta/tittar (under vad)'
 ;
 
 VerbRule(LookBehind)
     ('titta' | 'l') 'bakom' dobjList
     : LookBehindAction
-    verbPhrase = 'titta/tittande (bakom vad)'
+    verbPhrase = 'titta/tittar (bakom vad)'
 ;
 
 VerbRule(Feel)
     ('känn' | 'rör') dobjList
     : FeelAction
-    verbPhrase = 'röra/rörande (vad)'
+    verbPhrase = 'röra/rör (vad)'
 ;
 
 VerbRule(Taste)
     'smaka' dobjList
     : TasteAction
-    verbPhrase = 'smaka/smakande (vad)'
+    verbPhrase = 'smaka/smakar (vad)'
 ;
 
 VerbRule(Smell)
     ('lukta' | 'vädra' | 'lukta' 'på') dobjList
     : SmellAction
-    verbPhrase = 'lukta/luktande (vad)'
+    verbPhrase = 'lukta/luktar (vad)'
 
     /*
      *   use the "not aware" version of the no-match message - the object
@@ -9725,13 +9704,13 @@ VerbRule(Smell)
 VerbRule(SmellImplicit)
     'lukta' | 'vädra'
     : SmellImplicitAction
-    verbPhrase = 'lukta/luktande'
+    verbPhrase = 'lukta/luktar'
 ;
 
 VerbRule(ListenTo)
     ('hör' | 'lyssna' 'till' ) dobjList
     : ListenToAction
-    verbPhrase = 'lyssna/lyssnande (till vad)'
+    verbPhrase = 'lyssna/lyssnar (till vad)'
 
     /*
      *   use the "not aware" version of the no-match message - the object
@@ -9744,14 +9723,14 @@ VerbRule(ListenTo)
 VerbRule(ListenImplicit)
     'lyssna' | 'hör'
     : ListenImplicitAction
-    verbPhrase = 'lyssna/lyssnande'
+    verbPhrase = 'lyssna/lyssnar'
 ;
 
 VerbRule(PutIn)
     ('lägg' | 'placera' | 'sätt' ) dobjList
-        ('in' | 'in' 'i' | 'in' 'till' | 'insidan' | 'insidan' 'av') singleIobj
+        ('i' | 'in' | 'in' 'i' | 'in' 'till' | 'insidan' | 'insidan' 'av') singleIobj
     : PutInAction
-    verbPhrase = 'sätta/sättande (vad) (in i vad)'
+    verbPhrase = 'sätta/sätter (vad) (in i vad)'
     askIobjResponseProd = inSingleNoun
 ;
 
@@ -9760,26 +9739,26 @@ VerbRule(PutOn)
         ('på' | ('upp' 'på') | 'på' 'till' | 'uppe' 'på') singleIobj
     | 'sätt' dobjList 'ner' 'på' singleIobj
     : PutOnAction
-    verbPhrase = 'sätta/sättande (vad) (på vad)'
+    verbPhrase = 'sätta/sätter (vad) (på vad)'
     askIobjResponseProd = onSingleNoun
 ;
 
 VerbRule(PutUnder)
     ('lägg' | 'placera' |'sätt') dobjList 'under' singleIobj
     : PutUnderAction
-    verbPhrase = 'sätta/sättande (vad) (under vad)'
+    verbPhrase = 'sätta/sätter (vad) (under vad)'
 ;
 
 VerbRule(PutBehind)
     ('lägg' | 'placera' |'sätt') dobjList 'bakom' singleIobj
     : PutBehindAction
-    verbPhrase = 'sätta/sättande (vad) (bakom vad)'
+    verbPhrase = 'sätta/sätter (vad) (bakom vad)'
 ;
 
 VerbRule(PutInWhat)
     [badness 500] ('lägg' | 'placera' |'sätt') dobjList
     : PutInAction
-    verbPhrase = 'sätta/sättande (vad) (i vad)'
+    verbPhrase = 'sätta/sätter (vad) (i vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -9788,30 +9767,17 @@ VerbRule(PutInWhat)
     }
 ;
 
-/*
-VerbRule(Wear)
-    ('ta'|'ikläd'|'klä'|'kläd') ('på'|) dobjList
-    : WearAction
-    verbPhrase = 'kläd på/iklädande (vad)'
-;
-
-VerbRule(Doff)
-    ('tag'|'ta'|'klä'|'kläd') 'av' dobjList
-    : DoffAction
-    verbPhrase = 'klä av/avklädande (vad)'
-;*/
-
 VerbRule(Kiss)
     'kyss' singleDobj
     : KissAction
-    verbPhrase = 'kyssa/kyssande (vem)'
+    verbPhrase = 'kyssa/kysser (vem)'
 ;
 
 VerbRule(AskFor)
     ('fråga' | 'f') singleDobj 'efter' singleTopic
     | ('fråga' | 'f') 'efter' singleTopic 'av' singleDobj
     : AskForAction
-    verbPhrase = 'fråga/frågande (vem) (efter vad)'
+    verbPhrase = 'fråga/frågar (vem) (efter vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = forSingleNoun
@@ -9820,7 +9786,7 @@ VerbRule(AskFor)
 VerbRule(AskWhomFor)
     ('fråga' | 'f') 'efter' singleTopic
     : AskForAction
-    verbPhrase = 'fråga/frågande (vem) (efter vad)'
+    verbPhrase = 'fråga/frågar (vem) (efter vad)'
     omitIobjInDobjQuery = true
     construct()
     {
@@ -9833,7 +9799,7 @@ VerbRule(AskWhomFor)
 VerbRule(AskAbout)
     ('fråga' | 'f') singleDobj 'om' singleTopic
     : AskAboutAction
-    verbPhrase = 'fråga/frågande (vem) (om vad)'
+    verbPhrase = 'fråga/frågar (vem) (om vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
 ;
@@ -9841,7 +9807,7 @@ VerbRule(AskAbout)
 VerbRule(AskAboutImplicit)
     'f' singleTopic
     : AskAboutAction
-    verbPhrase = 'fråga/frågande (vem) (om vad)'
+    verbPhrase = 'fråga/frågar (vem) (om vad)'
     omitIobjInDobjQuery = true
     construct()
     {
@@ -9854,7 +9820,7 @@ VerbRule(AskAboutImplicit)
 VerbRule(AskAboutWhat)
     [badness 500] 'fråga' singleDobj
     : AskAboutAction
-    verbPhrase = 'fråga/frågande (vem) (om vad)'
+    verbPhrase = 'fråga/frågar (vem) (om vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
     construct()
@@ -9869,7 +9835,7 @@ VerbRule(AskAboutWhat)
 VerbRule(TellAbout)
     ('berätta' | 'b') singleDobj 'om' singleTopic
     : TellAboutAction
-    verbPhrase = 'berätta/berättande (vem) (om vad)'
+    verbPhrase = 'berätta/berättar (vem) (om vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
 ;
@@ -9877,7 +9843,7 @@ VerbRule(TellAbout)
 VerbRule(TellAboutImplicit)
     'b' singleTopic
     : TellAboutAction
-    verbPhrase = 'berätta/berättande (vem) (om vad)'
+    verbPhrase = 'berätta/berättar (vem) (om vad)'
     omitIobjInDobjQuery = true
     construct()
     {
@@ -9890,7 +9856,7 @@ VerbRule(TellAboutImplicit)
 VerbRule(TellAboutWhat)
     [badness 500] 'berätta' singleDobj
     : TellAboutAction
-    verbPhrase = 'berätta/berättande (vem) (om vad)'
+    verbPhrase = 'berätta/berättar (vem) (om vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
     construct()
@@ -9904,26 +9870,26 @@ VerbRule(TellAboutWhat)
 VerbRule(AskVague)
     [badness 500] 'fråga' singleDobj singleTopic
     : AskVagueAction
-    verbPhrase = 'fråga/frågande (vem)'
+    verbPhrase = 'fråga/frågar (vem)'
 ;
 
 VerbRule(TellVague)
     [badness 500] 'berätta' singleDobj singleTopic
     : AskVagueAction
-    verbPhrase = 'berätta/berättande (vem)'
+    verbPhrase = 'berätta/berättar (vem)'
 ;
 
 VerbRule(TalkTo)
-    ('hälsa' | 'säg' 'hej' 'till' | 'prata' ('till'|'med')) singleDobj
+    ('hälsa' ('på'|'till'|) | 'säg' 'hej' 'till' | 'prata' ('till'|'med')) singleDobj
     : TalkToAction
-    verbPhrase = 'prata/pratande (till vem)'
+    verbPhrase = 'prata/pratar (till vem)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(TalkToWhat)
     [badness 500] 'prata'
     : TalkToAction
-    verbPhrase = 'prata/pratande (till vem)'
+    verbPhrase = 'prata/pratar (till vem)'
     askDobjResponseProd = singleNoun
 
     construct()
@@ -9937,50 +9903,50 @@ VerbRule(TalkToWhat)
 VerbRule(Topics)
     ('ämne' | 'ämnen')
     : TopicsAction
-    verbPhrase = 'visa/visande ämnen'
+    verbPhrase = 'visa/visar ämnen'
 ;
 
 VerbRule(Hello)
     ('säg' | ) ('hej' | 'hallå' | 'tjena' | 'tja')
     : HelloAction
-    verbPhrase = 'hälsa/hälsande hej'
+    verbPhrase = 'hälsa/hälsar hej'
 ;
 
 VerbRule(Goodbye)
     ('säg' | ()) ('adjö' | 'hejdå' | 'hej' 'då'| 'farväl')
     : GoodbyeAction
-    verbPhrase = 'ta/tagande farväl'
+    verbPhrase = 'ta/tar farväl'
 ;
 
 VerbRule(Yes)
     'ja' | 'bekräfta' | 'säg' 'ja'
     : YesAction
-    verbPhrase = 'säga/sägande ja'
+    verbPhrase = 'säga/säger ja'
 ;
 
 VerbRule(No)
     'nej' | 'neka' | 'säg' 'nej'
     : NoAction
-    verbPhrase = 'säga/sägande nej'
+    verbPhrase = 'säga/säger nej'
 ;
 
 VerbRule(Yell)
     'skrik' | 'vråla' | 'skräna'
     : YellAction
-    verbPhrase = 'skrika/skrikande'
+    verbPhrase = 'skrika/skriker'
 ;
 
 VerbRule(GiveTo)
     ('ge' | 'erbjud') dobjList 'till' singleIobj
     : GiveToAction
-    verbPhrase = 'ge/givande (vad) (till vem)'
+    verbPhrase = 'ge/ger (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 ;
 
 VerbRule(GiveToType2)
     ('ge' | 'erbjud') singleIobj dobjList
     : GiveToAction
-    verbPhrase = 'ge/givande (vad) (till vem)'
+    verbPhrase = 'ge/ger (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 
     /* this is a non-prepositional phrasing */
@@ -9990,7 +9956,7 @@ VerbRule(GiveToType2)
 VerbRule(GiveToWhom)
     ('ge' | 'erbjud') dobjList
     : GiveToAction
-    verbPhrase = 'ge/givande (vad) (till vem)'
+    verbPhrase = 'ge/ger (vad) (till vem)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -10002,14 +9968,14 @@ VerbRule(GiveToWhom)
 VerbRule(ShowTo)
     'visa' dobjList 'för' singleIobj
     : ShowToAction
-    verbPhrase = 'visa/visande (vad) (till vem)'
+    verbPhrase = 'visa/visar (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 ;
 
 VerbRule(ShowToType2)
     'visa' singleIobj dobjList
     : ShowToAction
-    verbPhrase = 'visa/visande (vad) (till vem)'
+    verbPhrase = 'visa/visar (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 
     /* this is a non-prepositional phrasing */
@@ -10019,7 +9985,7 @@ VerbRule(ShowToType2)
 VerbRule(ShowToWhom)
     'visa' dobjList
     : ShowToAction
-    verbPhrase = 'visa/visande (vad) (till vem)'
+    verbPhrase = 'visa/visar (vad) (till vem)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -10031,27 +9997,27 @@ VerbRule(ShowToWhom)
 VerbRule(Throw)
     ('kasta' | 'släng') dobjList
     : ThrowAction
-    verbPhrase = 'kasta/kastande (vad)'
+    verbPhrase = 'kasta/kastar (vad)'
 ;
 
 VerbRule(ThrowAt)
     ('kasta' | 'släng') dobjList ('på'|'mot') singleIobj
     : ThrowAtAction
-    verbPhrase = 'kasta/kastande (vad) (mot vad)'
+    verbPhrase = 'kasta/kastar (vad) (mot vad)'
     askIobjResponseProd = atSingleNoun
 ;
 
 VerbRule(ThrowTo)
     ('kasta' | 'släng') dobjList 'till' singleIobj
     : ThrowToAction
-    verbPhrase = 'kasta/kastande (vad) (till vem)'
+    verbPhrase = 'kasta/kastar (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 ;
 
 VerbRule(ThrowToType2)
     'kasta' singleIobj dobjList
     : ThrowToAction
-    verbPhrase = 'kasta/kastande (vad) (till vem)'
+    verbPhrase = 'kasta/kastar (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
 
     /* this is a non-prepositional phrasing */
@@ -10061,14 +10027,14 @@ VerbRule(ThrowToType2)
 VerbRule(ThrowDir)
     ('kasta' | 'släng') dobjList ('till' | ) singleDir
     : ThrowDirAction
-    verbPhrase = ('kasta/kastande (vad) ' + dirMatch.dir.name)
+    verbPhrase = ('kasta/kastar (vad) ' + dirMatch.dir.name)
 ;
 
 /* a special rule for THROW DOWN <dobj> */
 VerbRule(ThrowDirDown)
     'kasta' 'ner' dobjList
     : ThrowDirAction
-    verbPhrase = ('kasta/kastande (vad) ner')
+    verbPhrase = ('kasta/kastar (vad) ner')
 
     /* the direction is fixed as 'ner' for this phrasing */
     getDirection() { return downDirection; }
@@ -10077,14 +10043,14 @@ VerbRule(ThrowDirDown)
 VerbRule(Follow)
     'följ' ('efter'|) singleDobj
     : FollowAction
-    verbPhrase = 'följa/följande (vem)'
+    verbPhrase = 'följa/följer (vem)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(Attack)
     ('attackera' | 'döda' | 'slå' | 'sparka') singleDobj
     : AttackAction
-    verbPhrase = 'attackera/attackerande (vem)'
+    verbPhrase = 'attackera/attackera (vem)'
     askDobjResponseProd = singleNoun
 ;
 
@@ -10093,7 +10059,7 @@ VerbRule(AttackWith)
         singleDobj
         'med' singleIobj
     : AttackWithAction
-    verbPhrase = 'attackera/attackerande (vem) (med vad)'
+    verbPhrase = 'attackera/attackera (vem) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
@@ -10101,73 +10067,73 @@ VerbRule(AttackWith)
 VerbRule(Inventory)
     'l' | 'lista' | ('lista'|'ta'|'tag') ('inventarie'|'inventarier')
     : InventoryAction
-    verbPhrase = 'lista/listande inventarier'
+    verbPhrase = 'lista/listar inventarier'
 ;
 
 VerbRule(InventoryTall)
     'l' 'högt' | 'lista' 'högt'
     : InventoryTallAction
-    verbPhrase = 'lista/listande inventarie "hög"'
+    verbPhrase = 'lista/listar inventarie "högt"'
 ;
 
 VerbRule(InventoryWide)
     'l' 'brett' | 'inventarier' 'brett'
     : InventoryWideAction
-    verbPhrase = 'lista/listande inventarier "brett"'
+    verbPhrase = 'lista/listar inventarier "brett"'
 ;
 
 VerbRule(Wait)
     'z' | 'vänta'
     : WaitAction
-    verbPhrase = 'vänta/väntande'
+    verbPhrase = 'vänta/väntar'
 ;
 
 VerbRule(Look)
-    'se' | 'titta' | ('titta'|'se'|'t') ('omkring'|'runt') 
+    ('t' | 'se' | 'titta') ('omkring'|'runt'|) 
     : LookAction
-    verbPhrase = 'titta/tittandess omkring'
+    verbPhrase = 'titta/tittar sig omkring'
 ;
 
 VerbRule(Quit)
-    'avsluta' | 'a'
+    'avsluta' | 'av' | 'a' 
     : QuitAction
-    verbPhrase = 'avsluta/avslutande'
+    verbPhrase = 'avsluta/avslutar'
 ;
 
 VerbRule(Again)
     'igen' | 'g'
     : AgainAction
-    verbPhrase = 'repetera/repeterande det sista kommandot'
+    verbPhrase = 'repetera/repeterar det sista kommandot'
 ;
 
 VerbRule(Footnote)
     ('fotnot' | 'not') singleNumber
     : FootnoteAction
-    verbPhrase = 'visa/visande a fotnoter'
+    verbPhrase = 'visa/visar fotnoter'
 ;
 
 VerbRule(FootnotesFull)
-    'fotnoter' 'full'
+    'fotnoter' ('fullständiga'|'alla'|'allt'|'full'|'fullt')
     : FootnotesFullAction
-    verbPhrase = 'tillåta/tillåtande alla fotnoter'
+    verbPhrase = 'tillåta/tillåter alla fotnoter'
 ;
 
 VerbRule(FootnotesMedium)
     'fotnoter' 'medium'
     : FootnotesMediumAction
-    verbPhrase = 'tillåta/tillåtande nya fotnoter'
+    verbPhrase = 'tillåta/tillåter nya fotnoter'
 ;
 
 VerbRule(FootnotesOff)
     'fotnoter' 'av'
     : FootnotesOffAction
-    verbPhrase = 'gömma/gömmande fotnoter'
+    verbPhrase = 'gömma/gömmer fotnoter'
 ;
 
 VerbRule(FootnotesStatus)
     'fotnoter'
     : FootnotesStatusAction
-    verbPhrase = 'visa/visande fotnoter status'
+    verbPhrase = 'visa/visar fotnoter status'
 ;
 
 VerbRule(TipsOn)
@@ -10176,7 +10142,7 @@ VerbRule(TipsOn)
 
     stat_ = true
 
-    verbPhrase = 'aktivera/aktiverande tips'
+    verbPhrase = 'aktivera/aktiverar tips'
 ;
 
 VerbRule(TipsOff)
@@ -10185,121 +10151,121 @@ VerbRule(TipsOff)
 
     stat_ = nil
 
-    verbPhrase = 'inaktivera/inaktiverande tips'
+    verbPhrase = 'inaktivera/inaktiverar tips'
 ;
 
 VerbRule(Verbose)
-    'ordrik' | 'verbose'
+    'ordrik' | 'ordrikt' | 'verbose'
     : VerboseAction
-    verbPhrase = 'aktivera/aktiverande VERBOSE mode'
+    verbPhrase = 'aktivera/aktiverar ORDRIKT läge'
 ;
 
 VerbRule(Terse)
-    'kortfattad' | 'terse' | 'brief'
+    'kortfattat' | 'kortfattad' | 'terse' | 'brief'
     : TerseAction
-    verbPhrase = 'aktivera/aktiverande BRIEF mode'
+    verbPhrase = 'aktivera/aktiverar KORTFATTAT läge'
 ;
 
 VerbRule(Score)
     'poäng' | 'status'
     : ScoreAction
-    verbPhrase = 'visa/visande poäng'
+    verbPhrase = 'visa/visar poäng'
 ;
 
 VerbRule(FullScore)
     'full' 'poäng' | 'full'
     : FullScoreAction
-    verbPhrase = 'visa/visande full poäng'
+    verbPhrase = 'visa/visar full poäng'
 ;
 
 VerbRule(Notify)
     'notifiering'
     : NotifyAction
-    verbPhrase = 'visa/visande notifieringsstatus'
+    verbPhrase = 'visa/visar notifieringsstatus'
 ;
 
 VerbRule(NotifyOn)
     'notifiering' 'på'
     : NotifyOnAction
-    verbPhrase = 'slå på/påslagande poängnotifikation'
+    verbPhrase = 'slå på/slår på poängnotifikation'
 ;
 
 VerbRule(NotifyOff)
     'notifiering' 'av'
     : NotifyOffAction
-    verbPhrase = 'stänga av/avstängande poängnotifikation'
+    verbPhrase = 'stänga av/stänger av poängnotifikation'
 ;
 
 VerbRule(Save)
     'spara'
     : SaveAction
-    verbPhrase = 'spara/sparande'
+    verbPhrase = 'spara/sparar'
 ;
 
 VerbRule(SaveString)
     'spara' quotedStringPhrase->fname_
     : SaveStringAction
-    verbPhrase = 'spara/sparande'
+    verbPhrase = 'spara/sparar'
 ;
 
 VerbRule(Restore)
     ('ladda'|'återskapa')
     : RestoreAction
-    verbPhrase = 'ladda/laddande'
+    verbPhrase = 'ladda/laddar'
 ;
 
 VerbRule(RestoreString)
     ('ladda'|'återskapa') quotedStringPhrase->fname_
     : RestoreStringAction
-    verbPhrase = 'ladda/laddande'
+    verbPhrase = 'ladda/laddar'
 ;
 
 VerbRule(SaveDefaults)
     'spara' 'förvalt'
     : SaveDefaultsAction
-    verbPhrase = 'spara/sparande förvalt'
+    verbPhrase = 'spara/sparar förvalt'
 ;
 
 VerbRule(RestoreDefaults)
-    'restore' 'förvalt'
+    'återställ' 'förvalt'
     : RestoreDefaultsAction
-    verbPhrase = 'restore/restoring förvalt'
+    verbPhrase = 'återställa/återställer förvalt'
 ;
 
 VerbRule(Restart)
     'omstart' ('starta' 'om')
     : RestartAction
-    verbPhrase = 'starta om/omstartande'
+    verbPhrase = 'starta om/startar om'
 ;
 
 VerbRule(Pause)
     'pausa'
     : PauseAction
-    verbPhrase = 'pausa/pausande'
+    verbPhrase = 'pausa/pausar'
 ;
 
 VerbRule(Undo)
     'ångra'
     : UndoAction
-    verbPhrase = 'ångra/ångrande'
+    verbPhrase = 'ångra/ångrar'
 ;
 
 VerbRule(Version)
     'version'
     : VersionAction
-    verbPhrase = 'visa/visande version'
+    verbPhrase = 'visa/visar version'
 ;
 
 VerbRule(Credits)
     ('omnämnande'|'omnämnanden')
     : CreditsAction
-    verbPhrase = 'visa/visande omnämnanden'
+    verbPhrase = 'visa/visar omnämnanden'
 ;
 
 VerbRule(About)
     'om'
     : AboutAction
-    verbPhrase = 'visa/visande information om berättelse'
+    verbPhrase = 'visa/visar information om berättelse'
 ;
 
 
@@ -10309,49 +10275,49 @@ VerbRule(About)
 VerbRule(Script)
     'script' | 'script' 'på'
     : ScriptAction
-    verbPhrase = 'starta/startande scriptande'
+    verbPhrase = 'starta/startar scriptande'
 ;
 
 VerbRule(ScriptString)
     'script' quotedStringPhrase->fname_
     : ScriptStringAction
-    verbPhrase = 'starta/startande scriptande'
+    verbPhrase = 'starta/startar scriptande'
 ;
 
 VerbRule(ScriptOff)
     'script' 'av' | 'unscript'
     : ScriptOffAction
-    verbPhrase = 'sluta/slutande scriptande'
+    verbPhrase = 'sluta/slutar scriptande'
 ;
 
 VerbRule(Record)
-    'record' | 'record' 'på'
+    'inspelning' | 'inspelning' 'på'
     : RecordAction
-    verbPhrase = 'starta/startande kommandoinspelning'
+    verbPhrase = 'starta/startar kommandoinspelning'
 ;
 
 VerbRule(RecordString)
-    'record' quotedStringPhrase->fname_
+    'inspelning' quotedStringPhrase->fname_
     : RecordStringAction
-    verbPhrase = 'starta/startande kommandoinspelning'
+    verbPhrase = 'starta/startar kommandoinspelning'
 ;
 
 VerbRule(RecordEvents)
-    'record' 'events' | 'record' 'events' 'på'
+    'inspelning' ('events'|'händelser') | 'inspelning' ('events'|'händelser') 'på'
     : RecordEventsAction
-    verbPhrase = 'starta/startande event recording'
+    verbPhrase = 'starta/startar händelseinspelning'
 ;
 
 VerbRule(RecordEventsString)
     'record' 'events' quotedStringPhrase->fname_
     : RecordEventsStringAction
-    verbPhrase = 'starta/startande kommandoinspelning'
+    verbPhrase = 'starta/startar kommandoinspelning'
 ;
 
 VerbRule(RecordOff)
-    'record' 'av'
+    'inspelning' 'av'
     : RecordOffAction
-    verbPhrase = 'sluta/slutande kommandoinspelning'
+    verbPhrase = 'sluta/slutar kommandoinspelning'
 ;
 
 VerbRule(ReplayString)
@@ -10377,13 +10343,13 @@ VerbRule(ReplayQuiet)
 
 
 VerbRule(VagueTravel) 'gå' | 'vandra' : VagueTravelAction
-    verbPhrase = 'gå/gående'
+    verbPhrase = 'gå/går'
 ;
 
 VerbRule(Travel)
     'gå' singleDir | singleDir
     : TravelAction
-    verbPhrase = ('gå/gående ' + dirMatch.dir.name)
+    verbPhrase = ('gå/går ' + dirMatch.dir.name)
 ;
 
 /*
@@ -10396,42 +10362,42 @@ VerbRule(Travel)
  *   to get found.)  
  */
 class EnTravelVia: TravelViaAction
-    verbPhrase = 'använd/användande (vad)'
+    verbPhrase = 'använd/använder (vad)'
 ;
 
 VerbRule(Port)
     'gå' 'till' ('babord' | 'b')
     : PortAction
     dirMatch: DirectionProd { dir = portDirection }
-    verbPhrase = 'gå/gående till babord'
+    verbPhrase = 'gå/går till babord'
 ;
 
 VerbRule(Starboard)
     'gå' 'till' ('styrbord' | 'sb')
     : StarboardAction
     dirMatch: DirectionProd { dir = starboardDirection }
-    verbPhrase = 'gå/gående till styrbord'
+    verbPhrase = 'gå/går till styrbord'
 ;
 
 VerbRule(In)
     'gå' 'in'
     : InAction
     dirMatch: DirectionProd { dir = inDirection }
-    verbPhrase = 'gå in/gående in'
+    verbPhrase = 'gå in/går in'
 ;
 
 VerbRule(Out)
     'gå' 'ut' | 'lämna'
     : OutAction
     dirMatch: DirectionProd { dir = outDirection }
-    verbPhrase = 'lämna/lämnande'
+    verbPhrase = 'lämna/lämnar'
 ;
 
 VerbRule(GoThrough)
     ('vandra' | 'gå' ) ('genom')
         singleDobj
     : GoThroughAction
-    verbPhrase = 'gå/gående (genom vad)'
+    verbPhrase = 'gå/går (genom vad)'
     askDobjResponseProd = singleNoun
 ;
 
@@ -10441,27 +10407,27 @@ VerbRule(Enter)
      | ('vandra' | 'gå') ('till' | 'in' | 'in' 'till'))
     singleDobj
     : EnterAction
-    verbPhrase = 'gå in i/gående in i (vad)'
+    verbPhrase = 'gå in i/går in i (vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(GoBack)
     'tillbaka' | 'gå' 'tillbaka' | 'återvänd'
     : GoBackAction
-    verbPhrase = 'gå/gående tillbaka'
+    verbPhrase = 'gå/går tillbaka'
 ;
 
 VerbRule(Dig)
     ('gräv' | 'gräv' 'i') singleDobj
     : DigAction
-    verbPhrase = 'gräva/grävande (i vad)'
+    verbPhrase = 'gräva/gräver (i vad)'
     askDobjResponseProd = inSingleNoun
 ;
 
 VerbRule(DigWith)
     ('gräv' | 'gräv' 'i') singleDobj 'med' singleIobj
     : DigWithAction
-    verbPhrase = 'gräva/grävande (i vad) (med vad)'
+    verbPhrase = 'gräva/gräver (i vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = inSingleNoun
     askIobjResponseProd = withSingleNoun
@@ -10470,26 +10436,26 @@ VerbRule(DigWith)
 VerbRule(Jump)
     'hoppa'
     : JumpAction
-    verbPhrase = 'hoppa/hoppande'
+    verbPhrase = 'hoppa/hoppar'
 ;
 
 VerbRule(JumpOffI)
     'hoppa' 'av'
     : JumpOffIAction
-    verbPhrase = 'hoppa/hoppande av'
+    verbPhrase = 'hoppa/hoppar av'
 ;
 
 VerbRule(JumpOff)
     'hoppa' 'av' singleDobj
     : JumpOffAction
-    verbPhrase = 'hoppa/hoppande (av vad)'
+    verbPhrase = 'hoppa/hoppar (av vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(JumpOver)
     ('hoppa' | 'hoppa' 'över') singleDobj
     : JumpOverAction
-    verbPhrase = 'hoppa/hoppande (över vad)'
+    verbPhrase = 'hoppa/hoppar (över vad)'
     askDobjResponseProd = singleNoun
 ;
 
@@ -10497,26 +10463,26 @@ VerbRule(Push)
     ///('tryck' |'knuffa' | 'pressa') dobjList
     ('flytta' |'knuffa' | 'pressa' | 'tryck') dobjList
     : PushAction
-    verbPhrase = 'trycka/tryckande (vad)'
+    verbPhrase = 'trycka/trycker (vad)'
 ;
 
 VerbRule(Pull)
     'dra' dobjList
     : PullAction
-    verbPhrase = 'dra/dragande (vad)'
+    verbPhrase = 'dra/drar (vad)'
 ;
 
 VerbRule(Move)
     'flytta'|'knuffa' dobjList
     : MoveAction
-    verbPhrase = 'flytta/flyttande (vad)'
+    verbPhrase = 'flytta/flyttar (vad)'
 ;
 
 VerbRule(MoveTo)
     //('flytta' ) dobjList ('till' | 'under') singleIobj
     ('flytta'|'tryck' ) dobjList ('till' | 'under') singleIobj
     : MoveToAction
-    verbPhrase = 'flytta/flyttande (vad) (till vad)'
+    verbPhrase = 'flytta/flyttar (vad) (till vad)'
     askIobjResponseProd = toSingleNoun
     omitIobjInDobjQuery = true
 ;
@@ -10524,7 +10490,7 @@ VerbRule(MoveTo)
 VerbRule(MoveWith)
     'flytta' singleDobj 'med' singleIobj
     : MoveWithAction
-    verbPhrase = 'flytta/flyttande (vad) (med vad)'
+    verbPhrase = 'flytta/flyttar (vad) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
     omitIobjInDobjQuery = true
@@ -10533,13 +10499,13 @@ VerbRule(MoveWith)
 VerbRule(Turn)
     ('vrid' | 'rotera') dobjList
     : TurnAction
-    verbPhrase = 'vrida/vridande (vad)'
+    verbPhrase = 'vrida/vrider (vad)'
 ;
 
 VerbRule(TurnWith)
     ('vrid' | 'rotera') singleDobj 'med' singleIobj
     : TurnWithAction
-    verbPhrase = 'vrida/vridande (vad) (med vad)'
+    verbPhrase = 'vrida/vrider (vad) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
@@ -10548,7 +10514,7 @@ VerbRule(TurnTo)
     ('vrid' | 'rotera') singleDobj
         'till' singleLiteral
     : TurnToAction
-    verbPhrase = 'vrida/vridande (vad) (till vad)'
+    verbPhrase = 'vrida/vrider (vad) (till vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
 ;
@@ -10556,13 +10522,13 @@ VerbRule(TurnTo)
 VerbRule(Set)
     'sätt' dobjList
     : SetAction
-    verbPhrase = 's{ä|a}tta/sättande (vad)'
+    verbPhrase = 'sätta/sätter (vad)'
 ;
 
 VerbRule(SetTo)
     'sätt' singleDobj 'till' singleLiteral
     : SetToAction
-    verbPhrase = 's{ä|a}tta/sättande (vad) (till vad)'
+    verbPhrase = 'sätta/sätter (vad) (till vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
 ;
@@ -10570,20 +10536,20 @@ VerbRule(SetTo)
 VerbRule(TypeOn)
     'skriv' 'på' singleDobj
     : TypeOnAction
-    verbPhrase = 'skriva/skrivande (på vad)'
+    verbPhrase = 'skriva/skriver (på vad)'
 ;
 
 VerbRule(TypeLiteralOn)
     'skriv' singleLiteral 'på' singleDobj
     : TypeLiteralOnAction
-    verbPhrase = 'skriva/skrivande (vad) (på vad)'
+    verbPhrase = 'skriva/skriver (vad) (på vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(TypeLiteralOnWhat)
     [badness 500] 'skriv' singleLiteral
     : TypeLiteralOnAction
-    verbPhrase = 'skriva/skrivande (vad) (på vad)'
+    verbPhrase = 'skriva/skriver (vad) (på vad)'
     construct()
     {
         /* set up the empty direct object phrase */
@@ -10596,16 +10562,14 @@ VerbRule(EnterOn)
     ('kliv'|'gå') singleLiteral
         ('på' | 'in' | 'in' 'till' | 'med') singleDobj
     : EnterOnAction
-    verbPhrase = 'kliva/klivande (vad) (på vad)'
-    //verbPhrase = 'kl{i|e}v{er|}/klivande (vad) (på vad)'
+    verbPhrase = 'kliva/kliver (vad) (på vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(EnterOnWhat)
     'kliv' 'på' singleLiteral
     : EnterOnAction
-    verbPhrase = 'kliva/klivande (vad) (på vad)'
-    //verbPhrase = 'kl{i|e}v{er|}/klivande (vad) (på vad)'
+    verbPhrase = 'kliva/kliver (vad) (på vad)'
     construct()
     {
         /*
@@ -10652,7 +10616,7 @@ enterOnWhatAsker: ResolveAsker
 
 VerbRule(Consult)
     'konsultera' singleDobj : ConsultAction
-    verbPhrase = 'konsultera/konsulterande (vad)'
+    verbPhrase = 'konsultera/konsulterar (vad)'
     askDobjResponseProd = singleNoun
 ;
 
@@ -10666,7 +10630,7 @@ VerbRule(ConsultAbout)
          singleTopic 'i' singleDobj
     | ('titta' | 'l') singleTopic 'upp' 'i' singleDobj
     : ConsultAboutAction
-    verbPhrase = 'konsultera/konsulterande (vad) (om vad)'
+    verbPhrase = 'konsultera/konsulterar (vad) (om vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
 ;
@@ -10679,7 +10643,7 @@ VerbRule(ConsultWhatAbout)
     singleTopic
     | ('titta' | 't') singleTopic 'upp'
     : ConsultAboutAction
-    verbPhrase = 'slå/slåendes upp (vad) (i vad)'
+    verbPhrase = 'slå/slår upp (vad) (i vad)'
     whichMessageTopic = DirectObject
     construct()
     {
@@ -10693,14 +10657,14 @@ VerbRule(ConsultWhatAbout)
 VerbRule(Switch)
     'tryck' 'på' dobjList
     : SwitchAction
-    verbPhrase = 'trycka/tryckande på (vad)'
+    verbPhrase = 'trycka/trycker på (vad)'
 ;
 
 
 VerbRule(Flip)
     'vänd' dobjList
     : FlipAction
-    verbPhrase = 'vända/vändande (vad)'
+    verbPhrase = 'vända/vänder (vad)'
 ;
 
 
@@ -10708,40 +10672,40 @@ VerbRule(TurnOn)
     ('aktivera' | ('vrid' | 'slå') 'på') dobjList
     | ('vrid' | 'slå') dobjList 'på'
     : TurnOnAction
-    verbPhrase = 'vrida/vridande on (vad)'
+    verbPhrase = 'vrida/vrider på (vad)'
 ;
 
 VerbRule(TurnOff)
     ('deaktivera' | ('vrid' | 'slå') 'av') dobjList
     | ('vrid' | 'slå') dobjList 'av'
     : TurnOffAction
-    verbPhrase = 'vrida/vridande av (vad)'
+    verbPhrase = 'vrida/vrider av (vad)'
 ;
 
 VerbRule(Light)
     'tänd' dobjList
     : LightAction
-    verbPhrase = 'tända/tändande (vad)'
+    verbPhrase = 'tända/tänder (vad)'
 ;
 
 DefineTAction(Strike);
 VerbRule(Strike)
     'slå' dobjList
     : StrikeAction
-    verbPhrase = 'slå/slående (vad)'
+    verbPhrase = 'slå/slår (vad)'
 ;
 
 VerbRule(Burn)
     ('tänd' | 'bränn' | 'sätt' 'eld' 'på') dobjList
     : BurnAction
-    verbPhrase = 'tända/tändande (vad)'
+    verbPhrase = 'tända/tänder (vad)'
 ;
 
 VerbRule(BurnWith)
     ('tänd' | 'bränn' | 'sätt' 'eld' 'på') singleDobj
         'med' singleIobj
     : BurnWithAction
-    verbPhrase = 'tända/tändande (vad) (med vad)'
+    verbPhrase = 'tända/tänder (vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
@@ -10751,19 +10715,19 @@ VerbRule(Extinguish)
     ('släck' | 'släck ut' | 'blås' 'ut') dobjList
     
     : ExtinguishAction
-    verbPhrase = 'släcka/släckande (vad)'
+    verbPhrase = 'släcka/släcker (vad)'
 ;
 
 VerbRule(Break)
     ('förstör' | 'ha' 'sönder') dobjList
     : BreakAction
-    verbPhrase = 'förstöra/förstande (vad)'
+    verbPhrase = 'förstöra/förstör (vad)'
 ;
 
 VerbRule(CutWithWhat)
     [badness 500] 'klipp' singleDobj
     : CutWithAction
-    verbPhrase = 'klippa/klippande (vad) (med vad)'
+    verbPhrase = 'klippa/klipper (vad) (med vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -10775,7 +10739,7 @@ VerbRule(CutWithWhat)
 VerbRule(CutWith)
     'klipp' ('av'|) singleDobj 'med' singleIobj
     : CutWithAction
-    verbPhrase = 'klippa/klippande (vad) (med vad)'
+    verbPhrase = 'klippa/klipper (vad) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
@@ -10783,55 +10747,53 @@ VerbRule(CutWith)
 VerbRule(Eat)
     ('ät' | 'konsumera') dobjList
     : EatAction
-    verbPhrase = '{äta|åt}/ätande (vad)'
+    verbPhrase = '{äta|åt}/äter (vad)'
 ;
 
 VerbRule(Drink)
     ('drick' ) dobjList
     : DrinkAction
-    verbPhrase = 'dricka/drickande (vad)'
+    verbPhrase = 'dricka/dricker (vad)'
 ;
 
 VerbRule(Pour)
     'häll' dobjList
     : PourAction
-    verbPhrase = 'hälla/hällande (vad)'
+    verbPhrase = 'hälla/häller (vad)'
 ;
 
 VerbRule(PourInto)
     'häll' dobjList ('i') singleIobj
     : PourIntoAction
-    verbPhrase = 'hälla/hällande (vad) (i vad)'
+    verbPhrase = 'hälla/häller (vad) (i vad)'
     askIobjResponseProd = inSingleNoun
 ;
 
 VerbRule(PourOnto)
     'häll' dobjList ('på' | 'på' 'till') singleIobj
     : PourOntoAction
-    verbPhrase = 'hälla/hällande (vad) (på vad)'
+    verbPhrase = 'hälla/häller (vad) (på vad)'
     askIobjResponseProd = onSingleNoun
 ;
 
 VerbRule(Climb)
     'klättra' singleDobj
     : ClimbAction
-    verbPhrase = 'klättra/klättrande (på vad)'
+    verbPhrase = 'klättra/klättrar (på vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ClimbUp)
     ('kliv' | 'gå' | 'vandra') 'upp' singleDobj
     : ClimbUpAction
-    verbPhrase = 'kliva/klivande (upp åpå vad)'
-    //verbPhrase = 'kliva/klivande (upp på vad)'
+    verbPhrase = 'kliva/kliver (upp åpå vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ClimbUpWhat)
     [badness 200] ('kliv' | 'gå' | 'vandra') 'upp'
     : ClimbUpAction
-    verbPhrase = 'kliva/klivande  (upp vad)'
-    //verbPhrase = 'kl{iver|ev}/klivande  (upp på vad)'
+    verbPhrase = 'kliva/kliver (upp vad)'
     askDobjResponseProd = singleNoun
     construct()
     {
@@ -10843,16 +10805,14 @@ VerbRule(ClimbUpWhat)
 VerbRule(ClimbDown)
     ('climb' | 'gå' | 'vandra') 'ner' singleDobj
     : ClimbDownAction
-    verbPhrase = 'kliva/klivande  (ner på vad)'
-    //verbPhrase = 'kl{iver|ev}/klivande  (ner på vad)'
+    verbPhrase = 'kliva/kliver (ner på vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ClimbDownWhat)
     [badness 200] ('climb' | 'gå' | 'vandra') 'ner'
     : ClimbDownAction
-    verbPhrase = 'kliva/klivande (ner på vad)'
-    //verbPhrase = 'kl{iver|ev}/klivande  (ner på vad)'
+    verbPhrase = 'kliva/kliver (ner på vad)'
     askDobjResponseProd = singleNoun
     construct()
     {
@@ -10864,13 +10824,13 @@ VerbRule(ClimbDownWhat)
 VerbRule(Clean)
     'rengör' dobjList
     : CleanAction
-    verbPhrase = 'rengöra/rengörande (vad)'
+    verbPhrase = 'rengöra/rengör (vad)'
 ;
 
 VerbRule(CleanWith)
     'rengör' dobjList 'med' singleIobj
     : CleanWithAction
-    verbPhrase = 'rengöra/rengörande (vad) (med vad)'
+    verbPhrase = 'rengöra/rengör (vad) (med vad)'
     askIobjResponseProd = withSingleNoun
     omitIobjInDobjQuery = true
 ;
@@ -10883,13 +10843,15 @@ VerbRule(AttachTo)
     dobjList 'med' singleIobj
     : AttachToAction
     askIobjResponseProd = toSingleNoun
-    verbPhrase = 'sätta fast/fastsättande (vad) (med vad)'
+    verbPhrase = 'sätt fast/sätter fast (vad) (med vad)'
 ;
+// TODO: ändra alla sätta till sätt, 
+// (kliv upp och lås upp dörren och öppna den först)
 
 VerbRule(AttachToWhat)
     [badness 500] ('koppla') dobjList
     : AttachToAction
-    verbPhrase = 'koppla/kopplande ihop (vad) (med vad)'
+    verbPhrase = 'koppla/kopplar ihop (vad) (med vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -10908,37 +10870,37 @@ VerbRule(DetachFrom)
 VerbRule(Detach)
     ('koppla' 'från')| ('ta'|'tag') 'loss' | 'lossa' ('på'|) dobjList
     : DetachAction
-    verbPhrase = 'ta loss/lossa på (vad)'
+    verbPhrase = 'ta loss/lossar på (vad)'
 ;
 
 VerbRule(Open)
     'öppna' dobjList
     : OpenAction
-    verbPhrase = 'öppna/öppnande (vad)'
+    verbPhrase = 'öppna/öppnar (vad)'
 ;
 
 VerbRule(Close)
     ('stäng' | ('slå'|'stäng') 'igen') dobjList
     : CloseAction
-    verbPhrase = 'stänga/stängande (vad)'
+    verbPhrase = 'stäng/stänger (vad)'
 ;
 
 VerbRule(Lock)
     'lås' dobjList
     : LockAction
-    verbPhrase = 'låsa/låsande (vad)'
+    verbPhrase = 'låsa/låser (vad)'
 ;
 
 VerbRule(Unlock)
     'lås' 'upp' dobjList
     : UnlockAction
-    verbPhrase = 'låsa/låsande upp (vad)'
+    verbPhrase = 'låsa/låser upp (vad)'
 ;
 
 VerbRule(LockWith)
     'lås' singleDobj 'med' singleIobj
     : LockWithAction
-    verbPhrase = 'låsa/låsande (vad) (med vad)'
+    verbPhrase = 'låsa/låser (vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
@@ -10947,7 +10909,7 @@ VerbRule(LockWith)
 VerbRule(UnlockWith)
     'lås' 'upp' singleDobj 'med' singleIobj
     : UnlockWithAction
-    verbPhrase = 'låsa upp/upplåsande (vad) (med vad)'
+    verbPhrase = 'låsa upp/låser upp (vad) (med vad)'
     omitIobjInDobjQuery = true
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
@@ -10957,7 +10919,7 @@ VerbRule(SitOn)
     'sitt' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
         singleDobj
     : SitOnAction
-    verbPhrase = 'sitta/sittande (på vad)'
+    verbPhrase = 'sitta/sitter (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -10967,14 +10929,14 @@ VerbRule(SitOn)
 
 VerbRule(Sit)
     'sitt' ( | 'ner') : SitAction
-    verbPhrase = 'sitta/sittande ner'
+    verbPhrase = 'sitta/sitter ner'
 ;
 
 VerbRule(LieOn)
     'ligg' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
         singleDobj
     : LieOnAction
-    verbPhrase = 'ligga/liggande (på vad)'
+    verbPhrase = 'ligga/ligger (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -10984,7 +10946,7 @@ VerbRule(LieOn)
 
 VerbRule(Lie)
     'ligg' ( | 'ner') : LieAction
-    verbPhrase = 'ligga/liggande ner'
+    verbPhrase = 'ligga/ligger ner'
 ;
 
 VerbRule(StandOn)
@@ -10992,8 +10954,7 @@ VerbRule(StandOn)
      | 'climb' ('på' | ('upp' 'på') | 'på' 'till'))
     singleDobj
     : StandOnAction
-    verbPhrase = 'kliva/klivande (på vad)'
-    //verbPhrase = 'kl{iver|ev}/klivande (på vad)'
+    verbPhrase = 'kliva/kliver (på vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorInPrep, if there's a direct object available */
@@ -11004,14 +10965,14 @@ VerbRule(StandOn)
 VerbRule(Stand)
     'stå' | 'stå' 'upp' | 'kliv' 'upp'
     : StandAction
-    verbPhrase = 'kliv/klivande upp' // TODO: klev upp och öppnade
+    verbPhrase = 'kliv/kliver upp'
 ;
 
 VerbRule(GetOutOf)
     ('ut' 'ur' | 'kliv' 'ut' 'ur' | 'climb' 'ut' 'ur' | 'lämna' | 'gå' 'ut')
     singleDobj
     : GetOutOfAction
-    verbPhrase = 'kliva/klivande (ut ur vad)'
+    verbPhrase = 'kliva/kliver (ut ur vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorOutOfPrep, if there's a direct object available */
@@ -11022,7 +10983,7 @@ VerbRule(GetOutOf)
 VerbRule(GetOffOf)
     'kliv' ('av' | 'av' 'of' | 'ner' 'från') singleDobj
     : GetOffOfAction
-    verbPhrase = 'kliva/klivande av (från vad)'
+    verbPhrase = 'kliva/kliver av (från vad)'
     askDobjResponseProd = singleNoun
 
     /* use the actorOutOfPrep, if there's a direct object available */
@@ -11037,7 +10998,7 @@ VerbRule(GetOut)
     | 'gå' 'i' 'land'
     | 'kliv' 'ut'
     : GetOutAction
-    verbPhrase = 'gå/gående ut'
+    verbPhrase = 'gå/går ut'
 ;
 
 VerbRule(Board)
@@ -11046,53 +11007,53 @@ VerbRule(Board)
      | ('kliv' ('in' | 'i' | 'in' 'till')))
     singleDobj
     : BoardAction
-    verbPhrase = 'gå/gående (in till vad)'
+    verbPhrase = 'gå/går (in till vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(Sleep)
     'sova'
     : SleepAction
-    verbPhrase = 'sova/sovande'
+    verbPhrase = 'sova/sover'
 ;
 
 VerbRule(Fasten)
     'fäst' | ('koppla' 'fast') dobjList
     : FastenAction
-    verbPhrase = 'fästa/fästande (vad)'
+    verbPhrase = 'fästa/fäster (vad)'
 ;
 
 VerbRule(FastenTo)
     ('fäst' | 'koppla') dobjList ('till'|'i') singleIobj
     : FastenToAction
-    verbPhrase = 'fästa/fästande (vad) (i vad)'
+    verbPhrase = 'fästa/fäster (vad) (i vad)'
     askIobjResponseProd = toSingleNoun
 ;
 
 VerbRule(Unfasten)
     'koppla' ('loss'|'lös') | 'avfäst' dobjList
     : UnfastenAction
-    verbPhrase = 'koppla lös/kopplande lös (vad)'
+    verbPhrase = 'koppla lös/kopplar lös (vad)'
 ;
 
 VerbRule(UnfastenFrom)
     'koppla' ('loss'|'lös') | 'avfäst'  dobjList 'från' singleIobj
     : UnfastenFromAction
-    verbPhrase = 'koppla lös/kopplande lös (vad) (från vad)'
+    verbPhrase = 'koppla lös/kopplar lös (vad) (från vad)'
     askIobjResponseProd = fromSingleNoun
 ;
 
 VerbRule(PlugInto)
     'koppla'|'anslut' dobjList ('i' | 'in' ('till'|'i'|)) singleIobj
     : PlugIntoAction
-    verbPhrase = 'koppla in/inkopplande (vad) (i vad)'
+    verbPhrase = 'koppla in/kopplar in (vad) (i vad)'
     askIobjResponseProd = inSingleNoun
 ;
 
 VerbRule(PlugIntoWhat)
     [badness 500] 'koppla' 'in' dobjList
     : PlugIntoAction
-    verbPhrase = 'koppla in/inkopplande (vad) (i vad)'
+    verbPhrase = 'koppla in/kopplar in (vad) (i vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -11101,38 +11062,35 @@ VerbRule(PlugIntoWhat)
     }
 ;
 
-
-// TODO: gör om alla verbPhrase till utan t ex: öppna{|de}
-
 VerbRule(PlugIn)
     'koppla' ('i'|'in') dobjList
     : PlugInAction
-    verbPhrase = 'koppla in/inkopplande (vad)'
+    verbPhrase = 'koppla in/kopplar in (vad)'
 ;
 
 VerbRule(UnplugFrom)
     'koppla' ('ner' | 'loss' | 'lös') dobjList 'från' singleIobj
     : UnplugFromAction
-    verbPhrase = 'koppla lös/kopplande lös (vad) (från vad)'
+    verbPhrase = 'koppla lös/kopplar lös (vad) (från vad)'
     askIobjResponseProd = fromSingleNoun
 ;
 
 VerbRule(Unplug)
     'koppla' ('ner' | 'loss' | 'lös') dobjList
     : UnplugAction
-    verbPhrase = 'koppla lös/kopplande lös (vad)'
+    verbPhrase = 'koppla lös/kopplar lös (vad)'
 ;
 
 VerbRule(Screw)
     'skruva' dobjList
     : ScrewAction
-    verbPhrase = 'skruva/skruvande (vad)'
+    verbPhrase = 'skruva/skruvar (vad)'
 ;
 
 VerbRule(ScrewWith)
     'skruva' dobjList 'med' singleIobj
     : ScrewWithAction
-    verbPhrase = 'skruva/skruvande (vad) (med vad)'
+    verbPhrase = 'skruva/skruvar (vad) (med vad)'
     omitIobjInDobjQuery = true
     askIobjResponseProd = withSingleNoun
 ;
@@ -11140,13 +11098,13 @@ VerbRule(ScrewWith)
 VerbRule(Unscrew)
     'skruva' ('loss'|'lös') dobjList
     : UnscrewAction
-    verbPhrase = 'skruva loss/avskruvande (vad)'
+    verbPhrase = 'skruva loss/skruva loss (vad)'
 ;
 
 VerbRule(UnscrewWith)
     'skruva' ('loss'|'lös')  dobjList 'med' singleIobj
     : UnscrewWithAction
-    verbPhrase = 'skruva{|de} loss/avskruvande (vad) (med vad)'
+    verbPhrase = 'skruva loss/skruvar loss (vad) (med vad)'
     omitIobjInDobjQuery = true
     askIobjResponseProd = withSingleNoun
 ;
@@ -11155,7 +11113,7 @@ VerbRule(PushTravelDir)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
     ('dra' | 'drag' | 'flytta') singleDobj singleDir
     : PushTravelDirAction
-    verbPhrase = ('trycka/tryckande (vad) ' + dirMatch.dir.name)
+    verbPhrase = ('trycka/trycker (vad) ' + dirMatch.dir.name)
 ;
 
 VerbRule(PushTravelThrough)
@@ -11163,7 +11121,7 @@ VerbRule(PushTravelThrough)
     ('dra' | 'drag' | 'flytta') singleDobj singleDir
     ('genom') singleIobj
     : PushTravelThroughAction
-    verbPhrase = 'trycka/tryckande (vad) (genom vad)'
+    verbPhrase = 'trycka/trycker (vad) (genom vad)'
 ;
 
 VerbRule(PushTravelEnter)
@@ -11171,7 +11129,7 @@ VerbRule(PushTravelEnter)
     ('dra' | 'drag' | 'flytta') singleDobj
     ('in' ('till'|'i') ) singleIobj
     : PushTravelEnterAction
-    verbPhrase = 'trycka/tryckande (vad) (in i vad)'
+    verbPhrase = 'trycka/trycker (vad) (in i vad)'
 ;
 
 VerbRule(PushTravelGetOutOf)
@@ -11179,7 +11137,7 @@ VerbRule(PushTravelGetOutOf)
     ('dra' | 'drag' | 'flytta') singleDobj
     'ut' ('of' | ) singleIobj
     : PushTravelGetOutOfAction
-    verbPhrase = 'trycka/tryckande (vad) (ut ur vad)'
+    verbPhrase = 'trycka/trycker (vad) (ut ur vad)'
 ;
 
 
@@ -11188,7 +11146,7 @@ VerbRule(PushTravelClimbUp)
     ('dra' | 'drag' | 'flytta') singleDobj
     'up' singleIobj
     : PushTravelClimbUpAction
-    verbPhrase = 'trycka/tryckande (vad) (up vad)'
+    verbPhrase = 'trycka/trycker (vad) (up vad)'
     omitIobjInDobjQuery = true
 ;
 
@@ -11197,7 +11155,7 @@ VerbRule(PushTravelClimbDown)
     ('dra' | 'drag' | 'flytta') singleDobj
     'ner' singleIobj
     : PushTravelClimbDownAction
-    verbPhrase = 'trycka/tryckande (vad) (ner vad)'
+    verbPhrase = 'trycka/trycker (vad) (ner vad)'
 ;
 
 VerbRule(Exits)
@@ -11214,19 +11172,19 @@ VerbRule(ExitsMode)
              | 'status'->stat_ ('rad' | ) | 'statusrad'->stat_
              | 'titta'->look_)
     : ExitsModeAction
-    verbPhrase = 'stänga av/avstängande visning av utgångar'
+    verbPhrase = 'stänga av/stänger av visning av utgångar'
 ;
 
 VerbRule(HintsOff)
     'ledtrådar' 'av'
     : HintsOffAction
-    verbPhrase = 'stänga av/avstängande ledtrådar'
+    verbPhrase = 'stänga av/stänger av ledtrådar'
 ;
 
 VerbRule(Hint)
     'ledtrådar'
     : HintAction
-    verbPhrase = 'visa/visande ledtrådar'
+    verbPhrase = 'visa/visar ledtrådar'
 ;
 
 VerbRule(Oops)
@@ -11238,7 +11196,7 @@ VerbRule(Oops)
 VerbRule(OopsOnly)
     ('oops'|'o'|'oj'|'hoppsan')
     : OopsIAction
-    verbPhrase = 'hoppsan/tillrättande'
+    verbPhrase = 'hoppsan/tillrättar'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -11274,26 +11232,43 @@ VerbRule(Debug)
 DefineTIAction(WearPerson)
 ;
 
+
+
+
+VerbRule(Wear)
+    ('ta'|'ikläd'|'klä'|'klär'|'kläd') ('på') dobjList
+    : WearAction
+    verbPhrase = 'klä/klär på (vad)'
+;
+
+VerbRule(Doff)
+    ('tag'|'ta'|'klä'|'klär'|'kläd') 'av' dobjList
+    : DoffAction
+    verbPhrase = 'klä/klär av (vad)'
+;
+
+
 /**
  * Define new grammar for the swedish cases
  */
 VerbRule(DoffPerson)
     ('tag'|'ta'|'klä'|'kläd') 'av' singleIobj dobjList
     : DoffAction
-    verbPhrase = 'klä av/avklädande (vad)'
+    verbPhrase = 'klä/klär av (vad)'
 ;
 
 
 VerbRule(WearPerson)
-    ('ta'|'ikläd'|'klä'|'kläd') ('på'|) singleIobj dobjList
+    ('ta'|'ikläd'|'klä'|'kläd') 'på' singleIobj dobjList
     : WearAction
-    verbPhrase = 'kläd på/iklädande (vad)'
+    verbPhrase = 'klä/klär på (vad)'
 ;
 
+// TODO: hantera default för "klä på mig jackan" och "klä på dig jackan"
 
 /**
  *  "WearPerson"
- * Denna behövs, då det i svenskan är vanligast uttrycket är "ta på mig/dig jackan", inte "ta på jackan"
+ * Denna behövs, då det i svenskan är uttrycket "ta på mig/dig jackan", vanligt. Inte bara "ta på jackan"
  */
  /*
 modify Wearable 
@@ -11327,7 +11302,7 @@ modify Wearable
 VerbRule(WearWhat)
     [badness 500] ('ta'|'ikläd'|'klä'|'kläd') ('på'|) singleNoun
     : WearAction
-    verbPhrase = 'kläd på/iklädande (vad)'
+    verbPhrase = 'klä på/klär på (vad)'
     construct()
     {
         //set up the empty indirect object phrase
@@ -11343,7 +11318,7 @@ VerbRule(WearWhat)
 VerbRule(AskAboutWhat)
     [badness 500] 'fråga' singleDobj
     : AskAboutAction
-    verbPhrase = 'fråga/frågande (vem) (om vad)'
+    verbPhrase = 'fråga/frågar (vem) (om vad)'
     askDobjResponseProd = singleNoun
     omitIobjInDobjQuery = true
     construct()

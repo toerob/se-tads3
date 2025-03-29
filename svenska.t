@@ -16,10 +16,10 @@
    
 
 gameMain: GameMainDef
-    //initialPlayerChar = me
+    initialPlayerChar = me
     //initialPlayerChar = argon
     //initialPlayerChar = maria
-    initialPlayerChar = karl
+    //initialPlayerChar = karl
     //initialPlayerChar = emma
     //initialPlayerChar = julia
     usePastTense = true    

@@ -2,6 +2,8 @@
 #include <adv3.h>
 #include <sv_se.h> 
 
+// TODO: VerbRule(PutOn), correct verbPhrase participle
+// 
 
 labbet: Room 'Labbet'
     "Du står i laboratoriumet. Väggarna är fyllda med tavlor på periodiska systemet och annat kemirelaterat. "
@@ -18,6 +20,7 @@ labbet: Room 'Labbet'
 
 +banken: Surface 'bänk[-en]*bänkar[-na]'  'bänk' 
 ;
++peng: Thing 'peng[-en]*peng[-ar]' 'peng';
 
 ++maskin: Thing, Heavy 'espressomaskin[-en]/maskin[-en]' 'espresso maskin'
     isListed = true
