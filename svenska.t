@@ -13,13 +13,14 @@
 #include "sv_se.h" //en_us.t
 
 
+
    
 
 gameMain: GameMainDef
-    initialPlayerChar = me
+    //initialPlayerChar = me
     //initialPlayerChar = argon
     //initialPlayerChar = maria
-    //initialPlayerChar = karl
+    initialPlayerChar = karl
     //initialPlayerChar = emma
     //initialPlayerChar = julia
     usePastTense = true    
@@ -33,6 +34,12 @@ gameMain: GameMainDef
         if(initialPlayerChar == julia) {
             juliaGlobal.showIntro();
         }
+
+        tadsSay('*****', new SwedishInflector().inflect('stol[b,ut,s]'));
+        tadsSay('*****', new SwedishInflector().get_all_forms('stol')['indefinite_singular']);
+        tadsSay('*****', new SwedishInflector().get_all_forms('stol')['definite_singular']);
+        tadsSay('*****', new SwedishInflector().get_all_forms('stol')['indefinite_plural']);
+        tadsSay('*****', new SwedishInflector().get_all_forms('stol')['definite_plural']);
     }
 ;
 

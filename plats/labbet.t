@@ -20,7 +20,7 @@ labbet: Room 'Labbet'
 
 +banken: Surface 'bänk[-en]*bänkar[-na]'  'bänk' 
 ;
-+peng: Thing 'peng[-en]*peng[-ar]' 'peng';
+++peng: Thing 'peng[-en]*peng[-ar]' 'peng';
 
 ++maskin: Thing, Heavy 'espressomaskin[-en]/maskin[-en]' 'espresso maskin'
     isListed = true

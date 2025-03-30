@@ -1741,12 +1741,35 @@ playerMessages: libMessages
     /* no match for a noun phrase */
     noMatch(actor, action, txt) { action.noMatch(self, actor, txt); }
 
+
+    uterPattern = static new RexPattern('(.*)en$|.*(um|e|el|er|en)$')
+
     /*
      *   No match message - we can't see a match for the noun phrase.  This
      *   is the default for most verbs. 
      */
-    noMatchCannotSee(actor, txt)
-        { "{Du/han} {ser} ingen <<txt>> {här}. "; }
+
+
+    noMatchCannotSee(actor, txt) { 
+        local match, pronoun;
+        
+        forEachInstance(Thing, function(obj) {
+            if(obj.name == txt || obj.theName == txt) {
+                match = obj;
+                throw new BreakLoopSignal();
+            }        
+        });
+
+        if(match) {
+            pronoun = match.isUter 
+                ? (match.isPlural ? 'inga' : 'ingen') 
+                : (match.isPlural ? 'inga' : 'inget');
+        } else {
+            pronoun = rexMatch(uterPattern, txt) ? 'ingen' : 'inget';
+        }
+
+        "{Du/han} {ser} <<pronoun>> <<txt>> {här}. "; 
+    }
 
     /*
      *   No match message - we're not aware of a match for the noun phrase.
@@ -2120,8 +2143,9 @@ npcMessages: playerMessages
     }
 
     /* no match for a noun phrase */
-    noMatchCannotSee(actor, txt)
-        { "\^<<actor.nameSees>> ingen <<txt>>. "; }
+    noMatchCannotSee(actor, txt) { 
+        "\^<<actor.nameSees>> ingen <<txt>>. ";  // TODO: genitiv
+    }
     noMatchNotAware(actor, txt)
         { "\^<<actor.nameIs>> inte medveten om någon <<txt>>. "; }
 
@@ -3159,7 +3183,7 @@ playerActionMessages: MessageHelper
     notAContainerMsg = '{Du/han} {kan} inte stoppa någonting in {the iobj/him}. '
 
     /* trying to put an object on a non-surface */
-    notASurfaceMsg = 'Det {finns|fanns} ingen bra yta på {the iobj/him}. '
+    notASurfaceMsg = 'Det {finns|fanns} ingen bra yta på {the iobj/him}. ' // TODO: genitiv
 
     /* can't put anything under iobj */
     cannotPutUnderMsg =

@@ -472,14 +472,15 @@ modify VocabObject
      */
     initializeVocabWith(str)
     {
+        //tadsSay('<<self.name>>.initializeVocabWith \"<<str>>\"\n');
         local sectPart;
         local modList = [];
 
         /* start off in the adjective section */
         sectPart = &adjective;
 
-
         //if(str.match('{')) {
+
 
         local result = handleWordForms(str);
         if(result.length>0) {
@@ -589,40 +590,44 @@ modify VocabObject
                     // Diffa mot föregår commit om det 
                     // behövs
 
-                    if(rexMatch(R'.*[\\[][-](.*)[]].*', cur) != nil) {
-                        "vocabWord: <<cur>>\n";
+                    if(rexMatch(R'.*<lsquare>[-](.*)<rsquare>.*', cur) != nil) {
+                        //"vocabWord: <<cur>>\n";
                         local ending = rexGroup(1)[3];
                         //"ending: <<ending>>\n";
 
 
                         // Once we got the ending we can remove the ending syntax ([-xyz]) from the vocabWord
                         cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
-
                         local curWithEnding = cutEndings(cur) + ending;
-
                         wordPart = &literalAdjective;   // TODO: not sure this will do...
 
 
-                        "Adding to dictionary: <<cur>> + definitive form: <<curWithEnding>> (-<<ending>>)\b";
+                        //tadsSay('<<cur>>, <<curWithEnding>> [-<<ending>>]\n');
                         //cmdDict.addWord(self, cur, wordPart);
                         cmdDict.addWord(self, curWithEnding, wordPart);
                         
+                        if(ending.endsWith('n') || ending.endsWith('na')) {
+                            //tadsSay('##<<self.theName>> uterum##');
+                            isUter = true;
+                        }
+
                         // If within the noun section and an ending ends with 'n'
                         // Assume noun is uter.
-                            if(sectPart == &noun) {
-                                // TODO: Only replace theName if its similar to name
-                                // OR in other words, unset by the user
+                        if(sectPart == &noun) {
+                            // TODO: Only replace theName if its similar to name
+                            // OR in other words, unset by the user
 
-                                // TODO: verify this works
-                                isUter = ending.endsWith('n');
-                                
-                                if(theName == name) {
-                                    name = cur;
-                                    theName = curWithEnding;
-                                    "theName: <<theName>> replaced with <<curWithEnding>>\n";
-                                }
-                            }
-        
+                            // TODO: verify this works
+                            //isUter = ending.endsWith('n');
+                            //isUter = ending.endsWith('na');
+                            
+                            /*if(theName == name) {
+                                name = cur;
+                                theName = curWithEnding;
+                                "theName: <<theName>> replaced with <<curWithEnding>>\n";
+                            }*/
+                        }
+    
 
                         /*if(sectPart == &plural) {
                             isPlural = ending.endsWith('a');
@@ -1276,8 +1281,26 @@ modify Thing
     //theNameFrom(str) { return (isQualifiedName ? '' : 'the') + str ; }
 
     swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
+    
+
 
     theNameFrom(str) { 
+        /*if(theName != nil) {
+            return theName;
+        }*/
+        /*if (isPlural) {
+            str = replacePluralEndings(str);
+        }
+        else {
+            str = replaceEndings(str);
+        }
+        if (isYours)
+        {
+            str = yourAkkPossAdj + str;              
+        }*/
+        //return (isQualifiedName || isYours ? '' : isPlural ? 'die ' : 
+        //isHim ? 'den ' : isHer ? 'den ' : 'det ' ) + str; 
+        
         // TODO: this is WIP - obiously not yet satisfying algorithm.. override theName property 
         // /whenever it fails to properly create a definitive name for a swedish word. There are 
         // probably many cases where this needs to happen
@@ -11357,6 +11380,7 @@ handleWordForms(mainSentence) {
 
     if(endingsPart) {
 
+      // 'fonst[ret,er,ren,rena]
       local endings = endingsPart[3].split(',');      
       endings.forEach(function(ending) {
         //"\nEnding: <<ending>>\n";

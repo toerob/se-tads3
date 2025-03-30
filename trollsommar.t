@@ -101,6 +101,7 @@ huset: Room 'I husets vestibul' 'husets vestibul'
 ;
 
 +bokhylla: Container 'bokhylla[-n] hylla[-n]' 'bokhylla' 
+    isUter = true
     initSpecialDesc = "En bokhylla står här. "
 ;
 
@@ -142,14 +143,14 @@ vardagsrum: Room 'vardagsrummet' 'vardagsrummet'
 ;
 
 //TODO: behövs fönst[-er|-ret]c eller liknande också?
-/*+fonster: Openable, Fixture 'fönster[-et] fönstret*fönster' 'fönster'
-    isOpen = true
-;*/
-
-+fonster: Openable, Fixture 'fonst{er,ret@d,ren@p,rena@dp}' 'fönster'
++fonster: Openable, Fixture 'fönster[-et] fönstret*fönster lucka[-n]' 'fönster'
     isOpen = true
 ;
-
+/*
++fonster: Openable, Fixture 'fonst{er,ret@d,ren@p,rena@dp} luck{a,an@d,or@p,orna@dp}' 'fönster'
+    isOpen = true
+;
+*/
 //
 
 
