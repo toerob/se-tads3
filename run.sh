@@ -1,3 +1,5 @@
-rlwrap /home/reboto/repos/myfrobtads/build/frob -i plain -k UTF-8  $1
+#!/bin/bash
+#rlwrap /home/reboto/repos/myfrobtads/build/frob -i plain -k UTF-8  $1
+rlwrap frob -i plain -k UTF-8  $1
 
 # frob -k UTF-8 svenska.t3

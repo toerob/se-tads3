@@ -2,6 +2,10 @@
 #include <adv3.h>
 #include <sv_se.h> 
 
+#define __DEBUG
+#include "debug.h"
+
+
 gameMain: GameMainDef
     initialPlayerChar = me
     showIntro() {
@@ -105,7 +109,9 @@ driveway: OutdoorRoom 'Uppfarten' 'Uppfarten'
     }
 ;
 
-+houseEntranceDoorOutside: Door -> houseEntranceDoorInside 'house entrance door*doors' 'main door';
++houseEntranceDoorOutside: Door -> houseEntranceDoorInside 'huvudingång[en]/dörr[-en]**dörrar[-na]' 'huvudingången'
+    isProperName = true
+;
 
 +me: Actor;
 
@@ -116,3 +122,7 @@ driveway: OutdoorRoom 'Uppfarten' 'Uppfarten'
        \n* Fixa mat (PIZZA och VIN)
        \n"
 ;
+
+
+
+Test 'spel' ['n','z', 'ö', 'hälsa', 'kyss', 'v', 'upp', 'v', 'sitt på sängen'] [anteckning];

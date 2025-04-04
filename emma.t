@@ -3,7 +3,7 @@
 #include <sv_se.h> 
 
 emma: Actor 'Emma' 'Emma'
-    "Emma is your wife.  "   
+    "Emma är din fru.  "   
     isProperName = true
     isHer = true
     location = kitchen
@@ -29,7 +29,7 @@ emma: Actor 'Emma' 'Emma'
 +++NoTopic 'Nej'
     "<q>Nej, tror du inte att den hamnade med de övriga köksgrejerna som flyttgubbarna kommer med imorgon?</q> frågar du tillbaka.\b
     <q>Hmm, nej det tror jag inte. Jag minns att jag var rädd att den skulle spricka så jag har för mig jag la den i i någon av dina väskor</q>, svarar hon. \b
-    <q>Är det inte mycket det äktenskapet handlar om? Att jag bär dina stenar</q> retas du och duckar när det kommer en socke flygandes. ";
+    <q>Är det inte mycket det äktenskapet handlar om? Att maken bär fruns stenar?</q> retas du och duckar när det kommer en socke flygandes. ";
 
 
 

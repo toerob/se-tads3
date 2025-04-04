@@ -29,15 +29,30 @@
 -d
 -FIinclude
 -FLlib
--o tuscany.t3
+-o svenska.t3
 
 ##sources
 -lib system.tl
 -lib adv3/adv3
 -source kfDebug
 
--source tuscany
--source emma
+
+-source svenska
+-source plats/labbet
+-source karaktar/professor
+-source plats/korridor
+-source mailman
+-source karaktar/maria
+-source karaktar/fiskare
+-source plats/naturen
+
+#-source _gameTrackerAdv3
+#-source SwedishDictionary
+
+-source argon
+-source trollsommar
+-source sommarsaga
+-source julia
 
 -res
 GameInfo.txt

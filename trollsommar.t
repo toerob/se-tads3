@@ -109,7 +109,10 @@ huset: Room 'I husets vestibul' 'husets vestibul'
 
 ++trasnidadFigur: Thing 'träsnidad figur[-en]' 'träsnidad figur' 
 "En träsnidad figur av ett troll. "
+    //theDisambigName = 'den träsnidade figuren'
+    theName = 'den träsnidade figuren' // TODO: sätt 'den' vid skapande om isProperName = nil
 ;
+// TODO: kasta figur mot hyllan
 
 
 +forsaljare: Actor 'anki/försäljare[-n]' 'Anki'
