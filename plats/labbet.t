@@ -50,19 +50,19 @@ labbet: Room 'Labbet'
 
 +professornsStol: Chair 'stol[-en]*stolar' 'stol'
     isUter = true
-    isOwnedBy = [professor]
+    ownedBy = [professor]
     disambigName = 'professorns stol'
     theName = 'stolen'
 ;
 
 +minStol: Chair 'stol[-en]*stolar' 'stol'
     isUter = true
-    isOwnedBy = [me]
+    ownedBy = [me]
     disambigName = 'din stol'
 ;
 
 ++jacka: Wearable 'jacka[-n]*jackor[-na]' 'jacka'
-    isOwnedBy = [me]
+    ownedBy = [me]
 ;
 +++ficka: Container, Component 'jackficka[-n]' 'jackficka'
 ;

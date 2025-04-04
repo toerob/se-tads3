@@ -116,16 +116,17 @@ fiskarensboning: Room 'fiskarens boning' 'fiskarens boning'
 ;
 
 
-vid_stuga: OutdoorRoom 'Vid en stuga'
+vid_stuga: OutdoorRoom 'Vid en stuga' 'utanför stugan'
     "..."
     northeast = huvudvagen
     east =  huvudvagen
     inorth = stugdorrenOutside
     west = stugdorrenOutside
 ;
-+stugdorrenOutside: LockableWithKey, Door -> stugdorrenInside 'dörr[-en]*dörrar[-na]' 'dörr'
++stugdorrenOutside: LockableWithKey, Door 'dörr[-en]*dörrar[-na]' 'dörr'
+    theName = 'dörren'
     keyList = [stugdorrsnyckel]
-    isLocked  = true
+    //isLocked  = true
 ;
 
 
@@ -134,7 +135,11 @@ insida_stuga: OutdoorRoom 'I stugan'
     east = stugdorrenInside
     out = stugdorrenInside
 ;
-+stugdorrenInside: LockableWithKey, Door -> stugdorrenOutside 'dörr[-en]*dörrar[-na]' 'dörr'
++stugdorrenInside: LockableWithKey, Door 'dörr[-en]*dörrar[-na]' 'dörr'
+    masterObject = stugdorrenOutside
+
+    theName = 'dörren'
+    knownKeyList = [stugdorrsnyckel]
     keyList = [stugdorrsnyckel]
 ;
 

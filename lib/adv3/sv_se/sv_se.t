@@ -476,29 +476,10 @@ modify VocabObject
         local sectPart;
         local modList = [];
 
+        local foundPluralName = nil; // Used to find the first defined pluralname in vocabWords and set pluralName to it
+
         /* start off in the adjective section */
         sectPart = &adjective;
-
-        //if(str.match('{')) {
-
-
-        local result = handleWordForms(str);
-        if(result.length>0) {
-            result.length>0 && "\n***************************************************************************\n";
-            result
-                .subset({y: y.isDefinitive && !y.isPlural})
-                .forEach(function(x) {
-                    theName = x.withEnding;
-                    "The name: <<theName>>";
-
-                    //"\n<<if x.isDefinitive>>Definitive<<end>><<if x.isPlural>> plural<<end>> form ending: <<x.withEnding>>\n";  
-                });
-            result.length>0 && "\n***************************************************************************\n";
-
-        }
-        //}
-                        
-
 
         /* scan the string until we run out of text */
         while (str != '')
@@ -611,6 +592,37 @@ modify VocabObject
                             isUter = true;
                         }
 
+                        // TODO: det är oftare jobbigare att böja till pluralformen med pluralNameFrom()
+                        // så överrid den om vi faktiskt hittat en pluralform i vocabWords. T ex: 'väskor[-na]'
+                        if(!foundPluralName) {
+                            if(sectPart == &plural) {
+                                //if(dataTypeXlat(pluralName) == TypeFuncPtr) 
+                                {
+                                    foundPluralName=true;
+                                    pluralName = cur;
+                                    //pluralDisambigName
+                                    tadsSay('\ \ \ pluralName = <<curWithEnding>>\n');
+                                }
+                                
+                            }
+                        }
+
+                        /* Använd theNameFrom istället och tvinga name att definieras
+                        if(foundTheName) {
+                            if(isPlural) {
+                                if(sectPart == &plural) {
+                                    foundTheName=true;
+                                    theName = curWithEnding;
+                                    tadsSay('\ \ \ theName = <<curWithEnding>> (pluralnamed)\n');
+                                }
+                            } else {
+                                foundTheName=true;
+                                theName = curWithEnding;
+                                tadsSay('\ \ \ theName = <<curWithEnding>>\n');
+                            }
+                        }*/
+
+
                         // If within the noun section and an ending ends with 'n'
                         // Assume noun is uter.
                         if(sectPart == &noun) {
@@ -620,6 +632,7 @@ modify VocabObject
                             // TODO: verify this works
                             //isUter = ending.endsWith('n');
                             //isUter = ending.endsWith('na');
+
                             
                             /*if(theName == name) {
                                 name = cur;
@@ -1119,7 +1132,7 @@ modify Thing
 
     /* demonstrative pronouns ('that' or 'those') */
     //thatNom { return ['that', 'he', 'she', 'those'][pronounSelector]; }
-    thatNom { return [ (isUter?'den':'det'), 'honom', 'henne', 'dessa'][pronounSelector]; }
+    thatNom { return [ (isUter?'den':'det'), 'han', 'henne', 'dessa'][pronounSelector]; }
 
 
     thatIsContraction
@@ -1127,7 +1140,7 @@ modify Thing
         return thatNom + tSel('är', ' ' + verbToBe);
     }
     //thatObj { return ['that', 'him', 'her', 'those'][pronounSelector]; }
-    thatObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dessa'][pronounSelector]; }
+    thatObj { return [ (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
 
     /*
      *   get a string with the appropriate pronoun for the object plus the
@@ -1262,6 +1275,22 @@ modify Thing
      *   ordinary nouns don't vary according to how they're used in a
      *   sentence).
      */
+
+    // I ett fall där både bestämd/obestämd form ska användas får theName helt enkelt överridas 
+    //jagare:  Actor 'hjortjägare[-n]/jägare[-n]' 'hjortjägare'
+    //    theName = 'hjortjägaren'
+    //    isProperName = nil
+    //    isHim = true
+    //;
+    // 
+    // 
+    //hans:  Actor 'hans/hjortjägare[-n]/jägare[-n]' 'Hans'
+    //    isProperName = true
+    //    isHim = true
+    //;
+
+
+
     theName = (theNameFrom(name))
 
     /*
@@ -1278,13 +1307,19 @@ modify Thing
      *   If my name is already qualified, don't add an article; otherwise,
      *   add a 'the' as the prefixed definite article.
      */
-    //theNameFrom(str) { return (isQualifiedName ? '' : 'the') + str ; }
+    theNameFrom(str) { 
+        return (isQualifiedName 
+        ? '' 
+        :  isPlural
+            ? 'några ' 
+            : (isUter? 'en ' : 'ett ')
+        ) 
+        + str ; 
+    }
 
     swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
-    
 
-
-    theNameFrom(str) { 
+    //theNameFrom(str) { 
         /*if(theName != nil) {
             return theName;
         }*/
@@ -1346,8 +1381,9 @@ modify Thing
 
         //local article = (isUter?'en':'ett');
         //return (isQualifiedName ? '' : article + ' ') + str ; 
-        return str;
-    }
+      
+        //return str;
+    //}
 
       
     // #################################################
@@ -1477,7 +1513,7 @@ modify Thing
     {
         /* add apostrophe-S, unless it's a plural ending with 's' */
         return theName
-            + (isPlural && theName.endsWith('s') ? '&rsquo;' : '&rsquo;s');
+            + (isPlural && theName.endsWith('s') ? '' : 's');
     }
 
     /*
@@ -1650,7 +1686,7 @@ modify Thing
              */
             ret = owner.theNamePossAdj + ' ' + pluralName;
             if (!isMassNoun && !isPlural)
-                ret = 'one of ' + ret;
+                ret = 'en av ' + ret;
 
             /* return the result */
             return ret;
@@ -1922,13 +1958,13 @@ modify Thing
          *   else (any other capital letter, or any non-letter character),
          *   we'll just add an "s".
          */
-        if (len == 1)
+        /*if (len == 1)
         {
             if (rexMatch(patSingleApostropheS, str) != nil)
-                return str + '&rsquo;s';
+                return str + 'or';
             else
-                return str + 's';
-        }
+                return str + 'a';
+        }*/
 
         /* get the last character of the name, and the last pair of chars */
         lastChar = str.substr(len, 1);
@@ -1941,7 +1977,7 @@ modify Thing
          *   just add "s": "the 1940s", "the low 20s".
          */
         if (rexMatch(patUpperOrDigit, lastChar) != nil)
-            return str + 's';
+            return str + 'er'; // I svenskan, t ex: PLUer, GSMer, CFOer
 
         /*
          *   If the last character is a period, it must be an abbreviation
@@ -1949,7 +1985,7 @@ modify Thing
          *   add an apostrophe-S.
          */
         if (lastChar == '.')
-            return str + '&rsquo;s';
+            return str + 'er'; // Ingen aning om detta alltid fungerar.
 
         /*
          *   If it ends in a non-vowel followed by 'y', change -y to -ies.
@@ -1958,14 +1994,35 @@ modify Thing
          *   -> "surveys", "essay" -> "essays", "day" -> "days".)
          */
         if (rexMatch(patVowelY, lastPair) != nil)
-            return str.substr(1, len - 1) + 'ies';
+            return str.substr(1, len - 1) + 'er';
 
         /* if it ends in s, x, z, or h, add -es */
         if ('sxzh'.find(lastChar) != nil)
-            return str + 'es';
+            return str + 'er';
 
-        /* for anything else, just add -s */
-        return str + 's';
+
+        // TODO: hantera oregelbundna verb på något vettigt sett
+        // Där oregelbundna verb gör det omöjligt, overrida metoden pluralName 
+        // med pluralformen direkt
+        // Te x:
+        // * nagel/naglar
+        // * ögon/ögon
+        // * 
+
+        // I de flesta fall i svenskan då det är plural läggs följande till:
+        //  -ar, -or,-er , 
+        // skärm-ar
+        // mugg-ar
+        // fläkt-ar
+        if ('mgt'.find(lastChar) != nil)
+            return str + 'ar';
+
+        // äpple-n
+        if ('n'.find(lastChar) != nil)
+            return str + 'a';
+
+        /* for anything else, just add -er */
+        return str + 'er';
     }
 
     /* some pre-compiled patterns for pluralName */
@@ -2436,6 +2493,7 @@ modify Actor
     /* demonstrative pronoun, nominative case with 'is' contraction */
     thatIsContraction
     {
+        tadsSay('LEFT TO FIX');
         return thatNom
             + tSel(['&rsquo;m', '&rsquo;re', '&rsquo;s',
                     '&rsquo;re', '&rsquo;re', ' are'][conjugationSelector],
@@ -2450,8 +2508,9 @@ modify Actor
     /* get my pronoun with a being verb contraction ("the box's") */
     itIsContraction
     {
-        return itNom + tSel('&rsquo;' + ['m', 're', 's', 're', 're', 're'][conjugationSelector], ' ' + verbToBe);
-        //return itNom + ' ' + verbToBe;
+        //return itNom + tSel('ens' + ['m', 're', 's', 're', 're', 're'][conjugationSelector], ' ' + verbToBe);
+        //return itNom + tSel('&rsquo;' + ['m', 're', 's', 're', 're', 're'][conjugationSelector], ' ' + verbToBe);
+        return itNom + ' (TODO) ' + verbToBe;
     }
 
     /*
@@ -4042,7 +4101,6 @@ langMessageBuilder: MessageBuilder
         ['själva', &itReflexive, 'actor', nil, nil],
 
 
-        // TODO: Gör om alla dessa till:
         // den/han den/honom den/henne
 
         /* parameters that don't imply any target object */
@@ -4052,6 +4110,16 @@ langMessageBuilder: MessageBuilder
         ['the/her', &theNameObj, nil, &itReflexive, nil],
         ['the\'s/her', &theNamePossAdj, nil, &itPossAdj, nil],
         ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
+
+        // TODO: Testa av dessa att de gör samma som ovan
+        ['den/han', &theName, nil, nil, true],
+        ['den/hon', &theName, nil, nil, true],
+        ['den/honom', &theNameObj, nil, &itReflexive, nil],
+        ['den/henne', &theNameObj, nil, &itReflexive, nil],
+        
+        //TODO: ['hennes', &theNamePossAdj, nil, &itPossAdj, nil],
+        
+        ['dess/hennes', &theNamePossNoun, nil, &itPossNoun, nil],
 
         /*
          *  Verb 's' endings.  In most cases, you should use 's/d', 's/ed',
@@ -6079,8 +6147,10 @@ grammar qualifiedSingularNounPhrase(anyPlural):
  *   article.
  */
 grammar qualifiedSingularNounPhrase(theOneIn):
-    'the' 'one' ('that' ('is' | 'was') | 'that' tokApostropheS | )
-    ('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
+    'den' 'som' ('är' | 'var')  ('i' | 'inuti' | 'inom' | 'på' | 'från')
+
+    //'the' 'one' ('that' ('is' | 'was') | 'that' tokApostropheS | )
+    //('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : VagueContainerDefiniteNounPhraseProd
 
@@ -6088,7 +6158,7 @@ grammar qualifiedSingularNounPhrase(theOneIn):
      *   our main phrase is simply 'one' (so disambiguation prompts will
      *   read "which one do you mean...")
      */
-    mainPhraseText = 'one'
+    mainPhraseText = 'sådan'
 ;
 
 /*
@@ -6096,8 +6166,10 @@ grammar qualifiedSingularNounPhrase(theOneIn):
  *   indefinite article.
  */
 grammar qualifiedSingularNounPhrase(anyOneIn):
-    ('anything' | 'one') ('that' ('is' | 'was') | 'that' tokApostropheS | )
-    ('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
+    ('allting' | 'en') ('som' ('är' | 'var') )
+    ('i' | 'inuti' | 'inom' | 'på' | 'från')
+    //('anything' | 'one') ('that' ('is' | 'was') | 'that' tokApostropheS | )
+    //('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : VagueContainerIndefiniteNounPhraseProd
 ;
@@ -6138,11 +6210,15 @@ grammar indetSingularNounPhrase(basic):
  */
 grammar indetSingularNounPhrase(locational):
     nounPhrase->np_
-    ('that' ('is' | 'was')
-     | 'that' tokApostropheS
-     | 'that' ('are' | 'were')
-     | )
-    ('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
+
+    ('som' ('är' | 'var') | )
+    ('i' | 'inuti' | 'inom' | 'på' | 'från')
+
+    //('that' ('is' | 'was')
+    // | 'that' tokApostropheS
+    // | 'that' ('are' | 'were')
+    // | )
+    //('in' | 'inside' | 'inside' 'of' | 'på' | 'från')
     completeNounPhraseWithoutAll->cont_
     : ContainerNounPhraseProd
 ;
@@ -10088,7 +10164,7 @@ VerbRule(AttackWith)
 ;
 
 VerbRule(Inventory)
-    'l' | 'lista' | ('lista'|'ta'|'tag') ('inventarie'|'inventarier')
+    'i' | 'inv' | 'l' | 'lista' | ('lista'|'ta'|'tag') ('inventarie'|'inventarier')
     : InventoryAction
     verbPhrase = 'lista/listar inventarier'
 ;
@@ -10845,13 +10921,13 @@ VerbRule(ClimbDownWhat)
 ;
 
 VerbRule(Clean)
-    'rengör' dobjList
+    'rengör'|'städa' dobjList
     : CleanAction
     verbPhrase = 'rengöra/rengör (vad)'
 ;
 
 VerbRule(CleanWith)
-    'rengör' dobjList 'med' singleIobj
+    'rengör'|'städa' dobjList 'med' singleIobj
     : CleanWithAction
     verbPhrase = 'rengöra/rengör (vad) (med vad)'
     askIobjResponseProd = withSingleNoun

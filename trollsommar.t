@@ -17,7 +17,6 @@ landsvagen: OutdoorRoom 'landsvägen' 'landsvägen'
     west = vastraSkogen
 ;
 
-
 +bilen: Vehicle 'bil[-en]*bilar[-na]' 'bilen'
     allowedPostures = [sitting]
     canTravelVia(connector, dest) { return nil; }
@@ -100,15 +99,26 @@ huset: Room 'I husets vestibul' 'husets vestibul'
     out asExit(west)
 ;
 
-+bokhylla: Container 'bokhylla[-n] hylla[-n]' 'bokhylla' 
++bokhylla: Container 'bokhylla[-n]**hyllor[-na] hylla[-n]**hyllor[-na]' 'bokhylla' 
     isUter = true
-    initSpecialDesc = "En bokhylla står här. "
+    //isPlural = true
+    //initSpecialDesc = "En bokhylla står här. "
 ;
 
 ++bok: Thing 'bok[-en]*böcker[-na]' 'bok';
 
 ++trasnidadFigur: Thing 'träsnidad figur[-en]' 'träsnidad figur' 
 "En träsnidad figur av ett troll. "
+;
+
+
++forsaljare: Actor 'anki/försäljare[-n]' 'Anki'
+    isProperName  = true
+    isHer = true
+;
+
+++handvaska: Thing 'handväska[-n]/väska[-n]**handväskor[-na]' 'handväska'
+    ownedBy = [forsaljare]
 ;
 
 

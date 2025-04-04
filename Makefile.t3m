@@ -34,6 +34,8 @@
 ##sources
 -lib system.tl
 -lib adv3/adv3
+-source kfDebug
+
 -source svenska
 -source plats/labbet
 -source karaktar/professor
@@ -42,7 +44,6 @@
 -source karaktar/maria
 -source karaktar/fiskare
 -source plats/naturen
-
 
 #-source _gameTrackerAdv3
 #-source SwedishDictionary

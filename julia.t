@@ -51,7 +51,9 @@ skogen: OutdoorRoom 'skogen' 'skogen'
 
 
 jagare:  Actor 'hjortjägare[-n]/jägare[-n]' 'hjortjägare'
-    proper = true
+    theName = 'hjortjägaren'
+    isProperName = nil
+    isHim = true
 ;
 
 +jagareFetchDeerAgenda: DelayedAgendaItem

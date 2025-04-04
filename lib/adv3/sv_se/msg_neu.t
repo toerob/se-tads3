@@ -3718,7 +3718,7 @@ playerActionMessages: MessageHelper
 
     /* cannot consult object */
     cannotConsultMsg =
-        '{That dobj/he} {är} ingenting {du/han} {kan} konsultera. '
+        '{That dobj/he} saker {är} ingenting {du/han} {kan} konsultera. '
 
     /* cannot type anything on object */
     cannotTypeOnMsg = '{Du/han} {kan} skriva någonting på {that dobj/him}. '
@@ -3889,13 +3889,12 @@ playerActionMessages: MessageHelper
 
     /* not edible/drinkable */
     cannotEatMsg = '{The dobj/he} {does} verkar inte vara ätbart. '
-    cannotDrinkMsg = '{That dobj/he} {does} verkar inte vara något
-        {du/han} {kan} dricka. '
+    cannotDrinkMsg = '{The dobj/he} verkar inte vara något {du/han} {kan} dricka. '
 
     /* cannot clean object */
     cannotCleanMsg =
         //'{Du/han} wouldn&rsquo;t {|have} know{|n} how to clean {that dobj/him}. '
-        '{Du/han} skulle inte veta hur {that dobj/him} {ska} rengöras. '
+        '{Du/han} skulle inte veta hur {that dobj/him} {rengörs|rengjordes}. '
     cannotCleanWithMsg =
         '{Du/han} {kan} inte rengöra någonting med {that iobj/him}. '
 
@@ -4098,11 +4097,11 @@ npcActionMessages: playerActionMessages
 
     /* trying to take/move/put a Heavy object */
     cannotTakeHeavyMsg =
-        '{That dobj/he} {är} för tung {you/him} att ta. '
+        '{That dobj/he} saker {är} för tung {you/him} att ta. '
     cannotMoveHeavyMsg =
-        '{That dobj/he} {är} för tung {you/him} att flytta. '
+        '{That dobj/he} saker {är} för tung {you/him} att flytta. '
     cannotPutHeavyMsg =
-        '{That dobj/he} {är} för tung {you/him} att flytta. '
+        '{That dobj/he} saker {är} för tung {you/him} att flytta. '
 
     /* trying to move a component object */
     cannotMoveComponentMsg(loc)
