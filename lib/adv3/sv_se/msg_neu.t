@@ -2939,7 +2939,7 @@ playerActionMessages: MessageHelper
 
     /* can't take something while occupying it */
     cannotTakeLocationMsg = '{Du/han} {kan} inte ta {that/him dobj}
-        medan {you\'re} uppehåller {it/him dobj}. '
+        medan {du/han} uppehåller {it/him dobj}. '
 
     /* can't REMOVE something that's being held */
     cannotRemoveHeldMsg = 'Det {finns|fanns} ingenting att ta bort 
