@@ -476,8 +476,8 @@ modify VocabObject
         local sectPart;
         local modList = [];
 
-        local foundPluralName = nil; // Used to find the first defined pluralname in vocabWords and set pluralName to it
-
+        local foundPluralName = nil; // Used to find the first defined pluralname in vocabWords and set pluralName property to it
+        local foundTheDefinitiveForm = nil; // Used to find the first defined definitive form in vocabWords and set definitiveForm property to it
         /* start off in the adjective section */
         sectPart = &adjective;
 
@@ -572,24 +572,26 @@ modify VocabObject
                     // behövs
 
                     if(rexMatch(R'.*<lsquare>[-](.*)<rsquare>.*', cur) != nil) {
-                        //"vocabWord: <<cur>>\n";
                         local ending = rexGroup(1)[3];
-                        //"ending: <<ending>>\n";
-
 
                         // Once we got the ending we can remove the ending syntax ([-xyz]) from the vocabWord
                         cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
                         local curWithEnding = cutEndings(cur) + ending;
                         wordPart = &literalAdjective;   // TODO: not sure this will do...
 
-
-                        //tadsSay('<<cur>>, <<curWithEnding>> [-<<ending>>]\n');
-                        //cmdDict.addWord(self, cur, wordPart);
                         cmdDict.addWord(self, curWithEnding, wordPart);
-                        
-                        if(ending.endsWith('n') || ending.endsWith('na')) {
-                            //tadsSay('##<<self.theName>> uterum##');
-                            isUter = true;
+
+                        if(isPlural && sectPart == &plural) {
+                            // PLural definitive form is not yet handled automatically
+                        } else {
+                            // Only check the for the uterum/neutrum ending if we are not in the plural section
+                            if(ending.endsWith('n') || ending.endsWith('na')) {
+                                isUter = true;
+                                tadsSay('[<<self.theName>>] ');
+                            } else {
+                                isUter = nil;
+                                tadsSay('[<<self.theName>>] ');
+                            }
                         }
 
                         // TODO: det är oftare jobbigare att böja till pluralformen med pluralNameFrom()
@@ -601,26 +603,25 @@ modify VocabObject
                                     foundPluralName=true;
                                     pluralName = cur;
                                     //pluralDisambigName
-                                    tadsSay('\ \ \ pluralName = <<curWithEnding>>\n');
-                                }
-                                
+                                    tadsSay('\ plu = [<<curWithEnding>>] ');
+                                }                                
                             }
                         }
 
-                        /* Använd theNameFrom istället och tvinga name att definieras
-                        if(foundTheName) {
+                        // Använd theNameFrom istället och tvinga name att definieras
+                        if(!foundTheDefinitiveForm) {
                             if(isPlural) {
                                 if(sectPart == &plural) {
-                                    foundTheName=true;
-                                    theName = curWithEnding;
-                                    tadsSay('\ \ \ theName = <<curWithEnding>> (pluralnamed)\n');
+                                    foundTheDefinitiveForm=true;
+                                    definitiveForm = curWithEnding;
+                                    tadsSay('\ defplu = [<<curWithEnding>>] ');
                                 }
                             } else {
-                                foundTheName=true;
-                                theName = curWithEnding;
-                                tadsSay('\ \ \ theName = <<curWithEnding>>\n');
+                                foundTheDefinitiveForm=true;
+                                definitiveForm = curWithEnding;
+                                tadsSay('\ def = [<<curWithEnding>>] ');
                             }
-                        }*/
+                        }
 
 
                         // If within the noun section and an ending ends with 'n'
@@ -647,6 +648,7 @@ modify VocabObject
                         }*/
 
                         //isPlural = ending.endsWith('na');
+                        tadsSay('\n');
                     }
 
 
@@ -1307,14 +1309,26 @@ modify Thing
      *   If my name is already qualified, don't add an article; otherwise,
      *   add a 'the' as the prefixed definite article.
      */
+    
+    //theNameFrom(str) { return (isQualifiedName ? '' : 'the ') + str; }
+
+    definitiveForm = nil
+
     theNameFrom(str) { 
-        return (isQualifiedName 
-        ? '' 
-        :  isPlural
-            ? 'några ' 
-            : (isUter? 'en ' : 'ett ')
-        ) 
-        + str ; 
+
+        if(isQualifiedName) {
+            return str;
+        }
+        //tadsSay('theNameFrom <<definitiveForm>>');
+            
+        if(definitiveForm) {
+            return definitiveForm;
+        }
+            
+        return (isPlural
+            ? 'de ' 
+            : (isUter? 'den ' : 'det ')) 
+                + str; 
     }
 
     swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
@@ -2894,6 +2908,7 @@ modify standing
     msgVerbIPast = 'stod upp'
     msgVerbTPresent = 'stå{r}'
     msgVerbTPast = 'stod'
+    //participle = 'ståendes'
     participle = 'står'
 ;
 
@@ -2902,7 +2917,8 @@ modify sitting
     msgVerbIPast = 'satte {själv} ner'
     msgVerbTPresent = 'sitter'
     msgVerbTPast = 'satt'
-    participle = 'sittande'
+    //participle = 'sittande'
+    participle = 'sitter'
 ;
 
 modify lying
@@ -2910,7 +2926,8 @@ modify lying
     msgVerbIPast = 'lade {själv} ner'
     msgVerbTPresent = 'ligger'
     msgVerbTPast = 'lade {själv}'
-    participle = 'liggande'
+    //participle = 'liggande'
+    participle = 'ligger'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -9826,7 +9843,7 @@ VerbRule(ListenImplicit)
 ;
 
 VerbRule(PutIn)
-    ('lägg' | 'placera' | 'sätt' ) dobjList
+    ('lägg' | 'placera' | 'sätt' | 'stoppa'  ) dobjList
         ('i' | 'in' | 'in' 'i' | 'in' 'till' | 'insidan' | 'insidan' 'av') singleIobj
     : PutInAction
     verbPhrase = 'sätta/sätter (vad) (in i vad)'
@@ -9834,7 +9851,7 @@ VerbRule(PutIn)
 ;
 
 VerbRule(PutOn)
-    ('lägg' | 'placera' | 'släpp' | 'sätt') dobjList
+    ('lägg' | 'placera' | 'släpp' | 'sätt' | 'stoppa') dobjList
         ('på' | ('upp' 'på') | 'på' 'till' | 'uppe' 'på') singleIobj
     | 'sätt' dobjList 'ner' 'på' singleIobj
     : PutOnAction
@@ -10768,14 +10785,14 @@ VerbRule(Flip)
 
 
 VerbRule(TurnOn)
-    ('aktivera' | ('vrid' | 'slå') 'på') dobjList
+    ('aktivera' | ('vrid' | 'slå') 'på' | 'starta') dobjList
     | ('vrid' | 'slå') dobjList 'på'
     : TurnOnAction
     verbPhrase = 'vrida/vrider på (vad)'
 ;
 
 VerbRule(TurnOff)
-    ('deaktivera' | ('vrid' | 'slå') 'av') dobjList
+    ('deaktivera' | ('vrid' | 'stäng' | 'slå') 'av') dobjList
     | ('vrid' | 'slå') dobjList 'av'
     : TurnOffAction
     verbPhrase = 'vrida/vrider av (vad)'

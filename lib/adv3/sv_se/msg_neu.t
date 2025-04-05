@@ -2837,15 +2837,15 @@ playerActionMessages: MessageHelper
 
     /* default response to open/close */
     okayOpenMsg = shortTMsg(
-        'Öppnat. ', '{Du/han} öppna{r/de} {the dobj/him}. ')
+        'Öppna<<gDobj.isUter?'d':'t'>>. ', '{Du/han} öppna{r/de} {the dobj/him}. ')
     okayCloseMsg = shortTMsg(
-        'Stängt. ', '{Du/han} stäng{er|de} {the dobj/him}. ')
+        'Stäng<<gDobj.isUter?'d':'t'>>. ', '{Du/han} stäng{er|de} {the dobj/him}. ')
 
     /* default response to lock/unlock */
     okayLockMsg = shortTMsg(
-        'Låst. ', '{Du/han} lås{e/te} {the dobj/him}. ')
+        'Låst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{e/te} {the dobj/him}. ')
     okayUnlockMsg = shortTMsg(
-        'Upplåst. ', '{Du/han} lås{er/te} upp {the dobj/him}. ')
+        'Upplåst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{er/te} upp {the dobj/him}. ')
 
     /* cannot dig here */
     cannotDigMsg = '{Du/han} {have} ingen anledning att gräva i {that dobj/him}. '

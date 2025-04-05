@@ -36,9 +36,7 @@
 -lib adv3/adv3
 
 -source dynfunc
-
 -source debug
-
 -source kfDebug
 
 -source tuscany

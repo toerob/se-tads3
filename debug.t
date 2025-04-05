@@ -1,6 +1,9 @@
 #charset "utf-8"
 #include <adv3.h>
 #include <sv_se.h> 
+
+// OBS: kräver "-source dynfunc" i Makefile
+
 /*
  *   ************************************************************************
  *   debug.t This module forms part of the adv3Lite library, and defines a
@@ -415,7 +418,7 @@ DefineLiteralAction(DoTest)
         if (script) {
             script.run();
         } else {
-            "DMsg(test sequence not found, 'Test sequence not found. ');";
+            "Testsekvenser ej funna.";
         }
     }
     
@@ -425,8 +428,8 @@ DefineLiteralAction(DoTest)
     turnSequence() { }
 ;
 
-VerbRule(Test)
-    'test' singleLiteral  // literalPhrase->literalMatch
+VerbRule(DoTest)
+    'tst' singleLiteral  // literalPhrase->literalMatch
     : DoTestAction
     verbPhrase = 'testa/testa (what)'
     //missingQ = 'which sequence do you want to test'
@@ -526,6 +529,7 @@ class Test: object
                     tadsSay('[WARNING: No tokens parsed]\n');
                     return;
                 }
+                // "<bold><<x>></bold>\n";
                 libGlobal.playerChar.addPendingCommand(true, libGlobal.playerChar, toks);
             }
         });

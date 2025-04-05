@@ -42,8 +42,7 @@ hallway: Room 'Hallen' 'hallen'
     north = livingRoom
     west = bathroom
     up = hallwayStairsUp
-    southwest asExit(up)
-    
+    southwest asExit(up)    
 ;
 +hallwayStairsUp: StairwayUp  -> hallwayStairsDown 'trappa[n]**trappor[-na]' 'trappor' isPlural = true;
 +houseEntranceDoorInside: Door -> houseEntranceDoorOutside 'husentrén/dörr[-en]*dörrar[-na]' 'huvuddörr';
@@ -61,17 +60,18 @@ bathroom: Room 'badrummet' 'badrummet'
     east = hallway
 ;
 
++bathtub: Container 'badkar[-et]/badkar[-et]**badkar[-en]' 'badkar';
+
 livingRoom: Room 'vardagsrummet' 'vardagsrummet'
     south = hallway
     north = patioDoorInside
 ;
-+patioDoorInside: Door -> patioDoorOutside 'patio door*doors' 'patio door' material = glass;
-patio: Room 'patio' 'patio'
-    "There's an actual POOL here. Other than that no furniture yet. Tomorrow they'll come. "
-    //Add adjacent garden ?
++patioDoorInside: Door -> patioDoorOutside 'glasdörr[-en]/dörr[-en]**dörrar[-na]' 'glasdörr' material = glass;
+patio: Room 'uteplatsen' 'uteplatsen'
+    "Det finns en riktig POOL här. Annars ingen möblering än. Imorgon kommer de. "    
     south = patioDoorOutside
 ;
-+patioDoorOutside: Door -> patioDoorInside 'patio door*doors' 'patio door' material = glass;
++patioDoorOutside: Door -> patioDoorInside 'glasdörr[-en]/dörr[-en]**dörrar[-na]' 'glasdörr' material = glass;
 
 
 
@@ -90,7 +90,7 @@ masterBedroom: Room 'Stora sovrummet' 'Stora sovrummet'
     east = hallwayUpstairs
 ;
 
-+bed: Bed 'dubbelsäng[-en]/säng[-en]**sängar[-na]' 'dubbelsäng'
++bed: Bed, Heavy 'dubbelsäng[-en]/säng[-en]**sängar[-na]' 'dubbelsäng'
     theName = 'dubbelsängen'
 ;
 
@@ -125,4 +125,4 @@ driveway: OutdoorRoom 'Uppfarten' 'Uppfarten'
 
 
 
-Test 'spel' ['n','z', 'ö', 'hälsa', 'kyss', 'v', 'upp', 'v', 'sitt på sängen'] [anteckning];
+Test 'spel' ['n','z', 'ö', 'hälsa', 'kyss', 'v', 'upp', 'v', 'sitt på sängen', 'x säng', 'ligg ner'] [anteckning];
