@@ -219,7 +219,7 @@ libMessages: MessageHelper
 
     /* generic "feel" description of a Thing */
     thingFeelDesc(obj)
-        { "{Du/han} känn{er|de} inget oväntat. "; }
+        { "{Du/han} kän{ner|de} inget oväntat. "; }
 
     /* obscured "read" description */
     obscuredReadDesc(obj)
@@ -1273,7 +1273,7 @@ libMessages: MessageHelper
     /* default description of the player character */
     pcDesc(actor)
     {
-        "\^<<actor.theName>> ser<<actor.verbEndingSEd>> likadan ut som vanligt. ";
+        "\^<<actor.theName>> {ser|såg} likadan ut som vanligt. ";
     }
 
     /*
@@ -2646,7 +2646,7 @@ playerActionMessages: MessageHelper
     }
 
     /* no key is needed to lock or unlock this object */
-    noKeyNeededMsg = '{The dobj/he} {does} verkar inte behöva en nyckel. '
+    noKeyNeededMsg = '{The dobj/he} verka{r|de} inte behöva en nyckel. '
 
     /* actor must be standing before doing that */
     mustBeStandingMsg = '{Du/han} {behöver|behövde} stå upp före {it actor/he} {kan} göra det. '
@@ -2765,7 +2765,7 @@ playerActionMessages: MessageHelper
 
     /* generic "smell" description of a Thing */
     thingSmellDescMsg(obj)
-        { return '{Du/han} känn{er|de} ingen oväntad lukt. '; }
+        { return '{Du/han} kän{ner|de} ingen oväntad lukt. '; }
 
     /* default description of a non-player character */
     npcDescMsg(npc)
@@ -2798,7 +2798,7 @@ playerActionMessages: MessageHelper
         ovanligt. '
 
     /* there's nothing here with a specific odor */
-    nothingToSmellMsg = '{Du/han} känn{er|de} ingen oväntad lukt. '
+    nothingToSmellMsg = '{Du/han} kän{ner|de} ingen oväntad lukt. '
 
     /* there's nothing here with a specific noise */
     nothingToHearMsg = '{Du/han} {hör|hörde} inget oväntat. '
@@ -2902,9 +2902,9 @@ playerActionMessages: MessageHelper
     cannotPutImmovableMsg = '{Du/han} {kan} inte stoppa {the dobj/him} någonstans. '
 
     /* trying to take/move/put a Heavy object */
-    cannotTakeHeavyMsg = '{The dobj/he} {är} för tung. '
-    cannotMoveHeavyMsg = '{The dobj/he} {är} för tung. '
-    cannotPutHeavyMsg = '{The dobj/he} {är} för tung. '
+    cannotTakeHeavyMsg = '{The dobj/he} {är} för tung<<verbEndingTAFor(gDobj)>>. '
+    cannotMoveHeavyMsg = '{The dobj/he} {är} för tung<<verbEndingTAFor(gDobj)>>. '
+    cannotPutHeavyMsg = '{The dobj/he} {är} för tung<<verbEndingTAFor(gDobj)>>. '
 
     /* trying to move a component object */
     cannotMoveComponentMsg(loc)
@@ -2947,7 +2947,7 @@ playerActionMessages: MessageHelper
 
     /* default 'take' response */
     okayTakeMsg = shortTMsg(
-        'Tag<<gDobj.isPlural? 'na' : (gDobj.isUter?'en':'et')>>. ', '{Du/han} {tar|tog} {the dobj/him}. ')
+        'Tag<<gDobj.isUter && gDobj.isPlural? 'na' : (gDobj.isUter?'en':'et')>>. ', '{Du/han} {tar|tog} {the dobj/him}. ')
 
     /* default 'drop' response */
     okayDropMsg = shortTMsg(
@@ -3098,7 +3098,7 @@ playerActionMessages: MessageHelper
     tooHeavyForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{The obj/he} {är} för tung för dig {you/him} att plocka upp. ';
+        return '{The obj/he} {är} för tung<<verbEndingTAFor(obj)>> för dig {you/him} att plocka upp. ';
     }
 
     /*
@@ -3108,7 +3108,7 @@ playerActionMessages: MessageHelper
     totalTooHeavyForMsg(obj)
     {
         gMessageParams(obj);
-        return '{The obj/he} {är} för tung; {du/han} {kommer|} {behöva|behövde} {att|} sätta ner någonting först. ';
+        return '{The obj/he} {är} för tung<<verbEndingTAFor(obj)>>}; {du/han} {kommer|} {behöva|behövde} {att|} sätta ner någonting först. ';
     }
 
     /* object is för stor för container */
@@ -3887,8 +3887,20 @@ playerActionMessages: MessageHelper
             men {du/han} hittar inte någon som passa{r/de} låset. ';
     }
 
+    verbEndingTAFor(obj) {
+        if(obj) {
+            if(obj.isPlural) {
+                return 'a';
+            }
+            if(!obj.isUter) {
+                return 't';
+            }
+        }
+        return '';
+    }
+
     /* not edible/drinkable */
-    cannotEatMsg = '{The dobj/he} {does} verkar inte vara ätbart. '
+    cannotEatMsg = '{The dobj/he} verkar inte vara ätbar<<verbEndingTAFor(gDobj)>>. '
     cannotDrinkMsg = '{The dobj/he} verkar inte vara något {du/han} {kan} dricka. '
 
     /* cannot clean object */
@@ -4097,11 +4109,11 @@ npcActionMessages: playerActionMessages
 
     /* trying to take/move/put a Heavy object */
     cannotTakeHeavyMsg =
-        '{That dobj/he} saker {är} för tung {you/him} att ta. '
+        '{That dobj/he} saker {är} för tung<<verbEndingTAFor(gDobj)>> {you/him} att ta. '
     cannotMoveHeavyMsg =
-        '{That dobj/he} saker {är} för tung {you/him} att flytta. '
+        '{That dobj/he} saker {är} för tung<<verbEndingTAFor(gDobj)>> {you/him} att flytta. '
     cannotPutHeavyMsg =
-        '{That dobj/he} saker {är} för tung {you/him} att flytta. '
+        '{That dobj/he} saker {är} för tung<<verbEndingTAFor(gDobj)>> {you/him} att flytta. '
 
     /* trying to move a component object */
     cannotMoveComponentMsg(loc)

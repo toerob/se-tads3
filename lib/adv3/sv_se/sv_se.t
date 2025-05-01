@@ -581,17 +581,24 @@ modify VocabObject
 
                         cmdDict.addWord(self, curWithEnding, wordPart);
 
-                        if(isPlural && sectPart == &plural) {
-                            // PLural definitive form is not yet handled automatically
-                        } else {
-                            // Only check the for the uterum/neutrum ending if we are not in the plural section
-                            if(ending.endsWith('n') || ending.endsWith('na')) {
-                                isUter = true;
-                                tadsSay('[<<self.theName>>] ');
+                        // PLural definitive form is not yet handled automatically
+                        if(sectPart != &plural) {
+                            if(!isPlural) {
+                                // Only check the for the uterum/neutrum ending if we are not in the plural section
+                                if(ending.endsWith('n') || ending.endsWith('na')) {
+                                    isUter = true;
+                                    tadsSay('[<<self.theName>>] uter ');
+                                } else {
+                                    isUter = nil;
+                                    tadsSay('[<<self.theName>>] neuter ');
+                                }
                             } else {
-                                isUter = nil;
-                                tadsSay('[<<self.theName>>] ');
+                                if(ending.endsWith('n') || ending.endsWith('na')) {
+                                    isUter = true;
+                                    tadsSay('[<<self.theName>>] uter pluralpart and plural ');
+                                }
                             }
+
                         }
 
                         // TODO: det är oftare jobbigare att böja till pluralformen med pluralNameFrom()
@@ -603,7 +610,7 @@ modify VocabObject
                                     foundPluralName=true;
                                     pluralName = cur;
                                     //pluralDisambigName
-                                    tadsSay('\ plu = [<<curWithEnding>>] ');
+                                    tadsSay('\ plu = [<<curWithEnding>>] pluralpart ');
                                 }                                
                             }
                         }
@@ -1115,8 +1122,8 @@ modify Thing
     itNom { return [ (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
     
     
-
-    itObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector]; }
+    //TODO: Håll koll på pluralformen 'dem':'det håller i längden
+    itObj { return [ (isUter?'den':'det'), 'honom', 'henne', (isUter?'dem':'det2')][pronounSelector]; }
     
     //itPossAdj { return ['its', 'his', 'her', 'their'][pronounSelector]; }
     //itPossNoun { return ['its', 'his', 'hers', 'theirs'][pronounSelector]; }
@@ -1551,8 +1558,9 @@ modify Thing
          *   if we have a nominal owner, show with our owner name;
          *   otherwise, just show our regular theName
          */
-        if ((owner = getNominalOwner()) != nil)
+        if ((owner = getNominalOwner()) != nil) {
             return owner.theNamePossAdj + ' ' + name;
+        }
         else
             return theName;
     }
@@ -2088,9 +2096,9 @@ modify Thing
      *   A few common irregular verbs and name-plus-verb constructs,
      *   defined for convenience.
      */
-    verbToDo = (tSel('gör' + verbEndingEs, 'gjorde'))
+    verbToDo = (tSel('gör', 'gjorde'))
     nameDoes = (theName + ' ' + verbToDo)
-    verbToGo = (tSel('går' + verbEndingEs, 'gick'))
+    verbToGo = (tSel('går', 'gick'))
     verbToCome = (tSel('kommer' , 'kom'))
     verbToLeave = (tSel('går härifrån' , 'gick därifrån'))
     
@@ -2100,7 +2108,7 @@ modify Thing
 
     nameSees = (theName + ' ' + verbToSee)
     nameSeem = (theName + ' ' + verbToSeem)
-    verbToSay = (tSel('säger' + verbEndingS, 'sade'))
+    verbToSay = (tSel('säger', 'sade'))
     nameSays = (theName + ' ' + verbToSay)
     verbMust = (tSel('måste', 'var tvungen'))
     verbCan = (tSel('kan', 'kunde'))
@@ -2151,6 +2159,8 @@ modify Thing
     verbEndingA { return 'a'; }
 
     verbEndingAR { return 'ar'; }
+    
+    verbEndingT { return 't'; }
     
     verbEndingRDe = (tSel(verbEndingR, 'de'))
     
@@ -2478,7 +2488,8 @@ modify Actor
     }
     itReflexive
     {
-        return ['jag själv', 'jag själv', 'jag själv', 'oss själva',
+        return ['mig själv', 'mig själv', 'mig själv', 'oss själva',
+        //return ['jag själv', 'jag själv', 'jag själv', 'oss själva',
                'dig själv', 'dig själv', 'dig själv', 'dig själva',
                'den själv', 'han själv', 'hon själv', 'dem själva'][pronounSelector];
     }
@@ -4152,8 +4163,10 @@ langMessageBuilder: MessageBuilder
         ['s/?ed', &verbEndingSMessageBuilder_, nil, nil, true],
 
         // Swedish adaptation begins here
-        ['a', &verbEndingA, nil, nil, true],
+        ['a', &verbEndingA, nil, nil, true], // t ex ätbar(a)
         ['r', &verbEndingR, nil, nil, true],
+
+        ['t', &verbEndingT, nil, nil, true], // t ex ätbar(t)
         ['r/de', &verbEndingRDe, nil, nil, true],
         ['r/?de', &verbEndingRMessageBuilder_, nil, nil, true],
         ['ar/ade', &verbEndingARDe, nil, nil, true],
@@ -5973,7 +5986,7 @@ grammar completeNounPhraseWithoutAll(her):  'henne' : HerProd;
  *   yourself"
  */
 grammar completeNounPhraseWithoutAll(yourself):
-    'du själv' | 'ni själva' | 'du' : YouProd
+    'mig' 'själv' | 'dig' 'själv' | 'du' 'själv' | 'ni' 'själva' | 'du' | 'dig' : YouProd
 ;
 
 /*
@@ -10893,7 +10906,7 @@ VerbRule(PourOnto)
 ;
 
 VerbRule(Climb)
-    'klättra' singleDobj
+    'klättra' ('upp'|) ('på'|) singleDobj
     : ClimbAction
     verbPhrase = 'klättra/klättrar (på vad)'
     askDobjResponseProd = singleNoun
@@ -10919,7 +10932,7 @@ VerbRule(ClimbUpWhat)
 ;
 
 VerbRule(ClimbDown)
-    ('climb' | 'gå' | 'vandra') 'ner' singleDobj
+    ('climb' | 'gå' | 'vandra') 'ner' ('från'|) singleDobj
     : ClimbDownAction
     verbPhrase = 'kliva/kliver (ner på vad)'
     askDobjResponseProd = singleNoun

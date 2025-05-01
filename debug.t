@@ -382,6 +382,8 @@ DefineSystemAction(ListTests)
             "There are no test scripts defined in this game. ');";
             exit;
         }
+        
+        // "cmd: <<cmd.fully>>";
         fully = true; //TODO: fix from adv3Lite -> fully = cmd.verbProd.fully;
         foreach(local testObj in allTests.lst) {
             "<<testObj.testName>>";
@@ -397,7 +399,7 @@ DefineSystemAction(ListTests)
 ;
 
 VerbRule(ListTests)
-    ('list' | 'l') 'tests' (| 'fully' -> fully) 
+    ('list' | 'lista' | 'l') ('test'|'tester') (| 'fullt' -> fully) 
     : ListTestsAction
     verbPhrase = 'list/listing test scripts'
 ;
@@ -429,7 +431,7 @@ DefineLiteralAction(DoTest)
 ;
 
 VerbRule(DoTest)
-    'tst' singleLiteral  // literalPhrase->literalMatch
+    'testa' singleLiteral  // literalPhrase->literalMatch
     : DoTestAction
     verbPhrase = 'testa/testa (what)'
     //missingQ = 'which sequence do you want to test'

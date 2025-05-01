@@ -1,10 +1,11 @@
-IFID: 952c94dd-f92a-4970-9a00-cdcc24d038a1
-Name: The italian house
-Byline: by Tomas
-HtmlByline: by <a href="mailto:yourmail@address.com"></a>
-AuthorEmail: Tomas yourmail@address.com
+Name: Exempel 1
+Byline: av Tomas Öberg
+HtmlByline: av <a href="mailto:tomaserikoberg@gmail.com">Tomas Öberg</a>
+AuthorEmail: Tomas Öberg tomaserikoberg@gmail.com
+Desc: Exempel 2
+HtmlDesc: Exempel 2
 Version: 1
-ReleaseDate: 2025-04-05
+ReleaseDate: 2025-05-01
 Language: sv-SE
 LicenseType: Freeware
 CopyingRules: Nominal cost only; compilations allowed

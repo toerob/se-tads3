@@ -8,7 +8,7 @@ karl:  Actor 'karl' 'Karl' @huset //@husetsVeranda //landsvagen
     isProperName = true
     posture = sitting
 ;
-+key: Key 'nyckel[-n]*nycklar[-na]' 'nyckel';
++key: Key 'nyckel[-n]*nycklar[-na]' 'nyckel' isPlural=nil;
 
 
 landsvagen: OutdoorRoom 'landsvägen' 'landsvägen'
@@ -87,7 +87,7 @@ husetsKok: Room 'Köket' 'köket'
 ++tallrik: Surface 'tallrik[-en]*tallrikar[-na]' 'tallrik';
 +++sked: Thing 'sked[-en]*skedar[-na]' 'sked';
 
-+husFonsterSydsidaInsida: Door -> husFonsterSydsidaUtsida 'fönster/fönstret*fönster' 'fönster'
++husFonsterSydsidaInsida: Door -> husFonsterSydsidaUtsida 'fönster*fönster[-na]/fönstret*fönstren[-a]' 'fönster'
     theName = 'fönstret'
 
 ;
@@ -99,7 +99,7 @@ huset: Room 'I husets vestibul' 'husets vestibul'
     out asExit(west)
 ;
 
-+bokhylla: Container 'bokhylla[-n]**hyllor[-na] hylla[-n]**hyllor[-na]' 'bokhylla' 
++bokhylla: Container 'bokhylla[-n]*hyllor[-na] hylla[-n]*hyllor[-na]' 'bokhylla' 
     isUter = true
     //isPlural = true
     //initSpecialDesc = "En bokhylla står här. "
@@ -112,15 +112,13 @@ huset: Room 'I husets vestibul' 'husets vestibul'
     //theDisambigName = 'den träsnidade figuren'
     theName = 'den träsnidade figuren' // TODO: sätt 'den' vid skapande om isProperName = nil
 ;
-// TODO: kasta figur mot hyllan
-
 
 +forsaljare: Actor 'anki/försäljare[-n]' 'Anki'
     isProperName  = true
     isHer = true
 ;
 
-++handvaska: Thing 'handväska[-n]/väska[-n]**handväskor[-na]' 'handväska'
+++handvaska: Thing 'handväska[-n]/väska[-n]*handväskor[-na]' 'handväska'
     ownedBy = [forsaljare]
 ;
 
@@ -144,19 +142,27 @@ vardagsrum: Room 'vardagsrummet' 'vardagsrummet'
     } 
     west = huset
 ;
-+ bord: Surface, Heavy 'bord[-et]*bord[-en]' 'bord';
++ bord: Surface, Heavy 'bord[-et]*bord[-en]' 'bord' isUter = nil;
 ++ bricka: Surface 'bricka[-n]*brickor' 'bricka';
-+++ lov: Thing 'löv[-et]*löven' 'löv';
-+++ matta: Surface 'matta[-n]' 'matta';
++++ lov: Thing 'löv[-en]' 'löv' isPlural=true; //isUter=true;
++++ matta: Surface 'matta[-n]*mattor[-na]' 'matta';
 ++++ bowl: Container 'skål[-en]*skålar' 'skål';
-+++++ grape: Food 'grapefrukt[-en]*grapefrukter' 'grapefrukt';
++++++ chips: Food 'lite/chips[-en]' 'lite chips' 
+    theName='chipsen'
+    isPlural = true
+    isMassNoun=true
+    isQualifiedName=true 
+;
 
-+soffa: Thing 'soffa[-n]' 'soffa'
++++++ grape: Food 'grapefrukt[-en]*grapefrukter[-na]' 'grapefrukt';
+
++soffa: Thing 'soffa[-n]*soffor[-na]' 'soffa'
     initSpecialDesc = ""
 ;
 
 //TODO: behövs fönst[-er|-ret]c eller liknande också?
-+fonster: Openable, Fixture 'fönster[-et] fönstret*fönster lucka[-n]' 'fönster'
++fonster: Openable, Fixture 'fönster*fönstren[-a] lucka[-n]' 'fönster'
+    theName = 'fönstret'
     isOpen = true
 ;
 /*
@@ -171,8 +177,12 @@ vardagsrum: Room 'vardagsrummet' 'vardagsrummet'
 
 
 // TODO: några dörrflis,
-flis: Thing 'dörrflis' 'dörrflis'
+// Du såg några dörrflis där.
++flis: Thing 'lite/flis[-et]/dörrflis[-et]*dörrflis[-et]' 'lite dörrflis'
+    theName = 'dörrfliset'
+    isUter = nil
     isPlural = true
+    isProperName = true
 ;
 
 // ------------------------------
