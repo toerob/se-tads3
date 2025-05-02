@@ -113,7 +113,7 @@ toppenAvTrappan: Room 'toppen av en trappan' 'toppen av trappan'
   }
 ;
 
-tKorsning: Room 't-korsning' 't-korsningen'
+tKorsning: Room 'T-korsning' 'T-korsningen'
   ""
   south = toppenAvTrappan
   east: TravelMessage {

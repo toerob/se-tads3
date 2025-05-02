@@ -27,24 +27,32 @@
 -v
 -D
 -d
--FI include
--FL lib
+-FIinclude
+-FLlib
 -o spel.t3
 
 ##sources
 -lib system.tl
 -lib adv3/adv3
-
--source dynfunc
--source debug
 -source kfDebug
 
-#-source hantvig/hantvig
 
-#-source 1700/main
+-source svenska
+-source plats/labbet
+-source karaktar/professor
+-source plats/korridor
+-source mailman
+-source karaktar/maria
+-source karaktar/fiskare
+-source plats/naturen
 
--source sarkofagen/sarkofagen
--source sarkofagen/reldir
+#-source _gameTrackerAdv3
+#-source SwedishDictionary
+
+-source argon
+-source trollsommar
+-source sommarsaga
+-source julia
 
 -res
 GameInfo.txt

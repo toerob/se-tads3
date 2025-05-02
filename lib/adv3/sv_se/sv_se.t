@@ -4106,6 +4106,10 @@ langMessageBuilder: MessageBuilder
         /* parameters that imply the actor as the target object */
         ['du/han', &theName, 'actor', nil, true],
         ['du/hon', &theName, 'actor', nil, true],
+        
+        //['han', &thatNom, 'actor', nil, true],
+        //['hon', &thatNom, 'actor', nil, true],
+
         ['you\'re/he\'s', &itIsContraction, 'actor', nil, true],
         ['you\'re/she\'s', &itIsContraction, 'actor', nil, true],
         ['you\'re', &itIsContraction, 'actor', nil, true],
@@ -4257,6 +4261,8 @@ langMessageBuilder: MessageBuilder
         //FIXME: ['den/he', &thatNom, nil, nil, true],
         ['that/he', &thatNom, nil, nil, true],
 
+        ['det/han', &thatNom, nil, nil, true],
+        ['det/hon', &thatNom, nil, nil, true],
 
         ['that/she', &thatNom, nil, nil, true],
         ['that/him', &thatObj, nil, &itReflexive, nil],
@@ -9806,7 +9812,7 @@ VerbRule(LookBehind)
 ;
 
 VerbRule(Feel)
-    ('känn' | 'rör') dobjList
+    ('känn' | 'rör') ('på'|) dobjList
     : FeelAction
     verbPhrase = 'röra/rör (vad)'
 ;
@@ -11106,7 +11112,7 @@ VerbRule(GetOutOf)
 
     /* use the actorOutOfPrep, if there's a direct object available */
     adjustDefaultObjectPrep(prep, obj)
-        { return (obj != nil ? obj.actorOutOfPrep + ' ' : prep); }
+        { return (obj != nil ? obj.actorOutOfPrep + ' ' : prep)  ; }
 ;
 
 VerbRule(GetOffOf)

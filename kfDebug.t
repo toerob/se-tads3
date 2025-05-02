@@ -77,7 +77,7 @@ DefineTAction(Gonear)
         }
         else
         {
-            "You can't go there. ";
+            "Du kan inte gå dit. ";
             return;
         }
     }
@@ -87,7 +87,7 @@ VerbRule(Gonear)
     'gonear' singleDobj
     : GonearAction
     
-    verbPhrase = 'go/going near (what)'
+    verbPhrase = 'gå/går nära (vad)'
 ;
 
 /* ---------------------------------------------------------------------- */

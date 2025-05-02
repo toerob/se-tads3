@@ -1817,8 +1817,8 @@ playerMessages: libMessages
     {
         reportQuestion('<.parser>\^' + action.whatObj(which)
                        + ' vill du '
-                       + (actor.referralPerson == ThirdPerson
-                          ? actor.theName : '')
+                       + (actor.referralPerson == ThirdPerson ? actor.theName : '')
+                       + ' ' 
                        + action.getQuestionInf(which) + '?<./parser> ');
     }
 
@@ -3317,7 +3317,7 @@ playerActionMessages: MessageHelper
 
     /* travel attempted in the dark in a direction with no exit */
     cannotGoThatWayInDarkMsg = 'Det {är} för mörkt; {du/han}
-        {kan} inte see var du går. '
+        {kan} inte se var {det/han actor} {går|gick}. '
 
     /* we don't know the way back for a GO BACK */
     cannotGoBackMsg = '{Du/han} {vet|visste} inte hur man återvände{|r} {h|d}ärifrån. '
