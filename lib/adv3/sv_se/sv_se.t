@@ -2114,8 +2114,8 @@ modify Thing
     verbCan = (tSel('kan', 'kunde'))
     verbCannot = (tSel('kan inte', 'kunde inte'))
     verbCant = (tSel('kan inte', 'kunde inte'))
-    verbWill = (tSel('ska', 'skulle'))
-    verbWont = (tSel('ska inte', 'skulle inte'))
+    verbWill = (tSel('kommer', 'skulle'))
+    verbWont = (tSel('kommer inte', 'skulle inte'))
 
     /*
      *   Verb endings for regular '-s' verbs, agreeing with this object as
@@ -2487,11 +2487,13 @@ modify Actor
                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
     }
     itReflexive
-    {
+    { 
+            //  'myself', 'myself', 'myself', 'ourselves',
         return ['mig själv', 'mig själv', 'mig själv', 'oss själva',
-        //return ['jag själv', 'jag själv', 'jag själv', 'oss själva',
-               'dig själv', 'dig själv', 'dig själv', 'dig själva',
-               'den själv', 'han själv', 'hon själv', 'dem själva'][pronounSelector];
+            // 'yourself', 'yourself', 'yourself', 'yourselves',
+                'dig själv', 'dig själv', 'dig själv', 'er själva',
+               // 'itself', 'himself', 'herself', 'themselves'
+               'sig själv', 'sig själv', 'sig själv', 'sig själva'][pronounSelector];
     }
 
     /*
@@ -4104,15 +4106,20 @@ langMessageBuilder: MessageBuilder
     paramList_ =
     [
         /* parameters that imply the actor as the target object */
+        ['du', &theName, 'actor', nil, true],
+        ['jag', &theName, 'actor', nil, true],
         ['du/han', &theName, 'actor', nil, true],
         ['du/hon', &theName, 'actor', nil, true],
-        
+        ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
+        ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
+
         //['han', &thatNom, 'actor', nil, true],
         //['hon', &thatNom, 'actor', nil, true],
 
-        ['you\'re/he\'s', &itIsContraction, 'actor', nil, true],
-        ['you\'re/she\'s', &itIsContraction, 'actor', nil, true],
-        ['you\'re', &itIsContraction, 'actor', nil, true],
+        //['you\'re/he\'s', &itIsContraction, 'actor', nil, true],
+        //['you\'re/she\'s', &itIsContraction, 'actor', nil, true],
+        //['you\'re', &itIsContraction, 'actor', nil, true],
+
         ['you/him', &theNameObj, 'actor', &itReflexive, nil],
         ['you/her', &theNameObj, 'actor', &itReflexive, nil],
         ['your/her', &theNamePossAdj, 'actor', nil, nil],
@@ -4123,7 +4130,7 @@ langMessageBuilder: MessageBuilder
         ['yours', &theNamePossNoun, 'actor', nil, nil],
         ['yourself/himself', &itReflexive, 'actor', nil, nil],
         ['yourself/herself', &itReflexive, 'actor', nil, nil],
-        ['yourself', &itReflexive, 'actor', nil, nil],
+        ['digsjälv', &itReflexive, 'actor', nil, nil],
 
         ['dig', &itObj, 'actor', nil, nil],
         ['sig', &itObj, 'actor', nil, nil],
@@ -4132,118 +4139,71 @@ langMessageBuilder: MessageBuilder
         ['själv', &itReflexive, 'actor', nil, nil],
         ['själva', &itReflexive, 'actor', nil, nil],
 
-
-        // den/han den/honom den/henne
-
         /* parameters that don't imply any target object */
-        ['the/he', &theName, nil, nil, true],
-        ['the/she', &theName, nil, nil, true],
-        ['the/him', &theNameObj, nil, &itReflexive, nil],
-        ['the/her', &theNameObj, nil, &itReflexive, nil],
-        ['the\'s/her', &theNamePossAdj, nil, &itPossAdj, nil],
-        ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
-
-        // TODO: Testa av dessa att de gör samma som ovan
         ['den/han', &theName, nil, nil, true],
         ['den/hon', &theName, nil, nil, true],
         ['den/honom', &theNameObj, nil, &itReflexive, nil],
         ['den/henne', &theNameObj, nil, &itReflexive, nil],
-        
         //TODO: ['hennes', &theNamePossAdj, nil, &itPossAdj, nil],
-        
         ['dess/hennes', &theNamePossNoun, nil, &itPossNoun, nil],
 
         /*
-         *  Verb 's' endings.  In most cases, you should use 's/d', 's/ed',
-         *  or 's/?ed' rather than 's', except in places where you know you
-         *  will never need the past tense form, because 's' doesn't handle
-         *  the past tense.  Don't use 's/?ed' with a literal question
-         *  mark; put a consonant in place of the question mark instead.
+         *  Verbändelser
          */
-        ['s', &verbEndingS, nil, nil, true],
-        ['s/d', &verbEndingSD, nil, nil, true],
-        
-        ['s/ed', &verbEndingSEd, nil, nil, true],
-        ['s/?ed', &verbEndingSMessageBuilder_, nil, nil, true],
-
-        // Swedish adaptation begins here
         ['a', &verbEndingA, nil, nil, true], // t ex ätbar(a)
         ['r', &verbEndingR, nil, nil, true],
 
         ['t', &verbEndingT, nil, nil, true], // t ex ätbar(t)
-        ['r/de', &verbEndingRDe, nil, nil, true],
+        ['r/de', &verbEndingRDe, nil, nil, true], // SE
         ['r/?de', &verbEndingRMessageBuilder_, nil, nil, true],
         ['ar/ade', &verbEndingARDe, nil, nil, true],
         ['kan', &verbCan, nil, nil, true],
         ['are', &verbToBe, nil, nil, true],
         ['här', &verbHere, nil, nil, true],
-
-        ['sig', &verbHere, nil, nil, true],
-
-
-
-        ['verkar', &verbToSeem, nil, nil, true],
         
+        ['verkar', &verbToSeem, nil, nil, true],
         ['sätter', &verbToPut, nil, nil, true],
 
+        ['tar', &verbToTake, nil, nil, true],
+        ['ser', &verbToSee, nil, nil, true],
+
+        ['er/te', &verbEndingEr, nil, nil, true],  // t ex: trycker/tryckte
+        ['er/e', &verbEndingErE, nil, nil, true],  // t ex: tänder/tände
+        
+
+        ['är', &verbToBe, nil, nil, true],
+        ['var', &verbWas, nil, nil, true],
         // TODO: {be|have been}  '{vara|varit}'
 
-        ['ser', &verbToSee, nil, nil, true],
-        ['se', &verbToSee, nil, nil, true],
-
-        // Swedish adaptation ends here
-
-        ['es', &verbEndingEs, nil, nil, true],
-        ['es/ed', &verbEndingEs, nil, nil, true],
-
-        ['er/te', &verbEndingEr, nil, nil, true],
-        ['er/te', &verbEndingEr, nil, nil, true],
-        ['er/e', &verbEndingErE, nil, nil, true],
-        
-        ['ies', &verbEndingIes, nil, nil, true],
-        ['ies/ied', &verbEndingIes, nil, nil, true],
-        
-        ['är', &verbToBe, nil, nil, true],
-        ['tar', &verbToTake, nil, nil, true],
-        //['are', &verbToBe, nil, nil, true],
-
-        //['was', &verbWas, nil, nil, true],
-        //['were', &verbWas, nil, nil, true],
+        ['hade', &verbToHave, nil, nil, true],
         ['har', &verbToHave, nil, nil, true],
 
-        ['has', &verbToHave, nil, nil, true],
-        ['have', &verbToHave, nil, nil, true],
-        ['does', &verbToDo, nil, nil, true],
-        ['do', &verbToDo, nil, nil, true],
-        ['goes', &verbToGo, nil, nil, true],
-        ['gå', &verbToGo, nil, nil, true],
-        ['comes', &verbToCome, nil, nil, true],
-        ['come', &verbToCome, nil, nil, true],
-        ['leaves', &verbToLeave, nil, nil, true],
-        ['leave', &verbToLeave, nil, nil, true],
+        ['gör', &verbToDo, nil, nil, true],
+        ['går', &verbToGo, nil, nil, true],
+        ['kommer', &verbToCome, nil, nil, true],
+        ['lämnar', &verbToLeave, nil, nil, true],
 
-        //['sees', &verbToSee, nil, nil, true],
-        //['see', &verbToSee, nil, nil, true],
-
-        ['says', &verbToSay, nil, nil, true],
         ['säg', &verbToSay, nil, nil, true],
-        ['must', &verbMust, nil, nil, true],
-        ['cannot', &verbCannot, nil, nil, true],
-        ['can\'t', &verbCant, nil, nil, true],
-        ['will', &verbWill, nil, nil, true],
-        ['won\'t', &verbWont, nil, nil, true],
-        ['a/he', &aName, nil, nil, true],
-        ['an/he', &aName, nil, nil, true],
-        ['a/she', &aName, nil, nil, true],
-        ['an/she', &aName, nil, nil, true],
-        ['a/him', &aNameObj, nil, &itReflexive, nil],
-        ['an/him', &aNameObj, nil, &itReflexive, nil],
-        ['a/her', &aNameObj, nil, &itReflexive, nil],
-        ['an/her', &aNameObj, nil, &itReflexive, nil],
-        ['it/he', &itNom, nil, nil, true],
-        ['it/she', &itNom, nil, nil, true],
-        ['it/him', &itObj, nil, &itReflexive, nil],
-        ['it/her', &itObj, nil, &itReflexive, nil],
+        ['måste', &verbMust, nil, nil, true],
+        ['kommer', &verbWill, nil, nil, true],
+
+        ['en/han', &aName, nil, nil, true],
+        ['en/hon', &aName, nil, nil, true],
+        ['en/honom', &aNameObj, nil, &itReflexive, nil],
+        ['en/henne', &aNameObj, nil, &itReflexive, nil],
+        
+        ['ett/han', &aName, nil, nil, true],
+        ['ett/hon', &aName, nil, nil, true],
+        ['ett/honom', &aNameObj, nil, &itReflexive, nil],
+        ['ett/henne', &aNameObj, nil, &itReflexive, nil],
+        
+        // TODO: hur blir det med it nominative vs that nominative i följande fall
+        // (just nu krockar det med that det/han det/hon)
+
+        //['det/han', &itNom, nil, nil, true],
+        //['det/hon', &itNom, nil, nil, true],
+        ['det/honom', &itObj, nil, &itReflexive, nil],
+        ['det/henne', &itObj, nil, &itReflexive, nil],
 
         /*
          *   note that we don't have its/his, because that leaves
@@ -4259,14 +4219,14 @@ langMessageBuilder: MessageBuilder
         ['it\'s', &itIsContraction, nil, nil, true],
         
         //FIXME: ['den/he', &thatNom, nil, nil, true],
-        ['that/he', &thatNom, nil, nil, true],
-
         ['det/han', &thatNom, nil, nil, true],
         ['det/hon', &thatNom, nil, nil, true],
+        //['that/he', &thatNom, nil, nil, true],
+        //['that/she', &thatNom, nil, nil, true],
 
-        ['that/she', &thatNom, nil, nil, true],
         ['that/him', &thatObj, nil, &itReflexive, nil],
         ['that/her', &thatObj, nil, &itReflexive, nil],
+
         ['that\'s', &thatIsContraction, nil, nil, true],
         ['itself', &itReflexive, nil, nil, nil],
         ['itself/himself', &itReflexive, nil, nil, nil],
@@ -4274,9 +4234,10 @@ langMessageBuilder: MessageBuilder
 
         /* default preposition for standing in/on something */
         ['på', &actorInName, nil, nil, nil],
-        ['in', &actorInName, nil, nil, nil],
+        ['i', &actorInName, nil, nil, nil],
+        //['in', &actorInName, nil, nil, nil],
         ['outof', &actorOutOfName, nil, nil, nil],
-        ['offof', &actorOutOfName, nil, nil, nil],
+        ['avur', &actorOutOfName, nil, nil, nil],
         ['onto', &actorIntoName, nil, nil, nil],
         ['into', &actorIntoName, nil, nil, nil],
 
@@ -11104,7 +11065,7 @@ VerbRule(Stand)
 ;
 
 VerbRule(GetOutOf)
-    ('ut' 'ur' | 'kliv' 'ut' 'ur' | 'climb' 'ut' 'ur' | 'lämna' | 'gå' 'ut')
+    ( ('kliv'|'ut') 'ur' | 'kliv' 'ut' ('ur'|) | 'lämna' | 'gå' ('ut'|'ur'))
     singleDobj
     : GetOutOfAction
     verbPhrase = 'kliva/kliver (ut ur vad)'

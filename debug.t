@@ -506,8 +506,11 @@ class Test: object
             gActor.moveInto(location);	
             
             // If we want to report the move, show the new room description 
-            if(reportMove)
-                gActor.getOutermostRoom.lookAroundWithin();
+            "Teleporting to <<location>>";
+ 
+            if(reportMove) {
+                gActor.lookAround(true);
+            }
         }
         
         // Move any required objects into the actor's inventory 

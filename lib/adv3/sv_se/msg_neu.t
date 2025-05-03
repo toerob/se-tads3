@@ -225,14 +225,14 @@ libMessages: MessageHelper
     obscuredReadDesc(obj)
     {
         gMessageParams(obj);
-        "{Du/han} {kan} inte se {that obj/him} bra nog för att kunna läsa {it/him}. ";
+        "{Du/han} {kan} inte se {det obj/honom} bra nog för att kunna läsa {it/him}. ";
     }
 
     /* dim light "read" description */
     dimReadDesc(obj)
     {
         gMessageParams(obj);
-        "Det f{i|a}nns inte ljus bra nog att läsa {that obj/him}. ";
+        "Det f{i|a}nns inte ljus bra nog att läsa {det obj/honom}. ";
     }
 
     /* lit/unlit match description */
@@ -562,7 +562,7 @@ libMessages: MessageHelper
     }
 
     /* no topics to suggest when we're not talking to anyone */
-    noTopicsNotTalking = "<.parser>{You're} prata{r/de} inte för närvarande med någon.<./parser> "
+    noTopicsNotTalking = "<.parser>{Du} prata{r/de} inte för närvarande med någon.<./parser> "
 
     /*
      *   Show a note about the OOPS command.  This is, by default, added
@@ -751,7 +751,7 @@ libMessages: MessageHelper
     showFinishMsg(msg) { "<.p>*** <<msg>>\ ***<.p>"; }
 
     /* standard game-ending messages for the common outcomes */
-    finishDeathMsg = '{YOU/HE pc} {[HAR]|} {DÖTT|DOG}'
+    finishDeathMsg = '{DU/HAN pc} {[HAR]|} {DÖTT|DOG}'
     finishVictoryMsg = ('DU ' + tSel('HAR ', '') + '{VUNNIT|VANN}')
     finishFailureMsg = ('DU ' + tSel('HAR ', '') + '{MISSLYCKATS|MISSLYCKADES}')
     finishGameOverMsg = 'SPELET SLUT'
@@ -1237,14 +1237,14 @@ libMessages: MessageHelper
     cannotReachContents(obj, loc)
     {
         gMessageParams(obj, loc);
-        return '{Du/han} {kan} inte nå {the obj/him} genom ' + '{the loc/him}. ';
+        return '{Du/han} {kan} inte nå {det obj/honom} genom ' + '{den loc/honom}. ';
     }
 
     /* cannot reach an object because it's outisde the given container */
     cannotReachOutside(obj, loc)
     {
         gMessageParams(obj, loc);
-        return '{Du/han} {kan} inte nå {the obj/him} genom ' + '{the loc/him}. ';
+        return '{Du/han} {kan} inte nå {det obj/honom} genom ' + '{den loc/honom}. ';
     }
 
     /* sound is coming from inside/outside a container */
@@ -2555,7 +2555,7 @@ playerActionMessages: MessageHelper
     mustBeHoldingMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} hålla i {the obj/him} för att göra det. ';
+        return '{Du/han} {behöver|behövde} hålla i {det obj/honom} för att göra det. ';
     }
 
     /* it's too dark to do that */
@@ -2565,104 +2565,104 @@ playerActionMessages: MessageHelper
     mustBeVisibleMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte se {that obj/him}. ';
+        return '{Du/han} {kan} inte se {det obj/honom}. ';
     }
 
     /* object can be heard but not seen */
     heardButNotSeenMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} höra {an obj/him}, men {du/han}
-                 {kan} inte se {it obj/him}. ';
+        return '{Du/han} {kan} höra {en obj/honom}, men {du/han}
+                 {kan} inte se {det obj/honom}. ';
     }
 
     /* object can be smelled but not seen */
     smelledButNotSeenMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} känna lukten av {an obj/him}, men {du/han}
-                {kan} inte se {it obj/him}. ';
+        return '{Du/han} {kan} känna lukten av {en obj/honom}, men {du/han}
+                {kan} inte se {det obj/honom}. ';
     }
 
     /* cannot hear object */
     cannotHearMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte höra {that obj/him}. ';
+        return '{Du/han} {kan} inte höra {det obj/honom}. ';
     }
 
     /* cannot smell object */
     cannotSmellMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte känna lukten av {that obj/him}. ';
+        return '{Du/han} {kan} inte känna lukten av {det obj/honom}. ';
     }
 
     /* cannot taste object */
     cannotTasteMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte smaka {that obj/him}. ';
+        return '{Du/han} {kan} inte smaka {det obj/honom}. ';
     }
 
     /* must remove an article of clothing before a command */
     cannotBeWearingMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} måste ta av {the obj/him}
-                före {it actor/he} {kan} göra det. ';
+        return '{Du/han} måste ta av {det obj/honom}
+                före {det actor/han} {kan} göra det. ';
     }
 
     /* all contents must be removed from object before doing that */
     mustBeEmptyMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} ta ut allting från {the obj/him}
-                före {it actor/he} {kan} göra det. ';
+        return '{Du/han} {behöver|behövde} ta ut allting från {det obj/honom}
+                före {det actor/han} {kan} göra det. ';
     }
 
     /* object must be opened before doing that */
     mustBeOpenMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} öppna {the obj/him}
-                före {it actor/he} {kan} göra det. ';
+        return '{Du/han} {behöver|behövde} öppna {det obj/honom}
+                före {det actor/han} {kan} göra det. ';
     }
 
     /* object must be closed before doing that */
     mustBeClosedMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} stänga {the obj/him}
-               före {it actor/he} {kan} göra det. ';
+        return '{Du/han} {behöver|behövde} stänga {det obj/honom}
+               före {det actor/han} {kan} göra det. ';
     }
 
     /* object must be unlocked before doing that */
     mustBeUnlockedMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} låsa upp {the obj/him}
-                före {it actor/he} {kan} göra det. ';
+        return '{Du/han} {behöver|behövde} låsa upp {det obj/honom}
+                före {det actor/han} {kan} göra det. ';
     }
 
     /* no key is needed to lock or unlock this object */
-    noKeyNeededMsg = '{The dobj/he} verka{r|de} inte behöva en nyckel. '
+    noKeyNeededMsg = '{Den dobj/han} verka{r|de} inte behöva en nyckel. '
 
     /* actor must be standing before doing that */
-    mustBeStandingMsg = '{Du/han} {behöver|behövde} stå upp före {it actor/he} {kan} göra det. '
+    mustBeStandingMsg = '{Du/han} {behöver|behövde} stå upp före {det actor/han} {kan} göra det. '
 
     /* must be sitting on/in chair */
     mustSitOnMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} sitta {in obj} först. ';
+        return '{Du/han} {behöver|behövde} sitta {i obj} först. ';
     }
 
     /* must be lying on/in object */
     mustLieOnMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} ligga {in obj} först. ';
+        return '{Du/han} {behöver|behövde} ligga {i obj} först. ';
     }
 
     /* must get on/in object */
@@ -2670,7 +2670,7 @@ playerActionMessages: MessageHelper
     mustGetOnMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} gå {in obj} först. '; 
+        return '{Du/han} {behöver|behövde} gå {i obj} först. '; 
     }
 
     /* object must be in loc before doing that */
@@ -2686,7 +2686,7 @@ playerActionMessages: MessageHelper
     mustBeCarryingMsg(obj, actor)
     {
         gMessageParams(obj, actor);
-        return '{The actor/he} {behöver|behövde} hålla {the obj/him} före {it actor/he} {kan} göra det. ';
+        return '{The actor/he} {behöver|behövde} hålla {det obj/honom} före {det actor/han} {kan} göra det. ';
     }
 
     /* generic "that's not important" message for decorations */
@@ -2702,7 +2702,7 @@ playerActionMessages: MessageHelper
     unthingNotHereMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} ser inte {that obj/him} {här}. ';
+        return '{Du/han} ser inte {det obj/honom} {här}. ';
     }
 
     /* generic "that's too far away" message for Distant items */
@@ -2716,21 +2716,21 @@ playerActionMessages: MessageHelper
     notWithIntangibleMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte göra det med {an obj/him}. ';
+        return '{Du/han} {kan} inte göra det med {en obj/honom}. ';
     }
 
     /* generic failure message for varporous objects */
     notWithVaporousMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte göra det med {an obj/him}. ';
+        return '{Du/han} {kan} inte göra det med {en obj/honom}. ';
     }
 
     /* look in/look under/look through/look behind/search vaporous */
     lookInVaporousMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {ser} bara {the obj/him}. ';
+        return '{Du/han} {ser} bara {det obj/honom}. ';
     }
 
     /*
@@ -2742,21 +2742,21 @@ playerActionMessages: MessageHelper
     cannotReachObjectMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte nå {the obj/him}. ';
+        return '{Du/han} {kan} inte nå {det obj/honom}. ';
     }
 
     /* cannot reach an object through an obstructor */
     cannotReachThroughMsg(obj, loc)
     {
         gMessageParams(obj, loc);
-        return '{Du/han} {kan} inte nå {the obj/him} genom ' + '{the loc/him}. ';
+        return '{Du/han} {kan} inte nå {det obj/honom} genom ' + '{den loc/honom}. ';
     }
 
     /* generic long description of a Thing */
     thingDescMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {ser} inget ovanligt med ' + '{it obj/him}. ';
+        return '{Du/han} {ser} inget ovanligt med ' + '{det obj/honom}. ';
     }
 
     /* generic LISTEN TO description of a Thing */
@@ -2771,30 +2771,30 @@ playerActionMessages: MessageHelper
     npcDescMsg(npc)
     {
         gMessageParams(npc);
-        return '{Du/han} {ser} inget ovanligt med ' + '{the npc/him}. ';
+        return '{Du/han} {ser} inget ovanligt med ' + '{den npc/honom}. ';
     }
 
     /* generic messages for looking prepositionally */
     nothingInsideMsg =
-        'Det {är} inget ovanligt i {the dobj/him}. '
+        'Det {är} inget ovanligt i {den dobj/honom}. '
     nothingUnderMsg =
-        '{Du/han} {ser} inget ovanligt under {the dobj/him}. '
+        '{Du/han} {ser} inget ovanligt under {den dobj/honom}. '
     nothingBehindMsg =
-        '{Du/han} {ser} inget ovanligt bakom {the dobj/him}. '
+        '{Du/han} {ser} inget ovanligt bakom {den dobj/honom}. '
     nothingThroughMsg =
-        '{Du/han} {kan} ser ingenting genom {the dobj/him}. '
+        '{Du/han} {kan} ser ingenting genom {den dobj/honom}. '
 
     /* this is an object we can't look behind/through */
-    cannotLookBehindMsg = '{Du/han} {kan} inte se bakom {the dobj/him}. '
-    cannotLookUnderMsg = '{Du/han} {kan} inte se under {the dobj/him}. '
-    cannotLookThroughMsg = '{Du/han} {kan} inte se genom {the dobj/him}. '
+    cannotLookBehindMsg = '{Du/han} {kan} inte se bakom {den dobj/honom}. '
+    cannotLookUnderMsg = '{Du/han} {kan} inte se under {den dobj/honom}. '
+    cannotLookThroughMsg = '{Du/han} {kan} inte se genom {den dobj/honom}. '
 
     /* looking through an open passage */
     nothingThroughPassageMsg = '{Du/han} {kan} inte se mycket genom
-        {the dobj/him} {h|d}ärifrån. '
+        {den dobj/honom} {h|d}ärifrån. '
 
     /* there's nothing on the other side of a door we just opened */
-    nothingBeyondDoorMsg = '{Du/han} öppna{r/de} {the dobj/him} och {finner|fann} ingenting
+    nothingBeyondDoorMsg = '{Du/han} öppna{r/de} {den dobj/honom} och {finner|fann} ingenting
         ovanligt. '
 
     /* there's nothing here with a specific odor */
@@ -2806,110 +2806,110 @@ playerActionMessages: MessageHelper
     /* a sound appears to be coming from a source */
     noiseSourceMsg(src)
     {
-        return '{The dobj/he} verk{ar/ade} att komma från ' + src.theNameObj + '. ';
+        return '{Den dobj/han} verk{ar/ade} att komma från ' + src.theNameObj + '. ';
     }
 
     /* an odor appears to be coming from a source */
     odorSourceMsg(src)
     {
-        return '{The dobj/he} verk{ar/ade} att komma från '+ src.theNameObj + '. ';
+        return '{Den dobj/han} verk{ar/ade} att komma från '+ src.theNameObj + '. ';
     }
 
     /* an item is not wearable */
     notWearableMsg =
-        '{That dobj/he} {är} inte någonting som {du/han} {kan} klä på. '
+        '{Det dobj/han} {är} inte någonting som {du/han} {kan} klä på. '
 
     /* doffing something that isn't wearable */
     notDoffableMsg =
-        '{That dobj/he} {är} inte någonting som {du/han} {kan} ta av. '
+        '{Det dobj/han} {är} inte någonting som {du/han} {kan} ta av. '
 
     /* already wearing item */
-    alreadyWearingMsg = '{Du/han} {bär|bar} redan {it dobj/him}. '
+    alreadyWearingMsg = '{Du/han} {bär|bar} redan {den dobj/honom}. '
 
     /* not wearing (item being doffed) */
-    notWearingMsg = '{Du/han} {har|hade} inte den på {you/him} {that dobj/him}. '
+    notWearingMsg = '{Du/han} {har|hade} inte den på {du/honom} {det dobj/honom}. '
 
     /* default response to 'wear obj' */
-    okayWearMsg = 'Ok, {Du/han} {klär|klädde} på {you/him} {the dobj/him}. '
+    okayWearMsg = 'Ok, {Du/han} {klär|klädde} på {du/honom} {den dobj/honom}. '
 
     /* default response to 'doff obj' */
-    okayDoffMsg = 'Ok, {Du/han} {tar|tog} av {you/him} {the dobj/him}. '
+    okayDoffMsg = 'Ok, {Du/han} {tar|tog} av {du/honom} {den dobj/honom}. '
 
     /* default response to open/close */
     okayOpenMsg = shortTMsg(
-        'Öppna<<gDobj.isUter?'d':'t'>>. ', '{Du/han} öppna{r/de} {the dobj/him}. ')
+        'Öppna<<gDobj.isUter?'d':'t'>>. ', '{Du/han} öppna{r/de} {den dobj/honom}. ')
     okayCloseMsg = shortTMsg(
-        'Stäng<<gDobj.isUter?'d':'t'>>. ', '{Du/han} stäng{er|de} {the dobj/him}. ')
+        'Stäng<<gDobj.isUter?'d':'t'>>. ', '{Du/han} stäng{er|de} {den dobj/honom}. ')
 
     /* default response to lock/unlock */
     okayLockMsg = shortTMsg(
-        'Låst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{e/te} {the dobj/him}. ')
+        'Låst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{e/te} {den dobj/honom}. ')
     okayUnlockMsg = shortTMsg(
-        'Upplåst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{er/te} upp {the dobj/him}. ')
+        'Upplåst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{er/te} upp {den dobj/honom}. ')
 
     /* cannot dig here */
-    cannotDigMsg = '{Du/han} {have} ingen anledning att gräva i {that dobj/him}. '
+    cannotDigMsg = '{Du/han} {har} ingen anledning att gräva i {det dobj/honom}. '
 
     /* not a digging implement */
     cannotDigWithMsg =
         '{Du/han} {ser} inget sätt att använda {that iobj/him} som en spade. '
 
     /* taking something already being held */
-    alreadyHoldingMsg = '{Du/han} {har} redan {the dobj/him}. '
+    alreadyHoldingMsg = '{Du/han} {har} redan {den dobj/honom}. '
 
     /* actor taking self ("take me") */
-    takingSelfMsg = '{Du/han} {kan} inte plocka upp {yourself}. '
+    takingSelfMsg = '{Du/han} {kan} inte plocka upp {digsjälv}. '
 
     /* dropping an object not being carried */
-    notCarryingMsg = '{Du/han} bär inte på {that dobj/him}. '
+    notCarryingMsg = '{Du/han} bär inte på {det dobj/honom}. '
 
     /* actor dropping self */
-    droppingSelfMsg = '{Du/han} {kan} inte släppa {yourself}. '
+    droppingSelfMsg = '{Du/han} {kan} inte släppa {digsjälv}. '
 
     /* actor putting self in something */
-    puttingSelfMsg = '{Du/han} {kan} inte göra det med {yourself}. '
+    puttingSelfMsg = '{Du/han} {kan} inte göra det med {digsjälv}. '
 
     /* actor throwing self */
-    throwingSelfMsg = '{Du/han} {kan} inte kasta {yourself}. '
+    throwingSelfMsg = '{Du/han} {kan} inte kasta {digsjälv}. '
 
     /* we can't put the dobj in the iobj because it's already there */
-    alreadyPutInMsg = '{The dobj/he} {är} redan i {the iobj/him}. '
+    alreadyPutInMsg = '{Den dobj/han} {är} redan i {den iobj/honom}. '
 
     /* we can't put the dobj on the iobj because it's already there */
-    alreadyPutOnMsg = '{The dobj/he} {är} redan på {the iobj/him}. '
+    alreadyPutOnMsg = '{Den dobj/han} {är} redan på {den iobj/honom}. '
 
     /* we can't put the dobj under the iobj because it's already there */
-    alreadyPutUnderMsg = '{The dobj/he} {är} redan under {the iobj/him}. '
+    alreadyPutUnderMsg = '{Den dobj/han} {är} redan under {den iobj/honom}. '
 
     /* we can't put the dobj behind the iobj because it's already there */
-    alreadyPutBehindMsg = '{The dobj/he} {är} redan bakom {the iobj/him}. '
+    alreadyPutBehindMsg = '{Den dobj/han} {är} redan bakom {den iobj/honom}. '
 
     /*
      *   trying to move a Fixture to a new container by some means (take,
      *   drop, put in, put on, etc) 
      */
-    cannotMoveFixtureMsg = '{The dobj/he} {kan} inte flyttas. '
+    cannotMoveFixtureMsg = '{Den dobj/han} {kan} inte flyttas. '
 
     /* trying to take a Fixture */
-    cannotTakeFixtureMsg = '{Du/han} {kan} inte ta {that dobj/him}. '
+    cannotTakeFixtureMsg = '{Du/han} {kan} inte ta {det dobj/honom}. '
 
     /* trying to put a Fixture in something */
-    cannotPutFixtureMsg = '{Du/han} {kan} inte stoppa {the dobj/him} någonstans. '
+    cannotPutFixtureMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} någonstans. '
 
     /* trying to take/move/put an Immovable object */
-    cannotTakeImmovableMsg = '{Du/han} {kan} inte ta {that dobj/him}. '
-    cannotMoveImmovableMsg = '{The dobj/he} {kan} inte flyttas. '
-    cannotPutImmovableMsg = '{Du/han} {kan} inte stoppa {the dobj/him} någonstans. '
+    cannotTakeImmovableMsg = '{Du/han} {kan} inte ta {det dobj/honom}. '
+    cannotMoveImmovableMsg = '{Den dobj/han} {kan} inte flyttas. '
+    cannotPutImmovableMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} någonstans. '
 
     /* trying to take/move/put a Heavy object */
-    cannotTakeHeavyMsg = '{The dobj/he} {är} för tung<<verbEndingTAFor(gDobj)>>. '
-    cannotMoveHeavyMsg = '{The dobj/he} {är} för tung<<verbEndingTAFor(gDobj)>>. '
-    cannotPutHeavyMsg = '{The dobj/he} {är} för tung<<verbEndingTAFor(gDobj)>>. '
+    cannotTakeHeavyMsg = '{Den dobj/han} {är} för tung<<adjEndingForNounTA(gDobj)>>. '
+    cannotMoveHeavyMsg = '{Den dobj/han} {är} för tung<<adjEndingForNounTA(gDobj)>>. '
+    cannotPutHeavyMsg = '{Den dobj/han} {är} för tung<<adjEndingForNounTA(gDobj)>>. '
 
     /* trying to move a component object */
     cannotMoveComponentMsg(loc)
     {
-        return '{The dobj/he} {är} en del av ' + loc.theNameObj + '. ';
+        return '{Den dobj/han} {är} en del av ' + loc.theNameObj + '. ';
     }
 
     /* trying to take a component object */
@@ -2931,8 +2931,8 @@ playerActionMessages: MessageHelper
         det kan vara möjligt att knuffa {den} någonstans. '
 
     cannotMovePushableMsg = 'Det skulle inte {|ha} åstadkomm{a|it}
-        någonting att flytta runt {the dobj/him} riktningslöst, men {it actor/he}
-        det kanske {är} möjligt att flytta {it dobj/him} i en specifik riktning. '
+        någonting att flytta runt {den dobj/honom} riktningslöst, men {det actor/han}
+        det kanske {är} möjligt att flytta {det dobj/honom} i en specifik riktning. '
 
     cannotPutPushableMsg = '{Du/han} {kan} inte stoppa {that/him dobj} någonstans,
         men det kan vara möligt att knuffa {den} någonstans'
@@ -2943,15 +2943,15 @@ playerActionMessages: MessageHelper
 
     /* can't REMOVE something that's being held */
     cannotRemoveHeldMsg = 'Det {finns|fanns} ingenting att ta bort 
-        {the dobj/him} ifrån. '
+        {den dobj/honom} ifrån. '
 
     /* default 'take' response */
     okayTakeMsg = shortTMsg(
-        'Tag<<gDobj.isUter && gDobj.isPlural? 'na' : (gDobj.isUter?'en':'et')>>. ', '{Du/han} {tar|tog} {the dobj/him}. ')
+        'Tag<<gDobj.isUter && gDobj.isPlural? 'na' : (gDobj.isUter?'en':'et')>>. ', '{Du/han} {tar|tog} {den dobj/honom}. ')
 
     /* default 'drop' response */
     okayDropMsg = shortTMsg(
-        'Släppt<<gDobj.isPlural? 'a':''>>. ', '{Du/han} släpp{te/er} {the dobj/him}. ')
+        'Släppt<<gDobj.isPlural? 'a':''>>. ', '{Du/han} släpp{te/er} {den dobj/honom}. ')
 
     /* dropping an object */
     droppingObjMsg(dropobj)
@@ -2970,48 +2970,48 @@ playerActionMessages: MessageHelper
 
     /* default successful 'put in' response */
     okayPutInMsg = shortTIMsg(
-        'Gjort. ', '{Du/han} {sätter} {the dobj/him} i {the iobj/him}. ')
+        'Gjort. ', '{Du/han} {sätter} {den dobj/honom} i {den iobj/honom}. ')
 
     /* default successful 'put on' response */
     okayPutOnMsg = shortTIMsg(
-        'Gjort. ', '{Du/han} {sätter} {the dobj/him} på {the iobj/him}. ')
+        'Gjort. ', '{Du/han} {sätter} {den dobj/honom} på {den iobj/honom}. ')
 
     /* default successful 'put under' response */
     okayPutUnderMsg = shortTIMsg(
-        'Gjort. ', '{Du/han} {sätter} {the dobj/him} under {the iobj/him}. ')
+        'Gjort. ', '{Du/han} {sätter} {den dobj/honom} under {den iobj/honom}. ')
 
     /* default successful 'put behind' response */
     okayPutBehindMsg = shortTIMsg(
-        'Gjort. ', '{Du/han} {sätter} {the dobj/him} bakom {the iobj/him}. ')
+        'Gjort. ', '{Du/han} {sätter} {den dobj/honom} bakom {den iobj/honom}. ')
 
     /* try to take/move/put/taste an untakeable actor */
-    cannotTakeActorMsg = '{The dobj/he} låter inte {you/him} göra det. '
-    cannotMoveActorMsg = '{The dobj/he} låter inte {you/him} göra det. '
-    cannotPutActorMsg = '{The dobj/he} låter inte {you/him} göra det. '
-    cannotTasteActorMsg = '{The dobj/he} låter inte {you/him} göra det. '
+    cannotTakeActorMsg = '{Den dobj/han} låter inte {du/honom} göra det. '
+    cannotMoveActorMsg = '{Den dobj/han} låter inte {du/honom} göra det. '
+    cannotPutActorMsg = '{Den dobj/han} låter inte {du/honom} göra det. '
+    cannotTasteActorMsg = '{Den dobj/han} låter inte {du/honom} göra det. '
 
     /* trying to take/move/put/taste a person */
     cannotTakePersonMsg =
-        '{The dobj/he} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        '{Den dobj/han} skulle antagligen inte {|ha} uppskatta{|t} det. '
     cannotMovePersonMsg =
-        '{The dobj/he} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        '{Den dobj/han} skulle antagligen inte {|ha} uppskatta{|t} det. '
     cannotPutPersonMsg =
-        '{The dobj/he} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        '{Den dobj/han} skulle antagligen inte {|ha} uppskatta{|t} det. '
     cannotTastePersonMsg =
-        '{The dobj/he} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        '{Den dobj/han} skulle antagligen inte {|ha} uppskatta{|t} det. '
 
     /* cannot move obj through obstructor */
     cannotMoveThroughMsg(obj, obs)
     {
         gMessageParams(obj, obs);
-        return '{Du/han} {kan} inte förflytta {that obj/him} genom ' + '{the obs/him}. ';
+        return '{Du/han} {kan} inte förflytta {det obj/honom} genom ' + '{the obs/him}. ';
     }
 
     /* cannot move obj in our out of container cont */
     cannotMoveThroughContainerMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte förflytta {that obj/him} genom ' + '{the cont/him}. ';
+        return '{Du/han} {kan} inte förflytta {det obj/honom} genom ' + '{the cont/him}. ';
     }
 
     /* cannot move obj because cont is closed */
@@ -3069,7 +3069,7 @@ playerActionMessages: MessageHelper
     tooLargeForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{The obj/he} {är} för stor för {you/him} att hålla. ';
+        return '{The obj/he} {är} för stor för {du/honom} att hålla. ';
     }
 
     /* the actor doesn't have room to hold the object */
@@ -3083,7 +3083,7 @@ playerActionMessages: MessageHelper
     {
         gMessageParams(obj);
         return '{Du/han} {kan} inte göra det för att {the obj/he}
-                skulle {|ha} blivit för stor för {you/him} att hålla. ';
+                skulle {|ha} blivit för stor för {du/honom} att hålla. ';
     }
 
     /* the object is becoming large enough that the actor's hands are full */
@@ -3091,14 +3091,14 @@ playerActionMessages: MessageHelper
     {
         gMessageParams(obj);
         return '{Du/han} {kan} inte göra det för att {its/her} händer
-            skulle {|have} bli för fulla för att hålla {the obj/him}. ';
+            skulle {|have} bli för fulla för att hålla {det obj/honom}. ';
     }
 
     /* the object is too heavy (all by itself) for the actor to hold */
     tooHeavyForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{The obj/he} {är} för tung<<verbEndingTAFor(obj)>> för dig {you/him} att plocka upp. ';
+        return '{The obj/he} {är} för tung<<adjEndingForNounTA(obj)>> för dig {du/honom} att plocka upp. ';
     }
 
     /*
@@ -3108,7 +3108,7 @@ playerActionMessages: MessageHelper
     totalTooHeavyForMsg(obj)
     {
         gMessageParams(obj);
-        return '{The obj/he} {är} för tung<<verbEndingTAFor(obj)>>}; {du/han} {kommer|} {behöva|behövde} {att|} sätta ner någonting först. ';
+        return '{The obj/he} {är} för tung<<adjEndingForNounTA(obj)>>}; {du/han} {kommer|} {behöva|behövde} {att|} sätta ner någonting först. ';
     }
 
     /* object is för stor för container */
@@ -3136,28 +3136,28 @@ playerActionMessages: MessageHelper
     containerTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{The cont/he} {är} redan för full för att få plats med {the obj/him}. ';
+        return '{The cont/he} {är} redan för full för att få plats med {det obj/honom}. ';
     }
 
     /* surface doesn't have room for object */
     surfaceTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return 'Det {finns|fanns} inget rum för {the obj/him} på ' + '{the cont/him}. ';
+        return 'Det {finns|fanns} inget rum för {det obj/honom} på ' + '{the cont/him}. ';
     }
 
     /* underside doesn't have room for object */
     undersideTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return 'Det {finns|fanns} inget rum för {the obj/him} under ' + '{the cont/him}. ';
+        return 'Det {finns|fanns} inget rum för {det obj/honom} under ' + '{the cont/him}. ';
     }
 
     /* rear surface/space doesn't have room for object */
     rearTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return 'Det {finns|fanns} inget rum för {the obj/him} bakom ' + '{the cont/him}. ';
+        return 'Det {finns|fanns} inget rum för {det obj/honom} bakom ' + '{the cont/him}. ';
     }
 
     /* the current action would make obj too big for its container */
@@ -3165,7 +3165,7 @@ playerActionMessages: MessageHelper
     {
         gMessageParams(obj, cont);
         return '{Du/han} {kan} inte göra det då det skulle {göra|ha gjort}
-            {the obj/him} för stor för {the cont/him}. ';
+            {det obj/honom} för stor för {the cont/him}. ';
     }
 
     /*
@@ -3180,70 +3180,70 @@ playerActionMessages: MessageHelper
     }
 
     /* trying to put an object in a non-container */
-    notAContainerMsg = '{Du/han} {kan} inte stoppa någonting in {the iobj/him}. '
+    notAContainerMsg = '{Du/han} {kan} inte stoppa någonting in {den iobj/honom}. '
 
     /* trying to put an object on a non-surface */
-    notASurfaceMsg = 'Det {finns|fanns} ingen bra yta på {the iobj/him}. ' // TODO: genitiv
+    notASurfaceMsg = 'Det {finns|fanns} ingen bra yta på {den iobj/honom}. ' // TODO: genitiv
 
     /* can't put anything under iobj */
     cannotPutUnderMsg =
         '{Du/han} {kan} inte stoppa någonting under {that iobj/him}. '
 
     /* nothing can be put behind the given object */
-    cannotPutBehindMsg = '{Du/han} {kan} inte stoppa in någonting bakom {the iobj/him}. '
+    cannotPutBehindMsg = '{Du/han} {kan} inte stoppa in någonting bakom {den iobj/honom}. '
 
     /* trying to put something in itself */
-    cannotPutInSelfMsg = '{Du/han} {kan} inte stoppa {the dobj/him} i {itself}. '
+    cannotPutInSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} i {itself}. '
 
     /* trying to put something on itself */
-    cannotPutOnSelfMsg = '{Du/han} {kan} inte stoppa {the dobj/him} på {itself}. '
+    cannotPutOnSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} på {itself}. '
 
     /* trying to put something under itself */
-    cannotPutUnderSelfMsg = '{Du/han} {kan} inte stoppa {the dobj/him} under {itself}. '
+    cannotPutUnderSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} under {itself}. '
 
     /* trying to put something behind itself */
-    cannotPutBehindSelfMsg = '{Du/han} {kan} inte stoppa {the dobj/him} bakom {itself}. '
+    cannotPutBehindSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} bakom {itself}. '
 
     /* can't put something in/on/etc a restricted container/surface/etc */
     cannotPutInRestrictedMsg =
-        '{Du/han} {kan} inte stoppa {that dobj/him} i {the iobj/him}. '
+        '{Du/han} {kan} inte stoppa {det dobj/honom} i {den iobj/honom}. '
     cannotPutOnRestrictedMsg =
-        '{Du/han} {kan} inte stoppa {that dobj/him} på {the iobj/him}. '
+        '{Du/han} {kan} inte stoppa {det dobj/honom} på {den iobj/honom}. '
     cannotPutUnderRestrictedMsg =
-        '{Du/han} {kan} inte stoppa {that dobj/him} under {the iobj/him}. '
+        '{Du/han} {kan} inte stoppa {det dobj/honom} under {den iobj/honom}. '
     cannotPutBehindRestrictedMsg =
-        '{Du/han} {kan} inte stoppa {that dobj/him} bakom {the iobj/him}. '
+        '{Du/han} {kan} inte stoppa {det dobj/honom} bakom {den iobj/honom}. '
 
     /* trying to return something to a remove-only dispenser */
     cannotReturnToDispenserMsg =
-        '{Du/han} {kan} inte stoppa tillbaka {a dobj/him} i {the iobj/him}. '
+        '{Du/han} {kan} inte stoppa tillbaka {a dobj/him} i {den iobj/honom}. '
 
     /* wrong item type for dispenser */
     cannotPutInDispenserMsg =
-        '{Du/han} {kan} inte stoppa {a dobj/him} i {the iobj/him}. '
+        '{Du/han} {kan} inte stoppa {a dobj/him} i {den iobj/honom}. '
 
     /* the dobj doesn't fit on this keyring */
-    objNotForKeyringMsg = '{The dobj/he} passar inte på {the iobj/him}. '
+    objNotForKeyringMsg = '{Den dobj/han} passar inte på {den iobj/honom}. '
 
     /* the dobj isn't on the keyring */
-    keyNotOnKeyringMsg = '{The dobj/he} {är} inte fastsatt i {the iobj/him}. '
+    keyNotOnKeyringMsg = '{Den dobj/han} {är} inte fastsatt i {den iobj/honom}. '
 
     /* can't detach key (with no iobj specified) because it's not on a ring */
-    keyNotDetachableMsg = '{The dobj/he} {är} satt fast i någonting. '
+    keyNotDetachableMsg = '{Den dobj/han} {är} satt fast i någonting. '
 
     /* we took a key and attached it to a keyring */
     takenAndMovedToKeyringMsg(keyring)
     {
         gMessageParams(keyring);
-        return '{Du/han} plocka{r/de} upp {the dobj/him} och
-            fäst{er/te actor} {it dobj/him} i {the keyring/him}. ';
+        return '{Du/han} plocka{r/de} upp {den dobj/honom} och
+            fäst{er/te actor} {det dobj/honom} i {the keyring/him}. ';
     }
 
     /* we attached a key to a keyring automatically */
     movedKeyToKeyringMsg(keyring)
     {
         gMessageParams(keyring);
-        return '{Du/han} fäst{er/te} {the dobj/him} i {the keyring/him}. ';
+        return '{Du/han} fäst{er/te} {den dobj/honom} i {the keyring/him}. ';
     }
 
     /* we moved several keys to a keyring automatically */
@@ -3288,25 +3288,25 @@ playerActionMessages: MessageHelper
     }
 
     /* taking dobj from iobj, but dobj isn't in iobj */
-    takeFromNotInMsg = '{The dobj/he} {är} inte i {that iobj/him}. '
+    takeFromNotInMsg = '{Den dobj/han} {är} inte i {that iobj/him}. '
 
     /* taking dobj from surface, but dobj isn't on iobj */
-    takeFromNotOnMsg = '{The dobj/he} {är} inte på {that iobj/him}. '
+    takeFromNotOnMsg = '{Den dobj/han} {är} inte på {that iobj/him}. '
 
     /* taking dobj from under something, but dobj isn't under iobj */
-    takeFromNotUnderMsg = '{The dobj/he} {är} inte under {that iobj/him}. '
+    takeFromNotUnderMsg = '{Den dobj/han} {är} inte under {that iobj/him}. '
 
     /* taking dobj from behind something, but dobj isn't behind iobj */
-    takeFromNotBehindMsg = '{The dobj/he} {är} inte bakom {that iobj/him}. '
+    takeFromNotBehindMsg = '{Den dobj/han} {är} inte bakom {that iobj/him}. '
 
     /* taking dobj from an actor, but actor doesn't have iobj */
-    takeFromNotInActorMsg = '{The iobj/he} {har} inte {that dobj/him}. '
+    takeFromNotInActorMsg = '{The iobj/he} {har} inte {det dobj/honom}. '
 
     /* actor won't let go of a possession */
     willNotLetGoMsg(holder, obj)
     {
         gMessageParams(holder, obj);
-        return '{The holder/he} låter inte {you/him} få {that obj/him}. ';
+        return '{The holder/he} låter inte {du/honom} få {det obj/honom}. ';
     }
 
     /* must say which way to go */
@@ -3372,7 +3372,7 @@ playerActionMessages: MessageHelper
     cannotDoFromMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte göra det från {the obj/him}. ';
+        return '{Du/han} {kan} inte göra det från {det obj/honom}. ';
     }
 
     /* cannot carry out a command from within a vehicle in a nested room */
@@ -3394,28 +3394,28 @@ playerActionMessages: MessageHelper
     cannotPushObjectThatWayMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte knuffa {the obj/him} i den riktningen.';
+        return '{Du/han} {kan} inte knuffa {det obj/honom} i den riktningen.';
     }
 
     /* cannot push an object to a nested room */
     cannotPushObjectNestedMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte knuffa {the obj/him} dit. ';
+        return '{Du/han} {kan} inte knuffa {det obj/honom} dit. ';
     }
 
     /* cannot enter an exit-only passage */
     cannotEnterExitOnlyMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte gå in i {the obj/him} {h|d}ärifrån. ';
+        return '{Du/han} {kan} inte gå in i {det obj/honom} {h|d}ärifrån. ';
     }
 
     /* must open door before going that way */
     mustOpenDoorMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} öppna {the obj/him} först. ';
+        return '{Du/han} {behöver|behövde} öppna {det obj/honom} först. ';
     }
 
     /* door closes behind actor during travel through door */
@@ -3423,14 +3423,14 @@ playerActionMessages: MessageHelper
     {
         gMessageParams(obj);
         //TODO: testa
-        //return '<.p>After {du/han} {goes} through {the obj/him}, {it/he} close{s/d} behind {it actor/him}. ';
-        return '<.p>{the obj/him} stäng{er|de} bakom {it actor/him} efter att {du/han} {går|gick} igenom {it/he}. ';
+        //return '<.p>After {du/han} {goes} through {det obj/honom}, {it/he} close{s/d} behind {it actor/him}. ';
+        return '<.p>{det obj/honom} stäng{er|de} bakom {it actor/him} efter att {du/han} {går|gick} igenom {it/he}. ';
 
     }
 
     /* the stairway does not go up/down */
-    stairwayNotUpMsg = '{The dobj/he} {går|gick} bara ner {h|d}ärifrån. '
-    stairwayNotDownMsg = '{The dobj/he} {går|gick} bara upp {h|d}ärifrån. '
+    stairwayNotUpMsg = '{Den dobj/han} {går|gick} bara ner {h|d}ärifrån. '
+    stairwayNotDownMsg = '{Den dobj/han} {går|gick} bara upp {h|d}ärifrån. '
 
     /* "wait" */
     timePassesMsg = 'Tiden {går|gick}... '
@@ -3449,27 +3449,27 @@ playerActionMessages: MessageHelper
     addressingNoOneMsg
     {
         return '{Du/han} {behöver|behövde} vara mer specifik om ' + gLibMessages.whomPronoun
-            + ' {it actor/he} vill{e|} prata med. ';
+            + ' {det actor/han} vill{e|} prata med. ';
     }
 
     /* "yell" */
-    okayYellMsg = '{Du/han} {skriker|skrek} så högt som {it actor/he} bara {kan}. '
+    okayYellMsg = '{Du/han} {skriker|skrek} så högt som {det actor/han} bara {kan}. '
 
     /* "jump" */
     okayJumpMsg = '{Du/han} hoppa{r/de} och land{ar/ade} på samma ställe. '
 
     /* cannot hoppa over object */
-    cannotJumpOverMsg = '{Du/han} {kan} inte hoppa över {that dobj/him}. '
+    cannotJumpOverMsg = '{Du/han} {kan} inte hoppa över {det dobj/honom}. '
 
     /* cannot hoppa off object */
-    cannotJumpOffMsg = '{Du/han} {kan} inte hoppa av {that dobj/him}. '
+    cannotJumpOffMsg = '{Du/han} {kan} inte hoppa av {det dobj/honom}. '
 
     /* cannot hoppa off (with no direct object) from here */
     //cannotJumpOffHereMsg = 'There{&rsquo;s| was} nowhere to jump från {här}. '
     cannotJumpOffHereMsg = 'Det f{i|a}nns ingenting att hoppa från {h|d}ärifrån. '
 
     /* failed to find a topic in a consultable object */
-    cannotFindTopicMsg = '{Du/han} {kan} verka{r/de} inte kunna hitta det i {the dobj/him}. '
+    cannotFindTopicMsg = '{Du/han} {kan} verka{r/de} inte kunna hitta det i {den dobj/honom}. '
 
     /* an actor doesn't accept a command from another actor */
     refuseCommand(targetActor, issuingActor)
@@ -3482,7 +3482,7 @@ playerActionMessages: MessageHelper
     notAddressableMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte prata med {that obj/him}. ';
+        return '{Du/han} {kan} inte prata med {det obj/honom}. ';
     }
 
     /* actor won't respond to a request or other communicative gesture */
@@ -3508,16 +3508,16 @@ playerActionMessages: MessageHelper
     cannotTellSelfMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't give yourself something */
-    cannotGiveToSelfMsg = 'Att ge {the dobj/him} till {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotGiveToSelfMsg = 'Att ge {den dobj/honom} till {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
     
     /* can't give something to itself */
-    cannotGiveToItselfMsg = 'Att ge {the dobj/him} till {itself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotGiveToItselfMsg = 'Att ge {den dobj/honom} till {itself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't show yourself something */
-    cannotShowToSelfMsg = 'Att visa {the dobj/him} för {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotShowToSelfMsg = 'Att visa {den dobj/honom} för {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't show something to itself */
-    cannotShowToItselfMsg = 'Att visa {the dobj/him} för {itself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotShowToItselfMsg = 'Att visa {den dobj/honom} för {itself} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't give/show something to a non-actor */
     cannotGiveToMsg = '{Du/han} {kan} inte ge någonting till {an iobj/him}. '
@@ -3539,7 +3539,7 @@ playerActionMessages: MessageHelper
     /* object cannot hear actor */
     objCannotHearActorMsg(obj)
     {
-        return '\^' + obj.theName + ' verka{r|de} inte kunna höra {you/him}. ';
+        return '\^' + obj.theName + ' verka{r|de} inte kunna höra {du/honom}. ';
     }
 
     /* actor cannot see object being shown to actor */
@@ -3549,13 +3549,13 @@ playerActionMessages: MessageHelper
     }
 
     /* not a followable object */
-    notFollowableMsg = '{Du/han} {kan} inte följa {that dobj/him}. '
+    notFollowableMsg = '{Du/han} {kan} inte följa {det dobj/honom}. '
 
     /* cannot follow yourself */
-    cannotFollowSelfMsg = '{Du/han} {kan} inte följa {yourself}. '
+    cannotFollowSelfMsg = '{Du/han} {kan} inte följa {digsjälv}. '
 
     /* following an object that's in the same location as the actor */
-    followAlreadyHereMsg = '{The dobj/he} {är} precis {här}. '
+    followAlreadyHereMsg = '{Den dobj/han} {är} precis {här}. '
 
     /*
      *   following an object that we *think* is in our same location (in
@@ -3563,11 +3563,11 @@ playerActionMessages: MessageHelper
      *   last saw the object go), but it's too dark to see if that's
      *   really true 
      */
-    followAlreadyHereInDarkMsg = '{The dobj/he} borde {vara|varit} precis 
-        {här}, men {du/han} {kan} inte se {it dobj/him}. '
+    followAlreadyHereInDarkMsg = '{Den dobj/han} borde {vara|varit} precis 
+        {här}, men {du/han} {kan} inte se {det dobj/honom}. '
 
     /* trying to follow an object, but don't know where it went from here */
-    followUnknownMsg = '{Du/han} {är} inte säker på var {the dobj/he} {har} gått {h|d}ärifrån. '
+    followUnknownMsg = '{Du/han} {är} inte säker på var {Den dobj/han} {har} gått {h|d}ärifrån. '
 
     /*
      *   we're trying to follow an actor, but we last saw the actor in the
@@ -3575,25 +3575,25 @@ playerActionMessages: MessageHelper
      */
     cannotFollowFromHereMsg(srcLoc)
     {
-        return 'Den sista platsen {du/han} {såg|hade sett} {the dobj/him} var '
+        return 'Den sista platsen {du/han} {såg|hade sett} {den dobj/honom} var '
             + srcLoc.getDestName(gActor, gActor.location) + '. ';
     }
 
     /* acknowledge a 'follow' for a target that was in sight */
     okayFollowInSightMsg(loc)
     {
-        return '{Du/han} följ{er|de} {the dobj/him} '
+        return '{Du/han} följ{er|de} {den dobj/honom} '
             + loc.actorIntoName + '. ';
     }
 
     /* obj is not a weapon */
-    notAWeaponMsg = '{Du/han} {kan} inte attackera någonting med {the iobj/him}. '
+    notAWeaponMsg = '{Du/han} {kan} inte attackera någonting med {den iobj/honom}. '
 
     /* no effect attacking obj */
-    uselessToAttackMsg = '{Du/han} {kan} inte attackera {that dobj/him}. '
+    uselessToAttackMsg = '{Du/han} {kan} inte attackera {det dobj/honom}. '
 
     /* pushing object has no effect */
-    pushNoEffectMsg = 'Att trycka på {the dobj/him} {har|hade} ingen effekt. '
+    pushNoEffectMsg = 'Att trycka på {den dobj/honom} {har|hade} ingen effekt. '
 
     /* default 'push button' acknowledgment */
     okayPushButtonMsg = '<q>Klick.</q> '
@@ -3603,31 +3603,31 @@ playerActionMessages: MessageHelper
         '{Rhe dobj/him} {är} redan intryckt så långt det {går|gick}. '
 
     /* default acknowledgment to pushing a lever */
-    okayPushLeverMsg = '{Du/han} dr{ar|og} {the dobj/him} till {its/her dobj} stopp. '
+    okayPushLeverMsg = '{Du/han} dr{ar|og} {den dobj/honom} till {its/her dobj} stopp. '
 
     /* pulling object has no effect */
-    pullNoEffectMsg = 'Att dra i {the dobj/him} ha{r|de} ingen effekt. '
+    pullNoEffectMsg = 'Att dra i {den dobj/honom} ha{r|de} ingen effekt. '
 
     /* lever is already in pulled state */
     alreadyPulledMsg = '{It\'s dobj} var redan dragen så långt det gick. '
 
     /* default acknowledgment to pulling a lever */
-    okayPullLeverMsg = '{Du/han} {drar|drog} {the dobj/him} till {its/her dobj} stopp. '
+    okayPullLeverMsg = '{Du/han} {drar|drog} {den dobj/honom} till {its/her dobj} stopp. '
 
     /* default acknowledgment to pulling a spring-loaded lever */
-    /*okayPullSpringLeverMsg = '{Du/han} pull{s/ed} {the dobj/him}, which
+    /*okayPullSpringLeverMsg = '{Du/han} pull{s/ed} {den dobj/honom}, which
         spr{ing[s]|ung} back to {its/her} starting position as soon as
-        {du/han} let{[s]|} go of {it dobj/him}. '*/
+        {du/han} let{[s]|} go of {det dobj/honom}. '*/
 
 
-    okayPullSpringLeverMsg = '{Du/han} {drar|drog} {the dobj/him}, som
+    okayPullSpringLeverMsg = '{Du/han} {drar|drog} {den dobj/honom}, som
         fjädra{r/de} tillbaka till {its/her} startposition så snart som 
-        {du/han} släpp{er/te} taget om {it dobj/him}. '
+        {du/han} släpp{er/te} taget om {det dobj/honom}. '
 
 //TODO: fortsätt uppåt
 
     /* moving object has no effect */
-    moveNoEffectMsg = 'Att flytta {the dobj/him} skulle inte ge någon effekt. '
+    moveNoEffectMsg = 'Att flytta {den dobj/honom} skulle inte ge någon effekt. '
 
     /* cannot move object to other object */
     moveToNoEffectMsg = 'Detta skulle inte {|ha} åstadkomm{a|it någonting. '
@@ -3644,120 +3644,120 @@ playerActionMessages: MessageHelper
 
     /* cannot use object as an implement to move something */
     cannotMoveWithMsg =
-        '{Du/han} {kan} inte flytta någonting med {the iobj/him}. '
+        '{Du/han} {kan} inte flytta någonting med {den iobj/honom}. '
 
     /* cannot set object to setting */
-    cannotSetToMsg = '{Du/han} {kan} inte sätta {that dobj/him} till någonting. '
+    cannotSetToMsg = '{Du/han} {kan} inte sätta {det dobj/honom} till någonting. '
 
     /* invalid setting for generic Settable */
-    setToInvalidMsg = '{The dobj/he} {har} ingen sådan inställning. '
+    setToInvalidMsg = '{Den dobj/han} {har} ingen sådan inställning. '
 
     /* default 'set to' acknowledgment */
     okaySetToMsg(val)
-        { return 'Ok, {the dobj/he} {är} nu satt till ' + val + '. '; }
+        { return 'Ok, {Den dobj/han} {är} nu satt till ' + val + '. '; }
 
     /* cannot turn object */
-    cannotTurnMsg = '{Du/han} {kan} inte vrida {that dobj/him}. '
+    cannotTurnMsg = '{Du/han} {kan} inte vrida {det dobj/honom}. '
 
     /* must specify setting to turn object to */
-    mustSpecifyTurnToMsg = '{Du/han} behöver vara tydlig med vilken inställning du vill sätta {it dobj/him} till. '
+    mustSpecifyTurnToMsg = '{Du/han} behöver vara tydlig med vilken inställning du vill sätta {det dobj/honom} till. '
 
     /* cannot turn anything with object */
     cannotTurnWithMsg =
         '{Du/han} {kan} inte vrida någonting med {that iobj/him}. '
 
     /* invalid setting for dial */
-    turnToInvalidMsg = '{The dobj/he} {har} ingen sådan inställning. '
+    turnToInvalidMsg = '{Den dobj/han} {har} ingen sådan inställning. '
 
     /* default 'turn to' acknowledgment */
     okayTurnToMsg(val)
-        { return 'Ok, {the dobj/he} {är} nu satt till ' + val + '. '; }
+        { return 'Ok, {Den dobj/han} {är} nu satt till ' + val + '. '; }
 
     /* switch is already on/off */
-    alreadySwitchedOnMsg = '{The dobj/he} {är} redan på. '
-    alreadySwitchedOffMsg = '{The dobj/he} {är} redan av. '
+    alreadySwitchedOnMsg = '{Den dobj/han} {är} redan på. '
+    alreadySwitchedOffMsg = '{Den dobj/han} {är} redan av. '
 
     /* default acknowledgment for switching on/off */
-    okayTurnOnMsg = 'Ok, {the dobj/he} {är} nu på. '
-    okayTurnOffMsg = 'Ok, {the dobj/he} {är} nu av. '
+    okayTurnOnMsg = 'Ok, {Den dobj/han} {är} nu på. '
+    okayTurnOffMsg = 'Ok, {Den dobj/han} {är} nu av. '
 
     /* flashlight is on but doesn't light up */
-    flashlightOnButDarkMsg = '{Du/han} {vrider|vred} on {the dobj/him}, men ingenting verka{r/de} hända. '
+    flashlightOnButDarkMsg = '{Du/han} {vrider|vred} on {den dobj/honom}, men ingenting verka{r/de} hända. '
 
     /* default acknowledgment for eating something */
-    okayEatMsg = '{Du/han} {äter|åt} {the dobj/him}. '
+    okayEatMsg = '{Du/han} {äter|åt} {den dobj/honom}. '
 
     /* object must be burning before doing that */
     mustBeBurningMsg(obj)
     {
-        return '{Du/han} behöv{er|de} tända ' + obj.theNameObj + ' före {it actor/he} {kan} göra det. ';
+        return '{Du/han} behöv{er|de} tända ' + obj.theNameObj + ' före {det actor/han} {kan} göra det. ';
     }
 
     /* match not lit */
-    matchNotLitMsg = '{The dobj/he} {är} inte tänd. '
+    matchNotLitMsg = '{Den dobj/han} {är} inte tänd. '
 
     /* lighting a match */
     okayBurnMatchMsg =
-        '{Du/han} {drar|drog} an {the dobj/him} och tänd{er/e} en liten låga. '
+        '{Du/han} {drar|drog} an {den dobj/honom} och tänd{er/e} en liten låga. '
 
     /* extinguishing a match */
-    okayExtinguishMatchMsg = '{Du/han} släck{er/te} {the dobj/him}, som {försvinner|försvann} i en moln av aska. '
+    okayExtinguishMatchMsg = '{Du/han} släck{er/te} {den dobj/honom}, som {försvinner|försvann} i en moln av aska. '
 
     /* trying to light a candle with no fuel */
     candleOutOfFuelMsg =
-        '{The dobj/he} {är} för nedbrunne{en|et}; {it/he} {kan} inte tändas. '
+        '{Den dobj/han} {är} för nedbrunne{en|et}; {it/he} {kan} inte tändas. '
 
     /* lighting a candle */
-    okayBurnCandleMsg = '{Du/han} tänd{er/e} {the dobj/him}. '
+    okayBurnCandleMsg = '{Du/han} tänd{er/e} {den dobj/honom}. '
 
     /* extinguishing a candle that isn't lit */
-    candleNotLitMsg = '{The dobj/he} {är} inte tänd. '
+    candleNotLitMsg = '{Den dobj/han} {är} inte tänd. '
 
     /* extinguishing a candle */
     okayExtinguishCandleMsg = 'Gjort. '
 
     /* cannot consult object */
     cannotConsultMsg =
-        '{That dobj/he} saker {är} ingenting {du/han} {kan} konsultera. '
+        '{Det dobj/han} saker {är} ingenting {du/han} {kan} konsultera. '
 
     /* cannot type anything on object */
-    cannotTypeOnMsg = '{Du/han} {kan} skriva någonting på {that dobj/him}. '
+    cannotTypeOnMsg = '{Du/han} {kan} skriva någonting på {det dobj/honom}. '
 
     /* cannot enter anything on object */
-    cannotEnterOnMsg = '{Du/han} {kan} knappa in någonting på {that dobj/him}. '
+    cannotEnterOnMsg = '{Du/han} {kan} knappa in någonting på {det dobj/honom}. '
 
     /* cannot switch object */
-    cannotSwitchMsg = '{Du/han} {kan} inte ändra på {that dobj/him}. '
+    cannotSwitchMsg = '{Du/han} {kan} inte ändra på {det dobj/honom}. '
 
     /* cannot flip object */
-    cannotFlipMsg = '{Du/han} {kan} inte vända {that dobj/him}. '
+    cannotFlipMsg = '{Du/han} {kan} inte vända {det dobj/honom}. '
 
     /* cannot turn object on/off */
     cannotTurnOnMsg =
-        '{That dobj/he} {är} inte någonting som {du/han} {kan} slå på. '
+        '{Det dobj/han} {är} inte någonting som {du/han} {kan} slå på. '
     cannotTurnOffMsg =
-        '{That dobj/he} {är} inte någonting som {du/han} {kan} stänga av. '
+        '{Det dobj/han} {är} inte någonting som {du/han} {kan} stänga av. '
 
     /* cannot light */
-    cannotLightMsg = '{Du/han} {kan} inte tända {that dobj/him}. '
+    cannotLightMsg = '{Du/han} {kan} inte tända {det dobj/honom}. '
 
     /* cannot burn */
-    cannotBurnMsg = '{That dobj/he} {är} inte någonting {du/han} {kan} elda. '
+    cannotBurnMsg = '{Det dobj/han} {är} inte någonting {du/han} {kan} elda. '
     cannotBurnWithMsg =
         '{Du/han} {kan} inte elda någonting med {that iobj/him}. '
 
     /* cannot burn this specific direct object with this specific iobj */
-    cannotBurnDobjWithMsg = '{Du/han} {kan} inte tända {the dobj/him}
-                          med {the iobj/him}. '
+    cannotBurnDobjWithMsg = '{Du/han} {kan} inte tända {den dobj/honom}
+                          med {den iobj/honom}. '
 
     /* object is already burning */
-    alreadyBurningMsg = '{The dobj/he} brinner redan. '
+    alreadyBurningMsg = '{Den dobj/han} brinner redan. '
 
     /* cannot extinguish */
-    cannotExtinguishMsg = '{Du/han} {kan} inte släcka {that dobj/him}. '
+    cannotExtinguishMsg = '{Du/han} {kan} inte släcka {det dobj/honom}. '
 
     /* cannot pour/pour in/pour on */
-    cannotPourMsg = '{That dobj/he} {är} inte någonting {du/han} {kan} hälla. '
+    cannotPourMsg = '{Det dobj/han} {är} inte någonting {du/han} {kan} hälla. '
     cannotPourIntoMsg =
         '{Du/han} {kan} inte hälla någonting i {that iobj/him}. '
     cannotPourOntoMsg =
@@ -3765,34 +3765,34 @@ playerActionMessages: MessageHelper
 
     /* cannot attach object to object */
     cannotAttachMsg =
-        '{Du/han} {kan} inte fästa {that dobj/him} på någonting. '
+        '{Du/han} {kan} inte fästa {det dobj/honom} på någonting. '
     cannotAttachToMsg =
         '{Du/han} {kan} inte fästa någonting på {that iobj/him}. '
 
     /* cannot attach to self */
     cannotAttachToSelfMsg =
-        '{Du/han} {kan} inte fästa {the dobj/him} på {itself}. '
+        '{Du/han} {kan} inte fästa {den dobj/honom} på {itself}. '
 
     /* cannot attach because we're already attached to the given object */
     alreadyAttachedMsg =
-        '{The dobj/he} {är} redan fäst med {the iobj/him}. '
+        '{Den dobj/han} {är} redan fäst med {den iobj/honom}. '
 
     /*
      *   dobj and/or iobj can be attached to certain things, but not to
      *   each other 
      */
     wrongAttachmentMsg =
-        '{Du/han} {kan} inte fästa {that dobj/him} på {the iobj/him}. '
+        '{Du/han} {kan} inte fästa {det dobj/honom} på {den iobj/honom}. '
 
     /* dobj and iobj are attached, but they can't be taken apart */
     wrongDetachmentMsg =
-        '{Du/han} {kan} inte koppla loss {that dobj/him} från {the iobj/him}. '
+        '{Du/han} {kan} inte koppla loss {det dobj/honom} från {den iobj/honom}. '
 
     /* must detach the object before proceeding */
     mustDetachMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} ta loss {the obj/him} före {it actor/he}
+        return '{Du/han} {behöver|behövde} ta loss {det obj/honom} före {det actor/han}
             {kan} göra det. ';
     }
 
@@ -3803,71 +3803,73 @@ playerActionMessages: MessageHelper
     okayDetachFromMsg = 'Gjort. '
 
     /* cannot detach object from object */
-    cannotDetachMsg = '{Du/han} {kan} inte koppla loss {that dobj/him}. '
+    cannotDetachMsg = '{Du/han} {kan} inte koppla loss {det dobj/honom}. '
     cannotDetachFromMsg =
         '{Du/han} {kan} inte ta loss någonting från {that iobj/him}. '
 
     /* no obvious way to detach a permanent attachment */
     cannotDetachPermanentMsg =
-        'Det {finns|fanns} inget uppenbart sätt att ta loss {that dobj/him}. '
+        'Det {finns|fanns} inget uppenbart sätt att ta loss {det dobj/honom}. '
 
     /* dobj isn't attached to iobj */
-    notAttachedToMsg = '{The dobj/he} {sitter|satt} inte fast i {that iobj/him}. '
+    notAttachedToMsg = '{Den dobj/han} {sitter|satt} inte fast i {that iobj/him}. '
 
     /* breaking object would serve no purpose */
     shouldNotBreakMsg =
-        //'Breaking {that dobj/him} would {|have} serve{|d} no purpose. '
-        'Att ha sönder {that dobj/him} skulle inte {|ha} tjäna{|t} något syfte. '
+        //'Breaking {det dobj/honom} would {|have} serve{|d} no purpose. '
+        'Att ha sönder {det dobj/honom} skulle inte {|ha} tjäna{|t} något syfte. '
 
     /* cannot cut that */
-    cutNoEffectMsg = '{The iobj/he} {kan} verka{r/de} inte kunna skära {the dobj/him}. '
+    cutNoEffectMsg = '{The iobj/he} {kan} verka{r/de} inte kunna skära {den dobj/honom}. '
 
     /* can't use iobj to cut anything */
-    cannotCutWithMsg = '{Du/han} {kan} inte skära någonting med {the iobj/him}. '
+    cannotCutWithMsg = '{Du/han} {kan} inte skära någonting med {den iobj/honom}. '
 
     /* cannot climb object */
-    cannotClimbMsg = '{That dobj/he} {är} inte någonting {du/han} {kan} klättra. '
+    cannotClimbMsg = '{Det dobj/han} {är} inte någonting {du/han} {kan} klättra. '
 
     /* object is not openable/closable */
-    cannotOpenMsg = '{That dobj/he} {är} inte någonting {du/han} {kan} öppna. '
+    cannotOpenMsg = '{Det dobj/han} {är} inte någonting {du/han} {kan} öppna. '
     cannotCloseMsg =
-        '{That dobj/he} {är} inte någonting {du/han} {kan} stänga. '
+        '{Det dobj/han} {är} inte någonting {du/han} {kan} stänga. '
 
     /* already open/closed */
-    alreadyOpenMsg = '{The dobj/he} {är} redan öppe<<self.isUter?'n':'t'>>. '
-    alreadyClosedMsg = '{The dobj/he} {är} redan stäng<<self.isUter?'d':'t'>>. '
+    alreadyOpenMsg = '{Den dobj/han} {är} redan öppe<<gDobj && gDobj.isUter?'n':'t'>>. '
+    
+    // TODO: Går det att hitta ett bättre sätt?
+    alreadyClosedMsg = '{Den dobj/han} {är} redan stäng<<gDobj && gDobj.isUter?'d':'t'>>. '
 
     /* already locked/unlocked */
-    alreadyLockedMsg = '{The dobj/he} {är} redan låst. '
-    alreadyUnlockedMsg = '{The dobj/he} {är} redan olåst. '
+    alreadyLockedMsg = '{Den dobj/han} {är} redan låst. '
+    alreadyUnlockedMsg = '{Den dobj/han} {är} redan olåst. '
 
     /* cannot look in container because it's closed */
-    cannotLookInClosedMsg = '{The dobj/he} {är} stängd . '
+    cannotLookInClosedMsg = '{Den dobj/han} {är} stängd . '
 
     /* object is not lockable/unlockable */
     cannotLockMsg =
-        '{That dobj/he} {är} inte någonting {du/han} {kan} låsa. '
+        '{Det dobj/han} {är} inte någonting {du/han} {kan} låsa. '
     cannotUnlockMsg =
-        '{That dobj/he} {är} inte någonting {du/han} {kan} låsa upp. '
+        '{Det dobj/han} {är} inte någonting {du/han} {kan} låsa upp. '
 
     /* attempting to open a locked object */
-    cannotOpenLockedMsg = '{The dobj/he} verka{r/de} vara låst. '
+    cannotOpenLockedMsg = '{Den dobj/han} verka{r/de} vara låst. '
 
     /* object requires a key to unlock */
     unlockRequiresKeyMsg =
-        '{Du/han} verka{r/de} behöva en nyckel för att låsa upp {the dobj/him}. '
+        '{Du/han} verka{r/de} behöva en nyckel för att låsa upp {den dobj/honom}. '
 
     /* object is not a key */
     cannotLockWithMsg =
-        '{The iobj/he} {ser} inte lämplig ut att låsa {the dobj/him}. '
+        '{The iobj/he} {ser} inte lämplig ut att låsa {den dobj/honom}. '
     cannotUnlockWithMsg =
-        '{The iobj/he} {ser} inte lämplig ut att låsa upp {the dobj/him}. '
+        '{The iobj/he} {ser} inte lämplig ut att låsa upp {den dobj/honom}. '
 
     /* we don't know how to lock/unlock this */
     unknownHowToLockMsg =
-        'Det {är} inte tydligt på vilket sätt {the dobj/him} {ska} låsas. '
+        'Det {är} inte tydligt på vilket sätt {den dobj/honom} {ska} låsas. '
     unknownHowToUnlockMsg =
-        'Det {är} inte tydligt på vilket sätt {the dobj/him} {ska} låsas upp. '
+        'Det {är} inte tydligt på vilket sätt {den dobj/honom} {ska} låsas upp. '
 
     /* the key (iobj) does not fit the lock (dobj) */
     keyDoesNotFitLockMsg = '{The iobj/he} passa{r/de} inte låset. '
@@ -3887,53 +3889,59 @@ playerActionMessages: MessageHelper
             men {du/han} hittar inte någon som passa{r/de} låset. ';
     }
 
-    verbEndingTAFor(obj) {
+    // Böjer adjektivet utifrån objektets genus/form
+    adjEndingForNounTA(obj) {
         if(obj) {
+            // TODO: bestämd form, isQualified/isProper, tex:
+            // en-genus	ett-genus	bestämd form	plural
+            // liten	litet	lilla	små
+
             if(obj.isPlural) {
-                return 'a';
+                return 'a'; // plural / bestämd form
             }
             if(!obj.isUter) {
-                return 't';
+                return 't'; // ett-genus
             }
+
         }
-        return '';
+        return ''; // en-genus
     }
 
     /* not edible/drinkable */
-    cannotEatMsg = '{The dobj/he} verkar inte vara ätbar<<verbEndingTAFor(gDobj)>>. '
-    cannotDrinkMsg = '{The dobj/he} verkar inte vara något {du/han} {kan} dricka. '
+    cannotEatMsg = '{Den dobj/han} verka{r/de} inte vara ätbar<<adjEndingForNounTA(gDobj)>>. '
+    cannotDrinkMsg = '{Den dobj/han} verka{r/de} inte vara något {du/han} {kan} dricka. '
 
     /* cannot clean object */
     cannotCleanMsg =
-        //'{Du/han} wouldn&rsquo;t {|have} know{|n} how to clean {that dobj/him}. '
-        '{Du/han} skulle inte veta hur {that dobj/him} {rengörs|rengjordes}. '
+        //'{Du/han} wouldn&rsquo;t {|have} know{|n} how to clean {det dobj/honom}. '
+        '{Du/han} skulle inte veta hur {det dobj/honom} {rengörs|rengjordes}. '
     cannotCleanWithMsg =
         '{Du/han} {kan} inte rengöra någonting med {that iobj/him}. '
 
     /* cannot attach key (dobj) to (iobj) */
     cannotAttachKeyToMsg =
-        '{Du/han} {kan} inte fästa {the dobj/him} i {that iobj/him}. '
+        '{Du/han} {kan} inte fästa {den dobj/honom} i {that iobj/him}. '
 
     /* actor cannot sleep */
     cannotSleepMsg = '{Du/han} behöv{er|de} inte sova just nu. '
 
     /* cannot sit/lie/stand/get on/get out of */
     cannotSitOnMsg =
-        '{That dobj/he} {är} inte någonting som {du/han} {kan} sitta på. '
+        '{Det dobj/han} {är} inte någonting som {du/han} {kan} sitta på. '
     cannotLieOnMsg =
-        '{That dobj/he} {är} inte någonting som {du/han} {kan} ligga på. '
-    cannotStandOnMsg = '{Du/han} {kan} inte stå på {that dobj/him}. '
-    cannotBoardMsg = '{Du/han} {kan} inte kliva ombord på {that dobj/him}. '
-    cannotUnboardMsg = '{Du/han} {kan} inte kliva ut ur {that dobj/him}. '
-    cannotGetOffOfMsg = '{Du/han} {kan} inte kliva av från {that dobj/him}. '
+        '{Det dobj/han} {är} inte någonting som {du/han} {kan} ligga på. '
+    cannotStandOnMsg = '{Du/han} {kan} inte stå på {det dobj/honom}. '
+    cannotBoardMsg = '{Du/han} {kan} inte kliva ombord på {det dobj/honom}. '
+    cannotUnboardMsg = '{Du/han} {kan} inte kliva ut ur {det dobj/honom}. '
+    cannotGetOffOfMsg = '{Du/han} {kan} inte kliva av från {det dobj/honom}. '
 
     /* standing on a PathPassage */
-    cannotStandOnPathMsg = 'If {du/han} vill{|e} följa {the dobj/him},
+    cannotStandOnPathMsg = 'If {du/han} vill{|e} följa {den dobj/honom},
         säg bara det. '
 
     /* cannot sit/lie/stand on something being held */
     cannotEnterHeldMsg =
-        '{Du/han} {kan} inte göra det medan du {höll|håller} i {the dobj/him}. '
+        '{Du/han} {kan} inte göra det medan du {höll|håller} i {den dobj/honom}. '
 
     /* cannot get out (of current location) */
     cannotGetOutMsg = '{Du/han} är inte i någonting {du/han} {kan} kliva ur från. '
@@ -3954,11 +3962,11 @@ playerActionMessages: MessageHelper
 
     /* no room to stand/sit/lie på dobj */
     noRoomToStandMsg =
-        'Det {finns|fanns} inget rum för {you/him} att stå {på dobj}. '
+        'Det {finns|fanns} inget rum för {du/honom} att stå {på dobj}. '
     noRoomToSitMsg =
-        'Det {finns|fanns} inget rum för {you/him} att sitta {på dobj}. '
+        'Det {finns|fanns} inget rum för {du/honom} att sitta {på dobj}. '
     noRoomToLieMsg =
-        'Det {finns|fanns} inget rum för {you/him} att ligga {på dobj}. '
+        'Det {finns|fanns} inget rum för {du/honom} att ligga {på dobj}. '
 
     /* default report for standing up/sitting down/lying down */
     okayPostureChangeMsg(posture)
@@ -3976,90 +3984,90 @@ playerActionMessages: MessageHelper
     okayNotStandingOnMsg = 'Ok, {du/han} {är} inte längre {på dobj}. '
 
     /* cannot fasten/unfasten */
-    cannotFastenMsg = '{Du/han} {kan} inte fästa {the dobj/him}. '
-    cannotFastenToMsg = '{Du/han} {kan} inte fästa någonting på {the iobj/him}. '
-    cannotUnfastenMsg = '{Du/han} {kan} inte ta loss {the dobj/him}. '
-    cannotUnfastenFromMsg = '{Du/han} {kan} inte ta loss någonting från {the iobj/him}. '
+    cannotFastenMsg = '{Du/han} {kan} inte fästa {den dobj/honom}. '
+    cannotFastenToMsg = '{Du/han} {kan} inte fästa någonting på {den iobj/honom}. '
+    cannotUnfastenMsg = '{Du/han} {kan} inte ta loss {den dobj/honom}. '
+    cannotUnfastenFromMsg = '{Du/han} {kan} inte ta loss någonting från {den iobj/honom}. '
 
     /* cannot plug/unplug */
-    cannotPlugInMsg = '{Du/han} {ser} inget sätt att koppla in {the dobj/him}. '
-    cannotPlugInToMsg = '{Du/han} {ser} inget sätt att koppla in någonting i {the iobj/him}. '
-    cannotUnplugMsg = '{Du/han} {ser} inget sätt att koppla loss {the dobj/him}. '
-    cannotUnplugFromMsg = '{Du/han} {ser} inget sätt att la loss någonting från {the iobj/him}. '
+    cannotPlugInMsg = '{Du/han} {ser} inget sätt att koppla in {den dobj/honom}. '
+    cannotPlugInToMsg = '{Du/han} {ser} inget sätt att koppla in någonting i {den iobj/honom}. '
+    cannotUnplugMsg = '{Du/han} {ser} inget sätt att koppla loss {den dobj/honom}. '
+    cannotUnplugFromMsg = '{Du/han} {ser} inget sätt att la loss någonting från {den iobj/honom}. '
 
     /* cannot screw/unscrew */
-    cannotScrewMsg = '{Du/han} {ser} inget sätt att skruva {the dobj/him}. '
-    cannotScrewWithMsg = '{Du/han} {kan} inte skruva något med {the iobj/him}. '
-    cannotUnscrewMsg = '{Du/han} {ser} inget sätt att skruva loss {the dobj/him}. '
-    cannotUnscrewWithMsg = '{Du/han} {kan} inte skruva loss något med {the iobj/him}. '
+    cannotScrewMsg = '{Du/han} {ser} inget sätt att skruva {den dobj/honom}. '
+    cannotScrewWithMsg = '{Du/han} {kan} inte skruva något med {den iobj/honom}. '
+    cannotUnscrewMsg = '{Du/han} {ser} inget sätt att skruva loss {den dobj/honom}. '
+    cannotUnscrewWithMsg = '{Du/han} {kan} inte skruva loss något med {den iobj/honom}. '
 
     /* cannot enter/go through */
-    cannotEnterMsg = '{That/he dobj} {är} inte någonting {du/han} {kan} gå in i. '
-    cannotGoThroughMsg = '{That/he dobj} {är} inte någonting {du/han} {kan} gå genom. '
+    cannotEnterMsg = '{Det/han dobj} {är} inte någonting {du/han} {kan} gå in i. '
+    cannotGoThroughMsg = '{Det/han dobj} {är} inte någonting {du/han} {kan} gå genom. '
         
     /* can't throw something at itself */
     cannotThrowAtSelfMsg =
-        '{Du/han} {kan} inte kasta {that dobj/him} på {itself}. '
+        '{Du/han} {kan} inte kasta {det dobj/honom} på {itself}. '
 
     /* can't throw something at an object inside itself */
-    cannotThrowAtContentsMsg = '{Du/han} {behöver|behövde} ta bort {the iobj/him}
-        från {the dobj/him} före {it actor/he} {kan} göra det. '
+    cannotThrowAtContentsMsg = '{Du/han} {behöver|behövde} ta bort {den iobj/honom}
+        från {den dobj/honom} före {det actor/han} {kan} göra det. '
 
     /* can't throw through a sense connector */
     cannotThrowThroughMsg(target, loc)
     {
         gMessageParams(target, loc);
-        return '{Du/han} {kan} inte kasta någonting genom {the loc/him}. ';
+        return '{Du/han} {kan} inte kasta någonting genom {den loc/honom}. ';
     }
 
     /* shouldn't throw something at the floor */
     shouldNotThrowAtFloorMsg =
-        '{Du/han} borde bara {|ha} {stoppa|stoppat} ner {it dobj/him} istället. '
+        '{Du/han} borde bara {|ha} {stoppa|stoppat} ner {det dobj/honom} istället. '
 
     /* THROW <obj> <direction> isn't supported; use THROW AT instead */
     dontThrowDirMsg =
         ('<.parser>Du behöver vara mer specifik om vad ' 
             + (gActor.referralPerson == ThirdPerson
                       ? 'du vill {the actor/him}' : '')
-         + ' ska kasta {the dobj/him} mot.<./parser> ')
+         + ' ska kasta {den dobj/honom} mot.<./parser> ')
 
     /* thrown object bounces off target (short report) */
-    throwHitMsg(projectile, target)
+    throwHitMsg(projektilen, target)
     {
-        gMessageParams(projectile, target);
-        return '{The projectile/he} träffa{r|de} {the target/him} utan någon uppenbar effekt. ';
+        gMessageParams(projektilen, target);
+        return '{Den projektilen/han} träffa{r|de} {det target/honom} utan någon uppenbar effekt. ';
     }
 
     /* thrown object lands on target */
-    throwFallMsg(projectile, target)
+    throwFallMsg(projektilen, target)
     {
-        gMessageParams(projectile, target);
-        return '{The projectile/he} landa{r/de} på {the target/him}. ';
+        gMessageParams(projektilen, target);
+        return '{Den projektilen/han} landa{r/de} på {det target/honom}. ';
     }
 
     /* thrown object bounces off target and falls to destination */
-    throwHitFallMsg(projectile, target, dest)
+    throwHitFallMsg(projektilen, target, dest)
     {
-        gMessageParams(projectile, target);
-        return '{The projectile/he} träffa{r/de} {the target/him}
+        gMessageParams(projektilen, target);
+        return '{Den projektilen/han} träffa{r/de} {det target/honom}
             utan någon uppenbar effekt, och {faller|föll} '
             + dest.putInName + '. ';
     }
 
     /* thrown object falls short of distant target (sentence prefix only) */
-    throwShortMsg(projectile, target)
+    throwShortMsg(projektilen, target)
     {
-        gMessageParams(projectile, target);
-        return '{The projectile/he}  {faller|föll} långtifrån '
-               + '{the target/him}. ';
+        gMessageParams(projektilen, target);
+        return '{Den projektilen/han}  {faller|föll} långtifrån '
+               + '{det target/honom}. ';
     }
         
     /* thrown object falls short of distant target */
-    throwFallShortMsg(projectile, target, dest)
+    throwFallShortMsg(projektilen, target, dest)
     {
-        gMessageParams(projectile, target);
-        return '{The projectile/he}  {faller|föll} ' + dest.putInName
-            + ' långtifrån {the target/him}. ';
+        gMessageParams(projektilen, target);
+        return '{Den projektilen/han}  {faller|föll} ' + dest.putInName
+            + ' långtifrån {det target/honom}. ';
     }
 
     /* target catches object */
@@ -4080,15 +4088,15 @@ playerActionMessages: MessageHelper
     }
 
     /* cannot kiss something */
-    //cannotKissMsg = 'Kissing {the dobj/him} {has|had} no obvious effect. '
-    cannotKissMsg = 'Att kyssa {the dobj/him} {har} ingen uppenbar effekt. '
+    //cannotKissMsg = 'Kissing {den dobj/honom} {has|had} no obvious effect. '
+    cannotKissMsg = 'Att kyssa {den dobj/honom} {har} ingen uppenbar effekt. '
 
     /* person uninterested in being kissed */
     cannotKissActorMsg
-        = '{The dobj/he} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        = '{Den dobj/han} skulle antagligen inte {|ha} uppskatta{|t} det. '
 
     /* cannot kiss yourself */
-    cannotKissSelfMsg = '{Du/han} {kan} inte kyssa {yourself}. '
+    cannotKissSelfMsg = '{Du/han} {kan} inte kyssa {digsjälv}. '
 
     /* it is now dark at actor's location */
     newlyDarkMsg = 'Det {är} nu kolsvart. '
@@ -4104,66 +4112,66 @@ npcActionMessages: playerActionMessages
     timePassesMsg = '{Du/han} vänta{|r}... '
 
     /* trying to move a Fixture/Immovable */
-    cannotMoveFixtureMsg = '{Du/han} {kan} inte flytta {that dobj/him}. '
-    cannotMoveImmovableMsg = '{Du/han} {kan} inte flytta {that dobj/him}. '
+    cannotMoveFixtureMsg = '{Du/han} {kan} inte flytta {det dobj/honom}. '
+    cannotMoveImmovableMsg = '{Du/han} {kan} inte flytta {det dobj/honom}. '
 
     /* trying to take/move/put a Heavy object */
     cannotTakeHeavyMsg =
-        '{That dobj/he} saker {är} för tung<<verbEndingTAFor(gDobj)>> {you/him} att ta. '
+        '{Det dobj/han} saker {är} för tung<<adjEndingForNounTA(gDobj)>> {du/honom} att ta. '
     cannotMoveHeavyMsg =
-        '{That dobj/he} saker {är} för tung<<verbEndingTAFor(gDobj)>> {you/him} att flytta. '
+        '{Det dobj/han} saker {är} för tung<<adjEndingForNounTA(gDobj)>> {du/honom} att flytta. '
     cannotPutHeavyMsg =
-        '{That dobj/he} saker {är} för tung<<verbEndingTAFor(gDobj)>> {you/him} att flytta. '
+        '{Det dobj/han} saker {är} för tung<<adjEndingForNounTA(gDobj)>> {du/honom} att flytta. '
 
     /* trying to move a component object */
     cannotMoveComponentMsg(loc)
     {
-        return '{Du/han} {kan} inte göra det för att {the dobj/he} {är} del av ' + loc.theNameObj + '. ';
+        return '{Du/han} {kan} inte göra det för att {Den dobj/han} {är} del av ' + loc.theNameObj + '. ';
     }
 
     /* default successful 'take' response */
-    okayTakeMsg = '{Du/han} {tar|tog} {the dobj/him}. '
+    okayTakeMsg = '{Du/han} {tar|tog} {den dobj/honom}. '
 
     /* default successful 'drop' response */
-    okayDropMsg = '{Du/han} {sätter} ner {the dobj/him}. '
+    okayDropMsg = '{Du/han} {sätter} ner {den dobj/honom}. '
 
     /* default successful 'put in' response */
-    okayPutInMsg = '{Du/han} {sätter} {the dobj/him} i {the iobj/him}. '
+    okayPutInMsg = '{Du/han} {sätter} {den dobj/honom} i {den iobj/honom}. '
 
     /* default successful 'put on' response */
-    okayPutOnMsg = '{Du/han} {sätter} {the dobj/him} på {the iobj/him}. '
+    okayPutOnMsg = '{Du/han} {sätter} {den dobj/honom} på {den iobj/honom}. '
 
     /* default successful 'put under' response */
     okayPutUnderMsg =
-        '{Du/han} {sätter} {the dobj/him} under {the iobj/him}. '
+        '{Du/han} {sätter} {den dobj/honom} under {den iobj/honom}. '
 
     /* default successful 'put behind' response */
     okayPutBehindMsg =
-        '{Du/han} {sätter} {the dobj/him} bakom {the iobj/him}. '
+        '{Du/han} {sätter} {den dobj/honom} bakom {den iobj/honom}. '
 
     /* default succesful response to 'wear obj' */
     okayWearMsg =
-        '{Du/han} {sätter} på {the dobj/him}. '
+        '{Du/han} {sätter} på {den dobj/honom}. '
 
     /* default successful response to 'doff obj' */
-    okayDoffMsg = '{Du/han} {tar} av {the dobj/him}. '
+    okayDoffMsg = '{Du/han} {tar} av {den dobj/honom}. '
 
     /* default successful responses to open/close */
-    okayOpenMsg = '{Du/han} öppna{de/r} {the dobj/him}. '
-    okayCloseMsg = '{Du/han} stäng{er|de} {the dobj/him}. '
+    okayOpenMsg = '{Du/han} öppna{de/r} {den dobj/honom}. '
+    okayCloseMsg = '{Du/han} stäng{er|de} {den dobj/honom}. '
 
     /* default successful responses to lock/unlock */
-    okayLockMsg = '{Du/han} lås{er/te} {the dobj/him}. '
-    okayUnlockMsg = '{Du/han} lås{er/te} upp {the dobj/him}. '
+    okayLockMsg = '{Du/han} lås{er/te} {den dobj/honom}. '
+    okayUnlockMsg = '{Du/han} lås{er/te} upp {den dobj/honom}. '
 
     /* push/pull/move with no effect */
-    pushNoEffectMsg = '{Du/han} försök{er/te} att knuffa {the dobj/him}, utan någon '
+    pushNoEffectMsg = '{Du/han} försök{er/te} att knuffa {den dobj/honom}, utan någon '
                       + 'uppenbar effekt. '
-    pullNoEffectMsg = '{Du/han} försök{er/te} att dra {the dobj/him}, utan någon '
+    pullNoEffectMsg = '{Du/han} försök{er/te} att dra {den dobj/honom}, utan någon '
                       + 'uppenbar effekt. '
-    moveNoEffectMsg = '{Du/han} försök{er/te} att flytta {the dobj/him}, utan någon '
+    moveNoEffectMsg = '{Du/han} försök{er/te} att flytta {den dobj/honom}, utan någon '
                       + 'uppenbar effekt. '
-    moveToNoEffectMsg = '{Du/han} lämna{r/de} {the dobj/he} där {it/he} {är}. '
+    moveToNoEffectMsg = '{Du/han} lämna{r/de} {Den dobj/han} där {it/he} {är}. '
 
     whereToGoMsg =
         //'You&rsquo;ll have to say which way {du/han} should {|have} go{|ne}. '
@@ -4198,7 +4206,7 @@ npcActionMessages: playerActionMessages
     {
         gMessageParams(obj, cont);
         return '{Du/han} {kan} inte göra det för att {the cont/he} {är}
-            är redan för full för att få rymma {the obj/him}. ';
+            är redan för full för att få rymma {det obj/honom}. ';
     }
 
     /* surface doesn't have room for object */
@@ -4206,34 +4214,34 @@ npcActionMessages: playerActionMessages
     {
         gMessageParams(obj, cont);
         return '{Du/han} {kan} inte göra det för att det {finns|fanns} 
-            ingen plats för {the obj/him} på {the cont/him}. ';
+            ingen plats för {det obj/honom} på {the cont/him}. ';
     }
 
     /* the dobj doesn't fit on this keyring */
-    objNotForKeyringMsg = '{Du/han} {kan} inte göra det för att {that dobj/he}
-        {får|fick} inte plats i {the iobj/him}. '
+    objNotForKeyringMsg = '{Du/han} {kan} inte göra det för att {Det dobj/han}
+        {får|fick} inte plats i {den iobj/honom}. '
 
     /* taking dobj from iobj, but dobj isn't in iobj */
     takeFromNotInMsg = '{Du/han} {kan} inte göra det för att
-        {the dobj/he} {är} inte i {that iobj/him}. '
+        {Den dobj/han} {är} inte i {that iobj/him}. '
 
     /* taking dobj from surface, but dobj isn't on iobj */
     takeFromNotOnMsg = '{Du/han} {kan} inte göra det för att
-        {the dobj/he} {är} inte på {that iobj/him}. '
+        {Den dobj/han} {är} inte på {that iobj/him}. '
 
     /* taking dobj under something, but dobj isn't under iobj */
     takeFromNotUnderMsg = '{Du/han} {kan} inte göra det för att
-        {the dobj/he} {är} inte under {that iobj/him}. '
+        {Den dobj/han} {är} inte under {that iobj/him}. '
 
     /* taking dobj from behind something, but dobj isn't behind iobj */
     takeFromNotBehindMsg = '{Du/han} {kan} inte göra det för att
-        {the dobj/he} {är} inte bakom {that iobj/him}. '
+        {Den dobj/han} {är} inte bakom {that iobj/him}. '
 
     /* cannot jump off (with no direct object) from here */
-    cannotJumpOffHereMsg = 'Det {finns|fanns} ingenstans för {you/him} att hoppa av. '
+    cannotJumpOffHereMsg = 'Det {finns|fanns} ingenstans för {du/honom} att hoppa av. '
 
     /* should not break object */
-    shouldNotBreakMsg = '{Du/han} {vill|ville} inte förstöra {that dobj/him}. '
+    shouldNotBreakMsg = '{Du/han} {vill|ville} inte förstöra {det dobj/honom}. '
 
     /* report for standing up/sitting down/lying down */
     okayPostureChangeMsg(posture)
@@ -4247,38 +4255,38 @@ npcActionMessages: playerActionMessages
     }
 
     /* report for getting off a platform */
-    okayNotStandingOnMsg = '{Du/han} {kliver|klev} {offof dobj}. '
+    okayNotStandingOnMsg = '{Du/han} {kliver|klev} {avur dobj}. '
 
     /* default 'turn to' acknowledgment */
     okayTurnToMsg(val)
-        { return '{Du/han} {vrider|vred} {the dobj/him} till ' + val + '. '; }
+        { return '{Du/han} {vrider|vred} {den dobj/honom} till ' + val + '. '; }
 
     /* default 'push button' acknowledgment */
-    okayPushButtonMsg = '{Du/han} tryck{er/te} {the dobj/him}. '
+    okayPushButtonMsg = '{Du/han} tryck{er/te} {den dobj/honom}. '
 
     /* default acknowledgment for switching on/off */
-    okayTurnOnMsg = '{Du/han} {vrider|vred} på {the dobj/him}. '
-    okayTurnOffMsg = '{Du/han} {vrider|vred} av {the dobj/him}. '
+    okayTurnOnMsg = '{Du/han} {vrider|vred} på {den dobj/honom}. '
+    okayTurnOffMsg = '{Du/han} {vrider|vred} av {den dobj/honom}. '
 
     /* the key (iobj) does not fit the lock (dobj) */
     keyDoesNotFitLockMsg = '{Du/han} försök{er/te} {the iobj/he}, men {it iobj/he} passa{r/de} inte till låset. '
 
     /* acknowledge entering "follow" mode */
-    okayFollowModeMsg = '<q>Ok, jag kommer följa {the dobj/him}.</q> '
+    okayFollowModeMsg = '<q>Ok, jag kommer följa {den dobj/honom}.</q> '
 
     /* note that we're already in "follow" mode */
-    alreadyFollowModeMsg = '<q>Jag följer redan {the dobj/him}.</q> '
+    alreadyFollowModeMsg = '<q>Jag följer redan {den dobj/honom}.</q> '
 
     /* extinguishing a candle */
-    okayExtinguishCandleMsg = '{Du/han} släck{er/te} {the dobj/him}. '
+    okayExtinguishCandleMsg = '{Du/han} släck{er/te} {den dobj/honom}. '
 
     /* acknowledge attachment */
     okayAttachToMsg =
-        '{Du/han} fäst{er/te} {the dobj/him} till {the iobj/him}. '
+        '{Du/han} fäst{er/te} {den dobj/honom} till {den iobj/honom}. '
 
     /* acknowledge detachment */
     okayDetachFromMsg =
-        '{Du/han} {tar} lös {the dobj/him} från {the iobj/him}. '
+        '{Du/han} {tar} lös {den dobj/honom} från {den iobj/honom}. '
 
     /*
      *   the PC's responses to conversational actions applied to oneself
@@ -4288,8 +4296,8 @@ npcActionMessages: playerActionMessages
     cannotAskSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
     cannotAskSelfForMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
     cannotTellSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
-    cannotGiveToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att ge {the dobj/him} till {sigsjälv}. '
-    cannotShowToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att visa {the dobj/him} för {sigsjälv}. '
+    cannotGiveToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att ge {den dobj/honom} till {sigsjälv}. '
+    cannotShowToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att visa {den dobj/honom} för {sigsjälv}. '
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -4433,12 +4441,12 @@ actorSingleInventoryLister: InventoryLister
         { ". "; }
 
     showListPrefixTall(itemCount, pov, parent)
-        { "TODO:4407<<buildSynthParam('The/he', parent)>> {bär|bar} på:"; }
+        { "TODO:4407<<buildSynthParam('Den/han', parent)>> {bär|bar} på:"; }
     showListContentsPrefixTall(itemCount, pov, parent)
-        { "TODO:4409<<buildSynthParam('A/he', parent)>>, som {bär|bar} på:"; }
+        { "TODO:4409<<buildSynthParam('En/han', parent)>>, som {bär|bar} på:"; }
 
     showListEmpty(pov, parent)
-        { "TODO:4412<<buildSynthParam('The/he', parent)>> {är} tomhänt. "; }
+        { "TODO:4412<<buildSynthParam('Den/han', parent)>> {är} --tomhänt. "; }
 ;
 
 /*
@@ -4551,32 +4559,34 @@ actorInventoryLister: DividedInventoryLister
     showInventoryEmpty(parent)
     {
         /* empty inventory */
-        "<<buildSynthParam('The/he', parent)>> {är} tomhänt. ";
+        "<<buildSynthParam('Den/han', parent)>> {är} tomhänt. ";
     }
     showInventoryWearingOnly(parent, wearing)
     {
         /* we're carrying nothing but wearing some items */
-        "<<buildSynthParam('The/he', parent)>> {bär|bar} på ingenting, och {är} {bär|bar} på <<wearing>>. ";
+        "<<buildSynthParam('Den/han', parent)>> {bär|bar} på ingenting, och {är} {bär|bar} på <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
         /* we have only carried items to report */
-        "<<buildSynthParam('The/he', parent)>> {bär|bar} på <<carrying>>. ";
+        "<<buildSynthParam('Den/han', parent)>> {bär|bar} på <<carrying>>. ";
     }
     showInventoryShortLists(parent, carrying, wearing)
     {
         local nm = gSynthMessageParam(parent);
         
+        // TODO: it\'s
         /* short lists - combine carried and worn in a single sentence */
-        "<<buildParam('The/he', nm)>> {är} bär på <<carrying>>,
+        "<<buildParam('Den/han', nm)>> {är} bär på <<carrying>>,
         och <<buildParam('it\'s', nm)>>{subj} är iklädd <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
     {
         local nm = gSynthMessageParam(parent);
 
+        // TODO:
         /* long lists - show carried and worn in separate sentences */
-        "<<buildParam('The/he', nm)>> {bär|bar} på <<carrying>>.
+        "<<buildParam('Den/han', nm)>> {bär|bar} på <<carrying>>.
         <<buildParam('It\'s', nm)>> {bär|bar} <<wearing>>. ";
     }
 
@@ -4585,11 +4595,11 @@ actorInventoryLister: DividedInventoryLister
      *   need to provide the framing messages for the tall-mode listing.  
      */
     showListPrefixTall(itemCount, pov, parent)
-        { "<<buildSynthParam('The/he', parent)>> {bär|bar} på:"; }
+        { "<<buildSynthParam('Den/han', parent)>> {bär|bar} på:"; }
     showListContentsPrefixTall(itemCount, pov, parent)
-        { "<<buildSynthParam('A/he', parent)>>, som {bär|bar} på:"; }
+        { "<<buildSynthParam('En/han', parent)>>, som {bär|bar} på:"; }
     showListEmpty(pov, parent)
-        { "<<buildSynthParam('The/he', parent)>> {är} tomhänt. "; }
+        { "<<buildSynthParam('Den/han', parent)>> {är} tomhänt. "; }
 ;
 
 /*
@@ -4735,7 +4745,7 @@ class LookWhereContentsLister: DescContentsLister
     {
         /* show a default message indicating the surface is empty */
         gMessageParams(parent);
-        defaultDescReport('{Du/han} {ser} ingenting ' + parent.objInPrep + ' {the parent/him}. ');
+        defaultDescReport('{Du/han} {ser} ingenting ' + parent.objInPrep + ' {den parent/honom}. ');
     }
 ;
 
@@ -4757,7 +4767,7 @@ thingLookInLister: LookWhereContentsLister, BaseThingContentsLister
          *   specially-described contents. 
          */
         gMessageParams(parent);
-        defaultDescReport('{Du/han} {ser} inget ovanligt i {the parent/him}. ');
+        defaultDescReport('{Du/han} {ser} inget ovanligt i {den parent/honom}. ');
     }
 ;
 
@@ -4782,10 +4792,10 @@ openableOpeningLister: BaseThingContentsLister
          */
         gMessageParams(pov, parent);
         if (pov.isPlayerChar())
-            "{Du/han} öppna{r/de} {the parent/him} och {finner|fann} ";
+            "{Du/han} öppna{r/de} {den parent/honom} och {finner|fann} ";
         else
-            //"{The pov/he} öppna{r/de} {the parent/him}, avslöjandes ";
-            "{Du/han} öppna{r/de} {the parent/him} och {finner|fann} ";
+            //"{The pov/he} öppna{r/de} {den parent/honom}, avslöjandes ";
+            "{Du/han} öppna{r/de} {den parent/honom} och {finner|fann} ";
     }
 ;
 

@@ -78,7 +78,7 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
     }
 ;
 
-+dorrmatta: Underside 'dorrmatta[-n]/matta[-n]' 'dorrmatta'
++dorrmatta: Underside 'dörrmatta[-n]/matta[-n]' 'dörrmatta'
     // Search, Turn
     dobjFor(Search) asDobjFor(LookUnder)
     dobjFor(Turn) asDobjFor(LookUnder)
@@ -87,9 +87,13 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
         action() {
             inherited();
             if(!stugdorrsnyckel.discovered) {
-                stugdorrsnyckel.moveInto(verandan);
+                //stugdorrsnyckel.moveInto(verandan);
                 stugdorrsnyckel.discover();
                 "Den välbekanta nyckeln blänker till av ljuset. ";
+                
+                stugdorrsnyckel.moveInto(gPlayerChar);
+                "{Du} plockar upp den. ";
+
             }
         }
     }
@@ -97,9 +101,13 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
     dobjFor(LookUnder) {
         action() {
             if(!stugdorrsnyckel.discovered) {
-                stugdorrsnyckel.moveInto(verandan);
+                //stugdorrsnyckel.moveInto(verandan);
                 stugdorrsnyckel.discover();
                 "Mats lyfte på hörnet av dörrmattan och fann den välbekanta nyckeln blänka till av ljuset. ";
+
+                stugdorrsnyckel.moveInto(gPlayerChar);
+                "{Du/han} plocka{r/de} upp den. ";
+
             }
         }
     }
@@ -116,7 +124,7 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
     north asExit(out)
     east = stugansKok
     south = stugansSovrum
-    getExtraScopeItems(actor) { return inherited(actor) + lysknapp; }
+    getExtraScopeItems(actor) { return inherited(actor) + lysknapp + stugansTaklampa; }
 
 ;
 
@@ -127,6 +135,7 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
   makeOn(status) {
     inherited(status);
     stugansTaklampa.isLit = status;
+    stugansKok.brightness = status ? 2 : 0;
   }
 ;
 
@@ -154,8 +163,15 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
 
 ++telefon: Thing 'röd telefon[-en]' 'telefon'
     "En röd telefon hängde på väggen. "
-    //dobjFor(Call) {}
+    dobjFor(Call) {
+        verify() {}
+        check() {}
+        action() {
+            "Ingen kopplingssignal hörs. Telefonledningen måste vara trasig. ";
+        }
+    }
 ;
+
 
 /*
         before[;
@@ -254,7 +270,7 @@ vedbod: Room 'vedboden' 'vedboden'
     }
 ;
 
-+ficklampa: Hidden, Flashlight 'ficklampa[-n]' 'ficklampa';
++ficklampa: Hidden, Flashlight 'ficklampa[-n]/lampa[-n]' 'ficklampa';
 /*
         before[;
             !TODO: batteriet i kylskåpet
@@ -375,7 +391,7 @@ Mats: Actor 'mats;;;du' 'Mats' @grasmattan
 stugansKok: DarkRoom 'stugans kök' 'stugans kök'
     west = stugansVardagsrum
 ;
-+OpenableContainer, Fixture, LightSource 'kylskåp[-et]' 'kylskåp'
++OpenableContainer, Fixture, LightSource 'kylskåp[-et]/kyl[-en]/skåp[-et]' 'kylskåp'
     isLit = nil
     makeOpen(stat) {
         inherited(stat);
@@ -486,7 +502,53 @@ Component, Switch  'vattenkran[-en]/kran[-en]' 'vattenkran'
 Thing 'tvål[-en]' 'tvål'
     location = tvattstall.subContainer;
 
-Test 'spel' ['sö', 'titta under matta', 'ta nyckel', 's', 'ö', 'ta nyckel', 'v', 'n', 'v', 's', 'känn på verktygsbänk'];
+
+
+
+/*
+DefineLiteralTAction(CallImplicit, DirectObject)
+    execAction() {
+        "Men vem skulle {du} ringa?" ;
+    }
+;
+VerbRule(CallImplicit)
+    ('ring' 'med') 
+    | ('slå' ('in'|) 'nummer' 'på'|) singleDobj
+    : CallImplicitAction
+    verbPhrase = 'ringa/ringer (vad)'
+    missingQ = 'vilket nummer vill du ringa'
+;*/
+
+DefineLiteralTAction(Call, DirectObject)
+    execAction() {
+        "<q><<gLiteral>></q> {är} inte ett nummer som leder någonstans" ;
+    }
+;
+VerbRule(Call)
+    ('ring' (|'upp'|) 
+    | ('slå' ('in'|) ('nummer'|))) singleLiteral 'på' singleDobj
+    : CallAction
+    verbPhrase = 'ringa/ringer (vad)'
+    missingQ = 'vilket nummer vill du ringa'
+;
+
+DefineTAction(Lift);
+
+VerbRule(Lift)
+    'lyft' ('på'|) dobjList
+    : LiftAction
+    verbPhrase = 'lyfta/lyfter (vad)'
+    missingQ = 'vad vill du lyfta på'
+;
+
+
+Test 'spel' [
+    'sö', 'titta under matta', 'ta nyckel', 's', 
+    'tänd lampan', 'ö', 'ta nyckel', 'v', 'n', 'v', 's', 
+    'känn på verktygsbänk', 'n', 'sö', 's', 'tänd ficklampa', 's'
+    ];
 
 
 Test 'matta' ['sö', 'titta under matta', 'ta nyckel', 's'];
+
+Test 'bord' ['purloin ficklampa', 'tänd lampa', 'öppna låda'] @stugansSovrum;
