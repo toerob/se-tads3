@@ -51,6 +51,18 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
     south = vedboDorrUtsida
 ;
 
+// TODO: Flytta in i köket sedan
++skap: ComplexContainer, Heavy 'skåp[-et]' 'skåp'
+    subContainer: ComplexComponent, OpenableContainer {
+        //descContentsLister = thingDescContentsLister
+    }
+;
+++skapLuckor: ComplexComponent, ContainerDoor // 'skåplucka[-n]**skåpluck[-or]/luckor[-na]' 'skåpluckor' 
+    isPlural = true
+;
+
++++skapLuckeUtrymme: ComplexContainer 'insida[-n]' 'insida';
+
 +vedboDorrUtsida: LockableWithKey, Door 'vedbodörr[-en]/dörr[-en]*dörrar[-na]' 'vedbodörr'
     knownKeyList = [forradsdorrsnyckel]
     keyList = [forradsdorrsnyckel]
@@ -413,7 +425,9 @@ Object -> fridge "kylskåp"
     has neuter openable container static;
 */
 
-+Thing 'batteri[-er]' 'batterier' isPlural = true;
++batterier: Thing 'batteri[-er]' 'batterier' isPlural = true
+    theName = 'batterierna'
+;
 
 
 
@@ -421,7 +435,8 @@ Object -> fridge "kylskåp"
 
 +forradsdorrsnyckel: Key 'förråds-/förrådsdörrsnyckel[-n]/nyckel[-n]' 'förrådsdörrsnyckel'; 
 
-stugansSovrum: DarkRoom 'stugans sovrum' 'sovrummet'
+// TODO: darkroom
+stugansSovrum: Room 'stugans sovrum' 'sovrummet'
     north = stugansVardagsrum
     west = stugansBadrum
 ;
@@ -440,13 +455,23 @@ stugansSovrum: DarkRoom 'stugans sovrum' 'sovrummet'
 
 ++dammsugare: Thing 'dammsugare[-n]' 'dammsugare';
 
+// TODO: isUter fungerar inte på ComplexComponent (åtminstone när den deklareras inline som här)
+// >x låda
+// Det var öppen, och innehöll en tändsticksask.
 +nattduksbord: ComplexContainer, Heavy 'bord[-et]/nattduksbord[-et]' 'nattduksbord'    "Ett nattduksbord med en låda. "
     subSurface: ComplexComponent, Surface { }
-    subContainer: ComplexComponent, OpenableContainer 'låda[-n]' 'låda' {
+    /*subContainer: ComplexComponent, OpenableContainer 'låda[-n]' 'låda' {
         bulkCapacity = 10
-    }
+        isUter = true
+    }*/
+    subContainer = drawer
     cannotTakeMsg = "Det var för otympligt för att gå runt att bära på."
 ;
+++drawer: Component, OpenableContainer 'låda[-n]' 'låda' {
+    bulkCapacity = 10
+}
+
+
 oljelampa: Thing 'oljelampa[-n]/lampa[-n]' 'oljelampa' 
     location = nattduksbord.subSurface
 ;

@@ -2158,6 +2158,49 @@ modify Thing
 
     verbEndingA { return 'a'; }
 
+    // Böjer adjektivet utifrån objektets genus/form
+    // Fungerar för t ex: ätbar{a}
+    endingForNounTA {
+        // self är gDobj i detta läge:
+        if(self) {
+            if(self.isPlural) {
+                return 'a'; // plural / bestämd form
+            }
+            if(!self.isUter) {
+                return 't'; // ett-genus
+            }
+        }
+        return ''; // en-genus
+    }
+
+    endingForNounA {
+        // self är gDobj i detta läge:
+        if(self.isPlural) {
+            return 'a'; // plural / bestämd form
+        }
+        return ''; // ingen förändring
+    }
+
+    endingForNounDTDa {
+        if(self.isPlural) {
+            return 'da'; // plural / bestämd form
+        }
+        if(self.isUter) {
+            return 'd'; // en-genus
+        }
+        return 't'; // ett-genus
+    }
+
+    endingForNounEnEtNa {
+        if(self.isPlural) {
+            return 'na'; // plural / bestämd form
+        }
+        if(self.isUter) {
+            return 'en'; // en-genus
+        }
+        return 'et'; // ett-genus
+    }
+
     verbEndingAR { return 'ar'; }
     
     verbEndingT { return 't'; }
@@ -4147,10 +4190,23 @@ langMessageBuilder: MessageBuilder
         //TODO: ['hennes', &theNamePossAdj, nil, &itPossAdj, nil],
         ['dess/hennes', &theNamePossNoun, nil, &itPossNoun, nil],
 
+        ['a/t', &endingForNounTA, 'dobj', nil, nil],
+        ['a', &endingForNounA, 'dobj', nil, nil],
+        ['d/t/da', &endingForNounDTDa, 'dobj', nil, nil],
+        ['en/et/na', &endingForNounEnEtNa, 'dobj', nil, nil],
+
+        // eval buildParam('en/na', buildSynthParam('en/na', stugdorrUtsida))
+
         /*
          *  Verbändelser
          */
-        ['a', &verbEndingA, nil, nil, true], // t ex ätbar(a)
+
+        // TODO: Frågan om verbEndingA ska finnas eller kan nyttja {a/t} 
+        // eller övriga former istället. 
+        // Ta reda på hur vanlig den formen är och om det kan vara en generell 
+        // lösning oavsett adjektiv / verb.
+        //['a', &verbEndingA, nil, nil, true], // t ex ätbar(a)
+
         ['r', &verbEndingR, nil, nil, true],
 
         ['t', &verbEndingT, nil, nil, true], // t ex ätbar(t)
@@ -4211,14 +4267,28 @@ langMessageBuilder: MessageBuilder
          *   only use the feminine pronouns with these, to make the
          *   meaning unambiguous
          */
+         // TODO: byt ut och testa av med dess/hennes i båda dessa fall, 
+         //  verkar inte bli någon skillnad
         ['its/her', &itPossAdj, nil, nil, nil],
         ['its/hers', &itPossNoun, nil, nil, nil],
 
-        ['it\'s/he\'s', &itIsContraction, nil, nil, true],
-        ['it\'s/she\'s', &itIsContraction, nil, nil, true],
-        ['it\'s', &itIsContraction, nil, nil, true],
+        ['dess/hennes', &itPossAdj, nil, nil, nil],
+
+        //['it\'s/he\'s', &itIsContraction, nil, nil, true],
+        //['it\'s/she\'s', &itIsContraction, nil, nil, true],
+        //['it\'s', &itIsContraction, nil, nil, true],
+        
+        ['detär', &itIsContraction, nil, nil, true],
+        ['denär', &itIsContraction, nil, nil, true],
         
         //FIXME: ['den/he', &thatNom, nil, nil, true],
+
+        //TODO:  det/han vs den/han just nu är något otydlig.
+        // Det kommer från att den/han tagit över the/he
+        // Kom på ett tydligare sätt att visa att det är 
+        // bestämd artikel eller är det tydligt nog?
+        //  Han/hon/den/det jmf med den/han: Golvet/Mats etc..
+
         ['det/han', &thatNom, nil, nil, true],
         ['det/hon', &thatNom, nil, nil, true],
         //['that/he', &thatNom, nil, nil, true],
