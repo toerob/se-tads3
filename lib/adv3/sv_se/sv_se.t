@@ -2092,6 +2092,7 @@ modify Thing
     nameDoes = (theName + ' ' + verbToDo)
     verbToGo = (tSel('går', 'gick'))
     verbToCome = (tSel('kommer' , 'kom'))
+    verbToCome2 = (tSel('anländer' , 'anlände'))
     
     //verbToLeave = (tSel('leave' + verbEndingS, 'left'))
     //verbToLeave = (tSel('går härifrån' , 'gick därifrån'))
@@ -2543,7 +2544,7 @@ modify Actor
      */
     thatNom
     {
-        return ['Jag', 'Jag', 'Jag', 'vi',
+        return ['jag', 'jag', 'jag', 'vi',
                'du', 'du', 'du', 'du',
                (isUter?'den':'det'), 'han', 'henne', 'de'][pronounSelector];
     }
@@ -3268,6 +3269,8 @@ matchStateUnlit: ThingState
  *   English-specific modifications for Room.
  */
 modify Room
+    isProperName = true // En rumstitel skrivs oftast i bestämd form i svenskan
+
     /*
      *   The ordinary 'name' property is used the same way it's used for
      *   any other object, to refer to the room when it shows up in
@@ -3496,16 +3499,16 @@ modify outDirection name = 'ut';
 
 DefineLangDir(port, 'babord' | 'b', 'tillbaka till')
     sayArriving(trav)
-        { gLibMessages.sayArrivingShipDir(trav, 'babord'); }
+        { gLibMessages.sayArrivingShipDir(trav, 'babordssidan'); }
     sayDeparting(trav)
-        { gLibMessages.sayDepartingShipDir(trav, 'babord'); }
+        { gLibMessages.sayDepartingShipDir(trav, 'längs babordssidan'); }
 ;
 
 DefineLangDir(starboard, 'styrbord' | 'sb', 'tillbaka till')
     sayArriving(trav)
-        { gLibMessages.sayArrivingShipDir(trav, 'styrbord'); }
+        { gLibMessages.sayArrivingShipDir(trav, 'styrbordssidan'); }
     sayDeparting(trav)
-        { gLibMessages.sayDepartingShipDir(trav, 'styrbord'); }
+        { gLibMessages.sayDepartingShipDir(trav, 'längs styrbordssidan'); }
 ;
 
 DefineLangDir(aft,  'akterut' | 'akt', 'tillbaka till')
@@ -3517,6 +3520,11 @@ DefineLangDir(fore, 'föröver' 'för' | 'fören' | 'forward' | 'f', 'tillbaka t
     sayArriving(trav) { gLibMessages.sayArrivingShipDir(trav, 'fören'); }
     sayDeparting(trav) { gLibMessages.sayDepartingFore(trav); }
 ;
+
+modify foreDirection name = 'föröver'; 
+modify aftDirection name = 'akteröver'; 
+modify starboardDirection name = 'styrbordssida'; 
+modify portDirection name = 'babordssida'; 
 
 /* ------------------------------------------------------------------------ */
 /*

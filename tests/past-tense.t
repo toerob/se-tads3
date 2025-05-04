@@ -78,24 +78,68 @@ bokenObjUterumSingular: Thing 'bok[-en]' 'bok';
 papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper';
 skyltarObjUterumPlural: Thing 'skylt*skyltar[-na]' 'skyltar' isPlural=true;
 
-dorrenObjUterSingular: Thing 'dörr[-en]' 'dörr';
+dorrenObjUterumSingular: Thing 'dörr[-en]' 'dörr';
 skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp';
++snickargladje: Component 'snickareglädje[-n]' 'snickargläde';
 
-dorrarObjUterPlural: Thing 'dörr*dörr[-ar]' 'dörrar' isPlural = true isUter = true;
-skapenObjNeuterPlural: Thing 'skåp[-et]*skåp[-en]' 'skåpen' isPlural = true isUter = nil;
+dorrarObjUterPlural: Thing 'dörr[-en]*dörrar[-na]' 'dörrar' isPlural = true isUter = true;
+skapenObjNeuterPlural: Thing 'skåp[-et]*skåpen' 'skåpen' isPlural = true isUter = nil theName = 'skåpen';
+
+tandsticka: Thing 'tändsticka[-n]' 'tändsticka';
+ljuset: Thing 'stearinljus[-et]' 'stearinljus';
+prassel: SimpleNoise 'prassel/prasslet/prasslande[-t]' 'prassel' 
+  theName = 'prasslet'
+  //isProperName = true
+;
+
+hatt: Wearable 'hatt[-en]' 'hatt';
+
+sopor: SimpleOdor 'sopa*sopor' 'sopor' isPlural = true isQualifiedName = true;
+
+lukten: SimpleOdor 'lukt[-en]' 'lukt';
+
 
 hobbit: Actor 'hobbit[-en]' 'hobbit' isHim = true isProperName = nil;
-baren: Room 'baren' 'baren'   theName = 'baren';
-+krogare: Actor 'krögare[-n]' 'krögare' isHim = true isProperName = nil;
+baren: Room 'baren' 'baren'   theName = 'baren'
+  east = valvgangPathPassage
+  south = passageThroughPassage
+;
++ krogare: Actor 'krögare[-n]' 'krögare' isHim = true isProperName = nil;
++ bankraden: Chair 'bänkrad[-en]' 'bänkrad';
+++ sjorovare: Actor 'sjörrövare[-n]' 'sjörövare' 
+  isHim = true 
+  isProperName = nil
+  posture = sitting
+;
+++ viking: Actor 'viking[-en]' 'sjörövare' 
+  isHim = true 
+  isProperName = nil
+  posture = sitting
+;
 
-fylke: Room 'Fylke' 'Fylke';
++ passageThroughPassage: ThroughPassage 'passage[-n]' 'passage' theName = 'passagen';
++ trappan: StairwayUp 'trappa[-n]' 'trappa' theName = 'trappan';
++ kallartrappan: StairwayDown 'trappa[-n]' 'trappa' theName = 'källartrappan';
+fylke: OutdoorRoom 'Fylke' 'Fylke';
+
+hallen: Room 'hallen' 'hallen'
+  west = valvgangPathPassage
+;
++ valvgangPathPassage: PathPassage 'valvgång[-en]' 'valvgång' theName = 'valvgången';
+
+masten: OutdoorRoom 'masten' 'masten';
++pirat: Actor 'pirat[-en]' 'pirat';
++matros: Actor 'matros[-en]' 'matros';
+kajen: OutdoorRoom 'kajen' 'kajen';
 
 musikenObjUterumSingular: Thing 'musik[-en]' 'musik';
 matosetObjUterumSingular: Thing 'matos[-et]' 'matos';
 
+
+
 // Test Assertions
 UnitTest 'openMsg - uterum singular' run {
-  assertThat(libMessages.openMsg(dorrenObjUterSingular)).isEqualTo('öppen');
+  assertThat(libMessages.openMsg(dorrenObjUterumSingular)).isEqualTo('öppen');
 };
 UnitTest 'openMsg - neutrum singular' run {
   assertThat(libMessages.openMsg(skapetObjNeutrumSingular)).isEqualTo('öppet');
@@ -108,7 +152,7 @@ UnitTest 'openMsg - neutrum plural' run {
 };
 
 UnitTest 'distantThingDesc - neutrum plural' run {
-  libMessages.distantThingDesc(dorrenObjUterSingular);
+  libMessages.distantThingDesc(dorrenObjUterumSingular);
   assertThat(o).startsWith('Den är för långt borta för att kunna utgöra några detaljer'); 
 };
 
@@ -140,7 +184,7 @@ UnitTest 'thingTasteDesc neuter singular' run {
 
 UnitTest 'thingTasteDesc uterum singular' run {
   gPlayerChar = spelare2aPerspektiv;
-  libMessages.thingTasteDesc(dorrenObjUterSingular);
+  libMessages.thingTasteDesc(dorrenObjUterumSingular);
   assertThat(o).startsWith('Den smakade ungefär som du hade förväntat dig.');
 };
 
@@ -162,7 +206,7 @@ UnitTest 'announceRemappedAction neutrum dobj' run {
 UnitTest 'announceRemappedAction uterum dobj' run {
   //mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
-  gAction.setCurrentObjects([dorrenObjUterSingular]);
+  gAction.setCurrentObjects([dorrenObjUterumSingular]);
   assertThat(libMessages.announceRemappedAction(gAction))
     .contains('öppnar dörren');
 };
@@ -187,7 +231,7 @@ UnitTest 'announceImplicitAction neutrum dobj tryingImpCtx' run {
 UnitTest 'announceImplicitAction uterum dobj tryingImpCtx' run {
   //mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
-  gAction.setCurrentObjects([dorrenObjUterSingular]);
+  gAction.setCurrentObjects([dorrenObjUterumSingular]);
   assertThat(libMessages.announceImplicitAction(gAction, tryingImpCtx))
     .contains('försöker öppna dörren först');
 };
@@ -229,7 +273,7 @@ UnitTest 'obscuredThingSoundDesc first person neuter singular' run {
 UnitTest 'obscuredThingSmellDesc first person uterum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare1aPerspektiv;
-  libMessages.obscuredThingSmellDesc(appletObjNeutrumSingular, dorrenObjUterSingular);
+  libMessages.obscuredThingSmellDesc(appletObjNeutrumSingular, dorrenObjUterumSingular);
   assertThat(o).startsWith('Jag kunde inte känna så mycket lukt genom dörren.');
 };
 
@@ -511,173 +555,650 @@ UnitTest 'sayTravelingRemotely' run {
   assertThat(o).startsWith('\^en hobbit gick till Fylke.');
 };
 
-UnitTest 'sayArrivingDir norr' run {
+UnitTest 'sayArrivingDir' run {
   //mainOutputStream.hideOutput = nil;
-  hobbit.location = fylke; 
-  libMessages.sayArrivingDir(hobbit, northDirection.name); 
-  assertThat(o).startsWith('\^en hobbit kom till Fylke norrifrån.');
+  [
+    [northDirection, '\^en hobbit kom till Fylke norrifrån.'],
+    [southDirection, '\^en hobbit kom till Fylke söderifrån.'],
+    [eastDirection, '\^en hobbit kom till Fylke österifrån.'],
+    [westDirection, '\^en hobbit kom till Fylke västerifrån.'],
+    [northeastDirection, '\^en hobbit kom till Fylke nordösterifrån.'],
+    [northwestDirection, '\^en hobbit kom till Fylke nordvästerifrån.'],
+    [southeastDirection, '\^en hobbit kom till Fylke sydösterifrån.'],
+    [southwestDirection, '\^en hobbit kom till Fylke sydvästerifrån.'],
+    [upDirection, '\^en hobbit kom till Fylke uppifrån.'],
+    [downDirection, '\^en hobbit kom till Fylke nerifrån.'],
+    [inDirection, '\^en hobbit kom till Fylke inifrån.'],
+    [outDirection, '\^en hobbit kom till Fylke utifrån.']
+  ].forEach(function(pair) {
+    hobbit.location = fylke;   
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    local dir = pair[1];
+    local msg = pair[2];
+    hobbit.location = fylke; 
+    libMessages.sayArrivingDir(hobbit, dir.name); 
+    assertThat(o).startsWith(msg);
+  });
 };
 
-UnitTest 'sayArrivingDir söder' run {
-  //mainOutputStream.hideOutput = nil;
-  hobbit.location = fylke; 
-  libMessages.sayArrivingDir(hobbit, southDirection.name); 
-  assertThat(o).startsWith('\^en hobbit kom till Fylke söderifrån.');
-};
-
-UnitTest 'sayArrivingDir uppifrån' run {
-  //mainOutputStream.hideOutput = nil;
-  hobbit.location = fylke; 
-  libMessages.sayArrivingDir(hobbit, upDirection.name); 
-  assertThat(o).startsWith('\^en hobbit kom till Fylke uppifrån');
-};
-
-/*
-// TODO:
 UnitTest 'sayDepartingDir' run {
   //mainOutputStream.hideOutput = nil;
   hobbit.location = fylke; 
-  libMessages.sayDepartingDir(hobbit, baren); 
-  assertThat(o).startsWith('\^en hobbit gick till Fylke.');
+  
+  [
+    [northDirection, '\^en hobbit lämnade Fylke norrut.'],
+    [southDirection, '\^en hobbit lämnade Fylke söderut.'],
+    [eastDirection, '\^en hobbit lämnade Fylke österut.'],
+    [westDirection, '\^en hobbit lämnade Fylke västerut.'],
+    [northeastDirection, '\^en hobbit lämnade Fylke nordösterut.'],
+    [northwestDirection, '\^en hobbit lämnade Fylke nordvästerut.'],
+    [southeastDirection, '\^en hobbit lämnade Fylke sydösterut.'],
+    [southwestDirection, '\^en hobbit lämnade Fylke sydvästerut.'],
+    
+    // TODO: snygga till meningarna nedan:
+    [upDirection, '\^en hobbit lämnade Fylke uppåt.'], 
+    [downDirection, '\^en hobbit lämnade Fylke neråt.'],
+    [inDirection, '\^en hobbit lämnade Fylke inåt.'],
+    [outDirection, '\^en hobbit lämnade Fylke utåt.']
+  ].forEach(function(pair) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    local dir = pair[1];
+    local msg = pair[2];
+    hobbit.location = fylke; 
+    libMessages.sayDepartingDir(hobbit, dir.name); 
+    assertThat(o).startsWith(msg);
+  });
+
 };
-*/
 
-// TODO:
+
+// Överväg allternativen:
+//Han kom från kajen akterifrån
+//Han kom från kajen vid babord
+//Han kom från styrbordssidan av kajen
+
+
+
+UnitTest 'sayArrivingShipDir' run {
+  ////mainOutputStream.hideOutput = nil;
+  [
+    [foreDirection, 'en pirat kom till masten från fören.'],
+    [aftDirection, 'en pirat kom till masten från aktern.'],
+    [portDirection, 'en pirat kom till masten från babordssidan.'],
+    [starboardDirection, 'en pirat kom till masten från styrbordssidan.']
+  ].forEach(function(pair) {
+    pirat.location = masten; 
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    local dir = pair[1];
+    local msg = pair[2];
+    pirat.location = masten; 
+    dir.sayArriving(pirat);
+    // NOTE: testar indirekt även:
+    // libMessages.sayDepartingShipDir(hobbit, dir.name); 
+
+    assertThat(o).contains(msg);
+  });
+};
+
+UnitTest 'sayDepartingShipDir' run {
+  // mainOutputStream.hideOutput = nil;
+  [
+     [foreDirection, 'en pirat gick föröver mot kajen'],
+     [aftDirection, 'en pirat gick akteröver mot kajen'],
+     [portDirection, 'en pirat gick längs babordssidan mot kajen'],
+     [starboardDirection, 'en pirat gick längs styrbordssidan mot kajen']
+  ].forEach(function(pair) {
+    pirat.location = kajen; 
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    local dir = pair[1];
+    local msg = pair[2];
+    pirat.location = kajen;     
+    // NOTE: inkluderar test av sayDepartingAft(traveler) & sayDepartingFore(traveler)
+    dir.sayDeparting(pirat);
+    assertThat(o).contains(msg);
+  });
+};
+
+UnitTest 'sayDepartingShipDir' run {
+  // mainOutputStream.hideOutput = nil;
+  [
+     [foreDirection, 'en pirat gick föröver mot kajen'],
+     [aftDirection, 'en pirat gick akteröver mot kajen'],
+     [portDirection, 'en pirat gick längs babordssidan mot kajen'],
+     [starboardDirection, 'en pirat gick längs styrbordssidan mot kajen']
+  ].forEach(function(pair) {
+    pirat.location = kajen; 
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    local dir = pair[1];
+    local msg = pair[2];
+    pirat.location = kajen; 
+    dir.sayDeparting(pirat);
+    assertThat(o).contains(msg);
+  });
+};
+
+UnitTest 'sayDepartingThroughPassage' run {
+  //mainOutputStream.hideOutput = nil;
+  pirat.location = baren; 
+  libMessages.sayDepartingThroughPassage(pirat, passageThroughPassage);
+  assertThat(o).contains('en pirat lämnade baren genom passagen');
+};
+
+UnitTest 'sayArrivingThroughPassage' run {
+  //mainOutputStream.hideOutput = nil;
+  pirat.location = baren; 
+  libMessages.sayArrivingThroughPassage(pirat, passageThroughPassage);
+  assertThat(o).startsWith('\^en pirat kom in i baren genom passagen');
+};
+
+UnitTest 'sayDepartingViaPath' run {
+  //mainOutputStream.hideOutput = nil;
+  pirat.location = baren; 
+  libMessages.sayDepartingViaPath(pirat, valvgangPathPassage);
+  assertThat(o).startsWith('\^en pirat lämnade baren via valvgången');
+};
+
+
+UnitTest 'sayArrivingViaPath' run {
+  //mainOutputStream.hideOutput = nil;
+  pirat.location = baren; 
+  libMessages.sayArrivingViaPath(pirat, valvgangPathPassage);
+  assertThat(o).contains('\^en pirat kom till baren via valvgången');
+};
+
+UnitTest 'sayDepartingUpStairs' run {
+  //mainOutputStream.hideOutput = nil;
+  pirat.location = baren; 
+  libMessages.sayDepartingUpStairs(pirat, trappan);
+  assertThat(o).contains('\^en pirat gick upp för trappan');
+};
+
+UnitTest 'sayDepartingDownStairs' run {
+  //mainOutputStream.hideOutput = nil;
+  pirat.location = baren; 
+  libMessages.sayDepartingDownStairs(pirat, trappan);
+  assertThat(o).contains('\^en pirat gick ner för trappan');
+};
+
+UnitTest 'sayArrivingUpStairs' run {
+  //mainOutputStream.hideOutput = nil;
+  pirat.location = baren; 
+  libMessages.sayArrivingUpStairs(pirat, kallartrappan);
+  assertThat(o).contains('\^en pirat kom upp från källartrappan');
+};
+
+UnitTest 'sayArrivingDownStairs' run {
+  //mainOutputStream.hideOutput = nil;
+  pirat.location = baren; 
+  libMessages.sayArrivingDownStairs(pirat, trappan);
+  assertThat(o).contains('\^en pirat kom ner från trappan till baren.');
+};
+
+UnitTest 'sayDepartingWith' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.sayDepartingWith(pirat, hobbit);
+  assertThat(o).contains('\^en pirat anlände med hobbiten.');
+};
+
+
+UnitTest 'sayDepartingWithGuide' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.sayDepartingWithGuide(pirat, matros);
+  assertThat(o).contains('\^matrosen lät piraten leda vägen.');
+};
+
+UnitTest 'sayOpenDoorRemotely dörren (neutrum uterum)' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.sayOpenDoorRemotely(dorrenObjUterumSingular, true);
+  assertThat(o).contains('Någon öppnade dörren från den andra sidan');
+};
+
+UnitTest 'sayOpenDoorRemotely skåpet (neutrum singular)' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.sayOpenDoorRemotely(skapetObjNeutrumSingular, true);
+  assertThat(o).contains('Någon öppnade skåpet från den andra sidan');
+};
+
+UnitTest 'sayOpenDoorRemotely dörrar (uterum plural)' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.sayOpenDoorRemotely(dorrarObjUterPlural, true);
+  assertThat(o).contains('Någon öppnade dörrarna från den andra sidan');
+};
+
+// TODO: bör testas mera
+UnitTest 'actorInRemoteRoom' run {
+  //mainOutputStream.hideOutput = nil;
+  //libGlobal.pointOfView = hobbit;
+  libMessages.actorInRemoteRoom(pirat, baren, krogare);
+  assertThat(o).contains('\^piraten står i baren');
+};
+
+// TODO: testa i större sammanhang också
+UnitTest 'actorInGroupSuffix' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.actorInGroupSuffix(sitting, bankraden, [sjorovare, viking]);
+  assertThat(o).startsWith(' sitter på bänkraden'); // TODO: måste testa denna i sin helhet
+};
+
+// TODO: testa i större sammanhang också
+UnitTest 'actorInRemoteGroupSuffix' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.actorInRemoteGroupSuffix(hobbit, sitting, bankraden, baren, [sjorovare, viking]);
+  assertThat(o).startsWith(' i baren, sitter på bänkraden'); // TODO: måste testa denna i sin helhet
+};
+
+// TODO: testa i större sammanhang också, 
+// verkar bara vara Lister.showArrangedList(pov, parent, lst, options, indent, infoTab, itemCount, singles, groups, groupTab, origLst)
+// som använder detta meddelande
+
+UnitTest 'actorHereGroupSuffix' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.actorHereGroupSuffix(sitting, [sjorovare]);
+  assertThat(o).startsWith(' sitter där');
+};
+
+// TODO: testa i större sammanhang också
+UnitTest 'actorThereGroupSuffix' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.actorThereGroupSuffix(krogare, lying, baren, [viking]);
+  assertThat(o).startsWith(' ligger i baren');
+};
+
+
+//   say that the actor is in the nested room, in the current
+//   posture, and add then add that we're in the outer room as
+//   well 
+UnitTest 'actorInRemoteNestedRoom' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.actorInRemoteNestedRoom(krogare, baren, hallen, viking);
+  
+  // TODO: oklart om hur detta ska se ut och det är rätt? 
+  // TODO: Bygg upp ett scenario som visar detta meddelande i sin helhet
+  assertThat(o).startsWith('\^krögaren var i hallen, står i baren.'); 
+  // I engelskan ska participle vara ståendes, men det känns inte rätt här. 
+};
+
+UnitTest 'matchBurnedOut' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.matchBurnedOut(tandsticka);
+  assertThat(o).startsWith('Tändstickan brann upp, och försvann i ett moln av aska.'); 
+};
+
+UnitTest 'candleBurnedOut' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.candleBurnedOut(ljuset);
+  assertThat(o).startsWith('Stearinljuset brann ner för långt för att fortsätta vara tänt, och slocknade.'); 
+};
+
+UnitTest 'objBurnedOut' run {
+  //mainOutputStream.hideOutput = nil;
+  libMessages.objBurnedOut(ljuset);
+  assertThat(o).startsWith('Stearinljuset slocknade.');
+};
+
+UnitTest 'inputFileScriptWarning' run {
+  //mainOutputStream.hideOutput = nil;
+  assertThat(libMessages.inputFileScriptWarning('42VARNING', 'filnamn'))
+    .startsWith('VARNING Vill du fortsätta?');
+};
+
+UnitTest 'inputFileScriptWarning' run {
+  //mainOutputStream.hideOutput = nil;
+  assertThat(libMessages.inputFileScriptWarning('42VARNING', 'filnamn'))
+    .startsWith('VARNING Vill du fortsätta?');
+};
+
+// --------------
+// playerMessages
+// --------------
+
+UnitTest 'commandNotUnderstood' run {
+  //mainOutputStream.hideOutput = nil;
+  playerMessages.commandNotUnderstood(nil);
+  assertThat(o).startsWith('Spelet förstår inte det kommandot.');
+};
+UnitTest 'specialTopicInactive' run {
+  //mainOutputStream.hideOutput = nil;
+  playerMessages.specialTopicInactive(nil);
+  assertThat(o).startsWith('Det kommandot kan inte användas just nu.');
+};
+UnitTest 'allNotAllowed' run {
+  //mainOutputStream.hideOutput = nil;
+  playerMessages.allNotAllowed(nil);
+  assertThat(o).contains('<q>Allt</q> kan inte användas med det verbet');
+};
+
+UnitTest 'noMatchForAll' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  playerMessages.noMatchForAll(nil);
+  assertThat(o).contains('Du såg inget passande där');
+};
+
+UnitTest 'noMatchForAllBut' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  playerMessages.noMatchForAllBut(nil);
+  assertThat(o).contains('Du såg ingenting annat där');
+};
+
+UnitTest 'noMatchForPronoun' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  playerMessages.noMatchForPronoun(gActor, nil, 'den');
+  assertThat(o).contains('Ordet <q>den</q> refererade inte till någonting just nu.');
+};
+
+// TODO: mocka allt rätt i och flusha sedan gTranscript
+//UnitTest 'askMissingObject' run {
+  //mainOutputStream.hideOutput = nil;
+  //gActor = spelare2aPerspektiv;
+  //gAction = UnlockWithAction.createActionInstance();
+  //gAction.setCurrentObjects([skapetObjNeutrumSingular]);
+  //playerMessages.askMissingObject(gActor, UnlockWithAction, DirectObject);
+  //assertThat(o).contains('Vill du .');
+//};
+
+
+
+// --------------------
+// playerActionMessages
+// --------------------
+UnitTest 'mustBeHoldingMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare3dePerspektiv;
+  gAction = EatAction.createActionInstance();
+  gAction.setCurrentObjects([appletObjNeutrumSingular]);
+  local msg = playerActionMessages.mustBeHoldingMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Bob behövde hålla i det för att göra det.');
+};
+
+UnitTest 'mustBeVisibleMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare3dePerspektiv;
+  gAction = EatAction.createActionInstance();
+  gAction.setCurrentObjects([appletObjNeutrumSingular]);
+  local msg = playerActionMessages.mustBeVisibleMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Bob kunde inte se det.');
+};
+
+UnitTest 'heardButNotSeenMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gPlayerChar = gActor;
+  gActor = spelare3dePerspektiv;
+  gAction = EatAction.createActionInstance();
+  gAction.setCurrentObjects([prassel]);
+  local msg = playerActionMessages.heardButNotSeenMsg(prassel);
+  "<<msg>>";
+  // TODO: "kunde höra något prassla" skulle varit en bättre mening, 
+  // se över hur det ska gå att ordna så som proper/plural fungerar nu
+  assertThat(o).startsWith('Bob kunde höra ett prassel, men han kunde inte se det.');
+};
+
+UnitTest 'smelledButNotSeenMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare3dePerspektiv;
+  gAction = SearchAction.createActionInstance();
+  gAction.setCurrentObjects([sopor]);
+  local msg = playerActionMessages.smelledButNotSeenMsg(sopor);
+  "<<msg>>";
+  assertThat(o).startsWith('Bob kunde känna lukten av sopor, men han kunde inte se dem.');
+};
+
+
+UnitTest 'cannotHearMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  gAction = ListenToAction.createActionInstance();
+  gAction.setCurrentObjects([prassel]);
+  local msg = playerActionMessages.cannotHearMsg(prassel);
+  "<<msg>>";
+  assertThat(o).startsWith('Du kunde inte höra det.');
+};
+
+UnitTest 'cannotSmellMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  gAction = ListenToAction.createActionInstance();
+  gAction.setCurrentObjects([prassel]);
+  local msg = playerActionMessages.cannotSmellMsg(prassel);
+  "<<msg>>";
+  assertThat(o).startsWith('Du kunde inte känna lukten av det.');
+};
+
+UnitTest 'cannotTasteMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  gAction = ListenToAction.createActionInstance();
+  gAction.setCurrentObjects([prassel]);
+  local msg = playerActionMessages.cannotTasteMsg(prassel);
+  "<<msg>>";
+  assertThat(o).startsWith('Du kunde inte smaka det.');
+};
+
+
+UnitTest 'cannotBeWearingMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  gAction = WearAction.createActionInstance();
+  gAction.setCurrentObjects([hatt]);
+  local msg = playerActionMessages.cannotBeWearingMsg(hatt);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag måste ta av den innan jag kunde göra det.');
+};
+
+UnitTest 'mustBeEmptyMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustBeEmptyMsg(hatt);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag behövde ta ut allting från den före jag kunde göra det.');
+};
+
+
+UnitTest 'mustBeOpenMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustBeOpenMsg(hatt);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag behövde öppna den före jag kunde göra det');
+};
+
+
+UnitTest 'mustBeClosedMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustBeClosedMsg(skapetObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag behövde stänga det före jag kunde göra det.');
+};
+
+
+UnitTest 'mustBeUnlockedMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustBeUnlockedMsg(skapenObjNeuterPlural);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag behövde låsa upp dem före jag kunde göra det.');
+};
+
+UnitTest 'mustSitOnMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustSitOnMsg(skapetObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag behövde sitta i skåpet först.');
+};
+
+UnitTest 'mustLieOnMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustLieOnMsg(bankraden);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag behövde ligga på bänkraden först.');
+};
+
+UnitTest 'mustGetOnMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustGetOnMsg(bankraden);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag behövde komma upp på bänkraden först.');
+};
+
+UnitTest 'mustBeInMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustBeInMsg(appletObjNeutrumSingular, skapetObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Äpplet behövde vara i skåpet före jag kunde göra det');
+};
+
+
+UnitTest 'mustBeCarryingMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare3dePerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.mustBeCarryingMsg(appletObjNeutrumSingular, gActor);
+  "<<msg>>";
+  assertThat(o).startsWith('Bob behövde hålla det före han kunde göra det.');
+};
+
+UnitTest 'decorationNotImportantMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare3dePerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.decorationNotImportantMsg(bankraden);
+  "<<msg>>";
+  assertThat(o).startsWith('Bänkraden är oviktig.');
+};
+
+UnitTest 'unthingNotHereMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.unthingNotHereMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag ser inte det där.');
+};
+
+// ------- Masskopiera mall
+UnitTest 'tooDistantMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.tooDistantMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Äpplet var för långt borta.');
+};
+
+UnitTest 'notWithIntangibleMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.notWithIntangibleMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag kunde inte göra det med ett äpple.');
+};
+
+UnitTest 'notWithVaporousMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.notWithVaporousMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag kunde inte göra det med ett äpple.');
+};
+
+
+UnitTest 'lookInVaporousMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.lookInVaporousMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag såg bara det.');
+};
+
+
+// ---
+
+
+UnitTest 'cannotReachObjectMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.cannotReachObjectMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag kunde inte nå det.');
+};
+
+UnitTest 'thingDescMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.thingDescMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag såg inget ovanligt med det.');
+};
+
+
+
+UnitTest 'npcDescMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  local msg = playerActionMessages.npcDescMsg(appletObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Jag såg inget ovanligt med äpplet.');
+};
+
+
+UnitTest 'noiseSourceMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gPlayerChar = gActor;
+  gAction = ListenToAction.createActionInstance();
+  gAction.setCurrentObjects([prassel]);
+  local msg = playerActionMessages.noiseSourceMsg(skapenObjNeuterPlural);
+  "<<msg>>";
+  assertThat(o).startsWith('Prasslet verkade att komma från skåpen.');
+};
+
+
+UnitTest 'odorSourceMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gAction = ListenToAction.createActionInstance();
+  gAction.setCurrentObjects([lukten]);
+  local msg = playerActionMessages.odorSourceMsg(skapetObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Lukten verkade att komma från skåpet.');
+};
+
+
+UnitTest 'cannotMoveComponentMsg' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare1aPerspektiv;
+  gAction = MoveAction.createActionInstance();
+  gAction.setCurrentObjects([snickargladje]);
+  local msg = playerActionMessages.cannotMoveComponentMsg(skapetObjNeutrumSingular);
+  "<<msg>>";
+  assertThat(o).startsWith('Snickareglädjen var en del av skåpet');
+};
+
+
 /*
-actorInRemoteRoom(actor, room, pov)
-actorInRemoteNestedRoom(actor, inner, outer, pov)
-actorInGroupSuffix(posture, cont, lst)
-actorInRemoteGroupSuffix(pov, posture, cont, remote, lst)
-actorHereGroupSuffix(posture, lst)
-actorThereGroupSuffix(pov, posture, remote, lst)
-
---sayArriving(traveler)
---sayDeparting(traveler)
---sayArrivingLocally(traveler, dest)
---sayDepartingLocally(traveler, dest)
---sayTravelingRemotely(traveler, dest)
-sayArrivingDir(traveler, dirName)
-sayDepartingDir(traveler, dirName)
-sayArrivingShipDir(traveler, dirName)
-sayDepartingShipDir(traveler, dirName)
-sayDepartingAft(traveler)
-sayDepartingFore(traveler)
-sayDepartingThroughPassage(traveler, passage)
-sayArrivingThroughPassage(traveler, passage)
-sayDepartingViaPath(traveler, passage)
-sayArrivingViaPath(traveler, passage)
-sayDepartingUpStairs(traveler, stairs)
-sayDepartingDownStairs(traveler, stairs)
-sayArrivingUpStairs(traveler, stairs)
-sayArrivingDownStairs(traveler, stairs)
-sayDepartingWith(traveler, lead)
-sayDepartingWithGuide(guide, lead)
-sayOpenDoorRemotely(door, stat)
-matchBurnedOut(obj)
-candleBurnedOut(obj)
-objBurnedOut(obj)
-inputFileScriptWarning(warning, filename)
-commandNotUnderstood(actor)
-specialTopicInactive(actor)
-allNotAllowed(actor)
-noMatchForAll(actor)
-noMatchForAllBut(actor)
-noMatchForPronoun(actor, typ, pronounWord)
-askMissingObject(actor, action, which)
-missingObject(actor, action, which)
-askMissingLiteral(actor, action, which)
-missingLiteral(actor, action, which)
-reflexiveNotAllowed(actor, typ, pronounWord)
-wrongReflexive(actor, typ, pronounWord)
-noMatchForPossessive(actor, owner, txt)
-noMatchForPluralPossessive(actor, txt)
-noMatchForLocation(actor, loc, txt)
-nothingInLocation(actor, loc)
-noMatchDisambig(actor, origPhrase, disambigResponse)
-emptyNounPhrase(actor)
-zeroQuantity(actor, txt)
-insufficientQuantity(actor, txt, matchList, requiredNum)
-uniqueObjectRequired(actor, txt, matchList)
-singleObjectRequired(actor, txt)
-disambigOrdinalOutOfRange(actor, ordinalWord, originalText)
-requiredNum, askingAgain, dist)
-ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
-missingActor(actor)
-singleActorRequired(actor)
-cannotChangeActor()
-askUnknownWord(actor, txt)
-wordIsUnknown(actor, txt)
-refuseCommandBusy(targetActor, issuingActor)
-cannotAddressMultiple(actor)
-explainCancelCommandLine()
-commandNotHeard(actor)
-noMatchForAll(actor)
-noMatchForAllBut(actor)
-insufficientQuantity(actor, txt, matchList, requiredNum)
-ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
-askMissingObject(actor, action, which)
-missingObject(actor, action, which)
-missingLiteral(actor, action, which)
-noMatchCannotSee(actor, txt)
-noMatchNotAware(actor, txt)
-noMatchForAll(actor)
-noMatchForAllBut(actor)
-zeroQuantity(actor, txt)
-insufficientQuantity(actor, txt, matchList, requiredNum)
-uniqueObjectRequired(actor, txt, matchList)
-singleObjectRequired(actor, txt)
-noMatchDisambig(actor, origPhrase, disambigResponse)
-disambigOrdinalOutOfRange(actor, ordinalWord, originalText)
-requiredNum, askingAgain, dist)
-ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
-askMissingObject(actor, action, which)
-missingObject(actor, action, which)
-missingLiteral(actor, action, which)
-askUnknownWord(actor, txt)
-wordIsUnknown(actor, txt)
-commandNotUnderstood(actor)
-noMatchCannotSee(actor, txt)
-noMatchNotAware(actor, txt)
-noMatchForAll(actor)
-noMatchForAllBut(actor)
-emptyNounPhrase(actor)
-zeroQuantity(actor, txt)
-insufficientQuantity(actor, txt, matchList, requiredNum)
-uniqueObjectRequired(actor, txt, matchList)
-singleObjectRequired(actor, txt)
-ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
-askMissingObject(actor, action, which)
-wordIsUnknown(actor, txt)
-mustBeHoldingMsg(obj)
-mustBeVisibleMsg(obj)
-heardButNotSeenMsg(obj)
-smelledButNotSeenMsg(obj)
-cannotHearMsg(obj)
-cannotSmellMsg(obj)
-cannotTasteMsg(obj)
-cannotBeWearingMsg(obj)
-mustBeEmptyMsg(obj)
-mustBeOpenMsg(obj)
-mustBeClosedMsg(obj)
-mustBeUnlockedMsg(obj)
-mustSitOnMsg(obj)
-mustLieOnMsg(obj)
-mustGetOnMsg(obj)
-mustBeInMsg(obj, loc)
-mustBeCarryingMsg(obj, actor)
-decorationNotImportantMsg(obj)
-unthingNotHereMsg(obj)
-tooDistantMsg(obj)
-notWithIntangibleMsg(obj)
-notWithVaporousMsg(obj)
-lookInVaporousMsg(obj)
-cannotReachObjectMsg(obj)
-cannotReachThroughMsg(obj, loc)
-thingDescMsg(obj)
-npcDescMsg(npc)
-noiseSourceMsg(src)
-odorSourceMsg(src)
-cannotMoveComponentMsg(loc)
 cannotTakeComponentMsg(loc)
 cannotPutComponentMsg(loc)
 droppingObjMsg(dropobj)
@@ -756,6 +1277,73 @@ tooLargeForUndersideMsg(obj, cont)
 tooLargeForRearMsg(obj, cont)
 containerTooFullMsg(obj, cont)
 surfaceTooFullMsg(obj, cont)
+*/
+
+/*
+missingObject(actor, action, which)
+askMissingLiteral(actor, action, which)
+missingLiteral(actor, action, which)
+reflexiveNotAllowed(actor, typ, pronounWord)
+wrongReflexive(actor, typ, pronounWord)
+noMatchForPossessive(actor, owner, txt)
+noMatchForPluralPossessive(actor, txt)
+noMatchForLocation(actor, loc, txt)
+nothingInLocation(actor, loc)
+noMatchDisambig(actor, origPhrase, disambigResponse)
+emptyNounPhrase(actor)
+zeroQuantity(actor, txt)
+insufficientQuantity(actor, txt, matchList, requiredNum)
+uniqueObjectRequired(actor, txt, matchList)
+singleObjectRequired(actor, txt)
+disambigOrdinalOutOfRange(actor, ordinalWord, originalText)
+requiredNum, askingAgain, dist)
+ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
+missingActor(actor)
+singleActorRequired(actor)
+cannotChangeActor()
+askUnknownWord(actor, txt)
+wordIsUnknown(actor, txt)
+refuseCommandBusy(targetActor, issuingActor)
+cannotAddressMultiple(actor)
+explainCancelCommandLine()
+commandNotHeard(actor)
+noMatchForAll(actor)
+noMatchForAllBut(actor)
+insufficientQuantity(actor, txt, matchList, requiredNum)
+ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
+askMissingObject(actor, action, which)
+missingObject(actor, action, which)
+missingLiteral(actor, action, which)
+noMatchCannotSee(actor, txt)
+noMatchNotAware(actor, txt)
+noMatchForAll(actor)
+noMatchForAllBut(actor)
+zeroQuantity(actor, txt)
+insufficientQuantity(actor, txt, matchList, requiredNum)
+uniqueObjectRequired(actor, txt, matchList)
+singleObjectRequired(actor, txt)
+noMatchDisambig(actor, origPhrase, disambigResponse)
+disambigOrdinalOutOfRange(actor, ordinalWord, originalText)
+requiredNum, askingAgain, dist)
+ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
+askMissingObject(actor, action, which)
+missingObject(actor, action, which)
+missingLiteral(actor, action, which)
+askUnknownWord(actor, txt)
+wordIsUnknown(actor, txt)
+commandNotUnderstood(actor)
+noMatchCannotSee(actor, txt)
+noMatchNotAware(actor, txt)
+noMatchForAll(actor)
+noMatchForAllBut(actor)
+emptyNounPhrase(actor)
+zeroQuantity(actor, txt)
+insufficientQuantity(actor, txt, matchList, requiredNum)
+uniqueObjectRequired(actor, txt, matchList)
+singleObjectRequired(actor, txt)
+ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
+askMissingObject(actor, action, which)
+
 roomOkayPostureChangeMsg(posture, obj)
 construct(prefix, suffix)
 showCombinedInventoryList(parent, carrying, wearing)

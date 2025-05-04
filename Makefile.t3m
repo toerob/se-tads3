@@ -47,14 +47,12 @@
 
 #-source skargarden/skargarden
 
-#-I../../code/tads3/tads3-unit-test/
-
-
-
+#-I../../code/tads3/tads3-unit-test
 
 # TESTER 
 -source ../../code/tads3/tads3-unit-test/unittest.t
 -source tests/past-tense
+
 # TODO: gör klart sedan -source tests/present-tense 
 
 

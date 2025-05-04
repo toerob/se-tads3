@@ -1358,7 +1358,7 @@ libMessages: MessageHelper
     actorInRemoteRoom(actor, room, pov)
     {
         /* say that the actor is in the room, using its remote in-name */
-        "\^<<actor.nameIs>> <<actor.posture.participle>> <<room.inRoomName(pov)>>. ";
+        "\^<<actor.theName>> <<actor.posture.participle>> <<room.inRoomName(pov)>>. ";
     }
 
     /*
@@ -1386,8 +1386,9 @@ libMessages: MessageHelper
     actorInGroupPrefix(posture, cont, lst) { "\^"; }
     actorInGroupSuffix(posture, cont, lst)
     {
-        " <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
-        <<posture.participle>> <<cont.actorInName>>. ";
+        // Inget behov av är/var i svenskan, vi går direkt på verbet
+        //" <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
+        " <<posture.participle>> <<cont.actorInName>>. ";
     }
 
     /*
@@ -1399,8 +1400,8 @@ libMessages: MessageHelper
     actorInRemoteGroupPrefix(pov, posture, cont, remote, lst) { "\^"; }
     actorInRemoteGroupSuffix(pov, posture, cont, remote, lst)
     {
-        " <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
-        <<remote.inRoomName(pov)>>, <<posture.participle>>
+        //" <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
+        " <<remote.inRoomName(pov)>>, <<posture.participle>>
         <<cont.actorInName>>. ";
     }
 
@@ -1432,8 +1433,8 @@ libMessages: MessageHelper
     actorThereGroupPrefix(pov, posture, remote, lst) { "\^"; }
     actorThereGroupSuffix(pov, posture, remote, lst)
     {
-        " <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
-        <<posture.participle>> <<remote.inRoomName(pov)>>. ";
+        //" <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
+        " <<posture.participle>> <<remote.inRoomName(pov)>>. ";
     }
 
     /* a traveler is arriving, but not from a compass direction */
@@ -1490,8 +1491,13 @@ libMessages: MessageHelper
     sayDepartingDir(traveler, dirName)
     {
         local nm = traveler.travelerRemoteLocName;
+        /* ORG:
+            "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>>
+            to the <<dirName>><<nm != '' ? ' from ' + nm : ''>>. ";
+        */
+        "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<nm>> <<dirName>>. ";
 
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<dirName>><<nm != '' ? ' från ' + nm : ''>>. ";
+        //"\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>>   <<dirName>><<nm != '' ? ' från ' + nm : ''>>. ";
         //"\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> 
         //to the <<dirName>><<nm != '' ? ' from ' + nm : ''>>. ";
     }
@@ -1499,6 +1505,10 @@ libMessages: MessageHelper
     /* a traveler is arriving from a shipboard direction */
     sayArrivingShipDir(traveler, dirName)
     {
+        // Byt ut ändelsen -'ut' till '-ifrån' när vi beskriver 
+        // varifrån någon kom, tex: "En hobbit kom till Fylke akterifrån." 
+        // föröverifrån, babordssida,
+        //local dirNameEnding2 = dirName + 'ifrån';
         "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerRemoteLocName>> från <<dirName>>. ";
     }
 
@@ -1506,8 +1516,7 @@ libMessages: MessageHelper
     sayDepartingShipDir(traveler, dirName)
     {
         local nm = traveler.travelerRemoteLocName;
-        
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<dirName>><<nm != '' ? ' från ' + nm : ''>>. ";
+        "\^<<traveler.travelerName(nil)>> <<traveler.verbToGo>> <<dirName>><<nm != '' ? ' mot ' + nm : ''>>. ";
     }
 
     /* a traveler is going aft */
@@ -1515,8 +1524,7 @@ libMessages: MessageHelper
     {
         local nm = traveler.travelerRemoteLocName;
         
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToGo>>
-        akterut<<nm != '' ? ' från ' + nm : ''>>. ";
+        "\^<<traveler.travelerName(nil)>> <<traveler.verbToGo>> akteröver<<nm != '' ? ' mot ' + nm : ''>>. ";
     }
 
     /* a traveler is going fore */
@@ -1524,8 +1532,7 @@ libMessages: MessageHelper
     {
         local nm = traveler.travelerRemoteLocName;
 
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToGo>>
-        föröver<<nm != '' ? ' från ' + nm : ''>>. ";
+        "\^<<traveler.travelerName(nil)>> <<traveler.verbToGo>> föröver<<nm != '' ? ' mot ' + nm : ''>>. ";
     }
 
     /* a shipboard direction was attempted while not onboard a ship */
@@ -1541,22 +1548,19 @@ libMessages: MessageHelper
     /* a traveler is arriving via a passage */
     sayArrivingThroughPassage(traveler, passage)
     {
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> in 
-        <<traveler.travelerRemoteLocName>> genom <<passage.theNameObj>>. ";
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> in i <<traveler.travelerRemoteLocName>> genom <<passage.theNameObj>>. ";
     }
 
     /* a traveler is leaving via a path */
     sayDepartingViaPath(traveler, passage)
     {
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>>
-        <<traveler.travelerRemoteLocName>> via <<passage.theNameObj>>. ";
+        "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<traveler.travelerRemoteLocName>> via <<passage.theNameObj>>. ";
     }
 
     /* a traveler is arriving via a path */
     sayArrivingViaPath(traveler, passage)
     {
-        "\^<<traveler.travelerName(true)>>  <<traveler.verbToCome>> till 
-        <<traveler.travelerRemoteLocName>> via <<passage.theNameObj>>. ";
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerRemoteLocName>> via <<passage.theNameObj>>. ";
     }
 
     /* a traveler is leaving up a stairway */
@@ -1576,8 +1580,7 @@ libMessages: MessageHelper
     {
         local nm = traveler.travelerRemoteLocName;
 
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>>
-        upp från <<stairs.theNameObj>><<nm != '' ? ' till ' + nm : ''>>. ";
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> upp från <<stairs.theNameObj>><<nm != '' ? ' till ' + nm : ''>>. ";
     }
 
     /* a traveler is arriving by coming down a stairway */
@@ -1592,7 +1595,7 @@ libMessages: MessageHelper
     /* acompanying another actor on travel */
     sayDepartingWith(traveler, lead)
     {
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToCome>> med <<lead.theNameObj>>. ";
+        "\^<<traveler.travelerName(nil)>> <<traveler.verbToCome2>> med <<lead.theNameObj>>. ";
     }
 
     /*
@@ -1612,8 +1615,7 @@ libMessages: MessageHelper
     /* note that a door is being opened/closed remotely */
     sayOpenDoorRemotely(door, stat)
     {
-        "Någon <<stat ? 'öppna' + tSel('r', 'de')
-                        : 'stäng' + tSel('er', 'de')>>
+        "Någon <<stat ? 'öppna' + tSel('r', 'de') : 'stäng' + tSel('er', 'de')>>
         <<door.theNameObj>> från den andra sidan. ";
     }
 
@@ -1672,7 +1674,7 @@ libMessages: MessageHelper
     {
         gMessageParams(obj);
         //"{Den obj/han} finish{es/ed} burning, and disappear{s/ed} into a cloud of ash. ";
-        "{Den obj/han} br{inner|ann} upp, och försv{inner|ann} i ett rök av aska.. ";
+        "{Den obj/han} br{inner|ann} upp, och försv{inner|ann} i ett moln av aska. ";
     }
 
     /* daemon report for burning out a candle */
@@ -2587,7 +2589,7 @@ playerActionMessages: MessageHelper
     heardButNotSeenMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} höra {en obj/honom}, men {du/han}
+        return '{Du actor/han} {kan} höra {en obj/honom}, men {det actor/han}
                  {kan} inte se {det obj/honom}. ';
     }
 
@@ -2595,7 +2597,7 @@ playerActionMessages: MessageHelper
     smelledButNotSeenMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} känna lukten av {en obj/honom}, men {du/han}
+        return '{Du actor/han} {kan} känna lukten av {en obj/honom}, men {det actor/han}
                 {kan} inte se {det obj/honom}. ';
     }
 
@@ -2624,8 +2626,8 @@ playerActionMessages: MessageHelper
     cannotBeWearingMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} måste ta av {det obj/honom}
-                före {det actor/han} {kan} göra det. ';
+        return '{Du actor/han} måste ta av {det obj/honom}
+                innan {det actor/han} {kan} göra det. ';
     }
 
     /* all contents must be removed from object before doing that */
@@ -2685,7 +2687,8 @@ playerActionMessages: MessageHelper
     mustGetOnMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {behöver|behövde} gå {i obj} först. '; 
+        //return '{You/he} {must} get {in obj} first. ';
+        return '{Du/han} {behöver|behövde} komma upp {i obj} först. '; 
     }
 
     /* object must be in loc before doing that */
@@ -2693,8 +2696,7 @@ playerActionMessages: MessageHelper
     mustBeInMsg(obj, loc)
     {
         gMessageParams(obj, loc);
-        return '{Den obj/han} {behöver|behövde} vara i { loc} före {du/han} 
-            {kan} göra det. ';
+        return '{Den obj/han} {behöver|behövde} vara {i loc} före {du/han} {kan} göra det. ';
     }
 
     /* actor must be holding the object before we can do that */
