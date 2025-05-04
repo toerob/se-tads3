@@ -44,11 +44,11 @@
  *   see the whole {typ var} expression in one go.  So, instead of writing
  *   this:
  *   
- *.     {The/he <<var>>} {är} ...
+ *.     {The/he <<var>>} {is} ...
  *   
  *   write this:
  *   
- *.     <<buildParam('The/he', var)>> {är} ...
+ *.     <<buildParam('The/he', var)>> {is} ...
  */
 buildParam(typeString, nm)
 {
@@ -175,10 +175,10 @@ libMessages: MessageHelper
         { " (<<lst.length() == 2 ? 'båda' : 'alla'>> <<stateName>>)"; }
 
     /* generic long description of a Thing from a distance */
-    distantThingDesc(obj)
+    distantThingDesc(obj) 
     {
         gMessageParams(obj);
-        "{Detär obj} är för långt borta för att kunna utgöra några detaljer . ";
+        "{Det obj/han} är för långt borta för att kunna utgöra några detaljer. ";
     }
 
     /* generic long description of a Thing under obscured conditions */
@@ -207,14 +207,14 @@ libMessages: MessageHelper
     obscuredThingSmellDesc(obj, obs)
     {
         gMessageParams(obj, obs);
-        "{Du/han} {kan} inte känna speciellt mycket lukt genom {den obs/honom}. ";
+        "{Du/han} {kan} inte känna så mycket lukt genom {den obs/honom}. ";
     }
 
     /* generic "taste" description of a Thing */
     thingTasteDesc(obj)
     {
         gMessageParams(obj);
-        "{It/he obj} smaka{r/de} ungefär som {du/han} förväntade. ";
+        "{De/honom obj} smaka{r|de} ungefär som {du/han} {|hade} förvänta{r|t} {dig}. ";
     }
 
     /* generic "feel" description of a Thing */
@@ -225,7 +225,7 @@ libMessages: MessageHelper
     obscuredReadDesc(obj)
     {
         gMessageParams(obj);
-        "{Du/han} {kan} inte se {det obj/honom} bra nog för att kunna läsa {it/him}. ";
+        "{Du/han} {kan} inte se {det obj/honom} bra nog för att kunna läsa {det/honom}. ";
     }
 
     /* dim light "read" description */
@@ -1240,7 +1240,7 @@ libMessages: MessageHelper
         return '{Du/han} {kan} inte nå {det obj/honom} genom ' + '{den loc/honom}. ';
     }
 
-    /* cannot reach an object because it's outisde the given container */
+    /* cannot reach an object because it's outside the given container */
     cannotReachOutside(obj, loc)
     {
         gMessageParams(obj, loc);
@@ -1250,24 +1250,20 @@ libMessages: MessageHelper
     /* sound is coming from inside/outside a container */
     soundIsFromWithin(obj, loc)
     {
-        "\^<<obj.theName>> {verkar|verkade} komma från 
-        insidan <<loc.theNameObj>>. ";
+        "\^<<obj.theName>> {verkar|verkade} komma från insidan <<loc.theNameObj>>. ";
     }
     soundIsFromWithout(obj, loc)
     {
-        "\^<<obj.theName>> {verkar|verkade} komma från 
-        utsidan <<loc.theNameObj>>. ";    }
+        "\^<<obj.theName>> {verkar|verkade} komma från utsidan <<loc.theNameObj>>. ";    }
 
     /* odor is coming from inside/outside a container */
     smellIsFromWithin(obj, loc)
     {
-        "\^<<obj.theName>> {verkar|verkade} komma från 
-        insidan <<loc.theNameObj>>. ";
+        "\^<<obj.theName>> {verkar|verkade} komma från insidan <<loc.theNameObj>>. ";
     }
     smellIsFromWithout(obj, loc)
     {
-        "\^<<obj.theName>> {verkar|verkade} komma från 
-        utsidan <<loc.theNameObj>>. ";
+        "\^<<obj.theName>> {verkar|verkade} komma från utsidan <<loc.theNameObj>>. ";
     }
 
     /* default description of the player character */
@@ -1284,8 +1280,9 @@ libMessages: MessageHelper
     roomActorStatus(actor)
     {
         /* mention any posture other than standing */
-        if (actor.posture != standing)
+        if (actor.posture != standing) {
             " (<<actor.posture.participle>>)";
+        }
     }
 
     /* show a status line addendum: standing in/on something */
@@ -1304,8 +1301,7 @@ libMessages: MessageHelper
      */
     roomActorHereDesc(actor)
     {
-        "\^<<actor.theName>> <<actor.posture.participle>>
-        <<tSel('här', 'där')>>. ";
+        "\^<<actor.theName>> <<actor.posture.participle>> <<tSel('här', 'där')>>. ";
     }
 
     /*
@@ -1338,8 +1334,7 @@ libMessages: MessageHelper
      */
     actorInRoomPosture(actor, room)
     {
-        "\^<<actor.itIs>> <<actor.posture.participle>>
-        <<room.actorInName>>. ";
+        "{Det actor/han} <<actor.posture.participle>> <<room.actorInName>>. ";
     }
 
     /*
@@ -1349,8 +1344,9 @@ libMessages: MessageHelper
      */
     roomActorPostureDesc(actor)
     {
-        if (actor.posture != standing)
-            "\^<<actor.itIs>> <<actor.posture.participle>>. ";
+        if (actor.posture != standing) {
+            "{Det actor/honom} <<actor.posture.participle>>. ";
+        }
     }
 
     /*

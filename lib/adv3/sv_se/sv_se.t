@@ -1120,17 +1120,9 @@ modify Thing
      *   noun
      */
     itNom { return [ (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
-    
-    
-    //TODO: Håll koll på pluralformen 'dem':'det håller i längden
-    itObj { return [ (isUter?'den':'det'), 'honom', 'henne', (isUter?'dem':'det2')][pronounSelector]; }
-    
-    //itPossAdj { return ['its', 'his', 'her', 'their'][pronounSelector]; }
-    //itPossNoun { return ['its', 'his', 'hers', 'theirs'][pronounSelector]; }
+    itObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector]; }
     itPossAdj { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
     itPossNoun { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
-
-
 
     /* get the object reflexive pronoun (itself, etc) */
     itReflexive
@@ -4163,6 +4155,7 @@ langMessageBuilder: MessageBuilder
         //['you\'re/she\'s', &itIsContraction, 'actor', nil, true],
         //['you\'re', &itIsContraction, 'actor', nil, true],
 
+        // TODO: ta bort/ersätt rester av engelskan här:
         ['you/him', &theNameObj, 'actor', &itReflexive, nil],
         ['you/her', &theNameObj, 'actor', &itReflexive, nil],
         ['your/her', &theNamePossAdj, 'actor', nil, nil],
@@ -4293,9 +4286,12 @@ langMessageBuilder: MessageBuilder
         ['det/hon', &thatNom, nil, nil, true],
         //['that/he', &thatNom, nil, nil, true],
         //['that/she', &thatNom, nil, nil, true],
+        ['de/honom', &thatObj, nil, &itReflexive, nil],
+        ['de/henne', &thatObj, nil, &itReflexive, nil],
 
-        ['that/him', &thatObj, nil, &itReflexive, nil],
-        ['that/her', &thatObj, nil, &itReflexive, nil],
+
+        //['that/him', &thatObj, nil, &itReflexive, nil],
+        //['that/her', &thatObj, nil, &itReflexive, nil],
 
         ['that\'s', &thatIsContraction, nil, nil, true],
         ['itself', &itReflexive, nil, nil, nil],
@@ -8991,7 +8987,7 @@ modify TAction
     }
 
     /* get the verb phrase in infinitive or participle form */
-    getVerbPhrase(inf, ctx, useTensePhrase = nil)
+    getVerbPhrase(inf, ctx)
     {
         local dobj;
         local dobjText;
@@ -9016,7 +9012,7 @@ modify TAction
 
 
         /* get the phrasing */
-        ret = getVerbPhrase1(inf, verbPhrase, dobjText, dobjIsPronoun, useTensePhrase);
+        ret = getVerbPhrase1(inf, verbPhrase, dobjText, dobjIsPronoun);
 
         /* set the pronoun antecedent to my direct object */
         ctx.setPronounObj(dobj);
@@ -9037,23 +9033,12 @@ modify TAction
      *   and 'dobjIsPronoun' is true if the dobj text is rendered as a
      *   pronoun.
      */
-    // TODO:  hoppas kunna ta bort useTensePhrase...
-    getVerbPhrase1(inf, vp, dobjText, dobjIsPronoun, useTensePhrase = nil)
+    getVerbPhrase1(inf, vp, dobjText, dobjIsPronoun)
     {
         local ret;
         local dprep;
         local vcomp;
 
-        // TODO: måste finnas någon fler stans där detta inte sker just nu... 
-        if(useTensePhrase) {
-            //"<<dobjIsPronoun?'dobjIsPronoun':'dobjIsNotPronoun'>>\n";
-            //"<<inf?'inf':'notInf'>>\n";
-            local predicate = getPredicate();
-            if(predicate && predicate.propDefined(&tensePhrase)) {        
-                local newVp = predicate.tensePhrase;
-                vp = newVp;
-            }
-        }
         //"verb phrase: [[<<vp>>]]";
 
         /*
@@ -9065,7 +9050,6 @@ modify TAction
         rexMatch('(.*)/(<alphanum|-|squote>+)(.*) '
                 + '<lparen>(.*?)<space>*?<alpha>+<rparen>(.*)',
                 vp);
-    
 
         /* start off with the infinitive or participle, as desired */
         if (inf)
@@ -9092,12 +9076,6 @@ modify TAction
 
         /* add the direct object preposition */
         ret += spPrefix(dprep);
-
-        
-        /*if(useTensePhrase) {
-            ret = '!' + ret +'!';
-        }*/
-
 
         /* add the direct object, using the pronoun form if applicable */
         ret += ' ' + dobjText;
@@ -9407,7 +9385,7 @@ modify TIAction
     }
 
     /* get the verb phrase in infinitive or participle form */
-    getVerbPhrase(inf, ctx, useTensePhrase = nil)
+    getVerbPhrase(inf, ctx)
     {
         local dobj, dobjText, dobjIsPronoun;
         local iobj, iobjText;
@@ -9519,10 +9497,10 @@ modify LiteralAction
         return delegated TAction(which);
     }
 
-    getVerbPhrase(inf, ctx, useTensePhrase = nil)
+    getVerbPhrase(inf, ctx)
     {
         /* handle this as though the literal were a direct object phrase */
-        return TAction.getVerbPhrase1(inf, verbPhrase, gLiteral, nil);
+        return TAction.getVerbPhrase1(inf, verbPhrase, gLiteral);
     }
 
     getQuestionInf(which)
@@ -9606,7 +9584,7 @@ modify LiteralTAction
         }
     }
 
-    getVerbPhrase(inf, ctx, useTensePhrase)
+    getVerbPhrase(inf, ctx)
     {
         local dobj, dobjText, dobjIsPronoun;
         local litText;
@@ -9656,11 +9634,11 @@ modify TopicAction
         return delegated TAction(which);
     }
 
-    getVerbPhrase(inf, ctx, useTensePhrase)
+    getVerbPhrase(inf, ctx)
     {
         /* handle this as though the topic text were a direct object phrase */
         return TAction.getVerbPhrase1(
-            inf, verbPhrase, getTopic().getTopicText().toLower(), nil);
+            inf, verbPhrase, getTopic().getTopicText().toLower());
     }
 
     getQuestionInf(which)
@@ -9726,7 +9704,7 @@ modify TopicTAction
         }
     }
 
-    getVerbPhrase(inf, ctx, useTensePhrase = nil)
+    getVerbPhrase(inf, ctx)
     {
         local dobj, dobjText, dobjIsPronoun;
         local topicText;
