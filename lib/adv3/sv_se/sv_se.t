@@ -2092,8 +2092,12 @@ modify Thing
     nameDoes = (theName + ' ' + verbToDo)
     verbToGo = (tSel('går', 'gick'))
     verbToCome = (tSel('kommer' , 'kom'))
-    verbToLeave = (tSel('går härifrån' , 'gick därifrån'))
     
+    //verbToLeave = (tSel('leave' + verbEndingS, 'left'))
+    //verbToLeave = (tSel('går härifrån' , 'gick därifrån'))
+    verbToLeave = (tSel('lämnar' , 'lämnade'))
+
+
     //verbToSee = (tSel('ser' + verbEndingS, 'såg'))
     verbToSee = (tSel('ser', 'såg'))
 
@@ -3106,7 +3110,6 @@ modify Traveler
     {
         /* get our location's name from the PC's perspective */
         local nm = location.getDestName(gPlayerChar, gPlayerChar.location);
-
         /* if there's a name, return it; otherwise, use "the area" */
         return (nm != nil ? nm : 'platsen');
     }
@@ -3398,9 +3401,10 @@ modify Direction
 ;
 
 /*
- *   The English-specific modifications for compass directions.
+ *   The Swedish-specific modifications for compass directions.
  */
-modify CompassDirection
+ // TODO: kan ev. behöva göras annorlunda
+ modify CompassDirection
     /* describe a traveler arriving from this direction */
     sayArriving(traveler)
     {
@@ -3444,8 +3448,27 @@ DefineLangDir(down, 'ner'|'nedåt'|'n', 'tillbaka');
 DefineLangDir(in,  'in', 'tillbaka');
 DefineLangDir(out, 'ut', 'tillbaka');
 
+// NOTE: WIP - börja med att utgå från att det kommer räcka med:
+// strängkonkateneringar av +'ut' +'ifrån'
+// Tester kommer visa om det håller hela vägen
+// OBS: just nu löses det med en splice(-2, 2, 'ifrån') i libMessages.sayArrivingDir
+// TODO:  rätt plats behöver lokaliseras för när övriga väderstreck även ska konkateneras med 'ut'
+
+modify northDirection       name = 'norrut'; //dirFromName = 'norrifrån';
+modify southDirection       name = 'söderut'; //dirFromName = 'söderifrån';
+modify eastDirection        name = 'österut'; //dirFromName = 'österifrån';
+modify westDirection        name = 'västerut'; //dirFromName = 'västerifrån';
+modify northwestDirection   name = 'nordvästerut'; //dirFromName = 'nordvästerifrån';
+modify northeastDirection   name = 'nordösterut'; //dirFromName = 'nordösterifrån';
+modify southwestDirection   name = 'sydvästerut'; //dirFromName = 'sydvästerifrån';
+modify southeastDirection   name = 'sydösterut'; //dirFromName = 'sydösterifrån';
+modify upDirection          name = 'uppåt'; //dirFromName = 'ovanifrån';
+modify downDirection        name = 'neråt'; //dirFromName = 'nedanifrån';
+modify inDirection          name = 'inåt'; //dirFromName = 'insidan';
+modify outDirection         name = 'utåt'; //dirFromName = 'utsidan';
 
 /*
+// TODO: Ersätt med nedan då logiken gjorts om
 modify northDirection name = 'norr';
 modify southDirection name = 'söder';
 modify eastDirection name = 'öst';
@@ -3460,18 +3483,6 @@ modify inDirection name = 'in';
 modify outDirection name = 'ut';
 */
 
-modify northDirection name = 'norrut';
-modify southDirection name = 'söderut';
-modify eastDirection name = 'österut';
-modify westDirection name = 'västerut';
-modify northwestDirection name = 'nordvästerut';
-modify northeastDirection name = 'nordösterut';
-modify southwestDirection name = 'sydvästerut';
-modify southeastDirection name = 'sydösterut';
-modify upDirection name = 'uppåt';
-modify downDirection name = 'neråt';
-modify inDirection name = 'innåt';
-modify outDirection name = 'utåt';
 
 /*
  *   The English-specific shipboard direction modifications.  Certain of

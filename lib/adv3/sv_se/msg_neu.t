@@ -1358,8 +1358,7 @@ libMessages: MessageHelper
     actorInRemoteRoom(actor, room, pov)
     {
         /* say that the actor is in the room, using its remote in-name */
-        "\^<<actor.nameIs>> <<actor.posture.participle>>
-        <<room.inRoomName(pov)>>. ";
+        "\^<<actor.nameIs>> <<actor.posture.participle>> <<room.inRoomName(pov)>>. ";
     }
 
     /*
@@ -1441,9 +1440,6 @@ libMessages: MessageHelper
     sayArriving(traveler)
     {
         //"\^<<traveler.travelerName(true)>> enter<<traveler.verbEndingSEd>> <<traveler.travelerLocName>>. ";
-
-        // TODO: in/ut till
-
         "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerLocName>>. ";
     }
 
@@ -1468,8 +1464,7 @@ libMessages: MessageHelper
      */
     sayDepartingLocally(traveler, dest)
     {
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToLeave>>
-        <<traveler.travelerLocName>>. ";
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToLeave>> <<traveler.travelerLocName>>. ";
     }
 
     /*
@@ -1478,14 +1473,17 @@ libMessages: MessageHelper
      */
     sayTravelingRemotely(traveler, dest)
     {
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToGo>> {hit}  <<traveler.travelerLocName>>. ";
+        //"\^<<traveler.travelerName(true)>> <<traveler.verbToGo>> to <<traveler.travelerLocName>>. ";
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToGo>> till <<traveler.travelerLocName>>. ";
     }
 
     /* a traveler is arriving from a compass direction */
     sayArrivingDir(traveler, dirName)
     {
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>>
-        <<traveler.travelerRemoteLocName>> från <<dirName>>. ";
+        // Byt ut ändelsen -'ut' till '-ifrån' när vi beskriver 
+        // varifrån någon kom, tex: "En hobbit kom till Fylke norrifrån."
+        local dirNameEnding2 = dirName.splice(-2, 2, 'ifrån');
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerRemoteLocName>> <<dirNameEnding2>>. ";
     }
 
     /* a traveler is leaving in a given compass direction */

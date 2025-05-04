@@ -14,7 +14,7 @@ versionInfo: GameID
   htmlDesc = 'enhetstester'
 ;
 gameMain: GameMainDef
-    initialPlayerChar = testPlayer2stPerspective
+    initialPlayerChar = spelare2aPerspektiv
     usePastTense = true
 ;
 
@@ -53,18 +53,18 @@ beforeEachTest: BeforeEach
     }
 ;
 
-testPlayer1stPerspective: Actor 'jag' 'jag'
+spelare1aPerspektiv: Actor 'jag' 'jag'
   pcReferralPerson = FirstPerson
   isProperName = true
   isHim = true
 ;
 
-testPlayer2stPerspective: Actor 'du' 'du'
+spelare2aPerspektiv: Actor 'du' 'du'
   pcReferralPerson = SecondPerson
   isProperName = true
   isHim = true
 ;
-testPlayer3stPerspective: Actor 'bob' 'Bob'
+spelare3dePerspektiv: Actor 'bob' 'Bob'
   pcReferralPerson = ThirdPerson
   isProperName = true
   isHim = true
@@ -85,9 +85,10 @@ dorrarObjUterPlural: Thing 'dörr*dörr[-ar]' 'dörrar' isPlural = true isUter =
 skapenObjNeuterPlural: Thing 'skåp[-et]*skåp[-en]' 'skåpen' isPlural = true isUter = nil;
 
 hobbit: Actor 'hobbit[-en]' 'hobbit' isHim = true isProperName = nil;
-baren: Room 'baren' 'baren' 
-  theName = 'baren'
-;
+baren: Room 'baren' 'baren'   theName = 'baren';
++krogare: Actor 'krögare[-n]' 'krögare' isHim = true isProperName = nil;
+
+fylke: Room 'Fylke' 'Fylke';
 
 musikenObjUterumSingular: Thing 'musik[-en]' 'musik';
 matosetObjUterumSingular: Thing 'matos[-et]' 'matos';
@@ -113,38 +114,38 @@ UnitTest 'distantThingDesc - neutrum plural' run {
 
 
 UnitTest 'obscuredThingDesc first person' run {
-  gPlayerChar = testPlayer1stPerspective;
+  gPlayerChar = spelare1aPerspektiv;
   libMessages.obscuredThingDesc(skapenObjNeuterPlural, skapenObjNeuterPlural);
   assertThat(o).startsWith('Jag kunde inte utgöra några detaljer genom skåpen.');
 };
 
 UnitTest 'obscuredThingDesc second person' run {
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.obscuredThingDesc(skapenObjNeuterPlural, skapenObjNeuterPlural);
   assertThat(o).startsWith('Du kunde inte utgöra några detaljer genom skåpen.');
 };
 
 UnitTest 'obscuredThingDesc second person' run {
-  gPlayerChar = testPlayer3stPerspective;
+  gPlayerChar = spelare3dePerspektiv;
   libMessages.obscuredThingDesc(skapenObjNeuterPlural, skapenObjNeuterPlural);
   assertThat(o).startsWith('Bob kunde inte utgöra några detaljer genom skåpen.');
 };
 
 
 UnitTest 'thingTasteDesc neuter singular' run {
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.thingTasteDesc(skapetObjNeutrumSingular);
   assertThat(o).startsWith('Det smakade ungefär som du hade förväntat dig.');
 };
 
 UnitTest 'thingTasteDesc uterum singular' run {
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.thingTasteDesc(dorrenObjUterSingular);
   assertThat(o).startsWith('Den smakade ungefär som du hade förväntat dig.');
 };
 
 UnitTest 'thingTasteDesc plural' run {
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.thingTasteDesc(skapenObjNeuterPlural);
   assertThat(o).startsWith('De smakade ungefär som du hade förväntat dig.');
 };
@@ -220,77 +221,77 @@ UnitTest 'announceMoveToBag plural dobj tryingImpCtx' run {
 
 UnitTest 'obscuredThingSoundDesc first person neuter singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer1stPerspective;
+  gPlayerChar = spelare1aPerspektiv;
   libMessages.obscuredThingSoundDesc(appletObjNeutrumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('Jag kunde inte höra något detaljerat genom skåpet.');
 };
 
 UnitTest 'obscuredThingSmellDesc first person uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer1stPerspective;
+  gPlayerChar = spelare1aPerspektiv;
   libMessages.obscuredThingSmellDesc(appletObjNeutrumSingular, dorrenObjUterSingular);
   assertThat(o).startsWith('Jag kunde inte känna så mycket lukt genom dörren.');
 };
 
 UnitTest 'obscuredReadDesc first person uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer1stPerspective;
+  gPlayerChar = spelare1aPerspektiv;
   libMessages.obscuredReadDesc(papperetObjNeutrumSingular);
   assertThat(o).startsWith('Jag kunde inte se det bra nog för att kunna läsa det.');
 };
 
 UnitTest 'obscuredReadDesc 1a person uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.obscuredReadDesc(bokenObjUterumSingular);
   assertThat(o).startsWith('Du kunde inte se den bra nog för att kunna läsa den.');
 };
 
 UnitTest 'obscuredReadDesc 3ee person uterum plural' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer3stPerspective;
+  gPlayerChar = spelare3dePerspektiv;
   libMessages.obscuredReadDesc(skyltarObjUterumPlural);
   assertThat(o).startsWith('Bob kunde inte se dem bra nog för att kunna läsa dem.');
 };
 
 UnitTest 'obscuredThingSmellDesc 2a person uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.thingTasteDesc(appletObjNeutrumSingular);
   assertThat(o).startsWith('Det smakade ungefär som du hade förväntat dig.');
 };
 
 UnitTest 'dimReadDesc 2a person neutrum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.dimReadDesc(papperetObjNeutrumSingular);
   assertThat(o).startsWith('Det fanns inte ljus bra nog att läsa det.');
 };
 
 UnitTest 'cannotReachObject 1a person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer1stPerspective;
+  gPlayerChar = spelare1aPerspektiv;
   libMessages.cannotReachObject(appletObjNeutrumSingular);
   assertThat(o).startsWith('Jag kunde inte nå äpplet.');
 };
 
 UnitTest 'cannotReachObject 2nd person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.cannotReachObject(appletObjNeutrumSingular);
   assertThat(o).startsWith('Du kunde inte nå äpplet.');
 };
 
 UnitTest 'cannotReachObject 3e person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer3stPerspective;
+  gPlayerChar = spelare3dePerspektiv;
   libMessages.cannotReachObject(appletObjNeutrumSingular);
   assertThat(o).startsWith('Bob kunde inte nå äpplet.');
 };
 
 UnitTest 'cannotReachContents 1a person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer1stPerspective;
+  gPlayerChar = spelare1aPerspektiv;
   local str = libMessages.cannotReachContents(appletObjNeutrumSingular, skapetObjNeutrumSingular);
   "<<str>>";
   assertThat(o).startsWith('Jag kunde inte nå det genom skåpet.');
@@ -298,7 +299,7 @@ UnitTest 'cannotReachContents 1a person dobj: uterum singular' run {
 
 UnitTest 'cannotReachContents 2a person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   local str = libMessages.cannotReachContents(appletObjNeutrumSingular, skapetObjNeutrumSingular);
   "<<str>>";
   assertThat(o).startsWith('Du kunde inte nå det genom skåpet.');
@@ -306,7 +307,7 @@ UnitTest 'cannotReachContents 2a person dobj: uterum singular' run {
 
 UnitTest 'cannotReachContents 3e person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer3stPerspective;
+  gPlayerChar = spelare3dePerspektiv;
   local str = libMessages.cannotReachContents(appletObjNeutrumSingular, skapetObjNeutrumSingular);
   "<<str>>";
   assertThat(o).startsWith('Bob kunde inte nå det genom skåpet.');
@@ -315,7 +316,7 @@ UnitTest 'cannotReachContents 3e person dobj: uterum singular' run {
 
 UnitTest 'cannotReachOutside 2a person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer3stPerspective;
+  gPlayerChar = spelare3dePerspektiv;
   local str = libMessages.cannotReachOutside(appletObjNeutrumSingular, skapetObjNeutrumSingular);
   "<<str>>";
   assertThat(o).startsWith('Bob kunde inte nå det genom skåpet.');
@@ -324,7 +325,7 @@ UnitTest 'cannotReachOutside 2a person dobj: uterum singular' run {
 
 UnitTest 'soundIsFromWithin 2a person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.soundIsFromWithin(musikenObjUterumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('\^musiken verkade komma från insidan skåpet.');
 };
@@ -332,48 +333,48 @@ UnitTest 'soundIsFromWithin 2a person dobj: uterum singular' run {
 
 UnitTest 'soundIsFromWithout 2a person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.soundIsFromWithout(musikenObjUterumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('\^musiken verkade komma från utsidan skåpet.');
 };
 
 UnitTest 'smellIsFromWithin 2a person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.smellIsFromWithin(matosetObjUterumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('\^matoset verkade komma från insidan skåpet.');
 };
 
 UnitTest 'smellIsFromWithout 2a person dobj: uterum singular' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.smellIsFromWithout(matosetObjUterumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('\^matoset verkade komma från utsidan skåpet.');
 };
 
 UnitTest 'pcDesc 1a person' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer1stPerspective;
+  gPlayerChar = spelare1aPerspektiv;
   libMessages.pcDesc(gPlayerChar);
   assertThat(o).startsWith('\^jag såg likadan ut som vanligt.');
 };
 UnitTest 'pcDesc 2a person' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   libMessages.pcDesc(gPlayerChar);
   assertThat(o).startsWith('\^du såg likadan ut som vanligt.');
 };
 
 UnitTest 'pcDesc 3e person' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer3stPerspective;
+  gPlayerChar = spelare3dePerspektiv;
   libMessages.pcDesc(gPlayerChar);
   assertThat(o).startsWith('\^Bob såg likadan ut som vanligt.');
 };
 
 UnitTest 'roomActorStatus actor (ingen output om stående)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = standing;
   libMessages.roomActorStatus(hobbit);
   assertThat(o).isEqualTo('');
@@ -381,7 +382,7 @@ UnitTest 'roomActorStatus actor (ingen output om stående)' run {
 
 UnitTest 'roomActorStatus actor (sitter)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = sitting;
   libMessages.roomActorStatus(hobbit);
   assertThat(o).isEqualTo(' (sitter)');
@@ -389,7 +390,7 @@ UnitTest 'roomActorStatus actor (sitter)' run {
 
 UnitTest 'roomActorStatus actor (ligger)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = lying;
   libMessages.roomActorStatus(hobbit);
   assertThat(o).isEqualTo(' (ligger)');
@@ -398,7 +399,7 @@ UnitTest 'roomActorStatus actor (ligger)' run {
 
 UnitTest 'roomActorHereDesc actor (ligger)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = standing;
   libMessages.roomActorHereDesc(hobbit);
   assertThat(o).contains('\^hobbiten står där.');
@@ -406,7 +407,7 @@ UnitTest 'roomActorHereDesc actor (ligger)' run {
 
 UnitTest 'roomActorHereDesc actor (ligger)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = sitting;
   libMessages.roomActorHereDesc(hobbit);
   assertThat(o).startsWith('\^hobbiten sitter där.');
@@ -414,7 +415,7 @@ UnitTest 'roomActorHereDesc actor (ligger)' run {
 
 UnitTest 'roomActorHereDesc actor (ligger)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = lying;
   libMessages.roomActorHereDesc(hobbit);
   assertThat(o).startsWith('\^hobbiten ligger där.');
@@ -424,7 +425,7 @@ UnitTest 'roomActorHereDesc actor (ligger)' run {
 
 UnitTest 'roomActorThereDesc actor (ligger)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = standing;
   libMessages.roomActorThereDesc(hobbit);
   assertThat(o).contains('\^hobbiten står i närheten.'); // TODO: OK mening?
@@ -432,7 +433,7 @@ UnitTest 'roomActorThereDesc actor (ligger)' run {
 
 UnitTest 'roomActorThereDesc actor (ligger)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = sitting;
   libMessages.roomActorThereDesc(hobbit);
   assertThat(o).startsWith('\^hobbiten sitter i närheten.'); // TODO: OK mening?
@@ -440,7 +441,7 @@ UnitTest 'roomActorThereDesc actor (ligger)' run {
 
 UnitTest 'roomActorThereDesc actor (ligger)' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = lying;
   libMessages.roomActorThereDesc(hobbit);
   assertThat(o).startsWith('\^hobbiten ligger i närheten.'); // TODO: OK mening?
@@ -450,7 +451,7 @@ UnitTest 'roomActorThereDesc actor (ligger)' run {
 // TODO: kan testas betydligt mera
 UnitTest 'actorInRoom' run {
   //mainOutputStream.hideOutput = nil;
-  gPlayerChar = testPlayer2stPerspective;
+  gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = sitting;
   libMessages.actorInRoom(hobbit, baren); 
   assertThat(o).startsWith('\^hobbiten sitter i baren.');
@@ -473,15 +474,73 @@ UnitTest 'roomActorPostureDesc' run {
   assertThat(o).startsWith('Han sitter.');
 };
 
-/* TODO:
 UnitTest 'sayArriving' run {
   //mainOutputStream.hideOutput = nil;
-  gActor = hobbit;
-  hobbit.posture = sitting;
+  hobbit.location = fylke; 
   libMessages.sayArriving(hobbit); 
-  assertThat(o).startsWith('Han sitter.');
-};*/
+  assertThat(o).startsWith('\^en hobbit kom till Fylke.');
+};
 
+UnitTest 'sayDeparting' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  libMessages.sayDeparting(hobbit); 
+  assertThat(o).startsWith('\^en hobbit lämnade Fylke.');
+};
+
+
+UnitTest 'sayArrivingLocally' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  libMessages.sayArrivingLocally(hobbit, baren); 
+  //sayDepartingLocally(traveler, dest)
+  assertThat(o).startsWith('\^en hobbit kom till Fylke.');
+};
+
+UnitTest 'sayDepartingLocally' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  libMessages.sayDepartingLocally(hobbit, baren); 
+  assertThat(o).startsWith('\^en hobbit lämnade Fylke.');
+};
+
+UnitTest 'sayTravelingRemotely' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  libMessages.sayTravelingRemotely(hobbit, baren); 
+  assertThat(o).startsWith('\^en hobbit gick till Fylke.');
+};
+
+UnitTest 'sayArrivingDir norr' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  libMessages.sayArrivingDir(hobbit, northDirection.name); 
+  assertThat(o).startsWith('\^en hobbit kom till Fylke norrifrån.');
+};
+
+UnitTest 'sayArrivingDir söder' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  libMessages.sayArrivingDir(hobbit, southDirection.name); 
+  assertThat(o).startsWith('\^en hobbit kom till Fylke söderifrån.');
+};
+
+UnitTest 'sayArrivingDir uppifrån' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  libMessages.sayArrivingDir(hobbit, upDirection.name); 
+  assertThat(o).startsWith('\^en hobbit kom till Fylke uppifrån');
+};
+
+/*
+// TODO:
+UnitTest 'sayDepartingDir' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  libMessages.sayDepartingDir(hobbit, baren); 
+  assertThat(o).startsWith('\^en hobbit gick till Fylke.');
+};
+*/
 
 // TODO:
 /*
@@ -491,11 +550,12 @@ actorInGroupSuffix(posture, cont, lst)
 actorInRemoteGroupSuffix(pov, posture, cont, remote, lst)
 actorHereGroupSuffix(posture, lst)
 actorThereGroupSuffix(pov, posture, remote, lst)
+
 --sayArriving(traveler)
-sayDeparting(traveler)
-sayArrivingLocally(traveler, dest)
-sayDepartingLocally(traveler, dest)
-sayTravelingRemotely(traveler, dest)
+--sayDeparting(traveler)
+--sayArrivingLocally(traveler, dest)
+--sayDepartingLocally(traveler, dest)
+--sayTravelingRemotely(traveler, dest)
 sayArrivingDir(traveler, dirName)
 sayDepartingDir(traveler, dirName)
 sayArrivingShipDir(traveler, dirName)
