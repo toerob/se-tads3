@@ -270,7 +270,7 @@ vedbod: Room 'vedboden' 'vedboden'
     masterObject = vedboDorrUtsida
 ;
 
-+verktygsbank: Fixture 'verktygsbänk[-en]' 'verktygsbänk'
++verktygsbank: Fixture 'verktygsbänk[-en]/bänk[-en]' 'verktygsbänk'
     feelDesc() {
             // TODO: inform -> tads equiv: if(location==thedark) {
         "Mats kände med handen över träytan på bänken <<if ficklampa.discovered>> men fann inget mer. <<end>>";
@@ -441,7 +441,7 @@ stugansSovrum: Room 'stugans sovrum' 'sovrummet'
     west = stugansBadrum
 ;
 
-+stugansSovrumsSang: Surface 'säng[-en]' 'säng'
++stugansSovrumsSang: BasicBed 'säng[-en]' 'säng'
     dobjFor(Search) {
         action() {
             "Under sängen låg en hel dammråttsfamilj. ";

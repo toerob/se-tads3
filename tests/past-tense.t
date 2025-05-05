@@ -110,6 +110,8 @@ baren: Room 'baren' 'baren'   theName = 'baren'
   east = valvgangPathPassage
   south = passageThroughPassage
 ;
+apan: Actor 'apa[-n]' 'apa';
+
 + krogare: Actor 'krögare[-n]' 'krögare' isHim = true isProperName = nil;
 + bankraden: Chair 'bänkrad[-en]' 'bänkrad';
 ++ sjorovare: Actor 'sjörrövare[-n]' 'sjörövare' 
@@ -133,6 +135,7 @@ hallen: Room 'hallen' 'hallen'
 ;
 + valvgangPathPassage: PathPassage 'valvgång[-en]' 'valvgång' theName = 'valvgången';
 
+vagnen: Vehicle 'vagn[-en]' 'vagn';
 masten: OutdoorRoom 'masten' 'masten';
 +pirat: Actor 'pirat[-en]' 'pirat';
 +matros: Actor 'matros[-en]' 'matros';
@@ -894,15 +897,19 @@ UnitTest 'noMatchForPronoun' run {
   assertThat(o).contains('Ordet <q>den</q> refererade inte till någonting just nu.');
 };
 
-// TODO: mocka allt rätt i och flusha sedan gTranscript
-//UnitTest 'askMissingObject' run {
+// TODO: fixa text... något med gTranscript ställer troligen till det.
+/*UnitTest 'askMissingObject' run {
+  gActor = spelare2aPerspektiv;
+  gActor.referralPerson = DirectObject;
+
+  setPlayer(spelare2aPerspektiv);
   //mainOutputStream.hideOutput = nil;
-  //gActor = spelare2aPerspektiv;
-  //gAction = UnlockWithAction.createActionInstance();
-  //gAction.setCurrentObjects([skapetObjNeutrumSingular]);
-  //playerMessages.askMissingObject(gActor, UnlockWithAction, DirectObject);
-  //assertThat(o).contains('Vill du .');
-//};
+  gAction = UnlockWithAction.createActionInstance();
+  gAction.setCurrentObjects([skapetObjNeutrumSingular]);
+  playerMessages.askMissingObject(gActor, gAction, DirectObject);
+  //local x = gTranscript.();
+  //assertThat(x).contains('Vill du .');
+};*/
 
 
 
@@ -1204,6 +1211,7 @@ UnitTest 'cannotMoveComponentMsg' run {
 
 
 UnitTest 'cannotTakeComponentMsg singular/neutrum del av singular' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = TakeAction.createActionInstance();
   gAction.setCurrentObjects([snickargladje]);
@@ -1213,6 +1221,7 @@ UnitTest 'cannotTakeComponentMsg singular/neutrum del av singular' run {
 };
 
 UnitTest 'cannotPutComponentMsg singular/neutrum del av plural' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = TakeAction.createActionInstance();
   gAction.setCurrentObjects([snickargladje]);
@@ -1225,6 +1234,7 @@ UnitTest 'cannotPutComponentMsg singular/neutrum del av plural' run {
 };
 
 UnitTest 'droppingObjMsg' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1235,6 +1245,7 @@ UnitTest 'droppingObjMsg' run {
 
 
 UnitTest 'floorlessDropMsg' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1246,6 +1257,7 @@ UnitTest 'floorlessDropMsg' run {
 // ...........
 
 UnitTest 'cannotMoveThroughMsg' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   local msg = playerActionMessages.cannotMoveThroughMsg(appletObjNeutrumSingular, roret);
   "<<msg>>";
@@ -1253,6 +1265,7 @@ UnitTest 'cannotMoveThroughMsg' run {
 };
 
 UnitTest 'cannotMoveThroughContainerMsg' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   local msg = playerActionMessages.cannotMoveThroughContainerMsg(appletObjNeutrumSingular, roret);
   "<<msg>>";
@@ -1260,6 +1273,7 @@ UnitTest 'cannotMoveThroughContainerMsg' run {
 };
 
 UnitTest 'cannotMoveThroughClosedMsg' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = MoveWithAction.createActionInstance();
   gAction.setCurrentObjects([appletObjNeutrumSingular, roret]);
@@ -1269,6 +1283,7 @@ UnitTest 'cannotMoveThroughClosedMsg' run {
 };
 
 UnitTest 'cannotFitIntoOpeningMsg' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([appletObjNeutrumSingular]);
@@ -1278,6 +1293,7 @@ UnitTest 'cannotFitIntoOpeningMsg' run {
 };
 
 UnitTest 'cannotFitOutOfOpeningMsg' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1288,6 +1304,7 @@ UnitTest 'cannotFitOutOfOpeningMsg' run {
 
 
 UnitTest 'cannotTouchThroughContainerMsg' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = FeelAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1432,6 +1449,7 @@ UnitTest 'totalTooHeavyForMsg(obj)' run {
 };
 
 UnitTest 'tooLargeForContainerMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1441,6 +1459,7 @@ UnitTest 'tooLargeForContainerMsg(obj, cont)' run {
 };
 
 UnitTest 'tooLargeForUndersideMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1450,6 +1469,7 @@ UnitTest 'tooLargeForUndersideMsg(obj, cont)' run {
 };
 
 UnitTest 'tooLargeForRearMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1459,6 +1479,7 @@ UnitTest 'tooLargeForRearMsg(obj, cont)' run {
 };
 
 UnitTest 'containerTooFullMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1468,6 +1489,7 @@ UnitTest 'containerTooFullMsg(obj, cont)' run {
 };
 
 UnitTest 'surfaceTooFullMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1477,6 +1499,7 @@ UnitTest 'surfaceTooFullMsg(obj, cont)' run {
 };
 
 UnitTest 'undersideTooFullMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1486,6 +1509,7 @@ UnitTest 'undersideTooFullMsg(obj, cont)' run {
 };
 
 UnitTest 'rearTooFullMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1495,6 +1519,7 @@ UnitTest 'rearTooFullMsg(obj, cont)' run {
 };
 
 UnitTest 'becomingTooLargeForContainerMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1504,6 +1529,7 @@ UnitTest 'becomingTooLargeForContainerMsg(obj, cont)' run {
 };
 
 UnitTest 'containerBecomingTooFullMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1513,6 +1539,7 @@ UnitTest 'containerBecomingTooFullMsg(obj, cont)' run {
 };
 
 UnitTest 'takenAndMovedToKeyringMsg(keyring)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([nyckel]);
@@ -1522,6 +1549,7 @@ UnitTest 'takenAndMovedToKeyringMsg(keyring)' run {
 };
 
 UnitTest 'movedKeyToKeyringMsg(keyring)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([nyckel]);
@@ -1531,6 +1559,7 @@ UnitTest 'movedKeyToKeyringMsg(keyring)' run {
 };
 
 UnitTest 'movedKeysToKeyringMsg(keyring, keys)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([nyckel]);
@@ -1541,6 +1570,7 @@ UnitTest 'movedKeysToKeyringMsg(keyring, keys)' run {
 
 // TODO: Förbättra objekten till kläder 
 UnitTest 'circularlyInMsg(x, y)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([nyckel]);
@@ -1551,6 +1581,7 @@ UnitTest 'circularlyInMsg(x, y)' run {
 
 // TODO: Förbättra objekten till kläder
 UnitTest 'circularlyOnMsg(x, y)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1561,6 +1592,7 @@ UnitTest 'circularlyOnMsg(x, y)' run {
 
 // TODO: Förbättra objekten till kläder
 UnitTest 'circularlyUnderMsg(x, y)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1571,6 +1603,7 @@ UnitTest 'circularlyUnderMsg(x, y)' run {
 
 // TODO: Förbättra objekten till kläder
 UnitTest 'circularlyBehindMsg(x, y)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1580,6 +1613,7 @@ UnitTest 'circularlyBehindMsg(x, y)' run {
 };
 
 UnitTest 'willNotLetGoMsg(holder, obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = TakeAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
@@ -1589,6 +1623,7 @@ UnitTest 'willNotLetGoMsg(holder, obj)' run {
 };
 
 UnitTest 'cannotGoThroughClosedDoorMsg(door)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = EnterAction.createActionInstance();
   gAction.setCurrentObjects([dorrenObjUterumSingular]);
@@ -1599,374 +1634,502 @@ UnitTest 'cannotGoThroughClosedDoorMsg(door)' run {
 
 // TODO: Keep going, you can do it!
 UnitTest 'invalidStagingContainerMsg(cont, dest)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.invalidStagingContainerMsg(baren, bankraden);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte göra det medan bänkraden var i baren.');
 };
 
 UnitTest 'invalidStagingContainerActorMsg(cont, dest)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.invalidStagingContainerActorMsg(hatt);
+  gAction = TravelAction.createActionInstance();
+  local msg = playerActionMessages.invalidStagingContainerActorMsg(hobbit, dorrarObjUterPlural);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte göra det då hobbiten höll i dörrarna.');
 };
 
 UnitTest 'invalidStagingLocationMsg(dest)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.invalidStagingLocationMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte gå in i hatten.'); // TODO: Rätt?
 };
 
 UnitTest 'nestedRoomTooHighMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.nestedRoomTooHighMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hatten var för hög att nå därifrån.');
 };
 
 UnitTest 'nestedRoomTooHighToExitMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.nestedRoomTooHighToExitMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Det var alltför långt fall ner för att kunna göra det därifrån.');
 };
 
 UnitTest 'cannotDoFromMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.cannotDoFromMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte göra det från den.');
 };
 
 UnitTest 'vehicleCannotDoFromMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
+  hatt.location = baren;
   local msg = playerActionMessages.vehicleCannotDoFromMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte göra det medan hatten var i baren');
 };
 
 UnitTest 'cannotGoThatWayInVehicleMsg(traveler)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.cannotGoThatWayInVehicleMsg(hatt);
+  gAction = TravelAction.createActionInstance();
+  local msg = playerActionMessages.cannotGoThatWayInVehicleMsg(vagnen);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte göra det i vagnen.');
 };
 
 UnitTest 'cannotPushObjectThatWayMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.cannotPushObjectThatWayMsg(hatt);
+  gAction = PushAction.createActionInstance();
+  gAction.setCurrentObjects([vagnen]);
+  local msg = playerActionMessages.cannotPushObjectThatWayMsg(vagnen);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte knuffa den i den riktningen.');
 };
 
 UnitTest 'cannotPushObjectNestedMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.cannotPushObjectNestedMsg(hatt);
+  gAction = PushAction.createActionInstance();
+  gAction.setCurrentObjects([vagnen]);
+  local msg = playerActionMessages.cannotPushObjectNestedMsg(vagnen);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte knuffa den dit.');
 };
 
 UnitTest 'cannotEnterExitOnlyMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.cannotEnterExitOnlyMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte gå in i den därifrån.');
 };
 
 UnitTest 'mustOpenDoorMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.mustOpenDoorMsg(hatt);
+  local msg = playerActionMessages.mustOpenDoorMsg(dorrarObjUterPlural);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag behövde öppna dem först.');
 };
 
 UnitTest 'doorClosesBehindMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.doorClosesBehindMsg(hatt);
+  gAction = TravelAction.createActionInstance();
+  local msg = playerActionMessages.doorClosesBehindMsg(dorrarObjUterPlural);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).contains('efter att jag gick igenom dem, stängde sig dörrarna bakom mig.');
 };
 
+
 UnitTest 'refuseCommand(targetActor, issuingActor)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.refuseCommand(hatt);
+  local msg = playerActionMessages.refuseCommand(hobbit, gActor);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hobbiten vägrade min begäran.');
+};
+
+
+UnitTest 'refuseCommand(targetActor, issuingActor)' run {
+  setPlayer(spelare2aPerspektiv);
+  gActor = spelare2aPerspektiv;
+  local msg = playerActionMessages.refuseCommand(hobbit, gActor);
+  "<<msg>>";
+  assertThat(o).startsWith('Hobbiten vägrade din begäran.');
+};
+
+
+UnitTest 'refuseCommand(targetActor, issuingActor)' run {
+  setPlayer(spelare3dePerspektiv);
+  gActor = spelare3dePerspektiv;
+  local msg = playerActionMessages.refuseCommand(hobbit, gActor);
+  "<<msg>>";
+  assertThat(o).startsWith('Hobbiten vägrade Bobs begäran.');
 };
 
 UnitTest 'notAddressableMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.notAddressableMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte prata med den.');
 };
 
 UnitTest 'noResponseFromMsg(other)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.noResponseFromMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hatten svarade inte.');
 };
 
 UnitTest 'notInterestedMsg(actor)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.notInterestedMsg(hatt);
+  local msg = playerActionMessages.notInterestedMsg(pirat);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('\^piraten verkade ointresserad.');
 };
 
 UnitTest 'objCannotHearActorMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.objCannotHearActorMsg(hatt);
+  gAction.setCurrentObjects([pirat]);
+  local msg = playerActionMessages.objCannotHearActorMsg(pirat);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('\^piraten verkade inte kunna höra mig.');
 };
 
 UnitTest 'actorCannotSeeMsg(actor, obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.actorCannotSeeMsg(hatt);
+  gAction.setCurrentObjects([hobbit]);
+  local msg = playerActionMessages.actorCannotSeeMsg(hobbit, hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('\^hobbiten gjorde verkar oförmögen att se hatten.');
 };
 
 UnitTest 'cannotFollowFromHereMsg(srcLoc)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.cannotFollowFromHereMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Den senaste platsen jag hade sett hatten var baren.');
 };
 
 UnitTest 'okayPushTravelMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.okayPushTravelMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).contains('Jag tryckte in hatten i utrymmet.');
 };
 
 UnitTest 'mustBeBurningMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.mustBeBurningMsg(hatt);
+  gAction.setCurrentObjects([ljuset]);
+  local msg = playerActionMessages.mustBeBurningMsg(ljuset);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag behövde tända stearinljuset före jag kunde göra det.');
 };
 
 UnitTest 'mustDetachMsg(obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
   local msg = playerActionMessages.mustDetachMsg(hatt);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag behövde ta loss den före jag kunde göra det.');
 };
 
 UnitTest 'foundKeyOnKeyringMsg(ring, key)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.foundKeyOnKeyringMsg(hatt);
+  gAction = ExamineAction.createActionInstance();
+  gAction.setCurrentObjects([nyckel]);
+  local msg = playerActionMessages.foundKeyOnKeyringMsg(nyckelring, nyckel);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag försökte varje nyckel på nyckelringen, och upptäckte att nyckeln passade låset.');
 };
 
 UnitTest 'foundNoKeyOnKeyringMsg(ring)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.foundNoKeyOnKeyringMsg(hatt);
+  gAction.setCurrentObjects([nyckelring]);
+  local msg = playerActionMessages.foundNoKeyOnKeyringMsg(nyckelring);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag försökte varje nyckel på nyckelringen, men jag hittade inte någon som passade låset.');
 };
 
 UnitTest 'roomOkayPostureChangeMsg(posture, obj)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.roomOkayPostureChangeMsg(hatt);
+  local msg = playerActionMessages.roomOkayPostureChangeMsg(sitting, baren);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Ok, jag satt i baren.');
 };
 
 UnitTest 'cannotThrowThroughMsg(target, loc)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.cannotThrowThroughMsg(hatt);
+  local msg = playerActionMessages.cannotThrowThroughMsg(hatt, baren);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Jag kunde inte kasta någonting genom baren.');
 };
 
 UnitTest 'throwHitMsg(projektilen, target)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = throwHitMsg.cannotReachOutOfOpeningMsg(hatt);
+  gAction = ThrowAtAction.createActionInstance();
+  gAction.setCurrentObjects([hatt, hobbit]);
+  local msg = playerActionMessages.throwHitMsg(hatt, hobbit);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hatten träffade hobbiten utan någon uppenbar effekt.');
 };
 
 UnitTest 'throwFallMsg(projektilen, target)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.throwFallMsg(hatt);
+  gAction = ThrowAtAction.createActionInstance();
+  gAction.setCurrentObjects([hatt, hobbit]);
+  local msg = playerActionMessages.throwFallMsg(hatt, hobbit);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hatten landade på hobbiten.');
 };
 
 UnitTest 'throwHitFallMsg(projektilen, target, dest)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.throwHitFallMsg(hatt);
+  local msg = playerActionMessages.throwHitFallMsg(hatt, hobbit, bankraden);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hatten träffade hobbiten utan någon uppenbar effekt, och föll ner på bänkraden.');
 };
 
 UnitTest 'throwShortMsg(projektilen, target)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.throwShortMsg(hatt);
+  local msg = playerActionMessages.throwShortMsg(hatt, hobbit);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hatten föll långtifrån hobbiten.');
 };
 
 UnitTest 'throwFallShortMsg(projektilen, target, dest)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.throwFallShortMsg(hatt);
+  local msg = playerActionMessages.throwFallShortMsg(hatt, hobbit, baren);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hatten föll i baren långtifrån hobbiten.');
 };
 
 UnitTest 'throwCatchMsg(obj, target)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.throwCatchMsg(hatt);
+  local msg = playerActionMessages.throwCatchMsg(hatt, hobbit);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('\^hobbiten fångade hatten.');
 };
 
 UnitTest 'willNotCatchMsg(catcher)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.willNotCatchMsg(hatt);
+  local msg = playerActionMessages.willNotCatchMsg(hobbit);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('\^hobbiten såg inte ut som han ville fånga någonting.');
 };
 
 UnitTest 'tooLargeForContainerMsg(obj, cont)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.tooLargeForContainerMsg(hatt);
+  local msg = playerActionMessages.tooLargeForContainerMsg(hatt, skapetObjNeutrumSingular);
   "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  assertThat(o).startsWith('Hatten var för stor för skåpet.');
 };
 
-UnitTest 'tooLargeForUndersideMsg(obj, cont)' run {
+
+UnitTest 'missingObject(actor, action, which)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
+  gActor.referralPerson = DirectObject;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.tooLargeForUndersideMsg(hatt);
-  "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  playerMessages.missingObject(gActor, gAction, DirectObject);
+  assertThat(o).startsWith('Du behöver vara specifik om vad du vill');
 };
 
-UnitTest 'tooLargeForRearMsg(obj, cont)' run {
+
+UnitTest 'missingActor(actor)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
+  gActor.referralPerson = DirectObject;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.tooLargeForRearMsg(hatt);
-  "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  playerMessages.missingActor(gActor);
+  assertThat(o).startsWith('Du behövde vara mer specifik om vem du ville addressera.');
 };
 
-UnitTest 'containerTooFullMsg(obj, cont)' run {
+UnitTest 'singleActorRequired(actor)' run {
+  setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
+  gActor.referralPerson = DirectObject;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.containerTooFullMsg(hatt);
-  "<<msg>>";
-  assertThat(o).startsWith('TODO');
-};
-
-UnitTest 'surfaceTooFullMsg(obj, cont)' run {
-  gActor = spelare1aPerspektiv;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.surfaceTooFullMsg(hatt);
-  "<<msg>>";
-  assertThat(o).startsWith('TODO');
+  playerMessages.singleActorRequired(gActor);
+  assertThat(o).startsWith('Du kan bara addressera en person åt gången.');
 };
 
 
+
+// TODO: blir ett problem med 
+// itNom {return [ (isUter ? 'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
+// blir bara ett problem när den väljs, inte 'det'
+
+UnitTest 'cannotTalkTo(targetActor, issuingActor) #1' run {
+  mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  playerMessages.cannotTalkTo(hobbit, pirat);
+  assertThat(o).startsWith('\^hobbiten var inte någonting du kunde prata med.');
+};
+UnitTest 'cannotTalkTo(targetActor, issuingActor) #2' run {
+  mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  playerMessages.cannotTalkTo(pirat, hobbit);
+  assertThat(o).startsWith('\^du var inte någonting han kunde prata med.');
+};
+
+UnitTest 'cannotTalkTo(targetActor, issuingActor) #3' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(apan);
+  gActor = apan;  
+  apan.pcReferralPerson = FirstPerson;
+  playerMessages.cannotTalkTo(hobbit, apan);
+  assertThat(o).startsWith('\^hobbiten var inte någonting jag kunde prata med.');
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+
+  apan.pcReferralPerson = SecondPerson;
+  playerMessages.cannotTalkTo(hobbit, apan);
+  assertThat(o).startsWith('\^hobbiten var inte någonting du kunde prata med.');
+  
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  apan.pcReferralPerson = ThirdPerson;
+  playerMessages.cannotTalkTo(hobbit, apan);
+  assertThat(o).startsWith('\^hobbiten var inte någonting den kunde prata med.');
+
+};
 
 /*
-UnitTest '/' run {
-  gAction.setCurrentObjects([]);
-  local msg = playerActionMessages.'(loc)
-  assertThat(o).startsWith('...');
-};
 
-UnitTest 'cannotMoveComponentMsg' run {
-  gAction.setCurrentObjects([]);
-  local msg = playerActionMessages.cannotMoveComponentMsg(loc)
-  assertThat(o).startsWith('...');
+alreadyTalkingTo(actor, greeter)
+oopsNote()
+acknowledgeVerboseMode(verbose)
+showNotifyStatus(stat)
+acknowledgeNotifyStatus(stat)
+announceMultiActionObject(obj, whichObj, action)
+announceAmbigActionObject(obj, whichObj, action)
+announceDefaultObject(obj, whichObj, action, resolvedAllObjects)
+noCommandForAgain()
+againCannotChangeActor()
+againCannotTalkToTarget(issuer, target)
+againNotPossible(issuer)
+systemActionToNPC()
+confirmQuit()
+notTerminating()
+confirmRestart()
+saveFailed(exc)
+saveFailedOnServer(exc)
+makeSentence(msg)
+restoreFailedOnServer(exc)
+restoreInvalidFile()
+restoreCorruptedFile()
+restoreInvalidMatch()
+restoreFailed(exc)
+filePromptFailed()
+filePromptFailedMsg(msg)
+pausePrompt()
+pauseSaving()
+pauseEnded()
+inputScriptOkay(fname)
+inputScriptFailedException(exc)
+scriptingOkay()
+scriptingOkayWebTemp()
+scriptingFailedException(exc)
+recordingFailedException(exc)
+undoOkay(actor, cmd)
+undoFailed()
+invalidFinishOption(resp)
+exitsOnOffOkay(stat, look)
+explainExitsOnOff()
+currentExitsSettings(statusLine, roomDesc)
+mentionFullScore()
+savedDefaults()
+restoredDefaults()
+defaultsFileReadError(exc)
+textMenuMainPrompt(keylist)
+textMenuTopicPrompt()
+menuInstructions(keylist, prevLink)
+menuNextChapter(keylist, title, hrefNext, hrefUp)
+*/
+/*
+UnitTest 'askMissingLiteral(actor, action, which)' run {
+  setPlayer(spelare1aPerspektiv);
+  gActor = spelare1aPerspektiv;
+  gActor.referralPerson = DirectObject;
+  gAction = DropAction.createActionInstance();
+  gAction.setCurrentObjects([hatt]);
+  playerMessages.askMissingLiteral(gActor, gAction, DirectObject);
+  assertThat(o).startsWith('Du behöver vara specifik om vad du vill');
 };*/
 
+
 /*
-missingObject(actor, action, which)
-askMissingLiteral(actor, action, which)
 missingLiteral(actor, action, which)
 reflexiveNotAllowed(actor, typ, pronounWord)
 wrongReflexive(actor, typ, pronounWord)
@@ -1983,8 +2146,7 @@ singleObjectRequired(actor, txt)
 disambigOrdinalOutOfRange(actor, ordinalWord, originalText)
 requiredNum, askingAgain, dist)
 ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
-missingActor(actor)
-singleActorRequired(actor)
+
 cannotChangeActor()
 askUnknownWord(actor, txt)
 wordIsUnknown(actor, txt)
@@ -2029,26 +2191,26 @@ singleObjectRequired(actor, txt)
 ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
 askMissingObject(actor, action, which)
 
-roomOkayPostureChangeMsg(posture, obj)
-construct(prefix, suffix)
 showCombinedInventoryList(parent, carrying, wearing)
-countPhrases(txt)
+showInventoryEmpty(parent)
+showInventoryWearingOnly(parent, wearing)
+showInventoryCarryingOnly(parent, carrying)
+showInventoryShortLists(parent, carrying, wearing)
+showInventoryLongLists(parent, carrying, wearing)
+
 showInventoryEmpty(parent)
 showInventoryWearingOnly(parent, wearing)
 showInventoryCarryingOnly(parent, carrying)
 showInventoryShortLists(parent, carrying, wearing)
 showInventoryLongLists(parent, carrying, wearing)
 showInventoryEmpty(parent)
-showInventoryWearingOnly(parent, wearing)
-showInventoryCarryingOnly(parent, carrying)
-showInventoryShortLists(parent, carrying, wearing)
-showInventoryLongLists(parent, carrying, wearing)
-showInventoryEmpty(parent)
+
 showInventoryWearingOnly(parent, wearing)
 showInventoryCarryingOnly(parent, carrying)
 showInventoryShortLists(parent, carrying, wearing)
 showInventoryLongLists(parent, carrying, wearing)
 showListEmpty(pov, parent)
+
 showListPrefixWide(itemCount, pov, parent)
 showListEmpty(pov, parent)
 showListEmpty(pov, parent)
@@ -2117,55 +2279,5 @@ shortFootnoteStatus(stat)
 invalidCommandToken(ch)
 smellDescSeparator()
 soundDescSeparator()
-cannotTalkTo(targetActor, issuingActor)
-alreadyTalkingTo(actor, greeter)
-oopsNote()
-acknowledgeVerboseMode(verbose)
-showNotifyStatus(stat)
-acknowledgeNotifyStatus(stat)
-announceMultiActionObject(obj, whichObj, action)
-announceAmbigActionObject(obj, whichObj, action)
-announceDefaultObject(obj, whichObj, action, resolvedAllObjects)
-noCommandForAgain()
-againCannotChangeActor()
-againCannotTalkToTarget(issuer, target)
-againNotPossible(issuer)
-systemActionToNPC()
-confirmQuit()
-notTerminating()
-confirmRestart()
-saveFailed(exc)
-saveFailedOnServer(exc)
-makeSentence(msg)
-restoreFailedOnServer(exc)
-restoreInvalidFile()
-restoreCorruptedFile()
-restoreInvalidMatch()
-restoreFailed(exc)
-filePromptFailed()
-filePromptFailedMsg(msg)
-pausePrompt()
-pauseSaving()
-pauseEnded()
-inputScriptOkay(fname)
-inputScriptFailedException(exc)
-scriptingOkay()
-scriptingOkayWebTemp()
-scriptingFailedException(exc)
-recordingFailedException(exc)
-undoOkay(actor, cmd)
-undoFailed()
-invalidFinishOption(resp)
-exitsOnOffOkay(stat, look)
-explainExitsOnOff()
-currentExitsSettings(statusLine, roomDesc)
-mentionFullScore()
-savedDefaults()
-restoredDefaults()
-defaultsFileReadError(exc)
-textMenuMainPrompt(keylist)
-textMenuTopicPrompt()
-menuInstructions(keylist, prevLink)
-menuNextChapter(keylist, title, hrefNext, hrefUp)
 
 */

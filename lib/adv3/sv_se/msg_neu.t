@@ -94,7 +94,7 @@ libMessages: MessageHelper
      *   to use "who" everywhere can do so by changing this property's
      *   value to 'who'.  
      */
-    whomPronoun = 'som'
+    whomPronoun = 'vem'
 
     /*
      *   Flag: offer an explanation of the "OOPS" command when it first
@@ -2072,14 +2072,14 @@ playerMessages: libMessages
     /* the actor is missing in a command */
     missingActor(actor)
     {
-        "<.parser>Du behöver vara mer specifik om <<whomPronoun>> du vill<<tSel('', 'e')>> addressera.<./parser> ";
+        "<.parser>Du behöv{er|de} vara mer specifik om <<whomPronoun>> du vill<<tSel('', 'e')>> addressera.<./parser> ";
     }
 
     /* only a single actor can be addressed at a time */
     singleActorRequired(actor)
     {
         "<.parser>Du kan bara addressera en person åt gången.<./parser> ";
-    }
+    }   
 
     /* cannot change actor mid-command */
     cannotChangeActor()
@@ -2687,7 +2687,7 @@ playerActionMessages: MessageHelper
     mustGetOnMsg(obj)
     {
         gMessageParams(obj);
-        //return '{You/he} {must} get {in obj} first. ';
+        //return '{You/he} {must} get {i obj} first. ';
         return '{Du/han} {behöver|behövde} komma upp {i obj} först. '; 
     }
 
@@ -3348,28 +3348,28 @@ playerActionMessages: MessageHelper
     invalidStagingContainerActorMsg(cont, dest)
     {
         gMessageParams(cont, dest);
-        return '{Du/han} {kan} inte göra det medan {den cont/han} {är} {håller|höll} i {den dest/honom}. ';
+        return '{Du/han} {kan} inte göra det då {den cont/han} {håller|höll} i {den dest/honom}. ';
     }
     
     /* can't carry out travel because 'dest' isn't a valid staging location */
     invalidStagingLocationMsg(dest)
     {
         gMessageParams(dest);
-        return '{Du/han} {kan} inte gå {in dest}. ';
+        return '{Du/han} {kan} inte gå in {i dest}. ';
     }
 
     /* destination is too high to enter from here */
     nestedRoomTooHighMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/han} {är} för högt att nå {h|d}ärifrån. ';
+        return '{Den obj/han} {är} för hög{t/a obj} att nå {h|d}ärifrån. ';
     }
 
     /* enclosing room is too high to reach by GETTING OUT OF here */
     nestedRoomTooHighToExitMsg(obj)
     {
         // TODO: testa denna
-        return 'Det {är} alltför långt fall ner för för att kunna göra det {h|d}ärifrån. ';
+        return 'Det {är} alltför långt fall ner för att kunna göra det {h|d}ärifrån. ';
         //return 'It{&rsquo;s| was} too long a drop to do that från {här}. ';
     }
 
@@ -3385,14 +3385,14 @@ playerActionMessages: MessageHelper
     {
         local loc = obj.location;
         gMessageParams(obj, loc);
-        return '{Du/han} {kan} inte göra det medan {Den obj/han} {är} {in loc}. ';
+        return '{Du/han} {kan} inte göra det medan {den obj/han} {är} {i loc}. ';
     }
 
     /* cannot go that way in a vehicle */
     cannotGoThatWayInVehicleMsg(traveler)
     {
         gMessageParams(traveler);
-        return '{Du/han} {kan} inte göra det {in traveler}. ';
+        return '{Du/han} {kan} inte göra det {i traveler}. ';
     }
 
     /* cannot push an object that way */
@@ -3427,9 +3427,9 @@ playerActionMessages: MessageHelper
     doorClosesBehindMsg(obj)
     {
         gMessageParams(obj);
-        //TODO: testa
         //return '<.p>After {du/han} {goes} through {det obj/honom}, {it/he} close{s/d} behind {it actor/him}. ';
-        return '<.p>{det obj/honom} stäng{er|de} bakom {it actor/him} efter att {du/han} {går|gick} igenom {it/he}. ';
+        //return '<.p>{den/han obj} stäng{er|de} sig bakom {det actor/honom} efter att {du/han} {går|gick} igenom {det/honom obj}. ';
+        return '<.p>efter att {du/han actor} {går|gick} igenom {det/honom obj}, stäng{er|de} sig {den/han obj} bakom {det actor/honom}. ';
 
     }
 
@@ -3480,7 +3480,7 @@ playerActionMessages: MessageHelper
     refuseCommand(targetActor, issuingActor)
     {
         gMessageParams(targetActor, issuingActor);
-        return '{Den targetActor/han} vägra{r/de} {your/his} begäran. ';
+        return '{Den targetActor/han} vägra{r|de} {din/hans issuingActor} begäran. ';
     }
 
     /* cannot talk to an object (because it makes no sense to do so) */
@@ -3580,7 +3580,7 @@ playerActionMessages: MessageHelper
      */
     cannotFollowFromHereMsg(srcLoc)
     {
-        return 'Den sista platsen {du/han} {såg|hade sett} {den dobj/honom} var '
+        return 'Den senaste platsen {du/han} {såg|hade sett} {den dobj/honom} var '
             + srcLoc.getDestName(gActor, gActor.location) + '. ';
     }
 
@@ -3644,7 +3644,7 @@ playerActionMessages: MessageHelper
     okayPushTravelMsg(obj)
     {
         //return '<.p>{Du/han} push{es/ed} ' + obj.theNameObj + ' into the area. ';
-        return '<.p>{Du/han} tryck{er/te} in ' + obj.theNameObj + ' till utrymmet. ';
+        return '<.p>{Du/han} tryck{er/te} in ' + obj.theNameObj + ' i utrymmet. ';
     }
 
     /* cannot use object as an implement to move something */
@@ -3882,16 +3882,21 @@ playerActionMessages: MessageHelper
     /* found key on keyring */
     foundKeyOnKeyringMsg(ring, key)
     {
+        /*
+        return '{You/he} tr{ies/ied} each key on {the ring/him}, and
+            {find[s actor]|found} that {the key/he} fit{s/ted} the lock. ';
+        */
+        // TODO: undersök hur denna fungerar
+        //  {find[s actor]|finner} 
         gMessageParams(ring, key);
-        return '{Du/han} försök{er/te} varje nyckel på {den ring/honom}, och upptäcker att {den key/han} passa{r/de} låset. ';
+        return '{Du/han} försök{er|te} varje nyckel på {den ring/honom}, och upptäck{er|te} att {den key/han} passa{r/de} låset. ';
     }
 
     /* failed to find a key on keyring */
     foundNoKeyOnKeyringMsg(ring)
     {
         gMessageParams(ring);
-        return '{Du/han} försök{er/te} varje nyckel på {den ring/honom},
-            men {du/han} hittar inte någon som passa{r/de} låset. ';
+        return '{Du/han} försök{er|te} varje nyckel på {den ring/honom}, men {du/han} hitta{r|de} inte någon som passa{r/de} låset. ';
     }
 
 
@@ -3935,7 +3940,7 @@ playerActionMessages: MessageHelper
     cannotGetOutMsg = '{Du/han} är inte i någonting {du/han} {kan} kliva ur från. '
 
     /* actor is already in a location */
-    alreadyInLocMsg = '{Du/han} redan {in dobj}. '
+    alreadyInLocMsg = '{Du/han} redan {i dobj}. '
 
     /* actor is already standing/sitting on/lying on */
     alreadyStandingMsg = '{Du/han} {står|stod} redan. '
@@ -3964,7 +3969,7 @@ playerActionMessages: MessageHelper
     roomOkayPostureChangeMsg(posture, obj)
     {
         gMessageParams(obj);
-        return 'Ok, {du/han} ' + posture.msgVerbT  +' {nu|} {på obj}. ';
+        return 'Ok, {du/han} <<posture.msgVerbT>>{ nu | }{på obj}. ';
         // ( {är} nu ' + posture.participle + ' {på obj}. )';
     }
 
@@ -4023,22 +4028,22 @@ playerActionMessages: MessageHelper
     throwHitMsg(projektilen, target)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/han} träffa{r|de} {det target/honom} utan någon uppenbar effekt. ';
+        return '{Den projektilen/han} träffa{r|de} {den target/han} utan någon uppenbar effekt. ';
     }
 
     /* thrown object lands on target */
     throwFallMsg(projektilen, target)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/han} landa{r/de} på {det target/honom}. ';
+        return '{Den projektilen/han} landa{r/de} på {den target/han}. ';
     }
 
     /* thrown object bounces off target and falls to destination */
     throwHitFallMsg(projektilen, target, dest)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/han} träffa{r/de} {det target/honom}
-            utan någon uppenbar effekt, och {faller|föll} '
+        return '{Den projektilen/han} träffa{r/de} {den target/han}
+            utan någon uppenbar effekt, och {faller|föll} ner '
             + dest.putInName + '. ';
     }
 
@@ -4046,16 +4051,15 @@ playerActionMessages: MessageHelper
     throwShortMsg(projektilen, target)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/han}  {faller|föll} långtifrån '
-               + '{det target/honom}. ';
+        return '{Den projektilen/han} {faller|föll} långtifrån {den target/han}. ';
     }
         
     /* thrown object falls short of distant target */
     throwFallShortMsg(projektilen, target, dest)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/han}  {faller|föll} ' + dest.putInName
-            + ' långtifrån {det target/honom}. ';
+        return '{Den projektilen/han} {faller|föll} ' + dest.putInName
+            + ' långtifrån {den target/han}. ';
     }
 
     /* target catches object */
@@ -4153,11 +4157,11 @@ npcActionMessages: playerActionMessages
     okayUnlockMsg = '{Du/han} lås{er/te} upp {den dobj/honom}. '
 
     /* push/pull/move with no effect */
-    pushNoEffectMsg = '{Du/han} försök{er/te} att knuffa {den dobj/honom}, utan någon '
+    pushNoEffectMsg = '{Du/han} försök{er|te} att knuffa {den dobj/honom}, utan någon '
                       + 'uppenbar effekt. '
-    pullNoEffectMsg = '{Du/han} försök{er/te} att dra {den dobj/honom}, utan någon '
+    pullNoEffectMsg = '{Du/han} försök{er|te} att dra {den dobj/honom}, utan någon '
                       + 'uppenbar effekt. '
-    moveNoEffectMsg = '{Du/han} försök{er/te} att flytta {den dobj/honom}, utan någon '
+    moveNoEffectMsg = '{Du/han} försök{er|te} att flytta {den dobj/honom}, utan någon '
                       + 'uppenbar effekt. '
     moveToNoEffectMsg = '{Du/han} lämna{r/de} {Den dobj/han} där {it/he} {är}. '
 
@@ -4257,7 +4261,7 @@ npcActionMessages: playerActionMessages
     okayTurnOffMsg = '{Du/han} {vrider|vred} av {den dobj/honom}. '
 
     /* the key (iobj) does not fit the lock (dobj) */
-    keyDoesNotFitLockMsg = '{Du/han} försök{er/te} {Den iobj/han}, men {det iobj/han} passa{r/de} inte till låset. '
+    keyDoesNotFitLockMsg = '{Du/han} försök{er|te} {Den iobj/han}, men {det iobj/han} passa{r/de} inte till låset. '
 
     /* acknowledge entering "follow" mode */
     okayFollowModeMsg = '<q>Ok, jag kommer följa {den dobj/honom}.</q> '

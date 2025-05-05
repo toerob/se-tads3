@@ -1119,8 +1119,12 @@ modify Thing
      *   nominative case, objective case, possessive adjective, possessive
      *   noun
      */
-    itNom { return [ (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
+    itNom { 
+        return [ (isUter ? 'den':'det'), 'han', 'hon', 'de'][pronounSelector]; 
+        //return [ 'den', 'han', 'hon', 'de'][pronounSelector]; 
+    }
     itObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector]; }
+
     itPossAdj { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
     itPossNoun { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
 
@@ -1133,7 +1137,10 @@ modify Thing
 
     /* demonstrative pronouns ('that' or 'those') */
     //thatNom { return ['that', 'he', 'she', 'those'][pronounSelector]; }
-    thatNom { return [ (isUter?'den':'det'), 'han', 'henne', 'dessa'][pronounSelector]; }
+    //thatNom { return [ (isUter?'den':'det'), 'han', 'henne', 'dessa'][pronounSelector]; }
+    
+    // 'De' - är nog mest praktisk här är teorin
+    thatNom { return [ (isUter?'den':'det'), 'han', 'henne', 'de'][pronounSelector]; }
 
 
     thatIsContraction
@@ -1525,7 +1532,10 @@ modify Thing
     theNamePossAdj
     {
         /* add apostrophe-S, unless it's a plural ending with 's' */
-        return theName
+        
+        // Lägg till s om det saknas på slutet, t ex: "Bob" blir "Bobs"
+
+        return theName + (theName.endsWith('s') ? '' : 's'); 
             //+ (isPlural && theName.endsWith('s') ? '' : 's')
             ;
     }
@@ -2511,7 +2521,7 @@ modify Actor
     }
     itObj
     {
-        return ['mig', 'mig', 'mig', 'us',
+        return ['mig', 'mig', 'mig', 'oss',
                'dig', 'dig', 'dig', 'dig',
                'den', 'han', 'hon', 'dem'][pronounSelector];
     }
@@ -2521,7 +2531,9 @@ modify Actor
                'din', 'din', 'din', 'dina',
                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
     }
-    itPossAdjPlural
+    // TODO: skulle kunna slås ihop med ovanstående med lite lim
+    // så försvinner behovet av två stycken här.
+    itPossAdjPlural 
     {
         return ['mina', 'mina', 'mina', 'våra',
                'dina', 'dina', 'dina', 'dina',
@@ -2553,7 +2565,7 @@ modify Actor
     {
         return ['jag', 'jag', 'jag', 'vi',
                'du', 'du', 'du', 'du',
-               (isUter?'den':'det'), 'han', 'henne', 'de'][pronounSelector];
+               (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector];
     }
 
     /* demonstrative pronoun, objective case */
@@ -2561,13 +2573,13 @@ modify Actor
     {
         return ['jag', 'jag', 'jag', 'oss',
                'du', 'du', 'du', 'du',
-               (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector];
+               (isUter?'den':'det'), 'honom', 'henne', 'dessa'][pronounSelector];
     }
 
     /* demonstrative pronoun, nominative case with 'is' contraction */
     thatIsContraction
     {
-        tadsSay('LEFT TO FIX');
+        //tadsSay('LEFT TO FIX');
         return thatNom
             + tSel(['&rsquo;m', '&rsquo;re', '&rsquo;s',
                     '&rsquo;re', '&rsquo;re', ' are'][conjugationSelector],
