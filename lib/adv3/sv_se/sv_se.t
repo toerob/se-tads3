@@ -1526,7 +1526,8 @@ modify Thing
     {
         /* add apostrophe-S, unless it's a plural ending with 's' */
         return theName
-            + (isPlural && theName.endsWith('s') ? '' : 's');
+            //+ (isPlural && theName.endsWith('s') ? '' : 's')
+            ;
     }
 
     /*
@@ -2505,20 +2506,26 @@ modify Actor
     itNom
     {
         return ['jag', 'jag', 'jag', 'vi',
-               'du', 'du', 'du', 'du',
+               'du', 'du', 'du', 'ni',
                'den', 'han', 'hon', 'de'][pronounSelector];
     }
     itObj
     {
         return ['mig', 'mig', 'mig', 'us',
                'dig', 'dig', 'dig', 'dig',
-               'den', 'han', 'henne', 'dem'][pronounSelector];
+               'den', 'han', 'hon', 'dem'][pronounSelector];
     }
     itPossAdj
     {
         return ['min', 'min', 'min', 'våran',
-               'din', 'din', 'din', 'din',
+               'din', 'din', 'din', 'dina',
                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+    }
+    itPossAdjPlural
+    {
+        return ['mina', 'mina', 'mina', 'våra',
+               'dina', 'dina', 'dina', 'dina',
+               'dessas', 'deras', 'deras', 'deras'][pronounSelector];
     }
     itPossNoun
     {
@@ -2634,6 +2641,10 @@ modify Actor
     /* theName as a possessive adjective */
     theNamePossAdj
         { return (referralPerson == ThirdPerson ? inherited : itPossAdj); }
+
+    /* theName as a possessive adjective and in plural form */
+    theNamePossAdjPlural
+        { return (referralPerson == ThirdPerson ? inherited : itPossAdjPlural); }
 
     /* theName as a possessive noun */
     theNamePossNoun
@@ -4167,6 +4178,13 @@ langMessageBuilder: MessageBuilder
         ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
         ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
 
+        ['mig', &itObj, 'actor', nil, nil],
+        ['dig', &itObj, 'actor', nil, nil],
+        ['sig', &itObj, 'actor', nil, nil],
+
+        ['min', &theNamePossAdj, 'actor', nil, nil],
+        ['din', &itPossAdj, 'actor', nil, nil],
+
         //['han', &thatNom, 'actor', nil, true],
         //['hon', &thatNom, 'actor', nil, true],
 
@@ -4178,17 +4196,20 @@ langMessageBuilder: MessageBuilder
         ['you/him', &theNameObj, 'actor', &itReflexive, nil],
         ['you/her', &theNameObj, 'actor', &itReflexive, nil],
         ['your/her', &theNamePossAdj, 'actor', nil, nil],
-        ['your/his', &theNamePossAdj, 'actor', nil, nil],
-        ['your', &theNamePossAdj, 'actor', nil, nil],
+        
+        ['your/his', &theNamePossAdj, 'actor', nil, nil],        
+        ['din/hans', &theNamePossAdj, 'actor', nil, nil], // Ersätter ovan
+        //['your', &theNamePossAdj, 'actor', nil, nil],
+
+        ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
+
+
         ['yours/hers', &theNamePossNoun, 'actor', nil, nil],
         ['yours/his', &theNamePossNoun, 'actor', nil, nil],
         ['yours', &theNamePossNoun, 'actor', nil, nil],
         ['yourself/himself', &itReflexive, 'actor', nil, nil],
         ['yourself/herself', &itReflexive, 'actor', nil, nil],
         ['digsjälv', &itReflexive, 'actor', nil, nil],
-
-        ['dig', &itObj, 'actor', nil, nil],
-        ['sig', &itObj, 'actor', nil, nil],
 
         // sig själv
         ['själv', &itReflexive, 'actor', nil, nil],
@@ -4200,7 +4221,9 @@ langMessageBuilder: MessageBuilder
         ['den/honom', &theNameObj, nil, &itReflexive, nil],
         ['den/henne', &theNameObj, nil, &itReflexive, nil],
         //TODO: ['hennes', &theNamePossAdj, nil, &itPossAdj, nil],
-        ['dess/hennes', &theNamePossNoun, nil, &itPossNoun, nil],
+        ['dess/hennes', &theNamePossNoun, nil, &itPossNoun, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
+        ['dess/hon', &itPossAdj, nil, nil, nil],               // ['its/her', &itPossAdj, nil, nil, nil],
+
 
         ['a/t', &endingForNounTA, 'dobj', nil, nil],
         ['a', &endingForNounA, 'dobj', nil, nil],
@@ -4284,7 +4307,7 @@ langMessageBuilder: MessageBuilder
         ['its/her', &itPossAdj, nil, nil, nil],
         ['its/hers', &itPossNoun, nil, nil, nil],
 
-        ['dess/hennes', &itPossAdj, nil, nil, nil],
+        
 
         //['it\'s/he\'s', &itIsContraction, nil, nil, true],
         //['it\'s/she\'s', &itIsContraction, nil, nil, true],

@@ -2941,7 +2941,7 @@ playerActionMessages: MessageHelper
     cannotPutComponentMsg(loc)
     {
         return '{Du/han} {kan} inte lägga {det/honom dobj} någonstans; '
-            + '{detär dobj} del av ' + loc.theNameObj + '. ';
+            + '{detär dobj} en del av ' + loc.theNameObj + '. ';
     }
 
     /* specialized Immovable messages for TravelPushables */
@@ -2983,7 +2983,7 @@ playerActionMessages: MessageHelper
     {
         gMessageParams(dropobj);
         //return '{It dropobj/he}  {faller|föll} out of sight below. ';
-        return '{It dropobj/he} {faller|föll} utom synhåll nedanför. ';
+        return '{Det dropobj/han} {faller|föll} utom synhåll nedanför. ';
     }
 
     /* default successful 'put in' response */
@@ -3036,23 +3036,21 @@ playerActionMessages: MessageHelper
     cannotMoveThroughClosedMsg(obj, cont)
     {
         gMessageParams(cont);
-        return '{Du/han} {kan} inte göra det för att {den cont/han} {är} ' + 'stängd. ';
+        return '{Du/han} {kan} inte göra det då {den cont/han} {är} ' + 'stäng{d/t/da iobj}. ';
     }
 
     /* cannot fit obj into cont through cont's opening */
     cannotFitIntoOpeningMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att {Den obj/han} {är}
-                för stor att sätta in i {den cont/honom}. ';
+        return '{Du/han} {kan} inte göra det då {den obj/han} {är} för stor{a/t obj} för att sätta in i {den cont/honom}. ';
     }
 
     /* cannot fit obj out of cont through cont's opening */
     cannotFitOutOfOpeningMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att {Den obj/han} {är}
-                för stor att ta ut ur {den cont/honom}. ';
+        return '{Du/han} {kan} inte göra det då {den obj/han} {är} för stor{a/t obj} för att ta ut ur {den cont/honom}. ';
     }
 
     /* actor 'obj' cannot reach in our out of container 'cont' */
@@ -3066,57 +3064,55 @@ playerActionMessages: MessageHelper
     cannotTouchThroughClosedMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/han} {kan} inte göra det för att {den cont/han} {är} stängd. ';
+        return '{Den obj/han} {kan} inte göra det då {den cont/han} {är} stäng{d/t/da cont}. ';
     }
 
     /* actor cannot fit hand into cont through cont's opening */
     cannotReachIntoOpeningMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/han} {kan} inte få in {dess/hennes} hand i ' + '{den cont/honom}. ';
+        return '{Den obj/han} {kan} inte få in {din actor} hand i ' + '{den cont/honom}. ';
     }
 
     /* actor cannot fit hand into cont through cont's opening */
     cannotReachOutOfOpeningMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/han} {kan} inte få in {dess/hennes} hand genom {den cont/honom}. ';
+        return '{Den obj/han} {kan} inte få in {dess/hennes obj} hand genom {den cont/honom}. ';
     }
 
-    /* the object is för stor för the actor to hold */
+    /* the object is too big for the actor to hold */
     tooLargeForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/han} {är} för stor för {du/honom} att hålla. ';
+        return '{Den obj/han} {är} för stor{t/a obj} för {du/honom} att hålla. ';
     }
 
     /* the actor doesn't have room to hold the object */
     handsTooFullForMsg(obj)
     {
-        return '{Your} händer {är} för fulla för att hålla ' + obj.theNameObj + '. ';
+        return '{Mina} händer {är} för fulla för att även hålla ' + obj.theNameObj + '. ';
     }
 
     /* the object is becoming too big for the actor to hold */
     becomingTooLargeForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte göra det för att {Den obj/han}
-                skulle {|ha} blivit för stor för {du/honom} att hålla. ';
+        return '{Du/han} {kan} inte göra det då {den obj/han} skulle {|ha} blivit för stor{a/t} för {du/honom} att hålla. ';
     }
 
     /* the object is becoming large enough that the actor's hands are full */
     handsBecomingTooFullForMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte göra det för att {dess/hennes} händer
-            skulle {|have} bli för fulla för att hålla {det obj/honom}. ';
+        return '{Du/han} {kan} inte göra det då {mina} händer skulle {|ha} blivit för fulla för att kunna hålla {det/honom obj}. ';
     }
 
     /* the object is too heavy (all by itself) for the actor to hold */
     tooHeavyForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/han} {är} för tung{a/t} för dig {du/honom} att plocka upp. ';
+        return '{Den obj/han} {är} för tung{t/a obj} för {dig} att plocka upp. ';
     }
 
     /*
@@ -3126,7 +3122,7 @@ playerActionMessages: MessageHelper
     totalTooHeavyForMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/han} {är} för tung{a/t}; {du/han} {kommer|} {behöva|behövde} {att|} sätta ner någonting först. ';
+        return '{Den obj/han} {är} för tung{t/a obj}; {du/han} {kommer |}behöv{a|de} sätta ner någonting först. ';
     }
 
     /* object is för stor för container */
@@ -3154,7 +3150,7 @@ playerActionMessages: MessageHelper
     containerTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{den cont/han} {är} redan för full för att få plats med {det obj/honom}. ';
+        return '{den cont/han} {är} redan för full{t/a cont} för att få plats med {det obj/honom}. ';
     }
 
     /* surface doesn't have room for object */
@@ -3182,8 +3178,7 @@ playerActionMessages: MessageHelper
     becomingTooLargeForContainerMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det då det skulle {göra|ha gjort}
-            {det obj/honom} för stor för {den cont/honom}. ';
+        return '{Du/han} {kan} inte göra det då det skulle {göra|ha gjort} {det obj/honom} för stor{t/a obj} för {den cont/honom}. ';
     }
 
     /*
@@ -3193,8 +3188,7 @@ playerActionMessages: MessageHelper
     containerBecomingTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att {Den obj/han}
-            skulle inte längre få plats i {den cont/honom}. ';
+        return '{Du/han} {kan} inte göra det för att {den obj/han} skulle inte längre få plats i {den cont/honom}. ';
     }
 
     /* trying to put an object in a non-container */
@@ -3253,56 +3247,49 @@ playerActionMessages: MessageHelper
     takenAndMovedToKeyringMsg(keyring)
     {
         gMessageParams(keyring);
-        return '{Du/han} plocka{r/de} upp {den dobj/honom} och
-            fäst{er/te actor} {det dobj/honom} i {den keyring/honom}. ';
+        return '{Du/han} plocka{r/de} upp {den dobj/honom} och fäs{ter|te} {det dobj/honom} i {den keyring/honom}. ';
     }
 
     /* we attached a key to a keyring automatically */
     movedKeyToKeyringMsg(keyring)
     {
         gMessageParams(keyring);
-        return '{Du/han} fäst{er/te} {den dobj/honom} i {den keyring/honom}. ';
+        return '{Du/han} fäst{er|e} {den dobj/honom} i {den keyring/honom}. ';
     }
 
     /* we moved several keys to a keyring automatically */
     movedKeysToKeyringMsg(keyring, keys)
     {
         gMessageParams(keyring);
-        return '{Du/han} fäst{er/te} {your/his} lösa nyckel'
-            + (keys.length() > 1 ? 's' : '')
-            + ' i {den keyring/honom}. ';
+        return '{Du/han} fäst{er|e} {your/his} lösa nyck' + (keys.length() > 1 ? 'lar' : 'el') + ' i {den keyring/honom}. ';
     }
 
     /* putting y in x when x is already in y */
     circularlyInMsg(x, y)
     {
         gMessageParams(x, y);
-        return '{Du/han} {kan} inte göra det medan {den x/han} {är}
-            i {den y/honom}. ';
+        return '{Du/han} {kan} inte göra det då {den x/han} {är} i {den y/honom}. ';
     }
 
     /* putting y in x when x is already on y */
     circularlyOnMsg(x, y)
     {
         gMessageParams(x, y);
-        return '{Du/han} {kan} inte göra det medan {den x/han} {är}
-            på {den y/honom}. ';
+        return '{Du/han} {kan} inte göra det då {den x/han} {är} på {den y/honom}. ';
     }
 
     /* putting y in x when x is already under y */
     circularlyUnderMsg(x, y)
     {
         gMessageParams(x, y);
-        return '{Du/han} {kan} inte göra det medan {den x/han} {är}
-            under {den y/honom}. ';
+        return '{Du/han} {kan} inte göra det då {den x/han} {är} under {den y/honom}. ';
     }
 
     /* putting y in x when x is already behind y */
     circularlyBehindMsg(x, y)
     {
         gMessageParams(x, y);
-        return '{Du/han} {kan} inte göra det medan {den x/han} {är}
-            behind {den y/honom}. ';
+        return '{Du/han} {kan} inte göra det då {den x/han} {är} bakom {den y/honom}. ';
     }
 
     /* taking dobj from iobj, but dobj isn't in iobj */
@@ -3354,7 +3341,7 @@ playerActionMessages: MessageHelper
     invalidStagingContainerMsg(cont, dest)
     {
         gMessageParams(cont, dest);
-        return '{Du/han} {kan} inte göra det medan {den dest/han} {är} {in cont}. ';
+        return '{Du/han} {kan} inte göra det medan {den dest/han} {är} {i cont}. ';
     }
 
     /* cannot carry out travel while 'cont' (an actor) is holding 'dest' */
@@ -4283,7 +4270,7 @@ npcActionMessages: playerActionMessages
 
     /* acknowledge attachment */
     okayAttachToMsg =
-        '{Du/han} fäst{er/te} {den dobj/honom} till {den iobj/honom}. '
+        '{Du/han} fäst{er|e} {den dobj/honom} till {den iobj/honom}. '
 
     /* acknowledge detachment */
     okayDetachFromMsg =
