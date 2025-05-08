@@ -57,8 +57,16 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
         //descContentsLister = thingDescContentsLister
     }
 ;
-++skapLuckor: ComplexComponent, ContainerDoor // 'skåplucka[-n]**skåpluck[-or]/luckor[-na]' 'skåpluckor' 
+
++sofia: Actor 'Sofia' 'Sofia' isShe = true isProperName = true;
+++HelloTopic 'hello';
+++AskTopic 'regn' "...";
+
+// TODO: problem om inget namn sätts, problem om namn
+++skapLuckor: ComplexComponent, ContainerDoor 'skåplucka[-n]**skåpluck[-or]/luckor[-na]' 'skåpluckor' 
     isPlural = true
+    theName = 'skåpet' // TODO: detta ska inte behöva göras, det är ett plåster. theName ska inte kunna bli nil...
+
 ;
 
 +++skapLuckeUtrymme: ComplexContainer 'insida[-n]' 'insida';
@@ -433,7 +441,7 @@ Object -> fridge "kylskåp"
 
 
 
-+forradsdorrsnyckel: Key 'förråds-/förrådsdörrsnyckel[-n]/nyckel[-n]' 'förrådsdörrsnyckel'; 
++forradsdorrsnyckel: Key 'förråds-/förrådsnyckel[-n]/förrådsdörrsnyckel[-n]/nyckel[-n]' 'förrådsdörrsnyckel'; 
 
 // TODO: darkroom
 stugansSovrum: Room 'stugans sovrum' 'sovrummet'

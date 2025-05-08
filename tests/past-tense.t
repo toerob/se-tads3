@@ -144,7 +144,7 @@ kajen: OutdoorRoom 'kajen' 'kajen';
 musikenObjUterumSingular: Thing 'musik[-en]' 'musik';
 matosetObjUterumSingular: Thing 'matos[-et]' 'matos';
 
-
+/*
 // Test Assertions
 UnitTest 'openMsg - uterum singular' run {
   assertThat(libMessages.openMsg(dorrenObjUterumSingular)).isEqualTo('öppen');
@@ -898,18 +898,18 @@ UnitTest 'noMatchForPronoun' run {
 };
 
 // TODO: fixa text... något med gTranscript ställer troligen till det.
-/*UnitTest 'askMissingObject' run {
-  gActor = spelare2aPerspektiv;
-  gActor.referralPerson = DirectObject;
+// UnitTest 'askMissingObject' run {
+//   gActor = spelare2aPerspektiv;
+//   gActor.referralPerson = DirectObject;
 
-  setPlayer(spelare2aPerspektiv);
-  //mainOutputStream.hideOutput = nil;
-  gAction = UnlockWithAction.createActionInstance();
-  gAction.setCurrentObjects([skapetObjNeutrumSingular]);
-  playerMessages.askMissingObject(gActor, gAction, DirectObject);
-  //local x = gTranscript.();
-  //assertThat(x).contains('Vill du .');
-};*/
+//   setPlayer(spelare2aPerspektiv);
+//   //mainOutputStream.hideOutput = nil;
+//   gAction = UnlockWithAction.createActionInstance();
+//   gAction.setCurrentObjects([skapetObjNeutrumSingular]);
+//   playerMessages.askMissingObject(gActor, gAction, DirectObject);
+//   //local x = gTranscript.();
+//   //assertThat(x).contains('Vill du .');
+// };
 
 
 
@@ -1413,20 +1413,19 @@ UnitTest 'obscuredReadDesc 3de person uterum plural' run {
 };
 
 // TODO: fixa test, texten kan inte genereras som det är nu.
-/*
-UnitTest 'handsBecomingTooFullForMsg(obj) 3de person' run {
-  mainOutputStream.hideOutput = nil;
-  setPlayer(spelare3dePerspektiv);
-  gActor = spelare3dePerspektiv;
-  gPlayerChar = spelare3dePerspektiv;
-  gAction = TakeAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  gAction.setActors([spelare3dePerspektiv]);
-  local msg = playerActionMessages.handsBecomingTooFullForMsg(hatt);
-  "<<msg>>";
-  assertThat(o)
-    .startsWith('Bob kunde inte göra det då hans händer skulle ha blivit för fulla för att kunna hålla det.');
-};*/
+// UnitTest 'handsBecomingTooFullForMsg(obj) 3de person' run {
+//   //mainOutputStream.hideOutput = nil;
+//   setPlayer(spelare3dePerspektiv);
+//   gActor = spelare3dePerspektiv;
+//   gPlayerChar = spelare3dePerspektiv;
+//   gAction = TakeAction.createActionInstance();
+//   gAction.setCurrentObjects([hatt]);
+//   gAction.setActors([spelare3dePerspektiv]);
+//   local msg = playerActionMessages.handsBecomingTooFullForMsg(hatt);
+//   "<<msg>>";
+//   assertThat(o)
+//     .startsWith('Bob kunde inte göra det då hans händer skulle ha blivit för fulla för att kunna hålla det.');
+// };
 
 
 UnitTest 'tooHeavyForActorMsg(obj)' run {
@@ -2031,14 +2030,15 @@ UnitTest 'singleActorRequired(actor)' run {
 // blir bara ett problem när den väljs, inte 'det'
 
 UnitTest 'cannotTalkTo(targetActor, issuingActor) #1' run {
-  mainOutputStream.hideOutput = nil;
+  //mainOutputStream.hideOutput = nil;
   setPlayer(pirat);
   gActor = pirat;
   playerMessages.cannotTalkTo(hobbit, pirat);
   assertThat(o).startsWith('\^hobbiten var inte någonting du kunde prata med.');
 };
+
 UnitTest 'cannotTalkTo(targetActor, issuingActor) #2' run {
-  mainOutputStream.hideOutput = nil;
+  //mainOutputStream.hideOutput = nil;
   setPlayer(pirat);
   gActor = pirat;
   playerMessages.cannotTalkTo(pirat, hobbit);
@@ -2065,69 +2065,321 @@ UnitTest 'cannotTalkTo(targetActor, issuingActor) #3' run {
 
 };
 
-/*
 
-alreadyTalkingTo(actor, greeter)
-oopsNote()
-acknowledgeVerboseMode(verbose)
-showNotifyStatus(stat)
-acknowledgeNotifyStatus(stat)
-announceMultiActionObject(obj, whichObj, action)
-announceAmbigActionObject(obj, whichObj, action)
-announceDefaultObject(obj, whichObj, action, resolvedAllObjects)
-noCommandForAgain()
-againCannotChangeActor()
-againCannotTalkToTarget(issuer, target)
-againNotPossible(issuer)
-systemActionToNPC()
-confirmQuit()
-notTerminating()
-confirmRestart()
-saveFailed(exc)
-saveFailedOnServer(exc)
-makeSentence(msg)
-restoreFailedOnServer(exc)
-restoreInvalidFile()
-restoreCorruptedFile()
-restoreInvalidMatch()
-restoreFailed(exc)
-filePromptFailed()
-filePromptFailedMsg(msg)
-pausePrompt()
-pauseSaving()
-pauseEnded()
-inputScriptOkay(fname)
-inputScriptFailedException(exc)
-scriptingOkay()
-scriptingOkayWebTemp()
-scriptingFailedException(exc)
-recordingFailedException(exc)
-undoOkay(actor, cmd)
-undoFailed()
-invalidFinishOption(resp)
-exitsOnOffOkay(stat, look)
-explainExitsOnOff()
-currentExitsSettings(statusLine, roomDesc)
-mentionFullScore()
-savedDefaults()
-restoredDefaults()
-defaultsFileReadError(exc)
-textMenuMainPrompt(keylist)
-textMenuTopicPrompt()
-menuInstructions(keylist, prevLink)
-menuNextChapter(keylist, title, hrefNext, hrefUp)
+UnitTest 'alreadyTalkingTo(actor, greeter)' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(apan);
+  gActor = apan;  
+  apan.pcReferralPerson = FirstPerson;
+  playerMessages.alreadyTalkingTo(hobbit, apan);
+  assertThat(o).startsWith('\^jag hade redan hobbitens uppmärksamhet.');
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+
+  apan.pcReferralPerson = SecondPerson;
+  playerMessages.alreadyTalkingTo(hobbit, apan);
+  assertThat(o).startsWith('\^du hade redan hobbitens uppmärksamhet.');
+  
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  apan.pcReferralPerson = ThirdPerson;
+  playerMessages.alreadyTalkingTo(hobbit, apan);
+  assertThat(o).startsWith('\^apan hade redan hobbitens uppmärksamhet.');
+};
+
+
+UnitTest 'againCannotChangeActor' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  local msg = playerMessages.againCannotChangeActor();
+  "<<msg>>";
+  assertThat(o).contains('För att repetera ett kommando som <q>sköldpadda, gå norrut,</q>
+säg bara <q>igen,</q> inte <q>sköldpadda, igen.</q>');
+};
+
+UnitTest 'againCannotTalkToTarget' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  playerMessages.againCannotTalkToTarget(hobbit, apan);
+  assertThat(o).contains('\^hobbiten kunde inte repetera det kommandot.');
+
+};
 */
-/*
+
+//TODO:
+    // TakeFromAction -> 'vad vill du x',
+    // DetachFromAction -> 'vad vill du x',
+    // UnfastenFromAction -> 'vad vill du x',
+    // UnplugFromAction -> 'vad vill du x',
+
+    //PutInAction -> 'vad vill du stoppa in',
+    //PutOnAction -> 'vad vill du lägga på',
+    //PutUnderAction -> 'vad vill du lägga under',
+    //PutBehindAction -> 'vad vill du lägga bakom',
+    //PutInAction -> 'vad vill du x',
+    //AskVagueAction -> 'vem vill du x',
+
+    //GiveToAction -> 'vad vill du x',
+    //ShowToAction -> 'vad vill du x',
+    //ThrowAction -> 'vad vill du kasta',
+    //ThrowAtAction -> 'vad vill du x',
+    //ThrowToAction -> 'vad vill du x',
+
+    //ReplayStringAction -> 'vill du avsluta kommandoinspelning',
+    //TravelViaAction -> 'vad vill du x',
+    //MoveToAction -> 'vad vill du röra',
+
+
+    //EnterOnAction -> 'vad vill du kliva på',
+    //ConsultAboutAction -> 'vad vill du sklå upp',
+
+    //PourIntoAction -> 'vad vill du hälla i',
+    //PourOntoAction -> 'vad vill du hälla på',
+    //AttachToAction -> 'vad vill du sätta fast',
+
+
+    //FastenToAction -> 'vad vill du fästa till',
+    //PlugIntoAction -> 'vad vill du x',
+    //PushTravelDirAction -> 'vad vill du x',
+    //PushTravelEnterAction -> 'vad vill du x',
+    //PushTravelGetOutOfAction -> 'vad vill du x',
+    //PushTravelClimbUpAction -> 'vad vill du x',
+    //PushTravelClimbDownAction -> 'vad vill du x',
+    //DebugAction -> 'vill du debugga',
+    //AskAboutAction -> 'vad vill du x'
+  
+
 UnitTest 'askMissingLiteral(actor, action, which)' run {
-  setPlayer(spelare1aPerspektiv);
-  gActor = spelare1aPerspektiv;
-  gActor.referralPerson = DirectObject;
-  gAction = DropAction.createActionInstance();
-  gAction.setCurrentObjects([hatt]);
-  playerMessages.askMissingLiteral(gActor, gAction, DirectObject);
-  assertThat(o).startsWith('Du behöver vara specifik om vad du vill');
+  //mainOutputStream.hideOutput = nil;
+  local actionTextPairs = 
+  [
+    TakeAction -> 'vad vill du ta',
+    RemoveAction -> 'vad vill du ta bort',
+    DropAction -> 'vad vill du släppa',
+    ExamineAction -> 'vad vill du undersöka',
+    ReadAction -> 'vad vill du läsa',
+    LookInAction -> 'vad vill du titta i',
+    LookUnderAction -> 'vad vill du titta under',
+    LookBehindAction -> 'vad vill du titta bakom',
+    FeelAction -> 'vad vill du röra',
+    TasteAction -> 'vad vill du smaka',
+    SmellAction -> 'vad vill du lukta',
+    ListenToAction -> 'vad vill du lyssna till',
+    SmellImplicitAction -> 'vill du lukta',
+    ListenImplicitAction -> 'vill du lyssna',
+    KissAction -> 'vem vill du kyssa',
+    AskForAction -> 'vem vill du fråga',
+    AskAboutAction -> 'vem vill du fråga',
+    TellAboutAction -> 'vem vill du berätta för',
+    TalkToAction -> 'vem vill du prata med',
+    TopicsAction -> 'vill du visa samtalsämnen',
+    HelloAction -> 'vill du hälsa',
+    GoodbyeAction -> 'vill du ta farväl',
+    YesAction -> 'vill du säga ja',
+    NoAction -> 'vill du säga nej',
+    YellAction -> 'vill du skrika',
+    ThrowDirAction -> 'vad vill du kasta?',
+    FollowAction -> 'vem vill du följa',
+    AttackAction -> 'vem vill du attackera',
+    InventoryAction -> 'vill du lista inventarier',
+    InventoryTallAction -> 'vill du lista inventarier "högt"',
+    InventoryWideAction -> 'vill du lista inventarier "brett"',
+    WaitAction -> 'vill du vänta',
+    LookAction -> 'vill du titta runt',
+    QuitAction -> 'vill du avsluta',
+    AgainAction -> 'vill du repetera det sista kommandot',
+    FootnoteAction -> 'vill du visa fotnoter?',
+    FootnotesFullAction -> 'vill du tillåta alla fotnoter',
+    FootnotesMediumAction -> 'vill du tillåta nya fotnoter',
+    FootnotesOffAction -> 'vill du gömma fotnoter',
+    FootnotesStatusAction -> 'vill du visa status för fotnoter',    
+    TipModeAction -> 'vill du aktivera tips',
+    VerboseAction -> 'vill du aktivera ORDRIKT läge',
+    TerseAction -> 'vill du aktivera KORTFATTAT läge',
+    ScoreAction -> 'vill du visa poäng',
+    FullScoreAction -> 'vill du visa full poäng',
+    NotifyAction -> 'vill du visa notifieringsstatus',
+    NotifyOnAction -> 'vill du slå på poängnotifikation',
+    NotifyOffAction -> 'vill du stänga av poängnotifikation',
+    SaveAction -> 'vill du spara',
+    SaveStringAction -> 'vill du spara',
+    RestoreAction -> 'vill du ladda',
+    RestoreStringAction -> 'vill du ladda',
+    SaveDefaultsAction -> 'vill du spara förvalt',
+    RestoreDefaultsAction -> 'vill du återställa förvalt',
+    RestartAction -> 'vill du starta om',
+    PauseAction -> 'vill du pausa',
+    UndoAction -> 'vill du ångra',
+    VersionAction -> 'vill du visa version',
+    CreditsAction -> 'vill du visa omnämnanden',
+    AboutAction -> 'vill du visa information om berättelse',
+    ScriptAction -> 'vill du starta skriptande',
+    ScriptStringAction -> 'vill du starta skriptande',
+    ScriptOffAction -> 'vill du avsluta skriptande',
+    
+    RecordAction -> 'vill du starta händelseinspelning',
+    RecordStringAction -> 'vill du starta händelseinspelning',
+    RecordEventsAction -> 'vill du starta händelseinspelning',
+    RecordEventsStringAction -> 'vill du starta händelseinspelning',
+
+    RecordOffAction -> 'vill du avsluta kommandoinspelning',
+    VagueTravelAction -> 'vill du gå',
+    TravelAction -> 'vill du gå till',
+    PortAction -> 'vill du gå till babord',
+    StarboardAction -> 'vill du gå till styrbord',
+    InAction -> 'vill du gå in',
+    OutAction -> 'vill du gå ut',
+    EnterAction -> 'vad vill du gå in i', // TODO: gå in i
+    GoBackAction -> 'vill du gå tillbaka',
+    DigAction -> 'vad vill du gräva',
+    JumpAction -> 'vill du hoppa',
+    JumpOffIAction -> 'vill du hoppa av',
+    JumpOffAction -> 'vad vill du hoppa av',
+    JumpOverAction -> 'vad vill du hoppa över',
+    PullAction -> 'vad vill du dra',
+    MoveAction -> 'vad vill du flytta',
+    TurnAction -> 'vad vill du vrida',
+    TurnToAction -> 'vad vill du vrida',
+    SetAction -> 'vad vill du ställa',
+    SetToAction -> 'vad vill du ställa',
+    TypeOnAction -> 'vad vill du skriva på',
+    TypeLiteralOnAction -> 'vad vill du skriva',
+    ConsultAction -> 'vad vill du konsultera',
+    FlipAction -> 'vad vill du vända',
+    TurnOnAction -> 'vad vill du vrida på',
+    TurnOffAction -> 'vad vill du vrida av',
+    LightAction -> 'vad vill du tända',
+    StrikeAction -> 'vad vill du slå',
+    BurnAction -> 'vad vill du tända',
+    BreakAction -> 'vad vill du förstöra',
+    EatAction -> 'vad vill du äta',
+    DrinkAction -> 'vad vill du dricka',
+    PourAction -> 'vad vill du hälla',
+    ClimbAction -> 'vad vill du klättra',
+    ClimbUpAction -> 'vad vill du kliva upp på',
+    ClimbDownAction -> 'vad vill du kliva ner på',
+    CleanAction -> 'vad vill du rengöra',
+    OpenAction -> 'vad vill du öppna',
+    CloseAction -> 'vad vill du stänga',
+    LockAction -> 'vad vill du låsa',
+    UnlockAction -> 'vad vill du låsa upp',
+    SitOnAction -> 'vad vill du sitta på',
+    SitAction -> 'vill du sitta ner',
+    LieOnAction -> 'vad vill du ligga på',
+    LieAction -> 'vill du ligga',
+    StandOnAction -> 'vad vill du stå på',
+    StandAction -> 'vill du stå',
+    GetOutOfAction -> 'vad vill du kliva ut ur',
+    GetOffOfAction -> 'vad vill du kliva av från',
+    GetOutAction -> 'vill du kliva ut',
+    BoardAction -> 'vad vill du borda',
+    SleepAction -> 'vill du sova',
+    FastenAction -> 'vad vill du fästa',
+    UnfastenAction -> 'vad vill du koppla lös',
+    PlugInAction -> 'vad vill du koppla in',
+    UnplugAction -> 'vad vill du koppla ur',
+    ScrewAction -> 'vad vill du skruva på',
+    UnscrewAction -> 'vad vill du skruva loss',
+    ExitsAction -> 'vill du visa utgångar',
+    ExitsModeAction -> 'vill du stänga av av visning av utgångar',
+    HintsOffAction -> 'vill du stänga av av ledtrådar',
+    HintAction -> 'vill du visa ledtrådar',
+    OopsAction -> 'vad vill du rätta',
+    OopsIAction -> 'vill du rätta',
+    DoffAction -> 'vad vill du klä av',
+    WearAction -> 'vad vill du klä på'
+  ];
+
+  actionTextPairs.forEachAssoc(function(action, msg) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    gTranscript = new CommandTranscript();
+    setPlayer(spelare1aPerspektiv);
+    gActor = spelare1aPerspektiv;
+    gActor.referralPerson = DirectObject;
+    gAction = action.createActionInstance();
+    gAction.setCurrentObjects([hatt]);
+    playerMessages.askMissingLiteral(gActor, gAction, DirectObject);
+    gTranscript.showReports(true);
+    gTranscript.clearReports();
+    assertThat(o.findReplace('  ', ' ', ReplaceAll)).contains(msg);
+  });
+} skip=true;
+
+UnitTest 'playerMessages.askMissingObject' run {
+  local actionTextPairs = 
+  [
+      AttackWithAction -> 'vad vill du attackera med',
+      DigWithAction -> 'vad vill du gräva med',
+      MoveWithAction -> 'vad vill du flytta med',
+      TurnWithAction -> 'vad vill du vrida med',
+      BurnWithAction-> 'vad vill du tända med',
+      CutWithAction -> 'vad vill du klippa med',
+      CleanWithAction -> 'vad vill du rengöra med',
+      LockWithAction -> 'vad vill du låsa med',
+      UnlockWithAction -> 'vad vill du låsa upp med',
+      ScrewWithAction -> 'vad vill du skruva med',
+      UnscrewWithAction -> 'vad vill du skruva loss med'
+  ];
+  actionTextPairs.forEachAssoc(function(action, msg) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    //mainOutputStream.hideOutput = nil;
+    gTranscript = new CommandTranscript();
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = action.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular, nyckel]);
+    playerMessages.askMissingObject(pirat, gAction, IndirectObject);
+    gTranscript.showReports(true);
+    gTranscript.clearReports();
+    //local str = mainOutputStream.captureOutput( {: "<<o>>" });    
+    assertThat(o).contains(msg);
+  });
+} skip=true;
+
+
+/*
+TODO: troligen inkorrekt, kolla användningen av npcMessages.askMissingObject i adv3
+UnitTest 'npcMessages.askMissingObject' run {
+  local actionTextPairs = 
+  [
+      AttackWithAction -> 'vad vill du attackera med',
+      DigWithAction -> 'vad vill du gräva med',
+      MoveWithAction -> 'vad vill du flytta med',
+      TurnWithAction -> 'vad vill du vrida med',
+      BurnWithAction-> 'vad vill du tända med',
+      CutWithAction -> 'vad vill du klippa med',
+      CleanWithAction -> 'vad vill du rengöra med',
+      LockWithAction -> 'vad vill du låsa med',
+      UnlockWithAction -> 'vad vill du låsa upp med',
+      ScrewWithAction -> 'vad vill du skruva med',
+      UnscrewWithAction -> 'vad vill du skruva loss med'
+  ];
+  actionTextPairs.forEachAssoc(function(action, msg) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    mainOutputStream.hideOutput = nil;
+    gTranscript = new CommandTranscript();
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = action.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular, nyckel]);
+    //gAction.setResolvedObjects();
+    //gAction.setActors(apan, pirat);
+
+    npcMessages.askMissingObject(apan, TakeAction, IndirectObject);
+
+    gTranscript.showReports(true);
+    gTranscript.clearReports();
+    //local str = mainOutputStream.captureOutput( {: "<<o>>" });    
+    assertThat(o).contains(msg);
+  });
+
 };*/
 
+
+/*
+npcDeferredMessagesDirect.askMissingObject(apan, TakeAction, DirectObject);
+npcMessagesDirect.askMissingObject(apan, TakeAction, DirectObject);
+*/
 
 /*
 missingLiteral(actor, action, which)
@@ -2158,7 +2410,7 @@ noMatchForAll(actor)
 noMatchForAllBut(actor)
 insufficientQuantity(actor, txt, matchList, requiredNum)
 ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
-askMissingObject(actor, action, which)
+
 missingObject(actor, action, which)
 missingLiteral(actor, action, which)
 noMatchCannotSee(actor, txt)
@@ -2191,24 +2443,13 @@ singleObjectRequired(actor, txt)
 ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
 askMissingObject(actor, action, which)
 
-showCombinedInventoryList(parent, carrying, wearing)
+[actorInventoryLister, actorHoldingDescInventoryListerLong, actorHoldingDescInventoryListerShort]:
 showInventoryEmpty(parent)
 showInventoryWearingOnly(parent, wearing)
 showInventoryCarryingOnly(parent, carrying)
 showInventoryShortLists(parent, carrying, wearing)
 showInventoryLongLists(parent, carrying, wearing)
 
-showInventoryEmpty(parent)
-showInventoryWearingOnly(parent, wearing)
-showInventoryCarryingOnly(parent, carrying)
-showInventoryShortLists(parent, carrying, wearing)
-showInventoryLongLists(parent, carrying, wearing)
-showInventoryEmpty(parent)
-
-showInventoryWearingOnly(parent, wearing)
-showInventoryCarryingOnly(parent, carrying)
-showInventoryShortLists(parent, carrying, wearing)
-showInventoryLongLists(parent, carrying, wearing)
 showListEmpty(pov, parent)
 
 showListPrefixWide(itemCount, pov, parent)

@@ -1832,11 +1832,9 @@ playerMessages: libMessages
      */
     askMissingObject(actor, action, which)
     {
+        local actorName = actor.referralPerson == ThirdPerson ? ' '+actor.theName : '';
         reportQuestion('<.parser>\^' + action.whatObj(which)
-                       + ' vill du '
-                       + (actor.referralPerson == ThirdPerson ? actor.theName : '')
-                       + ' ' 
-                       + action.getQuestionInf(which) + '?<./parser> ');
+                       + ' vill du<<actorName>> <<action.getQuestionInf(which)>>?<./parser> ');
     }
 
     /*
