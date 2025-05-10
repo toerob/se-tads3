@@ -471,352 +471,131 @@ modify VocabObject
      *   conventions of the English format in other languages where
      *   different formats would be more convenient.
      */
-    initializeVocabWithOldBackup(str)
-    {
-        local sectPart;
-        local modList = [];
-
-        /* start off in the adjective section */
-        sectPart = &adjective;
-
-        /* scan the string until we run out of text */
-        while (str != '')
-        {
-            local len;
-            local cur;
-
-            /*
-             *   if it starts with a quote, find the close quote;
-             *   otherwise, find the end of the current token by seeking
-             *   the next delimiter
-             */
-            if (str.startsWith('"'))
-            {
-                /* find the close quote */
-                len = str.find('"', 2);
-            }
-            else
-            {
-                /* no quotes - find the next delimiter */
-                len = rexMatch('<^space|star|/>*', str);
-            }
-
-            /* if there's no match, use the whole rest of the string */
-            if (len == nil)
-                len = str.length();
-
-            /* if there's anything before the delimiter, extract it */
-            if (len != 0)
-            {
-                /* extract the part up to but not including the delimiter */
-                cur = str.substr(1, len);
-
-                /*
-                 *   if we're in the adjectives, and either this is the
-                 *   last token or the next delimiter is not a space, this
-                 *   is implicitly a noun
-                 */
-                if (sectPart == &adjective
-                    && (len == str.length()
-                        || str.substr(len + 1, 1) != ' '))
-                {
-                    /* move to the noun section */
-                    sectPart = &noun;
-                }
-
-                /*
-                 *   if the word isn't a single hyphen (in which case it's
-                 *   a null word placeholder, not an actual vocabulary
-                 *   word), add it to our own appropriate part-of-speech
-                 *   property and to the dictionary
-                 */
-                if (cur != '-')
-                {
-                    /*
-                     *   by default, use the part of speech of the current
-                     *   string section as the part of speech for this
-                     *   word
-                     */
-                    local wordPart = sectPart;
-
-                    /*
-                     *   Check for parentheses, which indicate that the
-                     *   token is "weak."  This doesn't affect anything
-                     *   about the token or its part of speech except that
-                     *   we must include the token in our list of weak
-                     *   tokens.
-                     */
-                    if (cur.startsWith('(') && cur.endsWith(')'))
-                    {
-                        /* it's a weak token - remove the parens */
-                        cur = cur.substr(2, cur.length() - 2);
-
-                        /*
-                         *   if we don't have a weak token list yet,
-                         *   create the list
-                         */
-                        if (weakTokens == nil)
-                            weakTokens = [];
-
-                        /* add the token to the weak list */
-                        weakTokens += cur;
-                    }
-
-                    /*
-                     *   Check for special formats: quoted strings,
-                     *   apostrophe-S words.  These formats are mutually
-                     *   exclusive.
-                     */
-                    if (cur.startsWith('"'))
-                    {
-                        /*
-                         *   It's a quoted string, so it's a literal
-                         *   adjective.
-                         */
-
-                        /* remove the quote(s) */
-                        if (cur.endsWith('"'))
-                            cur = cur.substr(2, cur.length() - 2);
-                        else
-                            cur = cur.substr(2);
-
-                        /* change the part of speech to 'literal adjective' */
-                        wordPart = &literalAdjective;
-                    }
-                    else if (cur.endsWith('\'s'))
-                    {
-                        /*
-                         *   It's an apostrophe-s word.  Remove the "'s"
-                         *   suffix and add the root word using adjApostS
-                         *   as the part of speech.  The grammar rules are
-                         *   defined to allow this part of speech to be
-                         *   used exclusively with "'s" suffixes in input.
-                         *   Since the tokenizer always pulls the "'s"
-                         *   suffix off of a word in the input, we have to
-                         *   store any vocabulary words with "'s" suffixes
-                         *   the same way, with the "'s" suffixes removed.
-                         */
-
-                        /* change the part of speech to adjApostS */
-                        wordPart = &adjApostS;
-
-                        /* remove the "'s" suffix from the string */
-                        cur = cur.substr(1, cur.length() - 2);
-                    }
-
-                    /* add the word to our own list for this part of speech */
-                    if (self.(wordPart) == nil)
-                        self.(wordPart) = [cur];
-                    else
-                        self.(wordPart) += cur;
-
-                    /* add it to the dictionary */
-                    cmdDict.addWord(self, cur, wordPart);
-
-                    if (cur.endsWith('.'))
-                    {
-                        local abbr;
-
-                        /*
-                         *   It ends with a period, so this is an
-                         *   abbreviated word.  Enter the abbreviation
-                         *   both with and without the period.  The normal
-                         *   handling will enter it with the period, so we
-                         *   only need to enter it specifically without.
-                         */
-                        abbr = cur.substr(1, cur.length() - 1);
-                        self.(wordPart) += abbr;
-                        cmdDict.addWord(self, abbr, wordPart);
-                    }
-
-                    /* note that we added to this list */
-                    if (modList.indexOf(wordPart) == nil)
-                        modList += wordPart;
-                }
-            }
-
-            /* if we have a delimiter, see what we have */
-            if (len + 1 < str.length())
-            {
-                /* check the delimiter */
-                switch(str.substr(len + 1, 1))
-                {
-                case ' ':
-                    /* stick with the current part */
-                    break;
-
-                case '*':
-                    /* start plurals */
-                    sectPart = &plural;
-                    break;
-
-                case '/':
-                    /* start alternative nouns */
-                    sectPart = &noun;
-                    break;
-                }
-
-                /* remove the part up to and including the delimiter */
-                str = str.substr(len + 2);
-
-                /* skip any additional spaces following the delimiter */
-                if ((len = rexMatch('<space>+', str)) != nil)
-                    str = str.substr(len + 1);
-            }
-            else
-            {
-                /* we've exhausted the string - we're done */
-                break;
-            }
-        }
-
-        /* uniquify each word list we updated */
-        foreach (local p in modList)
-            self.(p) = self.(p).getUnique();
-    }
-
     initializeVocabWith(str)
     {
-        /*if(self.location == skap) {
-            tadsSay('<<self>>****###\n');
-        }
-        tadsSay('<<self.name>>.initializeVocabWith \"<<str>>\"\n');
-        */
-        if(str == '') {
-            return;
-        }
-
         local sectPart;
         local modList = [];
 
-        local foundPluralName = nil; // Used to find the first defined pluralname in vocabWords and set pluralName property to it
-        local foundTheDefinitiveForm = nil; // Used to find the first defined definitive form in vocabWords and set definitiveForm property to it
+        // Used to find the first defined pluralname in vocabWords and set pluralName property to it
+        local foundPluralName = nil; 
 
-        /* start off in the adjective section */
-        sectPart = &adjective;
+        // Used to find the first defined definitive form in vocabWords and set definitiveForm property to it
+        local foundTheDefinitiveForm = nil; 
 
-        /* scan the string until we run out of text */
-        while (str != '')
-        {
-            local len;
-            local cur;
+         // Ändra bara grammatiskt genus om det inte specificerats i objektet redan
+         local isUterDefinedAlready = propDefined(&isUter);
+         if(!isUterDefinedAlready) {
+            // Uterum är vanligast men teorin är att det blir lättare
+            // att mönstermatcha mot uterum- än neutrumformen.
+            isUter = nil; // Defaulta till neutrum om definitionen saknas i objektet.
+         }
 
-            /*
-             *   if it starts with a quote, find the close quote;
-             *   otherwise, find the end of the current token by seeking
-             *   the next delimiter
-             */
-            if (str.startsWith('"'))
-            {
-                /* find the close quote */
+        // Börja i adjektivsektionen 
+        sectPart = &adjective; 
+
+        // Iterera igenom strängen så länge den har ett innehåll
+        while (str != '') {
+            local len, cur;
+
+            // Om strängen börjar med ett citattecken, ta reda på positionen av nästkommande citattecken,
+            // annars: sök redan på nästkommande avskiljningstecken
+            if (str.startsWith('"')) {                
                 len = str.find('"', 2);
-            }
-            else
-            {
-                /* no quotes - find the next delimiter */
+            } else {
                 len = rexMatch('<^space|star|/>*', str);
             }
 
-            /* if there's no match, use the whole rest of the string */
-            if (len == nil)
+            // Om ingen matchning dök upp på vare sig citationstecken eller avskiljare, 
+            // använd resten av strängen som längd
+            if (len == nil) {
                 len = str.length();
+            }
 
-            /* if there's anything before the delimiter, extract it */
-            if (len != 0)
-            {
-                /* extract the part up to but not including the delimiter */
-                cur = str.substr(1, len);
+            // Om det fanns något före avskiljningstecknet, extrahera det
+            if (len != 0) {
+                cur = str.substr(1, len); // Extrahera allt innan skiljetecknet 
 
-                /*
-                 *   if we're in the adjectives, and either this is the
-                 *   last token or the next delimiter is not a space, this
-                 *   is implicitly a noun
-                 */
-                if (sectPart == &adjective
-                    && (len == str.length()
-                        || str.substr(len + 1, 1) != ' '))
-                {
-                    /* move to the noun section */
+                // Om vi är i adjektivdelen och antingen är på sista tecknet 
+                // ELLER ser att nästa avskiljare inte är ett mellanslag, 
+                // då kan vi härleda att vi har att göra med ett substantiv 
+                // och ska byta till substantivdelen
+                if (sectPart == &adjective && (len == str.length() || str.substr(len + 1, 1) != ' ')) {
                     sectPart = &noun;
+                } else {
+
+                    if(sectPart == &adjective) {
+                        //tadsSay('adjektiv: <<cur>> <<self>>');
+                        // Om objektets plats är ett levande ting som slutar på s, lägg även till <f>' 
+                        // Detta på grund av en lite mer ålderdomlig svenska där apostrof läggs
+                        // till possesiva namn som slutar på s.
+                        // T ex: nils' hus.
+                        if(cur.endsWith('s')
+                        && self.location != nil
+                        && self.location.ofKind(Actor)) { 
+                            // Lägg till ett extra ord i adjApostS 
+                            cmdDict.addWord(self, cur + '\'', &adjApostS);
+                            // Ett krux med detta är dock parsern, som behöver uppdateras.
+                            // Just nu hanterar den bara engelska typen, t ex "nils's"
+                        } 
+                    }
                 }
 
-                /*
-                 *   if the word isn't a single hyphen (in which case it's
-                 *   a null word placeholder, not an actual vocabulary
-                 *   word), add it to our own appropriate part-of-speech
-                 *   property and to the dictionary
-                 */
-                if (cur != '-')
-                {
-                    /*
-                     *   by default, use the part of speech of the current
-                     *   string section as the part of speech for this
-                     *   word
-                     */
+                // Om tecknet inte är ett bindestreck (vilket skulle vara en placeholder för ett "noll-ord", 
+                // DVS: inte ett riktigt vokabulärt ord), lägg till det i sin rätta sektion samt i lexikonet
+                if (cur != '-') {
+                    
+                    // Låt taldelen utgå från nuvarande sektion för detta ord
                     local wordPart = sectPart;
 
-                    /*
-                     *   Check for parentheses, which indicate that the
-                     *   token is "weak."  This doesn't affect anything
-                     *   about the token or its part of speech except that
-                     *   we must include the token in our list of weak
-                     *   tokens.
-                     */
+                    // Kolla efter parenteser, vilket markerar detta ord som "svagt". 
+                    // Detta påverkar inget annat än att ordet läggs till i listan 
+                    // för "svaga" ord.
                     if (cur.startsWith('(') && cur.endsWith(')'))
                     {
-                        /* it's a weak token - remove the parens */
-                        cur = cur.substr(2, cur.length() - 2);
-
-                        /*
-                         *   if we don't have a weak token list yet,
-                         *   create the list
-                         */
-                        if (weakTokens == nil)
+                        cur = cur.substr(2, cur.length() - 2); // ta bort parenteserna
+                        if (weakTokens == nil) {
                             weakTokens = [];
-
-                        /* add the token to the weak list */
+                        }
                         weakTokens += cur;
                     }
 
-
-                    // TODO: Denna gäller (enklast och snabbast). 
-                    // Ta bort logik för där bestämd form togs ur name 
-                    // istället för vocabWords och rensa upp kodspill här och där. 
-                    // Diffa mot föregår commit om det 
-                    // behövs
+        
+                    // Hantera svenska ordändelser
+                    //  [-n], [-en], [-t], [-et], etc...
                     if(rexMatch(R'.*<lsquare>[-](.*)<rsquare>.*', cur) != nil) {
                         local ending = rexGroup(1)[3];
 
-                        // Once we got the ending we can remove the ending syntax 
-                        // ([-xyz]) from the vocabWord
+                        // När vi väl fått en ändelse kan vi ta bort ändelsesyntaxen
+                        // [-xyz] från vocabWord
                         cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
                         local curWithEnding = cutEndings(cur) + ending;
-                        wordPart = &literalAdjective;   // TODO: not sure this will do...
 
-                        cmdDict.addWord(self, curWithEnding, wordPart);
+                        // Lägg till det expanderande ordet
+                        cmdDict.addWord(self, curWithEnding, sectPart);
+                        displayWordPart(sectPart, curWithEnding, self);
 
-                        // NOTE:  Plural definitive form is not yet handled automatically
-                        // Kontroller bara uterum/neutrum om inte i plural-sektionen
-                        if(sectPart != &plural) {
-                            if(!isPlural) {
-                                if(ending.endsWith('n') || ending.endsWith('na')) {
-                                    isUter = true;
+                        // tadsSay('<<self>>: med ändelse <<curWithEnding>>\n');
+
+                        // TODO: rensa även vocabWords, 
+                        // så alla hakparenteser blir ersatta med expanderade ord
+                        if(!isUterDefinedAlready) {
+                            if(sectPart != &plural) {
+                                if(!isPlural) {
+                                    isUter = ending.endsWith('n') || ending.endsWith('na');
                                 } else {
-                                    isUter = nil;
-                                }
-                            } else {
-                                // TODO: kontrollera fler pluralformer 
-                                if(ending.endsWith('n') || ending.endsWith('na')) {
-                                    isUter = true;
+                                    // TODO: kontrollera fler pluralformer
+                                    if(ending.endsWith('n') || ending.endsWith('na')) {
+                                        isUter = true;
+                                    }
                                 }
                             }
-
                         }
 
                         // Det är oftare jobbigare att böja till pluralName med pluralNameFrom()
-                        // så överrid den om vi faktiskt hittat en pluralform i vocabWords. 
+                        // så överrid pluralName om vi faktiskt hittat en pluralform i vocabWords. 
                         // T ex: 'väskor[-na]'
                         if(!foundPluralName) {
+                            // TODO: if(isPlural) { ?
                             if(sectPart == &plural) {
                                 foundPluralName=true;
                                 pluralName = cur;
@@ -825,23 +604,13 @@ modify VocabObject
 
                         // Använd theNameFrom istället och tvinga name att definieras
                         if(!foundTheDefinitiveForm) {
-                            if(isPlural) {
-                                if(sectPart == &plural) {
-                                    foundTheDefinitiveForm=true;
-                                    definitiveForm = curWithEnding;
-                                    //tadsSay('\ defplu = [<<curWithEnding>>] ');
-                                }
-                            } else {
-                                foundTheDefinitiveForm=true;
-                                definitiveForm = curWithEnding;
-                                //tadsSay('\ def = **[<<curWithEnding>>] ');
-                            }
+                            foundTheDefinitiveForm=true;
+                            definitiveForm = curWithEnding;
                         }
                     }
 
                     // Kolla efter specialformat, strängcitat, ändelser 's' (för ägande)
-                    // Dessa är uteslutande varandra
-
+                    // Dessa kan inte samexistera utan utesluter varandra
                     if (cur.startsWith('"')) {
                          // Det är ett strängcitat, så det blir ett 'literal adjective'.
                         // ta bort citationstecknen:
@@ -850,33 +619,10 @@ modify VocabObject
                         } else {
                             cur = cur.substr(2);
                         }
-
                         // Ändra denna del av talet 'literal adjective'
                         wordPart = &literalAdjective;
 
-                    } else if (cur.endsWith('\'s')) {
-                        /*
-                         // TODO: Inte samma behov i svenskan, däremot s utan apostrof för ägande
-                         // men det är inte alltid så,  t ex vid namn som slutar på s. Därför
-                         // behöver detta hanteras annorlunda. Oklart hur.
-                  
-                         // It's an apostrophe-s word.  Remove the "'s"
-                         // suffix and add the root word using adjApostS
-                         // as the part of speech.  The grammar rules are
-                         // defined to allow this part of speech to be
-                         // used exclusively with "'s" suffixes in input.
-                         // Since the tokenizer always pulls the "'s"
-                         // suffix off of a word in the input, we have to
-                         // store any vocabulary words with "'s" suffixes
-                         // the same way, with the "'s" suffixes removed.
-
-                        // change the part of speech to adjApostS 
-                        wordPart = &adjApostS;
-
-                        // remove the "'s" suffix from the string
-                        cur = cur.substr(1, cur.length() - 2);
-                        */
-                    }
+                    } 
 
                     // Lägg till ordet till våran egen lista för denna del av talet
                     if (self.(wordPart) == nil) {
@@ -885,18 +631,19 @@ modify VocabObject
                         self.(wordPart) += cur;
                     }
 
+
                     // Lägg till det till ordboken
                     cmdDict.addWord(self, cur, wordPart);
+                    displayWordPart(wordPart, cur, self);
 
-                    if (cur.endsWith('.'))
-                    {
+                    if (cur.endsWith('.')) {
                         local abbr;
-
-                         // Slutar på en punkt och är därmed ett avkortat ord. 
-                         // Skriv in förkortningen både med och utan punkten.
-                         // Den normala hanteringen skriver in det tillsammans 
-                         // med punkten så vi behöver bara skriva in det 
-                         // specifikt utan.                         
+                        // Om order slutar på en punkt är det ett avkortat ord. 
+                        // förkortningen läggs till i lexikonet både med och utan punkten.
+ 
+                        // Den normala hanteringen skriver in det tillsammans 
+                        // med punkten så vi behöver bara skriva in det 
+                        // specifikt utan.                         
                         abbr = cur.substr(1, cur.length() - 1);
                         self.(wordPart) += abbr;
                         cmdDict.addWord(self, abbr, wordPart);
@@ -908,6 +655,8 @@ modify VocabObject
                     }
                 }
             }
+
+
 
             if (len + 1 < str.length()) {                   // if we have a delimiter, see what we have 
                 switch(str.substr(len + 1, 1)) {
@@ -923,6 +672,19 @@ modify VocabObject
             } else {
                 break; // we've exhausted the string - we're done 
             }
+        }
+
+        // Om objektet är en namnlös subContainer/subSurface som ej definierat
+        // isUter men isUter har definierats i dess lexicalParent
+        // använd samma genus då objektet avser samma objekt som lexicalParent.
+        if(self.vocabWords == ''
+        && !propDefined(&isUter)
+        && ofKind(ComplexComponent)
+        && lexicalParent
+        && lexicalParent.ofKind(ComplexContainer)
+        && lexicalParent.propDefined(&isUter)) {
+            tadsSay('<<self>> ärver <<lexicalParent.isUter?'uterum':'neutrum'>> från <<self.lexicalParent>>\n' );
+            isUter = lexicalParent.isUter;
         }
 
         /* uniquify each word list we updated */
@@ -950,7 +712,7 @@ enum neuter, uter;
  */
 modify Thing
 
-    isUter = nil // uter/neuter
+    //isUter = nil // uter/neuter
     article = 'ett'
 
     /*
@@ -1374,7 +1136,7 @@ modify Thing
              // third-person singular present, then it becomes 'ied' in
              // the past.
              
-            else if (rexMatch(iesEndingPat, verb))
+            else if (rexMatch(iesnounEndingPat, verb))
                     return verb.substr(1, verb.length() - 1) + 'ied';
 
             
@@ -1410,9 +1172,9 @@ modify Thing
                  //
                  // '-sh', '-ch', and '-o' endings add suffix '-es'
                  
-                if (rexMatch(iesEndingPat, verb))
+                if (rexMatch(iesnounEndingPat, verb))
                     return verb.substr(1, verb.length() - 1) + 'ies';
-                else if (rexMatch(esEndingPat, verb))
+                else if (rexMatch(esnounEndingPat, verb))
                     return verb + 'es';
                 else
                     return verb;
@@ -1422,8 +1184,8 @@ modify Thing
     }
 
     /* verb-ending patterns for figuring out which '-s' ending to add */
-    iesEndingPat = static new RexPattern('.*[^aeiou]y$')
-    esEndingPat = static new RexPattern('.*(o|ch|sh)$')
+    iesnounEndingPat = static new RexPattern('.*[^aeiou]y$')
+    esnounEndingPat = static new RexPattern('.*(o|ch|sh)$')
 
     /*
      *   Get the name with a definite article ("the box").  By default, we
@@ -1490,168 +1252,6 @@ modify Thing
     }
 
     swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
-
-    //theNameFrom(str) { 
-        /*if(theName != nil) {
-            return theName;
-        }*/
-        /*if (isPlural) {
-            str = replacePluralEndings(str);
-        }
-        else {
-            str = replaceEndings(str);
-        }
-        if (isYours)
-        {
-            str = yourAkkPossAdj + str;              
-        }*/
-        //return (isQualifiedName || isYours ? '' : isPlural ? 'die ' : 
-        //isHim ? 'den ' : isHer ? 'den ' : 'det ' ) + str; 
-        
-        // TODO: this is WIP - obiously not yet satisfying algorithm.. override theName property 
-        // /whenever it fails to properly create a definitive name for a swedish word. There are 
-        // probably many cases where this needs to happen
-        // TODO: also make it more efficient. The array should'nt need to be in here.
-
-        /*local lastChar = str.substr(str.length);
-        local isLastCharAVocal = swedishVocals.indexOf(lastChar);
-
-        if(isProperName) {
-            return str;
-        }
-
-        if(isUter) {
-            if(!isLastCharAVocal) {
-                // T ex: påse påsarna påsen
-                return str + (isPlural?'na': 'en');
-            } else {
-                // T ex: stuga stugorna stugan
-                return str.substr(0, str.length) + (isPlural?'orna': 'n');
-            }
-        } else {
-            if(!isLastCharAVocal) {
-                // T ex: svärd, svärdena svärdet
-                // T ex: skal, skalena skalet
-                return str + (isPlural?'ena': 'et');
-            } else {
-                return str + (isPlural?'ena': 't');
-            }
-        }*/
-        // "<<str>>";
-       
-       
-        /*if (isPlural) {
-            str = replacePluralEndings(str);
-        }
-        else {*/
-            //str = replaceEndings(str);
-        //}
-        /*if (isYours)
-        {
-            str = yourAkkPossAdj + str;              
-        }*/
-
-        //local article = (isUter?'en':'ett');
-        //return (isQualifiedName ? '' : article + ' ') + str ; 
-      
-        //return str;
-    //}
-
-      
-    // #################################################
-    // ## central function to replace all the special ##
-    // ## endings, like 'Äppl[-et]', 'Stol[-en]' etc. ##
-    // #################################################
-    
-    replaceEndings(txt) {
-        //"org:[<<txt>>]";
-
-        local idx=0;
-
-        // Tex: fönst[-er|-ret]
-        txt = txt.findReplace('[-er|-ret]', 'ret', ReplaceAll, idx);   // -- print noun genitive endings
-
-        txt = txt.findReplace('[-et]', 'et', ReplaceAll, idx);   // -- print noun genitive endings
-        txt = txt.findReplace('[-en]', 'en', ReplaceAll, idx);   // -- print noun genitive endings
-
-        //txt = txt.findReplace('[^]', self.adjEnding, ReplaceAll); // -- replace adjective endings
-        /*if (curcase.isGen) {
-            txt = txt.findReplace('[-s]', 's', ReplaceAll);   // -- print noun genitive endings
-            txt = txt.findReplace('[-es]', 'es', ReplaceAll); // -- print noun genitive endings
-            txt = txt.findReplace('[-ses]', 'ses', ReplaceAll); // -- print noun genitive endings
-            txt = txt.findReplace('[-n]', 'n', ReplaceAll);    // -- print noun genitive endings
-            txt = txt.findReplace('[-en]', 'en', ReplaceAll); // -- print noun genitive endings
-        }
-        else if (curcase.isDat || curcase.isAkk){
-            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-            txt = txt.findReplace('[-n]', 'n', ReplaceAll);   // -- print noun accusative/dative endings
-            txt = txt.findReplace('[-en]', 'en', ReplaceAll);   // -- print noun accusative/dative endings
-        }
-        else { // -- we have the nominative
-            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-            txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- reomve noun accusative/dative endings
-            txt = txt.findReplace('[-en]', '', ReplaceAll);   // -- remove noun genitive endings
-        }*/
-        return txt;
-    }
-
-    
-    // #################################################
-    // ## central function to replace all the special ##
-    // ## endings, like 'kärn[-orna]', 'Stolar[-na]' etc. ##
-    // #################################################
-
-    replacePluralEndings(txt) {
-
-
-        txt = txt.findReplace('[-orna]', 'orna', ReplaceAll);   // -- print noun genitive endings
-        txt = txt.findReplace('[-ren]', 'ren', ReplaceAll);   // -- print noun genitive endings
-        txt = txt.findReplace('[-na]', 'na', ReplaceAll);   // -- print noun genitive endings
-
-        /*txt = txt.findReplace('[^]', self.adjPluralEnding, ReplaceAll); // -- replace adjective endings
-        if (curcase.isGen) {
-            txt = txt.findReplace('[-s]', 's', ReplaceAll);   // -- print noun genitive endings
-            txt = txt.findReplace('[-es]', 'es', ReplaceAll); // -- print noun genitive endings
-            txt = txt.findReplace('[-ses]', 'ses', ReplaceAll); // -- print noun genitive endings
-            txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- remove noun accusative/dative endings
-        }
-        else if (curcase.isDat){
-            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-            txt = txt.findReplace('[-n]', 'n', ReplaceAll);   // -- print noun accusative/dative endings
-        }
-        else if (curcase.isAkk){
-            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-            txt = txt.findReplace('[-n]', '', ReplaceAll);   // -- print noun accusative/dative endings
-        }
-        else { // -- we have the nominative
-            txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-            txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-            txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-            txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- reomve noun accusative/dative endings
-        }*/
-        return txt;
-    }
-    
-
-    cutEndings(txt) {
-        txt = txt.findReplace('[-ret]', '', ReplaceAll);   // ##### remove noun genitive endings
-        txt = txt.findReplace('[-en]', '', ReplaceAll);   // ##### remove noun genitive endings
-        txt = txt.findReplace('[-et]', '', ReplaceAll); // ##### remove noun genitive endings
-        txt = txt.findReplace('[-n]', '', ReplaceAll);  // ##### remove noun genitive endings
-        txt = txt.findReplace('[-t]', '', ReplaceAll);   // ##### remove noun accusative/dative endings        
-        txt = txt.findReplace('[-na]', '', ReplaceAll);   // ##### remove noun accusative/dative endings        
-        return txt;
-    }
-
-
 
     /*
      *   theName as a possessive adjective (Bob's book, your book).  If the
@@ -2341,6 +1941,16 @@ modify Thing
         return ''; // ingen förändring
     }
 
+    endingForNounAdAtNa {
+        if(self.isPlural) {
+            return 'na'; // plural / bestämd form
+        }
+        if(self.isUter) {
+            return 'ad'; // en-genus
+        }
+        return 'at'; // ett-genus
+    }
+
     endingForNounDTDa {
         if(self.isPlural) {
             return 'da'; // plural / bestämd form
@@ -2731,7 +2341,7 @@ modify Actor
     /* demonstrative pronoun, nominative case with 'is' contraction */
     thatIsContraction
     {
-        //tadsSay('LEFT TO FIX');
+        tadsSay('LEFT TO FIX');
         return thatNom
             + tSel(['&rsquo;m', '&rsquo;re', '&rsquo;s',
                     '&rsquo;re', '&rsquo;re', ' are'][conjugationSelector],
@@ -4392,6 +4002,7 @@ langMessageBuilder: MessageBuilder
         ['a/t', &endingForNounTA, 'dobj', nil, nil],
         ['a', &endingForNounA, 'dobj', nil, nil],
         ['d/t/da', &endingForNounDTDa, 'dobj', nil, nil],
+        ['ad/at/na', &endingForNounAdAtNa, 'dobj', nil, nil],
         ['en/et/na', &endingForNounEnEtNa, 'dobj', nil, nil],
 
         // eval buildParam('en/na', buildSynthParam('en/na', stugdorrUtsida))
@@ -4828,12 +4439,12 @@ langMessageBuilder: MessageBuilder
             paramStr = paramStr.substr(1, exclamInd - 1)
                        + paramStr.substr(exclamInd + 1);
         }
-
+        // TODO: gör något åt dessa
         /* look for "id obj's" and "id1 obj's/id2" */
         if (rexMatch(patIdObjSlashIdApostS, paramStr) != nil)
         {
             /* rewrite with the "'s" moved to the preceding parameter name */
-            paramStr = rexGroup(1)[3] + '\'s'
+            paramStr = rexGroup(1)[3] + '\'s' 
                        + rexGroup(2)[3] + rexGroup(3)[3];
         }
         else if (rexMatch(patIdObjApostS, paramStr) != nil)
@@ -5056,7 +4667,7 @@ spellIntExt(val, flags)
     local str;
     local trailingSpace;
     local needAnd;
-    local powers = [1000000000, ' biljon ',
+    local powers = [1000000000, ' miljard ',
                     1000000,    ' miljon ',
                     1000,       ' tusen ',
                     100,        ' hundra '];
@@ -7306,6 +6917,7 @@ grammar nounWord(nounAbbr): noun->noun_ tokAbbrPeriod->period_
  *   An adjective word.  This can be either a simple 'adjective' vocabulary
  *   word, or it can be an 'adjApostS' vocabulary word plus a 's token.  
  */
+
 grammar adjWord(adj): adjective->adj_ : AdjPhraseWithVocab
     /* generate a list of resolved objects */
     getVocabMatchList(resolver, results, extraFlags)
@@ -7469,13 +7081,16 @@ Vilket stol menar du, din stol, eller professorns stol?
 grammar possessiveNounPhrase(npApostropheS):
     //('the' | )
     ('den' | )
-    (nounPhrase->np_ tokApostropheS->apost_
-     | pluralPhrase->np (tokApostropheS->apost_ | tokPluralApostrophe->apost_))
+    (
+        nounPhrase->np_ tokApostropheS->apost_
+     | pluralPhrase->np (tokApostropheS->apost_ | tokPluralApostrophe->apost_)
+     )
     : LayeredNounPhraseProd
 
     /* get the original text without the "'s" suffix */
     getOrigMainText()
     {
+        //tadsSay(np_.getOrigText() + '\n');
         /* return just the basic noun phrase part */
         return np_.getOrigText();
     }
@@ -11742,3 +11357,179 @@ class WordEndingForm: object
     return wordStart + ending;
   }
 ;
+
+
+    
+// #################################################
+// ## central function to replace all the special ##
+// ## endings, like 'Äppl[-et]', 'Stol[-en]' etc. ##
+// #################################################
+//eval replaceEndings('sak[-en]')
+function replaceEndings(txt) {
+    //"org:[<<txt>>]";
+    /*
+    local nounEndingPat = new RexPattern('.*<lsquare>(.*)<rbrace>');
+    local str = rexMatch(nounEndingPat, txt);
+    if(str) {
+        replStr = str.findReplace('[', '', ReplaceAll);
+
+        tadsSay('MATCH');
+        str = rexGroup(1)[3];
+        tadsSay('<<str>>');
+    }
+    return;
+    */
+
+
+
+
+    local idx=0;
+
+    // Tex: fönst[-er|-ret]
+    txt = txt.findReplace('[-er|-ret]', 'ret', ReplaceAll, idx);   // -- print noun genitive endings
+
+    txt = txt.findReplace('[-et]', 'et', ReplaceAll, idx);   // -- print noun genitive endings
+    txt = txt.findReplace('[-en]', 'en', ReplaceAll, idx);   // -- print noun genitive endings
+
+    //txt = txt.findReplace('[^]', self.adjEnding, ReplaceAll); // -- replace adjective endings
+    /*if (curcase.isGen) {
+        txt = txt.findReplace('[-s]', 's', ReplaceAll);   // -- print noun genitive endings
+        txt = txt.findReplace('[-es]', 'es', ReplaceAll); // -- print noun genitive endings
+        txt = txt.findReplace('[-ses]', 'ses', ReplaceAll); // -- print noun genitive endings
+        txt = txt.findReplace('[-n]', 'n', ReplaceAll);    // -- print noun genitive endings
+        txt = txt.findReplace('[-en]', 'en', ReplaceAll); // -- print noun genitive endings
+    }
+    else if (curcase.isDat || curcase.isAkk){
+        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+        txt = txt.findReplace('[-n]', 'n', ReplaceAll);   // -- print noun accusative/dative endings
+        txt = txt.findReplace('[-en]', 'en', ReplaceAll);   // -- print noun accusative/dative endings
+    }
+    else { // -- we have the nominative
+        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+        txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- reomve noun accusative/dative endings
+        txt = txt.findReplace('[-en]', '', ReplaceAll);   // -- remove noun genitive endings
+    }*/
+    return txt;
+}
+
+
+cutEndings(txt) {
+    txt = txt.findReplace('[-ret]', '', ReplaceAll);   // ##### remove noun genitive endings
+    txt = txt.findReplace('[-en]', '', ReplaceAll);   // ##### remove noun genitive endings
+    txt = txt.findReplace('[-et]', '', ReplaceAll); // ##### remove noun genitive endings
+    txt = txt.findReplace('[-n]', '', ReplaceAll);  // ##### remove noun genitive endings
+    txt = txt.findReplace('[-t]', '', ReplaceAll);   // ##### remove noun accusative/dative endings        
+    txt = txt.findReplace('[-na]', '', ReplaceAll);   // ##### remove noun accusative/dative endings        
+    return txt;
+}
+
+
+// #################################################
+// ## central function to replace all the special ##
+// ## endings, like 'kärn[-orna]', 'Stolar[-na]' etc. ##
+// #################################################
+
+function replacePluralEndings(txt) {
+
+
+    txt = txt.findReplace('[-orna]', 'orna', ReplaceAll);   // -- print noun genitive endings
+    txt = txt.findReplace('[-ren]', 'ren', ReplaceAll);   // -- print noun genitive endings
+    txt = txt.findReplace('[-na]', 'na', ReplaceAll);   // -- print noun genitive endings
+
+    /*txt = txt.findReplace('[^]', self.adjPluralEnding, ReplaceAll); // -- replace adjective endings
+    if (curcase.isGen) {
+        txt = txt.findReplace('[-s]', 's', ReplaceAll);   // -- print noun genitive endings
+        txt = txt.findReplace('[-es]', 'es', ReplaceAll); // -- print noun genitive endings
+        txt = txt.findReplace('[-ses]', 'ses', ReplaceAll); // -- print noun genitive endings
+        txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- remove noun accusative/dative endings
+    }
+    else if (curcase.isDat){
+        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+        txt = txt.findReplace('[-n]', 'n', ReplaceAll);   // -- print noun accusative/dative endings
+    }
+    else if (curcase.isAkk){
+        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+        txt = txt.findReplace('[-n]', '', ReplaceAll);   // -- print noun accusative/dative endings
+    }
+    else { // -- we have the nominative
+        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
+        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
+        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
+        txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- reomve noun accusative/dative endings
+    }*/
+    return txt;
+}
+
+
+
+function displayWordPart(wordPart, cur, obj) {
+    if(wordPart == &noun) {
+        tadsSay('\ <<cur>> (substantiv)');
+    }
+    if(wordPart == &plural) {
+        tadsSay('\ <<cur>> (plural)');
+    }
+    if(wordPart == &adjApostS) {
+        tadsSay('\ <<cur>> (adjektiv)');
+    }
+    tadsSay('\t\t\t\t\t\t -> \ [<<obj.name>>]\n');
+}
+
+
+
+// ###############################
+// -- Swedish: debug verbs -- VOCAB
+// ###############################
+
+DefineIAction(Vocab)
+    execAction() {
+        displayVocab();
+    }
+;
+
+function displayVocab() {
+    local objList = [];
+    local stringList = [];
+    local propList = [];
+            
+    local nounList = [];
+    local adjectiveList = [];
+    local pluralList = [];
+    local adjApostSList = [];
+    local litAdjList = [];
+
+    cmdDict.forEachWord({ x,y,z: objList += x});
+    cmdDict.forEachWord({ x,y,z: stringList += y});
+    cmdDict.forEachWord({ x,y,z: propList += z});
+    
+    local len = objList.length();
+    for (local i = 1; i < len; i++) {
+        local obj = propList[i];
+        switch(obj) {
+            case &noun:               nounList += stringList[i]; break;
+            case &adjective:          adjectiveList += stringList[i]; break;
+            case &plural:             pluralList += stringList[i]; break;
+            case &adjApostS:          adjApostSList += stringList[i]; break;
+            case &literalAdjective:   litAdjList += stringList[i]; break;
+        }
+    }
+    "<.p>[NOUNS]<.p>";              foreach (local cur in nounList)         "\^<<cur>> ";
+    "<.p>[ADJECTIVES]<.p>";         foreach (local cur in adjectiveList)    "\^<<cur>> ";
+    "<.p>[PLURALS]<.p>";            foreach (local cur in pluralList)       "\^<<cur>> ";
+    "<.p>[ADJAPOSTS]<.p>";          foreach (local cur in adjApostSList)    "\^<<cur>> ";    
+    "<.p>[LITERALADJECTIVE]<.p>";   foreach (local cur in litAdjList)       "\^<<cur>> ";
+}
+
+VerbRule(Vokabular)
+    'vokab' | 'voc' | 'vocab' | 'vokabulär' | 'vokabulär'
+    :VocabAction 
+    verbPhrase = 'se/ser vokabulär'
+; 

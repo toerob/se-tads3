@@ -59,26 +59,18 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
 
 +saken: Thing 'saker[-na]' 'saker' isPlural = true;
 
-// TODO: Flytta in i köket sedan
-+skap: Heavy, ComplexContainer 'skåp[-et]' 'skåp'
-    subSurface: ComplexComponent, Surface {}
-    subContainer: ComplexComponent, OpenableContainer  {
-        //descContentsLister = thingDescContentsLister
-    }
-;
-
-// TODO: problem om inget namn sätts, problem om namn
+//++skapLuckeUtrymme: ComplexContainer,OpenableContainer 'insida[-n]' 'insida';
 /*++skapLuckor: ContainerDoor, ComplexComponent 'skåplucka[-n]*skåpluck[-or]/lucka*luckor[-na]' 'skåpluckor' 
     isPlural = true
-    //theName = 'skåpet' // TODO: detta ska inte behöva göras, det är ett plåster. theName ska inte kunna bli nil...
 ;*/
 
 +sofia: Actor 'Sofia' 'Sofia' isShe = true isProperName = true;
+++sofiasMossa: Wearable 'sofias mössa[-n]' 'mössa' isWornBy = sofia;
+
 ++HelloTopic 'hello';
 ++AskTopic 'regn' "...";
 
 
-+++skapLuckeUtrymme: ComplexContainer 'insida[-n]' 'insida';
 
 +vedboDorrUtsida: LockableWithKey, Door 'vedbodörr[-en]/dörr[-en]*dörrar[-na]' 'vedbodörr'
     knownKeyList = [forradsdorrsnyckel]
@@ -417,7 +409,7 @@ Mats: Actor 'mats;;;du' 'Mats' @grasmattan
 
 // Insidan av stugan
 
-stugansKok: DarkRoom 'stugans kök' 'stugans kök'
+stugansKok: DarkRoom 'stugans kök' 'köket'
     west = stugansVardagsrum
 ;
 +OpenableContainer, Fixture, LightSource 'kylskåp[-et]/kyl[-en]/skåp[-et]' 'kylskåp'
@@ -425,6 +417,14 @@ stugansKok: DarkRoom 'stugans kök' 'stugans kök'
     makeOpen(stat) {
         inherited(stat);
         self.isLit = stat;
+    }
+;
+
+// TODO: Flytta in i köket sedan
++skap: Heavy, ComplexContainer 'skåp[-et]' 'skåp'
+    subSurface: ComplexComponent, Surface {}
+    subContainer: ComplexComponent, OpenableContainer  {
+        //descContentsLister = thingDescContentsLister
     }
 ;
 
@@ -524,7 +524,8 @@ TODO: ska det saknas lampa där? Anpassa annars:
     dobjFor(Extinguish) remapTo(TurnOff, lysknapp)
 ;
 */
-+Fixture 'dusch[-en]';
+
++Fixture 'dusch[-en]' 'dusch';
 +Fixture, OpenableContainer 'spegel[-n]' 'spegel';
 +Fixture, Surface 'toalett[-en]' 'toalett';
 +Fixture, OpenableContainer 'lock[-et]/toalettlock[-et]' 'toalettlock';
@@ -594,3 +595,12 @@ Test 'spel' [
 Test 'matta' ['sö', 'titta under matta', 'ta nyckel', 's'];
 
 Test 'bord' ['purloin ficklampa', 'tänd lampa', 'öppna låda'] @stugansSovrum;
+
+
+function w(o) {
+    cmdDict.forEachWord(function(obj, str, prop) {
+      if(obj == o) {
+        "word: <<obj>>: <<str>> <<prop>>\n";
+      }
+    });
+}

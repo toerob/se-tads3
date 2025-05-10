@@ -562,7 +562,7 @@ libMessages: MessageHelper
     }
 
     /* no topics to suggest when we're not talking to anyone */
-    noTopicsNotTalking = "<.parser>{Du} prata{r/de} inte för närvarande med någon.<./parser> "
+    noTopicsNotTalking = "<.parser>{Du} prata{r|de} inte för närvarande med någon.<./parser> "
 
     /*
      *   Show a note about the OOPS command.  This is, by default, added
@@ -1536,7 +1536,7 @@ libMessages: MessageHelper
     }
 
     /* a shipboard direction was attempted while not onboard a ship */
-    notOnboardShip = "Den riktningen sakna{r/de} betydelse {här}. "
+    notOnboardShip = "Den riktningen sakna{r|de} betydelse {här}. "
 
     /* a traveler is leaving via a passage */
     sayDepartingThroughPassage(traveler, passage)
@@ -1682,14 +1682,14 @@ libMessages: MessageHelper
     {
         gMessageParams(obj);
         //"{Den obj/han} burn{s/ed} down too far to stay lit, and {goes} out. ";
-        "{Den obj/han} br{inner|ann} ner för långt för att fortsätta vara tän{d|t}, och slockna{r/de}. ";
+        "{Den obj/han} br{inner|ann} ner för långt för att fortsätta vara tän{d|t}, och slockna{r|de}. ";
     }
 
     /* daemon report for burning out a generic fueled light source */
     objBurnedOut(obj)
     {
         gMessageParams(obj);
-        "{Den obj/han} slockna{r/de}. ";
+        "{Den obj/han} slockna{r|de}. ";
     }
 
     /* 
@@ -1823,7 +1823,7 @@ playerMessages: libMessages
     noMatchForPronoun(actor, typ, pronounWord)
     {
         /* show the message */
-        "<.parser>Ordet <q><<pronounWord>></q> referera{r/de} inte till någonting just nu.<./parser> ";
+        "<.parser>Ordet <q><<pronounWord>></q> referera{r|de} inte till någonting just nu.<./parser> ";
     }
 
     /*
@@ -1901,7 +1901,7 @@ playerMessages: libMessages
     /* no match for a plural possessive phrase */
     noMatchForPluralPossessive(actor, txt)
     {
-        "<.parser>\^De verka{r/de} inte ha någon sådan sak.<./parser> ";
+        "<.parser>\^De verka{r|de} inte ha någon sådan sak.<./parser> ";
     }
 
     /* no match for a containment phrase */
@@ -2111,7 +2111,7 @@ playerMessages: libMessages
     /* the actor refuses the command because it's busy with something else */
     refuseCommandBusy(targetActor, issuingActor)
     {
-        "\^<<targetActor.nameIs>> upttagen. ";
+        "\^<<targetActor.nameIs>> upptagen. ";
     }
 
     /* cannot speak to multiple actors */
@@ -2154,7 +2154,7 @@ npcMessages: playerMessages
     /* the target cannot hear a command we gave */
     commandNotHeard(actor)
     {
-        "\^<<actor.nameDoes>> svara{r/de} ej. ";
+        "\^<<actor.nameDoes>> svara{r|de} ej. ";
     }
 
     /* no match for a noun phrase */
@@ -2809,7 +2809,7 @@ playerActionMessages: MessageHelper
         {den dobj/honom} {h|d}ärifrån. '
 
     /* there's nothing on the other side of a door we just opened */
-    nothingBeyondDoorMsg = '{Du/han} öppna{r/de} {den dobj/honom} och {finner|fann} ingenting
+    nothingBeyondDoorMsg = '{Du/han} öppna{r|de} {den dobj/honom} och {finner|fann} ingenting
         ovanligt. '
 
     /* there's nothing here with a specific odor */
@@ -2852,9 +2852,9 @@ playerActionMessages: MessageHelper
 
     /* default response to open/close */
     okayOpenMsg = shortTMsg(
-        'Öppna<<gDobj.isUter?'d':'t'>>. ', '{Du/han} öppna{r/de} {den dobj/honom}. ')
+        'Öppn{ad/at/na}. ', '{Du/han} öppna{r|de} {den dobj/honom}. ')
     okayCloseMsg = shortTMsg(
-        'Stäng<<gDobj.isUter?'d':'t'>>. ', '{Du/han} stäng{er|de} {den dobj/honom}. ')
+        'Stäng{d/t/da}. ', '{Du/han} stäng{er|de} {den dobj/honom}. ')
 
     /* default response to lock/unlock */
     okayLockMsg = shortTMsg(
@@ -3245,7 +3245,7 @@ playerActionMessages: MessageHelper
     takenAndMovedToKeyringMsg(keyring)
     {
         gMessageParams(keyring);
-        return '{Du/han} plocka{r/de} upp {den dobj/honom} och fäs{ter|te} {det dobj/honom} i {den keyring/honom}. ';
+        return '{Du/han} plocka{r|de} upp {den dobj/honom} och fäs{ter|te} {det dobj/honom} i {den keyring/honom}. ';
     }
 
     /* we attached a key to a keyring automatically */
@@ -3459,7 +3459,7 @@ playerActionMessages: MessageHelper
     okayYellMsg = '{Du/han} {skriker|skrek} så högt som {det actor/han} bara {kan}. '
 
     /* "jump" */
-    okayJumpMsg = '{Du/han} hoppa{r/de} och land{ar/ade} på samma ställe. '
+    okayJumpMsg = '{Du/han} hoppa{r|de} och land{ar/ade} på samma ställe. '
 
     /* cannot hoppa over object */
     cannotJumpOverMsg = '{Du/han} {kan} inte hoppa över {det dobj/honom}. '
@@ -3472,7 +3472,7 @@ playerActionMessages: MessageHelper
     cannotJumpOffHereMsg = 'Det f{i|a}nns ingenting att hoppa från {h|d}ärifrån. '
 
     /* failed to find a topic in a consultable object */
-    cannotFindTopicMsg = '{Du/han} {kan} verka{r/de} inte kunna hitta det i {den dobj/honom}. '
+    cannotFindTopicMsg = '{Du/han} {kan} verka{r|de} inte kunna hitta det i {den dobj/honom}. '
 
     /* an actor doesn't accept a command from another actor */
     refuseCommand(targetActor, issuingActor)
@@ -3492,7 +3492,7 @@ playerActionMessages: MessageHelper
     noResponseFromMsg(other)
     {
         gMessageParams(other);
-        return '{Den other/han} svara{r/de} inte. ';
+        return '{Den other/han} svara{r|de} inte. ';
     }
 
     /* trying to give something to someone who already has the object */
@@ -3612,7 +3612,7 @@ playerActionMessages: MessageHelper
     pullNoEffectMsg = 'Att dra i {den dobj/honom} ha{r|de} ingen effekt. '
 
     /* lever is already in pulled state */
-    alreadyPulledMsg = '{It\'s dobj} var redan dragen så långt det gick. '
+    alreadyPulledMsg = '{Den dobj} var redan dragen så långt det gick. '
 
     /* default acknowledgment to pulling a lever */
     okayPullLeverMsg = '{Du/han} {drar|drog} {den dobj/honom} till {dess/hennes dobj} stopp. '
@@ -3624,7 +3624,7 @@ playerActionMessages: MessageHelper
 
 
     okayPullSpringLeverMsg = '{Du/han} {drar|drog} {den dobj/honom}, som
-        fjädra{r/de} tillbaka till {dess/hennes} startposition så snart som 
+        fjädra{r|de} tillbaka till {dess/hennes} startposition så snart som 
         {du/han} släpp{er/te} taget om {det dobj/honom}. '
 
 //TODO: fortsätt uppåt
@@ -3685,7 +3685,7 @@ playerActionMessages: MessageHelper
     okayTurnOffMsg = 'Ok, {Den dobj/han} {är} nu av. '
 
     /* flashlight is on but doesn't light up */
-    flashlightOnButDarkMsg = '{Du/han} {vrider|vred} on {den dobj/honom}, men ingenting verka{r/de} hända. '
+    flashlightOnButDarkMsg = '{Du/han} {vrider|vred} on {den dobj/honom}, men ingenting verka{r|de} hända. '
 
     /* default acknowledgment for eating something */
     okayEatMsg = '{Du/han} {äter|åt} {den dobj/honom}. '
@@ -3823,7 +3823,7 @@ playerActionMessages: MessageHelper
         'Att ha sönder {det dobj/honom} skulle inte {|ha} tjäna{|t} något syfte. '
 
     /* cannot cut that */
-    cutNoEffectMsg = '{Den iobj/han} {kan} verka{r/de} inte kunna skära {den dobj/honom}. '
+    cutNoEffectMsg = '{Den iobj/han} {kan} verka{r|de} inte kunna skära {den dobj/honom}. '
 
     /* can't use iobj to cut anything */
     cannotCutWithMsg = '{Du/han} {kan} inte skära någonting med {den iobj/honom}. '
@@ -3856,11 +3856,11 @@ playerActionMessages: MessageHelper
         '{Det dobj/han} {är} inte någonting {du/han} {kan} låsa upp. '
 
     /* attempting to open a locked object */
-    cannotOpenLockedMsg = '{Den dobj/han} verka{r/de} vara låst. '
+    cannotOpenLockedMsg = '{Den dobj/han} verka{r|de} vara låst. '
 
     /* object requires a key to unlock */
     unlockRequiresKeyMsg =
-        '{Du/han} verka{r/de} behöva en nyckel för att låsa upp {den dobj/honom}. '
+        '{Du/han} verka{r|de} behöva en nyckel för att låsa upp {den dobj/honom}. '
 
     /* object is not a key */
     cannotLockWithMsg =
@@ -3875,7 +3875,7 @@ playerActionMessages: MessageHelper
         'Det {är} inte tydligt på vilket sätt {den dobj/honom} {ska} låsas upp. '
 
     /* the key (iobj) does not fit the lock (dobj) */
-    keyDoesNotFitLockMsg = '{Den iobj/han} passa{r/de} inte låset. '
+    keyDoesNotFitLockMsg = '{Den iobj/han} passa{r|de} inte låset. '
 
     /* found key on keyring */
     foundKeyOnKeyringMsg(ring, key)
@@ -3887,20 +3887,20 @@ playerActionMessages: MessageHelper
         // TODO: undersök hur denna fungerar
         //  {find[s actor]|finner} 
         gMessageParams(ring, key);
-        return '{Du/han} försök{er|te} varje nyckel på {den ring/honom}, och upptäck{er|te} att {den key/han} passa{r/de} låset. ';
+        return '{Du/han} försök{er|te} varje nyckel på {den ring/honom}, och upptäck{er|te} att {den key/han} passa{r|de} låset. ';
     }
 
     /* failed to find a key on keyring */
     foundNoKeyOnKeyringMsg(ring)
     {
         gMessageParams(ring);
-        return '{Du/han} försök{er|te} varje nyckel på {den ring/honom}, men {du/han} hitta{r|de} inte någon som passa{r/de} låset. ';
+        return '{Du/han} försök{er|te} varje nyckel på {den ring/honom}, men {du/han} hitta{r|de} inte någon som passa{r|de} låset. ';
     }
 
 
     /* not edible/drinkable */
-    cannotEatMsg = '{Den dobj/han} verka{r/de} inte vara ätbar{a/t}. '
-    cannotDrinkMsg = '{Den dobj/han} verka{r/de} inte vara något {du/han} {kan} dricka. '
+    cannotEatMsg = '{Den dobj/han} verka{r|de} inte vara ätbar{a/t}. '
+    cannotDrinkMsg = '{Den dobj/han} verka{r|de} inte vara något {du/han} {kan} dricka. '
 
     /* cannot clean object */
     cannotCleanMsg =
@@ -4033,7 +4033,7 @@ playerActionMessages: MessageHelper
     throwFallMsg(projektilen, target)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/han} landa{r/de} på {den target/han}. ';
+        return '{Den projektilen/han} landa{r|de} på {den target/han}. ';
     }
 
     /* thrown object bounces off target and falls to destination */
@@ -4148,12 +4148,12 @@ npcActionMessages: playerActionMessages
     okayDoffMsg = '{Du/han} {tar} av {den dobj/honom}. '
 
     /* default successful responses to open/close */
-    okayOpenMsg = '{Du/han} öppna{de/r} {den dobj/honom}. '
+    okayOpenMsg = '{Du/han} öppna{r|de} {den dobj/honom}. '
     okayCloseMsg = '{Du/han} stäng{er|de} {den dobj/honom}. '
 
     /* default successful responses to lock/unlock */
-    okayLockMsg = '{Du/han} lås{er/te} {den dobj/honom}. '
-    okayUnlockMsg = '{Du/han} lås{er/te} upp {den dobj/honom}. '
+    okayLockMsg = '{Du/han} lås{er|te} {den dobj/honom}. '
+    okayUnlockMsg = '{Du/han} lås{er|te} upp {den dobj/honom}. '
 
     /* push/pull/move with no effect */
     pushNoEffectMsg = '{Du/han} försök{er|te} att knuffa {den dobj/honom}, utan någon '
@@ -4162,7 +4162,7 @@ npcActionMessages: playerActionMessages
                       + 'uppenbar effekt. '
     moveNoEffectMsg = '{Du/han} försök{er|te} att flytta {den dobj/honom}, utan någon '
                       + 'uppenbar effekt. '
-    moveToNoEffectMsg = '{Du/han} lämna{r/de} {Den dobj/han} där {it/he} {är}. '
+    moveToNoEffectMsg = '{Du/han} lämna{r[de} {Den dobj/han} där {it/he} {är}. '
 
     whereToGoMsg =
         //'You&rsquo;ll have to say which way {du/han} should {|have} go{|ne}. '
@@ -4260,7 +4260,7 @@ npcActionMessages: playerActionMessages
     okayTurnOffMsg = '{Du/han} {vrider|vred} av {den dobj/honom}. '
 
     /* the key (iobj) does not fit the lock (dobj) */
-    keyDoesNotFitLockMsg = '{Du/han} försök{er|te} {Den iobj/han}, men {det iobj/han} passa{r/de} inte till låset. '
+    keyDoesNotFitLockMsg = '{Du/han} försök{er|te} {Den iobj/han}, men {det iobj/han} passa{r|de} inte till låset. '
 
     /* acknowledge entering "follow" mode */
     okayFollowModeMsg = '<q>Ok, jag kommer följa {den dobj/honom}.</q> '
@@ -4602,6 +4602,15 @@ actorInventoryLister: DividedInventoryLister
  *   We start the inventory listing on a new line, and use the actor's
  *   full name in the list preface.  
  */
+ // TODO: x sofia 
+ // kraschar finns showList med 7 resp 8 parametrar där examinee är den sista. 
+
+/*
+>actorHoldingDescInventoryListerLong.showList(Mats, sofia, [sofiasMossa], 2,
+0, {obj:LookupTable}, nil)
+   sofia.examineListContentsWith(actorHoldingDescInventoryListerLong)
+   sofia.holdingDesc()
+*/
 actorHoldingDescInventoryListerLong: actorInventoryLister
     showInventoryEmpty(parent)
     {
@@ -4781,9 +4790,9 @@ openableOpeningLister: BaseThingContentsLister
          */
         gMessageParams(pov, parent);
         if (pov.isPlayerChar())
-            "{Du/han} öppna{r/de} {den parent/honom} och {finner|fann} ";
+            "{Du/han} öppna{r|de} {den parent/honom} och {finner|fann} ";
         else
-            "{Du/han} öppna{r/de} {den parent/honom} och {finner|fann} ";
+            "{Du/han} öppna{r|de} {den parent/honom} och {finner|fann} ";
     }
 ;
 
