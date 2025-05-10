@@ -5,6 +5,12 @@
 #define __DEBUG
 #include "../debug.h"
 
+// TODO: kasta repet på årorna -krasch
+// TODO: kasta åror
+// –>baten.putInName()
+//   playerActionMessages.throwHitFallMsg({obj:Attachable,Thing},
+// putInName
+
 // Översättningsproblem
 // TODO: lös att det inte går att skriva följande nu och få "årorna var för tunga" istället för "de åror var för tunga":
 //  ++Thing, Heavy 'åror[-na]' 'åror'     isPlural = true;
@@ -51,23 +57,26 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
     south = vedboDorrUtsida
 ;
 
++saken: Thing 'saker[-na]' 'saker' isPlural = true;
+
 // TODO: Flytta in i köket sedan
-+skap: ComplexContainer, Heavy 'skåp[-et]' 'skåp'
-    subContainer: ComplexComponent, OpenableContainer {
++skap: Heavy, ComplexContainer 'skåp[-et]' 'skåp'
+    subSurface: ComplexComponent, Surface {}
+    subContainer: ComplexComponent, OpenableContainer  {
         //descContentsLister = thingDescContentsLister
     }
 ;
+
+// TODO: problem om inget namn sätts, problem om namn
+/*++skapLuckor: ContainerDoor, ComplexComponent 'skåplucka[-n]*skåpluck[-or]/lucka*luckor[-na]' 'skåpluckor' 
+    isPlural = true
+    //theName = 'skåpet' // TODO: detta ska inte behöva göras, det är ett plåster. theName ska inte kunna bli nil...
+;*/
 
 +sofia: Actor 'Sofia' 'Sofia' isShe = true isProperName = true;
 ++HelloTopic 'hello';
 ++AskTopic 'regn' "...";
 
-// TODO: problem om inget namn sätts, problem om namn
-++skapLuckor: ComplexComponent, ContainerDoor 'skåplucka[-n]**skåpluck[-or]/luckor[-na]' 'skåpluckor' 
-    isPlural = true
-    theName = 'skåpet' // TODO: detta ska inte behöva göras, det är ett plåster. theName ska inte kunna bli nil...
-
-;
 
 +++skapLuckeUtrymme: ComplexContainer 'insida[-n]' 'insida';
 
@@ -360,7 +369,7 @@ bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
 
 
 
-+baten: Attachable, Vehicle, Heavy /*Enterable -> (location.south)*/ 'båt[-en]**båtar[-na]' 'båten'
++baten: Attachable, Heavy, Container, Vehicle  /*Enterable -> (location.south)*/ 'båt[-en]**båtar[-na]' 'båten'
     "Det var en träfärgad ~snipa~ med plats för två. Mats brukade använda den till att fiska och åka runt på upptäcktsfärder i skärgården. "
     specialDesc = "Mot bryggans södra del låg Mats båt förtöjd. "
     isQualifiedName = true

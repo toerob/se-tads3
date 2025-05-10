@@ -45,13 +45,13 @@
 #-source sarkofagen/sarkofagen
 #-source sarkofagen/reldir
 
-#-source skargarden/skargarden
+-source skargarden/skargarden
 
 #-I../../code/tads3/tads3-unit-test
 
 # TESTER 
--source ../../code/tads3/tads3-unit-test/unittest.t
--source tests/past-tense
+#-source ../../code/tads3/tads3-unit-test/unittest.t
+#-source tests/past-tense
 #-source tests/initialize-tests
 
 # TODO: gör klart sedan -source tests/present-tense 

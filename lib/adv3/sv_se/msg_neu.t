@@ -4040,9 +4040,10 @@ playerActionMessages: MessageHelper
     throwHitFallMsg(projektilen, target, dest)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/han} träffa{r/de} {den target/han}
+        return '{Den projektilen/han} träffa{r|de} {den target/han}
             utan någon uppenbar effekt, och {faller|föll} ner '
-            + dest.putInName + '. ';
+            + dest.putInName + '. '
+            ;
     }
 
     /* thrown object falls short of distant target (sentence prefix only) */

@@ -445,8 +445,9 @@ modify VocabObject
         }
 
         /* add vocabulary from each of our superclasses */
-        foreach (local sc in getSuperclassList())
+        foreach (local sc in getSuperclassList()) {
             sc.inheritVocab(target, done);
+        }
     }
 
 
@@ -470,14 +471,227 @@ modify VocabObject
      *   conventions of the English format in other languages where
      *   different formats would be more convenient.
      */
+    initializeVocabWithOldBackup(str)
+    {
+        local sectPart;
+        local modList = [];
+
+        /* start off in the adjective section */
+        sectPart = &adjective;
+
+        /* scan the string until we run out of text */
+        while (str != '')
+        {
+            local len;
+            local cur;
+
+            /*
+             *   if it starts with a quote, find the close quote;
+             *   otherwise, find the end of the current token by seeking
+             *   the next delimiter
+             */
+            if (str.startsWith('"'))
+            {
+                /* find the close quote */
+                len = str.find('"', 2);
+            }
+            else
+            {
+                /* no quotes - find the next delimiter */
+                len = rexMatch('<^space|star|/>*', str);
+            }
+
+            /* if there's no match, use the whole rest of the string */
+            if (len == nil)
+                len = str.length();
+
+            /* if there's anything before the delimiter, extract it */
+            if (len != 0)
+            {
+                /* extract the part up to but not including the delimiter */
+                cur = str.substr(1, len);
+
+                /*
+                 *   if we're in the adjectives, and either this is the
+                 *   last token or the next delimiter is not a space, this
+                 *   is implicitly a noun
+                 */
+                if (sectPart == &adjective
+                    && (len == str.length()
+                        || str.substr(len + 1, 1) != ' '))
+                {
+                    /* move to the noun section */
+                    sectPart = &noun;
+                }
+
+                /*
+                 *   if the word isn't a single hyphen (in which case it's
+                 *   a null word placeholder, not an actual vocabulary
+                 *   word), add it to our own appropriate part-of-speech
+                 *   property and to the dictionary
+                 */
+                if (cur != '-')
+                {
+                    /*
+                     *   by default, use the part of speech of the current
+                     *   string section as the part of speech for this
+                     *   word
+                     */
+                    local wordPart = sectPart;
+
+                    /*
+                     *   Check for parentheses, which indicate that the
+                     *   token is "weak."  This doesn't affect anything
+                     *   about the token or its part of speech except that
+                     *   we must include the token in our list of weak
+                     *   tokens.
+                     */
+                    if (cur.startsWith('(') && cur.endsWith(')'))
+                    {
+                        /* it's a weak token - remove the parens */
+                        cur = cur.substr(2, cur.length() - 2);
+
+                        /*
+                         *   if we don't have a weak token list yet,
+                         *   create the list
+                         */
+                        if (weakTokens == nil)
+                            weakTokens = [];
+
+                        /* add the token to the weak list */
+                        weakTokens += cur;
+                    }
+
+                    /*
+                     *   Check for special formats: quoted strings,
+                     *   apostrophe-S words.  These formats are mutually
+                     *   exclusive.
+                     */
+                    if (cur.startsWith('"'))
+                    {
+                        /*
+                         *   It's a quoted string, so it's a literal
+                         *   adjective.
+                         */
+
+                        /* remove the quote(s) */
+                        if (cur.endsWith('"'))
+                            cur = cur.substr(2, cur.length() - 2);
+                        else
+                            cur = cur.substr(2);
+
+                        /* change the part of speech to 'literal adjective' */
+                        wordPart = &literalAdjective;
+                    }
+                    else if (cur.endsWith('\'s'))
+                    {
+                        /*
+                         *   It's an apostrophe-s word.  Remove the "'s"
+                         *   suffix and add the root word using adjApostS
+                         *   as the part of speech.  The grammar rules are
+                         *   defined to allow this part of speech to be
+                         *   used exclusively with "'s" suffixes in input.
+                         *   Since the tokenizer always pulls the "'s"
+                         *   suffix off of a word in the input, we have to
+                         *   store any vocabulary words with "'s" suffixes
+                         *   the same way, with the "'s" suffixes removed.
+                         */
+
+                        /* change the part of speech to adjApostS */
+                        wordPart = &adjApostS;
+
+                        /* remove the "'s" suffix from the string */
+                        cur = cur.substr(1, cur.length() - 2);
+                    }
+
+                    /* add the word to our own list for this part of speech */
+                    if (self.(wordPart) == nil)
+                        self.(wordPart) = [cur];
+                    else
+                        self.(wordPart) += cur;
+
+                    /* add it to the dictionary */
+                    cmdDict.addWord(self, cur, wordPart);
+
+                    if (cur.endsWith('.'))
+                    {
+                        local abbr;
+
+                        /*
+                         *   It ends with a period, so this is an
+                         *   abbreviated word.  Enter the abbreviation
+                         *   both with and without the period.  The normal
+                         *   handling will enter it with the period, so we
+                         *   only need to enter it specifically without.
+                         */
+                        abbr = cur.substr(1, cur.length() - 1);
+                        self.(wordPart) += abbr;
+                        cmdDict.addWord(self, abbr, wordPart);
+                    }
+
+                    /* note that we added to this list */
+                    if (modList.indexOf(wordPart) == nil)
+                        modList += wordPart;
+                }
+            }
+
+            /* if we have a delimiter, see what we have */
+            if (len + 1 < str.length())
+            {
+                /* check the delimiter */
+                switch(str.substr(len + 1, 1))
+                {
+                case ' ':
+                    /* stick with the current part */
+                    break;
+
+                case '*':
+                    /* start plurals */
+                    sectPart = &plural;
+                    break;
+
+                case '/':
+                    /* start alternative nouns */
+                    sectPart = &noun;
+                    break;
+                }
+
+                /* remove the part up to and including the delimiter */
+                str = str.substr(len + 2);
+
+                /* skip any additional spaces following the delimiter */
+                if ((len = rexMatch('<space>+', str)) != nil)
+                    str = str.substr(len + 1);
+            }
+            else
+            {
+                /* we've exhausted the string - we're done */
+                break;
+            }
+        }
+
+        /* uniquify each word list we updated */
+        foreach (local p in modList)
+            self.(p) = self.(p).getUnique();
+    }
+
     initializeVocabWith(str)
     {
-        //tadsSay('<<self.name>>.initializeVocabWith \"<<str>>\"\n');
+        /*if(self.location == skap) {
+            tadsSay('<<self>>****###\n');
+        }
+        tadsSay('<<self.name>>.initializeVocabWith \"<<str>>\"\n');
+        */
+        if(str == '') {
+            return;
+        }
+
         local sectPart;
         local modList = [];
 
         local foundPluralName = nil; // Used to find the first defined pluralname in vocabWords and set pluralName property to it
         local foundTheDefinitiveForm = nil; // Used to find the first defined definitive form in vocabWords and set definitiveForm property to it
+
         /* start off in the adjective section */
         sectPart = &adjective;
 
@@ -570,48 +784,42 @@ modify VocabObject
                     // istället för vocabWords och rensa upp kodspill här och där. 
                     // Diffa mot föregår commit om det 
                     // behövs
-
                     if(rexMatch(R'.*<lsquare>[-](.*)<rsquare>.*', cur) != nil) {
                         local ending = rexGroup(1)[3];
 
-                        // Once we got the ending we can remove the ending syntax ([-xyz]) from the vocabWord
+                        // Once we got the ending we can remove the ending syntax 
+                        // ([-xyz]) from the vocabWord
                         cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
                         local curWithEnding = cutEndings(cur) + ending;
                         wordPart = &literalAdjective;   // TODO: not sure this will do...
 
                         cmdDict.addWord(self, curWithEnding, wordPart);
 
-                        // PLural definitive form is not yet handled automatically
+                        // NOTE:  Plural definitive form is not yet handled automatically
+                        // Kontroller bara uterum/neutrum om inte i plural-sektionen
                         if(sectPart != &plural) {
                             if(!isPlural) {
-                                // Only check the for the uterum/neutrum ending if we are not in the plural section
                                 if(ending.endsWith('n') || ending.endsWith('na')) {
                                     isUter = true;
-                                    tadsSay('[<<self.theName>>] uter ');
                                 } else {
                                     isUter = nil;
-                                    tadsSay('[<<self.theName>>] neuter ');
                                 }
                             } else {
+                                // TODO: kontrollera fler pluralformer 
                                 if(ending.endsWith('n') || ending.endsWith('na')) {
                                     isUter = true;
-                                    tadsSay('[<<self.theName>>] uter pluralpart and plural ');
                                 }
                             }
 
                         }
 
-                        // TODO: det är oftare jobbigare att böja till pluralformen med pluralNameFrom()
-                        // så överrid den om vi faktiskt hittat en pluralform i vocabWords. T ex: 'väskor[-na]'
+                        // Det är oftare jobbigare att böja till pluralName med pluralNameFrom()
+                        // så överrid den om vi faktiskt hittat en pluralform i vocabWords. 
+                        // T ex: 'väskor[-na]'
                         if(!foundPluralName) {
                             if(sectPart == &plural) {
-                                //if(dataTypeXlat(pluralName) == TypeFuncPtr) 
-                                {
-                                    foundPluralName=true;
-                                    pluralName = cur;
-                                    //pluralDisambigName
-                                    tadsSay('\ plu = [<<curWithEnding>>] pluralpart ');
-                                }                                
+                                foundPluralName=true;
+                                pluralName = cur;
                             }
                         }
 
@@ -621,155 +829,99 @@ modify VocabObject
                                 if(sectPart == &plural) {
                                     foundTheDefinitiveForm=true;
                                     definitiveForm = curWithEnding;
-                                    tadsSay('\ defplu = [<<curWithEnding>>] ');
+                                    //tadsSay('\ defplu = [<<curWithEnding>>] ');
                                 }
                             } else {
                                 foundTheDefinitiveForm=true;
                                 definitiveForm = curWithEnding;
-                                tadsSay('\ def = **[<<curWithEnding>>] ');
+                                //tadsSay('\ def = **[<<curWithEnding>>] ');
                             }
                         }
-
-
-                        // If within the noun section and an ending ends with 'n'
-                        // Assume noun is uter.
-                        if(sectPart == &noun) {
-                            // TODO: Only replace theName if its similar to name
-                            // OR in other words, unset by the user
-
-                            // TODO: verify this works
-                            //isUter = ending.endsWith('n');
-                            //isUter = ending.endsWith('na');
-
-                            
-                            /*if(theName == name) {
-                                name = cur;
-                                theName = curWithEnding;
-                                "theName: <<theName>> replaced with <<curWithEnding>>\n";
-                            }*/
-                        }
-    
-
-                        /*if(sectPart == &plural) {
-                            isPlural = ending.endsWith('a');
-                        }*/
-
-                        //isPlural = ending.endsWith('na');
-                        tadsSay('\n');
                     }
 
+                    // Kolla efter specialformat, strängcitat, ändelser 's' (för ägande)
+                    // Dessa är uteslutande varandra
 
-
-
-                    /*
-                     *   Check for special formats: quoted strings,
-                     *   apostrophe-S words.  These formats are mutually
-                     *   exclusive.
-                     */
-                    if (cur.startsWith('"'))
-                    {
-                        /*
-                         *   It's a quoted string, so it's a literal
-                         *   adjective.
-                         */
-
-                        /* remove the quote(s) */
-                        if (cur.endsWith('"'))
+                    if (cur.startsWith('"')) {
+                         // Det är ett strängcitat, så det blir ett 'literal adjective'.
+                        // ta bort citationstecknen:
+                        if (cur.endsWith('"')) {
                             cur = cur.substr(2, cur.length() - 2);
-                        else
+                        } else {
                             cur = cur.substr(2);
+                        }
 
-                        /* change the part of speech to 'literal adjective' */
+                        // Ändra denna del av talet 'literal adjective'
                         wordPart = &literalAdjective;
-                    }
-                    else if (cur.endsWith('\'s'))
-                    {
-                        /*
-                         *   It's an apostrophe-s word.  Remove the "'s"
-                         *   suffix and add the root word using adjApostS
-                         *   as the part of speech.  The grammar rules are
-                         *   defined to allow this part of speech to be
-                         *   used exclusively with "'s" suffixes in input.
-                         *   Since the tokenizer always pulls the "'s"
-                         *   suffix off of a word in the input, we have to
-                         *   store any vocabulary words with "'s" suffixes
-                         *   the same way, with the "'s" suffixes removed.
-                         */
 
-                        /* change the part of speech to adjApostS */
+                    } else if (cur.endsWith('\'s')) {
+                        /*
+                         // TODO: Inte samma behov i svenskan, däremot s utan apostrof för ägande
+                         // men det är inte alltid så,  t ex vid namn som slutar på s. Därför
+                         // behöver detta hanteras annorlunda. Oklart hur.
+                  
+                         // It's an apostrophe-s word.  Remove the "'s"
+                         // suffix and add the root word using adjApostS
+                         // as the part of speech.  The grammar rules are
+                         // defined to allow this part of speech to be
+                         // used exclusively with "'s" suffixes in input.
+                         // Since the tokenizer always pulls the "'s"
+                         // suffix off of a word in the input, we have to
+                         // store any vocabulary words with "'s" suffixes
+                         // the same way, with the "'s" suffixes removed.
+
+                        // change the part of speech to adjApostS 
                         wordPart = &adjApostS;
 
-                        /* remove the "'s" suffix from the string */
+                        // remove the "'s" suffix from the string
                         cur = cur.substr(1, cur.length() - 2);
+                        */
                     }
 
- 
-
-
-
-                    /* add the word to our own list for this part of speech */
-                    if (self.(wordPart) == nil)
+                    // Lägg till ordet till våran egen lista för denna del av talet
+                    if (self.(wordPart) == nil) {
                         self.(wordPart) = [cur];
-                    else
+                    } else {
                         self.(wordPart) += cur;
+                    }
 
-                    /* add it to the dictionary */
+                    // Lägg till det till ordboken
                     cmdDict.addWord(self, cur, wordPart);
 
                     if (cur.endsWith('.'))
                     {
                         local abbr;
 
-                        /*
-                         *   It ends with a period, so this is an
-                         *   abbreviated word.  Enter the abbreviation
-                         *   both with and without the period.  The normal
-                         *   handling will enter it with the period, so we
-                         *   only need to enter it specifically without.
-                         */
+                         // Slutar på en punkt och är därmed ett avkortat ord. 
+                         // Skriv in förkortningen både med och utan punkten.
+                         // Den normala hanteringen skriver in det tillsammans 
+                         // med punkten så vi behöver bara skriva in det 
+                         // specifikt utan.                         
                         abbr = cur.substr(1, cur.length() - 1);
                         self.(wordPart) += abbr;
                         cmdDict.addWord(self, abbr, wordPart);
                     }
 
-                    /* note that we added to this list */
-                    if (modList.indexOf(wordPart) == nil)
+                    // note that we added to this list
+                    if (modList.indexOf(wordPart) == nil) {
                         modList += wordPart;
+                    }
                 }
             }
 
-            /* if we have a delimiter, see what we have */
-            if (len + 1 < str.length())
-            {
-                /* check the delimiter */
-                switch(str.substr(len + 1, 1))
-                {
-                case ' ':
-                    /* stick with the current part */
-                    break;
-
-                case '*':
-                    /* start plurals */
-                    sectPart = &plural;
-                    break;
-
-                case '/':
-                    /* start alternative nouns */
-                    sectPart = &noun;
-                    break;
+            if (len + 1 < str.length()) {                   // if we have a delimiter, see what we have 
+                switch(str.substr(len + 1, 1)) {
+                    case ' ': break;                        // stick with the current part 
+                    case '*': sectPart = &plural; break;    // start plurals 
+                    case '/': sectPart = &noun; break;      // start alternative nouns 
                 }
+                str = str.substr(len + 2);                  // remove the part up to and including the delimiter 
 
-                /* remove the part up to and including the delimiter */
-                str = str.substr(len + 2);
-
-                /* skip any additional spaces following the delimiter */
+                // skip any additional spaces following the delimiter 
                 if ((len = rexMatch('<space>+', str)) != nil)
                     str = str.substr(len + 1);
-            }
-            else
-            {
-                /* we've exhausted the string - we're done */
-                break;
+            } else {
+                break; // we've exhausted the string - we're done 
             }
         }
 

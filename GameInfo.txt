@@ -4,7 +4,7 @@ Byline: by Tomas
 HtmlByline: by <a href="mailto:yourmail@address.com"></a>
 AuthorEmail: Tomas yourmail@address.com
 Version: 1
-ReleaseDate: 2025-05-02
+ReleaseDate: 2025-05-10
 Language: sv-SE
 LicenseType: Freeware
 CopyingRules: Nominal cost only; compilations allowed
