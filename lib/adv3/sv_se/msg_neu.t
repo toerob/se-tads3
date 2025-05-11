@@ -2163,10 +2163,10 @@ npcMessages: playerMessages
 
     /* no match for a noun phrase */
     noMatchCannotSee(actor, txt) { 
-        "\^<<actor.nameSees>> ingen <<txt>>. ";  // TODO: genitiv
+        "\^<<actor.nameSees>> inget liknande <<txt>>. ";  // TODO: genitiv
     }
     noMatchNotAware(actor, txt)
-        { "\^<<actor.nameIs>> inte medveten om någon <<txt>>. "; }
+        { "\^<<actor.nameIs>> inte medveten om något liknande <<txt>>. "; }
 
     /* no match for 'all' */
     noMatchForAll(actor)
@@ -2262,11 +2262,11 @@ npcMessagesDirect: npcMessages
     /* no match for a noun phrase */
     noMatchCannotSee(actor, txt)
     {
-        "\^<<actor.nameVerb('titta')>> runt. <q>Jag ser inte någon <<txt>>.</q> ";
+        "\^<<actor.nameVerb('titta')>> runt. <q>Jag ser inte någonting liknande <<txt>>.</q> ";
     }
     noMatchNotAware(actor, txt)
     {
-        "<q>Jag känner inte till någon <<txt>>,</q> <<actor.nameSays>>. ";
+        "<q>Jag känner inte till någonting om <<txt>>,</q> <<actor.nameSays>>. ";
     }
 
     /* no match for 'all' */
@@ -2468,7 +2468,7 @@ npcDeferredMessagesDirect: npcDeferredMessages
     /* no match for a noun phrase */
     noMatchCannotSee(actor, txt)
     {
-        "\^<<actor.nameSays>>, <q>Jag såg inte någon <<txt>>.</q> ";
+        "\^<<actor.nameSays>>, <q>Jag såg inget liknande <<txt>>.</q> ";
     }
     noMatchNotAware(actor, txt)
     {
@@ -4601,15 +4601,6 @@ actorInventoryLister: DividedInventoryLister
  *   We start the inventory listing on a new line, and use the actor's
  *   full name in the list preface.  
  */
- // TODO: x sofia 
- // kraschar finns showList med 7 resp 8 parametrar där examinee är den sista. 
-
-/*
->actorHoldingDescInventoryListerLong.showList(Mats, sofia, [sofiasMossa], 2,
-0, {obj:LookupTable}, nil)
-   sofia.examineListContentsWith(actorHoldingDescInventoryListerLong)
-   sofia.holdingDesc()
-*/
 actorHoldingDescInventoryListerLong: actorInventoryLister
     showInventoryEmpty(parent)
     {

@@ -904,22 +904,6 @@ UnitTest 'noMatchForPronoun' run {
   assertThat(o).contains('Ordet <q>den</q> refererade inte till någonting just nu.');
 };
 
-// TODO: fixa text... något med gTranscript ställer troligen till det.
-// UnitTest 'askMissingObject' run {
-//   gActor = spelare2aPerspektiv;
-//   gActor.referralPerson = DirectObject;
-
-//   setPlayer(spelare2aPerspektiv);
-//   //mainOutputStream.hideOutput = nil;
-//   gAction = UnlockWithAction.createActionInstance();
-//   gAction.setCurrentObjects([skapetObjNeutrumSingular]);
-//   playerMessages.askMissingObject(gActor, gAction, DirectObject);
-//   //local x = gTranscript.();
-//   //assertThat(x).contains('Vill du .');
-// };
-
-
-
 // --------------------
 // playerActionMessages
 // --------------------
