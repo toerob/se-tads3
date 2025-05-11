@@ -1055,7 +1055,7 @@ modify Thing
     /* get the object reflexive pronoun (itself, etc) */
     itReflexive
     {
-        return [(isUter?'den':'det')+' själv', 'han själv', 'hon själv', 'de själva']
+        return ['sig själv', 'han själv', 'hon själv', 'de själva']
                [pronounSelector];
     }
 
@@ -2289,9 +2289,12 @@ modify Actor
     }
     itObj
     {
+        // TODO: var ska 'sig' in
+        // {sig} blir nu 'den', det var inget han kunde klä på han
+        // men samtidigt används denna av 'han sitter'
         return ['mig', 'mig', 'mig', 'oss',
                'dig', 'dig', 'dig', 'dig',
-               'den', 'han', 'hon', 'dem'][pronounSelector];
+               'sig', 'sig', 'sig', 'sig'][pronounSelector];
     }
     itPossAdj
     {
@@ -3990,6 +3993,7 @@ langMessageBuilder: MessageBuilder
         ['yourself/himself', &itReflexive, 'actor', nil, nil],
         ['yourself/herself', &itReflexive, 'actor', nil, nil],
         ['digsjälv', &itReflexive, 'actor', nil, nil],
+        ['sigsjälv', &itReflexive, 'actor', nil, nil],
 
         // sig själv
         ['själv', &itReflexive, 'actor', nil, nil],
@@ -4001,9 +4005,11 @@ langMessageBuilder: MessageBuilder
         ['den/honom', &theNameObj, nil, &itReflexive, nil],
         ['den/henne', &theNameObj, nil, &itReflexive, nil],
         //TODO: ['hennes', &theNamePossAdj, nil, &itPossAdj, nil],
-        ['dess/hennes', &theNamePossNoun, nil, &itPossNoun, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
+        //['dess/hennes', &theNamePossNoun, nil, &itPossNoun, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
+        
         ['dess/hon', &itPossAdj, nil, nil, nil],               // ['its/her', &itPossAdj, nil, nil, nil],
-
+        ['dess/hennes', &itPossNoun, nil, nil, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
+        
 
         ['a/t', &endingForNounTA, 'dobj', nil, nil],
         ['a', &endingForNounA, 'dobj', nil, nil],
@@ -4074,9 +4080,11 @@ langMessageBuilder: MessageBuilder
 
         //['det/han', &itNom, nil, nil, true],
         //['det/hon', &itNom, nil, nil, true],
+        
+        // TODO: {mig} {dig} {sig} bör räcka. 
         ['det/honom', &itObj, nil, &itReflexive, nil],
         ['det/henne', &itObj, nil, &itReflexive, nil],
-
+        
         /*
          *   note that we don't have its/his, because that leaves
          *   ambiguous whether we want an adjective or noun form - so we
