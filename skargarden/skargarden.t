@@ -65,7 +65,7 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
 ;*/
 
 +sofia: Actor 'Sofia' 'Sofia' isShe = true isProperName = true;
-++sofiasMossa: Wearable 'sofias mössa[-n]' 'mössa' isWornBy = sofia;
+++sofiasMossa: Wearable 'sofias mössa[-n]' 'mössa' wornBy = sofia;
 
 ++HelloTopic 'hello';
 ++AskTopic 'regn' "...";
