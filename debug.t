@@ -96,7 +96,7 @@ DefineLiteralAction(Debug2)
  *   debugging operations while running the game.  The Debug Action parses
  *   the options string to carry out the command.  
 */
-VerbRule(Debug) 'debug' singleLiteral
+VerbRule(SweDebug) 'debug' singleLiteral
     : Debug2Action
     verbPhrase = 'debugga/debugga (vad)'
 ;

@@ -144,7 +144,6 @@ kajen: OutdoorRoom 'kajen' 'kajen';
 musikenObjUterumSingular: Thing 'musik[-en]' 'musik';
 matosetObjUterumSingular: Thing 'matos[-et]' 'matos';
 
-/*
 // Test Assertions
 UnitTest 'openMsg - uterum singular' run {
   assertThat(libMessages.openMsg(dorrenObjUterumSingular)).isEqualTo('öppen');
@@ -2104,7 +2103,6 @@ UnitTest 'againCannotTalkToTarget' run {
   assertThat(o).contains('\^hobbiten kunde inte repetera det kommandot.');
 
 };
-*/
 
 //TODO:
     // TakeFromAction -> 'vad vill du x',
@@ -2303,7 +2301,7 @@ UnitTest 'askMissingLiteral(actor, action, which)' run {
     gTranscript.clearReports();
     assertThat(o.findReplace('  ', ' ', ReplaceAll)).contains(msg);
   });
-} skip=true;
+} skip=nil;
 
 UnitTest 'playerMessages.askMissingObject' run {
   local actionTextPairs = 
@@ -2334,7 +2332,7 @@ UnitTest 'playerMessages.askMissingObject' run {
     //local str = mainOutputStream.captureOutput( {: "<<o>>" });    
     assertThat(o).contains(msg);
   });
-} skip=true;
+} skip=nil;
 
 
 /*

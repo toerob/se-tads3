@@ -398,7 +398,7 @@ bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
 
 
 
-Mats: Actor 'mats;;;du' 'Mats' @grasmattan
+Mats: Actor 'mats/du' 'Mats' @grasmattan
   pcReferralPerson = ThirdPerson
   isProperName = true
   isHim = true
@@ -450,7 +450,7 @@ Object -> fridge "kylskåp"
 
 
 
-+forradsdorrsnyckel: Key 'förråds-/förrådsnyckel[-n]/förrådsdörrsnyckel[-n]/nyckel[-n]' 'förrådsdörrsnyckel'; 
++forradsdorrsnyckel: Key 'förrådsnyckel[-n]/förrådsdörrsnyckel[-n]/nyckel[-n]' 'förrådsdörrsnyckel'; 
 
 // TODO: darkroom
 stugansSovrum: Room 'stugans sovrum' 'sovrummet'

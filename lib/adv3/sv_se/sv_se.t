@@ -568,20 +568,19 @@ modify VocabObject
                         // När vi väl fått en ändelse kan vi ta bort ändelsesyntaxen
                         // [-xyz] från vocabWord
                         cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
-                        local curWithEnding = cutEndings(cur) + ending;
+                        //local curWithEnding = cutEndings(cur) + ending;
+                        local curWithEnding = cur + ending;
 
                         // Lägg till det expanderande ordet
                         cmdDict.addWord(self, curWithEnding, sectPart);
                         displayWordPart(sectPart, curWithEnding, self);
-
-                        // tadsSay('<<self>>: med ändelse <<curWithEnding>>\n');
 
                         // TODO: rensa även vocabWords, 
                         // så alla hakparenteser blir ersatta med expanderade ord
                         if(!isUterDefinedAlready) {
                             if(sectPart != &plural) {
                                 if(!isPlural) {
-                                    isUter = ending.endsWith('n') || ending.endsWith('na');
+                                    isUter = ending.endsWith('n') || ending.endsWith('na');                                    
                                 } else {
                                     // TODO: kontrollera fler pluralformer
                                     if(ending.endsWith('n') || ending.endsWith('na')) {
@@ -591,22 +590,33 @@ modify VocabObject
                             }
                         }
 
-                        // Det är oftare jobbigare att böja till pluralName med pluralNameFrom()
-                        // så överrid pluralName om vi faktiskt hittat en pluralform i vocabWords. 
-                        // T ex: 'väskor[-na]'
+                        // Tilldela pluralName det första plural-ordet vi hittar i vocabWords
+                        // Detta då det oftare är jobbigare att böja till pluralName med pluralNameFrom()
                         if(!foundPluralName) {
-                            // TODO: if(isPlural) { ?
                             if(sectPart == &plural) {
                                 foundPluralName=true;
                                 pluralName = cur;
                             }
                         }
 
-                        // Använd theNameFrom istället och tvinga name att definieras
+                        // Tilldela definitiveForm den första definitiva formen vi hittar i vocabWords
+                        // (Möjligen TODO: använd theNameFrom istället och tvinga name att definieras)
                         if(!foundTheDefinitiveForm) {
-                            foundTheDefinitiveForm=true;
-                            definitiveForm = curWithEnding;
+                            if(isPlural) {
+                                // Om objektet är plural
+                                // Sätt bara definitiv form om vi är i pluraldelen
+                                if(sectPart == &plural) {
+                                    foundTheDefinitiveForm=true;
+                                    definitiveForm = curWithEnding;
+                                }
+                            } else {
+                                // I övriga fall sätts definitiv form oavsett 
+                                foundTheDefinitiveForm=true;
+                                definitiveForm = curWithEnding;
+                            }
                         }
+                        
+                        
                     }
 
                     // Kolla efter specialformat, strängcitat, ändelser 's' (för ägande)
@@ -1598,12 +1608,8 @@ modify Thing
       */
     aNameFrom(str)
     {
-
         /* remember the original source string */
-        local inStr = cutEndings(str);
-
-        //" **(aNameFrom: [<<inStr>>])** ";
-
+        local inStr = str;
 
         /* if the name is already qualified, don't add an article at all */
         if (isQualifiedName)
@@ -11358,137 +11364,28 @@ class WordEndingForm: object
   }
 ;
 
-
-    
-// #################################################
-// ## central function to replace all the special ##
-// ## endings, like 'Äppl[-et]', 'Stol[-en]' etc. ##
-// #################################################
-//eval replaceEndings('sak[-en]')
-function replaceEndings(txt) {
-    //"org:[<<txt>>]";
-    /*
-    local nounEndingPat = new RexPattern('.*<lsquare>(.*)<rbrace>');
-    local str = rexMatch(nounEndingPat, txt);
-    if(str) {
-        replStr = str.findReplace('[', '', ReplaceAll);
-
-        tadsSay('MATCH');
-        str = rexGroup(1)[3];
-        tadsSay('<<str>>');
-    }
-    return;
-    */
-
-
-
-
-    local idx=0;
-
-    // Tex: fönst[-er|-ret]
-    txt = txt.findReplace('[-er|-ret]', 'ret', ReplaceAll, idx);   // -- print noun genitive endings
-
-    txt = txt.findReplace('[-et]', 'et', ReplaceAll, idx);   // -- print noun genitive endings
-    txt = txt.findReplace('[-en]', 'en', ReplaceAll, idx);   // -- print noun genitive endings
-
-    //txt = txt.findReplace('[^]', self.adjEnding, ReplaceAll); // -- replace adjective endings
-    /*if (curcase.isGen) {
-        txt = txt.findReplace('[-s]', 's', ReplaceAll);   // -- print noun genitive endings
-        txt = txt.findReplace('[-es]', 'es', ReplaceAll); // -- print noun genitive endings
-        txt = txt.findReplace('[-ses]', 'ses', ReplaceAll); // -- print noun genitive endings
-        txt = txt.findReplace('[-n]', 'n', ReplaceAll);    // -- print noun genitive endings
-        txt = txt.findReplace('[-en]', 'en', ReplaceAll); // -- print noun genitive endings
-    }
-    else if (curcase.isDat || curcase.isAkk){
-        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-        txt = txt.findReplace('[-n]', 'n', ReplaceAll);   // -- print noun accusative/dative endings
-        txt = txt.findReplace('[-en]', 'en', ReplaceAll);   // -- print noun accusative/dative endings
-    }
-    else { // -- we have the nominative
-        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-        txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- reomve noun accusative/dative endings
-        txt = txt.findReplace('[-en]', '', ReplaceAll);   // -- remove noun genitive endings
-    }*/
-    return txt;
-}
-
-
-cutEndings(txt) {
-    txt = txt.findReplace('[-ret]', '', ReplaceAll);   // ##### remove noun genitive endings
-    txt = txt.findReplace('[-en]', '', ReplaceAll);   // ##### remove noun genitive endings
-    txt = txt.findReplace('[-et]', '', ReplaceAll); // ##### remove noun genitive endings
-    txt = txt.findReplace('[-n]', '', ReplaceAll);  // ##### remove noun genitive endings
-    txt = txt.findReplace('[-t]', '', ReplaceAll);   // ##### remove noun accusative/dative endings        
-    txt = txt.findReplace('[-na]', '', ReplaceAll);   // ##### remove noun accusative/dative endings        
-    return txt;
-}
-
-
-// #################################################
-// ## central function to replace all the special ##
-// ## endings, like 'kärn[-orna]', 'Stolar[-na]' etc. ##
-// #################################################
-
-function replacePluralEndings(txt) {
-
-
-    txt = txt.findReplace('[-orna]', 'orna', ReplaceAll);   // -- print noun genitive endings
-    txt = txt.findReplace('[-ren]', 'ren', ReplaceAll);   // -- print noun genitive endings
-    txt = txt.findReplace('[-na]', 'na', ReplaceAll);   // -- print noun genitive endings
-
-    /*txt = txt.findReplace('[^]', self.adjPluralEnding, ReplaceAll); // -- replace adjective endings
-    if (curcase.isGen) {
-        txt = txt.findReplace('[-s]', 's', ReplaceAll);   // -- print noun genitive endings
-        txt = txt.findReplace('[-es]', 'es', ReplaceAll); // -- print noun genitive endings
-        txt = txt.findReplace('[-ses]', 'ses', ReplaceAll); // -- print noun genitive endings
-        txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- remove noun accusative/dative endings
-    }
-    else if (curcase.isDat){
-        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-        txt = txt.findReplace('[-n]', 'n', ReplaceAll);   // -- print noun accusative/dative endings
-    }
-    else if (curcase.isAkk){
-        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-        txt = txt.findReplace('[-n]', '', ReplaceAll);   // -- print noun accusative/dative endings
-    }
-    else { // -- we have the nominative
-        txt = txt.findReplace('[-s]', '', ReplaceAll);    // -- remove noun genitive endings
-        txt = txt.findReplace('[-es]', '', ReplaceAll);   // -- remove noun genitive endings
-        txt = txt.findReplace('[-ses]', '', ReplaceAll); // -- remove noun genitive endings
-        txt = txt.findReplace('[-n]', '', ReplaceAll);    // -- reomve noun accusative/dative endings
-    }*/
-    return txt;
-}
-
-
-
 function displayWordPart(wordPart, cur, obj) {
+    #ifdef __DEBUG
     if(wordPart == &noun) {
         tadsSay('\ <<cur>> (substantiv)');
     }
     if(wordPart == &plural) {
         tadsSay('\ <<cur>> (plural)');
     }
-    if(wordPart == &adjApostS) {
+    if(wordPart == &adjective) {
         tadsSay('\ <<cur>> (adjektiv)');
     }
     tadsSay('\t\t\t\t\t\t -> \ [<<obj.name>>]\n');
+    #endif
 }
 
 
 
-// ###############################
-// -- Swedish: debug verbs -- VOCAB
-// ###############################
+//###############################
+//### SVENSKA DEBUGFUNKTIONER ###
+//###############################
 
+// 'vokab' listar alla ord och vilken kategori de tillhör (substantiv, adjektiv, plural)
 DefineIAction(Vocab)
     execAction() {
         displayVocab();

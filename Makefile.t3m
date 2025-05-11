@@ -22,6 +22,7 @@
 #-we
 -D LANGUAGE=sv_se
 -D MESSAGESTYLE=neu
+#-D __DEBUG
 -Fy obj
 -Fo obj
 -v
@@ -45,14 +46,14 @@
 #-source sarkofagen/sarkofagen
 #-source sarkofagen/reldir
 
--source skargarden/skargarden
+#-source skargarden/skargarden
 
 #-I../../code/tads3/tads3-unit-test
 
 # TESTER 
-#-source ../../code/tads3/tads3-unit-test/unittest.t
+-source ../../code/tads3/tads3-unit-test/unittest.t
 #-source tests/past-tense
-#-source tests/initialize-tests
+-source tests/initialize-tests
 
 # TODO: gör klart sedan -source tests/present-tense 
 
