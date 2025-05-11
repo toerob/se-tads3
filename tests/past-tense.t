@@ -144,6 +144,7 @@ kajen: OutdoorRoom 'kajen' 'kajen';
 musikenObjUterumSingular: Thing 'musik[-en]' 'musik';
 matosetObjUterumSingular: Thing 'matos[-et]' 'matos';
 
+/*
 // Test Assertions
 UnitTest 'openMsg - uterum singular' run {
   assertThat(libMessages.openMsg(dorrenObjUterumSingular)).isEqualTo('öppen');
@@ -2334,44 +2335,40 @@ UnitTest 'playerMessages.askMissingObject' run {
   });
 } skip=nil;
 
+*/
 
-/*
-TODO: troligen inkorrekt, kolla användningen av npcMessages.askMissingObject i adv3
+// TODO: troligen inkorrekt, kolla användningen av npcMessages.askMissingObject i adv3
 UnitTest 'npcMessages.askMissingObject' run {
+  //mainOutputStream.hideOutput = nil;
   local actionTextPairs = 
   [
-      AttackWithAction -> 'vad vill du attackera med',
-      DigWithAction -> 'vad vill du gräva med',
-      MoveWithAction -> 'vad vill du flytta med',
-      TurnWithAction -> 'vad vill du vrida med',
-      BurnWithAction-> 'vad vill du tända med',
-      CutWithAction -> 'vad vill du klippa med',
-      CleanWithAction -> 'vad vill du rengöra med',
-      LockWithAction -> 'vad vill du låsa med',
-      UnlockWithAction -> 'vad vill du låsa upp med',
-      ScrewWithAction -> 'vad vill du skruva med',
-      UnscrewWithAction -> 'vad vill du skruva loss med'
+      AttackWithAction -> 'vad vill du att apan ska attackera med',
+      DigWithAction -> 'vad vill du att apan ska gräva med',
+      MoveWithAction -> 'vad vill du att apan ska flytta med',
+      TurnWithAction -> 'vad vill du att apan ska vrida med',
+      BurnWithAction-> 'vad vill du att apan ska tända med',
+      CutWithAction -> 'vad vill du att apan ska klippa med',
+      CleanWithAction -> 'vad vill du att apan ska rengöra med',
+      LockWithAction -> 'vad vill du att apan ska låsa med',
+      UnlockWithAction -> 'vad vill du att apan ska låsa upp med',
+      ScrewWithAction -> 'vad vill du att apan ska skruva med',
+      UnscrewWithAction -> 'vad vill du att apan ska skruva loss med'
   ];
   actionTextPairs.forEachAssoc(function(action, msg) {
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
-    mainOutputStream.hideOutput = nil;
     gTranscript = new CommandTranscript();
     setPlayer(pirat);
     gActor = pirat;
     gAction = action.createActionInstance();
     gAction.setCurrentObjects([skapetObjNeutrumSingular, nyckel]);
-    //gAction.setResolvedObjects();
-    //gAction.setActors(apan, pirat);
-
-    npcMessages.askMissingObject(apan, TakeAction, IndirectObject);
-
+    npcMessages.askMissingObject(apan, gAction, IndirectObject);
     gTranscript.showReports(true);
     gTranscript.clearReports();
     //local str = mainOutputStream.captureOutput( {: "<<o>>" });    
     assertThat(o).contains(msg);
   });
 
-};*/
+};
 
 
 /*

@@ -2196,13 +2196,17 @@ npcMessages: playerMessages
      */
     askMissingObject(actor, action, which)
     {
-        reportQuestion('[TODO: testa msg_neu 2162]<.parser>\^' + action.whatObj(which)
-                       + ' du vill ' + actor.theNameObj + ' ska '
-                       + action.getQuestionInf(which) + '?<./parser> ');
+        //reportQuestion('<.parser>\^' + action.whatObj(which)
+        //               + ' do you want ' + actor.theNameObj + ' to '
+        //               + action.getQuestionInf(which) + '?<./parser> ');
+        reportQuestion('<.parser>\^' + action.whatObj(which) 
+                       + ' vill du att ' + actor.theNameObj + ' ska '
+                       + action.getQuestionInf(which) + '?<./parser> '
+                       );
     }
     missingObject(actor, action, which)
     {
-        "[TODO:2168] <.parser>Du behöver vara mer specifik om <<action.whatObj(which)>> du vill <<actor.theNameObj>> ska
+        "[TODO:2168] x<.parser>Du behöver vara mer specifik om <<action.whatObj(which)>> du vill <<actor.theNameObj>> ska
         <<action.getQuestionInf(which)>>.<./parser> ";
     }
 

@@ -52,8 +52,8 @@
 
 # TESTER 
 -source ../../code/tads3/tads3-unit-test/unittest.t
-#-source tests/past-tense
--source tests/initialize-tests
+-source tests/past-tense
+#-source tests/initialize-tests
 
 # TODO: gör klart sedan -source tests/present-tense 
 

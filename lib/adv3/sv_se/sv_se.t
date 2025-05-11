@@ -10019,7 +10019,7 @@ VerbRule(Follow)
 VerbRule(Attack)
     ('attackera' | 'döda' | 'slå' | 'sparka') singleDobj
     : AttackAction
-    verbPhrase = 'attackera/attackera (vem)'
+    verbPhrase = 'attackera/attackerar (vem)'
     askDobjResponseProd = singleNoun
 ;
 
@@ -10028,7 +10028,7 @@ VerbRule(AttackWith)
         singleDobj
         'med' singleIobj
     : AttackWithAction
-    verbPhrase = 'attackera/attackera (vem) (med vad)'
+    verbPhrase = 'attackera/attackerar (vem) (med vad)'
     askDobjResponseProd = singleNoun
     askIobjResponseProd = withSingleNoun
 ;
