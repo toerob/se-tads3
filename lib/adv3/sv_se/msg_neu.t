@@ -1869,9 +1869,7 @@ playerMessages: libMessages
         <<action.getQuestionInf(which)>>.  Try, for example,
         <<action.getQuestionInf(which)>> <q>something</q>.<./parser> ";
         */
-
-        "[TODO: Ser detta bra ut? msg_neu 1837]<.parser>Var mer specifik om <<action.whatObj(which)>> 
-        <<action.getQuestionInf(which)>>.  Försök, exempelvis ,
+        "<.parser>Var mer specifik om <<action.whatObj(which)>> du vill <<action.getQuestionInf(which)>>. Försök, exempelvis,
         <<action.getQuestionInf(which)>> <q>någonting</q>.<./parser> ";
 
     }
@@ -1901,13 +1899,19 @@ playerMessages: libMessages
     /* no match for a plural possessive phrase */
     noMatchForPluralPossessive(actor, txt)
     {
-        "<.parser>\^De verka{r|de} inte ha någon sådan sak.<./parser> ";
+        "<.parser>\^de verka{r|de} inte ha någon sådan sak.<./parser> ";
     }
 
     /* no match for a containment phrase */
     noMatchForLocation(actor, loc, txt)
-    {
-        "<.parser>\^<<actor.nameSees>> ingen <<loc.childInName(txt)>>.<./parser> ";
+    {        
+        // Du såg ingen kikare på marken
+        // Du såg ingen äpple på marken
+        // Du såg in
+
+        //"<.parser>\^<<actor.nameSees>> inge<<utrum?'n':'t'>> <<loc.childInName(txt)>>.<./parser>";
+        "<.parser>\^<<actor.nameSees>> inget liknande {här|där}.<./parser>";
+        //"<.parser>\^Detta syntes inte till.<./parser> ";
     }
 
     /* nothing in a container whose contents are specifically requested */
@@ -2199,24 +2203,20 @@ npcMessages: playerMessages
         //reportQuestion('<.parser>\^' + action.whatObj(which)
         //               + ' do you want ' + actor.theNameObj + ' to '
         //               + action.getQuestionInf(which) + '?<./parser> ');
-        reportQuestion('<.parser>\^' + action.whatObj(which) 
-                       + ' vill du att ' + actor.theNameObj + ' ska '
+        reportQuestion('<.parser>\^<<action.whatObj(which)>> vill du att '
+                       + actor.theNameObj + ' ska '
                        + action.getQuestionInf(which) + '?<./parser> '
                        );
     }
     missingObject(actor, action, which)
     {
-        "[TODO:2168] x<.parser>Du behöver vara mer specifik om <<action.whatObj(which)>> du vill <<actor.theNameObj>> ska
-        <<action.getQuestionInf(which)>>.<./parser> ";
+        "<.parser>Du behöver vara mer specifik om <<action.whatObj(which)>> du vill att <<actor.theNameObj>> ska <<action.getQuestionInf(which)>>.<./parser> ";
     }
 
     /* missing literal phrase query and error message templates */
     missingLiteral(actor, action, which)
     {
-        "[TODO:2175]<.parser>Du behöver vara mer specifik om <<action.whatObj(which)>>
-        du vill <<actor.theNameObj>> ska <<action.getQuestionInf(which)>>.
-        Till exempel: <<actor.theName>>, <<action.getQuestionInf(which)>>
-        <q>någonting</q>.<./parser> ";
+        "<.parser>Du behöver vara mer specifik om <<action.whatObj(which)>> du vill att <<actor.theNameObj>> ska <<action.getQuestionInf(which)>>. Till exempel: <<actor.theName>>, <<action.getQuestionInf(which)>> <q>någonting</q>.<./parser> ";
     }
 ;
 
@@ -2536,9 +2536,8 @@ npcDeferredMessagesDirect: npcDeferredMessages
     /* an object phrase was missing */
     askMissingObject(actor, action, which)
     {
-        reportQuestion('\^' + actor.nameSays
-                       + ', <q>Jag förstod inte vad  '
-                       + action.whatObj(which) + ' du ville att jag ska '
+        reportQuestion('\^<<actor.nameSays>>, <q>Jag visste inte '
+                       + action.whatObj(which) + ' du ville att jag skulle '
                        + action.getQuestionInf(which) + '.</q> ');
     }
 
@@ -2578,7 +2577,7 @@ playerActionMessages: MessageHelper
     }
 
     /* it's too dark to do that */
-    tooDarkMsg = 'Det är för mörkt för att göra det. '
+    tooDarkMsg = 'Det {är} för mörkt för att göra det. '
 
     /* object must be visible */
     mustBeVisibleMsg(obj)
@@ -2801,7 +2800,7 @@ playerActionMessages: MessageHelper
     nothingBehindMsg =
         '{Du/han} {ser} inget ovanligt bakom {den dobj/honom}. '
     nothingThroughMsg =
-        '{Du/han} {kan} ser ingenting genom {den dobj/honom}. '
+        '{Du/han} {ser} ingenting genom {den dobj/honom}. '
 
     /* this is an object we can't look behind/through */
     cannotLookBehindMsg = '{Du/han} {kan} inte se bakom {den dobj/honom}. '
@@ -2836,11 +2835,11 @@ playerActionMessages: MessageHelper
 
     /* an item is not wearable */
     notWearableMsg =
-        '{Det dobj/han} {är} inte någonting som {du/han} {kan} klä på. '
+        '{Det dobj/han} {är} inte någonting som {du/han} {kan} klä på {dig}. '
 
     /* doffing something that isn't wearable */
     notDoffableMsg =
-        '{Det dobj/han} {är} inte någonting som {du/han} {kan} ta av. '
+        '{Det dobj/han} {är} inte någonting som {du/han} {kan} ta av {dig}. '
 
     /* already wearing item */
     alreadyWearingMsg = '{Du/han} {bär|bar} redan {den dobj/honom}. '

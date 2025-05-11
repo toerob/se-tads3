@@ -144,7 +144,7 @@ kajen: OutdoorRoom 'kajen' 'kajen';
 musikenObjUterumSingular: Thing 'musik[-en]' 'musik';
 matosetObjUterumSingular: Thing 'matos[-et]' 'matos';
 
-/*
+
 // Test Assertions
 UnitTest 'openMsg - uterum singular' run {
   assertThat(libMessages.openMsg(dorrenObjUterumSingular)).isEqualTo('öppen');
@@ -2335,9 +2335,7 @@ UnitTest 'playerMessages.askMissingObject' run {
   });
 } skip=nil;
 
-*/
 
-// TODO: troligen inkorrekt, kolla användningen av npcMessages.askMissingObject i adv3
 UnitTest 'npcMessages.askMissingObject' run {
   //mainOutputStream.hideOutput = nil;
   local actionTextPairs = 
@@ -2367,23 +2365,593 @@ UnitTest 'npcMessages.askMissingObject' run {
     //local str = mainOutputStream.captureOutput( {: "<<o>>" });    
     assertThat(o).contains(msg);
   });
-
 };
 
 
-/*
-npcDeferredMessagesDirect.askMissingObject(apan, TakeAction, DirectObject);
-npcMessagesDirect.askMissingObject(apan, TakeAction, DirectObject);
-*/
+UnitTest 'npcDeferredMessagesDirect.askMissingObject' run {
+  //mainOutputStream.hideOutput = nil;
+  local actionTextPairs = 
+  [
+      AttackWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle attackera med.</q>',
+      DigWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle gräva med.</q>',
+      MoveWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle flytta med.</q>',
+      TurnWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle vrida med.</q>',
+      BurnWithAction-> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle tända med.</q>',
+      CutWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle klippa med.</q>',
+      CleanWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle rengöra med.</q>',
+      LockWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle låsa med.</q>',
+      UnlockWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle låsa upp med.</q>',
+      ScrewWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle skruva med.</q>',
+      UnscrewWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle skruva loss med.</q>'
+  ];
+  actionTextPairs.forEachAssoc(function(action, msg) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    gTranscript = new CommandTranscript();
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = action.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular, nyckel]);
+    npcDeferredMessagesDirect.askMissingObject(matros, gAction, IndirectObject);
+    gTranscript.showReports(true);
+    gTranscript.clearReports();
+    //local str = mainOutputStream.captureOutput( {: "<<o>>" });    
+    assertThat(o).contains(msg);
+  });
+};
+
+UnitTest 'npcMessagesDirect.askMissingObject' run {
+  //mainOutputStream.hideOutput = nil;
+  local actionTextPairs = 
+  [
+      AttackWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska attackera med?</q>',
+      DigWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska gräva med?</q>',
+      MoveWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska flytta med?</q>',
+      TurnWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska vrida med?</q>',
+      BurnWithAction-> '\^matrosen sade, <q>\^vad vill du att jag ska tända med?</q>',
+      CutWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska klippa med?</q>',
+      CleanWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska rengöra med?</q>',
+      LockWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska låsa med?</q>',
+      UnlockWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska låsa upp med?</q>',
+      ScrewWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska skruva med?</q>',
+      UnscrewWithAction -> '\^matrosen sade, <q>\^vad vill du att jag ska skruva loss med?</q>'
+      
+  ];
+  actionTextPairs.forEachAssoc(function(action, msg) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    gTranscript = new CommandTranscript();
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = action.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular, nyckel]);
+    npcMessagesDirect.askMissingObject(matros, gAction, IndirectObject);
+    gTranscript.showReports(true);
+    gTranscript.clearReports();
+    //local str = mainOutputStream.captureOutput( {: "<<o>>" });    
+    assertThat(o).contains(msg);
+  });
+};
+
+
+// Notering: npcMessagesDirect.missingLiteral 
+// anropar direkt
+// npcMessagesDirect.missingObject(actor, action, which);
+// så det blir exakt samma output
+
+
+UnitTest 'playerMessages.missingLiteral' run {
+  //mainOutputStream.hideOutput = nil;
+  local actionTextPairs = 
+  [
+      AttackWithAction -> ['Var mer specifik om vad du vill attackera med',
+                        'Försök, exempelvis, attackera med <q>någonting</q>'],  
+      DigWithAction -> ['Var mer specifik om vad du vill gräva med',
+                        'Försök, exempelvis, gräva med <q>någonting</q>'],
+      MoveWithAction -> ['Var mer specifik om vad du vill flytta med',
+                        'Försök, exempelvis, flytta med <q>någonting</q>'],
+      TurnWithAction -> ['Var mer specifik om vad du vill vrida med',
+                        'Försök, exempelvis, vrida med <q>någonting</q>'],
+      BurnWithAction-> ['Var mer specifik om vad du vill tända med',
+                        'Försök, exempelvis, tända med <q>någonting</q>'],
+      CutWithAction -> ['Var mer specifik om vad du vill klippa med',
+                        'Försök, exempelvis, klippa med <q>någonting</q>'],
+      CleanWithAction -> ['Var mer specifik om vad du vill rengöra med',
+                        'Försök, exempelvis, rengöra med <q>någonting</q>'],
+      LockWithAction -> ['Var mer specifik om vad du vill låsa med',
+                        'Försök, exempelvis, låsa med <q>någonting</q>'],
+      UnlockWithAction -> ['Var mer specifik om vad du vill låsa upp',
+                        'Försök, exempelvis, låsa upp med <q>någonting</q>'],
+      ScrewWithAction -> ['Var mer specifik om vad du vill skruva med',
+                        'Försök, exempelvis, skruva med <q>någonting</q>'],
+      UnscrewWithAction -> ['Var mer specifik om vad du vill skruva loss med',
+                        'Försök, exempelvis, skruva loss med <q>någonting</q>']
+  ];
+  actionTextPairs.forEachAssoc(function(action, msg) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    gTranscript = new CommandTranscript();
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = action.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular, nyckel]);
+    playerMessages.missingLiteral(matros, gAction, IndirectObject);
+    gTranscript.showReports(true);
+    gTranscript.clearReports();
+    local str = mainOutputStream.captureOutput( {: "<<o>>" }); 
+    assertThat(str).contains(msg[1]);
+    assertThat(str).contains(msg[2]);
+  });
+};
+
+UnitTest 'npcMessages.missingLiteral' run {
+  //mainOutputStream.hideOutput = nil;
+  local actionTextPairs = 
+  [
+      AttackWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska attackera med',
+                        'Till exempel: matrosen, attackera med <q>någonting</q>'],  
+      DigWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska gräva med',
+                        'Till exempel: matrosen, gräva med <q>någonting</q>'],
+      MoveWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska flytta med',
+                        'Till exempel: matrosen, flytta med <q>någonting</q>'],
+      TurnWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska vrida med',
+                        'Till exempel: matrosen, vrida med <q>någonting</q>'],
+      BurnWithAction-> ['Du behöver vara mer specifik om vad du vill att matrosen ska tända med',
+                        'Till exempel: matrosen, tända med <q>någonting</q>'],
+      CutWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska klippa med',
+                        'Till exempel: matrosen, klippa med <q>någonting</q>'],
+      CleanWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska rengöra med',
+                        'Till exempel: matrosen, rengöra med <q>någonting</q>'],
+      LockWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska låsa med',
+                        'Till exempel: matrosen, låsa med <q>någonting</q>'],
+      UnlockWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska låsa upp',
+                        'Till exempel: matrosen, låsa upp med <q>någonting</q>'],
+      ScrewWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska skruva med',
+                        'Till exempel: matrosen, skruva med <q>någonting</q>'],
+      UnscrewWithAction -> ['Du behöver vara mer specifik om vad du vill att matrosen ska skruva loss med',
+                        'Till exempel: matrosen, skruva loss med <q>någonting</q>']
+  ];
+  actionTextPairs.forEachAssoc(function(action, msg) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    gTranscript = new CommandTranscript();
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = action.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular, nyckel]);
+    npcMessages.missingLiteral(matros, gAction, IndirectObject);
+    gTranscript.showReports(true);
+    gTranscript.clearReports();
+    local str = mainOutputStream.captureOutput( {: "<<o>>" }); 
+    assertThat(str).contains(msg[1]);
+    assertThat(str).contains(msg[2]);
+  });
+};
+
+UnitTest 'playerMessages.noMatchForPossessive' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  playerMessages.noMatchForPossessive(gActor, apan, nil);
+  assertThat(o).contains('\^apan verkade inte ha någon sådan sak.');
+};
+
+UnitTest 'playerMessages.noMatchForPluralPossessive' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  playerMessages.noMatchForPluralPossessive(gActor, nil);
+  assertThat(o).contains('\^de verkade inte ha någon sådan sak');
+};
+
+UnitTest 'playerMessages.noMatchForLocation' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  gActor.location = masten;
+  playerMessages.noMatchForLocation(gActor, masten, 'kikare');
+  assertThat(o).contains('\^du såg inget liknande där.');
+};
+
+UnitTest 'playerMessages.noMatchForLocation' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  gActor.location = masten;
+  playerMessages.noMatchForLocation(apan, masten, 'kikare');
+  assertThat(o).contains('\^apan såg inget liknande där.');
+};
+
+UnitTest 'playerMessages.nothingInLocation 2d' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  gActor.location = masten;
+  playerMessages.nothingInLocation(gActor, masten);
+  assertThat(o).contains('\^du såg inget ovanligt på marken.');
+};
+
+UnitTest 'playerMessages.nothingInLocation 3d' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  gActor.location = masten;
+  playerMessages.nothingInLocation(apan, masten);
+  assertThat(o).contains('\^apan såg inget ovanligt på marken.');
+};
+
+
+UnitTest 'playerMessages.nothingInLocation 3d' run {
+  //mainOutputStream.hideOutput = nil;
+  setPlayer(pirat);
+  gActor = pirat;
+  gActor.location = masten;
+  playerMessages.nothingInLocation(apan, masten);
+  assertThat(o).contains('\^apan såg inget ovanligt på marken.');
+};
+
+UnitTest 'libMessages' run {
+    local pairs = [
+      &finishDeathMsg -> 'DU DOG',
+      &finishVictoryMsg -> 'DU VANN',
+      &finishFailureMsg -> 'DU MISSLYCKADES',
+      &finishGameOverMsg -> 'SPELET SLUT'
+  ];
+  pairs.forEachAssoc(function(msg, expectedOutput) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+     "<<libMessages.(msg)>>";
+    local str = o.findReplace('  ', ' ', ReplaceAll);
+    assertThat(str).isEqualTo(expectedOutput);
+  });
+};
+
+
+UnitTest 'playerActionMessages sig/dig' run {
+  //mainOutputStream.hideOutput = nil;
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    gAction = WearAction.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular]);
+    local pairs = [
+        //&notWearableMsg -> 'Det var inte någonting som Bob kunde klä på sig.',
+        &notDoffableMsg -> 'Det var inte någonting som Bob kunde ta av sig.'
+    ];
+  pairs.forEachAssoc(function(msg, expectedOutput) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+     "<<playerActionMessages.(msg)>>";
+    local str = o.findReplace('  ', ' ', ReplaceAll);
+    assertThat(str).startsWith(expectedOutput);
+  });
+};
+
+UnitTest 'playerActionMessages' run {
+    //mainOutputStream.hideOutput = nil;
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = TakeAction.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular, nyckel]);
+
+    local pairs = [
+      &cannotDoThatMsg -> 'Du kunde inte göra det.',
+      &tooDarkMsg -> 'Det var för mörkt för att göra det.',
+      &noKeyNeededMsg -> 'Skåpet verkade inte behöva en nyckel',
+      &mustBeStandingMsg -> 'Du behövde stå upp före du kunde göra det.',
+      &nothingInsideMsg -> 'Det var inget ovanligt i skåpet.',
+      &nothingUnderMsg -> 'Du såg inget ovanligt under skåpet.',
+      &nothingBehindMsg -> 'Du såg inget ovanligt bakom skåpet',
+      &nothingThroughMsg -> 'Du såg ingenting genom skåpet',
+      &cannotLookBehindMsg -> 'Du kunde inte se bakom skåpet',
+      &cannotLookUnderMsg -> 'Du kunde inte se under skåpet',
+      &cannotLookThroughMsg -> 'Du kunde inte se genom skåpet',
+      &nothingThroughPassageMsg -> 'Du kunde inte se mycket genom skåpet därifrån',
+      &nothingBeyondDoorMsg -> 'Du öppnade skåpet och fann ingenting ovanligt.',
+
+      &nothingToSmellMsg -> 'Du kände ingen oväntad lukt.',
+      &nothingToHearMsg -> 'Du hörde inget oväntat.',
+      &notWearableMsg -> 'Det var inte någonting som du kunde klä på dig.',
+      &notDoffableMsg -> 'Det var inte någonting som du kunde ta av dig.',
+      &alreadyWearingMsg -> '--',
+      &notWearingMsg -> '--',
+      &okayWearMsg -> '--',
+      &okayDoffMsg -> '--',
+      &okayOpenMsg -> '--',
+      &okayCloseMsg -> '--',
+      &okayLockMsg -> '--',
+      &okayUnlockMsg -> '--',
+      &cannotDigMsg -> '--',
+      &cannotDigWithMsg -> '--',
+      &alreadyHoldingMsg -> '--',
+      &takingSelfMsg -> '--',
+      &notCarryingMsg -> '--',
+      &droppingSelfMsg -> '--',
+      &puttingSelfMsg -> '--',
+      &throwingSelfMsg -> '--',
+      &alreadyPutInMsg -> '--',
+      &alreadyPutOnMsg -> '--',
+      &alreadyPutUnderMsg -> '--'
+  ];
+  pairs.forEachAssoc(function(msg, expectedOutput) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+     "<<playerActionMessages.(msg)>>";
+     
+    local str = o.findReplace('  ', ' ', ReplaceAll);
+    
+    assertThat(str).startsWith(expectedOutput);
+  });
+};
+
+//TODO: Samma för npcActionMessages
 
 /*
-missingLiteral(actor, action, which)
-reflexiveNotAllowed(actor, typ, pronounWord)
-wrongReflexive(actor, typ, pronounWord)
-noMatchForPossessive(actor, owner, txt)
-noMatchForPluralPossessive(actor, txt)
-noMatchForLocation(actor, loc, txt)
-nothingInLocation(actor, loc)
+
+
+&alreadyPutBehindMsg -> '--',
+&cannotMoveFixtureMsg -> '--',
+&cannotTakeFixtureMsg -> '--',
+&cannotPutFixtureMsg -> '--',
+&cannotTakeImmovableMsg -> '--',
+&cannotMoveImmovableMsg -> '--',
+&cannotPutImmovableMsg -> '--',
+&cannotTakeHeavyMsg -> '--',
+&cannotMoveHeavyMsg -> '--',
+&cannotPutHeavyMsg -> '',
+&cannotTakePushableMsg -> '',
+&cannotMovePushableMsg -> '',
+&cannotPutPushableMsg -> '',
+&cannotTakeLocationMsg -> '',
+&cannotRemoveHeldMsg -> '',
+&okayTakeMsg -> '',
+&okayDropMsg -> '',
+&okayPutInMsg -> '',
+&okayPutOnMsg -> '',
+&okayPutUnderMsg -> '',
+&okayPutBehindMsg -> '',
+&cannotTakeActorMsg -> '',
+&cannotMoveActorMsg -> '',
+&cannotPutActorMsg -> '',
+&cannotTasteActorMsg -> '',
+&cannotTakePersonMsg -> '',
+&cannotMovePersonMsg -> '',
+&cannotPutPersonMsg -> '',
+&cannotTastePersonMsg -> '',
+&notAContainerMsg -> '',
+&notASurfaceMsg -> '',
+&cannotPutUnderMsg -> '',
+&cannotPutBehindMsg -> '',
+&cannotPutInSelfMsg -> '',
+&cannotPutOnSelfMsg -> '',
+&cannotPutUnderSelfMsg -> '',
+&cannotPutBehindSelfMsg -> '',
+&cannotPutInRestrictedMsg -> '',
+&cannotPutOnRestrictedMsg -> '',
+&cannotPutUnderRestrictedMsg -> '',
+&cannotPutBehindRestrictedMsg -> '',
+&cannotReturnToDispenserMsg -> '',
+&cannotPutInDispenserMsg -> '',
+&objNotForKeyringMsg -> '',
+&keyNotOnKeyringMsg -> '',
+&keyNotDetachableMsg -> '',
+&takeFromNotInMsg -> '',
+&takeFromNotOnMsg -> '',
+&takeFromNotUnderMsg -> '',
+&takeFromNotBehindMsg -> '',
+&takeFromNotInActorMsg -> '',
+&whereToGoMsg -> '',
+&cannotGoThatWayMsg -> '',
+&cannotGoThatWayInDarkMsg -> '',
+&cannotGoBackMsg -> '',
+&cannotDoFromHereMsg -> '',
+&stairwayNotUpMsg -> '',
+&stairwayNotDownMsg -> '',
+&timePassesMsg -> '',
+&sayHelloMsg -> '',
+&sayGoodbyeMsg -> '',
+&sayYesMsg -> '',
+&sayNoMsg -> '',
+&okayYellMsg -> '',
+&okayJumpMsg -> '',
+&cannotJumpOverMsg -> '',
+&cannotJumpOffMsg -> '',
+&cannotJumpOffHereMsg -> '',
+&cannotJumpOffHereMsg -> '',
+&cannotFindTopicMsg -> '',
+&giveAlreadyHasMsg -> '',
+&cannotTalkToSelfMsg -> '',
+&cannotAskSelfMsg -> '',
+&cannotAskSelfForMsg -> '',
+&cannotTellSelfMsg -> '',
+&cannotGiveToSelfMsg -> '',
+&cannotGiveToItselfMsg -> '',
+&cannotShowToSelfMsg -> '',
+&cannotShowToItselfMsg -> '',
+&cannotGiveToMsg -> '',
+&cannotShowToMsg -> '',
+&askVagueMsg -> '',
+&tellVagueMsg -> '',
+&notFollowableMsg -> '',
+&cannotFollowSelfMsg -> '',
+&followAlreadyHereMsg -> '',
+&followAlreadyHereInDarkMsg -> '',
+&followUnknownMsg -> '',
+&notAWeaponMsg -> '',
+&uselessToAttackMsg -> '',
+&pushNoEffectMsg -> '',
+&okayPushButtonMsg -> '',
+&alreadyPushedMsg -> '',
+&okayPushLeverMsg -> '',
+&pullNoEffectMsg -> '',
+&alreadyPulledMsg -> '',
+&okayPullLeverMsg -> '',
+&okayPullSpringLeverMsg -> '',
+&okayPullSpringLeverMsg -> '',
+&moveNoEffectMsg -> '',
+&moveToNoEffectMsg -> '',
+&cannotPushTravelMsg -> '',
+&cannotMoveWithMsg -> '',
+&cannotSetToMsg -> '',
+&setToInvalidMsg -> '',
+&cannotTurnMsg -> '',
+&mustSpecifyTurnToMsg -> '',
+&cannotTurnWithMsg -> '',
+&turnToInvalidMsg -> '',
+&alreadySwitchedOnMsg -> '',
+&alreadySwitchedOffMsg -> '',
+&okayTurnOnMsg -> '',
+&okayTurnOffMsg -> '',
+&flashlightOnButDarkMsg -> '',
+&okayEatMsg -> '',
+&matchNotLitMsg -> '',
+&okayBurnMatchMsg -> '',
+&okayExtinguishMatchMsg -> '',
+&candleOutOfFuelMsg -> '',
+&okayBurnCandleMsg -> '',
+&candleNotLitMsg -> '',
+&okayExtinguishCandleMsg -> '',
+&cannotConsultMsg -> '',
+&cannotTypeOnMsg -> '',
+&cannotEnterOnMsg -> '',
+&cannotSwitchMsg -> '',
+&cannotFlipMsg -> '',
+&cannotTurnOnMsg -> '',
+&cannotTurnOffMsg -> '',
+&cannotLightMsg -> '',
+&cannotBurnMsg -> '',
+&cannotBurnWithMsg -> '',
+&cannotBurnDobjWithMsg -> '',
+&alreadyBurningMsg -> '',
+&cannotExtinguishMsg -> '',
+&cannotPourMsg -> '',
+&cannotPourIntoMsg -> '',
+&cannotPourOntoMsg -> '',
+&cannotAttachMsg -> '',
+&cannotAttachToMsg -> '',
+&cannotAttachToSelfMsg -> '',
+&alreadyAttachedMsg -> '',
+&wrongAttachmentMsg -> '',
+&wrongDetachmentMsg -> '',
+&okayAttachToMsg -> '',
+&okayDetachFromMsg -> '',
+&cannotDetachMsg -> '',
+&cannotDetachFromMsg -> '',
+&cannotDetachPermanentMsg -> '',
+&notAttachedToMsg -> '',
+&shouldNotBreakMsg -> '',
+&cutNoEffectMsg -> '',
+&cannotCutWithMsg -> '',
+&cannotClimbMsg -> '',
+&cannotOpenMsg -> '',
+&cannotCloseMsg -> '',
+&alreadyOpenMsg -> '',
+&alreadyClosedMsg -> '',
+&alreadyLockedMsg -> '',
+&alreadyUnlockedMsg -> '',
+&cannotLookInClosedMsg -> '',
+&cannotLockMsg -> '',
+&cannotUnlockMsg -> '',
+&cannotOpenLockedMsg -> '',
+&unlockRequiresKeyMsg -> '',
+&cannotLockWithMsg -> '',
+&cannotUnlockWithMsg -> '',
+&unknownHowToLockMsg -> '',
+&unknownHowToUnlockMsg -> '',
+&keyDoesNotFitLockMsg -> '',
+&cannotEatMsg -> '',
+&cannotDrinkMsg -> '',
+&cannotCleanMsg -> '',
+&cannotCleanWithMsg -> '',
+&cannotAttachKeyToMsg -> '',
+&cannotSleepMsg -> '',
+&cannotSitOnMsg -> '',
+&cannotLieOnMsg -> '',
+&cannotStandOnMsg -> '',
+&cannotBoardMsg -> '',
+&cannotUnboardMsg -> '',
+&cannotGetOffOfMsg -> '',
+&cannotStandOnPathMsg -> '',
+&cannotEnterHeldMsg -> '',
+&cannotGetOutMsg -> '',
+&alreadyInLocMsg -> '',
+&alreadyStandingMsg -> '',
+&alreadyStandingOnMsg -> '',
+&alreadySittingMsg -> '',
+&alreadySittingOnMsg -> '',
+&alreadyLyingMsg -> '',
+&alreadyLyingOnMsg -> '',
+&notOnPlatformMsg -> '',
+&noRoomToStandMsg -> '',
+&noRoomToSitMsg -> '',
+&noRoomToLieMsg -> '',
+&okayNotStandingOnMsg -> '',
+&cannotFastenMsg -> '',
+&cannotFastenToMsg -> '',
+&cannotUnfastenMsg -> '',
+&cannotUnfastenFromMsg -> '',
+&cannotPlugInMsg -> '',
+&cannotPlugInToMsg -> '',
+&cannotUnplugMsg -> '',
+&cannotUnplugFromMsg -> '',
+&cannotScrewMsg -> '',
+&cannotScrewWithMsg -> '',
+&cannotUnscrewMsg -> '',
+&cannotUnscrewWithMsg -> '',
+&cannotEnterMsg -> '',
+&cannotGoThroughMsg -> '',
+&cannotThrowAtSelfMsg -> '',
+&cannotThrowAtContentsMsg -> '',
+&shouldNotThrowAtFloorMsg -> '',
+&dontThrowDirMsg -> '',
+&cannotThrowToMsg -> '',
+&cannotKissMsg -> '',
+&cannotKissMsg -> '',
+&cannotKissSelfMsg -> '',
+&newlyDarkMsg -> '',
+&timePassesMsg -> '',
+&cannotMoveFixtureMsg -> '',
+&cannotMoveImmovableMsg -> '',
+&cannotTakeHeavyMsg -> '',
+&cannotMoveHeavyMsg -> '',
+&cannotPutHeavyMsg -> '',
+&okayTakeMsg -> '',
+&okayDropMsg -> '',
+&okayPutInMsg -> '',
+&okayPutOnMsg -> '',
+&okayPutUnderMsg -> '',
+&okayPutBehindMsg -> '',
+&okayWearMsg -> '',
+&okayDoffMsg -> '',
+&okayOpenMsg -> '',
+&okayCloseMsg -> '',
+&okayLockMsg -> '',
+&okayUnlockMsg -> '',
+&pushNoEffectMsg -> '',
+&pullNoEffectMsg -> '',
+&moveNoEffectMsg -> '',
+&moveToNoEffectMsg -> '',
+&whereToGoMsg -> '',
+&objNotForKeyringMsg -> '',
+&takeFromNotInMsg -> '',
+&takeFromNotOnMsg -> '',
+&takeFromNotUnderMsg -> '',
+&takeFromNotBehindMsg -> '',
+&cannotJumpOffHereMsg -> '',
+&shouldNotBreakMsg -> '',
+&okayNotStandingOnMsg -> '',
+&okayPushButtonMsg -> '',
+&okayTurnOnMsg -> '',
+&okayTurnOffMsg -> '',
+&keyDoesNotFitLockMsg -> '',
+&okayFollowModeMsg -> '',
+&alreadyFollowModeMsg -> '',
+&okayExtinguishCandleMsg -> '',
+&okayAttachToMsg -> '',
+&okayDetachFromMsg -> '',
+&cannotTalkToSelfMsg -> '',
+&cannotAskSelfMsg -> '',
+&cannotAskSelfForMsg -> '',
+&cannotTellSelfMsg -> '',
+&cannotGiveToSelfMsg -> '',
+&cannotShowToSelfMsg -> '',
+// npcActionMessages
+*/
+
+
+/*
 noMatchDisambig(actor, origPhrase, disambigResponse)
 emptyNounPhrase(actor)
 zeroQuantity(actor, txt)
