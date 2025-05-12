@@ -3264,7 +3264,7 @@ playerActionMessages: MessageHelper
     movedKeysToKeyringMsg(keyring, keys)
     {
         gMessageParams(keyring);
-        return '{Du/han} fäst{er|e} {your/his} lösa nyck' + (keys.length() > 1 ? 'lar' : 'el') + ' i {den keyring/honom}. ';
+        return '{Du/han} fäst{er|e} {din/hans} lösa nyck' + (keys.length() > 1 ? 'lar' : 'el') + ' i {den keyring/honom}. ';
     }
 
     /* putting y in x when x is already in y */

@@ -722,7 +722,6 @@ enum neuter, uter;
  */
 modify Thing
 
-    //isUter = nil // uter/neuter
     article = 'ett'
 
     /*
@@ -1066,11 +1065,6 @@ modify Thing
     // 'De' - är nog mest praktisk här är teorin
     thatNom { return [ (isUter?'den':'det'), 'han', 'henne', 'de'][pronounSelector]; }
 
-
-    thatIsContraction
-    {
-        return thatNom + tSel('är', ' ' + verbToBe);
-    }
     //thatObj { return ['that', 'him', 'her', 'those'][pronounSelector]; }
     thatObj { return [ (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
 
@@ -1870,6 +1864,7 @@ modify Thing
 
     //verbToSee = (tSel('ser' + verbEndingS, 'såg'))
     verbToSee = (tSel('ser', 'såg'))
+    verbToHear = (tSel('hör', 'hörde'))
 
 
     nameSees = (theName + ' ' + verbToSee)
@@ -2099,7 +2094,6 @@ class NameAsOther: object
     itReflexive = (targetObj.itReflexive)
     thatNom = (targetObj.thatNom)
     thatObj = (targetObj.thatObj)
-    thatIsContraction = (targetObj.thatIsContraction)
     itIs = (targetObj.itIs)
     itIsContraction = (targetObj.itIsContraction)
     itVerb(verb) { return targetObj.itVerb(verb); }
@@ -2283,9 +2277,11 @@ modify Actor
      */
     itNom
     {
+        local denDet = isUter?'den':'det';
         return ['jag', 'jag', 'jag', 'vi',
                'du', 'du', 'du', 'ni',
-               'den', 'han', 'hon', 'de'][pronounSelector];
+               denDet, 'han', 'hon', 'de'][pronounSelector];
+
     }
     itObj
     {
@@ -2293,15 +2289,40 @@ modify Actor
         // {sig} blir nu 'den', det var inget han kunde klä på han
         // men samtidigt används denna av 'han sitter'
         return ['mig', 'mig', 'mig', 'oss',
-               'dig', 'dig', 'dig', 'dig',
+               'dig', 'dig', 'dig', 'er',
                'sig', 'sig', 'sig', 'sig'][pronounSelector];
     }
+
+    // defaultar till isUter för att matcha mot din/min etc om detta 
+    // objekt är huvudkaraktären. De flesta levande ting är också uterum
+    isUter = true 
+
     itPossAdj
     {
-        return ['min', 'min', 'min', 'våran',
+                        
+        return ['min', 'min', 'min', 'vår',
                'din', 'din', 'din', 'dina',
-               'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+               'sin', 'hans', 'hennes', 'deras'][pronounSelector];
+
+        
+        //if (isPlural) {
+        //    return ['mina', 'mina', 'mina', 'våra',
+        //            'dina', 'dina', 'dina', 'era',
+        //            'deras', 'hans', 'hennes', 'deras'][pronounSelector];
+        //}
+        
+        /*
+        if (isUter) {
+            return ['min', 'min', 'min', 'vår',
+                    'din', 'din', 'din', 'er',
+                    'sin', 'hans', 'hennes', 'deras'][pronounSelector];
+        }
+        return ['mitt', 'mitt', 'mitt', 'vårt',
+                'ditt', 'ditt', 'ditt', 'ert',
+                'sitt', 'hans', 'hennes', 'deras'][pronounSelector];
+        */
     }
+
     // TODO: skulle kunna slås ihop med ovanstående med lite lim
     // så försvinner behovet av två stycken här.
     itPossAdjPlural 
@@ -2312,9 +2333,25 @@ modify Actor
     }
     itPossNoun
     {
+        if (isPlural) {
+            return ['mina', 'mina', 'mina', 'våra',
+                    'dina', 'dina', 'dina', 'era',
+                    'deras', 'hans', 'hennes', 'deras'][pronounSelector];
+        }
+        if (isUter) {
+            return ['min', 'min', 'min', 'vår',
+                    'din', 'din', 'din', 'er',
+                    'sin', 'hans', 'hennes', 'deras'][pronounSelector];
+        }
+        // Default: neutrum
+        return ['mitt', 'mitt', 'mitt', 'vårt',
+                'ditt', 'ditt', 'ditt', 'ert',
+                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+        /*
         return ['min', 'min', 'min', 'våran',
                'din', 'din', 'din', 'din',
                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+        */
     }
     itReflexive
     { 
@@ -2323,7 +2360,7 @@ modify Actor
             // 'yourself', 'yourself', 'yourself', 'yourselves',
                 'dig själv', 'dig själv', 'dig själv', 'er själva',
                // 'itself', 'himself', 'herself', 'themselves'
-               'sig själv', 'sig själv', 'sig själv', 'sig själva'][pronounSelector];
+               'sig självt', 'sig själv', 'sig själv', 'sig själva'][pronounSelector];
     }
 
     /*
@@ -2345,16 +2382,6 @@ modify Actor
         return ['jag', 'jag', 'jag', 'oss',
                'du', 'du', 'du', 'du',
                (isUter?'den':'det'), 'honom', 'henne', 'dessa'][pronounSelector];
-    }
-
-    /* demonstrative pronoun, nominative case with 'is' contraction */
-    thatIsContraction
-    {
-        tadsSay('LEFT TO FIX');
-        return thatNom
-            + tSel(['&rsquo;m', '&rsquo;re', '&rsquo;s',
-                    '&rsquo;re', '&rsquo;re', ' are'][conjugationSelector],
-                   ' ' + verbToBe);
     }
 
     /*
@@ -3960,35 +3987,47 @@ langMessageBuilder: MessageBuilder
         /* parameters that imply the actor as the target object */
         ['du', &theName, 'actor', nil, true],
         ['jag', &theName, 'actor', nil, true],
+        ['vi', &theName, 'actor', nil, true],
+
+        ['ni', &theName, 'actor', nil, true],
+        ['er', &itObj, 'actor', nil, nil],
+
         ['du/han', &theName, 'actor', nil, true],
         ['du/hon', &theName, 'actor', nil, true],
+
         ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
         ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
+
+        // TODO: testa alla med theName ovan med itNom istället
+        //['ni', &itNom, 'actor', nil, nil],
+        //['vi', &itNom, nil, nil, true],
+        ['det', &itObj, 'actor', nil, nil],
+
+
 
         ['mig', &itObj, 'actor', nil, nil],
         ['dig', &itObj, 'actor', nil, nil],
         ['sig', &itObj, 'actor', nil, nil],
+        ['oss', &itObj, 'actor', nil, nil],
 
-        ['min', &theNamePossAdj, 'actor', nil, nil],
+        ['min', &itPossAdj, 'actor', nil, nil],
         ['din', &itPossAdj, 'actor', nil, nil],
-
+        ['sin', &itPossAdj, 'actor', nil, nil],
+        ['dess', &itPossAdj, 'actor', nil, nil],
+        ['vår', &itPossAdj, 'actor', nil, nil],
+        /*
+        ['mitt', &itPossAdj, 'actor', nil, nil],
+        ['ditt', &itPossAdj, 'actor', nil, nil],
+        ['sitt', &itPossAdj, 'actor', nil, nil],
+        */
         //['han', &thatNom, 'actor', nil, true],
-        //['hon', &thatNom, 'actor', nil, true],
-
-        //['you\'re/he\'s', &itIsContraction, 'actor', nil, true],
-        //['you\'re/she\'s', &itIsContraction, 'actor', nil, true],
-        //['you\'re', &itIsContraction, 'actor', nil, true],
-
-        // TODO: ta bort/ersätt rester av engelskan här:
-        ['you/him', &theNameObj, 'actor', &itReflexive, nil],
-        ['you/her', &theNameObj, 'actor', &itReflexive, nil],
-        ['your/her', &theNamePossAdj, 'actor', nil, nil],
-        
-        ['your/his', &theNamePossAdj, 'actor', nil, nil],        
-        ['din/hans', &theNamePossAdj, 'actor', nil, nil], // Ersätter ovan
+        //['hon', &thatNom, 'actor', nil, true],        
+        ['din/hans', &theNamePossAdj, nil, nil, nil],
         //['your', &theNamePossAdj, 'actor', nil, nil],
 
+        //['mina', &theNamePossAdj, 'actor', nil, nil],
         ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
+        ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
 
 
         ['yours/hers', &theNamePossNoun, 'actor', nil, nil],
@@ -3996,8 +4035,11 @@ langMessageBuilder: MessageBuilder
         ['yours', &theNamePossNoun, 'actor', nil, nil],
         ['yourself/himself', &itReflexive, 'actor', nil, nil],
         ['yourself/herself', &itReflexive, 'actor', nil, nil],
+        ['migsjälv', &itReflexive, 'actor', nil, nil],
         ['digsjälv', &itReflexive, 'actor', nil, nil],
         ['sigsjälv', &itReflexive, 'actor', nil, nil],
+        ['osssjälv', &itReflexive, 'actor', nil, nil],
+        ['ersjälv', &itReflexive, 'actor', nil, nil],
 
         // sig själv
         ['själv', &itReflexive, 'actor', nil, nil],
@@ -4013,6 +4055,7 @@ langMessageBuilder: MessageBuilder
         
         ['dess/hon', &itPossAdj, nil, nil, nil],               // ['its/her', &itPossAdj, nil, nil, nil],
         ['dess/hennes', &itPossNoun, nil, nil, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
+        ['vår/hennes', &itPossNoun, nil, nil, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
         
 
         ['a/t', &endingForNounTA, 'dobj', nil, nil],
@@ -4047,14 +4090,17 @@ langMessageBuilder: MessageBuilder
         ['sätter', &verbToPut, nil, nil, true],
 
         ['tar', &verbToTake, nil, nil, true],
+        ['tog', &verbToTake, nil, nil, true],
         ['ser', &verbToSee, nil, nil, true],
+        ['såg', &verbToSee, nil, nil, true],
+        ['hör', &verbToHear, nil, nil, true],
 
         ['er/te', &verbEndingEr, nil, nil, true],  // t ex: trycker/tryckte
         ['er/e', &verbEndingErE, nil, nil, true],  // t ex: tänder/tände
         
 
         ['är', &verbToBe, nil, nil, true],
-        ['var', &verbWas, nil, nil, true],
+        ['var', &verbToBe, nil, nil, true],
         // TODO: {be|have been}  '{vara|varit}'
 
         ['hade', &verbToHave, nil, nil, true],
@@ -4082,9 +4128,6 @@ langMessageBuilder: MessageBuilder
         // TODO: hur blir det med it nominative vs that nominative i följande fall
         // (just nu krockar det med that det/han det/hon)
 
-        //['det/han', &itNom, nil, nil, true],
-        //['det/hon', &itNom, nil, nil, true],
-        
         // TODO: {mig} {dig} {sig} bör räcka. 
         ['det/honom', &itObj, nil, &itReflexive, nil],
         ['det/henne', &itObj, nil, &itReflexive, nil],
@@ -4099,8 +4142,6 @@ langMessageBuilder: MessageBuilder
          //  verkar inte bli någon skillnad
         ['its/her', &itPossAdj, nil, nil, nil],
         ['its/hers', &itPossNoun, nil, nil, nil],
-
-        
 
         //['it\'s/he\'s', &itIsContraction, nil, nil, true],
         //['it\'s/she\'s', &itIsContraction, nil, nil, true],
@@ -4128,7 +4169,6 @@ langMessageBuilder: MessageBuilder
         //['that/him', &thatObj, nil, &itReflexive, nil],
         //['that/her', &thatObj, nil, &itReflexive, nil],
 
-        ['that\'s', &thatIsContraction, nil, nil, true],
         ['itself', &itReflexive, nil, nil, nil],
         ['itself/himself', &itReflexive, nil, nil, nil],
         ['itself/herself', &itReflexive, nil, nil, nil],

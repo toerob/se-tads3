@@ -13,6 +13,7 @@ versionInfo: GameID
   desc = 'enhetstester'
   htmlDesc = 'enhetstester'
 ;
+
 gameMain: GameMainDef
     initialPlayerChar = spelare2aPerspektiv
     usePastTense = nil
