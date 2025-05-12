@@ -66,10 +66,44 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
 
 +sofia: Actor 'Sofia' 'Sofia' isShe = true isProperName = true;
 ++sofiasMossa: Wearable 'sofias mössa[-n]' 'mössa' wornBy = sofia;
+++ sofiaChatting : InConversationState
+    specialDesc = "Sofia stod alldeles framför dig "
+    stateDesc = "Hon stod vänd mot dig och väntade på att du skulle tala. "
+    attentionSpan = 2 
+;
++++ sofiaRedoAttTala : ConversationReadyState
+    specialDesc = "Sofia stod där."
+    stateDesc = "Sofia stod framför dig. "
+    isInitState = true
+;
 
-++HelloTopic 'hello';
-++AskTopic 'regn' "...";
+++++HelloTopic "<q>Hej!</q>, säger du. <q>Hej hej!</q>, svarar Sofia.";
+++++ByeTopic "<q>Hej då!</q>, säger du. \n<q>Hej då</q>, svarar Sofia.";
 
+++++ ImpByeTopic "Eran konverstation tog slut";
+++++ BoredByeTopic "Sofia börjar titta på omgivningen istället för att konversera. ";
+
++++AskTopic, SuggestedAskTopic 'regn' 
+    "<q>Det typiska livet i skärgården...</q>"
+    name = 'regnet'
+;
++++AskTopic, SuggestedAskTopic @sofia
+    "<q>Jag har inte så mycket att säga...</q>"
+    name = 'henne själv'
+;
++++GiveShowTopic, SuggestedShowTopic @saken 
+    "<q>Jag har en sån där hemma</q>, svarar Sofia med ett ansträngt leende. "
+    name = (matchObj.name)
+;
++++ TellTopic, SuggestedTellTopic @Mats
+    "<q>Ok, berätta mer...</q>"
+    name = 'dig själv'
+;
+// TODO: ge saker till sofia, krasch vid
++++GiveTopic, SuggestedGiveTopic @saken
+    "<q>Eh, nja...</q>"
+    name = (matchObj.name)
+;
 
 
 +vedboDorrUtsida: LockableWithKey, Door 'vedbodörr[-en]/dörr[-en]*dörrar[-na]' 'vedbodörr'

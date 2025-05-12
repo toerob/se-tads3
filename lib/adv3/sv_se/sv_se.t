@@ -2783,33 +2783,34 @@ modify lying
  *   from the short name fairly easily.
  */
 modify SuggestedAskTopic
-    fullName = ('ask {it targetActor/him} about ' + name)
+    fullName = ('fråga {den targetActor/honom} om ' + name)
 ;
 
 modify SuggestedTellTopic
-    fullName = ('tell {it targetActor/him} about ' + name)
+    fullName = ('berätta för {den targetActor/honom} om ' + name)
 ;
 
 modify SuggestedAskForTopic
-    fullName = ('ask {it targetActor/him} for ' + name)
+    // Alt. "Be om"
+    fullName = ('fråga {den targetActor/honom} efter ' + name)
 ;
 
 modify SuggestedGiveTopic
-    fullName = ('give {it targetActor/him} ' + name)
+    fullName = ('ge {den targetActor/honom} ' + name)
 ;
 
 modify SuggestedShowTopic
-    fullName = ('show {it targetActor/him} ' + name)
+    fullName = ('visa {den targetActor/honom} ' + name)
 ;
 
 modify SuggestedYesTopic
-    name = 'yes'
-    fullName = 'say yes'
+    name = 'ja'
+    fullName = 'säg ja'
 ;
 
 modify SuggestedNoTopic
-    name = 'no'
-    fullName = 'say no'
+    name = 'nej'
+    fullName = 'säg nej'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -8686,11 +8687,11 @@ modify Action
     * meningar så som: "öppnande dörren" eller "tagande boken".
     * (motsvarande "opening the door" eller "first taking the book")
     * 
-    * Istället används metoden till att skapa meningar så som "(kliver upp och försöker låsa upp dörren först)", 
-    * "(försöker ta boken först)" eller "(tar boken först)" osv. Vi lagrar med andra ord i verbPhrase formerna "öppna/öppnar"
-    * och "ta/tar" osv.
+    * Istället görs här en trade-off till att skapa meningar så som:
+    *  - "(kliver upp och försöker låsa upp dörren först)",  eller:
+    *  - "(försöker ta boken först)" eller "(tar boken först)" osv.
     * 
-    * TODO: byt namn till något mer passande för vad den gör. Infinitiv-formen används men inte particip-formen. 
+    * Vi lagrar med andra ord i verbPhrase formerna "öppna/öppnar" och "ta/tar" osv.
     */
     getParticiplePhrase()
     {
@@ -9860,7 +9861,7 @@ VerbRule(TellVague)
 ;
 
 VerbRule(TalkTo)
-    ('hälsa' ('på'|'till'|) | 'säg' 'hej' 'till' | 'prata' ('till'|'med')) singleDobj
+    'prata' ('till'|'med') singleDobj
     : TalkToAction
     verbPhrase = 'prata/pratar (med vem)'
     askDobjResponseProd = singleNoun
@@ -9881,12 +9882,14 @@ VerbRule(TalkToWhat)
 ;
 // TODO: kan inte användas.... varför?
 VerbRule(Topics)
-    ('ämne' | 'ämnen' | 'samtalsämnen' | 'samtal')
+    ('ä' | 'ämne' | 'ämnen' | 'samtalsämnen' | 'samtal')
     : TopicsAction
     verbPhrase = 'visa/visar samtalsämnen'
 ;
 
 VerbRule(Hello)
+    ('hälsa' ('på'|'till'|))
+    | ('säg' 'hej' 'till')
     ('säg' | ) ('hej' | 'hallå' | 'tjena' | 'tja')
     : HelloAction
     verbPhrase = 'hälsa/hälsar'

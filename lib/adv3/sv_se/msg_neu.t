@@ -5548,7 +5548,7 @@ class SuggestedTopicLister: Lister
         gMessageParams(askingActor, targetActor);
 
         /* show the prefix; include a paren if not in explicit mode */
-        "<<isExplicit ? '' : '('>>{You askingActor/he} kan ";
+        "<<isExplicit ? '' : '('>>{Du askingActor/han} kan ";
     }
     showListSuffixWide(cnt, pov, parent)
     {
@@ -5564,7 +5564,7 @@ class SuggestedTopicLister: Lister
         if (isExplicit)
         {
             gMessageParams(askingActor, targetActor);
-            "<<isExplicit ? '' : '('>>{You askingActor/he} {har|hade} ingenting
+            "<<isExplicit ? '' : '('>>{Du askingActor/han} {har|hade} ingenting
             specifikt just {nu|då} att diskutera med 
             {den targetActor/honom}.<<isExplicit ? '' : ')'>> ";
         }
