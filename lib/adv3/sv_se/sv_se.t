@@ -1851,7 +1851,7 @@ modify Thing
     verbWas { return tSel('var', 'hade varit'); }
 
     /* 'have' verb agreeing with this object as subject */
-    verbToHave { return tSel('har' , 'hade'); }
+    verbToHave { return tSel('har' , 'hade'); } // TODO: kontrollera att denna göra rätt
 
     /*
      *   A few common irregular verbs and name-plus-verb constructs,
@@ -3757,19 +3757,22 @@ modify litUnlitDistinguisher
  */
 modify LightSource
     /* provide lit/unlit names for litUnlitDistinguisher */
-    nameLit = ((isLit ? 'tänd ' : 'otänd ') + name)
+    nameLit = ((isLit ? 'tänd ' : 'otänd ') + name) // TODO: t/d/a
     aNameLit()
     {
         /*
          *   if this is a mass noun or a plural name, just use the name
          *   with lit/unlit; otherwise, add "a"
          */
-        if (isPlural || isMassNoun)
-            return (isLit ? 'tänd ' : 'otänd ') + name;
-        else
-            //TODO: Rätt artikel en/ett
-            //return (isLit ? 'en tänd ' : 'en otänd ') + name;
-            return (isLit ? 'ett tänt ' : 'ett otänt ') + name;
+        //TODO: TESTA rätt artikel en/ett/flera
+        if (isPlural || isMassNoun) {
+            return (isLit ? 'tända ' : 'otända ') + name;
+        }
+        if(isUter) {
+            return (isLit ? 'en tänd ' : 'en otänd ') + name;
+        }
+        return (isLit ? 'ett tänt ' : 'ett otänt ') + name;
+
     }
     //TODO: den/det
     theNameLit = ((isLit ? 'tända ' : 'släckta ') + name)

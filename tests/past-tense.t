@@ -1821,7 +1821,7 @@ UnitTest 'actorCannotSeeMsg(actor, obj)' run {
   gAction.setCurrentObjects([hobbit]);
   local msg = playerActionMessages.actorCannotSeeMsg(hobbit, hatt);
   "<<msg>>";
-  assertThat(o).startsWith('\^hobbiten gjorde verkar oförmögen att se hatten.');
+  assertThat(o).startsWith('\^hobbiten verkar oförmögen att se hatten.');
 };
 
 UnitTest 'cannotFollowFromHereMsg(srcLoc)' run {
@@ -2712,7 +2712,7 @@ UnitTest 'playerActionMessages' run {
       &whereToGoMsg -> 'Du behöver ange vilken väg att gå',
       &cannotGoThatWayMsg -> 'Du kunde inte gå ditåt.',
       &cannotGoThatWayInDarkMsg -> 'Det var för mörkt; du kunde inte se var du gick.',
-      &cannotGoBackMsg -> 'Du visste inte hur man återvänder därifrån.',
+      &cannotGoBackMsg -> 'Du visste inte hur man återvände därifrån.',
       &cannotDoFromHereMsg -> 'Du kunde inte göra det därifrån.',
       &stairwayNotUpMsg -> 'Tingesten gick bara ner därifrån.',
       &stairwayNotDownMsg -> 'Tingesten gick bara upp därifrån.',
@@ -2987,7 +2987,7 @@ UnitTest 'npcActionMessages' run {
       &whereToGoMsg -> 'Du skulle behöva säga vilken väg Bob skulle ha gått.',
       &cannotGoThatWayMsg -> 'Bob kunde inte gå ditåt.',
       &cannotGoThatWayInDarkMsg -> 'Det var för mörkt; Bob kunde inte se var han gick.',
-      &cannotGoBackMsg -> 'Bob visste inte hur man återvänder därifrån.',
+      &cannotGoBackMsg -> 'Bob visste inte hur man återvände därifrån.',
       &cannotDoFromHereMsg -> 'Bob kunde inte göra det därifrån.',
       &stairwayNotUpMsg -> 'Tingesten gick bara ner därifrån.',
       &stairwayNotDownMsg -> 'Tingesten gick bara upp därifrån.',

@@ -214,7 +214,7 @@ libMessages: MessageHelper
     thingTasteDesc(obj)
     {
         gMessageParams(obj);
-        "{De/honom obj} smaka{r|de} ungefär som {du/han} {|hade} förvänta{r|t} {dig}. ";
+        "{De/honom obj} smaka{r|de} ungefär som {du/han}{| hade} förvänta{r|t} {dig}. ";
     }
 
     /* generic "feel" description of a Thing */
@@ -558,7 +558,7 @@ libMessages: MessageHelper
     /* greeting actor while actor is already talking to us */
     alreadyTalkingTo(actor, greeter)
     {
-        "\^<<greeter.theName>> <<greeter.verbToHave>> redan <<actor.theNamePossAdj>> uppmärksamhet. ";
+        "\^<<greeter.theName>> {har|hade} redan <<actor.theNamePossAdj>> uppmärksamhet. ";
     }
 
     /* no topics to suggest when we're not talking to anyone */
@@ -751,7 +751,7 @@ libMessages: MessageHelper
     showFinishMsg(msg) { "<.p>*** <<msg>>\ ***<.p>"; }
 
     /* standard game-ending messages for the common outcomes */
-    finishDeathMsg = '{DU/HAN pc} {[HAR]|} {DÖTT|DOG}'
+    finishDeathMsg = '{DU/HAN pc}{ HAR | }{DÖTT|DOG}'
     finishVictoryMsg = ('DU ' + tSel('HAR ', '') + '{VUNNIT|VANN}')
     finishFailureMsg = ('DU ' + tSel('HAR ', '') + '{MISSLYCKATS|MISSLYCKADES}')
     finishGameOverMsg = 'SPELET SLUT'
@@ -1609,7 +1609,7 @@ libMessages: MessageHelper
      */
     sayDepartingWithGuide(guide, lead)
     {
-        "\^<<lead.theName>> <<tSel('låt', 'lät')>> <<guide.theNameObj>> leda vägen. ";
+        "\^<<lead.theName>> <<tSel('låter', 'lät')>> <<guide.theNameObj>> leda vägen. ";
     }
 
     /* note that a door is being opened/closed remotely */
@@ -1682,7 +1682,7 @@ libMessages: MessageHelper
     {
         gMessageParams(obj);
         //"{Den obj/han} burn{s/ed} down too far to stay lit, and {goes} out. ";
-        "{Den obj/han} br{inner|ann} ner för långt för att fortsätta vara tän{d|t}, och slockna{r|de}. ";
+        "{Den obj/han} br{inner|ann} ner för långt för att fortsätta vara tänt, och slockna{r|de}. ";
     }
 
     /* daemon report for burning out a generic fueled light source */
@@ -2536,8 +2536,8 @@ npcDeferredMessagesDirect: npcDeferredMessages
     /* an object phrase was missing */
     askMissingObject(actor, action, which)
     {
-        reportQuestion('\^<<actor.nameSays>>, <q>Jag visste inte '
-                       + action.whatObj(which) + ' du ville att jag skulle '
+        reportQuestion('\^<<actor.nameSays>>, <q>Jag {vet|visste} inte '
+                       + action.whatObj(which) + ' du {vill|ville} att jag {ska|skulle} '
                        + action.getQuestionInf(which) + '.</q> ');
     }
 
@@ -2869,14 +2869,14 @@ playerActionMessages: MessageHelper
         'Upplåst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{er/te} upp {den dobj/honom}. ')
 
     /* cannot dig here */
-    cannotDigMsg = '{Du/han} {har} ingen anledning att gräva i {det dobj/honom}. '
+    cannotDigMsg = '{Du/han} {har|hade} ingen anledning att gräva i {det dobj/honom}. '
 
     /* not a digging implement */
     cannotDigWithMsg =
         '{Du/han} {ser} inget sätt att använda {det iobj/honom} som en spade. '
 
     /* taking something already being held */
-    alreadyHoldingMsg = '{Du/han} {har} redan {den dobj/honom}. '
+    alreadyHoldingMsg = '{Du/han} {har|hade} redan {den dobj/honom}. '
 
     /* actor taking self ("take me") */
     takingSelfMsg = '{Du/han} {kan} inte plocka upp {digsjälv}. '
@@ -3101,14 +3101,14 @@ playerActionMessages: MessageHelper
     becomingTooLargeForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte göra det då {den obj/han} skulle {|ha} blivit för stor{a/t} för {du/honom} att hålla. ';
+        return '{Du/han} {kan} inte göra det då {den obj/han} skulle{ | ha }{bli|blivit} för stor{a/t} för {du/honom} att hålla. ';
     }
 
     /* the object is becoming large enough that the actor's hands are full */
     handsBecomingTooFullForMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte göra det då {mina} händer skulle {|ha} blivit för fulla för att kunna hålla {det/honom obj}. ';
+        return '{Du/han} {kan} inte göra det då {mina} händer skulle{ | ha }{bli|blivit} för fulla för att kunna hålla {det/honom obj}. ';
     }
 
     /* the object is too heavy (all by itself) for the actor to hold */
@@ -3125,7 +3125,7 @@ playerActionMessages: MessageHelper
     totalTooHeavyForMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/han} {är} för tung{t/a obj}; {du/han} {kommer |}behöv{a|de} sätta ner någonting först. ';
+        return '{Den obj/han} {är} för tung{t/a obj}; {du/han} behöv{er|de} sätta ner någonting först. ';
     }
 
     /* object is för stor för container */
@@ -3308,7 +3308,7 @@ playerActionMessages: MessageHelper
     takeFromNotBehindMsg = '{Den dobj/han} {är} inte bakom {det iobj/honom}. '
 
     /* taking dobj from an actor, but actor doesn't have iobj */
-    takeFromNotInActorMsg = '{Den iobj/han} {har} inte {det dobj/honom}. '
+    takeFromNotInActorMsg = '{Den iobj/han} {har|hade} inte {det dobj/honom}. '
 
     /* actor won't let go of a possession */
     willNotLetGoMsg(holder, obj)
@@ -3328,7 +3328,7 @@ playerActionMessages: MessageHelper
         {kan} inte se var {det/han actor} {går|gick}. '
 
     /* we don't know the way back for a GO BACK */
-    cannotGoBackMsg = '{Du/han} {vet|visste} inte hur man återvände{|r} {h|d}ärifrån. '
+    cannotGoBackMsg = '{Du/han} {vet|visste} inte hur man återvände{r|} {h|d}ärifrån. '
 
     /* cannot carry out a command from this location */
     cannotDoFromHereMsg = '{Du/han} {kan} inte göra det {h|d}ärifrån. '
@@ -3501,7 +3501,7 @@ playerActionMessages: MessageHelper
     }
 
     /* trying to give something to someone who already has the object */
-    giveAlreadyHasMsg = '{Den iobj/han} {har} redan {det/honom dobj}. '
+    giveAlreadyHasMsg = '{Den iobj/han} {har|hade} redan {det/honom dobj}. '
 
     /* can't talk to yourself */
     cannotTalkToSelfMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
@@ -3553,7 +3553,7 @@ playerActionMessages: MessageHelper
     /* actor cannot see object being shown to actor */
     actorCannotSeeMsg(actor, obj)
     {
-        return '\^' + actor.nameDoes + ' verkar oförmögen att se ' + obj.theNameObj + '. ';
+        return '\^<<actor.theName>> verkar oförmögen att se ' + obj.theNameObj + '. ';
     }
 
     /* not a followable object */
@@ -3571,11 +3571,11 @@ playerActionMessages: MessageHelper
      *   last saw the object go), but it's too dark to see if that's
      *   really true 
      */
-    followAlreadyHereInDarkMsg = '{Den dobj/han} borde {vara|varit} precis 
+    followAlreadyHereInDarkMsg = '{Den dobj/han} {bör|borde} {vara|varit} precis 
         {här}, men {du/han} {kan} inte se {det dobj/honom}. '
 
     /* trying to follow an object, but don't know where it went from here */
-    followUnknownMsg = '{Du/han} {är} inte säker på var {den dobj/han} {har} gått {h|d}ärifrån. '
+    followUnknownMsg = '{Du/han} {är} inte säker på var {den dobj/han} {har|hade} gått {h|d}ärifrån. '
 
     /*
      *   we're trying to follow an actor, but we last saw the actor in the
@@ -3583,7 +3583,7 @@ playerActionMessages: MessageHelper
      */
     cannotFollowFromHereMsg(srcLoc)
     {
-        return 'Den senaste platsen {du/han} {såg|hade sett} {den dobj/honom} var '
+        return 'Den senaste platsen {du/han} {såg|hade sett} {den dobj/honom} {är} '
             + srcLoc.getDestName(gActor, gActor.location) + '. ';
     }
 
@@ -3617,7 +3617,7 @@ playerActionMessages: MessageHelper
     pullNoEffectMsg = 'Att dra i {den dobj/honom} ha{r|de} ingen effekt. '
 
     /* lever is already in pulled state */
-    alreadyPulledMsg = '{Den dobj/honom} var redan dragen så långt det gick. '
+    alreadyPulledMsg = '{Den dobj/honom} {är} redan dragen så långt det {går|gick}. '
 
     /* default acknowledgment to pulling a lever */
     okayPullLeverMsg = '{Du/han} {drar|drog} {den dobj/honom} till {dess/hennes dobj} stopp. '
@@ -3653,7 +3653,7 @@ playerActionMessages: MessageHelper
     cannotSetToMsg = '{Du/han} {kan} inte ställa {det dobj/honom} till någonting. '
 
     /* invalid setting for generic Settable */
-    setToInvalidMsg = '{Den dobj/han} {har} ingen sådan inställning. '
+    setToInvalidMsg = '{Den dobj/han} {har|hade} ingen sådan inställning. '
 
     /* default 'set to' acknowledgment */
     okaySetToMsg(val)
@@ -3670,7 +3670,7 @@ playerActionMessages: MessageHelper
         '{Du/han} {kan} inte vrida någonting med {det iobj/honom}. '
 
     /* invalid setting for dial */
-    turnToInvalidMsg = '{Den dobj/han} {har} ingen sådan inställning. '
+    turnToInvalidMsg = '{Den dobj/han} {har|hade} ingen sådan inställning. '
 
     /* default 'turn to' acknowledgment */
     okayTurnToMsg(val)
@@ -4063,9 +4063,7 @@ playerActionMessages: MessageHelper
     /* target catches object */
     throwCatchMsg(obj, target)
     {
-        return '\^' + target.theName + ' '
-            + tSel('fånga' + target.verbEndingEs, 'fångade')
-            + ' ' + obj.theNameObj + '. ';
+        return '\^' + target.theName + ' ' + tSel('fångar', 'fångade') + ' ' + obj.theNameObj + '. ';
     }
 
     /* we're not a suitable target for THROW TO (because we're not an NPC) */
@@ -4079,7 +4077,7 @@ playerActionMessages: MessageHelper
 
     /* cannot kiss something */
     //cannotKissMsg = 'Kissing {den dobj/honom} {has|had} no obvious effect. '
-    cannotKissMsg = 'Att kyssa {den dobj/honom} {har} ingen uppenbar effekt. '
+    cannotKissMsg = 'Att kyssa {den dobj/honom} {har|hade} ingen uppenbar effekt. '
 
     /* person uninterested in being kissed */
     cannotKissActorMsg
@@ -5566,7 +5564,7 @@ class SuggestedTopicLister: Lister
         if (isExplicit)
         {
             gMessageParams(askingActor, targetActor);
-            "<<isExplicit ? '' : '('>>{You askingActor/he} {har} ingenting
+            "<<isExplicit ? '' : '('>>{You askingActor/he} {har|hade} ingenting
             specifikt just {nu|då} att diskutera med 
             {den targetActor/honom}.<<isExplicit ? '' : ')'>> ";
         }

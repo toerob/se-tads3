@@ -1,10 +1,12 @@
-IFID: 952c94dd-f92a-4970-9a00-cdcc24d038a1
-Name: Skärgården
-Byline: by Tomas
-HtmlByline: by <a href="mailto:yourmail@address.com"></a>
-AuthorEmail: Tomas yourmail@address.com
+IFID: 38da5fdf-9077-4043-bfe1-14c83c087c81
+Name: tester för svenska översättningen av adv3
+Byline: by Tomas Öberg
+HtmlByline: by <a href="mailto:yourmail@address.com">Tomas Öberg</a>
+AuthorEmail: Tomas Öberg yourmail@address.com
+Desc: enhetstester
+HtmlDesc: enhetstester
 Version: 1
-ReleaseDate: 2025-05-11
+ReleaseDate: 2025-05-12
 Language: sv-SE
 LicenseType: Freeware
 CopyingRules: Nominal cost only; compilations allowed
