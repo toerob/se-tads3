@@ -161,7 +161,7 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
                 "Mats lyfte på hörnet av dörrmattan och fann den välbekanta nyckeln blänka till av ljuset. ";
 
                 stugdorrsnyckel.moveInto(gPlayerChar);
-                "{Du/han} plocka{r/de} upp den. ";
+                "{Du/han} plocka{|de} upp den. ";
 
             }
         }

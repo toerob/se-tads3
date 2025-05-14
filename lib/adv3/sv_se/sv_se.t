@@ -1248,11 +1248,7 @@ modify Thing
         if(definitiveForm) {
             return definitiveForm;
         }
-            
-        return (isPlural
-            ? 'de ' 
-            : (isUter? 'den ' : 'det ')) 
-                + str; 
+        return (isPlural ? 'de ' : (isUter? 'den ' : 'det '))  + str; 
     }
 
     swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
@@ -2283,27 +2279,38 @@ modify Actor
                denDet, 'han', 'hon', 'de'][pronounSelector];
 
     }
+
     itObj
     {
-        // TODO: var ska 'sig' in
-        // {sig} blir nu 'den', det var inget han kunde klä på han
-        // men samtidigt används denna av 'han sitter'
+        // **TODO: itOBj ska vara följande **
+        // FIXA TESTER som förväntade sig det nedanför bortkommenterade
+
         return ['mig', 'mig', 'mig', 'oss',
                'dig', 'dig', 'dig', 'er',
+               (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector];
+        /*return ['mig', 'mig', 'mig', 'oss',
+               'dig', 'dig', 'dig', 'er',
                'sig', 'sig', 'sig', 'sig'][pronounSelector];
+               */
+               
     }
+    
+
 
     // defaultar till isUter för att matcha mot din/min etc om detta 
     // objekt är huvudkaraktären. De flesta levande ting är också uterum
     isUter = true 
 
+    // TODO: överrider Thing med helt ny betyldelse. Ensa detta. Bör vara itObj
+    // för formerna henne/honom
+    
+    // Ingen skillnad troligen från denna och itPossNoun
     itPossAdj
-    {
-                        
+    {    
+        //return itPossNoun();                   
         return ['min', 'min', 'min', 'vår',
                'din', 'din', 'din', 'dina',
                'sin', 'hans', 'hennes', 'deras'][pronounSelector];
-
         
         //if (isPlural) {
         //    return ['mina', 'mina', 'mina', 'våra',
@@ -2333,20 +2340,23 @@ modify Actor
     }
     itPossNoun
     {
+        
         if (isPlural) {
             return ['mina', 'mina', 'mina', 'våra',
                     'dina', 'dina', 'dina', 'era',
                     'deras', 'hans', 'hennes', 'deras'][pronounSelector];
         }
         if (isUter) {
-            return ['min', 'min', 'min', 'vår',
-                    'din', 'din', 'din', 'er',
-                    'sin', 'hans', 'hennes', 'deras'][pronounSelector];
+                    //1a,   han,   hon,   plural
+            return ['min', 'min',  'min', 'vår',    // 1a
+                    'din', 'din',  'din', 'er',     // 2a 
+                    'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e
         }
         // Default: neutrum
         return ['mitt', 'mitt', 'mitt', 'vårt',
                 'ditt', 'ditt', 'ditt', 'ert',
                 'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+        
         /*
         return ['min', 'min', 'min', 'våran',
                'din', 'din', 'din', 'din',
@@ -2780,7 +2790,7 @@ modify Posture
 modify standing
     msgVerbIPresent = 'ställer {dig} upp' //'stå{r} up'
     msgVerbIPast = 'stod upp'
-    msgVerbTPresent = 'stå{r}'
+    msgVerbTPresent = 'står'
     msgVerbTPast = 'stod'
     //participle = 'ståendes'
     participle = 'står'
@@ -3984,137 +3994,112 @@ langMessageBuilder: MessageBuilder
      */
     paramList_ =
     [
-        /* parameters that imply the actor as the target object */
-        ['du', &theName, 'actor', nil, true],
-        ['jag', &theName, 'actor', nil, true],
-        ['vi', &theName, 'actor', nil, true],
+        // Parametrar som implicerar nuvarande aktör (actor)
+        ['jag',       &theName, 'actor', nil, true],
+        ['du',        &theName, 'actor', nil, true],
+        ['du/han',    &theName, 'actor', nil, true],
+        ['du/hon',    &theName, 'actor', nil, true],
 
-        ['ni', &theName, 'actor', nil, true],
-        ['er', &itObj, 'actor', nil, nil],
+        // Nominativ
+        ['vi',        &itNom,   'actor', nil, true],
+        ['ni',        &itNom,   'actor', nil, true],
 
-        ['du/han', &theName, 'actor', nil, true],
-        ['du/hon', &theName, 'actor', nil, true],
+        ['han',       &itNom,   'actor', nil, true],
+        ['hon',       &itNom,   'actor', nil, true],
+        ['det',       &itNom,   'actor', nil, true],
+        //['de',        &itNom,   'actor', nil, true],
+        
+        ['det/han',   &itNom,    nil,    nil, true],
+        ['det/hon',   &itNom,    nil,    nil, true],
 
+        
+        // TODO: honom borde vara itObj, ensa:
+        ['honom',     &thatObj,  nil, nil, nil],
+        ['henne',     &thatObj,  nil, nil, nil],
+
+
+        ['de',     &thatNom,  'actor', nil, nil], //TODO: ska de vara för itNom eller för thatNom
+        ['den',     &thatNom,  'actor', nil, nil], // TODO: fixa
+        
         ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
         ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
 
+
+        // Objektform
         // TODO: testa alla med theName ovan med itNom istället
         //['ni', &itNom, 'actor', nil, nil],
         //['vi', &itNom, nil, nil, true],
+
+
+        ['er', &itObj, 'actor', nil, nil],
         ['det', &itObj, 'actor', nil, nil],
-
-
-
         ['mig', &itObj, 'actor', nil, nil],
         ['dig', &itObj, 'actor', nil, nil],
-        ['sig', &itObj, 'actor', nil, nil],
+        ['dem', &itObj, 'actor', nil, nil],
+        // ['sig', &itObj, 'actor', nil, nil], SIG är reflexiv
         ['oss', &itObj, 'actor', nil, nil],
 
+        // Possessiva
         ['min', &itPossAdj, 'actor', nil, nil],
         ['din', &itPossAdj, 'actor', nil, nil],
         ['sin', &itPossAdj, 'actor', nil, nil],
+        ['deras', &itPossAdj, 'actor', nil, nil],
         ['dess', &itPossAdj, 'actor', nil, nil],
         ['vår', &itPossAdj, 'actor', nil, nil],
-        /*
-        ['mitt', &itPossAdj, 'actor', nil, nil],
-        ['ditt', &itPossAdj, 'actor', nil, nil],
-        ['sitt', &itPossAdj, 'actor', nil, nil],
-        */
-        //['han', &thatNom, 'actor', nil, true],
-        //['hon', &thatNom, 'actor', nil, true],        
-        ['din/hans', &theNamePossAdj, nil, nil, nil],
-        //['your', &theNamePossAdj, 'actor', nil, nil],
 
-        //['mina', &theNamePossAdj, 'actor', nil, nil],
+        ['hans', &itPossNoun, 'actor', nil, nil],
+        ['hennes', &itPossNoun, 'actor', nil, nil],
+
+        ['din/hans', &itPossNoun, nil, nil, nil],
+        ['din/hennes', &itPossNoun, nil, nil, nil],
+        ['dess/hennes', &itPossNoun, nil, nil, nil],
+        ['vår/hennes', &itPossNoun, nil, nil, nil],
+
+        // Possessiva reflexiva
+
+
         ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
         ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
 
-
-        ['yours/hers', &theNamePossNoun, 'actor', nil, nil],
-        ['yours/his', &theNamePossNoun, 'actor', nil, nil],
-        ['yours', &theNamePossNoun, 'actor', nil, nil],
-        ['yourself/himself', &itReflexive, 'actor', nil, nil],
-        ['yourself/herself', &itReflexive, 'actor', nil, nil],
-        ['migsjälv', &itReflexive, 'actor', nil, nil],
-        ['digsjälv', &itReflexive, 'actor', nil, nil],
-        ['sigsjälv', &itReflexive, 'actor', nil, nil],
-        ['osssjälv', &itReflexive, 'actor', nil, nil],
-        ['ersjälv', &itReflexive, 'actor', nil, nil],
-
-        // sig själv
-        ['själv', &itReflexive, 'actor', nil, nil],
-        ['själva', &itReflexive, 'actor', nil, nil],
-
+        
         /* parameters that don't imply any target object */
+
         ['den/han', &theName, nil, nil, true],
         ['den/hon', &theName, nil, nil, true],
         ['den/honom', &theNameObj, nil, &itReflexive, nil],
         ['den/henne', &theNameObj, nil, &itReflexive, nil],
-        //TODO: ['hennes', &theNamePossAdj, nil, &itPossAdj, nil],
-        //['dess/hennes', &theNamePossNoun, nil, &itPossNoun, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
         
-        ['dess/hon', &itPossAdj, nil, nil, nil],               // ['its/her', &itPossAdj, nil, nil, nil],
-        ['dess/hennes', &itPossNoun, nil, nil, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
-        ['vår/hennes', &itPossNoun, nil, nil, nil], // ['the\'s/hers', &theNamePossNoun, nil, &itPossNoun, nil],
+        
+        ['dess/hon', &itPossNoun, nil, nil, nil],
+
         
 
-        ['a/t', &endingForNounTA, 'dobj', nil, nil],
-        ['a', &endingForNounA, 'dobj', nil, nil],
-        ['d/t/da', &endingForNounDTDa, 'dobj', nil, nil],
-        ['ad/at/na', &endingForNounAdAtNa, 'dobj', nil, nil],
-        ['en/et/na', &endingForNounEnEtNa, 'dobj', nil, nil],
-
-        // eval buildParam('en/na', buildSynthParam('en/na', stugdorrUtsida))
-
-        /*
-         *  Verbändelser
-         */
-
-        // TODO: Frågan om verbEndingA ska finnas eller kan nyttja {a/t} 
-        // eller övriga former istället. 
-        // Ta reda på hur vanlig den formen är och om det kan vara en generell 
-        // lösning oavsett adjektiv / verb.
-        //['a', &verbEndingA, nil, nil, true], // t ex ätbar(a)
-
-        ['r', &verbEndingR, nil, nil, true],
-
-        ['t', &verbEndingT, nil, nil, true], // t ex ätbar(t)
-        ['r/de', &verbEndingRDe, nil, nil, true], // SE
-        ['r/?de', &verbEndingRMessageBuilder_, nil, nil, true],
-        ['ar/ade', &verbEndingARDe, nil, nil, true],
-        ['kan', &verbCan, nil, nil, true],
-        ['are', &verbToBe, nil, nil, true],
-        ['här', &verbHere, nil, nil, true],
-        
         ['verkar', &verbToSeem, nil, nil, true],
         ['sätter', &verbToPut, nil, nil, true],
-
+        ['är', &verbToBe, nil, nil, true],
+        ['var', &verbToBe, nil, nil, true],
+        ['hade', &verbToHave, nil, nil, true],
+        ['har', &verbToHave, nil, nil, true],
+        ['kan', &verbCan, nil, nil, true],
+        ['här', &verbHere, nil, nil, true],
+        ['där', &verbHere, nil, nil, true],
         ['tar', &verbToTake, nil, nil, true],
         ['tog', &verbToTake, nil, nil, true],
         ['ser', &verbToSee, nil, nil, true],
         ['såg', &verbToSee, nil, nil, true],
         ['hör', &verbToHear, nil, nil, true],
-
-        ['er/te', &verbEndingEr, nil, nil, true],  // t ex: trycker/tryckte
-        ['er/e', &verbEndingErE, nil, nil, true],  // t ex: tänder/tände
         
-
-        ['är', &verbToBe, nil, nil, true],
-        ['var', &verbToBe, nil, nil, true],
-        // TODO: {be|have been}  '{vara|varit}'
-
-        ['hade', &verbToHave, nil, nil, true],
-        ['har', &verbToHave, nil, nil, true],
 
         ['gör', &verbToDo, nil, nil, true],
         ['går', &verbToGo, nil, nil, true],
         ['kommer', &verbToCome, nil, nil, true],
         ['lämnar', &verbToLeave, nil, nil, true],
-
         ['säg', &verbToSay, nil, nil, true],
         ['måste', &verbMust, nil, nil, true],
         ['kommer', &verbWill, nil, nil, true],
 
+
+        
         ['en/han', &aName, nil, nil, true],
         ['en/hon', &aName, nil, nil, true],
         ['en/honom', &aNameObj, nil, &itReflexive, nil],
@@ -4131,56 +4116,35 @@ langMessageBuilder: MessageBuilder
         // TODO: {mig} {dig} {sig} bör räcka. 
         ['det/honom', &itObj, nil, &itReflexive, nil],
         ['det/henne', &itObj, nil, &itReflexive, nil],
-        
-        /*
-         *   note that we don't have its/his, because that leaves
-         *   ambiguous whether we want an adjective or noun form - so we
-         *   only use the feminine pronouns with these, to make the
-         *   meaning unambiguous
-         */
-         // TODO: byt ut och testa av med dess/hennes i båda dessa fall, 
-         //  verkar inte bli någon skillnad
-        ['its/her', &itPossAdj, nil, nil, nil],
-        ['its/hers', &itPossNoun, nil, nil, nil],
-
-        //['it\'s/he\'s', &itIsContraction, nil, nil, true],
-        //['it\'s/she\'s', &itIsContraction, nil, nil, true],
-        //['it\'s', &itIsContraction, nil, nil, true],
-        
-        ['detär', &itIsContraction, nil, nil, true],
-        ['denär', &itIsContraction, nil, nil, true],
-        
-        //FIXME: ['den/he', &thatNom, nil, nil, true],
-
-        //TODO:  det/han vs den/han just nu är något otydlig.
-        // Det kommer från att den/han tagit över the/he
-        // Kom på ett tydligare sätt att visa att det är 
-        // bestämd artikel eller är det tydligt nog?
-        //  Han/hon/den/det jmf med den/han: Golvet/Mats etc..
-
-        ['det/han', &thatNom, nil, nil, true],
-        ['det/hon', &thatNom, nil, nil, true],
-        //['that/he', &thatNom, nil, nil, true],
-        //['that/she', &thatNom, nil, nil, true],
-        ['de/honom', &thatObj, nil, &itReflexive, nil],
-        ['de/henne', &thatObj, nil, &itReflexive, nil],
 
 
-        //['that/him', &thatObj, nil, &itReflexive, nil],
-        //['that/her', &thatObj, nil, &itReflexive, nil],
+        // Reflexiv
+        ['själv', &itReflexive, 'actor', nil, nil],
+        ['själva', &itReflexive, 'actor', nil, nil],
+        ['migsjälv', &itReflexive, 'actor', nil, nil],
+        ['digsjälv', &itReflexive, 'actor', nil, nil],
+        ['sigsjälv', &itReflexive, 'actor', nil, nil],
+        ['osssjälv', &itReflexive, 'actor', nil, nil],
+        ['ersjälv', &itReflexive, 'actor', nil, nil],
 
-        ['itself', &itReflexive, nil, nil, nil],
-        ['itself/himself', &itReflexive, nil, nil, nil],
-        ['itself/herself', &itReflexive, nil, nil, nil],
 
-        /* default preposition for standing in/on something */
+        // Prepositioner
         ['på', &actorInName, nil, nil, nil],
         ['i', &actorInName, nil, nil, nil],
-        //['in', &actorInName, nil, nil, nil],
-        ['outof', &actorOutOfName, nil, nil, nil],
         ['avur', &actorOutOfName, nil, nil, nil],
-        ['onto', &actorIntoName, nil, nil, nil],
-        ['into', &actorIntoName, nil, nil, nil],
+
+        /*
+         *  Verbändelser
+         */
+        ['er/te', &verbEndingEr, nil, nil, true],  // t ex: trycker/tryckte
+        ['er/e', &verbEndingErE, nil, nil, true],  // t ex: tänder/tände
+        ['a/t', &endingForNounTA, nil, nil, nil],
+        ['a', &endingForNounA, nil, nil, nil],
+        ['d/t/da', &endingForNounDTDa, nil, nil, nil],
+        ['ad/at/na', &endingForNounAdAtNa, nil, nil, nil],
+        ['en/et/na', &endingForNounEnEtNa, nil, nil, nil],
+
+
 
         /*
          *   The special invisible subject marker - this can be used to

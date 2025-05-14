@@ -214,7 +214,7 @@ libMessages: MessageHelper
     thingTasteDesc(obj)
     {
         gMessageParams(obj);
-        "{De/honom obj} smaka{r|de} ungefär som {du/han}{| hade} förvänta{r|t} {dig}. ";
+        "{Det/han obj} smaka{r|de} ungefär som {du/han}{| hade} förvänta{r|t} {dig}. ";
     }
 
     /* generic "feel" description of a Thing */
@@ -2824,13 +2824,13 @@ playerActionMessages: MessageHelper
     /* a sound appears to be coming from a source */
     noiseSourceMsg(src)
     {
-        return '{Den dobj/han} verk{ar/ade} att komma från ' + src.theNameObj + '. ';
+        return '{Den dobj/han} verka{r|de} att komma från ' + src.theNameObj + '. ';
     }
 
     /* an odor appears to be coming from a source */
     odorSourceMsg(src)
     {
-        return '{Den dobj/han} verk{ar/ade} att komma från '+ src.theNameObj + '. ';
+        return '{Den dobj/han} verka{r|de} att komma från '+ src.theNameObj + '. ';
     }
 
     /* an item is not wearable */
@@ -2938,14 +2938,14 @@ playerActionMessages: MessageHelper
     {
         // TODO: 
         return '{Du/han} {kan} inte ta {det/honom dobj}; '
-            + '{detär dobj} del av ' + loc.theNameObj + '. ';
+            + '{det dobj} {är} del av ' + loc.theNameObj + '. ';
     }
 
     /* trying to put a component in something */
     cannotPutComponentMsg(loc)
     {
         return '{Du/han} {kan} inte lägga {det/honom dobj} någonstans; '
-            + '{detär dobj} en del av ' + loc.theNameObj + '. ';
+            + '{det dobj} {är} en del av ' + loc.theNameObj + '. ';
     }
 
     /* specialized Immovable messages for TravelPushables */
@@ -3464,7 +3464,7 @@ playerActionMessages: MessageHelper
     okayYellMsg = '{Du/han} {skriker|skrek} så högt {det actor/han} bara {kan}. '
 
     /* "jump" */
-    okayJumpMsg = '{Du/han} hoppa{r|de} och land{ar/ade} på samma ställe. '
+    okayJumpMsg = '{Du/han} hoppa{r|de} och landa{r|de} på samma ställe. '
 
     /* cannot hoppa over object */
     cannotJumpOverMsg = '{Du/han} {kan} inte hoppa över {det dobj/honom}. '

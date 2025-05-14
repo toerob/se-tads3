@@ -105,6 +105,12 @@ spelare3dePerspektivDet: Actor 'träd[-et]' 'träd'
   isUter = nil // TODO: träd[-et] - uter härleds inte automatiskt. Kolla upp. Det är PGA att iSuter defaultar till true numera,m ändra i Thing
 ;
 
+spelare3dePerspektivDe: Actor 'män[-nen]' 'männen'
+  pcReferralPerson = ThirdPerson
+  isIt = true
+  isPlural = true // TODO: träd[-et] - uter härleds inte automatiskt. Kolla upp. Det är PGA att iSuter defaultar till true numera,m ändra i Thing
+;
+
 hund: Actor 'hund[-en]' 'hund'
   owner = spelare1aPerspektivVi
 ;
@@ -147,15 +153,13 @@ UnitTest 'satsdelar' run {
     spelare3dePerspektivDen -> ['{Du} spelar på {min} luta', 'Astronauten spelar på sin luta'],
     spelare3dePerspektivDen -> ['{Jag} spelar på {min} luta', 'Astronauten spelar på sin luta'],
     spelare3dePerspektivDen -> ['{Du/han} spelar på {min} luta', 'Astronauten spelar på sin luta'],
-    spelare3dePerspektivDen -> ['{Du/hon} spelar på {min} luta', 'Astronauten spelar på sin luta']
+    spelare3dePerspektivDen -> ['{Du/hon} spelar på {min} luta', 'Astronauten spelar på sin luta'],
 
   // TODO: LAGA
-  /*
-    spelare3dePerspektivDet -> ['{Du} spelar på {sin} luta', 'Trädet spelar på dess luta'],
-    spelare3dePerspektivDet -> ['{Jag} spelar på {sin} luta', 'Trädet spelar på dess luta'],
-    spelare3dePerspektivDet -> ['{Du/han} spelar på {sin} luta', 'Trädet spelar på dess luta'],
-    spelare3dePerspektivDet -> ['{Du/hon} spelar på {sin} luta', 'Trädet spelar på dess luta']
-    */
+    spelare3dePerspektivDet -> ['{Du} spelar på {sin} luta', 'Trädet spelar på sin luta'],
+    spelare3dePerspektivDet -> ['{Jag} spelar på {sin} luta', 'Trädet spelar på sin luta'],
+    spelare3dePerspektivDet -> ['{Du/han} spelar på {sin} luta', 'Trädet spelar på sin luta'],
+    spelare3dePerspektivDet -> ['{Du/hon} spelar på {sin} luta', 'Trädet spelar på sin luta']
   ].forEachAssoc(function(player, msgPlusResult) {
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
     setPlayer(player);
@@ -188,7 +192,7 @@ UnitTest '1:a person plural (vi)' run {
   gMessageParams(hund);
   [
     '{Vi} {är} trötta.'  -> ['Vi var trötta.'],  // itNom
-    'De hitta{r/de} {oss} i skogen.'  -> ['De hittade oss i skogen.'], // itObj
+    'De hitta{r|de} {oss} i skogen.'  -> ['De hittade oss i skogen.'], // itObj
     '{Vår} hund har rymt.'  -> ['Vår hund har rymt.'], // itPossAdj
     'Hunden {är} {vår}.'  -> ['Hunden var vår.'], // itPossNoun
     '{Vi} försvarar {osssjälv}.' -> ['Vi försvarar oss själva.'] // itReflexive
@@ -216,8 +220,6 @@ UnitTest '2:a person singular (du)' run {
     assertThat(o).isEqualTo(msgPlusResult[1]);
   });
 };
-
-
 
 UnitTest '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
@@ -257,52 +259,80 @@ UnitTest '3:e person neutrum (det)' run {
 };
 
 
-/*
-🧔 3:e person maskulinum (han)
-tads
-Kopiera
-Redigera
-'{Han} {springer} snabbt.'  // itNom
-'Jag {hörde} {honom} skrika.'  // itObj
-'{Hans} sko {går} sönder.'  // itPossAdj
-'Skoavtrycket {är} {hans}.'  // itPossNoun
-'{Han} {lurade} {sig själv}.'  // itReflexive
+UnitTest '3:e person maskulinum (han)' run {
+  //mainOutputStream.hideOutput = nil;
+  gMessageParams(spelare3dePerspektivHan);
+  local bob = spelare3dePerspektivHan;
+  gMessageParams(bob);
 
+  [
+    '{Han} spr{inger|ang} snabbt.' ->['Han sprang snabbt.'],   // itNom
+    'Jag {hör} {honom bob} skrika.' ->['Jag hörde honom skrika.'],   // itObj
+    '{Hans} sko {går} sönder.' ->['Hans sko gick sönder.'],   // itPossAdj
+    'Skoavtrycket {är} {hans}.' ->['Skoavtrycket var hans.'],   // itPossNoun
+    '{Han} lura{r|de} {sigsjälv}.' ->['Han lurade sig själv.']   // itReflexive
+  ].forEachAssoc(function(msg, msgPlusResult) {
+    setPlayer(spelare3dePerspektivHan);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "<<msg>>";
+    assertThat(o).isEqualTo(msgPlusResult[1]);
+  });
+};
 
-👩 3:e person femininum (hon)
-tads
-Kopiera
-Redigera
-'{Hon} {lagar} mat.'  // itNom
-'Vi {hjälpte} {henne}.'  // itObj
-'{Hennes} mat {är} god.'  // itPossAdj
-'Rätten {är} {hennes}.'  // itPossNoun
-'{Hon} {tvekar} på {sig själv}.'  // itReflexive
+UnitTest '3:e person femininum (hon)' run {
+  //mainOutputStream.hideOutput = nil;
+  gMessageParams(spelare3dePerspektivHon);
+  local bob = spelare3dePerspektivHon;
+  gMessageParams(bob);
+  [
+    '{Hon} laga{r|de} mat.' ->['Hon lagade mat.'], // itNom
+    'Vi hjälp{er|te} {henne}.' ->['Vi hjälpte henne.'], // itObj
+    '{Hennes} mat {är} god.' ->['Hennes mat var god.'], // itPossAdj
+    'Rätten {är} {hennes}.' ->['Rätten var hennes.'], // itPossNoun
+    '{Hon} tveka{r|de} på {sigsjälv}.' ->['Hon tvekade på sig själv.'] // itReflexive
+  ].forEachAssoc(function(msg, msgPlusResult) {
+    setPlayer(spelare3dePerspektivHon);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "<<msg>>";
+    assertThat(o).isEqualTo(msgPlusResult[1]);
+  });
+};
 
+UnitTest '3:e person plural (de)' run {
+  //mainOutputStream.hideOutput = nil;
+  gMessageParams(spelare3dePerspektivDe);
+  local bob = spelare3dePerspektivDe;
+  gMessageParams(bob);
+  [
+    '{De} {går} hem.' -> ['De gick hem.'],  // itNom
+    'Vi möt{te|er} {dem} på vägen.' -> ['Vi möter dem på vägen.'],  // itObj
+    '{Deras} bil {står|stod} {där}.' -> ['Deras bil stod där.'],  // itPossAdj
+    'Bilen {är} {deras}.' -> ['Bilen var deras.'],  // itPossNoun
+    '{De} skada{r|de} {sigsjälv}.' -> ['De skadade sig själva.']  // itReflexive
+  ].forEachAssoc(function(msg, msgPlusResult) {
+    setPlayer(spelare3dePerspektivDe);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "<<msg>>";
+    assertThat(o).isEqualTo(msgPlusResult[1]);
+  });
+};
 
-👨‍👩‍👧 3:e person plural (de)
-tads
-Kopiera
-Redigera
-'{De} {går} hem.'  // itNom
-'Vi {möter} {dem} på vägen.'  // itObj
-'{Deras} bil {står} där.'  // itPossAdj
-'Bilen {är} {deras}.'  // itPossNoun
-'{De} {skadar} {sig själva}.'  // itReflexive
-
-📦 Demonstrativa (thatNom / thatObj)
-tads
-Kopiera
-Redigera
-'Jag {såg} {den} som rymde.'  // thatNom (singular)
-'Jag {fångade} {den}.'  // thatObj (singular)
-'Jag {såg} {de} som smet.'  // thatNom (plural)
-'Jag {fångade} {dem}.'  // thatObj (plural)
-*/
-
-
-
-
+UnitTest 'Demonstrativa (thatNom / thatObj)' run {
+  //mainOutputStream.hideOutput = nil;
+  gMessageParams(spelare3dePerspektivDe);
+  gMessageParams(hund);
+  [
+    'Jag {såg} {den hund} som rymde.' -> ['Jag såg den som rymde.'],  // thatNom (singular)
+    'Jag fånga{r|de} {den hund}.' -> ['Jag fångade den.'],  // thatObj (singular)
+    'Jag {såg} {de} som smet.' -> ['Jag såg de som smet.'],  // thatNom (plural)
+    'Jag fånga{r|de} {dem}.' -> ['Jag fångade dem.']  // thatObj (plural)
+  ].forEachAssoc(function(msg, msgPlusResult) {
+    setPlayer(spelare3dePerspektivDe);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "<<msg>>";
+    assertThat(o).isEqualTo(msgPlusResult[1]);
+  });
+};
 
 
 

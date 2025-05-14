@@ -53,12 +53,12 @@
 # TESTER 
 -source ../../code/tads3/tads3-unit-test/unittest.t
 
-#TODO: -source tests/main
+#####-source tests/main
 
 #-source tests/present-tense
 #-source tests/past-tense
-#-source tests/initialize-tests
 -source tests/satsdelar
+#-source tests/initialize-tests
 
 
 -res
