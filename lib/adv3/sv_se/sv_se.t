@@ -1062,11 +1062,24 @@ modify Thing
     //thatNom { return ['that', 'he', 'she', 'those'][pronounSelector]; }
     //thatNom { return [ (isUter?'den':'det'), 'han', 'henne', 'dessa'][pronounSelector]; }
     
-    // 'De' - är nog mest praktisk här är teorin
-    thatNom { return [ (isUter?'den':'det'), 'han', 'henne', 'de'][pronounSelector]; }
+    // TODO: byt plats på thatNom och thatObj - ge dem 
+    // thatNom - 'detta/han'
+    // thatObj - 'detta/honom'
 
+    // 'De' - är nog mest praktisk här är teorin
+    thatNom { 
+        local obestamdForm = nil;
+        local de = obestamdForm? 'dessa' : 'de där';
+        if(isUter) {
+            local den =  obestamdForm? 'denna' : 'den där';
+            return [ den, den, den, de][pronounSelector]; 
+        }
+        local det = obestamdForm? 'detta' : 'det där';  
+        return [ det, det, det, de][pronounSelector]; 
+    }
+
+    thatObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'de'][pronounSelector]; }
     //thatObj { return ['that', 'him', 'her', 'those'][pronounSelector]; }
-    thatObj { return [ (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
 
     /*
      *   get a string with the appropriate pronoun for the object plus the
@@ -2363,6 +2376,17 @@ modify Actor
                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
         */
     }
+    
+    itReflexiveSimple
+    { 
+            //  'myself', 'myself', 'myself', 'ourselves',
+        return ['mig', 'mig', 'mig', 'oss',
+            // 'yourself', 'yourself', 'yourself', 'yourselves',
+                'dig', 'dig', 'dig', 'er',
+               // 'itself', 'himself', 'herself', 'themselves'
+               'sig', 'sig', 'sig', 'sig'][pronounSelector];
+    }
+
     itReflexive
     { 
             //  'myself', 'myself', 'myself', 'ourselves',
@@ -2379,12 +2403,15 @@ modify Actor
      *   second person, otherwise we'll use 'that' or 'those' as we would
      *   for an inanimate object.
      */
-    thatNom
+    /*thatNom
     {
-        return ['jag', 'jag', 'jag', 'vi',
-               'du', 'du', 'du', 'du',
-               (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector];
-    }
+        //return ['jag', 'jag', 'jag', 'vi',
+        //       'du', 'du', 'du', 'du',
+         //      (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector];
+        
+    }*/
+
+    //thatObj { return [ (isUter?'den':'det'), 'han', 'henne', 'de'][pronounSelector]; }
 
     /* demonstrative pronoun, objective case */
     thatObj
@@ -3995,65 +4022,67 @@ langMessageBuilder: MessageBuilder
     paramList_ =
     [
         // Parametrar som implicerar nuvarande aktör (actor)
+
+        // Nominativ
         ['jag',       &theName, 'actor', nil, true],
         ['du',        &theName, 'actor', nil, true],
         ['du/han',    &theName, 'actor', nil, true],
         ['du/hon',    &theName, 'actor', nil, true],
 
-        // Nominativ
+        ['han',       &itNom,   'actor', nil, true],
+        ['hon',       &itNom,   'actor', nil, true],
+        ['de',        &itNom,   'actor', nil, true],        
         ['vi',        &itNom,   'actor', nil, true],
         ['ni',        &itNom,   'actor', nil, true],
 
-        ['han',       &itNom,   'actor', nil, true],
-        ['hon',       &itNom,   'actor', nil, true],
-        ['det',       &itNom,   'actor', nil, true],
-        //['de',        &itNom,   'actor', nil, true],
-        
+
         ['det/han',   &itNom,    nil,    nil, true],
         ['det/hon',   &itNom,    nil,    nil, true],
 
+        ['mig',       &itObj,   'actor', nil, nil],
+        ['dig',       &itObj,   'actor', nil, nil],
         
-        // TODO: honom borde vara itObj, ensa:
-        ['honom',     &thatObj,  nil, nil, nil],
-        ['henne',     &thatObj,  nil, nil, nil],
+        // TODO: med actor?
+        ['honom',     &itObj,   nil, nil, nil],
+        ['henne',     &itObj,   nil, nil, nil],
+
+        ['den',       &itObj,   'actor', nil, nil],
+        ['det',       &itObj,   'actor', nil, nil],
+        ['dem',       &itObj,   'actor', nil, nil],
+        ['er',        &itObj,   'actor', nil, nil],
+        ['oss',       &itObj,   'actor', nil, nil],
 
 
-        ['de',     &thatNom,  'actor', nil, nil], //TODO: ska de vara för itNom eller för thatNom
-        ['den',     &thatNom,  'actor', nil, nil], // TODO: fixa
-        
+        ['detta/han',   &thatNom,  'actor', nil, true],
+        ['detta/hon',   &thatNom,  'actor', nil, true],
+        ['detta/honom', &thatObj,  'actor', nil, nil],
+        ['detta/henne', &thatObj,  'actor', nil, nil],
+
+
+        // TODO: OBS: mig och dig kan vara objekt också, bygg ut med motsvarande  ord för /obj /ref
+        ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+        ['dig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+        ['mig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+    
         ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
         ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
 
-
-        // Objektform
-        // TODO: testa alla med theName ovan med itNom istället
-        //['ni', &itNom, 'actor', nil, nil],
-        //['vi', &itNom, nil, nil, true],
-
-
-        ['er', &itObj, 'actor', nil, nil],
-        ['det', &itObj, 'actor', nil, nil],
-        ['mig', &itObj, 'actor', nil, nil],
-        ['dig', &itObj, 'actor', nil, nil],
-        ['dem', &itObj, 'actor', nil, nil],
-        // ['sig', &itObj, 'actor', nil, nil], SIG är reflexiv
-        ['oss', &itObj, 'actor', nil, nil],
-
         // Possessiva
-        ['min', &itPossAdj, 'actor', nil, nil],
-        ['din', &itPossAdj, 'actor', nil, nil],
-        ['sin', &itPossAdj, 'actor', nil, nil],
-        ['deras', &itPossAdj, 'actor', nil, nil],
-        ['dess', &itPossAdj, 'actor', nil, nil],
-        ['vår', &itPossAdj, 'actor', nil, nil],
+        // Kontrollera om de är samma
+        ['min',     &itPossAdj, 'actor', nil, nil],
+        ['din',     &itPossAdj, 'actor', nil, nil],
+        ['sin',     &itPossAdj, 'actor', nil, nil],
+        ['deras',   &itPossAdj, 'actor', nil, nil],
+        ['dess',    &itPossAdj, 'actor', nil, nil],
+        ['vår',     &itPossAdj, 'actor', nil, nil],
 
-        ['hans', &itPossNoun, 'actor', nil, nil],
-        ['hennes', &itPossNoun, 'actor', nil, nil],
+        ['hans',        &itPossNoun, 'actor', nil, nil],
+        ['hennes',      &itPossNoun, 'actor', nil, nil],
 
-        ['din/hans', &itPossNoun, nil, nil, nil],
-        ['din/hennes', &itPossNoun, nil, nil, nil],
+        ['din/hans',    &itPossNoun, nil, nil, nil],
+        ['din/hennes',  &itPossNoun, nil, nil, nil],
         ['dess/hennes', &itPossNoun, nil, nil, nil],
-        ['vår/hennes', &itPossNoun, nil, nil, nil],
+        ['vår/hennes',  &itPossNoun, nil, nil, nil],
 
         // Possessiva reflexiva
 

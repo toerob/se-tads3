@@ -2835,11 +2835,12 @@ playerActionMessages: MessageHelper
 
     /* an item is not wearable */
     notWearableMsg =
-        '{Det dobj/han} {är} inte någonting som {du/han} {kan} klä på {dig}. '
+        '{Detta dobj/han} {är} inte någonting som {du/han} {kan} klä på {sig}. '
 
     /* doffing something that isn't wearable */
     notDoffableMsg =
-        '{Det dobj/han} {är} inte någonting som {du/han} {kan} ta av {dig}. '
+        '{Detta dobj/han} {är} inte någonting som {du/han} {kan} ta av {sig}. '
+
 
     /* already wearing item */
     alreadyWearingMsg = '{Du/han} {bär|bar} redan {den dobj/honom}. '
@@ -2848,7 +2849,7 @@ playerActionMessages: MessageHelper
     //notWearingMsg = '{You\'re} not wearing {that dobj/him}. '
 
     /* not wearing (item being doffed) */
-    notWearingMsg = '{Du/han} {har|hade} inte den på {dig}. '
+    notWearingMsg = '{Du/han} {har|hade} inte på {sig} {detta dobj/honom}. '
 
     /* default response to 'wear obj' */
     okayWearMsg = 'Okej, {du/han} {klär|klädde} på {dig} {den dobj/honom}. '
@@ -2869,11 +2870,11 @@ playerActionMessages: MessageHelper
         'Upplåst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{er/te} upp {den dobj/honom}. ')
 
     /* cannot dig here */
-    cannotDigMsg = '{Du/han} {har|hade} ingen anledning att gräva i {det dobj/honom}. '
+    cannotDigMsg = '{Du/han} {har|hade} ingen anledning att gräva i {detta dobj/honom}. '
 
     /* not a digging implement */
     cannotDigWithMsg =
-        '{Du/han} {ser} inget sätt att använda {det iobj/honom} som en spade. '
+        '{Du/han} {ser} inget sätt att använda {detta iobj/honom} som en spade. '
 
     /* taking something already being held */
     alreadyHoldingMsg = '{Du/han} {har|hade} redan {den dobj/honom}. '

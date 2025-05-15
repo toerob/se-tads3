@@ -1774,7 +1774,7 @@ UnitTest 'refuseCommand(targetActor, issuingActor)' run {
   gActor = spelare3dePerspektiv;
   local msg = playerActionMessages.refuseCommand(hobbit, gActor);
   "<<msg>>";
-  assertThat(o).startsWith('Hobbiten vägrar Bobs begäran.');
+  assertThat(o).startsWith('Hobbiten vägrar hans begäran.');
 };
 
 UnitTest 'notAddressableMsg(obj)' run {
@@ -2602,7 +2602,7 @@ UnitTest 'playerActionMessages sig/dig' run {
     gAction.setCurrentObjects([skapetObjNeutrumSingular]);
     local pairs = [
         //&notWearableMsg -> 'Det är inte någonting som Bob kan klä på sig.',
-        &notDoffableMsg -> 'Det är inte någonting som Bob kan ta av sig.'
+        &notDoffableMsg -> 'Det där är inte någonting som Bob kan ta av sig.'
     ];
   pairs.forEachAssoc(function(msg, expectedOutput) {
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -2636,10 +2636,10 @@ UnitTest 'playerActionMessages' run {
 
       &nothingToSmellMsg -> 'Du känner ingen oväntad lukt.',
       &nothingToHearMsg -> 'Du hör inget oväntat.',
-      &notWearableMsg -> 'Den är inte någonting som du kan klä på dig.',
-      &notDoffableMsg -> 'Den är inte någonting som du kan ta av dig.',
+      &notWearableMsg -> 'Den där är inte någonting som du kan klä på dig.',
+      &notDoffableMsg -> 'Den där är inte någonting som du kan ta av dig.',
       &alreadyWearingMsg -> 'Du bär redan tingesten.',
-      &notWearingMsg -> 'Du har inte den på dig.',
+      &notWearingMsg -> 'Du har inte på dig den.',
       &okayWearMsg -> 'Okej, du klär på dig tingesten',
       &okayDoffMsg -> 'Okej, du tar av dig tingesten',
       &okayOpenMsg -> 'Öppnad.',
@@ -2911,10 +2911,10 @@ UnitTest 'npcActionMessages' run {
 
       &nothingToSmellMsg -> 'Bob känner ingen oväntad lukt.',
       &nothingToHearMsg -> 'Bob hör inget oväntat.',
-      &notWearableMsg -> 'Den är inte någonting som Bob kan klä på sig.',
-      &notDoffableMsg -> 'Den är inte någonting som Bob kan ta av sig.',
+      &notWearableMsg -> 'Den där är inte någonting som Bob kan klä på sig.',
+      &notDoffableMsg -> 'Den där är inte någonting som Bob kan ta av sig.',
       &alreadyWearingMsg -> 'Bob bär redan tingesten.',
-      &notWearingMsg -> 'Bob har inte den på sig.',
+      &notWearingMsg -> 'Bob har inte på sig den.',
       &okayWearMsg -> 'Bob klär på sig tingesten',
       &okayDoffMsg -> 'Bob tar av sig tingesten',
       &okayOpenMsg -> 'Bob öppnar tingesten.',
