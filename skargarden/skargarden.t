@@ -18,6 +18,14 @@
 //++Thing, Heavy 'åra**åror[-na]' 'åror' "..."
 //    isPlural = true
 
+// TODO:
+/*
+>ge saker 
+(till Sofia)
+(tar de saker först)
+krasch
+*/
+
 versionInfo: GameID
     IFID = '952c94dd-f92a-4970-9a00-cdcc24d038a1'
     name = 'Skärgården'
@@ -57,7 +65,11 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
     south = vedboDorrUtsida
 ;
 
-+saken: Thing 'saker[-na]' 'saker' isPlural = true;
+// TODO: alternativ syntax
+// +saken: Thing 'saker^n' 'saker' isPlural = true
+
++saken: Thing 'saker[-na]' 'saker' isPlural = true
+    theName = 'sakerna';
 
 //++skapLuckeUtrymme: ComplexContainer,OpenableContainer 'insida[-n]' 'insida';
 /*++skapLuckor: ContainerDoor, ComplexComponent 'skåplucka[-n]*skåpluck[-or]/lucka*luckor[-na]' 'skåpluckor' 
@@ -91,10 +103,13 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
     "<q>Jag har inte så mycket att säga...</q>"
     name = 'henne själv'
 ;
-+++GiveShowTopic, SuggestedShowTopic @saken 
+
+// OBS, manualen visar fel. DEt gårinte att använda GiveShowTopic + SuggestedShowTopic @
++++ ShowTopic, SuggestedShowTopic @saken 
     "<q>Jag har en sån där hemma</q>, svarar Sofia med ett ansträngt leende. "
     name = (matchObj.name)
 ;
+
 +++ TellTopic, SuggestedTellTopic @Mats
     "<q>Ok, berätta mer...</q>"
     name = 'dig själv'

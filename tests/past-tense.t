@@ -71,14 +71,14 @@ spelare3dePerspektiv: Actor 'bob' 'Bob'
 ;
 
 appletObjNeutrumSingular: Thing 'äpple[-t]' 'äpple';
-jordgubbeObjUterumSingular: Thing 'jordgubbe[-n]' 'jordgubbe';
+jordgubbeObjUtrumSingular: Thing 'jordgubbe[-n]' 'jordgubbe';
 vindruvorObjNeutrumPlural: Thing 'vindruva*vindruvor[-na]' 'vindruvor' isPlural=true;
 
-bokenObjUterumSingular: Thing 'bok[-en]' 'bok';
+bokenObjUtrumSingular: Thing 'bok[-en]' 'bok';
 papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper';
-skyltarObjUterumPlural: Thing 'skylt*skyltar[-na]' 'skyltar' isPlural=true;
+skyltarObjUtrumPlural: Thing 'skylt*skyltar[-na]' 'skyltar' isPlural=true;
 
-dorrenObjUterumSingular: Thing 'dörr[-en]' 'dörr';
+dorrenObjUtrumSingular: Thing 'dörr[-en]' 'dörr';
 skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp';
 +snickargladje: Component 'snickareglädje[-n]' 'snickargläde';
 
@@ -141,8 +141,8 @@ masten: OutdoorRoom 'masten' 'masten';
 +matros: Actor 'matros[-en]' 'matros';
 kajen: OutdoorRoom 'kajen' 'kajen';
 
-musikenObjUterumSingular: Thing 'musik[-en]' 'musik';
-matosetObjUterumSingular: Thing 'matos[-et]' 'matos';
+musikenObjUtrumSingular: Thing 'musik[-en]' 'musik';
+matosetObjUtrumSingular: Thing 'matos[-et]' 'matos';
 
 tingest: Thing 'tingest[-en]' 'tingest';
 sak: Thing 'sak[-en]' 'sak';
@@ -153,13 +153,13 @@ sak: Thing 'sak[-en]' 'sak';
 
 
 // Test Assertions
-UnitTest 'openMsg - uterum singular' run {
-  assertThat(libMessages.openMsg(dorrenObjUterumSingular)).isEqualTo('öppen');
+UnitTest 'openMsg - utrum singular' run {
+  assertThat(libMessages.openMsg(dorrenObjUtrumSingular)).isEqualTo('öppen');
 };
 UnitTest 'openMsg - neutrum singular' run {
   assertThat(libMessages.openMsg(skapetObjNeutrumSingular)).isEqualTo('öppet');
 };
-UnitTest 'openMsg - uterum plural' run {
+UnitTest 'openMsg - utrum plural' run {
   assertThat(libMessages.openMsg(dorrarObjUterPlural)).isEqualTo('öppnade');
 };
 UnitTest 'openMsg - neutrum plural' run {
@@ -167,7 +167,7 @@ UnitTest 'openMsg - neutrum plural' run {
 };
 
 UnitTest 'distantThingDesc - neutrum plural' run {
-  libMessages.distantThingDesc(dorrenObjUterumSingular);
+  libMessages.distantThingDesc(dorrenObjUtrumSingular);
   assertThat(o).startsWith('Den är för långt borta för att kunna utgöra några detaljer'); 
 };
 
@@ -197,9 +197,9 @@ UnitTest 'thingTasteDesc neuter singular' run {
   assertThat(o).startsWith('Det smakade ungefär som du hade förväntat dig.');
 };
 
-UnitTest 'thingTasteDesc uterum singular' run {
+UnitTest 'thingTasteDesc utrum singular' run {
   gPlayerChar = spelare2aPerspektiv;
-  libMessages.thingTasteDesc(dorrenObjUterumSingular);
+  libMessages.thingTasteDesc(dorrenObjUtrumSingular);
   assertThat(o).startsWith('Den smakade ungefär som du hade förväntat dig.');
 };
 
@@ -218,10 +218,10 @@ UnitTest 'announceRemappedAction neutrum dobj' run {
 };
 
 
-UnitTest 'announceRemappedAction uterum dobj' run {
+UnitTest 'announceRemappedAction utrum dobj' run {
   //mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
-  gAction.setCurrentObjects([dorrenObjUterumSingular]);
+  gAction.setCurrentObjects([dorrenObjUtrumSingular]);
   assertThat(libMessages.announceRemappedAction(gAction))
     .contains('öppnar dörren');
 };
@@ -243,10 +243,10 @@ UnitTest 'announceImplicitAction neutrum dobj tryingImpCtx' run {
     .contains('försöker öppna skåpet först');
 };
 
-UnitTest 'announceImplicitAction uterum dobj tryingImpCtx' run {
+UnitTest 'announceImplicitAction utrum dobj tryingImpCtx' run {
   //mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
-  gAction.setCurrentObjects([dorrenObjUterumSingular]);
+  gAction.setCurrentObjects([dorrenObjUtrumSingular]);
   assertThat(libMessages.announceImplicitAction(gAction, tryingImpCtx))
     .contains('försöker öppna dörren först');
 };
@@ -285,35 +285,35 @@ UnitTest 'obscuredThingSoundDesc first person neuter singular' run {
   assertThat(o).startsWith('Jag kunde inte höra något detaljerat genom skåpet.');
 };
 
-UnitTest 'obscuredThingSmellDesc first person uterum singular' run {
+UnitTest 'obscuredThingSmellDesc first person utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare1aPerspektiv;
-  libMessages.obscuredThingSmellDesc(appletObjNeutrumSingular, dorrenObjUterumSingular);
+  libMessages.obscuredThingSmellDesc(appletObjNeutrumSingular, dorrenObjUtrumSingular);
   assertThat(o).startsWith('Jag kunde inte känna så mycket lukt genom dörren.');
 };
 
-UnitTest 'obscuredReadDesc first person uterum singular' run {
+UnitTest 'obscuredReadDesc first person utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare1aPerspektiv;
   libMessages.obscuredReadDesc(papperetObjNeutrumSingular);
   assertThat(o).startsWith('Jag kunde inte se det bra nog för att kunna läsa det.');
 };
 
-UnitTest 'obscuredReadDesc 1a person uterum singular' run {
+UnitTest 'obscuredReadDesc 1a person utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
-  libMessages.obscuredReadDesc(bokenObjUterumSingular);
+  libMessages.obscuredReadDesc(bokenObjUtrumSingular);
   assertThat(o).startsWith('Du kunde inte se den bra nog för att kunna läsa den.');
 };
 
-UnitTest 'obscuredReadDesc 3ee person uterum plural' run {
+UnitTest 'obscuredReadDesc 3ee person utrum plural' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare3dePerspektiv;
-  libMessages.obscuredReadDesc(skyltarObjUterumPlural);
+  libMessages.obscuredReadDesc(skyltarObjUtrumPlural);
   assertThat(o).startsWith('Bob kunde inte se dem bra nog för att kunna läsa dem.');
 };
 
-UnitTest 'obscuredThingSmellDesc 2a person uterum singular' run {
+UnitTest 'obscuredThingSmellDesc 2a person utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   libMessages.thingTasteDesc(appletObjNeutrumSingular);
@@ -327,28 +327,28 @@ UnitTest 'dimReadDesc 2a person neutrum singular' run {
   assertThat(o).startsWith('Det fanns inte ljus bra nog att läsa det.');
 };
 
-UnitTest 'cannotReachObject 1a person dobj: uterum singular' run {
+UnitTest 'cannotReachObject 1a person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare1aPerspektiv;
   libMessages.cannotReachObject(appletObjNeutrumSingular);
   assertThat(o).startsWith('Jag kunde inte nå äpplet.');
 };
 
-UnitTest 'cannotReachObject 2nd person dobj: uterum singular' run {
+UnitTest 'cannotReachObject 2nd person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   libMessages.cannotReachObject(appletObjNeutrumSingular);
   assertThat(o).startsWith('Du kunde inte nå äpplet.');
 };
 
-UnitTest 'cannotReachObject 3e person dobj: uterum singular' run {
+UnitTest 'cannotReachObject 3e person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare3dePerspektiv;
   libMessages.cannotReachObject(appletObjNeutrumSingular);
   assertThat(o).startsWith('Bob kunde inte nå äpplet.');
 };
 
-UnitTest 'cannotReachContents 1a person dobj: uterum singular' run {
+UnitTest 'cannotReachContents 1a person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare1aPerspektiv;
   local str = libMessages.cannotReachContents(appletObjNeutrumSingular, skapetObjNeutrumSingular);
@@ -356,7 +356,7 @@ UnitTest 'cannotReachContents 1a person dobj: uterum singular' run {
   assertThat(o).startsWith('Jag kunde inte nå det genom skåpet.');
 };
 
-UnitTest 'cannotReachContents 2a person dobj: uterum singular' run {
+UnitTest 'cannotReachContents 2a person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   local str = libMessages.cannotReachContents(appletObjNeutrumSingular, skapetObjNeutrumSingular);
@@ -364,7 +364,7 @@ UnitTest 'cannotReachContents 2a person dobj: uterum singular' run {
   assertThat(o).startsWith('Du kunde inte nå det genom skåpet.');
 };
 
-UnitTest 'cannotReachContents 3e person dobj: uterum singular' run {
+UnitTest 'cannotReachContents 3e person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare3dePerspektiv;
   local str = libMessages.cannotReachContents(appletObjNeutrumSingular, skapetObjNeutrumSingular);
@@ -373,7 +373,7 @@ UnitTest 'cannotReachContents 3e person dobj: uterum singular' run {
 };
 
 
-UnitTest 'cannotReachOutside 2a person dobj: uterum singular' run {
+UnitTest 'cannotReachOutside 2a person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare3dePerspektiv;
   local str = libMessages.cannotReachOutside(appletObjNeutrumSingular, skapetObjNeutrumSingular);
@@ -382,32 +382,32 @@ UnitTest 'cannotReachOutside 2a person dobj: uterum singular' run {
 };
 
 
-UnitTest 'soundIsFromWithin 2a person dobj: uterum singular' run {
+UnitTest 'soundIsFromWithin 2a person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
-  libMessages.soundIsFromWithin(musikenObjUterumSingular, skapetObjNeutrumSingular);
+  libMessages.soundIsFromWithin(musikenObjUtrumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('\^musiken verkade komma från insidan skåpet.');
 };
 
 
-UnitTest 'soundIsFromWithout 2a person dobj: uterum singular' run {
+UnitTest 'soundIsFromWithout 2a person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
-  libMessages.soundIsFromWithout(musikenObjUterumSingular, skapetObjNeutrumSingular);
+  libMessages.soundIsFromWithout(musikenObjUtrumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('\^musiken verkade komma från utsidan skåpet.');
 };
 
-UnitTest 'smellIsFromWithin 2a person dobj: uterum singular' run {
+UnitTest 'smellIsFromWithin 2a person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
-  libMessages.smellIsFromWithin(matosetObjUterumSingular, skapetObjNeutrumSingular);
+  libMessages.smellIsFromWithin(matosetObjUtrumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('\^matoset verkade komma från insidan skåpet.');
 };
 
-UnitTest 'smellIsFromWithout 2a person dobj: uterum singular' run {
+UnitTest 'smellIsFromWithout 2a person dobj: utrum singular' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
-  libMessages.smellIsFromWithout(matosetObjUterumSingular, skapetObjNeutrumSingular);
+  libMessages.smellIsFromWithout(matosetObjUtrumSingular, skapetObjNeutrumSingular);
   assertThat(o).startsWith('\^matoset verkade komma från utsidan skåpet.');
 };
 
@@ -762,9 +762,9 @@ UnitTest 'sayDepartingWithGuide' run {
   assertThat(o).contains('\^matrosen lät piraten leda vägen.');
 };
 
-UnitTest 'sayOpenDoorRemotely dörren (neutrum uterum)' run {
+UnitTest 'sayOpenDoorRemotely dörren (neutrum utrum)' run {
   //mainOutputStream.hideOutput = nil;
-  libMessages.sayOpenDoorRemotely(dorrenObjUterumSingular, true);
+  libMessages.sayOpenDoorRemotely(dorrenObjUtrumSingular, true);
   assertThat(o).contains('Någon öppnade dörren från den andra sidan');
 };
 
@@ -774,7 +774,7 @@ UnitTest 'sayOpenDoorRemotely skåpet (neutrum singular)' run {
   assertThat(o).contains('Någon öppnade skåpet från den andra sidan');
 };
 
-UnitTest 'sayOpenDoorRemotely dörrar (uterum plural)' run {
+UnitTest 'sayOpenDoorRemotely dörrar (utrum plural)' run {
   //mainOutputStream.hideOutput = nil;
   libMessages.sayOpenDoorRemotely(dorrarObjUterPlural, true);
   assertThat(o).contains('Någon öppnade dörrarna från den andra sidan');
@@ -1206,7 +1206,7 @@ UnitTest 'cannotTakeComponentMsg singular/neutrum del av singular' run {
   gActor = spelare1aPerspektiv;
   gAction = TakeAction.createActionInstance();
   gAction.setCurrentObjects([snickargladje]);
-  local msg = playerActionMessages.cannotTakeComponentMsg(dorrenObjUterumSingular);
+  local msg = playerActionMessages.cannotTakeComponentMsg(dorrenObjUtrumSingular);
   "<<msg>>";
   assertThat(o).startsWith('Jag kunde inte ta den; den var del av dörren.');
 };
@@ -1394,12 +1394,12 @@ UnitTest 'handsBecomingTooFullForMsg(obj) 2a person' run {
 };
 
 
-UnitTest 'obscuredReadDesc 3de person uterum plural' run {
+UnitTest 'obscuredReadDesc 3de person utrum plural' run {
   //mainOutputStream.hideOutput = nil;
   setPlayer(spelare3dePerspektiv);
   gActor = spelare3dePerspektiv;
   gPlayerChar = spelare3dePerspektiv;
-  libMessages.obscuredReadDesc(skyltarObjUterumPlural);
+  libMessages.obscuredReadDesc(skyltarObjUtrumPlural);
   assertThat(o).startsWith('Bob kunde inte se dem bra nog för att kunna läsa dem.');
 };
 
@@ -1513,7 +1513,7 @@ UnitTest 'becomingTooLargeForContainerMsg(obj, cont)' run {
   gActor = spelare1aPerspektiv;
   gAction = DropAction.createActionInstance();
   gAction.setCurrentObjects([hatt]);
-  local msg = playerActionMessages.becomingTooLargeForContainerMsg(hatt, dorrenObjUterumSingular);
+  local msg = playerActionMessages.becomingTooLargeForContainerMsg(hatt, dorrenObjUtrumSingular);
   "<<msg>>";
   assertThat(o).startsWith('Jag kunde inte göra det då det skulle ha gjort den för stor för dörren.');
 };
@@ -1616,8 +1616,8 @@ UnitTest 'cannotGoThroughClosedDoorMsg(door)' run {
   setPlayer(spelare1aPerspektiv);
   gActor = spelare1aPerspektiv;
   gAction = EnterAction.createActionInstance();
-  gAction.setCurrentObjects([dorrenObjUterumSingular]);
-  local msg = playerActionMessages.cannotGoThroughClosedDoorMsg(dorrenObjUterumSingular);
+  gAction.setCurrentObjects([dorrenObjUtrumSingular]);
+  local msg = playerActionMessages.cannotGoThroughClosedDoorMsg(dorrenObjUtrumSingular);
   "<<msg>>";
   assertThat(o).startsWith('Jag kunde inte göra det då dörren var stängd.');
 };

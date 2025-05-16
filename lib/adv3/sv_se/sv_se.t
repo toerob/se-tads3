@@ -485,8 +485,8 @@ modify VocabObject
          // Ändra bara grammatiskt genus om det inte specificerats i objektet redan
          local isUterDefinedAlready = propDefined(&isUter);
          if(!isUterDefinedAlready) {
-            // Uterum är vanligast men teorin är att det blir lättare
-            // att mönstermatcha mot uterum- än neutrumformen.
+            // utrum är vanligast men teorin är att det blir lättare
+            // att mönstermatcha mot utrum- än neutrumformen.
             isUter = nil; // Defaulta till neutrum om definitionen saknas i objektet.
          }
 
@@ -693,7 +693,7 @@ modify VocabObject
         && lexicalParent
         && lexicalParent.ofKind(ComplexContainer)
         && lexicalParent.propDefined(&isUter)) {
-            tadsSay('<<self>> ärver <<lexicalParent.isUter?'uterum':'neutrum'>> från <<self.lexicalParent>>\n' );
+            tadsSay('<<self>> ärver <<lexicalParent.isUter?'utrum':'neutrum'>> från <<self.lexicalParent>>\n' );
             isUter = lexicalParent.isUter;
         }
 
@@ -1042,44 +1042,31 @@ modify Thing
      *   nominative case, objective case, possessive adjective, possessive
      *   noun
      */
-    itNom { 
-        return [ (isUter ? 'den':'det'), 'han', 'hon', 'de'][pronounSelector]; 
-        //return [ 'den', 'han', 'hon', 'de'][pronounSelector]; 
-    }
+    itNom {  return [ (isUter ? 'den':'det'), 'han', 'hon', 'de'][pronounSelector];  }
     itObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector]; }
 
     itPossAdj { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
     itPossNoun { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
 
     /* get the object reflexive pronoun (itself, etc) */
-    itReflexive
-    {
-        return ['sig själv', 'han själv', 'hon själv', 'de själva']
-               [pronounSelector];
-    }
+    itReflexive { return ['sig själv', 'han själv', 'hon själv', 'de själva'][pronounSelector]; }
 
-    /* demonstrative pronouns ('that' or 'those') */
-    //thatNom { return ['that', 'he', 'she', 'those'][pronounSelector]; }
-    //thatNom { return [ (isUter?'den':'det'), 'han', 'henne', 'dessa'][pronounSelector]; }
-    
-    // TODO: byt plats på thatNom och thatObj - ge dem 
-    // thatNom - 'detta/han'
-    // thatObj - 'detta/honom'
-
-    // 'De' - är nog mest praktisk här är teorin
+    // demonstrativa pronomen, nominativt 
     thatNom { 
         local obestamdForm = nil;
-        local de = obestamdForm? 'dessa' : 'de där';
-        if(isUter) {
-            local den =  obestamdForm? 'denna' : 'den där';
-            return [ den, den, den, de][pronounSelector]; 
+        if(isPlural) {
+            return obestamdForm? 'dessa' : 'de där';
         }
-        local det = obestamdForm? 'detta' : 'det där';  
-        return [ det, det, det, de][pronounSelector]; 
+        if(isUter) {
+            return  obestamdForm? 'denna' : 'den där';
+        }
+        return obestamdForm? 'detta' : 'det där';  
     }
 
-    thatObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'de'][pronounSelector]; }
-    //thatObj { return ['that', 'him', 'her', 'those'][pronounSelector]; }
+    // demonstrativa pronomen, objektivt
+    thatObj { 
+        return [ (isUter?'den':'det'), 'honom', 'henne', 'de'][pronounSelector]; 
+    }
 
     /*
      *   get a string with the appropriate pronoun for the object plus the
@@ -2311,7 +2298,7 @@ modify Actor
 
 
     // defaultar till isUter för att matcha mot din/min etc om detta 
-    // objekt är huvudkaraktären. De flesta levande ting är också uterum
+    // objekt är huvudkaraktären. De flesta levande ting är också utrum
     isUter = true 
 
     // TODO: överrider Thing med helt ny betyldelse. Ensa detta. Bör vara itObj
@@ -4053,11 +4040,10 @@ langMessageBuilder: MessageBuilder
         ['oss',       &itObj,   'actor', nil, nil],
 
 
-        ['detta/han',   &thatNom,  'actor', nil, true],
-        ['detta/hon',   &thatNom,  'actor', nil, true],
-        ['detta/honom', &thatObj,  'actor', nil, nil],
-        ['detta/henne', &thatObj,  'actor', nil, nil],
-
+        ['denna/han',    &thatNom,  nil, nil, true],
+        ['detta/han',    &thatNom,  nil, nil, true],
+        ['denna/honom',  &thatObj,  nil, &itReflexive, nil],
+        ['detta/honom',  &thatObj,  nil, &itReflexive, nil],
 
         // TODO: OBS: mig och dig kan vara objekt också, bygg ut med motsvarande  ord för /obj /ref
         ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
@@ -4067,8 +4053,8 @@ langMessageBuilder: MessageBuilder
         ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
         ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
 
-        // Possessiva
-        // Kontrollera om de är samma
+
+        // Possessiva reflexiva
         ['min',     &itPossAdj, 'actor', nil, nil],
         ['din',     &itPossAdj, 'actor', nil, nil],
         ['sin',     &itPossAdj, 'actor', nil, nil],
@@ -4076,56 +4062,25 @@ langMessageBuilder: MessageBuilder
         ['dess',    &itPossAdj, 'actor', nil, nil],
         ['vår',     &itPossAdj, 'actor', nil, nil],
 
+        ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
+        ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
+
+        // Possessiva
         ['hans',        &itPossNoun, 'actor', nil, nil],
         ['hennes',      &itPossNoun, 'actor', nil, nil],
-
         ['din/hans',    &itPossNoun, nil, nil, nil],
         ['din/hennes',  &itPossNoun, nil, nil, nil],
         ['dess/hennes', &itPossNoun, nil, nil, nil],
         ['vår/hennes',  &itPossNoun, nil, nil, nil],
+        //['dess/hon', &itPossNoun, nil, nil, nil],
 
-        // Possessiva reflexiva
-
-
-        ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
-        ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
-
-        
         /* parameters that don't imply any target object */
 
         ['den/han', &theName, nil, nil, true],
         ['den/hon', &theName, nil, nil, true],
         ['den/honom', &theNameObj, nil, &itReflexive, nil],
         ['den/henne', &theNameObj, nil, &itReflexive, nil],
-        
-        
-        ['dess/hon', &itPossNoun, nil, nil, nil],
 
-        
-
-        ['verkar', &verbToSeem, nil, nil, true],
-        ['sätter', &verbToPut, nil, nil, true],
-        ['är', &verbToBe, nil, nil, true],
-        ['var', &verbToBe, nil, nil, true],
-        ['hade', &verbToHave, nil, nil, true],
-        ['har', &verbToHave, nil, nil, true],
-        ['kan', &verbCan, nil, nil, true],
-        ['här', &verbHere, nil, nil, true],
-        ['där', &verbHere, nil, nil, true],
-        ['tar', &verbToTake, nil, nil, true],
-        ['tog', &verbToTake, nil, nil, true],
-        ['ser', &verbToSee, nil, nil, true],
-        ['såg', &verbToSee, nil, nil, true],
-        ['hör', &verbToHear, nil, nil, true],
-        
-
-        ['gör', &verbToDo, nil, nil, true],
-        ['går', &verbToGo, nil, nil, true],
-        ['kommer', &verbToCome, nil, nil, true],
-        ['lämnar', &verbToLeave, nil, nil, true],
-        ['säg', &verbToSay, nil, nil, true],
-        ['måste', &verbMust, nil, nil, true],
-        ['kommer', &verbWill, nil, nil, true],
 
 
         
@@ -4146,7 +4101,6 @@ langMessageBuilder: MessageBuilder
         ['det/honom', &itObj, nil, &itReflexive, nil],
         ['det/henne', &itObj, nil, &itReflexive, nil],
 
-
         // Reflexiv
         ['själv', &itReflexive, 'actor', nil, nil],
         ['själva', &itReflexive, 'actor', nil, nil],
@@ -4156,6 +4110,28 @@ langMessageBuilder: MessageBuilder
         ['osssjälv', &itReflexive, 'actor', nil, nil],
         ['ersjälv', &itReflexive, 'actor', nil, nil],
 
+
+        ['är', &verbToBe, nil, nil, true],
+        ['var', &verbToBe, nil, nil, true],
+        ['hade', &verbToHave, nil, nil, true],
+        ['har', &verbToHave, nil, nil, true],
+        ['kan', &verbCan, nil, nil, true],
+        ['här', &verbHere, nil, nil, true],
+        ['där', &verbHere, nil, nil, true],
+        ['tar', &verbToTake, nil, nil, true],
+        ['tog', &verbToTake, nil, nil, true],
+        ['ser', &verbToSee, nil, nil, true],
+        ['såg', &verbToSee, nil, nil, true],
+        ['hör', &verbToHear, nil, nil, true],
+        ['gör', &verbToDo, nil, nil, true],
+        ['går', &verbToGo, nil, nil, true],
+        ['kommer', &verbToCome, nil, nil, true],
+        ['lämnar', &verbToLeave, nil, nil, true],
+        ['säg', &verbToSay, nil, nil, true],
+        ['måste', &verbMust, nil, nil, true],
+        ['kommer', &verbWill, nil, nil, true],
+        ['verkar', &verbToSeem, nil, nil, true],
+        ['sätter', &verbToPut, nil, nil, true],
 
         // Prepositioner
         ['på', &actorInName, nil, nil, nil],

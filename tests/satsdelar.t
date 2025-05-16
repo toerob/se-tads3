@@ -319,12 +319,11 @@ UnitTest '3:e person plural (de)' run {
 
 UnitTest 'Demonstrativa (thatNom / thatObj)' run {
   //mainOutputStream.hideOutput = nil;
-  gMessageParams(spelare3dePerspektivDe);
-  gMessageParams(hund);
+  gMessageParams(spelare3dePerspektivDe, hund);
   [
     'Jag {såg} {den hund} som rymde.' -> ['Jag såg den som rymde.'],  // thatNom (singular)
-    'Jag fånga{r|de} {den hund}.' -> ['Jag fångade den.'],  // thatObj (singular)
-    'Jag {såg} {de} som smet.' -> ['Jag såg de som smet.'],  // thatNom (plural)
+    'Jag fånga{r|de} {denna hund/honom}.' -> ['Jag fångade den.'],  // thatObj (singular)
+    'Jag {såg} {denna spelare3dePerspektivDe/han} som smet.' -> ['Jag såg de där som smet.'],  // thatNom (plural)
     'Jag fånga{r|de} {dem}.' -> ['Jag fångade dem.']  // thatObj (plural)
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivDe);
