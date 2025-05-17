@@ -3243,7 +3243,7 @@ modify root##Direction \
    backToPrefix = backPre
 
 
-DefineLangDir(north, 'norr' | 'n' | 'norr' |'norrut', 'tillbaka från');
+DefineLangDir(north, 'norr' | 'n' | 'nord' |'norrut', 'tillbaka från');
 DefineLangDir(south, 'söder' | 's'| 'syd'|'söderut', 'tillbaka från');
 DefineLangDir(east,  'öster' | 'ö' |'öst'|'österut', 'tillbaka från');
 DefineLangDir(west, 'väst' | 'v'|'väst'|'västerut', 'tillbaka från');
@@ -10026,7 +10026,7 @@ VerbRule(AttackWith)
 ;
 
 VerbRule(Inventory)
-    'i' | 'inv' | 'l' | 'lista' | ('lista'|'ta'|'tag') ('inventarie'|'inventarier')
+    'i' | 'inv' |'inventera' | 'l' | 'lista' | ('lista'|'ta'|'tag') ('inventarie'|'inventarier')
     : InventoryAction
     verbPhrase = 'lista/listar inventarier'
 ;
