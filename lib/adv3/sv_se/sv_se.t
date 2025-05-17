@@ -2266,17 +2266,9 @@ modify Actor
 
     itObj
     {
-        // **TODO: itOBj ska vara följande **
-        // FIXA TESTER som förväntade sig det nedanför bortkommenterade
-
         return ['mig', 'mig', 'mig', 'oss',
                'dig', 'dig', 'dig', 'er',
                (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector];
-        /*return ['mig', 'mig', 'mig', 'oss',
-               'dig', 'dig', 'dig', 'er',
-               'sig', 'sig', 'sig', 'sig'][pronounSelector];
-               */
-               
     }
     
 
@@ -2285,7 +2277,8 @@ modify Actor
     // objekt är huvudkaraktären. De flesta levande ting är också utrum
     isUter = true 
 
-    isNeuter = nil
+    isNeuter = nil  // TODO: byt till isNeuter istället för isUter. 
+                    // Fler ord av det sistnämnda så mindre jobb för författare
 
     itPossAdj
     {    
@@ -2370,7 +2363,16 @@ modify Actor
      *   second person, otherwise we'll use 'that' or 'those' as we would
      *   for an inanimate object.
      */
-    /* demonstrative pronoun, objective case */
+    thatNom {
+        return isPlural ? 'de där' : isHim? 'han där': isHer? 'hon där' : inherited(); 
+        /*if(isPlural)   { return 'de där'; } 
+        else if(isHim) { return 'han där'; }
+        else if(isHer) { return 'hon där'; }
+        return inherited();
+        */
+    }
+
+    // demonstrative pronoun, objective case
     thatObj
     {
         return ['jag', 'jag', 'jag', 'oss',
@@ -3656,7 +3658,7 @@ modify DisambigResolver
              *   still-ambiguous exception and let the interactive
              *   disambiguation ask for further clarification
              */
-            results.ambiguousNounPhrase(nil, ResolveAsker, 'one',
+            results.ambiguousNounPhrase(nil, ResolveAsker, 'av',
                                         sub, matchList, matchList,
                                         1, self);
             return [];

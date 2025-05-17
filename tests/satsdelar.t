@@ -393,9 +393,6 @@ UnitTest 'Demonstrativa (thatNom / thatObj)' run {
         //['han', &thatNom, 'actor', nil, true],
         //['hon', &thatNom, 'actor', nil, true],
 
-        //['you\'re/he\'s', &itIsContraction, 'actor', nil, true],
-        //['you\'re/she\'s', &itIsContraction, 'actor', nil, true],
-        //['you\'re', &itIsContraction, 'actor', nil, true],
 
         // TODO: ta bort/ersätt rester av engelskan här:
         ['you/him', &theNameObj, 'actor', &itReflexive, nil],
@@ -484,8 +481,6 @@ UnitTest 'Demonstrativa (thatNom / thatObj)' run {
         ['det/honom', &itObj, nil, &itReflexive, nil],
         ['det/henne', &itObj, nil, &itReflexive, nil],
         
-        ['detär', &itIsContraction, nil, nil, true],
-        ['denär', &itIsContraction, nil, nil, true],
         
         //FIXME: ['den/he', &thatNom, nil, nil, true],
 
@@ -523,3 +518,10 @@ UnitTest 'Demonstrativa (thatNom / thatObj)' run {
     ]
 
 */
+
+
+
+
+
+// TODO: Annan fil:
+// TODO: testa av Resolver.resolvePronounAntecedent
