@@ -116,20 +116,21 @@ hus: Thing 'hus[-et]' 'hus';
 hund: Actor 'hund[-en]' 'hund'
   owner = spelare1aPerspektivVi
 ;
+
+katt: Actor 'katt[-en]' 'katt';
+
 luta: Actor 'luta[-n]' 'luta'
   owner = spelare3dePerspektivDet
   isUter = true
 ;
 
-// TODO: lös "huset var ert."
 // https://tads.dev/docs/adv3/doc/techman/t3msg.htm
 
-/*
 UnitTest '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(hund, hus, spelare2aPerspektivNi);
   [
-    '{Den dobj/han} {är} {ert}.' -> ['hus var ert.']  // itPossNoun (plural)
+    '{Den dobj/han} {är} {er}.' -> ['Huset var erat.']  // itPossNoun (plural)
 
   ].forEachAssoc(function(msg, msgPlusResult) {
     //gActor = spelare2aPerspektivNi;
@@ -142,7 +143,7 @@ UnitTest '2:a person plural (ni)' run {
     assertThat(o).isEqualTo(msgPlusResult[1]);
   });
 };
-*/
+
 
 // Test Assertions
 UnitTest 'satsdelar' run {
@@ -250,14 +251,17 @@ UnitTest '2:a person singular (du)' run {
 
 UnitTest '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
-  gMessageParams(hund, hus);
+  gMessageParams(katt, hus, spelare2aPerspektivNi, spelare2aPerspektivDu);
   [
     '{Ni} {har} kommit sent.' -> ['Ni hade kommit sent.'],  // itNom (plural)
-    'Hon {hör} {er actor} sjunga.' -> ['Hon hörde er sjunga.'],  // itObj (plural)
+    'Hon {hör} {dem} sjunga.' -> ['Hon hörde er sjunga.'],  // itObj (plural)
     '{Er} katt jamar.' -> ['Er katt jamar.'],  // itPossAdj (plural)
     'Katten {är} {er}.' -> ['Katten var er.'],  // itPossNoun (plural)
     '{Ni} försvarar {ersjälv}.' -> ['Ni försvarar er själva.'] // itReflexive (plural)
   ].forEachAssoc(function(msg, msgPlusResult) {
+    setPlayer(spelare2aPerspektivNi);
+    gAction = ExamineAction.createActionInstance();
+    gAction.setCurrentObjects([katt]);
     setPlayer(spelare2aPerspektivNi);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
     "<<msg>>";

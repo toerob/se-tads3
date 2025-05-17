@@ -2310,7 +2310,23 @@ modify Actor
     }
     itPossNoun
     {
-        
+        if(gDobj) {
+        if (gDobj.isPlural) {
+                return ['mina', 'mina', 'mina', 'våra',
+                        'dina', 'dina', 'dina', 'era',
+                        'deras', 'hans', 'hennes', 'deras'][pronounSelector];
+            }
+            if (gDobj.isUter) {
+                        //1a,   han,   hon,   plural
+                return ['min', 'min',  'min', 'vår',    // 1a perspektiv
+                        'din', 'din',  'din', 'er',     // 2a perspektiv
+                        'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e perspektiv
+            }
+            return ['mitt', 'mitt', 'mitt', 'vårat',
+                    'ditt', 'ditt', 'ditt', 'erat',
+                    'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+        }
+
         if (isPlural) {
             return ['mina', 'mina', 'mina', 'våra',
                     'dina', 'dina', 'dina', 'era',
@@ -2318,20 +2334,14 @@ modify Actor
         }
         if (isUter) {
                     //1a,   han,   hon,   plural
-            return ['min', 'min',  'min', 'vår',    // 1a
-                    'din', 'din',  'din', 'er',     // 2a 
-                    'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e
+            return ['min', 'min',  'min', 'vår',    // 1a perspektiv
+                    'din', 'din',  'din', 'er',     // 2a perspektiv
+                    'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e perspektiv
         }
-        // Default: neutrum
-        return ['mitt', 'mitt', 'mitt', 'vårt',
-                'ditt', 'ditt', 'ditt', 'ert',
+        return ['mitt', 'mitt', 'mitt', 'vårat',
+                'ditt', 'ditt', 'ditt', 'erat',
                 'dess', 'hans', 'hennes', 'deras'][pronounSelector];
         
-        /*
-        return ['min', 'min', 'min', 'våran',
-               'din', 'din', 'din', 'din',
-               'dess', 'hans', 'hennes', 'deras'][pronounSelector];
-        */
     }
     
     itReflexiveSimple
@@ -4013,10 +4023,12 @@ langMessageBuilder: MessageBuilder
         ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
 
 
-        ['ert',     &itPossNoun, 'actor', nil, true],
-
-
         // Possessiva
+        ['er',     &itPossNoun, 'actor', nil, nil],
+        //['erat',     &itPossNoun, 'actor', nil, nil],
+        //['eran',     &itPossNoun, 'actor', nil, nil],
+
+
         ['hans',        &itPossNoun, 'actor', nil, nil],
         ['hennes',      &itPossNoun, 'actor', nil, nil],
         ['din/hans',    &itPossNoun, nil, nil, nil],
