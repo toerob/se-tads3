@@ -1070,20 +1070,6 @@ modify Thing
 
     /*
      *   get a string with the appropriate pronoun for the object plus the
-     *   correct conjugation of 'to be'
-     */
-    itIs { return itNom + ' ' + verbToBe; }
-
-    /* get a pronoun plus a 'to be' contraction */
-    itIsContraction
-    {
-        //"\nTODO: itIsContraction(): Fixa]\n";
-        //return itNom + tSel(isPlural ? '&rsquo;re' : '&rsquo;s', ' ' + verbToBe);
-        return itNom + ' ' + verbToBe;
-    }
-
-    /*
-     *   get a string with the appropriate pronoun for the object plus the
      *   correct conjugation of the given regular verb for the appropriate
      *   person
      */
@@ -2090,8 +2076,6 @@ class NameAsOther: object
     itReflexive = (targetObj.itReflexive)
     thatNom = (targetObj.thatNom)
     thatObj = (targetObj.thatObj)
-    itIs = (targetObj.itIs)
-    itIsContraction = (targetObj.itIsContraction)
     itVerb(verb) { return targetObj.itVerb(verb); }
     conjugateRegularVerb(verb)
         { return targetObj.conjugateRegularVerb(verb); }
@@ -2301,24 +2285,13 @@ modify Actor
     // objekt är huvudkaraktären. De flesta levande ting är också utrum
     isUter = true 
 
-    // TODO: överrider Thing med helt ny betyldelse. Ensa detta. Bör vara itObj
-    // för formerna henne/honom
-    
-    // Ingen skillnad troligen från denna och itPossNoun
+    isNeuter = nil
+
     itPossAdj
     {    
-        //return itPossNoun();                   
-        return ['min', 'min', 'min', 'vår',
-               'din', 'din', 'din', 'dina',
-               'sin', 'hans', 'hennes', 'deras'][pronounSelector];
-        
-        //if (isPlural) {
-        //    return ['mina', 'mina', 'mina', 'våra',
-        //            'dina', 'dina', 'dina', 'era',
-        //            'deras', 'hans', 'hennes', 'deras'][pronounSelector];
-        //}
-        
-        /*
+        //   [1/s/n, 1/s/m, 1/s/f, 1/p, 
+        //    2/s/n, 2/s/m, 2/s/f, 2/p,
+        //    3/s/n, 3/s/m, 3/s/f, 3/p]
         if (isUter) {
             return ['min', 'min', 'min', 'vår',
                     'din', 'din', 'din', 'er',
@@ -2327,11 +2300,8 @@ modify Actor
         return ['mitt', 'mitt', 'mitt', 'vårt',
                 'ditt', 'ditt', 'ditt', 'ert',
                 'sitt', 'hans', 'hennes', 'deras'][pronounSelector];
-        */
     }
 
-    // TODO: skulle kunna slås ihop med ovanstående med lite lim
-    // så försvinner behovet av två stycken här.
     itPossAdjPlural 
     {
         return ['mina', 'mina', 'mina', 'våra',
@@ -2390,35 +2360,12 @@ modify Actor
      *   second person, otherwise we'll use 'that' or 'those' as we would
      *   for an inanimate object.
      */
-    /*thatNom
-    {
-        //return ['jag', 'jag', 'jag', 'vi',
-        //       'du', 'du', 'du', 'du',
-         //      (isUter?'den':'det'), 'han', 'hon', 'de'][pronounSelector];
-        
-    }*/
-
-    //thatObj { return [ (isUter?'den':'det'), 'han', 'henne', 'de'][pronounSelector]; }
-
     /* demonstrative pronoun, objective case */
     thatObj
     {
         return ['jag', 'jag', 'jag', 'oss',
                'du', 'du', 'du', 'du',
                (isUter?'den':'det'), 'honom', 'henne', 'dessa'][pronounSelector];
-    }
-
-    /*
-     *   We don't need to override itIs: the base class handling works for
-     *   actors too.
-     */
-
-    /* get my pronoun with a being verb contraction ("the box's") */
-    itIsContraction
-    {
-        //return itNom + tSel('ens' + ['m', 're', 's', 're', 're', 're'][conjugationSelector], ' ' + verbToBe);
-        //return itNom + tSel('&rsquo;' + ['m', 're', 's', 're', 're', 're'][conjugationSelector], ' ' + verbToBe);
-        return itNom + ' (TODO) ' + verbToBe;
     }
 
     /*
@@ -4064,6 +4011,10 @@ langMessageBuilder: MessageBuilder
 
         ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
         ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
+
+
+        ['ert',     &itPossNoun, 'actor', nil, true],
+
 
         // Possessiva
         ['hans',        &itPossNoun, 'actor', nil, nil],
@@ -7893,54 +7844,58 @@ grammar disambigOrdinalList(head):
  */
 #define defOrdinal(str, val) object ordinalWord=#@str numval=val
 
-defOrdinal(former, 1);
-defOrdinal(first, 1);
-defOrdinal(second, 2);
-defOrdinal(third, 3);
-defOrdinal(fourth, 4);
-defOrdinal(fifth, 5);
-defOrdinal(sixth, 6);
-defOrdinal(seventh, 7);
-defOrdinal(eighth, 8);
-defOrdinal(ninth, 9);
-defOrdinal(tenth, 10);
-defOrdinal(eleventh, 11);
-defOrdinal(twelfth, 12);
-defOrdinal(thirteenth, 13);
-defOrdinal(fourteenth, 14);
-defOrdinal(fifteenth, 15);
-defOrdinal(sixteenth, 16);
-defOrdinal(seventeenth, 17);
-defOrdinal(eighteenth, 18);
-defOrdinal(nineteenth, 19);
-defOrdinal(twentieth, 20);
-defOrdinal(1st, 1);
-defOrdinal(2nd, 2);
-defOrdinal(3rd, 3);
-defOrdinal(4th, 4);
-defOrdinal(5th, 5);
-defOrdinal(6th, 6);
-defOrdinal(7th, 7);
-defOrdinal(8th, 8);
-defOrdinal(9th, 9);
-defOrdinal(10th, 10);
-defOrdinal(11th, 11);
-defOrdinal(12th, 12);
-defOrdinal(13th, 13);
-defOrdinal(14th, 14);
-defOrdinal(15th, 15);
-defOrdinal(16th, 16);
-defOrdinal(17th, 17);
-defOrdinal(18th, 18);
-defOrdinal(19th, 19);
-defOrdinal(20th, 20);
+//defOrdinal(former, 1);
+defOrdinal(förra, 1);
+
+defOrdinal(första, 1);
+defOrdinal(andra, 2);
+defOrdinal(tredje, 3);
+defOrdinal(fjärde, 4);
+defOrdinal(femte, 5);
+defOrdinal(sjätte, 6);
+defOrdinal(sjunde, 7);
+defOrdinal(åttonde, 8);
+defOrdinal(nionde, 9);
+defOrdinal(tionde, 10);
+defOrdinal(elfte, 11);
+defOrdinal(tolfte, 12);
+defOrdinal(trettonde, 13);
+defOrdinal(fjortonde, 14);
+defOrdinal(femtonde, 15);
+defOrdinal(sextonde, 16);
+defOrdinal(sjuttonde, 17);
+defOrdinal(artonde, 18);
+defOrdinal(nittonde, 19);
+defOrdinal(tjugonde, 20);
+defOrdinal(1a, 1);
+defOrdinal(2a, 2);
+defOrdinal(3e, 3);
+defOrdinal(4e, 4);
+defOrdinal(5e, 5);
+defOrdinal(6e, 6);
+defOrdinal(7e, 7);
+defOrdinal(8e, 8);
+defOrdinal(9e, 9);
+defOrdinal(10e, 10);
+defOrdinal(11e, 11);
+defOrdinal(12e, 12);
+defOrdinal(13e, 13);
+defOrdinal(14e, 14);
+defOrdinal(15e, 15);
+defOrdinal(16e, 16);
+defOrdinal(17e, 17);
+defOrdinal(18e, 18);
+defOrdinal(19e, 19);
+defOrdinal(20e, 20);
 
 /*
  *   the special 'last' ordinal - the value -1 is special to indicate the
  *   last item in a list
  */
-defOrdinal(last, -1);
-defOrdinal(latter, -1);
+//defOrdinal(last, -1);
+//defOrdinal(latter, -1);
+defOrdinal(sista, -1);
+defOrdinal(senare, -1);
 
 
 /* ------------------------------------------------------------------------ */
@@ -8010,33 +7965,33 @@ grammar poundNumberPhrase(main): tokPoundInt->num_ : NumberProd
 #define defTeen(num, val)  object teenWord=#@num numval=val
 #define defTens(num, val)  object tensWord=#@num numval=val
 
-defDigit(one, 1);
-defDigit(two, 2);
-defDigit(three, 3);
-defDigit(four, 4);
-defDigit(five, 5);
-defDigit(six, 6);
-defDigit(seven, 7);
-defDigit(eight, 8);
-defDigit(nine, 9);
-defTeen(ten, 10);
-defTeen(eleven, 11);
-defTeen(twelve, 12);
-defTeen(thirteen, 13);
-defTeen(fourteen, 14);
-defTeen(fifteen, 15);
-defTeen(sixteen, 16);
-defTeen(seventeen, 17);
-defTeen(eighteen, 18);
-defTeen(nineteen, 19);
-defTens(twenty, 20);
-defTens(thirty, 30);
-defTens(forty, 40);
-defTens(fifty, 50);
-defTens(sixty, 60);
-defTens(seventy, 70);
-defTens(eighty, 80);
-defTens(ninety, 90);
+defDigit(en, 1);
+defDigit(två, 2);
+defDigit(tre, 3);
+defDigit(fyra, 4);
+defDigit(fem, 5);
+defDigit(sex, 6);
+defDigit(sju, 7);
+defDigit(åtta, 8);
+defDigit(nio, 9);
+defTeen(tio, 10);
+defTeen(elva, 11);
+defTeen(tolv, 12);
+defTeen(tretton, 13);
+defTeen(fjorton, 14);
+defTeen(femton, 15);
+defTeen(sexton, 16);
+defTeen(sjutton, 17);
+defTeen(arton, 18);
+defTeen(nitton, 19);
+defTens(tjugo, 20);
+defTens(trettio, 30);
+defTens(fyrtio, 40);
+defTens(femtio, 50);
+defTens(sextio, 60);
+defTens(sjuttio, 70);
+defTens(åttio, 80);
+defTens(nittio, 90);
 
 grammar spelledSmallNumber(digit): digitWord->num_ : NumberProd
     getval()
@@ -10313,10 +10268,10 @@ VerbRule(RecordOff)
 ;
 
 VerbRule(ReplayString)
-    'replay' ('quiet'->quiet_ | 'nonstop'->nonstop_ | )
+    'återspela' ('tyst'->quiet_ | 'oavbrutet'->nonstop_ | )
         (quotedStringPhrase->fname_ | )
     : ReplayStringAction
-    verbPhrase = 'replay/replaying command recording'
+    verbPhrase = 'återuppspela/återuppspelar kommandoinspelning'
 
     /* set the appropriate option flags */
     scriptOptionFlags = ((quiet_ != nil ? ScriptFileQuiet : 0)

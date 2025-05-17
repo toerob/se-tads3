@@ -111,12 +111,38 @@ spelare3dePerspektivDe: Actor 'män[-nen]' 'männen'
   isPlural = true // TODO: träd[-et] - uter härleds inte automatiskt. Kolla upp. Det är PGA att iSuter defaultar till true numera,m ändra i Thing
 ;
 
+hus: Thing 'hus[-et]' 'hus';
+
 hund: Actor 'hund[-en]' 'hund'
   owner = spelare1aPerspektivVi
 ;
 luta: Actor 'luta[-n]' 'luta'
   owner = spelare3dePerspektivDet
+  isUter = true
 ;
+
+// TODO: lös "huset var ert."
+// https://tads.dev/docs/adv3/doc/techman/t3msg.htm
+
+/*
+UnitTest '2:a person plural (ni)' run {
+  //mainOutputStream.hideOutput = nil;
+  gMessageParams(hund, hus, spelare2aPerspektivNi);
+  [
+    '{Den dobj/han} {är} {ert}.' -> ['hus var ert.']  // itPossNoun (plural)
+
+  ].forEachAssoc(function(msg, msgPlusResult) {
+    //gActor = spelare2aPerspektivNi;
+    gAction = ExamineAction.createActionInstance();
+    gAction.setCurrentObjects([hus]);
+    setPlayer(spelare2aPerspektivNi);
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "<<msg>>";
+    assertThat(o).isEqualTo(msgPlusResult[1]);
+  });
+};
+*/
 
 // Test Assertions
 UnitTest 'satsdelar' run {
@@ -156,10 +182,10 @@ UnitTest 'satsdelar' run {
     spelare3dePerspektivDen -> ['{Du/hon} spelar på {min} luta', 'Astronauten spelar på sin luta'],
 
   // TODO: LAGA
-    spelare3dePerspektivDet -> ['{Du} spelar på {sin} luta', 'Trädet spelar på sin luta'],
-    spelare3dePerspektivDet -> ['{Jag} spelar på {sin} luta', 'Trädet spelar på sin luta'],
-    spelare3dePerspektivDet -> ['{Du/han} spelar på {sin} luta', 'Trädet spelar på sin luta'],
-    spelare3dePerspektivDet -> ['{Du/hon} spelar på {sin} luta', 'Trädet spelar på sin luta']
+    spelare3dePerspektivDet -> ['{Du} spelar på {sin luta} luta', 'Trädet spelar på sin luta'],
+    spelare3dePerspektivDet -> ['{Jag} spelar på {sin luta} luta', 'Trädet spelar på sin luta'],
+    spelare3dePerspektivDet -> ['{Du/han} spelar på {sin luta} luta', 'Trädet spelar på sin luta'],
+    spelare3dePerspektivDet -> ['{Du/hon} spelar på {sin luta} luta', 'Trädet spelar på sin luta']
   ].forEachAssoc(function(player, msgPlusResult) {
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
     setPlayer(player);
@@ -189,12 +215,12 @@ UnitTest '1:a person singular' run {
 
 UnitTest '1:a person plural (vi)' run {
   //mainOutputStream.hideOutput = nil;
-  gMessageParams(hund);
+  gMessageParams(spelare1aPerspektivVi, hund);
   [
     '{Vi} {är} trötta.'  -> ['Vi var trötta.'],  // itNom
     'De hitta{r|de} {oss} i skogen.'  -> ['De hittade oss i skogen.'], // itObj
     '{Vår} hund har rymt.'  -> ['Vår hund har rymt.'], // itPossAdj
-    'Hunden {är} {vår}.'  -> ['Hunden var vår.'], // itPossNoun
+    'Hunden {är} {vår spelare1aPerspektivVi}.'  -> ['Hunden var vår.'], // itPossNoun
     '{Vi} försvarar {osssjälv}.' -> ['Vi försvarar oss själva.'] // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare1aPerspektivVi);
@@ -221,9 +247,10 @@ UnitTest '2:a person singular (du)' run {
   });
 };
 
+
 UnitTest '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
-  gMessageParams(hund);
+  gMessageParams(hund, hus);
   [
     '{Ni} {har} kommit sent.' -> ['Ni hade kommit sent.'],  // itNom (plural)
     'Hon {hör} {er actor} sjunga.' -> ['Hon hörde er sjunga.'],  // itObj (plural)
