@@ -532,6 +532,7 @@ stugansSovrum: Room 'stugans sovrum' 'sovrummet'
     }*/
     subContainer = drawer
     cannotTakeMsg = "Det var för otympligt för att gå runt att bära på."
+    isNeuter = true
 ;
 ++drawer: Component, OpenableContainer 'låda[-n]' 'låda' {
     bulkCapacity = 10
@@ -577,13 +578,15 @@ TODO: ska det saknas lampa där? Anpassa annars:
 +Fixture 'dusch[-en]' 'dusch';
 +Fixture, OpenableContainer 'spegel[-n]' 'spegel';
 +Fixture, Surface 'toalett[-en]' 'toalett';
-+Fixture, OpenableContainer 'lock[-et]/toalettlock[-et]' 'toalettlock';
++Fixture, OpenableContainer 'lock[-et]/toalettlock[-et]' 'toalettlock'
+    isNeuter = true;
 
 +tvattstall: ComplexContainer 'handfat[-et]/fat[-et]/tvättställ[-et]' 'tvättställ'
     subSurface: ComplexComponent, Surface 'kant[-en]/tvättställskant[-en]' 'tvättställskanten' { }
     subContainer: ComplexComponent  {
         bulkCapacity = 3
     }
+    isNeuter = true
 ;
 
 Component, Switch  'vattenkran[-en]/kran[-en]' 'vattenkran'

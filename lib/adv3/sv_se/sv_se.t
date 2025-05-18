@@ -54,8 +54,6 @@ modify GameInfoModuleID
     languageCode = 'sv-SE'
 ;
 
-//property isUter;
-
 /* ------------------------------------------------------------------------ */
 /*
  *   Simple yes/no confirmation.  The caller must display a prompt; we'll
@@ -465,9 +463,7 @@ modify VocabObject
      *   conventions of the English format in other languages where
      *   different formats would be more convenient.
      */
-    
-    //isUter = nil
-    
+        
     initializeVocabWith(str)
     {
         local sectPart;
@@ -485,17 +481,17 @@ modify VocabObject
          // värde per objekt. Om inte, så vill vi kunna härleda det ur ändelserna till orden
 
          // TODO: PropDefDirectly borde vara bättre men sabbar "'ditt' bland annat".
-         // local isUterDefinedAlready = propDefined(&isUter, PropDefDirectly);
-         local isUterDefinedAlready = propDefined(&isUter);
-         if(!isUterDefinedAlready) {
+         // local isNeuterDefinedAlready = propDefined(&isUter, PropDefDirectly);
+         /*
+         local isNeuterDefinedAlready = propDefined(&isNeuter);
+         if(isNeuterDefinedAlready) {
             //tadsSay('isUter is not directly defined for <<self>>\n');
             // utrum är vanligast men teorin är att det blir lättare
             // att mönstermatcha mot utrum- än neutrumformen.
-            isUter = nil; // Defaulta till neutrum om definitionen saknas i objektet.
+            isNeuter = true; // Defaulta till neutrum om definitionen saknas i objektet.
          } else {
             //tadsSay('isUter is directly defined for <<self>>\n');
-
-         }
+         }*/
 
 
         // Börja i adjektivsektionen 
@@ -503,8 +499,16 @@ modify VocabObject
 
         // Kontrollera om bara ett ord skrivits in. Används för tilldela cmdDict med &plural
         // och ev. tillhörande ändelser då enbart ett ord används.
-        local oneWordOnly = !(str.find(' ') || str.find('/') || str.find('*')) ? true : nil;
-        
+        local oneWordOnly = !(str.find(' ') || str.find('/') || str.find('*'));
+        // TODO: Ersätt med regex när den fungerar:
+        //oneWordOnly = rexMatch('(<space|star|/>)+?', str) == nil;
+        /*
+        if(oneWordOnly) {
+            tadsSay('<<self>> "str" one single word\n');
+        } else {
+            tadsSay('<<self>> "str" several words \n');
+        }*/
+
         // Iterera igenom strängen så länge den har ett innehåll
         while (str != '') {
             local len, cur;
@@ -598,10 +602,11 @@ modify VocabObject
                             displayWordPart(sectPart, curWithEnding, self);
                         #endif
 
-                        if (!isUterDefinedAlready) {
-                            if ((ending.endsWith('n') || ending.endsWith('na')))
-                                isUter = true;
-                        }
+                        /*if (!isNeuterDefinedAlready) {
+                            if (!((ending.endsWith('n') || ending.endsWith('na')))) {
+                                isNeuter = true;
+                            }
+                        }*/
 
                         // Tilldela pluralName det första plural-ordet vi hittar i vocabWords
                         // Detta då det oftare är jobbigare att böja till pluralName med pluralNameFrom()
@@ -703,16 +708,16 @@ modify VocabObject
         }
 
         // Om objektet är en namnlös subContainer/subSurface som ej definierat
-        // isUter men isUter har definierats i dess lexicalParent
+        // isNeuter men isNeuter har definierats i dess lexicalParent
         // använd samma genus då objektet avser samma objekt som lexicalParent.
         if(self.vocabWords == ''
-        && !propDefined(&isUter)
+        && propDefined(&isNeuter)
         && ofKind(ComplexComponent)
         && lexicalParent
         && lexicalParent.ofKind(ComplexContainer)
-        && lexicalParent.propDefined(&isUter)) {
-            //tadsSay('<<self>> ärver <<lexicalParent.isUter?'utrum':'neutrum'>> från <<self.lexicalParent>>\n' );
-            isUter = lexicalParent.isUter;
+        && lexicalParent.propDefined(&isNeuter)) {
+            //tadsSay('<<self>> ärver <<lexicalParent.isNeutrum?'neutrum':'utrum'>> från <<self.lexicalParent>>\n' );
+            isNeuter = lexicalParent.isNeuter;
         }
 
         /* uniquify each word list we updated */
@@ -741,6 +746,7 @@ enum neuter, uter;
  */
 modify Thing
 
+    
     article = 'ett'
 
     /*
@@ -1033,7 +1039,7 @@ modify Thing
     {
         /* if the count is one, use 'one' plus the singular name */
         if (count == 1) {
-            return (isUter?'en':'ett') + ' ' + singularStr;
+            return (!isNeuter?'en':'ett') + ' ' + singularStr;
         }
 
         /*
@@ -1061,8 +1067,8 @@ modify Thing
      *   nominative case, objective case, possessive adjective, possessive
      *   noun
      */
-    itNom {  return [ (isUter? 'den':'det'), 'han', 'hon', 'de'][pronounSelector];  }
-    itObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector]; }
+    itNom {  return [ (!isNeuter? 'den':'det'), 'han', 'hon', 'de'][pronounSelector];  }
+    itObj { return [ (isNeuter?'det':'den'), 'honom', 'henne', 'dem'][pronounSelector]; }
 
     itPossAdj { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
     itPossNoun { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
@@ -1076,15 +1082,15 @@ modify Thing
         if(isPlural) {
             return obestamdForm? 'dessa' : 'de där';
         }
-        if(isUter) {
-            return  obestamdForm? 'denna' : 'den där';
+        if(isNeuter) {
+            return obestamdForm? 'detta' : 'det där';  
         }
-        return obestamdForm? 'detta' : 'det där';  
+        return  obestamdForm? 'denna' : 'den där';
     }
 
     // demonstrativa pronomen, objektivt
     thatObj { 
-        return [ (isUter?'den':'det'), 'honom', 'henne', 'de'][pronounSelector]; 
+        return [ (isNeuter?'det':'den'), 'honom', 'henne', 'de'][pronounSelector]; 
     }
 
     /*
@@ -1253,7 +1259,7 @@ modify Thing
         if(definitiveForm) {
             return definitiveForm;
         }
-        return (isPlural ? 'de ' : (isUter? 'den ' : 'det '))  + str; 
+        return (isPlural ? 'de ' : (!isNeuter? 'den ' : 'det '))  + str; 
     }
 
     swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
@@ -1650,7 +1656,7 @@ modify Thing
                     firstChar = inStr.substr(1, 1);
                 }
             }
-            return (isUter?'en':'ett') + ' ' + str;
+            return (!isNeuter?'en':'ett') + ' ' + str;
         }
     }
 
@@ -1928,7 +1934,7 @@ modify Thing
             if(self.isPlural) {
                 return 'a'; // plural / bestämd form
             }
-            if(!self.isUter) {
+            if(self.isNeuter) {
                 return 't'; // ett-genus
             }
         }
@@ -1947,30 +1953,30 @@ modify Thing
         if(self.isPlural) {
             return 'na'; // plural / bestämd form
         }
-        if(self.isUter) {
-            return 'ad'; // en-genus
+        if(self.isNeuter) {
+            return 'at'; // ett-genus
         }
-        return 'at'; // ett-genus
+        return 'ad'; // en-genus
     }
 
     endingForNounDTDa {
         if(self.isPlural) {
             return 'da'; // plural / bestämd form
         }
-        if(self.isUter) {
-            return 'd'; // en-genus
+        if(self.isNeuter) {
+            return 't'; // ett-genus
         }
-        return 't'; // ett-genus
+        return 'd'; // en-genus
     }
 
     endingForNounEnEtNa {
         if(self.isPlural) {
             return 'na'; // plural / bestämd form
         }
-        if(self.isUter) {
-            return 'en'; // en-genus
+        if(self.isNeuter) {
+            return 'et'; // ett-genus
         }
-        return 'et'; // ett-genus
+        return 'en'; // en-genus
     }
 
     verbEndingAR { return 'ar'; }
@@ -2276,7 +2282,7 @@ modify Actor
      */
     itNom
     {
-        local denDet = isUter?'den':'det';
+        local denDet = isNeuter?'det':'den';
         return ['jag', 'jag', 'jag', 'vi',
                'du', 'du', 'du', 'ni',
                denDet, 'han', 'hon', 'de'][pronounSelector];
@@ -2287,31 +2293,28 @@ modify Actor
     {
         return ['mig', 'mig', 'mig', 'oss',
                'dig', 'dig', 'dig', 'er',
-               (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector];
+               (isNeuter?'det':'den'), 'honom', 'henne', 'dem'][pronounSelector];
     }
     
 
 
-    // defaultar till isUter för att matcha mot din/min etc om detta 
+    // defaultar till utrum för att matcha mot din/min etc om detta 
     // objekt är huvudkaraktären. De flesta levande ting är också utrum
-    isUter = true 
-
-    isNeuter = nil  // TODO: byt till isNeuter istället för isUter. 
-                    // Fler ord av det sistnämnda så mindre jobb för författare
+    isNeuter = nil 
 
     itPossAdj
     {    
         //   [1/s/n, 1/s/m, 1/s/f, 1/p, 
         //    2/s/n, 2/s/m, 2/s/f, 2/p,
         //    3/s/n, 3/s/m, 3/s/f, 3/p]
-        if (isUter) {
-            return ['min', 'min', 'min', 'vår',
-                    'din', 'din', 'din', 'er',
-                    'sin', 'hans', 'hennes', 'deras'][pronounSelector];
+        if (isNeuter) {
+            return ['mitt', 'mitt', 'mitt', 'vårt',
+                    'ditt', 'ditt', 'ditt', 'ert',
+                    'sitt', 'hans', 'hennes', 'deras'][pronounSelector];
         }
-        return ['mitt', 'mitt', 'mitt', 'vårt',
-                'ditt', 'ditt', 'ditt', 'ert',
-                'sitt', 'hans', 'hennes', 'deras'][pronounSelector];
+        return ['min', 'min', 'min', 'vår',
+                'din', 'din', 'din', 'er',
+                'sin', 'hans', 'hennes', 'deras'][pronounSelector];
     }
 
     itPossAdjPlural 
@@ -2320,6 +2323,7 @@ modify Actor
                'dina', 'dina', 'dina', 'dina',
                'dessas', 'deras', 'deras', 'deras'][pronounSelector];
     }
+
     itPossNoun
     {
         if(gDobj) {
@@ -2328,15 +2332,15 @@ modify Actor
                         'dina', 'dina', 'dina', 'era',
                         'deras', 'hans', 'hennes', 'deras'][pronounSelector];
             }
-            if (gDobj.isUter) {
-                        //1a,   han,   hon,   plural
-                return ['min', 'min',  'min', 'vår',    // 1a perspektiv
-                        'din', 'din',  'din', 'er',     // 2a perspektiv
-                        'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e perspektiv
+            if (gDobj.isNeuter) {
+                return ['mitt', 'mitt', 'mitt', 'vårat',
+                        'ditt', 'ditt', 'ditt', 'erat',
+                        'dess', 'hans', 'hennes', 'deras'][pronounSelector];
             }
-            return ['mitt', 'mitt', 'mitt', 'vårat',
-                    'ditt', 'ditt', 'ditt', 'erat',
-                    'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+                    //1a,   han,   hon,   plural
+            return ['min', 'min',  'min', 'vår',    // 1a perspektiv
+                    'din', 'din',  'din', 'er',     // 2a perspektiv
+                    'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e perspektiv
         }
 
         if (isPlural) {
@@ -2344,16 +2348,15 @@ modify Actor
                     'dina', 'dina', 'dina', 'era',
                     'deras', 'hans', 'hennes', 'deras'][pronounSelector];
         }
-        if (isUter) {
-                    //1a,   han,   hon,   plural
-            return ['min', 'min',  'min', 'vår',    // 1a perspektiv
-                    'din', 'din',  'din', 'er',     // 2a perspektiv
-                    'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e perspektiv
+        if (isNeuter) {
+            return ['mitt', 'mitt', 'mitt', 'vårat',
+                    'ditt', 'ditt', 'ditt', 'erat',
+                    'dess', 'hans', 'hennes', 'deras'][pronounSelector];        
         }
-        return ['mitt', 'mitt', 'mitt', 'vårat',
-                'ditt', 'ditt', 'ditt', 'erat',
-                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
-        
+                //1a,   han,   hon,   plural
+        return ['min', 'min',  'min', 'vår',    // 1a perspektiv
+                'din', 'din',  'din', 'er',     // 2a perspektiv
+                'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e perspektiv
     }
     
     itReflexiveSimple
@@ -2396,7 +2399,7 @@ modify Actor
     {
         return ['jag', 'jag', 'jag', 'oss',
                'du', 'du', 'du', 'du',
-               (isUter?'den':'det'), 'honom', 'henne', 'dessa'][pronounSelector];
+               (isNeuter?'det':'den'), 'honom', 'henne', 'dessa'][pronounSelector];
     }
 
     /*
@@ -3198,13 +3201,13 @@ modify defaultGround
     theName = 'marken'
 ;
 
-modify DefaultWall noun='vägg' 'väggen' plural='väggar' name='vägg' theName = 'väggen' isUter=true;
+modify DefaultWall noun='vägg' 'väggen' plural='väggar' name='vägg' theName = 'väggen';
 modify defaultCeiling noun='tak' plural='taket' name='tak' theName = 'taket';
-modify defaultNorthWall adjective='n' 'norr' 'nordlig' 'norra' noun = 'vägg' 'väggen' name='nordlig vägg' theName = 'norra väggen' isUter=true;
-modify defaultSouthWall adjective='s' 'syd' 'sydlig' 'söder' 'södra' noun = 'vägg' 'väggen' name='sydlig vägg' theName = 'södra väggen' isUter=true;
-modify defaultEastWall adjective='ö' 'öster' 'östlig' 'östra' noun = 'vägg' 'väggen' name='östlig vägg'  theName = 'östra väggen' isUter=true;
-modify defaultWestWall adjective='v' 'väster' 'västlig' 'västra' noun = 'vägg' 'väggen' name='västlig vägg' theName = 'västra väggen' isUter=true;
-modify defaultSky noun='himmel' name='himmel' theName = 'himlen' isUter=true;
+modify defaultNorthWall adjective='n' 'norr' 'nordlig' 'norra' noun = 'vägg' 'väggen' name='nordlig vägg' theName = 'norra väggen';
+modify defaultSouthWall adjective='s' 'syd' 'sydlig' 'söder' 'södra' noun = 'vägg' 'väggen' name='sydlig vägg' theName = 'södra väggen';
+modify defaultEastWall adjective='ö' 'öster' 'östlig' 'östra' noun = 'vägg' 'väggen' name='östlig vägg'  theName = 'östra väggen';
+modify defaultWestWall adjective='v' 'väster' 'västlig' 'västra' noun = 'vägg' 'väggen' name='västlig vägg' theName = 'västra väggen';
+modify defaultSky noun='himmel' name='himmel' theName = 'himlen';
 
 
 /* ------------------------------------------------------------------------ */
@@ -3798,10 +3801,10 @@ modify LightSource
         if (isPlural || isMassNoun) {
             return (isLit ? 'tända ' : 'otända ') + name;
         }
-        if(isUter) {
-            return (isLit ? 'en tänd ' : 'en otänd ') + name;
+        if(isNeuter) {
+            return (isLit ? 'ett tänt ' : 'ett otänt ') + name;
         }
-        return (isLit ? 'ett tänt ' : 'ett otänt ') + name;
+        return (isLit ? 'en tänd ' : 'en otänd ') + name;
 
     }
     //TODO: den/det
@@ -8499,7 +8502,7 @@ modify Action
         /* if there's no object list at all, just use 'it' */
         if (objList == nil || objList == []) {
             //return 'it';
-            return isUter? 'den' : 'det';
+            return isNeuter? 'det' : 'den';
         }
 
         /* note the number of objects in the resolved list */
@@ -8577,7 +8580,7 @@ modify Action
         else if (herCnt == objList.length() && himCnt == 0)
             return 'henne';
         else if (herCnt == 0 && himCnt == 0) {
-            return (objList[1].obj_.isUter)?'den':'det';
+            return (objList[1].obj_.isNeuter)?'det':'den';
         }
         else
             return 'dem';

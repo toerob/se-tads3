@@ -102,7 +102,7 @@ spelare3dePerspektivDen: Actor 'astronaut[-en]' 'astronaut'
 spelare3dePerspektivDet: Actor 'träd[-et]' 'träd'
   pcReferralPerson = ThirdPerson
   isIt = true
-  isUter = nil // TODO: träd[-et] - uter härleds inte automatiskt. Kolla upp. Det är PGA att iSuter defaultar till true numera,m ändra i Thing
+  isNeuter = true 
 ;
 
 spelare3dePerspektivDe: Actor 'män[-nen]' 'männen'
@@ -111,7 +111,7 @@ spelare3dePerspektivDe: Actor 'män[-nen]' 'männen'
   isPlural = true // TODO: träd[-et] - uter härleds inte automatiskt. Kolla upp. Det är PGA att iSuter defaultar till true numera,m ändra i Thing
 ;
 
-hus: Thing 'hus[-et]' 'hus';
+hus: Thing 'hus[-et]' 'hus' isNeuter = true;
 
 hund: Actor 'hund[-en]' 'hund'
   owner = spelare1aPerspektivVi
@@ -269,7 +269,7 @@ UnitTest '2:a person plural (ni)' run {
   });
 };
 
-tradet: Thing 'träd[-et]' 'träd';
+tradet: Thing 'träd[-et]' 'träd' isNeuter = true;
 
 UnitTest '3:e person neutrum (det)' run {
   //mainOutputStream.hideOutput = nil;

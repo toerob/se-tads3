@@ -39,6 +39,7 @@ UnitTest 'initialize äpple (ett-ord)' run {
     local appleAvancerat = new Thing();
     appleAvancerat.vocabWords = 'äpple[-t]/frukt[-en]*äpplen[-a] frukter[-na]';
     appleAvancerat.name = 'äpple';
+    
     appleAvancerat.initializeVocabWith(appleAvancerat.vocabWords);
 
     assertThat(cmdDict.findWord('frukt', &noun)).isEqualTo([appleAvancerat, 1]);
@@ -54,7 +55,7 @@ UnitTest 'initialize äpple (ett-ord)' run {
     assertThat(cmdDict.findWord('äpplena', &plural)).isEqualTo([appleAvancerat, 1]);
     assertThat(cmdDict.findWord('frukterna', &plural)).isEqualTo([appleAvancerat, 1]);
 
-    assertThat(appleAvancerat.isUter).isTrue();   
+    assertThat(appleAvancerat.isNeuter).isNil(); // OBS: härleds ännu inte
     assertThat(appleAvancerat.isPlural).isNil(); 
     
 };
@@ -79,8 +80,7 @@ UnitTest 'initialize dörr (en-ord)' run {
     assertThat(cmdDict.findWord('portar', &plural)).isEqualTo([obj, 1, obj, 5]);
     assertThat(cmdDict.findWord('portarna', &plural)).isEqualTo([obj, 1]);
 
-    // TODO: Fixa isUter
-    assertThat(obj.isUter).isTrue();   
+    assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
 };
 
@@ -96,8 +96,8 @@ UnitTest 'initialize plural' run {
     assertThat(cmdDict.findWord('stolar', &plural)[1]).isEqualTo(obj);
     assertThat(cmdDict.findWord('stolarna', &plural)[1]).isEqualTo(obj);  
 
-    // TODO: fixa till så isuter sätts på ändelsen "-na"
-    assertThat(obj.isUter).isTrue();   
+    // TODO: fixa till så isNeuter sätts på ändelsen "-na"
+    assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isTrue();
 }; 
 

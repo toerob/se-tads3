@@ -1629,7 +1629,7 @@ libMessages: MessageHelper
         if(obj.isPlural) {
             return 'öppna';
         }
-        return 'öppe<<obj.isUter?'n':'t'>>'; 
+        return 'öppe<<obj.isNeuter?'t':'n'>>'; 
         
     }
 
@@ -1639,14 +1639,14 @@ libMessages: MessageHelper
         if(obj.isPlural) {
             return 'stängda';
         }
-        return 'stäng<<obj.isUter?'d':'t'>>'; 
+        return 'stäng<<obj.isNeuter?'t':'d'>>'; 
     }
 
     /* object is currently open/closed */
-    //currentlyOpen = '{Detär dobj} för närvarande öpp en/na öppe<<obj.isUter?'n':'t'>>. '
-    //currentlyClosed = '{Detär dobj} för närvarande stäng<<obj.isUter?'d':'t'>>. '
-    currentlyOpen = '{Denär dobj} för närvarande öpp{en/et/na}. '
-    currentlyClosed = '{Detär dobj} för närvarande stäng{d/t/da}. '
+    //currentlyOpen = '{Detär dobj} för närvarande öpp en/na öppe<<obj.isNeuter?'t':'n'>>. '
+    //currentlyClosed = '{Detär dobj} för närvarande stäng<<obj.isNeuter?'t':'d'>>. '
+    currentlyOpen = '{Denär dobj} för närvarande öpp{en/et/na}. ' // TODO: ta bort sammansättningen
+    currentlyClosed = '{Detär dobj} för närvarande stäng{d/t/da}. ' // TODO: ta bort sammansättningen
 
     // eval buildParam('en/ett/na', buildSynthParam(stugdorrUtsida))
 
@@ -1783,9 +1783,7 @@ playerMessages: libMessages
         });
 
         if(match) {
-            pronoun = match.isUter 
-                ? (match.isPlural ? 'inga' : 'ingen') 
-                : (match.isPlural ? 'inga' : 'inget');
+            pronoun = match.isPlural ? 'inga' : match.isNeuter ? 'inget' : 'ingen';                
         } else {
             pronoun = rexMatch(uterPattern, txt) ? 'ingen' : 'inget';
         }
@@ -2030,7 +2028,7 @@ playerMessages: libMessages
              *   case, but we don't need to show a new one. 
              */
 
-            local whichWord = (matchList.length>0 && matchList[1].obj_.isUter)?'Vilken':'Vilket';
+            local whichWord = (matchList.length>0 && matchList[1].obj_.isNeuter)?'Vilket':'Vilken';
             if (askingAgain)
             
                 "<<whichWord>> menade du,
@@ -2050,7 +2048,7 @@ playerMessages: libMessages
              *   we're asking again, because we will already have shown a
              *   prompt that opened the tag in this case.  
              */
-            local whichWord = (matchList.length>0 && matchList[1].isUter)?'Vilken':'Vilket';
+            local whichWord = (matchList.length>0 && matchList[1].isNeuter)?'Vilket':'Vilken';
 
             if (askingAgain)
                 "<<whichWord>> <<spellInt(requiredNum)>> (av
@@ -2363,7 +2361,7 @@ npcMessagesDirect: npcMessages
                 "\^<<actor.nameVerb('fråga')>>, <q>";
             
 
-            "<<isUter?'Vilken':'Vilket'>> <<originalText>> menar du, <<
+            "<<isNeuter?'Vilket':'Vilken'>> <<originalText>> menar du, <<
             askDisambigList(matchList, fullMatchList, nil, dist)>>?</q> ";
         }
         else
@@ -2717,7 +2715,7 @@ playerActionMessages: MessageHelper
     decorationNotImportantMsg(obj)
     {
         gMessageParams(obj);
-        local ending = obj.isPlural? 'a' : (obj.isUter?'':'t');
+        local ending = obj.isPlural? 'a' : (obj.isNeuter?'t':'');
         return '{Den obj/han} är oviktig<<ending>>. ';
     }
 
@@ -2974,7 +2972,7 @@ playerActionMessages: MessageHelper
 
     /* default 'take' response */
     okayTakeMsg = shortTMsg(
-        'Tag<<gDobj.isUter && gDobj.isPlural? 'na' : (gDobj.isUter?'en':'et')>>. ', '{Du/han} {tar|tog} {den dobj/honom}. ')
+        'Tag<<gDobj.isPlural? 'na' : (gDobj.isNeuter?'et':'en')>>. ', '{Du/han} {tar|tog} {den dobj/honom}. ')
 
     /* default 'drop' response */
     okayDropMsg = shortTMsg(
@@ -3843,10 +3841,10 @@ playerActionMessages: MessageHelper
         '{Det dobj/han} {är} inte någonting {du/han} {kan} stänga. '
 
     /* already open/closed */
-    alreadyOpenMsg = '{Den dobj/han} {är} redan öppe<<gDobj && gDobj.isUter?'n':'t'>>. '
+    alreadyOpenMsg = '{Den dobj/han} {är} redan öppe<<gDobj && gDobj.isNeuter?'t':'n'>>. '
     
     // TODO: Går det att hitta ett bättre sätt?
-    alreadyClosedMsg = '{Den dobj/han} {är} redan stäng<<gDobj && gDobj.isUter?'d':'t'>>. '
+    alreadyClosedMsg = '{Den dobj/han} {är} redan stäng<<gDobj && gDobj.isNeuter?'t':'d'>>. '
 
     /* already locked/unlocked */
     alreadyLockedMsg = '{Den dobj/han} {är} redan låst. '
@@ -4816,7 +4814,7 @@ class BaseContentsLister: Lister
     }
     showListContentsPrefixTall(itemCount, pov, parent)
     {
-        "<<parent.aName>>, <<parent.objInPrep>> <<parent.isUter?'vilken':'vilket'>>
+        "<<parent.aName>>, <<parent.objInPrep>> <<parent.isNeuter?'vilket':'vilken'>>
         <<itemCount == 1 ? tSel('är', 'var') : tSel('är', 'var')>>:";
     }
 ;
@@ -4968,7 +4966,7 @@ class BaseInlineContentsLister: ContentsLister
     showListPrefixWide(cnt, pov, parent)
     {
 
-        " (<<parent.objInPrep>> <<parent.isUter?'vilken':'vilket'>> <<
+        " (<<parent.objInPrep>> <<parent.isNeuter?'vilket':'vilken'>> <<
           cnt == 1 ? tSel('är', 'var') : tSel('är', 'var')>> ";
     }
     showListSuffixWide(itemCount, pov, parent)

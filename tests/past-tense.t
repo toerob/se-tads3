@@ -70,16 +70,16 @@ spelare3dePerspektiv: Actor 'bob' 'Bob'
   isHim = true
 ;
 
-appletObjNeutrumSingular: Thing 'äpple[-t]' 'äpple';
+appletObjNeutrumSingular: Thing 'äpple[-t]' 'äpple' isNeuter = true;
 jordgubbeObjUtrumSingular: Thing 'jordgubbe[-n]' 'jordgubbe';
 vindruvorObjNeutrumPlural: Thing 'vindruva*vindruvor[-na]' 'vindruvor' isPlural=true;
 
 bokenObjUtrumSingular: Thing 'bok[-en]' 'bok';
-papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper';
+papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper' isNeuter=true;
 skyltarObjUtrumPlural: Thing 'skylt*skyltar[-na]' 'skyltar' isPlural=true;
 
 dorrenObjUtrumSingular: Thing 'dörr[-en]' 'dörr';
-skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp';
+skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp' isNeuter = true;
 +snickargladje: Component 'snickareglädje[-n]' 'snickargläde';
 
 dorrarObjUterPlural: Thing 'dörr[-en]*dörrar[-na]' 'dörrar' isPlural = true isUter = true;
@@ -89,6 +89,7 @@ tandsticka: Thing 'tändsticka[-n]' 'tändsticka';
 ljuset: Thing 'stearinljus[-et]' 'stearinljus';
 prassel: SimpleNoise 'prassel/prasslet/prasslande[-t]' 'prassel' 
   theName = 'prasslet'
+  isNeuter = true
   //isProperName = true
 ;
 
@@ -98,7 +99,7 @@ sopor: SimpleOdor 'sopa*sopor' 'sopor' isPlural = true isQualifiedName = true;
 
 lukten: SimpleOdor 'lukt[-en]' 'lukt';
 
-roret: Container 'rör[-et]' 'rör';
+roret: Container 'rör[-et]' 'rör' isNeuter = true;
 nyckel: Key 'nyckel[-n]' 'nyckel';
 nyckelring: Keyring 'nyckelring[-en]' 'nyckelring';
 

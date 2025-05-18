@@ -103,13 +103,13 @@ DefineTAction(Frotz)
         {
             dobjCur_.brightness = 3;
             
-            "{The dobj/he} start{s} to glow. ";
+            "{Den dobj/han} börja{r|de} glöda. ";
         }
         else
         {
             dobjCur_.brightness = 0;
             
-            "{The dobj/he} stop{s} glowing. ";
+            "{Den dobj/han} sluta{r|de} glöda. ";
         }
     }
 ;
@@ -118,7 +118,7 @@ VerbRule(Frotz)
     'frotz' singleDobj
     : FrotzAction
     
-    verbPhrase = 'frotz/frotzing (what)'
+    verbPhrase = 'frotz/frotza (vad)'
 ;
 
 /* ---------------------------------------------------------------------- */
