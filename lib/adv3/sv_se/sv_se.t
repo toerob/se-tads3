@@ -598,26 +598,9 @@ modify VocabObject
                             displayWordPart(sectPart, curWithEnding, self);
                         #endif
 
-                        if(!isUterDefinedAlready) {
-                            //tadsSay('Bestämmer uter för <<self>>\n');
-                            if(sectPart != &plural) {
-                                if(!isPlural) {
-                                    isUter = ending.endsWith('n') || ending.endsWith('na');                                    
-                                    //tadsSay('Bestämmer uter <<isUter?'TRUE':'NIL'>> för <<self>>\n');
-                                } else {
-                                    // TODO: kontrollera fler pluralformer
-                                    if(ending.endsWith('n') || ending.endsWith('na')) {
-                                        isUter = true;
-                                        //tadsSay('Bestämmer uter <<isUter?'TRUE':'NIL'>> för <<self>>\n');
-                                    }
-                                }
-                            } else {
-                                if(isPlural) {
-                                    if(ending.endsWith('n') || ending.endsWith('na')) {
-                                        isUter = true;
-                                    }
-                                }
-                            }
+                        if (!isUterDefinedAlready) {
+                            if ((ending.endsWith('n') || ending.endsWith('na')))
+                                isUter = true;
                         }
 
                         // Tilldela pluralName det första plural-ordet vi hittar i vocabWords
