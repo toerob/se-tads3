@@ -46,7 +46,7 @@
 #-source sarkofagen/sarkofagen
 #-source sarkofagen/reldir
 
--source skargarden/skargarden
+#-source skargarden/skargarden
 
 #-I../../code/tads3/tads3-unit-test
 
@@ -58,7 +58,7 @@
 #-source tests/present-tense
 #-source tests/past-tense
 #-source tests/satsdelar
-#-source tests/initialize-tests
+-source tests/initialize-tests
 
 
 -res
