@@ -54,6 +54,8 @@ modify GameInfoModuleID
     languageCode = 'sv-SE'
 ;
 
+//property isUter;
+
 /* ------------------------------------------------------------------------ */
 /*
  *   Simple yes/no confirmation.  The caller must display a prompt; we'll
@@ -387,11 +389,6 @@ modify VocabObject
         addToDictionary(&plural);
         addToDictionary(&adjApostS);
         addToDictionary(&literalAdjective);
-        
-        
-        //addToDictionary(&theName); -> hjälper inte
-
-
     }
 
     /* add the words from a dictionary property to the global dictionary */
@@ -450,9 +447,6 @@ modify VocabObject
         }
     }
 
-
-    
-
     /*
      *   Initialize our vocabulary from the given string.  This parses the
      *   given vocabulary initializer string and adds the words defined in
@@ -471,6 +465,9 @@ modify VocabObject
      *   conventions of the English format in other languages where
      *   different formats would be more convenient.
      */
+    
+    //isUter = nil
+    
     initializeVocabWith(str)
     {
         local sectPart;
@@ -482,17 +479,32 @@ modify VocabObject
         // Used to find the first defined definitive form in vocabWords and set definitiveForm property to it
         local foundTheDefinitiveForm = nil; 
 
-         // Ändra bara grammatiskt genus om det inte specificerats i objektet redan
+         // Ändra bara grammatiskt genus om det inte specificerats i objektet redan,
+         // Om det ärvs ses det inte som definierat. 
+         // Anledningen är att vi inte vill överrida vad användaren explicit satt för
+         // värde per objekt. Om inte, så vill vi kunna härleda det ur ändelserna till orden
+
+         // TODO: PropDefDirectly borde vara bättre men sabbar "'ditt' bland annat".
+         // local isUterDefinedAlready = propDefined(&isUter, PropDefDirectly);
          local isUterDefinedAlready = propDefined(&isUter);
          if(!isUterDefinedAlready) {
+            //tadsSay('isUter is not directly defined for <<self>>\n');
             // utrum är vanligast men teorin är att det blir lättare
             // att mönstermatcha mot utrum- än neutrumformen.
             isUter = nil; // Defaulta till neutrum om definitionen saknas i objektet.
+         } else {
+            //tadsSay('isUter is directly defined for <<self>>\n');
+
          }
+
 
         // Börja i adjektivsektionen 
         sectPart = &adjective; 
 
+        // Kontrollera om bara ett ord skrivits in. Används för tilldela cmdDict med &plural
+        // och ev. tillhörande ändelser då enbart ett ord används.
+        local oneWordOnly = !(str.find(' ') || str.find('/') || str.find('*')) ? true : nil;
+        
         // Iterera igenom strängen så länge den har ett innehåll
         while (str != '') {
             local len, cur;
@@ -539,6 +551,7 @@ modify VocabObject
                         } 
                     }
                 }
+                //displayWordPartOnly(sectPart);
 
                 // Om tecknet inte är ett bindestreck (vilket skulle vara en placeholder för ett "noll-ord", 
                 // DVS: inte ett riktigt vokabulärt ord), lägg till det i sin rätta sektion samt i lexikonet
@@ -546,6 +559,7 @@ modify VocabObject
                     
                     // Låt taldelen utgå från nuvarande sektion för detta ord
                     local wordPart = sectPart;
+                    //displayWordPartOnly(wordPart);
 
                     // Kolla efter parenteser, vilket markerar detta ord som "svagt". 
                     // Detta påverkar inget annat än att ordet läggs till i listan 
@@ -568,21 +582,37 @@ modify VocabObject
                         // När vi väl fått en ändelse kan vi ta bort ändelsesyntaxen
                         // [-xyz] från vocabWord
                         cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
-                        //local curWithEnding = cutEndings(cur) + ending;
                         local curWithEnding = cur + ending;
+
+                        // Om det bara finns ett ord och en ändelse,
+                        // och objektet är isPlural, byt sectPart till &plural 
+                        // Vi ändrar sectPart för att det ska fungera att lägga 
+                        // till som &plural även utan ändelse lite längre ned. 
+                        sectPart = oneWordOnly && isPlural? &plural : sectPart;
 
                         // Lägg till det expanderande ordet
                         cmdDict.addWord(self, curWithEnding, sectPart);
-                        displayWordPart(sectPart, curWithEnding, self);
 
-                        // TODO: rensa även vocabWords, 
-                        // så alla hakparenteser blir ersatta med expanderade ord
+                        //tadsSay('-> Lägger till ord för <<self>>: <<curWithEnding>> (<<sectPart>>)\n');
+                        #ifdef __DEBUG
+                            displayWordPart(sectPart, curWithEnding, self);
+                        #endif
+
                         if(!isUterDefinedAlready) {
+                            //tadsSay('Bestämmer uter för <<self>>\n');
                             if(sectPart != &plural) {
                                 if(!isPlural) {
                                     isUter = ending.endsWith('n') || ending.endsWith('na');                                    
+                                    //tadsSay('Bestämmer uter <<isUter?'TRUE':'NIL'>> för <<self>>\n');
                                 } else {
                                     // TODO: kontrollera fler pluralformer
+                                    if(ending.endsWith('n') || ending.endsWith('na')) {
+                                        isUter = true;
+                                        //tadsSay('Bestämmer uter <<isUter?'TRUE':'NIL'>> för <<self>>\n');
+                                    }
+                                }
+                            } else {
+                                if(isPlural) {
                                     if(ending.endsWith('n') || ending.endsWith('na')) {
                                         isUter = true;
                                     }
@@ -631,7 +661,6 @@ modify VocabObject
                         }
                         // Ändra denna del av talet 'literal adjective'
                         wordPart = &literalAdjective;
-
                     } 
 
                     // Lägg till ordet till våran egen lista för denna del av talet
@@ -644,7 +673,13 @@ modify VocabObject
 
                     // Lägg till det till ordboken
                     cmdDict.addWord(self, cur, wordPart);
-                    displayWordPart(wordPart, cur, self);
+
+                    //displayWordPartOnly(wordPart);
+                    //tadsSay('-> Lägger till ord för <<self>>: <<cur>> \n');
+
+                    #ifdef __DEBUG
+                        displayWordPart(wordPart, cur, self);
+                    #endif
 
                     if (cur.endsWith('.')) {
                         local abbr;
@@ -693,13 +728,14 @@ modify VocabObject
         && lexicalParent
         && lexicalParent.ofKind(ComplexContainer)
         && lexicalParent.propDefined(&isUter)) {
-            tadsSay('<<self>> ärver <<lexicalParent.isUter?'utrum':'neutrum'>> från <<self.lexicalParent>>\n' );
+            //tadsSay('<<self>> ärver <<lexicalParent.isUter?'utrum':'neutrum'>> från <<self.lexicalParent>>\n' );
             isUter = lexicalParent.isUter;
         }
 
         /* uniquify each word list we updated */
         foreach (local p in modList)
             self.(p) = self.(p).getUnique();
+        
     }
 ;
 
@@ -1042,7 +1078,7 @@ modify Thing
      *   nominative case, objective case, possessive adjective, possessive
      *   noun
      */
-    itNom {  return [ (isUter ? 'den':'det'), 'han', 'hon', 'de'][pronounSelector];  }
+    itNom {  return [ (isUter? 'den':'det'), 'han', 'hon', 'de'][pronounSelector];  }
     itObj { return [ (isUter?'den':'det'), 'honom', 'henne', 'dem'][pronounSelector]; }
 
     itPossAdj { return ['dess', 'hans', 'hennes', 'deras'][pronounSelector]; }
@@ -11356,8 +11392,20 @@ class WordEndingForm: object
   }
 ;
 
+
+function displayWordPartOnly(wordPart) {
+    if(wordPart == &noun) {
+        tadsSay(' &noun ');
+    }
+    if(wordPart == &plural) {
+        tadsSay(' &plural ');
+    }
+    if(wordPart == &adjective) {
+        tadsSay(' &noun ');
+    }
+}
+
 function displayWordPart(wordPart, cur, obj) {
-    #ifdef __DEBUG
     if(wordPart == &noun) {
         tadsSay('\ <<cur>> (substantiv)');
     }
@@ -11368,7 +11416,6 @@ function displayWordPart(wordPart, cur, obj) {
         tadsSay('\ <<cur>> (adjektiv)');
     }
     tadsSay('\t\t\t\t\t\t -> \ [<<obj.name>>]\n');
-    #endif
 }
 
 

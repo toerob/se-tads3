@@ -116,7 +116,7 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
 ;
 // TODO: ge saker till sofia, krasch vid
 +++GiveTopic, SuggestedGiveTopic @saken
-    "<q>Eh, nja...</q>"
+    "<q>Nej tack!</q>"
     name = (matchObj.name)
 ;
 

@@ -161,10 +161,10 @@ UnitTest 'openMsg - neutrum singular' run {
   assertThat(libMessages.openMsg(skapetObjNeutrumSingular)).isEqualTo('öppet');
 };
 UnitTest 'openMsg - utrum plural' run {
-  assertThat(libMessages.openMsg(dorrarObjUterPlural)).isEqualTo('öppnade');
+  assertThat(libMessages.openMsg(dorrarObjUterPlural)).isEqualTo('öppna');
 };
 UnitTest 'openMsg - neutrum plural' run {
-  assertThat(libMessages.openMsg(skapenObjNeuterPlural)).isEqualTo('öppnade');
+  assertThat(libMessages.openMsg(skapenObjNeuterPlural)).isEqualTo('öppna');
 };
 
 UnitTest 'distantThingDesc - neutrum plural' run {

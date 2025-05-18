@@ -1624,13 +1624,18 @@ libMessages: MessageHelper
      *   to describe the status of an openable object 
      */
     openMsg(obj) { 
+        //gMessageParams(obj);
+        //return 'öpp{en/et/na}';
         if(obj.isPlural) {
-            return 'öppnade';
+            return 'öppna';
         }
         return 'öppe<<obj.isUter?'n':'t'>>'; 
+        
     }
 
     closedMsg(obj) { 
+        //gMessageParams(obj);
+        //return 'stäng{d/t/da}';
         if(obj.isPlural) {
             return 'stängda';
         }
@@ -1647,7 +1652,7 @@ libMessages: MessageHelper
 
 
     /* stand-alone independent clause describing current open status */
-    openStatusMsg(obj) { return obj.itIsContraction + ' ' + obj.openDesc; }
+    openStatusMsg(obj) { return '{Det} {är} ' + obj.openDesc; }
 
     /* locked/unlocked status - adjectives describing lock states */
     lockedMsg(obj) { 
