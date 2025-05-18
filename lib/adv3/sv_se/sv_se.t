@@ -400,8 +400,29 @@ modify VocabObject
     /* initialize the vocabulary from vocabWords */
     initializeVocab()
     {
+        local isNeuterDefinedAlready = propDefined(&isNeuter, PropDefDirectly);
+        #ifdef __DEBUG
+            if(isNeuterDefinedAlready) {
+                tadsSay('<<self>>: isNeuter is set on directly, no override\n');
+            }
+        #endif
+
         /* inherit vocabulary from this class and its superclasses */
         inheritVocab(self, new Vector(10));
+
+        // Om neutrum inte är definierat av användaren direkt på objektet
+        // så försöker vi härleda det ur den definitiva formen.
+        // Om den definitiva formen slutar på -n eller -na så är det utrum,
+        // vi flippar om detta till inversen för neutrum.
+        if(!isNeuterDefinedAlready && definitiveForm) {
+            local isUterEnding = definitiveForm.endsWith('n') || definitiveForm.endsWith('na');
+            isNeuter = !isUterEnding;
+            #ifdef __DEBUG
+            if(isNeuter) {
+                tadsSay('<<self>>: <<definitiveForm>> is now set to neuter\n');
+            }
+            #endif
+        }
     }
 
     /*
@@ -480,10 +501,9 @@ modify VocabObject
          // Anledningen är att vi inte vill överrida vad användaren explicit satt för
          // värde per objekt. Om inte, så vill vi kunna härleda det ur ändelserna till orden
 
-         // TODO: PropDefDirectly borde vara bättre men sabbar "'ditt' bland annat".
-         // local isNeuterDefinedAlready = propDefined(&isUter, PropDefDirectly);
+         // local isNeuterDefinedAlready = propDefined(&isNeuter, PropDefDirectly);
+         //local isNeuterDefinedAlready = propDefined(&isNeuter, PropDefDirectly);
          /*
-         local isNeuterDefinedAlready = propDefined(&isNeuter);
          if(isNeuterDefinedAlready) {
             //tadsSay('isUter is not directly defined for <<self>>\n');
             // utrum är vanligast men teorin är att det blir lättare
@@ -619,19 +639,11 @@ modify VocabObject
 
                         // Tilldela definitiveForm den första definitiva formen vi hittar i vocabWords
                         // (Möjligen TODO: använd theNameFrom istället och tvinga name att definieras)
-                        if(!foundTheDefinitiveForm) {
-                            if(isPlural) {
-                                // Om objektet är plural
-                                // Sätt bara definitiv form om vi är i pluraldelen
-                                if(sectPart == &plural) {
-                                    foundTheDefinitiveForm=true;
-                                    definitiveForm = curWithEnding;
-                                }
-                            } else {
-                                // I övriga fall sätts definitiv form oavsett 
-                                foundTheDefinitiveForm=true;
-                                definitiveForm = curWithEnding;
-                            }
+                        if (!foundTheDefinitiveForm
+                            && ((isPlural && sectPart == &plural) || !isPlural))
+                        {
+                            foundTheDefinitiveForm = true;
+                            definitiveForm = curWithEnding;
                         }
                         
                         
@@ -721,8 +733,9 @@ modify VocabObject
         }
 
         /* uniquify each word list we updated */
-        foreach (local p in modList)
+        foreach (local p in modList) {
             self.(p) = self.(p).getUnique();
+        }
         
     }
 ;
@@ -2298,8 +2311,8 @@ modify Actor
     
 
 
-    // defaultar till utrum för att matcha mot din/min etc om detta 
-    // objekt är huvudkaraktären. De flesta levande ting är också utrum
+    // defaultar till neutrum för att matcha mot ditt/mitt etc om detta 
+    // objekt är huvudkaraktären. De flesta levande ting är utrum
     isNeuter = nil 
 
     itPossAdj

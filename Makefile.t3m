@@ -57,8 +57,8 @@
 
 #-source tests/present-tense
 #-source tests/past-tense
-#-source tests/satsdelar
--source tests/initialize-tests
+-source tests/satsdelar
+#-source tests/initialize-tests
 
 
 -res

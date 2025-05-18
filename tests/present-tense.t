@@ -71,16 +71,16 @@ spelare3dePerspektiv: Actor 'bob' 'Bob'
   isHim = true
 ;
 
-appletObjNeutrumSingular: Thing 'äpple[-t]' 'äpple' isNeuter = true;
+appletObjNeutrumSingular: Thing 'äpple[-t]' 'äpple' ;
 jordgubbeObjUtrumSingular: Thing 'jordgubbe[-n]' 'jordgubbe';
 vindruvorObjNeutrumPlural: Thing 'vindruva*vindruvor[-na]' 'vindruvor' isPlural=true;
 
 bokenObjUtrumSingular: Thing 'bok[-en]' 'bok';
-papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper' isNeuter = true;
+papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper' ;
 skyltarObjUtrumPlural: Thing 'skylt*skyltar[-na]' 'skyltar' isPlural=true;
 
 dorrenObjUtrumSingular: Thing 'dörr[-en]' 'dörr';
-skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp' isNeuter = true;
+skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp' ;
 +snickargladje: Component 'snickareglädje[-n]' 'snickargläde';
 
 dorrarObjUterPlural: Thing 'dörrar[-na]' 'dörrar2' isPlural = true;
@@ -90,7 +90,7 @@ tandsticka: Thing 'tändsticka[-n]' 'tändsticka';
 ljuset: Thing 'stearinljus[-et]' 'stearinljus';
 prassel: SimpleNoise 'prassel/prasslet/prasslande[-t]' 'prassel' 
   theName = 'prasslet'
-  isNeuter = true
+  
   //isProperName = true
 ;
 
@@ -100,7 +100,7 @@ sopor: SimpleOdor 'sopa*sopor' 'sopor' isPlural = true isQualifiedName = true;
 
 lukten: SimpleOdor 'lukt[-en]' 'lukt';
 
-roret: Container 'rör[-et]' 'rör' isNeuter = true;
+roret: Container 'rör[-et]' 'rör' ;
 nyckel: Key 'nyckel[-n]' 'nyckel';
 nyckelring: Keyring 'nyckelring[-en]' 'nyckelring';
 

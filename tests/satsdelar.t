@@ -339,7 +339,7 @@ UnitTest '3:e person plural (de)' run {
     'Vi möt{te|er} {dem} på vägen.' -> ['Vi möter dem på vägen.'],  // itObj
     '{Deras} bil {står|stod} {där}.' -> ['Deras bil stod där.'],  // itPossAdj
     'Bilen {är} {deras}.' -> ['Bilen var deras.'],  // itPossNoun
-    '{De} skada{r|de} {sigsjälv}.' -> ['De skadade sig själva.']  // itReflexive
+    '{De} skapa{r|de} {sigsjälv}.' -> ['De skapade sig själva.']  // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivDe);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();

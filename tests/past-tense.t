@@ -70,26 +70,26 @@ spelare3dePerspektiv: Actor 'bob' 'Bob'
   isHim = true
 ;
 
-appletObjNeutrumSingular: Thing 'äpple[-t]' 'äpple' isNeuter = true;
+appletObjNeutrumSingular: Thing 'äpple[-t]' 'äpple' ;
 jordgubbeObjUtrumSingular: Thing 'jordgubbe[-n]' 'jordgubbe';
 vindruvorObjNeutrumPlural: Thing 'vindruva*vindruvor[-na]' 'vindruvor' isPlural=true;
 
 bokenObjUtrumSingular: Thing 'bok[-en]' 'bok';
-papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper' isNeuter=true;
+papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper' ;
 skyltarObjUtrumPlural: Thing 'skylt*skyltar[-na]' 'skyltar' isPlural=true;
 
 dorrenObjUtrumSingular: Thing 'dörr[-en]' 'dörr';
-skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp' isNeuter = true;
+skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp' ;
 +snickargladje: Component 'snickareglädje[-n]' 'snickargläde';
 
-dorrarObjUterPlural: Thing 'dörr[-en]*dörrar[-na]' 'dörrar' isPlural = true isUter = true;
-skapenObjNeuterPlural: Thing 'skåp[-et]*skåpen' 'skåpen' isPlural = true isUter = nil theName = 'skåpen';
+dorrarObjUterPlural: Thing 'dörr[-en]*dörrar[-na]' 'dörrar' isPlural = true;
+skapenObjNeuterPlural: Thing 'skåp[-et]*skåpen' 'skåpen' isPlural = true theName = 'skåpen';
 
 tandsticka: Thing 'tändsticka[-n]' 'tändsticka';
 ljuset: Thing 'stearinljus[-et]' 'stearinljus';
 prassel: SimpleNoise 'prassel/prasslet/prasslande[-t]' 'prassel' 
   theName = 'prasslet'
-  isNeuter = true
+  
   //isProperName = true
 ;
 
@@ -99,7 +99,7 @@ sopor: SimpleOdor 'sopa*sopor' 'sopor' isPlural = true isQualifiedName = true;
 
 lukten: SimpleOdor 'lukt[-en]' 'lukt';
 
-roret: Container 'rör[-et]' 'rör' isNeuter = true;
+roret: Container 'rör[-et]' 'rör' ;
 nyckel: Key 'nyckel[-n]' 'nyckel';
 nyckelring: Keyring 'nyckelring[-en]' 'nyckelring';
 
@@ -2015,11 +2015,6 @@ UnitTest 'singleActorRequired(actor)' run {
   assertThat(o).startsWith('Du kan bara addressera en person åt gången.');
 };
 
-
-
-// TODO: blir ett problem med 
-// itNom {return [ (isUter ? 'den':'det'), 'han', 'hon', 'de'][pronounSelector]; }
-// blir bara ett problem när den väljs, inte 'det'
 
 UnitTest 'cannotTalkTo(targetActor, issuingActor) #1' run {
   //mainOutputStream.hideOutput = nil;

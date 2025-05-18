@@ -15,7 +15,7 @@
 // TODO: lös att det inte går att skriva följande nu och få "årorna var för tunga" istället för "de åror var för tunga":
 //  ++Thing, Heavy 'åror[-na]' 'åror'     isPlural = true;
 // En workaround är:
-//++Thing, Heavy 'åra**åror[-na]' 'åror' "..."
+//++Thing, Heavy 'åra*åror[-na]' 'åror' "..."
 //    isPlural = true
 
 // TODO:
@@ -48,7 +48,7 @@ gameMain: GameMainDef
 ;
 
 
-plankGolv: Floor 'golv[-et]**plankor[-na]' 'plankor';
+plankGolv: Floor 'golv[-et]*plankor[-na]' 'plankor';
 
 
 
@@ -72,7 +72,7 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
     theName = 'sakerna';
 
 //++skapLuckeUtrymme: ComplexContainer,OpenableContainer 'insida[-n]' 'insida';
-/*++skapLuckor: ContainerDoor, ComplexComponent 'skåplucka[-n]*skåpluck[-or]/lucka*luckor[-na]' 'skåpluckor' 
+/*++skapLuckor: ContainerDoor, ComplexComponent 'skåplucka[-n]/lucka/*luckor[-na] skåpluckor[-na]' 'skåpluckor' 
     isPlural = true
 ;*/
 
@@ -410,7 +410,7 @@ bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
 
 
 
-+baten: Attachable, Heavy, Container, Vehicle  /*Enterable -> (location.south)*/ 'båt[-en]**båtar[-na]' 'båten'
++baten: Attachable, Heavy, Container, Vehicle  /*Enterable -> (location.south)*/ 'båt[-en]*båtar[-na]' 'båten'
     "Det var en träfärgad ~snipa~ med plats för två. Mats brukade använda den till att fiska och åka runt på upptäcktsfärder i skärgården. "
     specialDesc = "Mot bryggans södra del låg Mats båt förtöjd. "
     isQualifiedName = true
@@ -429,7 +429,7 @@ bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
     attachedObjects = [baten, bryggan] // TODO: fungerar inte 
 ;
 
-++Thing, Heavy 'åra**åror[-na]' 'åror' "..."
+++Thing, Heavy 'åra*åror[-na]' 'åror' "..."
     isPlural = true
     isListed = true
     /*
@@ -491,7 +491,7 @@ Object -> fridge "kylskåp"
     has neuter openable container static;
 */
 
-+batterier: Thing 'batteri[-er]' 'batterier' isPlural = true
++batterier: Thing 'batterier[-na]' 'batterier' isPlural = true
     theName = 'batterierna'
 ;
 
@@ -521,18 +521,13 @@ stugansSovrum: Room 'stugans sovrum' 'sovrummet'
 
 ++dammsugare: Thing 'dammsugare[-n]' 'dammsugare';
 
-// TODO: isUter fungerar inte på ComplexComponent (åtminstone när den deklareras inline som här)
-// >x låda
-// Det var öppen, och innehöll en tändsticksask.
 +nattduksbord: ComplexContainer, Heavy 'bord[-et]/nattduksbord[-et]' 'nattduksbord'    "Ett nattduksbord med en låda. "
     subSurface: ComplexComponent, Surface { }
     /*subContainer: ComplexComponent, OpenableContainer 'låda[-n]' 'låda' {
         bulkCapacity = 10
-        isUter = true
     }*/
     subContainer = drawer
     cannotTakeMsg = "Det var för otympligt för att gå runt att bära på."
-    isNeuter = true
 ;
 ++drawer: Component, OpenableContainer 'låda[-n]' 'låda' {
     bulkCapacity = 10
@@ -546,7 +541,7 @@ oljelampa: Thing 'oljelampa[-n]/lampa[-n]' 'oljelampa'
 tandsticksask: OpenableContainer 'ask[-en]/tändsticka/tändstickor[-na]/tändsticksask[-en]' 'tändsticksask' 
     location = nattduksbord.subContainer
 ; 
-+tandstickor: Thing 'tändsticka**tändstickor[-na]' 'tändstickor' isPlural=true;
++tandstickor: Thing 'tändsticka*tändstickor[-na]' 'tändstickor' isPlural=true;
 
 
 
@@ -578,15 +573,13 @@ TODO: ska det saknas lampa där? Anpassa annars:
 +Fixture 'dusch[-en]' 'dusch';
 +Fixture, OpenableContainer 'spegel[-n]' 'spegel';
 +Fixture, Surface 'toalett[-en]' 'toalett';
-+Fixture, OpenableContainer 'lock[-et]/toalettlock[-et]' 'toalettlock'
-    isNeuter = true;
++Fixture, OpenableContainer 'lock[-et]/toalettlock[-et]' 'toalettlock';
 
 +tvattstall: ComplexContainer 'handfat[-et]/fat[-et]/tvättställ[-et]' 'tvättställ'
     subSurface: ComplexComponent, Surface 'kant[-en]/tvättställskant[-en]' 'tvättställskanten' { }
     subContainer: ComplexComponent  {
         bulkCapacity = 3
     }
-    isNeuter = true
 ;
 
 Component, Switch  'vattenkran[-en]/kran[-en]' 'vattenkran'
@@ -595,7 +588,8 @@ Component, Switch  'vattenkran[-en]/kran[-en]' 'vattenkran'
     dobjFor(Close) asDobjFor(TurnOff)
 ;
 Thing 'tvål[-en]' 'tvål'
-    location = tvattstall.subContainer;
+    location = tvattstall.subContainer
+;
 
 
 
