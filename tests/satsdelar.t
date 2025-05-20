@@ -116,8 +116,11 @@ hus: Thing 'hus[-et]' 'hus' isNeuter = true;
 hund: Actor 'hund[-en]' 'hund'
   owner = spelare1aPerspektivVi
 ;
-
 katt: Actor 'katt[-en]' 'katt';
+
+smyckena: Actor 'smycken[-a]' 'smycken' isPlural = true;
+skrin: Thing 'skrin[-et]' 'skrin' isNeuter = true;
+juvel: Thing 'juvel[-en]' 'juvel';
 
 luta: Actor 'luta[-n]' 'luta'
   owner = spelare3dePerspektivDet
@@ -348,14 +351,23 @@ UnitTest '3:e person plural (de)' run {
   });
 };
 
-UnitTest 'Demonstrativa (thatNom / thatObj)' run {
+UnitTest 'Demonstrativa (behövs inte specialiserat thatNom / thatObj)' run {
   //mainOutputStream.hideOutput = nil;
-  gMessageParams(spelare3dePerspektivDe, hund);
+  gMessageParams(spelare3dePerspektivDe, hund, smyckena, skrin, juvel);
   [
-    'Jag {såg} {den hund} som rymde.' -> ['Jag såg den som rymde.'],  // thatNom (singular)
-    'Jag fånga{r|de} {denna hund/honom}.' -> ['Jag fångade den.'],  // thatObj (singular)
-    'Jag {såg} {denna spelare3dePerspektivDe/han} som smet.' -> ['Jag såg de där som smet.'],  // thatNom (plural)
-    'Jag fånga{r|de} {dem}.' -> ['Jag fångade dem.']  // thatObj (plural)
+    '{De spelare3dePerspektivDe} {där} typerna alltså.' -> ['De där typerna alltså.'],              // thatNom
+    '{Det hund} {där} spelar apa.' -> ['Den där spelar apa.'],                                      // thatNom
+    '{Det skrin} {där} är dyrt.' -> ['Det där är dyrt.'],                                           // thatNom
+    '{Det/han spelare3dePerspektivDe} {där} var mina gamla klasskompisar.'  
+                                                       -> ['De där var mina gamla klasskompisar.'], // thatNom
+    'Jag {såg} {de spelare3dePerspektivDe} {där} smitarna.' 
+                                                       -> ['Jag såg de där smitarna.'],             // thatNom
+
+    'Hon tog {den juvel/obj} {där} utan lov.'      -> ['Hon tog den där utan lov.' ],               // thatObj
+    'Hon tog {det skrin/obj} {där} utan lov.'      -> ['Hon tog det där utan lov.' ],               // thatObj
+    'Hon tog {dem smyckena/obj} {där} utan lov.'   -> ['Hon tog dem där utan lov.' ],               // thatObj
+
+    'Jag hittade inte {det} {där} du pratade om.'  -> ['Jag hittade inte dem där du pratade om.' ]  // thatObj 
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivDe);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();

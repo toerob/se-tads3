@@ -1089,9 +1089,19 @@ modify Thing
     /* get the object reflexive pronoun (itself, etc) */
     itReflexive { return ['sig själv', 'han själv', 'hon själv', 'de själva'][pronounSelector]; }
 
+
+    // TODO: bör strykas
+
+    /*
+     *   Demonstrative pronoun, nominative case.  We'll use personal a
+     *   personal pronoun if we have a gender or we're in the first or
+     *   second person, otherwise we'll use 'that' or 'those' as we would
+     *   for an inanimate object.
+     */
+
     // demonstrativa pronomen, nominativt 
     thatNom { 
-        local obestamdForm = nil;
+        local obestamdForm = true;
         if(isPlural) {
             return obestamdForm? 'dessa' : 'de där';
         }
@@ -1103,7 +1113,15 @@ modify Thing
 
     // demonstrativa pronomen, objektivt
     thatObj { 
-        return [ (isNeuter?'det':'den'), 'honom', 'henne', 'de'][pronounSelector]; 
+        //return [ (isNeuter?'det':'den'), 'honom', 'henne', 'de'][pronounSelector]; 
+        local obestamdForm = true;
+        if(isPlural) {
+            return obestamdForm? 'dessa' : 'dem där';
+        }
+        if(isNeuter) {
+            return obestamdForm? 'detta' : 'det där';  
+        }
+        return  obestamdForm? 'denna' : 'den där';
     }
 
     /*
@@ -2390,29 +2408,6 @@ modify Actor
                 'dig själv', 'dig själv', 'dig själv', 'er själva',
                // 'itself', 'himself', 'herself', 'themselves'
                'sig självt', 'sig själv', 'sig själv', 'sig själva'][pronounSelector];
-    }
-
-    /*
-     *   Demonstrative pronoun, nominative case.  We'll use personal a
-     *   personal pronoun if we have a gender or we're in the first or
-     *   second person, otherwise we'll use 'that' or 'those' as we would
-     *   for an inanimate object.
-     */
-    thatNom {
-        return isPlural ? 'de där' : isHim? 'han där': isHer? 'hon där' : inherited(); 
-        /*if(isPlural)   { return 'de där'; } 
-        else if(isHim) { return 'han där'; }
-        else if(isHer) { return 'hon där'; }
-        return inherited();
-        */
-    }
-
-    // demonstrative pronoun, objective case
-    thatObj
-    {
-        return ['jag', 'jag', 'jag', 'oss',
-               'du', 'du', 'du', 'du',
-               (isNeuter?'det':'den'), 'honom', 'henne', 'dessa'][pronounSelector];
     }
 
     /*
@@ -4010,11 +4005,16 @@ langMessageBuilder: MessageBuilder
         ['du/han',    &theName, 'actor', nil, true],
         ['du/hon',    &theName, 'actor', nil, true],
 
+        ['den/nom',   &itNom,    nil,    nil, true],
+        ['det/nom',   &itNom,    nil,    nil, true],
+        ['de/nom',    &itNom,    nil,    nil, true],
+
         ['han',       &itNom,   'actor', nil, true],
         ['hon',       &itNom,   'actor', nil, true],
         ['de',        &itNom,   'actor', nil, true],        
         ['vi',        &itNom,   'actor', nil, true],
         ['ni',        &itNom,   'actor', nil, true],
+
 
 
         ['det/han',   &itNom,    nil,    nil, true],
@@ -4034,10 +4034,15 @@ langMessageBuilder: MessageBuilder
         ['oss',       &itObj,   'actor', nil, nil],
 
 
-        ['denna/han',    &thatNom,  nil, nil, true],
-        ['detta/han',    &thatNom,  nil, nil, true],
-        ['denna/honom',  &thatObj,  nil, &itReflexive, nil],
-        ['detta/honom',  &thatObj,  nil, &itReflexive, nil],
+        /* Finns ingen anledning att nyttja dessa framför {där} {där}   
+        // annat än om man lätt vill skulle vilja få ut "denna/detta/dessa" för valfritt objekt
+        ['denna',    &thatNom,  nil, nil, true],
+        ['dessa',    &thatNom,  nil, nil, true],
+        ['detta',    &thatNom,  nil, nil, true],
+        ['denna/obj',  &thatObj,  nil, &itReflexive, nil],
+        ['detta/obj',  &thatObj,  nil, &itReflexive, nil],
+        ['dessa/obj',  &thatObj,  nil, &itReflexive, nil],
+        */
 
         // TODO: OBS: mig och dig kan vara objekt också, bygg ut med motsvarande  ord för /obj /ref
         ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
@@ -4100,6 +4105,10 @@ langMessageBuilder: MessageBuilder
         // TODO: {mig} {dig} {sig} bör räcka. 
         ['det/honom', &itObj, nil, &itReflexive, nil],
         ['det/henne', &itObj, nil, &itReflexive, nil],
+
+        ['den/obj', &itObj, nil, &itReflexive, nil],
+        ['det/obj', &itObj, nil, &itReflexive, nil],
+        ['dem/obj', &itObj, nil, &itReflexive, nil],
 
         // Reflexiv
         ['själv', &itReflexive, 'actor', nil, nil],
