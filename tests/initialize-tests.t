@@ -37,23 +37,24 @@ modify Thing
 UnitTest 'initialize äpple (ett-ord)' run {
 
     local appleAvancerat = new Thing();
-    appleAvancerat.vocabWords = 'äpple[-t]/frukt[-en]*äpplen[-a] frukter[-na]';
+    appleAvancerat.vocabWords = 'gröna smakfulla äpple+t/frukt+en*äpplen+a frukter+na';
     appleAvancerat.name = 'äpple';
     
+
     appleAvancerat.initializeVocabWith(appleAvancerat.vocabWords);
+    tadsSay(getGrammarInfoFromCmdDict(appleAvancerat));
 
-    assertThat(cmdDict.findWord('frukt', &noun)).isEqualTo([appleAvancerat, 1]);
-    assertThat(cmdDict.findWord('frukten', &noun)).isEqualTo([appleAvancerat, 1]);  
+    assertThat(cmdDict.findWord('äpple', &noun)[1]).isEqualTo(appleAvancerat);
+    assertThat(cmdDict.findWord('äpplet', &noun)[1]).isEqualTo(appleAvancerat);  
+    assertThat(cmdDict.findWord('äpplen', &plural)[1]).isEqualTo(appleAvancerat);
+    assertThat(cmdDict.findWord('äpplena', &plural)[1]).isEqualTo(appleAvancerat);
 
-    assertThat(cmdDict.findWord('äpple', &noun)).isEqualTo([appleAvancerat, 1]);
-    assertThat(cmdDict.findWord('äpplet', &noun)).isEqualTo([appleAvancerat, 1]);  
-    
+    assertThat(cmdDict.findWord('frukt', &noun)[1]).isEqualTo(appleAvancerat);
+    assertThat(cmdDict.findWord('frukten', &noun)[1]).isEqualTo(appleAvancerat);  
+
     // Matchar första ordet exakt och det andra mha trunkering, därav två par i resultatet
-    assertThat(cmdDict.findWord('äpplen', &plural)).isEqualTo([appleAvancerat, 1, appleAvancerat, 5]);
-    assertThat(cmdDict.findWord('frukter', &plural)).isEqualTo([appleAvancerat, 1, appleAvancerat, 5]);
-
-    assertThat(cmdDict.findWord('äpplena', &plural)).isEqualTo([appleAvancerat, 1]);
-    assertThat(cmdDict.findWord('frukterna', &plural)).isEqualTo([appleAvancerat, 1]);
+    assertThat(cmdDict.findWord('frukter', &plural)[1]).isEqualTo(appleAvancerat);
+    assertThat(cmdDict.findWord('frukterna', &plural)[1]).isEqualTo(appleAvancerat);
 
     assertThat(appleAvancerat.isNeuter).isNil(); // OBS: härleds ännu inte
     assertThat(appleAvancerat.isPlural).isNil(); 
@@ -62,36 +63,62 @@ UnitTest 'initialize äpple (ett-ord)' run {
 
 UnitTest 'initialize dörr (en-ord)' run {
     local obj = new Thing();
-    obj.vocabWords = 'dörr[-en]/port[-en]*dörrar[-na] portar[-na]';
+    obj.vocabWords = 'rustik+a gammel+modig+a dörr+en/port+en*dörrar+na portar+na';
     obj.name = 'dörr';
     obj.initializeVocabWith(obj.vocabWords);
+    tadsSay(getGrammarInfoFromCmdDict(obj));
 
-    assertThat(cmdDict.findWord('dörr', &noun)).isEqualTo([obj, 1]);
-    assertThat(cmdDict.findWord('dörren', &noun)).isEqualTo([obj, 1]);  
+    //assertThat(cmdDict.findWord('gröna', &adjective)).isEqualTo(obj);
+    //assertThat(cmdDict.findWord('skrämmande', &adjective)[1]).isEqualTo(obj);  
 
-    assertThat(cmdDict.findWord('port', &noun)).isEqualTo([obj, 1]);
-    assertThat(cmdDict.findWord('porten', &noun)).isEqualTo([obj, 1]);  
+
+    assertThat(cmdDict.findWord('dörr', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('dörren', &noun)[1]).isEqualTo(obj);  
+
+    assertThat(cmdDict.findWord('port', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('porten', &noun)[1]).isEqualTo(obj);  
     
     // Matchar första ordet exakt och det andra mha trunkering, därav två par i resultatet
-    assertThat(cmdDict.findWord('dörrar', &plural)).isEqualTo([obj, 1, obj, 5]);
-    assertThat(cmdDict.findWord('dörrarna', &plural)).isEqualTo([obj, 1]);
-
-    // Matchar första ordet exakt och det andra mha trunkering, därav två par i resultatet
-    assertThat(cmdDict.findWord('portar', &plural)).isEqualTo([obj, 1, obj, 5]);
-    assertThat(cmdDict.findWord('portarna', &plural)).isEqualTo([obj, 1]);
+    assertThat(cmdDict.findWord('dörrar', &plural)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('dörrarna', &plural)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('portar', &plural)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('portarna', &plural)[1]).isEqualTo(obj);
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
 };
 
+UnitTest 'initialize tranbärsjuice (en-ord)' run {
+    local obj = new Thing();
+    obj.vocabWords = 'tranbär^s+juice+n';
+    obj.name = 'tranbärsjuice';
+    obj.initializeVocabWith(obj.vocabWords);
+    tadsSay(getGrammarInfoFromCmdDict(obj));
+
+    assertThat(cmdDict.findWord('tranbär', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('tranbären', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('tranbärsjuice', &noun)[1]).isEqualTo(obj);  
+    assertThat(cmdDict.findWord('tranbärsjuicen', &noun)[1]).isEqualTo(obj);
+
+    assertThat(cmdDict.findWord('juice', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('juicen', &noun)[1]).isEqualTo(obj);
+
+
+    assertThat(obj.isNeuter).isNil();   
+    assertThat(obj.isPlural).isNil(); 
+    //TODO: ska inte vara juicen
+    //assertThat(obj.definitiveForm).isEqualTo('tranbärsjuicen'); 
+};
+
 
 UnitTest 'initialize plural' run {
     local obj = new Thing();
-    obj.vocabWords = 'stolar[-na]';
+    obj.vocabWords = 'stolar+na';
     obj.name = 'stolarna';
     obj.isPlural = true;
 
     obj.initializeVocabWith(obj.vocabWords);
+    tadsSay(getGrammarInfoFromCmdDict(obj));
 
     assertThat(cmdDict.findWord('stolar', &plural)[1]).isEqualTo(obj);
     assertThat(cmdDict.findWord('stolarna', &plural)[1]).isEqualTo(obj);  
@@ -108,9 +135,17 @@ UnitTest 'initialize plural' run {
 
 
 
-    /*cmdDict.forEachWord(function(obj, str, prop) {
-      if(obj == apple) {
-        "word: <<obj>>: <<str>>\n";
-      }
-    });*/
  
+function getGrammarInfoFromCmdDict(o) {
+    local str = new StringBuffer();
+    cmdDict.forEachWord(function(obj, word, wordPart) {
+        if(obj == o) {
+            local grammarFunction = 'unknown';
+            if(wordPart == &noun) grammarFunction = 'substantiv';
+            else if(wordPart == &plural) grammarFunction = 'plural';
+            else if(wordPart == &adjective) grammarFunction = 'adjektiv';
+            str.append('<<word>> (<<grammarFunction>>) \n');
+        }
+    });
+    return toString(str);
+ }

@@ -485,6 +485,11 @@ modify VocabObject
      *   different formats would be more convenient.
      */
         
+    // Tillåter sammansatt ord med '+' som avskiljare, med ändelsen sist
+    // t ex: 'vit+a sten+en' blir ajektiv: vit, vita och substantiv sten, stenen
+    // t ex: 'vit+a sten+en' blir ajektiv: vit, vita och substantiv sten, stenen
+    combineVocabWords = true 
+
     initializeVocabWith(str)
     {
         local sectPart;
@@ -560,7 +565,7 @@ modify VocabObject
                 } else {
 
                     if(sectPart == &adjective) {
-                        //tadsSay('adjektiv: <<cur>> <<self>>');
+                        tadsSay('adjektiv: <<cur>> <<self>>');
                         // Om objektets plats är ett levande ting som slutar på s, lägg även till <f>' 
                         // Detta på grund av en lite mer ålderdomlig svenska där apostrof läggs
                         // till possesiva namn som slutar på s.
@@ -575,6 +580,8 @@ modify VocabObject
                         } 
                     }
                 }
+
+                local matchCombineVocabWordsNotation;
                 //displayWordPartOnly(sectPart);
 
                 // Om tecknet inte är ett bindestreck (vilket skulle vara en placeholder för ett "noll-ord", 
@@ -597,107 +604,161 @@ modify VocabObject
                         weakTokens += cur;
                     }
 
-        
-                    // Hantera svenska ordändelser
-                    //  [-n], [-en], [-t], [-et], etc...
-                    if(rexMatch(R'.*<lsquare>[-](.*)<rsquare>.*', cur) != nil) {
-                        local ending = rexGroup(1)[3];
 
-                        // När vi väl fått en ändelse kan vi ta bort ändelsesyntaxen
-                        // [-xyz] från vocabWord
-                        cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
-                        local curWithEnding = cur + ending;
+                    // Specialfall, t ex om en definition är: 
+                    // "sakerna: Thing 'sakerna' 'sakerna' isPlural=true;"
+                    // DVS pluralord utan adjektiv eller singular-substantiv innan,
+                    // så vill vi ersätta sectPart med &plural
+                    // Annars behåller vi bara den delen vi hade och lägger
+                    // till stam+ändelse-ordet som en sådan del.
+                    sectPart = oneWordOnly && isPlural? &plural : sectPart;
+                    
+                    // if(rexMatch(R'(.*)<plus>(.*)', cur) != nil) { }
+                    // TODO: gör variabelt antalet plus, eller iaf möjligheten till 3
 
-                        // Om det bara finns ett ord och en ändelse,
-                        // och objektet är isPlural, byt sectPart till &plural 
-                        // Vi ändrar sectPart för att det ska fungera att lägga 
-                        // till som &plural även utan ändelse lite längre ned. 
-                        sectPart = oneWordOnly && isPlural? &plural : sectPart;
+                    // TODO: bör göras innan och utanför denna funktion
+                    local definitiveFormWord = cur.split('+').join('');
+                    definitiveFormWord = definitiveFormWord.findReplace('^s', 's', ReplaceAll);
+                    
+                    local idx = definitiveFormWord.find(':');
+                    if(idx!= nil) {
+                        local end = definitiveFormWord.substr(idx+1);
+                        definitiveFormWord = definitiveFormWord.substr(1, idx-1) + end;
+                    }
+                    //tadsSay('BESTÄMD FORM: <<definitiveFormWord>> \n');
 
-                        // Lägg till det expanderande ordet
-                        cmdDict.addWord(self, curWithEnding, sectPart);
+                    if(combineVocabWords) {
+                        matchCombineVocabWordsNotation = rexMatch(R'.+(<plus>.+)+', cur);
+                        if(matchCombineVocabWordsNotation) {
+                            //tadsSay('createCompoundWordVariations for [<<cur>>]');
+                            local forms = createCompoundWordVariations(self, cur, sectPart);
+                            //tadsSay('INDEF: <<forms.standardForm>>\n');
+                            //tadsSay('DEF: <<forms.definitiveForm>>\n');
 
-                        //tadsSay('-> Lägger till ord för <<self>>: <<curWithEnding>> (<<sectPart>>)\n');
-                        #ifdef __DEBUG
-                            displayWordPart(sectPart, curWithEnding, self);
-                        #endif
+                            // Tilldela pluralName det första plural-ordet vi hittar i vocabWords
+                            // Detta då det oftare är jobbigare att böja till pluralName med pluralNameFrom()
+                            if(sectPart == &plural) {
+                                if(!foundPluralName) {
+                                    foundPluralName=true;                                
+                                    pluralName = forms.standardForm;
+                                }
+                            }
 
-                        /*if (!isNeuterDefinedAlready) {
-                            if (!((ending.endsWith('n') || ending.endsWith('na')))) {
-                                isNeuter = true;
+                            // Tilldela definitiveForm den första definitiva formen vi hittar i vocabWords
+                            // (Möjligen TODO: använd theNameFrom istället och tvinga name att definieras)
+                            if (!foundTheDefinitiveForm
+                                && ((isPlural && sectPart == &plural) || !isPlural))
+                            {
+                                foundTheDefinitiveForm = true;
+                                definitiveForm = forms.definitiveForm; // definitiveFormWord;
+                                //tadsSay('\n(DEF: <<definitiveForm>>)\n');
+                            }
+                        } 
+            
+                        /*
+                        // TODO: ta bort snart
+                        // Hantera svenska ordändelser på det förra sättet med 
+                        //  [-n], [-en], [-t], [-et], etc...
+                        else if(rexMatch(R'.*<lsquare>[-](.*)<rsquare>.*', cur) != nil) {
+                            local ending = rexGroup(1)[3];
+
+                            // När vi väl fått en ändelse kan vi ta bort ändelsesyntaxen
+                            // [-xyz] från vocabWord
+                            cur = cur.findReplace('[-' + ending +']', '', ReplaceAll);
+                            local curWithEnding = cur + ending;
+
+                            // Om det bara finns ett ord och en ändelse,
+                            // och objektet är isPlural, byt sectPart till &plural 
+                            // Vi ändrar sectPart för att det ska fungera att lägga 
+                            // till som &plural även utan ändelse lite längre ned. 
+                            sectPart = oneWordOnly && isPlural? &plural : sectPart;
+
+                            // Lägg till det expanderande ordet
+                            cmdDict.addWord(self, curWithEnding, sectPart);
+
+                            //tadsSay('-> Lägger till ord för <<self>>: <<curWithEnding>> (<<sectPart>>)\n');
+                            #ifdef __DEBUG
+                                displayWordPart(sectPart, curWithEnding, self);
+                            #endif
+
+                            //if (!isNeuterDefinedAlready) {
+                            //    if (!((ending.endsWith('n') || ending.endsWith('na')))) {
+                            //        isNeuter = true;
+                            //    }
+                            //}
+
+                            // Tilldela pluralName det första plural-ordet vi hittar i vocabWords
+                            // Detta då det oftare är jobbigare att böja till pluralName med pluralNameFrom()
+                            if(!foundPluralName) {
+                                if(sectPart == &plural) {
+                                    foundPluralName=true;
+                                    pluralName = cur;
+                                }
+                            }
+
+                            // Tilldela definitiveForm den första definitiva formen vi hittar i vocabWords
+                            // (Möjligen TODO: använd theNameFrom istället och tvinga name att definieras)
+                            if (!foundTheDefinitiveForm
+                                && ((isPlural && sectPart == &plural) || !isPlural))
+                            {
+                                foundTheDefinitiveForm = true;
+                                definitiveForm = curWithEnding;
                             }
                         }*/
-
-                        // Tilldela pluralName det första plural-ordet vi hittar i vocabWords
-                        // Detta då det oftare är jobbigare att böja till pluralName med pluralNameFrom()
-                        if(!foundPluralName) {
-                            if(sectPart == &plural) {
-                                foundPluralName=true;
-                                pluralName = cur;
-                            }
-                        }
-
-                        // Tilldela definitiveForm den första definitiva formen vi hittar i vocabWords
-                        // (Möjligen TODO: använd theNameFrom istället och tvinga name att definieras)
-                        if (!foundTheDefinitiveForm
-                            && ((isPlural && sectPart == &plural) || !isPlural))
-                        {
-                            foundTheDefinitiveForm = true;
-                            definitiveForm = curWithEnding;
-                        }
-                        
-                        
-                    }
-
-                    // Kolla efter specialformat, strängcitat, ändelser 's' (för ägande)
-                    // Dessa kan inte samexistera utan utesluter varandra
-                    if (cur.startsWith('"')) {
-                         // Det är ett strängcitat, så det blir ett 'literal adjective'.
-                        // ta bort citationstecknen:
-                        if (cur.endsWith('"')) {
-                            cur = cur.substr(2, cur.length() - 2);
-                        } else {
-                            cur = cur.substr(2);
-                        }
-                        // Ändra denna del av talet 'literal adjective'
-                        wordPart = &literalAdjective;
                     } 
+                    // TODO: Förlorar adjektiven om else sätts in
+                    // finns lite svagheter här, fixa testerna med dörr i intitialize-test
+                    //else {
 
-                    // Lägg till ordet till våran egen lista för denna del av talet
-                    if (self.(wordPart) == nil) {
-                        self.(wordPart) = [cur];
-                    } else {
-                        self.(wordPart) += cur;
-                    }
+                        // TODO: nästkommande kanske ska ligga före det ovan...
 
+                        // Kolla efter specialformat, strängcitat, ändelser 's' (för ägande)
+                        // Dessa kan inte samexistera utan utesluter varandra
+                        if (cur.startsWith('"')) {
+                            // Det är ett strängcitat, så det blir ett 'literal adjective'.
+                            // ta bort citationstecknen:
+                            if (cur.endsWith('"')) {
+                                cur = cur.substr(2, cur.length() - 2);
+                            } else {
+                                cur = cur.substr(2);
+                            }
+                            // Ändra denna del av talet 'literal adjective'
+                            wordPart = &literalAdjective;
+                        } 
 
-                    // Lägg till det till ordboken
-                    cmdDict.addWord(self, cur, wordPart);
+                        // Lägg till ordet till våran egen lista för denna del av talet
+                        if (self.(wordPart) == nil) {
+                            self.(wordPart) = [cur];
+                        } else {
+                            self.(wordPart) += cur;
+                        }
 
-                    //displayWordPartOnly(wordPart);
-                    //tadsSay('-> Lägger till ord för <<self>>: <<cur>> \n');
+                        // Lägg till det till ordboken men inte om vi använt "+"-notation, 
+                        // då detta redan skapat upp alla varianter som går och vi vill inte 
+                        // få rå-notationen som ett keyword 
+                        if(!matchCombineVocabWordsNotation) {
+                            cmdDict.addWord(self, cur, wordPart);
+                        }
 
-                    #ifdef __DEBUG
-                        displayWordPart(wordPart, cur, self);
-                    #endif
+                        if (cur.endsWith('.')) {
+                            local abbr;
+                            // Om order slutar på en punkt är det ett avkortat ord. 
+                            // förkortningen läggs till i lexikonet både med och utan punkten.
 
-                    if (cur.endsWith('.')) {
-                        local abbr;
-                        // Om order slutar på en punkt är det ett avkortat ord. 
-                        // förkortningen läggs till i lexikonet både med och utan punkten.
- 
-                        // Den normala hanteringen skriver in det tillsammans 
-                        // med punkten så vi behöver bara skriva in det 
-                        // specifikt utan.                         
-                        abbr = cur.substr(1, cur.length() - 1);
-                        self.(wordPart) += abbr;
-                        cmdDict.addWord(self, abbr, wordPart);
-                    }
+                            // Den normala hanteringen skriver in det tillsammans 
+                            // med punkten så vi behöver bara skriva in det 
+                            // specifikt utan.                         
+                            abbr = cur.substr(1, cur.length() - 1);
+                            self.(wordPart) += abbr;
+                            cmdDict.addWord(self, abbr, wordPart);
+                        }
 
-                    // note that we added to this list
-                    if (modList.indexOf(wordPart) == nil) {
-                        modList += wordPart;
-                    }
+                        // note that we added to this list
+                        if (modList.indexOf(wordPart) == nil) {
+                            modList += wordPart;
+                        }
+
+                    //}
                 }
             }
 
@@ -4015,8 +4076,6 @@ langMessageBuilder: MessageBuilder
         ['vi',        &itNom,   'actor', nil, true],
         ['ni',        &itNom,   'actor', nil, true],
 
-
-
         ['det/han',   &itNom,    nil,    nil, true],
         ['det/hon',   &itNom,    nil,    nil, true],
 
@@ -4032,17 +4091,6 @@ langMessageBuilder: MessageBuilder
         ['dem',       &itObj,   'actor', nil, nil],
         ['er',        &itObj,   'actor', nil, nil],
         ['oss',       &itObj,   'actor', nil, nil],
-
-
-        /* Finns ingen anledning att nyttja dessa framför {där} {där}   
-        // annat än om man lätt vill skulle vilja få ut "denna/detta/dessa" för valfritt objekt
-        ['denna',    &thatNom,  nil, nil, true],
-        ['dessa',    &thatNom,  nil, nil, true],
-        ['detta',    &thatNom,  nil, nil, true],
-        ['denna/obj',  &thatObj,  nil, &itReflexive, nil],
-        ['detta/obj',  &thatObj,  nil, &itReflexive, nil],
-        ['dessa/obj',  &thatObj,  nil, &itReflexive, nil],
-        */
 
         // TODO: OBS: mig och dig kan vara objekt också, bygg ut med motsvarande  ord för /obj /ref
         ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
@@ -9711,7 +9759,7 @@ VerbRule(SmellImplicit)
 ;
 
 VerbRule(ListenTo)
-    ('hör' | 'lyssna' 'till' ) dobjList
+    ('hör' | 'lyssna' ('på'|'till') ) dobjList
     : ListenToAction
     verbPhrase = 'lyssna/lyssnar (till vad)'
 
@@ -11225,12 +11273,6 @@ VerbRule(Debug)
 
 
 
-
-
-
-
-
-
 /******************************************************************************
  *** Additionals ***
  *****************************************************************************/
@@ -11337,67 +11379,9 @@ VerbRule(AskAboutWhat)
 ;
 */
 
-
-
-/**
- * Example usage: handleWordForms('fönst{er,ret@d,ren@p,rena@dp}');
- */
-
-
 swedishHelperGlobals: object 
   wordFormPattern = static R'(.*)[{](.*)[}]'
   //wordFormPattern = static R'(.*)[%](.*)[%]]'
-;
-
-
-handleWordForms(mainSentence) {
-  //"\nmain Sentence: <<mainSentence>>\n";
-  local wordEndingForms = new List();
-  local wordGroup = mainSentence.split(R'[* ]');
-  foreach(local textPart in wordGroup) {
-    //"\ntext part: <<textPart>>\n";
-    rexMatch(swedishHelperGlobals.wordFormPattern, textPart);
-    local wordStart = rexGroup(1);
-    local endingsPart = rexGroup(2);
-
-    //"wordStart: <<wordStart[3]>>";
-
-    if(endingsPart) {
-
-      // 'fonst[ret,er,ren,rena]
-      local endings = endingsPart[3].split(',');      
-      endings.forEach(function(ending) {
-        //"\nEnding: <<ending>>\n";
-        if(ending.endsWith('@d')) { // definitive singular
-          ending = ending.substr(0, ending.length-2);
-          wordEndingForms += new WordEndingForm(wordStart[3], ending, true);
-        } else if(ending.endsWith('@p')) { // plural
-          ending = ending.substr(0, ending.length-2);
-          wordEndingForms += new WordEndingForm(wordStart[3], ending, nil, true);
-        } else if(ending.endsWith('@dp')) { // definitive plural
-          ending = ending.substr(0, ending.length-3);
-          wordEndingForms += new WordEndingForm(wordStart[3], ending, true, true);
-        }
-      });
-    }
-  }
-  return wordEndingForms; 
-}
-
-class WordEndingForm: object
-  wordStart = nil
-  ending = nil
-  isDefinitive = nil
-  isPlural = nil
-  construct(wordStart, ending, isDefinitive = nil, isPlural = nil) {
-    self.wordStart = wordStart;
-    self.ending = ending;
-    self.isDefinitive = isDefinitive;
-    self.isPlural = isPlural;
-  }
-  withEnding() {
-    return wordStart + ending;
-  }
 ;
 
 
@@ -11426,6 +11410,257 @@ function displayWordPart(wordPart, cur, obj) {
     tadsSay('\t\t\t\t\t\t -> \ [<<obj.name>>]\n');
 }
 
+
+//Om det fungerar kör på ett anonymt objekt istället, det ska ändå bara slängas sen
+class WordPart: object {
+    word = nil
+    ending = nil
+    jointS = nil
+    construct(word, ending, jointS) {
+        self.word = word;
+        self.ending = ending;
+        self.jointS = jointS;
+    }
+}
+
+// Denna funktion skapar variationer från vocabWords
+// förutsatt att den följer följande mall:
+// äpple+t, äppel+kaka+n, papper+et eller papper^s+flyg+plan+et
+// 
+// Med andra ord, som enklast, lägg in en ändelse för bestämd form, så som "äpple+t"
+// Om det finns foge-s med i ordet, använd ^s, så som: ansvar^s+känsla+n
+// Om det ordets totala forms genus skiljer sig från enskilda ord går det att ändra 
+// enligt:
+//
+// sten:+häll:^s+altare+t
+// 
+// Det fungerar så här, då stenhällsaltaret slutar på t och vi märker ut det med +t
+// så antas hela ordets ändelse vara neutrum.
+// Om du vill göra avvikelser från detta, kan du skriva in ett ':' för att få 
+// skifta genus från neutrum till utrum för bara den ord komponenten, i detta fallet
+// "sten:", som nu blir utrum sten-en i sin enskildhet
+// samma med "häll:" som blir "häll-en" i sin enskildhet
+// 
+// Som bäst lyckas genusformen härledas automatiskt genom att bara skriva :,
+// men skulle det misslyckas och inte bli rätt, så kan du själv skriva in ändelsen 
+// direkt efter kolonet, t ex: "sten:en+häll:en^s+altare+t"
+// eller "tranbär:en^s+juice+n"
+// för att få automatgenererade ord: "tranbär, tranbären, juice, juicen, tranbär, tranbärjuice, tranbärsjuicen
+
+
+function createCompoundWordVariations(obj, cur, sectPart) {
+    local wordParts = new Vector();
+
+    local wordVariations = new Vector();
+
+    // Dela upp alla ordets sammansatta komponenter som är avskiljda med '+'
+    local parts = cur.split('+');
+
+    // Utgå från att minst två delar finns redan eftersom reguljära uttrycket identifierat det mönstret med "abc+def"
+    local wordCount = parts.length;
+    local ending = parts[parts.length]; 
+
+    // TODO: om det bara är längd 2, gör bara två varianter, en med den medskickade ändelsen, en utan.
+    tadsSay('[<<cur>>] (delar: <<parts.length>>)');
+    if(parts.length == 2) {
+        // TODO: BEHÖVS denna verkligen?
+        local nounWithoutEnding = parts[1];
+        local nounWithEnding = parts[1] + ending;
+        if(sectPart == &adjective) {
+            tadsSay('\bAJEKTIV: [ORG: <<cur>>] 1[<<nounWithoutEnding>>] 2[<<nounWithEnding>>]\b');
+        }
+        cmdDict.addWord(obj, nounWithoutEnding, sectPart);  
+        #ifdef __DEBUG
+            displayWordPart(sectPart, nounWithoutEnding, obj);
+        #endif
+        
+        cmdDict.addWord(obj, nounWithEnding, sectPart);  
+        #ifdef __DEBUG
+            displayWordPart(sectPart, nounWithEnding, obj);
+        #endif
+        
+        return object {
+            standardForm = nounWithoutEnding
+            definitiveForm = nounWithEnding
+        };
+
+    }
+
+    // OBS negation ! i början (pga att det är lättare att matcha mot utrum än neutrum)
+    local isEndingNeuter = !(ending.endsWith('n') || ending.endsWith('na') || ending.endsWith('a')); // För adjektiv 
+
+    // Inleder med att skapa individuella objekt av alla ordets komponenter förutom sista ändelsen
+    for(local i = 1; i<=parts.length-1; i++) {
+        local part = parts[i];
+        // Fånga in själva ordet isolerat, eventuellt ett 'genus-inverter (:)' och eventuellt foge-S (^s)
+        local match = rexMatch('([^<:^>]+)(:<alpha>*)?(<caret>s)?', part);
+        if(match == nil) {
+            tadsSay('\n<font color=red>VARNING: Notationsmismatch av "<<cur>>"\n.Använd enligt följande mall: äpple+n, äppel+kaka+n,papper+et eller papper^s+flyg+plan+et</font>\n');
+            continue;
+        }
+
+        local word = rexGroup(1)[3];
+
+        // Om vi är på sista ordet, använd bara definierade ändelsen i ending rakt av och bryt tidigt
+        // finns ingen anledning att härleda där då användaren specificerat ändelsen redan
+        if(i == parts.length-1) {
+            //tadsSay('\n***BREAKING EARLY with << word >> << ending>>***\n');
+            wordParts.append(new WordPart(word,ending, nil));
+            break;
+        } 
+
+        local genderMod = rexGroup(2);
+        local genderModContent = genderMod ? rexGroup(2)[3] : nil;
+
+        local jointS = rexGroup(3) != nil;
+
+        // Börjar med att utgå från samma ändelse som ändelsen för helhetsordet
+        local partEnding = ending;
+
+        // Om kolon + eventuell ny ändelse påträffas behöver det hanteras
+        if(genderMod) {
+            // Kolla initialt om det finns en ändelse bifogad efter kolonet
+            if(genderModContent) {
+                genderModContent = genderModContent.findReplace('^s', '', ReplaceAll);
+                genderModContent = genderModContent.findReplace(':', '', ReplaceAll);
+                partEnding = genderModContent;
+
+            } else {
+                // Om genus-ändelsen saknas försöker vi ändå härleda genus så gott det går
+
+                // Om ordet slutar på vokal eller inte är en god guidning till ett flertal fall
+                local endsWithVocal = rexMatch('.*[aeioyu]$', word);
+
+                // Ett-ord, kan sluta på vokal: äpple-t,  eller konsonant, träd-et, lock-et
+                // OBS: fixar inte former som skimmer/skimret, dessa får läggas till som separata ord
+                if(isEndingNeuter) {
+                    // Neutrum  som slutar vokal, t ex: äpple-t 
+                    // Alternativ konsonant, så som: träd-et
+                    partEnding = endsWithVocal? 't' : 'et'; 
+                
+                } else {
+                    if(endsWithVocal) {
+                        partEnding = 'n'; // en-ord som slutar på vokal, t ex: fura, pinne,
+                    } else {
+                        // Utrum (-en-ord) som slutar på konsonant.
+                        // Här är det omöjligt att veta säker, men en gissning är att om ordet 
+                        // slutar på -el, -er, -or eller -al kan vi lägga på ett enkelt 'n'
+                        // så som, cykel-n dator-n, teater-n
+                        partEnding = rexMatch('.*(el|er|or|al)$', word) ? 'n' : 'en';
+                        //tadsSay('SLUTAR PÅ KONSONANT UTRUM: <<word>> = <<partEnding>>');
+                    }
+                }
+            }
+        } else {
+            local endsWithVocal = rexMatch('.*[aeioyu]$', word);
+            // PLURAL
+            if(sectPart == &plural) {
+                // Vid plural gör vi ingenting än så länge... oftast skriver man formen direkt i obestämd+bestämd
+                // form, t ex: äpplen+a
+                // Utarbeta detta vid behov.
+
+            } else if(isEndingNeuter) {
+                // NEUTRUM
+                partEnding = endsWithVocal? 't' : 'et';
+            } else {
+                // UTRUM
+                if(endsWithVocal) {
+                    // t ex: fura, pinne,
+                    partEnding = 'n';
+                } else {
+                    // TODO: testa denna
+                    // omöjligt att veta, men en god gissning är:
+                    partEnding = rexMatch('.*(el|er|or|al)$', word) ? 'n' : 'en';
+                    //tadsSay('SLUTAR PÅ KONSONANT UTRUM: <<word>> = <<partEnding>>');
+                }
+            }
+        }
+        wordParts.append(new WordPart(word,partEnding,jointS));
+    }
+
+    for(local part in wordParts) {
+        wordVariations.append(part.word);
+
+        // Lägg bara till ändelse på ordet om de inte är i pluralform
+        //if(sectPart != &plural) {
+            wordVariations.append(part.word + part.ending);
+            //tadsSay('<<part.word>> / <<part.ending>> <<part.jointS?'Y':'N'>>\n');
+        //}
+    }
+
+    // Bygg upp längre sammansatta ord, genom att addera ett i taget:
+    local wordPartsList = wordParts.toList();
+    for(local nr = 1; nr <= wordPartsList.length; nr++) {
+        local w = wordPartsList.sublist(1, nr); // Bygg upp en lista med allt längre sammansatta ord
+
+        // Sätt ihop orden med foge-s om det behövs.
+        local compoundWord = w.mapAll({x: '<<x.word>><<x.jointS?'s':''>>' }).join('');
+
+        // Om sista sammansatta ordet har foge-s tillagt, ta bort det.
+        local sistaOrdetHarFogeS = w[w.length].jointS;
+
+        if(sistaOrdetHarFogeS) {
+            compoundWord = compoundWord.substr(1,-1);
+        }
+        wordVariations.append(compoundWord);
+        //tadsSay('compoundWord: <<compoundWord>>\n');
+    }
+    local longestWord = wordPartsList[wordPartsList.length];
+    local nounWithoutEnding = longestWord.word;
+    local nounWithEnding = longestWord.word + longestWord.ending;
+
+    if(parts.length == 3) {
+        //tadsSay('<<cur>>\n');
+        for(local i=1; i<=wordCount-2; i++) {
+            for(local j=2; j<=wordCount-1; j++) {
+                if(i == j) continue; // Kombinera inte samma ord
+                local firstWord = wordParts[i];
+                local secondWord = wordParts[j];
+                local word = firstWord.word + (firstWord.jointS?'s':'') + secondWord.word;
+                local wordWithEnding = word + secondWord.ending;
+                wordVariations.append(word);
+                wordVariations.append(wordWithEnding);
+            }
+        }
+    } else if(parts.length > 3) {
+        for(local i=1; i<=wordCount-3; i++) {
+            for(local j=2; j<=wordCount-2; j++) {
+                for(local k=3; k<=wordCount-1; k++) {
+                    if(i == j || j == k) continue; // Kombinera inte samma ord flera gånger
+
+                    local firstWord = wordParts[i];
+                    local secondWord = wordParts[j];
+                    local thirdWord = wordParts[k];
+                    local word = firstWord.word + (firstWord.jointS?'s':'') + secondWord.word + (secondWord.jointS?'s':'') + thirdWord.word;
+                    local wordWithEnding = word + thirdWord.ending;
+                    //tadsSay('[<<i>>,<<j>>,<<k>>] = [<<firstWord.word>>,<<secondWord.word>>,<<thirdWord.word>>] = <<word>> <<wordWithEnding>>\n');
+                    wordVariations.append(word);
+                    wordVariations.append(wordWithEnding);
+                }
+            }
+        }
+    }
+
+    // Ta bort dubbletter, kanske onödigt då cmdDict redan är ett table
+    local table = new LookupTable();
+    for(local x in wordVariations) table[x] = nil;
+    wordVariations = table.keysToList();
+
+    //local x = wordVariations.mapAll({x: '<<x>>'}).join(', ');
+    //tadsSay('Word variations: ' + x);
+
+    wordVariations.forEach(function(wordVariation) {
+        cmdDict.addWord(obj, wordVariation, sectPart);  
+        #ifdef __DEBUG
+            displayWordPart(sectPart, wordVariation, obj);
+        #endif
+    });
+
+    return object {
+        standardForm = nounWithoutEnding
+        definitiveForm = nounWithEnding
+    };
+}
 
 
 //###############################
@@ -11477,3 +11712,38 @@ VerbRule(Vokabular)
     :VocabAction 
     verbPhrase = 'se/ser vokabulär'
 ; 
+
+
+DefineLiteralAction(Ord)
+    execAction() {
+        local target = gLiteral.toLower();
+        local str = new StringBuffer();
+        local o = cmdDict.findWord(target);
+        if(o) {
+            str.append('Hittade objektet: [<<o[1]>>], \ntheName: "<<o[1].theName>>" \naName: "<<o[1].aName>>"\b');
+            str.append('Följande ord finns definierade:\b');
+            cmdDict.forEachWord(function(obj, word, wordPart) {
+                if(o[1] == obj) {
+                    local grammarFunction = 'unknown';
+                    if(wordPart == &noun) grammarFunction = 'substantiv';
+                    else if(wordPart == &plural) grammarFunction = 'plural';
+                    else if(wordPart == &adjective) grammarFunction = 'adjektiv';
+                    str.append('<<word>> (<<grammarFunction>>) \n');
+                }
+            });
+        } else {
+            str.append('Fann inget objekt som kan kallas så\n');
+        }
+
+        mainReport(toString(str));
+    }
+    afterAction() { }
+    turnSequence() { }
+;
+
+VerbRule(Ord)
+    'ord' singleLiteral
+    :OrdAction 
+    verbPhrase = 'ord/ord (vad)'
+; 
+

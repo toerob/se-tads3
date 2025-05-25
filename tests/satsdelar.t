@@ -95,11 +95,11 @@ spelare3dePerspektivHon: Actor 'alice' 'Alice'
   isProperName = true
   isHer = true
 ;
-spelare3dePerspektivDen: Actor 'astronaut[-en]' 'astronaut'
+spelare3dePerspektivDen: Actor 'astronaut+en' 'astronaut'
   pcReferralPerson = ThirdPerson
   isIt = true
 ;
-spelare3dePerspektivDet: Actor 'träd[-et]' 'träd'
+spelare3dePerspektivDet: Actor 'träd+et' 'träd'
   pcReferralPerson = ThirdPerson
   isIt = true
   isNeuter = true 
@@ -108,19 +108,19 @@ spelare3dePerspektivDet: Actor 'träd[-et]' 'träd'
 spelare3dePerspektivDe: Actor 'män[-nen]' 'männen'
   pcReferralPerson = ThirdPerson
   isIt = true
-  isPlural = true // TODO: träd[-et] - uter härleds inte automatiskt. Kolla upp. Det är PGA att iSuter defaultar till true numera,m ändra i Thing
+  isPlural = true // TODO: träd+et - uter härleds inte automatiskt. Kolla upp. Det är PGA att iSuter defaultar till true numera,m ändra i Thing
 ;
 
-hus: Thing 'hus[-et]' 'hus' isNeuter = true;
+hus: Thing 'hus+et' 'hus' isNeuter = true;
 
-hund: Actor 'hund[-en]' 'hund'
+hund: Actor 'hund+en' 'hund'
   owner = spelare1aPerspektivVi
 ;
-katt: Actor 'katt[-en]' 'katt';
+katt: Actor 'katt+en' 'katt';
 
 smyckena: Actor 'smycken[-a]' 'smycken' isPlural = true;
-skrin: Thing 'skrin[-et]' 'skrin' isNeuter = true;
-juvel: Thing 'juvel[-en]' 'juvel';
+skrin: Thing 'skrin+et' 'skrin' isNeuter = true;
+juvel: Thing 'juvel+en' 'juvel';
 
 luta: Actor 'luta[-n]' 'luta'
   owner = spelare3dePerspektivDet
@@ -272,7 +272,7 @@ UnitTest '2:a person plural (ni)' run {
   });
 };
 
-tradet: Thing 'träd[-et]' 'träd' isNeuter = true;
+tradet: Thing 'träd+et' 'träd' isNeuter = true;
 
 UnitTest '3:e person neutrum (det)' run {
   //mainOutputStream.hideOutput = nil;

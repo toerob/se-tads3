@@ -1652,7 +1652,7 @@ libMessages: MessageHelper
 
 
     /* stand-alone independent clause describing current open status */
-    openStatusMsg(obj) { return '{Det} {är} ' + obj.openDesc; }
+    openStatusMsg(obj) { return obj.itNom + ' ' + obj.verbToBe + ' ' + obj.openDesc; }
 
     /* locked/unlocked status - adjectives describing lock states */
     lockedMsg(obj) { 
@@ -2880,7 +2880,7 @@ playerActionMessages: MessageHelper
         '{Du/han} {ser} inget sätt att använda {det iobj/honom} så som en spade. '
 
     /* taking something already being held */
-    alreadyHoldingMsg = '{Du/han} {har|hade} redan {den dobj/honom}. '
+    alreadyHoldingMsg = '{Du/han} {håller|höll} redan {den dobj/honom}. '
 
     /* actor taking self ("take me") */
     takingSelfMsg = '{Du/han} {kan} inte plocka upp {digsjälv}. '

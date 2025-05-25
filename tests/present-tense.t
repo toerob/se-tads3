@@ -71,83 +71,83 @@ spelare3dePerspektiv: Actor 'bob' 'Bob'
   isHim = true
 ;
 
-appletObjNeutrumSingular: Thing 'äpple[-t]' 'äpple' ;
-jordgubbeObjUtrumSingular: Thing 'jordgubbe[-n]' 'jordgubbe';
-vindruvorObjNeutrumPlural: Thing 'vindruva*vindruvor[-na]' 'vindruvor' isPlural=true;
+appletObjNeutrumSingular: Thing 'äpple+t' 'äpple' ;
+jordgubbeObjUtrumSingular: Thing 'jordgubbe+n' 'jordgubbe';
+vindruvorObjNeutrumPlural: Thing 'vindruva*vindruvor+na' 'vindruvor' isPlural=true;
 
-bokenObjUtrumSingular: Thing 'bok[-en]' 'bok';
-papperetObjNeutrumSingular: Thing 'papper[-et]' 'papper' ;
-skyltarObjUtrumPlural: Thing 'skylt*skyltar[-na]' 'skyltar' isPlural=true;
+bokenObjUtrumSingular: Thing 'bok+en' 'bok';
+papperetObjNeutrumSingular: Thing 'papper+et' 'papper' ;
+skyltarObjUtrumPlural: Thing 'skylt*skyltar+na' 'skyltar' isPlural=true;
 
-dorrenObjUtrumSingular: Thing 'dörr[-en]' 'dörr';
-skapetObjNeutrumSingular: Thing 'skåp[-et]' 'skåp' ;
-+snickargladje: Component 'snickareglädje[-n]' 'snickargläde';
+dorrenObjUtrumSingular: Thing 'dörr+en' 'dörr';
+skapetObjNeutrumSingular: Thing 'skåp+et' 'skåp' ;
++snickargladje: Component 'snickareglädje+n' 'snickargläde';
 
-dorrarObjUterPlural: Thing 'dörrar[-na]' 'dörrar2' isPlural = true;
-skapenObjNeuterPlural: Thing 'skåp[-et]*skåpen' 'skåpen' isPlural = true theName = 'skåpen';
+dorrarObjUterPlural: Thing 'dörrar+na' 'dörrar2' isPlural = true;
+skapenObjNeuterPlural: Thing 'skåp+et*skåpen' 'skåpen' isPlural = true theName = 'skåpen';
 
-tandsticka: Thing 'tändsticka[-n]' 'tändsticka';
-ljuset: Thing 'stearinljus[-et]' 'stearinljus';
-prassel: SimpleNoise 'prassel/prasslet/prasslande[-t]' 'prassel' 
+tandsticka: Thing 'tändsticka+n' 'tändsticka';
+ljuset: Thing 'stearinljus+et' 'stearinljus';
+prassel: SimpleNoise 'prassel/prasslet/prasslande+t' 'prassel' 
   theName = 'prasslet'
   
   //isProperName = true
 ;
 
-hatt: Wearable 'hatt[-en]' 'hatt';
+hatt: Wearable 'hatt+en' 'hatt';
 
 sopor: SimpleOdor 'sopa*sopor' 'sopor' isPlural = true isQualifiedName = true;
 
-lukten: SimpleOdor 'lukt[-en]' 'lukt';
+lukten: SimpleOdor 'lukt+en' 'lukt';
 
-roret: Container 'rör[-et]' 'rör' ;
-nyckel: Key 'nyckel[-n]' 'nyckel';
-nyckelring: Keyring 'nyckelring[-en]' 'nyckelring';
+roret: Container 'rör+et' 'rör' ;
+nyckel: Key 'nyckel+n' 'nyckel';
+nyckelring: Keyring 'nyckelring+en' 'nyckelring';
 
-stegen: Thing 'stege[-n]' 'stege';
-vaggen: DefaultWall 'vägg[-en]' 'väggen';
+stegen: Thing 'stege+n' 'stege';
+vaggen: DefaultWall 'vägg+en' 'väggen';
 
-hobbit: Actor 'hobbit[-en]' 'hobbit' isHim = true isProperName = nil;
+hobbit: Actor 'hobbit+en' 'hobbit' isHim = true isProperName = nil;
 baren: Room 'baren' 'baren'   theName = 'baren'
   east = valvgangPathPassage
   south = passageThroughPassage
 ;
-apan: Actor 'apa[-n]' 'apa';
+apan: Actor 'apa+n' 'apa';
 
-+ krogare: Actor 'krögare[-n]' 'krögare' isHim = true isProperName = nil;
-+ bankraden: Chair 'bänkrad[-en]' 'bänkrad';
-++ sjorovare: Actor 'sjörrövare[-n]' 'sjörövare' 
++ krogare: Actor 'krögare+n' 'krögare' isHim = true isProperName = nil;
++ bankraden: Chair 'bänkrad+en' 'bänkrad';
+++ sjorovare: Actor 'sjörrövare+n' 'sjörövare' 
   isHim = true 
   isProperName = nil
   posture = sitting
 ;
-++ viking: Actor 'viking[-en]' 'sjörövare' 
+++ viking: Actor 'viking+en' 'sjörövare' 
   isHim = true 
   isProperName = nil
   posture = sitting
 ;
 
-+ passageThroughPassage: ThroughPassage 'passage[-n]' 'passage' theName = 'passagen';
-+ trappan: StairwayUp 'trappa[-n]' 'trappa' theName = 'trappan';
-+ kallartrappan: StairwayDown 'trappa[-n]' 'trappa' theName = 'källartrappan';
++ passageThroughPassage: ThroughPassage 'passage+n' 'passage' theName = 'passagen';
++ trappan: StairwayUp 'trappa+n' 'trappa' theName = 'trappan';
++ kallartrappan: StairwayDown 'trappa+n' 'trappa' theName = 'källartrappan';
 fylke: OutdoorRoom 'Fylke' 'Fylke';
 
 hallen: Room 'hallen' 'hallen'
   west = valvgangPathPassage
 ;
-+ valvgangPathPassage: PathPassage 'valvgång[-en]' 'valvgång' theName = 'valvgången';
++ valvgangPathPassage: PathPassage 'valvgång+en' 'valvgång' theName = 'valvgången';
 
-vagnen: Vehicle 'vagn[-en]' 'vagn';
+vagnen: Vehicle 'vagn+en' 'vagn';
 masten: OutdoorRoom 'masten' 'masten';
-+pirat: Actor 'pirat[-en]' 'pirat';
-+matros: Actor 'matros[-en]' 'matros';
++pirat: Actor 'pirat+en' 'pirat';
++matros: Actor 'matros+en' 'matros';
 kajen: OutdoorRoom 'kajen' 'kajen';
 
-musikenObjUtrumSingular: Thing 'musik[-en]' 'musik';
-matosetObjUtrumSingular: Thing 'matos[-et]' 'matos';
+musikenObjUtrumSingular: Thing 'musik+en' 'musik';
+matosetObjUtrumSingular: Thing 'matos+et' 'matos';
 
-tingest: Thing 'tingest[-en]' 'tingest';
-sak: Thing 'sak[-en]' 'sak';
+tingest: Thing 'tingest+en' 'tingest';
+sak: Thing 'sak+en' 'sak';
 
 
 
@@ -2649,7 +2649,7 @@ UnitTest 'playerActionMessages' run {
       &okayUnlockMsg -> 'Upplåst.',
       &cannotDigMsg -> 'Du har ingen anledning att gräva i den där.',
       &cannotDigWithMsg -> 'Du ser inget sätt att använda den så som en spade.',
-      &alreadyHoldingMsg -> 'Du har redan tingesten.',
+      &alreadyHoldingMsg -> 'Du håller redan tingesten.',
       &takingSelfMsg -> 'Du kan inte plocka upp dig själv',
       &notCarryingMsg -> 'Du bär inte på den.',
       &droppingSelfMsg -> 'Du kan inte släppa dig själv.',
@@ -2924,7 +2924,7 @@ UnitTest 'npcActionMessages' run {
       &okayUnlockMsg -> 'Bob låser upp tingesten.',
       &cannotDigMsg -> 'Bob har ingen anledning att gräva i den där.',
       &cannotDigWithMsg -> 'Bob ser inget sätt att använda den så som en spade.',
-      &alreadyHoldingMsg -> 'Bob har redan tingesten.',
+      &alreadyHoldingMsg -> 'Bob håller redan tingesten.',
       &takingSelfMsg -> 'Bob kan inte plocka upp sig själv',
       &notCarryingMsg -> 'Bob bär inte på den.',
       &droppingSelfMsg -> 'Bob kan inte släppa sig själv.',
