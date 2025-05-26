@@ -86,6 +86,8 @@ UnitTest 'initialize dörr (en-ord)' run {
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
+    assertThat(obj.definitiveForm).isEqualTo('dörren'); 
+
 };
 
 UnitTest 'initialize tranbärsjuice (en-ord)' run {
@@ -107,7 +109,7 @@ UnitTest 'initialize tranbärsjuice (en-ord)' run {
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
     //TODO: ska inte vara juicen
-    //assertThat(obj.definitiveForm).isEqualTo('tranbärsjuicen'); 
+    assertThat(obj.definitiveForm).isEqualTo('tranbärsjuicen'); 
 };
 
 
@@ -126,6 +128,8 @@ UnitTest 'initialize plural' run {
     // TODO: fixa till så isNeuter sätts på ändelsen "-na"
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isTrue();
+    assertThat(obj.definitiveForm).isEqualTo('stolarna'); 
+
 }; 
 
 

@@ -11588,6 +11588,7 @@ function createCompoundWordVariations(obj, cur, sectPart) {
         //}
     }
 
+    local longestWord = '';
     // Bygg upp längre sammansatta ord, genom att addera ett i taget:
     local wordPartsList = wordParts.toList();
     for(local nr = 1; nr <= wordPartsList.length; nr++) {
@@ -11602,12 +11603,24 @@ function createCompoundWordVariations(obj, cur, sectPart) {
         if(sistaOrdetHarFogeS) {
             compoundWord = compoundWord.substr(1,-1);
         }
+        // TODO: isPlural && sectPart == &plural
+        // eller !isPlural && sectPart == noun,
+        // TODO: fixa i anropet också så inga tilldelningar sker annars än då, t ex ska det inte ske vid &adjective
+        longestWord = max(compoundWord, longestWord); // Tilldela det hittills längsta ordet för bestämd form 
+        // TODO: Det bör hellre vara det första ordet än det längsta.
+        
         wordVariations.append(compoundWord);
         //tadsSay('compoundWord: <<compoundWord>>\n');
     }
-    local longestWord = wordPartsList[wordPartsList.length];
-    local nounWithoutEnding = longestWord.word;
-    local nounWithEnding = longestWord.word + longestWord.ending;
+    
+    // TODO: gör helt om och använd bara cur. Sätt ihop det helt och hållet givet:
+    // isPlural && sectPart == &plural
+    // eller !isPlural && sectPart == noun
+    // Men det villkoret ska ske i anropet också så inga tilldelningar sker annars än då, t ex ska det inte ske vid &adjective
+
+    //longestWord = wordPartsList[wordPartsList.length]; // TODO: Blir inte alltid längsta ordet, behöver sorteras alternativt märkas upp eller tilldelas allt eftersom med max
+    local nounWithoutEnding = longestWord;
+    local nounWithEnding = longestWord + ending;
 
     if(parts.length == 3) {
         //tadsSay('<<cur>>\n');
