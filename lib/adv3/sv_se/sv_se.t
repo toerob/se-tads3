@@ -10287,7 +10287,9 @@ VerbRule(RestoreDefaults)
 ;
 
 VerbRule(Restart)
-    'omstart' ('starta' 'om')
+    'omstart' 
+    | ('starta' 'om') 
+    | ('börja' 'om')
     : RestartAction
     verbPhrase = 'starta om/startar om'
 ;
@@ -11711,7 +11713,7 @@ DefineLiteralAction(Ord)
         local target = gLiteral.toLower();
         local str = new StringBuffer();
         local o = cmdDict.findWord(target);
-        if(o) {
+        if(o && o.length>0) {
             str.append('Hittade objektet: [<<o[1]>>], \ntheName: "<<o[1].theName>>" \naName: "<<o[1].aName>>"\b');
             str.append('Följande ord finns definierade:\b');
             cmdDict.forEachWord(function(obj, word, wordPart) {

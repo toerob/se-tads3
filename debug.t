@@ -431,7 +431,7 @@ DefineLiteralAction(DoTest)
 ;
 
 VerbRule(DoTest)
-    'testa' singleLiteral  // literalPhrase->literalMatch
+    ('testa'|'t') singleLiteral  // literalPhrase->literalMatch
     : DoTestAction
     verbPhrase = 'testa/testa (what)'
     //missingQ = 'which sequence do you want to test'

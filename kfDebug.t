@@ -43,15 +43,15 @@ DefineTAction(Purloin)
     execAction()
     {
         dobjCur_.moveIntoForTravel(gActor);
-        "Purloined. ";
+        "Stulen. ";
     }
 ;
 
 VerbRule(Purloin)
-    'purloin' dobjList
+    ('stjäl'|'purloin') dobjList
     : PurloinAction
     
-    verbPhrase = 'purloin/purloining (what)'
+    verbPhrase = 'stjäla/stjäl (vad)'
 ;
 
 /* ---------------------------------------------------------------------- */
@@ -84,7 +84,7 @@ DefineTAction(Gonear)
 ;
 
 VerbRule(Gonear)
-    'gonear' singleDobj
+    ('gonear'|'gånära') singleDobj
     : GonearAction
     
     verbPhrase = 'gå/går nära (vad)'

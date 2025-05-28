@@ -736,7 +736,7 @@ libMessages: MessageHelper
     confirmRestart()
     {
         
-        "Vill du verkligen börja om?\ (<<aHref('Y', 'Y',
+        "Vill du verkligen börja om?\ (<<aHref('J', 'J',
         'Bekräfta omstart')>> är bekräftande) >\ ";
     }
 
@@ -1774,21 +1774,32 @@ playerMessages: libMessages
 
     noMatchCannotSee(actor, txt) { 
         local match, pronoun;
-        
-        forEachInstance(Thing, function(obj) {
-            if(obj.name == txt || obj.theName == txt) {
-                match = obj;
-                throw new BreakLoopSignal();
-            }        
-        });
+        local target = txt.toLower();
+        match = cmdDict.findWord(target);
 
-        if(match) {
-            pronoun = match.isPlural ? 'inga' : match.isNeuter ? 'inget' : 'ingen';                
+        if(match != nil) {
+            match = match[1];
         } else {
-            pronoun = rexMatch(uterPattern, txt) ? 'ingen' : 'inget';
+            forEachInstance(Thing, function(obj) {
+                if(obj.name.startsWith(target) || obj.theName.startsWith(target)) {
+                    match = obj;
+                    throw new BreakLoopSignal();
+                }        
+            });
         }
 
-        "{Du/han} {ser} <<pronoun>> <<txt>> {här}. "; 
+        if(match) {
+            if(match.definitiveForm == txt) {
+                "{Du/han} {ser} inte <<txt>> {här}. "; 
+            } else {
+                pronoun = match.isPlural ? 'inga' : match.isNeuter ? 'inget' : 'ingen';                
+                "{Du/han} {ser} <<pronoun>> <<txt>> {här}. "; 
+            }
+        } else {
+            pronoun = rexMatch(uterPattern, txt) ? 'ingen' : 'inget';
+            "{Du/han} {ser} <<pronoun>> sådant {här}. "; 
+
+        }
     }
 
     /*

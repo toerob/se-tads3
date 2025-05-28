@@ -35,6 +35,12 @@
 ##sources
 -lib system.tl
 -lib adv3/adv3
+  -x footnote
+  -x hintsys
+
+  # TODO: fungerar inte i ruiner
+  #-x menusys
+
 
 -source dynfunc
 -source debug
@@ -61,7 +67,14 @@
 -source tests/initialize-tests
 
 #-source exempelspel/exempel
-#-source exempelspel/ruiner
+
+####################
+# Ruiner exempelspel
+####################
+#-source exempelspel/ruiner/ncDebugActions
+#-source exempelspel/ruiner/cquotes
+#-source exempelspel/ruiner/ruiner
+
 
 -res
 GameInfo.txt
