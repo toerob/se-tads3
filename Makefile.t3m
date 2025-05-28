@@ -51,10 +51,10 @@
 #-I../../code/tads3/tads3-unit-test
 
 # TESTER 
--source ../../code/tads3/tads3-unit-test/unittest.t
 
 #####-source tests/main
 
+-source ../../code/tads3/tads3-unit-test/unittest.t
 #-source tests/present-tense
 #-source tests/past-tense
 #-source tests/satsdelar

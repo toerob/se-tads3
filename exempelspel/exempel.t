@@ -16,6 +16,7 @@ versionInfo: GameID
     htmlDesc = ''
 ;
 
+
 gameMain: GameMainDef
     initialPlayerChar = du
     usePastTense = true
@@ -39,7 +40,7 @@ koket: OutdoorRoom 'Stugans kök' 'stugans kök'
   east = sjon
 ;
 
-+gokur: OpenableContainer, Heavy 'gökur+et/klocka+n' 'gökur'
++gokur: OpenableContainer, Heavy 'gökur+et/klocka+n'
   "Ett gammal gökur som hänger på väggen. Det har alltid stått still. "
   fixat = nil
   makeOpen(stat) {
@@ -54,13 +55,13 @@ koket: OutdoorRoom 'Stugans kök' 'stugans kök'
 
 ;
 
-++Component 'visarna' 'visarna'
+++visarna: Component 'visarna'
   "Visarna på klockan är gamla och rostiga. De har stått still så länge du kan minnas."
    isPlural = true
 ;
 
 
-+hemligLucka: HiddenDoor 'lucka+n' 'lucka'
++hemligLucka: HiddenDoor 'lucka+n'
   "En lucka i väggen. "
 ;
 
@@ -69,12 +70,12 @@ sovrummet: OutdoorRoom 'Sovrummet' 'sovrummet'
   east = koket
 ;
 
-+skap: Heavy, OpenableContainer 'skåp+et' 'skåp'
++skap: Heavy, OpenableContainer 'skåp+et' 
   "Ett gammalt skåp som står i hörnet av rummet. Det är fullt med gamla kläder och andra saker. "
 ;
 // TODO: "ta det" kugghjulet
 // TODO: "placera kugghjulet i gökuret"
-++kugghjul: Thing 'kugg+hjul+et' 'kugghjul'
+++kugghjul: Thing 'kugg+hjul+et'
   initial = "Ett gammalt kugghjul som ligger i skåpet. Det ser ut som det har legat där länge. "
   location = skap
   dobjFor(PutIn) {    
@@ -91,12 +92,13 @@ sovrummet: OutdoorRoom 'Sovrummet' 'sovrummet'
 ;
 
 
-du: Actor 'du' 'du' @koket
+du: Actor 'du'
+  location = koket
   pcReferralPerson = SecondPerson
 ;
 
 +apple: Thing 'goda smaskiga gröna äpple+t/frukt+en*äpplen+a frukter+na';
-+tranbar: Thing 'tranbär^s+juice+paketen+a' 'tranbärsjuicepaket' isPlural=true;
++tranbar: Thing 'tranbär^s+juice+paket+et' 'tranbärsjuicepaket';
 
 
 Test 'spelet' ['väst', 'öppna skåp', 'ta kugghjul', 'öst', 'öppna lucka', 'placera kugghjul i gökuret'];

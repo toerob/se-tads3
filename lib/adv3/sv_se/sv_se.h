@@ -76,8 +76,11 @@ VocabObject template 'vocabWords';
 /*
  *   Define some templates that apply to ordinary objects (descendants of
  *   Thing). 
+ * 
+ *   In the swedish translation, we can use the +-notation to infer the name, 
+ *   thus, it is here optional.
  */
-Thing template 'vocabWords' 'name' @location? "desc"?;
+Thing template 'vocabWords' 'name'? @location? "desc"?;
 
 /*
  *   For rooms, we normally have no vocabulary words, but we do have a name

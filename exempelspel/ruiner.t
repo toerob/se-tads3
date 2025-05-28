@@ -136,7 +136,7 @@ forest: OutdoorRoom '"STORA TORGET"' 'stora torget'
 
 // NEXT
 
-+ packingCase: Heavy, OpenableContainer 'packväska+n/väska+n/pack/låda+n' 'packväska'
++ packingCase: Heavy, OpenableContainer 'packväska+n/väska+n/pack/låda+n' 
     initSpecialDesc =  "Din packväska ligger här, redo att fyllas med alla viktiga kulturella fynd du kan göra, för transport tillbaka till civilisationen."
     dobjFor(Remove) asDobjFor(Take)
     dobjFor(PushTravel) asDobjFor(Take)
@@ -147,7 +147,7 @@ forest: OutdoorRoom '"STORA TORGET"' 'stora torget'
     }
 ;
 
-++ camera: Thing  'våtplåts plåt våt våtplåtskamera+n/kamera+n' 'våtplåtskamera'
+++ camera: Thing  'våtplåts plåt våt våtplåtskamera+n/kamera+n' 
 "En otymplig, robust, envis träinramad våtplåtsmodell: som alla arkeologer har du ett kärleks-hatförhållande till din kamera."
 ;
 
@@ -212,7 +212,7 @@ squareChamber:  Room 'Fyrkantig Kammare' 'fyrkantiga Kammaren'
     isPlural = true
 ;    
 
-+ sunlight: Thing 'solljusstråle+n/strål+en' 'solljusstråle';
++ sunlight: Thing 'solljusstråle+n/strål+en';
 
 // TODO: alternativ syntax stråle+n stråle+n
 //+ sunlight2: Thing 'stråle+n' 'solljusstråle';
@@ -224,20 +224,12 @@ corridor: Room 'Böjd Korridor+en' 'böjda korridoren'
 
 shrine: Room 'Helgedom+en' 'helgedomen';
 + paintings: Thing 'målning+ar' 'målningar';
-+ stone_table: Thing 'sten+häll^s+altare+t/stenhäll+en' 'stenhällsaltare';
++ stone_table: Thing 'sten+häll^s+altare+t/stenhäll+en';
 
 
 canyonNorth: Room 'Övre Änden av Dalgången' 'över änden av dalgången';
 
 + huge_ball: Thing 'enormt pimp:en+sten:en^s+klot+et' 'enorm pimpstensklot';
-+ huge_ball2: Thing 'ansvar^s+känsla+n' 'ansvarskänsla';
-+ huge_ball3: Thing 'papper^s+flyg+plan+et' 'ansvarskänsla';
-+ huge_ball4: Thing 'cyckel+slang+en' 'cyckelslang';
-+ huge_ball5: Thing 'tranbär^s+juice+n' 'tranbärsjuice';
-
-//+ test_obj: Thing 'ansvar:^skänsla-n' 'ansvarskänsla';
-
-
 
 Junction: Room 'Xibalb@\'a';
 
