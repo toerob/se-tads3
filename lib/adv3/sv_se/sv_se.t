@@ -649,6 +649,10 @@ modify VocabObject
                         //tadsSay('Ett enda ord - tilldelar det till namn då property name saknas: <<name>> \n');
                     //}
 
+                    local isPluralAndSectPartPlural = isPlural && sectPart == &plural;
+                    local isNounAndSectPartNoun = !isPlural && sectPart == &noun;
+                    local isNounOrPluralAndCorrespondingSectPart = isPluralAndSectPartPlural || isNounAndSectPartNoun;
+
                     if(combineVocabWords) {
                         //tadsSay('combineVocabWords för <<cur>>\n');
                         matchCombineVocabWordsNotation = rexMatch(R'.+(<plus>.+)+', cur);
@@ -662,17 +666,12 @@ modify VocabObject
                                     foundPluralName=true;                                
                                     pluralName = forms.standardForm;
                                 }
-                            }
-
-                            // TODO: avsluta scopet här med ytterligare } 
-                            // så att den redundanta koden appliceras i båda fallen
-                            
+                            }                            
 
                             // Tilldela definitiveForm den första definitiva formen vi hittar i vocabWords
-                            // (Möjligen TODO: använd theNameFrom istället och tvinga name att definieras)
-                            local isPluralAndSectPartPlural = isPlural && sectPart == &plural;
-                            local isNounAndSectPartNoun = !isPlural && sectPart == &noun;
-                            local isNounOrPluralAndCorrespondingSectPart = isPluralAndSectPartPlural || isNounAndSectPartNoun;
+                            // Vi gör detta enbart när +notation använts eftersom det är enbart då vi med 
+                            // säkerhet vet att den definitiva formen har använts.
+                            // (theNameFrom kommer att använda definitiveForm om den inte är nil. )
 
                             if(isNounOrPluralAndCorrespondingSectPart) {
                                 if(definitiveForm == nil) {
@@ -690,25 +689,14 @@ modify VocabObject
                                 }
                             }
                         } else {
-                            local isPluralAndSectPartPlural = isPlural && sectPart == &plural;
-                            local isNounAndSectPartNoun = !isPlural && sectPart == &noun;
-                            local isNounOrPluralAndCorrespondingSectPart = isPluralAndSectPartPlural || isNounAndSectPartNoun;
 
                             if(isNounOrPluralAndCorrespondingSectPart) {
-                                // TODO: wordPart till nuvarande sectPart
-                                // eftersom ordet läggs till senare med just innehållet i wordPart
-                                // vi vill inte missa om vi gått från &noun till &plural t ex
+                                // wordPart blir till nuvarande sectPart. Detta eftersom
+                                // ordet läggs till senare med just innehållet i wordPart
+                                // och vi vill inte missa om vi i detta läge bytt från &noun till &plural t ex. 
                                 wordPart = sectPart; 
 
-                                if(definitiveForm == nil) {
-                                    /*if(!foundTheDefinitiveForm) {
-                                        foundTheDefinitiveForm = true;
-                                        definitiveForm = cur;
-                                        tadsSay('Tilldelar definitiv form då det saknas: <<definitiveForm>> \n');
-                                    }*/
-                                }
-                                // Härled automatiskt 'name' om det saknas,
-                                //  så vi slipper skriva det explicit.
+                                // Härled automatiskt 'name' om det saknas, så vi slipper skriva det explicit.
                                 if(name == '') {
                                     name = cur;
                                     //tadsSay('Tilldelar objektets namn då det saknas: <<name>> \n');
@@ -1364,7 +1352,7 @@ modify Thing
         if(definitiveForm) {
             return definitiveForm;
         }
-        return (isPlural ? 'de ' : (!isNeuter? 'den ' : 'det '))  + str; 
+        return (isPlural ? 'de ' : (isNeuter? 'det ' : 'den '))  + str; 
     }
 
     swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
@@ -11473,31 +11461,6 @@ function createCompoundWordVariations(obj, cur, sectPart) {
     local wordCount = parts.length;
     local ending = parts[parts.length]; 
 
-    // TODO: om det bara är längd 2, gör bara två varianter, en med den medskickade ändelsen, en utan.
-    /*tadsSay('[<<cur>>] (delar: <<parts.length>>)');
-    if(parts.length == 2) {
-        // TODO: BEHÖVS denna verkligen?
-        local nounWithoutEnding = parts[1];
-        local nounWithEnding = parts[1] + ending;
-        if(sectPart == &adjective) {
-            tadsSay('\bAJEKTIV: [ORG: <<cur>>] 1[<<nounWithoutEnding>>] 2[<<nounWithEnding>>]\b');
-        }
-        cmdDict.addWord(obj, nounWithoutEnding, sectPart);  
-        #ifdef __DEBUG
-            displayWordPart(sectPart, nounWithoutEnding, obj);
-        #endif
-        
-        cmdDict.addWord(obj, nounWithEnding, sectPart);  
-        #ifdef __DEBUG
-            displayWordPart(sectPart, nounWithEnding, obj);
-        #endif
-        
-        return object {
-            standardForm = nounWithoutEnding
-            definitiveForm = nounWithEnding
-        };
-    }*/
-
     // slutet på ett singular/plural substantiv i bestämd form. 
     // T ex: äpple+n, äpple+na,
     local isNounOrPluralEndingUter = (sectPart == &noun || sectPart == &plural)
@@ -11541,6 +11504,8 @@ function createCompoundWordVariations(obj, cur, sectPart) {
         // Börjar med att utgå från samma ändelse som ändelsen för helhetsordet
         local partEnding = ending;
 
+        // TODO: förenkla detta, mycket redundant kod
+
         // Om kolon + eventuell ny ändelse påträffas behöver det hanteras
         if(genderMod) {
             // Kolla initialt om det finns en ändelse bifogad efter kolonet
@@ -11548,7 +11513,6 @@ function createCompoundWordVariations(obj, cur, sectPart) {
                 genderModContent = genderModContent.findReplace('^s', '', ReplaceAll);
                 genderModContent = genderModContent.findReplace(':', '', ReplaceAll);
                 partEnding = genderModContent;
-
             } else {
                 // Om genus-ändelsen saknas försöker vi ändå härleda genus så gott det går
 
@@ -11582,18 +11546,15 @@ function createCompoundWordVariations(obj, cur, sectPart) {
                 // Vid plural gör vi ingenting än så länge... oftast skriver man formen direkt i obestämd+bestämd
                 // form, t ex: äpplen+a
                 // Utarbeta detta vid behov.
-
             } else if(isEndingNeuter) {
                 // NEUTRUM
                 partEnding = endsWithVocal? 't' : 'et';
             } else {
                 // UTRUM
                 if(endsWithVocal) {
-                    // t ex: fura, pinne,
-                    partEnding = 'n';
+                    partEnding = 'n';                    // t ex: fura, pinne,
                 } else {
-                    // TODO: testa denna
-                    // omöjligt att veta, men en god gissning är:
+                    // Omöjligt att egentligen veta, men en god gissning är att om ordet slutar på el,er,or eller al
                     partEnding = rexMatch('.*(el|er|or|al)$', word) ? 'n' : 'en';
                     //tadsSay('SLUTAR PÅ KONSONANT UTRUM: <<word>> = <<partEnding>>');
                 }
@@ -11604,54 +11565,36 @@ function createCompoundWordVariations(obj, cur, sectPart) {
 
     for(local part in wordParts) {
         wordVariations.append(part.word);
-
-        // Lägg bara till ändelse på ordet om de inte är i pluralform
-        //if(sectPart != &plural) {
-            wordVariations.append(part.word + part.ending);
-            //tadsSay('<<part.word>> / <<part.ending>> <<part.jointS?'Y':'N'>>\n');
-        //}
+        wordVariations.append(part.word + part.ending);
     }
 
     local longestCompoundWord = '';
-    // Bygg upp längre sammansatta ord, genom att addera ett i taget:
+
+    // Bygg upp längre sammansatta ord, genom att addera ett i taget
     local wordPartsList = wordParts.toList();
     for(local nr = 1; nr <= wordPartsList.length; nr++) {
         local w = wordPartsList.sublist(1, nr); // Bygg upp en lista med allt längre sammansatta ord
 
-        // Sätt ihop orden med foge-s om det behövs.
+        // Sätt ihop orden med foge-s om det behövs
         local compoundWord = w.mapAll({x: '<<x.word>><<x.jointS?'s':''>>' }).join('');
 
-        // Om sista sammansatta ordet har foge-s tillagt, ta bort det.
+        // Om sista sammansatta ordet har foge-s tillagt, ta bort det
         local lastWordHasJointS = w[w.length].jointS;
 
         if(lastWordHasJointS) {
             compoundWord = compoundWord.substr(1,-1);
         }
 
-        // TODO: *****************************************
-        // TODO: *****************************************
-        // TODO: *****************************************
-        // TODO: *****************************************
-        // TODO: *****************************************
-
-        // TODO: isPlural && sectPart == &plural
-        // eller !isPlural && sectPart == noun,
-        // TODO: fixa i anropet också så inga tilldelningar sker annars än då, t ex ska det inte ske vid &adjective
-        longestCompoundWord = max(compoundWord, longestCompoundWord); // Tilldela det hittills längsta ordet för bestämd form 
-        // TODO: Det bör hellre vara det första ordet än det längsta.
+        // Håll koll det hittills längst sammansatta ordet för bestämd form 
+        longestCompoundWord = max(compoundWord, longestCompoundWord); 
         
         wordVariations.append(compoundWord);
         //tadsSay('compoundWord: <<compoundWord>>\n');
     }
-    
-    // TODO: gör helt om och använd bara cur. Sätt ihop det helt och hållet givet:
-    // isPlural && sectPart == &plural
-    // eller !isPlural && sectPart == noun
-    // Men det villkoret ska ske i anropet också så inga tilldelningar sker annars än då, t ex ska det inte ske vid &adjective
 
-    //longestCompoundWord = wordPartsList[wordPartsList.length]; // TODO: Blir inte alltid längsta ordet, behöver sorteras alternativt märkas upp eller tilldelas allt eftersom med max
-    local nounWithoutEnding = longestCompoundWord;
-    local nounWithEnding = longestCompoundWord + ending;
+    // Använd det längst sammansatta ordet för att skapa upp namn utan ändelse och med:
+    local wordWithoutEnding = longestCompoundWord; 
+    local wordWithEnding = longestCompoundWord + ending;
 
     if(parts.length == 3) {
         //tadsSay('<<cur>>\n');
@@ -11666,7 +11609,15 @@ function createCompoundWordVariations(obj, cur, sectPart) {
                 wordVariations.append(wordWithEnding);
             }
         }
-    } else if(parts.length > 3) {
+    } else if(parts.length > 3) {        
+        // En gräns nu är vid 3 inre komponenter för olika permutationer med förskjuten offset.
+        // (Förskjuten offset för att vi inte kombinerar med omkastad ordföljd, bara framåtriktad)
+        // 
+        // Detta skulle kunna vara dynamiskt också men frågan är om det rent praktiskt gör någon
+        // större skillnad. För även om vi i svenskan har en stor mängder sammansatta ord så är 
+        // det troliga att man som spelare hellre använder en fåordig synonym än den längsta 
+        // sammanssättningen om kontext kan guida vad man avser.
+
         for(local i=1; i<=wordCount-3; i++) {
             for(local j=2; j<=wordCount-2; j++) {
                 for(local k=3; k<=wordCount-1; k++) {
@@ -11685,16 +11636,11 @@ function createCompoundWordVariations(obj, cur, sectPart) {
         }
     }
 
-    // Ta bort dubbletter, kanske onödigt då cmdDict redan är ett table
-    /*local table = new LookupTable();
-    for(local x in wordVariations) table[x] = nil;
-    wordVariations = table.keysToList();*/
+    // Ta bort dubbletter, kanske onödigt då cmdDict redan är ett table, så när dessa 
+    // adderas dit kommer bara dubbletter skrivas över ändå.
     wordVariations = wordVariations.getUnique();
 
-
-    //local x = wordVariations.mapAll({x: '<<x>>'}).join(', ');
-    //tadsSay('Word variations: ' + x);
-
+    //tadsSay('Word variations: ' + wordVariations.mapAll({x: '<<x>>'}).join(', '));
     wordVariations.forEach(function(wordVariation) {
         cmdDict.addWord(obj, wordVariation, sectPart);  
         #ifdef __DEBUG
@@ -11703,8 +11649,8 @@ function createCompoundWordVariations(obj, cur, sectPart) {
     });
 
     return object {
-        standardForm = nounWithoutEnding
-        definitiveForm = nounWithEnding
+        standardForm = wordWithoutEnding
+        definitiveForm = wordWithEnding
     };
 }
 
