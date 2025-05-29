@@ -9,7 +9,7 @@
 
 // TODO: fixa norr
 
-Test 'spel' ['ät svamp', 'ner', 'läs inskriptioner', 'x solljus',  'x pygmé', 'öst', 'ta äggsäck', 'väst', 'sätt äggsäcken i solljuset', 'ta nyckel', 'söder', 'ta statyett', 'öppna dörr', 'lås upp dörr', 'söder', 'ta på mask' ];
+Test 'spel' ['ta allt', 'ät svamp', 'ner', 'läs inskriptioner', 'x solljus',  'x pygmé', 'öst', 'ta äggsäck', 'väst', 'sätt äggsäcken i solljuset', 'ta nyckel', 'söder', 'öppna dörr', 'lås upp dörr', 'fotografera statyett', 'söder', 'ta på mask', 'sv', 'fråga om xibalba', 'sv', 'upp', 'tryck klotet nedåt', 'ner', 'norr', 'tryck klot s', 's', 'ner', 's'];
 
 
 versionInfo: GameID
@@ -319,7 +319,7 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
 
 ;
 
-++ newspaper: Thing 'en månad gammal tidning+en/times/' 'en månad gammal tidning'
+++ newspaper: Thing 'månad gammal tidning+en/times/' 'en månad gammal tidning'
     "<q>The Times</q> från 26 februari 1938, på en gång fuktig och skör efter en månads exponering för klimatet, vilket är ungefär hur du känner dig själv. Kanske är det dimma i London. Kanske finns det bomber."
 ;
 
@@ -489,7 +489,7 @@ squareChamber:  Room 'Fyrkantig Kammare' 'fyrkantiga Kammaren'
 // TODO: Hur löser man egentligen "stråle av solljus" 
 // så adjektiv substantiv blir korrekt?
 // TODO: bygg fler tester av flera sammansatta ord åtskiljda av '/' så som detta exempel:
-+ sunlight: Vaporous 'solbelyst stråle av solen+s sol+ljusstråle+n/sol+ljus+et/luft+en/damm+korn+en/damm+et*strålar' "Dammkorn glimmar i strålen av solbelyst luft, så att den nästan verkar fast."
++ sunlight: Vaporous 'solbelyst stråle av solens sol+ljusstråle+n/sol:en+ljus+et/luft+en/damm+korn+en/damm+et*strålar' "Dammkorn glimmar i strålen av solbelyst luft, så att den nästan verkar fast."
     dobjFor(Search) asDobjFor(Examine)
                 
     notWithIntangibleMsg = 'Det är bara en immateriell solljusstråle.' 
@@ -780,9 +780,9 @@ junction: Room 'Xibalb&aacute'
 ;
 
 
-++stela : Treasure 'sten stela/gräns+marklör'
-    "Ristningarna verkar varna för att gränsen till Xibalb@'a, Skräckens Plats, är nära. Fågelglyfen är framträdande."
-    initSpecialDesc =  "En måttligt stor stela, eller gränssten, vilar på en avsats i huvudhöjd."
+++stela : Treasure 'sten stela/gräns+markör'
+    "Ristningarna verkar varna för att gränsen till Xibalb&aacute, Skräckens Plats, är nära. Fågelglyfen är framträdande."
+    initSpecialDesc = "En måttligt stor stela, eller gränssten, vilar på en avsats i huvudhöjd."
 ;
 
 canyonN: Room 'Övre Änden av Dalgången' 'över änden av dalgången'
@@ -791,9 +791,9 @@ canyonN: Room 'Övre Änden av Dalgången' 'över änden av dalgången'
   down asExit(south)
 ;
 
-+ hugeBall: Fixture 'enormt pimp:en+sten:en^s+klot+et' 'enorm pimpstensklot' 
++ hugeBall: TravelPushable 'enormt pimp+sten:en^s+klot+et' 'enorm pimpstensklot' 
     "Hela åtta fot i diameter, men ganska lätt."
-    initSpecialDesc =  "Ett enormt pimpstensklot vilar här, åtta fot brett."
+    specialDesc =  "Ett enormt pimpstensklot vilar här, åtta fot brett."
     cannotTakeMsg = 'Det är mycket sten i en åtta fot stor sfär. '
     cannotMoveMsg = 'Det skulle inte vara så svårt att få det att rulla. '
     cannotTurnMsg = (cannotMoveMsg)
@@ -807,8 +807,9 @@ canyonN: Room 'Övre Änden av Dalgången' 'över änden av dalgången'
     }
     describeMovePushable(traveler, connector)
     {
-        if(connector != canyonS)
-        "Pimpstensklotet rullar in i <<getOutermostRoom.destName>>. ";
+        if(connector != canyonS) {
+            "Pimpstensklotet rullar in i <<getOutermostRoom.destName>>. ";
+        }
     }
     beforeMovePushable(traveler, connector, dest) 
     { 
@@ -821,7 +822,7 @@ canyonN: Room 'Övre Änden av Dalgången' 'över änden av dalgången'
 ;
 
 canyonS: Room 'Nedre Änden av Dalgången'  'nedre änden av dalgången'
-    desc
+    desc()
     {
         if(hugeBall.isIn(nil)) {
              "Den södra änden av dalgången fortsätter nu ut på pimpstensklotet, som är kilat fast i avgrunden.";
@@ -838,11 +839,21 @@ canyonS: Room 'Nedre Änden av Dalgången'  'nedre änden av dalgången'
         isConnectorApparent (origin, actor) { return canTravelerPass(actor); }
     }
     down: NoTravelMessage {    
-    dobjFor(TravelVia) { action() { replaceAction(Enter, chasm); } }
+        dobjFor(TravelVia) { 
+            action() { 
+                replaceAction(Enter, chasm); 
+            } 
+        }
     }
 ;
 
-+ chasm: OpenableContainer 'skräckinjagande bottenlös+a avgrund+en/svärta/grop+en' 'skräckinjagande avgrunden'
++ chasm: Container, Fixture 'skräckinjagande bottenlös+a avgrund+en/svärta/grop+en' 'skräckinjagande avgrund'
+    beforeAction()
+    {
+        if(gActionIs(Jump)) {
+            replaceAction(Enter, self);
+        }
+    }
     dobjFor(Enter) {
         verify() {}
         action() {
@@ -854,13 +865,13 @@ canyonS: Room 'Nedre Änden av Dalgången'  'nedre änden av dalgången'
         if(hugeBall.isIn(getOutermostRoom))
         {
             hugeBall.moveInto(nil);
-            "^Pimpstensklotet rullar okontrollerat ner de sista metrarna av dalgången innan det skakar till i avgrundskäftarna, studsar tillbaka lite och träffar dig med en smäll på sidan av pannan. Du sjunker ihop, blödande, och... pimpstenen krymper, eller så växer din hand, för du verkar nu hålla den, stirrande på Alligator, son till Sju-Macaw, över bollplanen på Torget, huvudena av hans senaste motståndare spetsade på pålar, en församling som ropar efter ditt blod, och det finns inget annat att göra än att kasta ändå, och... men detta är bara nonsens, och du har en splittrande huvudvärk. ";
+            "Pimpstensklotet rullar okontrollerat ner de sista metrarna av dalgången innan det skakar till i avgrundskäftarna, studsar tillbaka lite och träffar dig med en smäll på sidan av pannan. Du sjunker ihop, blödande, och... pimpstenen krymper, eller så växer din hand, för du verkar nu hålla den, stirrande på Alligator, son till Sju-Macaw, över bollplanen på Torget, huvudena av hans senaste motståndare spetsade på pålar, en församling som ropar efter ditt blod, och det finns inget annat att göra än att kasta ändå, och... men detta är bara nonsens, och du har en splittrande huvudvärk. ";
         }
     }
     cannotJumpOverMsg = 'Den är alldeles för bred. '
 ;
 
-onBall: Room 'Pimp+sten^s+avsats+en' 'pimpstensavsatsen' 
+onBall: Room 'Pimpstensavsatsen' 'pimpstensavsatsen' 
     "En improviserad avsats bildad av pimpstensklotet, kilar fast på plats i avgrunden. Dalgången slutar ändå här."
     north = canyonS
     down asExit(north)
@@ -1081,7 +1092,8 @@ priest: Actor 'mumifierad kalenderlig präst+en'
 + AskTopic @tXibalba
   topicResponse()
   {
-      "Prästen sträcker ut ett benigt finger sydväst mot istapparna, som försvinner som frost när han talar. <q>Xibalb@'a, Underjorden.</q>";
+      "Prästen sträcker ut ett benigt finger sydväst mot istapparna, som försvinner som frost när han talar. <q>Xibalb&aacute, Underjorden.</q>";
+
       icicles.moveInto(nil);
   }
 ;

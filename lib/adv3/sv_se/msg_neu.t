@@ -1777,7 +1777,7 @@ playerMessages: libMessages
         local target = txt.toLower();
         match = cmdDict.findWord(target);
 
-        if(match != nil) {
+        if(match != nil && match.length > 0) {
             match = match[1];
         } else {
             forEachInstance(Thing, function(obj) {
@@ -4439,17 +4439,17 @@ class CustomRoomLister: Lister
  */
 actorSingleInventoryLister: InventoryLister
     showListPrefixWide(itemCount, pov, parent)
-        { "<<buildSynthParam('Den/han', parent)>> {bär|bar} på "; }
+        { "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på "; }
     showListSuffixWide(itemCount, pov, parent)
         { ". "; }
 
     showListPrefixTall(itemCount, pov, parent)
-        { "<<buildSynthParam('Den/han', parent)>> {bär|bar} på:"; }
+        { "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på:"; }
     showListContentsPrefixTall(itemCount, pov, parent)
         { "<<buildSynthParam('En/han', parent)>>, som {bär|bar} på:"; }
 
     showListEmpty(pov, parent)
-        { "<<buildSynthParam('Den/han', parent)>> {är} --tomhänt. "; }
+        { "<<buildSynthParam('Den/ref', parent)>> {är} --tomhänt. "; }
 ;
 
 /*
@@ -4562,17 +4562,17 @@ actorInventoryLister: DividedInventoryLister
     showInventoryEmpty(parent)
     {
         /* empty inventory */
-        "<<buildSynthParam('Den/han', parent)>> {är} tomhänt. ";
+        "<<buildSynthParam('Den/ref', parent)>> {är} tomhänt. ";
     }
     showInventoryWearingOnly(parent, wearing)
     {
         /* we're carrying nothing but wearing some items */
-        "<<buildSynthParam('Den/han', parent)>> {bär|bar} på ingenting, och {är} {bär|bar} på <<wearing>>. ";
+        "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på ingenting, och {är} {bär|bar} på <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
         /* we have only carried items to report */
-        "<<buildSynthParam('Den/han', parent)>> {bär|bar} på <<carrying>>. ";
+        "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på <<carrying>>. ";
     }
     showInventoryShortLists(parent, carrying, wearing)
     {
@@ -4580,8 +4580,8 @@ actorInventoryLister: DividedInventoryLister
         
         // TODO: it\'s
         /* short lists - combine carried and worn in a single sentence */
-        "<<buildParam('Den/han', nm)>> {är} bär på <<carrying>>,
-        och <<buildParam('den/han', nm)>>{subj} är iklädd <<wearing>>. ";
+        "<<buildParam('Den/ref', nm)>> {är} bär på <<carrying>>,
+        och <<buildParam('den/ref', nm)>>{subj} är iklädd <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
     {
@@ -4589,7 +4589,7 @@ actorInventoryLister: DividedInventoryLister
 
         // TODO:
         /* long lists - show carried and worn in separate sentences */
-        "<<buildParam('Den/han', nm)>> {bär|bar} på <<carrying>>.
+        "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>.
         <<buildParam('Det/han', nm)>> {bär|bar} <<wearing>>. ";
     }
 
@@ -4598,11 +4598,11 @@ actorInventoryLister: DividedInventoryLister
      *   need to provide the framing messages for the tall-mode listing.  
      */
     showListPrefixTall(itemCount, pov, parent)
-        { "<<buildSynthParam('Den/han', parent)>> {bär|bar} på:"; }
+        { "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på:"; }
     showListContentsPrefixTall(itemCount, pov, parent)
         { "<<buildSynthParam('En/han', parent)>>, som {bär|bar} på:"; }
     showListEmpty(pov, parent)
-        { "<<buildSynthParam('Den/han', parent)>> {är} tomhänt. "; }
+        { "<<buildSynthParam('Den/ref', parent)>> {är} tomhänt. "; }
 ;
 
 /*
@@ -4622,19 +4622,19 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
     showInventoryWearingOnly(parent, wearing)
     {
         /* we're carrying nothing but wearing some items */
-        "<.p><<buildSynthParam('Den/han', parent)>> {bär|bar} på <<wearing>>. ";
+        "<.p><<buildSynthParam('Den/ref', parent)>> {bär|bar} på <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
         /* we have only carried items to report */
-        "<.p><<buildSynthParam('Den/han', parent)>> {bär|bar} på <<carrying>>. ";
+        "<.p><<buildSynthParam('Den/ref', parent)>> {bär|bar} på <<carrying>>. ";
     }
     showInventoryShortLists(parent, carrying, wearing)
     {
         local nm = gSynthMessageParam(parent);
 
         /* short lists - combine carried and worn in a single sentence */
-        "<.p><<buildParam('Den/han', nm)>> bär på <<carrying>>,
+        "<.p><<buildParam('Den/ref', nm)>> bär på <<carrying>>,
         och <<buildParam('det/han', nm)>>{subj} iklädd <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
@@ -4642,7 +4642,7 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
         local nm = gSynthMessageParam(parent);
 
         /* long lists - show carried and worn in separate sentences */
-        "<.p><<buildParam('Den/han', nm)>> {bär|bar} på <<carrying>>.
+        "<.p><<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>.
         <<buildParam('det/han', nm)>> {bär|bar} på <<wearing>>. ";
     }
 ;

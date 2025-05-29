@@ -16,7 +16,7 @@
  *
  */
 
-// #ifdef __DEBUG
+#ifdef __DEBUG
 
 evaluatePreParser: StringPreParser 
     doParsing(str, which) {
@@ -521,21 +521,22 @@ class Test: object
 
         //  Preparse and execute each command in the list
         testVec.forEach(new function(x)  {
-            // Display the command to be executed 
-            "<b>><<x>></b>\n";
             
             // Preparse the command 
             x = StringPreParser.runAll(x, rmcCommand);                          
             
             // Execute the preparsed command if it is not nil after preparsing
             if(x) {
+                
                 local toks;
                 if((toks = cmdTokenizer.tokenize(x)) == nil) {
                     tadsSay('[WARNING: No tokens parsed]\n');
                     return;
                 }
-                // "<bold><<x>></bold>\n";
+                // Display the command to be executed 
+                "\b><bold><<x>></bold>\b";
                 libGlobal.playerChar.addPendingCommand(true, libGlobal.playerChar, toks);
+                libGlobal.playerChar.executeTurn();
             }
         });
     }
@@ -578,6 +579,6 @@ allTests: object
 ;
 
 
-//#endif // __DEBUG
+#endif // __DEBUG
 
 

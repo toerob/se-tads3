@@ -3335,10 +3335,10 @@ modify root##Direction \
    backToPrefix = backPre
 
 
-DefineLangDir(north, 'norr' | 'n' | 'nord' |'norrut', 'tillbaka från');
-DefineLangDir(south, 'söder' | 's'| 'syd'|'söderut', 'tillbaka från');
-DefineLangDir(east,  'öster' | 'ö' |'öst'|'österut', 'tillbaka från');
-DefineLangDir(west, 'väst' | 'v'|'väst'|'västerut', 'tillbaka från');
+DefineLangDir(north, 'norr'  | 'n' | 'nord' | 'norrut', 'tillbaka från');
+DefineLangDir(south, 'söder' | 's' | 'syd'  | 'söderut', 'tillbaka från');
+DefineLangDir(east,  'öster' | 'ö' | 'öst'  | 'österut', 'tillbaka från');
+DefineLangDir(west,  'väst'  | 'v' | 'väst' | 'västerut', 'tillbaka från');
 DefineLangDir(northeast, 'nordöst'|'nordösterut' | 'nö', 'tillbaka från');
 DefineLangDir(northwest, 'nordväst'|'nordvästerut' | 'nv', 'tillbaka från');
 DefineLangDir(southeast,  'sydöst'|'sydösterut'| 'sö', 'tillbaka från');
@@ -4168,6 +4168,7 @@ langMessageBuilder: MessageBuilder
         ['vår',     &itPossAdj, 'actor', nil, nil],
 
         ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
+        ['dina', &theNamePossAdjPlural, 'actor', nil, nil],
         ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
 
 
@@ -8289,9 +8290,9 @@ modify finishOptionRestore
 ;
 
 modify finishOptionRestart
-    desc = "<<aHrefAlt('omstart', 'OMSTART', 'OM<b>S</b>TART',
-            'Starta om spelet från början')>> the story"
-    responseKeyword = 'restart'
+    desc = "<<aHrefAlt('starta om', 'START', '<b>S</b>TARTA OM',
+            'Starta om spelet från början')>> spelet"
+    responseKeyword = 'omstart'
     responseChar = 's'
 ;
 
@@ -9683,7 +9684,7 @@ VerbRule(Remove)
 ;
 
 VerbRule(Drop)
-    ('släpp' | 'sätt' 'ner' | 'sätt' 'ner') dobjList
+    ('släpp' | ('sätt' | 'ställ' |'släpp') ('ner'|'ned') ) dobjList
     : DropAction
     verbPhrase = 'släppa/släpper (vad)'
 ;
@@ -11172,7 +11173,7 @@ VerbRule(UnscrewWith)
 
 VerbRule(PushTravelDir)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
-    ('dra' | 'drag' | 'flytta') singleDobj singleDir
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
     : PushTravelDirAction
     verbPhrase = ('trycka/trycker (vad) ' + dirMatch.dir.name)
 ;
@@ -11187,7 +11188,7 @@ VerbRule(PushTravelThrough)
 
 VerbRule(PushTravelEnter)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('dra' | 'drag' | 'flytta') singleDobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     ('in' ('till'|'i') ) singleIobj
     : PushTravelEnterAction
     verbPhrase = 'trycka/trycker (vad) (in i vad)'
@@ -11195,7 +11196,7 @@ VerbRule(PushTravelEnter)
 
 VerbRule(PushTravelGetOutOf)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('dra' | 'drag' | 'flytta') singleDobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     'ut' ('of' | ) singleIobj
     : PushTravelGetOutOfAction
     verbPhrase = 'trycka/trycker (vad) (ut ur vad)'
@@ -11204,7 +11205,7 @@ VerbRule(PushTravelGetOutOf)
 
 VerbRule(PushTravelClimbUp)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('dra' | 'drag' | 'flytta') singleDobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     'up' singleIobj
     : PushTravelClimbUpAction
     verbPhrase = 'trycka/trycker (vad) (up vad)'
@@ -11213,7 +11214,7 @@ VerbRule(PushTravelClimbUp)
 
 VerbRule(PushTravelClimbDown)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('dra' | 'drag' | 'flytta') singleDobj
+    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     'ner' singleIobj
     : PushTravelClimbDownAction
     verbPhrase = 'trycka/trycker (vad) (ner vad)'
@@ -11714,7 +11715,7 @@ VerbRule(Vokabular)
 DefineLiteralAction(Ord)
     execAction() {
         local target = gLiteral.toLower();
-        local str = new StringBuffer();
+        local str = new Vector();
         local o = cmdDict.findWord(target);
         if(o && o.length>0) {
             str.append('Hittade objektet: [<<o[1]>>], \ntheName: "<<o[1].theName>>" \naName: "<<o[1].aName>>"\b');
@@ -11731,8 +11732,8 @@ DefineLiteralAction(Ord)
         } else {
             str.append('Fann inget objekt som kan kallas så\n');
         }
-
-        mainReport(toString(str));
+        str.sort();
+        mainReport(toString(str.join('')));
     }
     afterAction() { }
     turnSequence() { }

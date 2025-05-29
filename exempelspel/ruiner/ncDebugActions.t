@@ -1,4 +1,4 @@
-#charset "Latin1"
+#charset "utf-8"
 
 /*
  * Real NC Debug Actions Module, version 1.1
@@ -85,7 +85,7 @@ Version history
 
 
 #include <adv3.h>
-#include <en_us.h>
+#include <sv_se.h>
 
 
 /* --------------------------------------------------------------------
@@ -134,9 +134,9 @@ DefineTAction(Snarf)
 ;
 
 VerbRule(Snarf)
-	('snarf' | 'purloin' | 'pn') dobjList
+	('snarf' | 'snarfa' | 'purloin' | 'pn') dobjList
 	: SnarfAction
-	verbPhrase = 'snarf/snarfing (what)'
+	verbPhrase = 'snarfa/snarfar (vad)'
 ;
 
 modify Thing {
@@ -154,7 +154,7 @@ modify Thing {
 		action() {
 		           if( ofKind(Hidden) ) discover;
 		             moveIntoForTravel(gActor); 
-		             "{The dobj/he} pop{s} into {your} hands. ";
+		             "{Den dobj/ref} dyker upp i {dina} händer. ";
 		          }
 	}
 }

@@ -22,7 +22,7 @@
 #-we
 -D LANGUAGE=sv_se
 -D MESSAGESTYLE=neu
-#-D __DEBUG
+-D __DEBUG
 -Fy obj
 -Fo obj
 -v
@@ -60,20 +60,20 @@
 
 #####-source tests/main
 
--source ../../code/tads3/tads3-unit-test/unittest.t
+#-source ../../code/tads3/tads3-unit-test/unittest.t
 #-source tests/present-tense
 #-source tests/past-tense
 #-source tests/satsdelar
--source tests/initialize-tests
+#-source tests/initialize-tests
 
 #-source exempelspel/exempel
 
 ####################
 # Ruiner exempelspel
 ####################
-#-source exempelspel/ruiner/ncDebugActions
-#-source exempelspel/ruiner/cquotes
-#-source exempelspel/ruiner/ruiner
+-source exempelspel/ruiner/ncDebugActions
+-source exempelspel/ruiner/cquotes
+-source exempelspel/ruiner/ruiner
 
 
 -res
