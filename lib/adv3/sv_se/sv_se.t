@@ -4089,14 +4089,15 @@ langMessageBuilder: MessageBuilder
 
         ['det/han',   &itNom,    nil,    nil, true],
         ['det/hon',   &itNom,    nil,    nil, true],
-
+        
+        ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
+        ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
+        ['den/honom', &theNameObj, nil, &itReflexive, nil],
+        ['den/henne', &theNameObj, nil, &itReflexive, nil],
+        
 
         ['det/honom', &itObj, nil, &itReflexive, nil],
         ['det/henne', &itObj, nil, &itReflexive, nil],
-
-        // Borde denna alltid användas före itObj?
-        ['den/honom', &theNameObj, nil, &itReflexive, nil],
-        ['den/henne', &theNameObj, nil, &itReflexive, nil],
 
         ['den/obj', &itObj, nil, &itReflexive, nil],
         ['det/obj', &itObj, nil, &itReflexive, nil],
@@ -4105,7 +4106,6 @@ langMessageBuilder: MessageBuilder
         ['mig',       &itObj,   'actor', nil, nil],
         ['dig',       &itObj,   'actor', nil, nil],
         
-        // TODO: med actor?
         ['honom',     &itObj,   nil, nil, nil],
         ['henne',     &itObj,   nil, nil, nil],
 
@@ -4114,26 +4114,6 @@ langMessageBuilder: MessageBuilder
         ['dem',       &itObj,   'actor', nil, nil],
         ['er',        &itObj,   'actor', nil, nil],
         ['oss',       &itObj,   'actor', nil, nil],
-
-        // TODO: OBS: mig och dig kan vara objekt också, bygg ut med motsvarande  ord för /obj /ref
-        ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
-        ['dig', &itReflexiveSimple, 'actor', &itReflexive, nil],
-        ['mig', &itReflexiveSimple, 'actor', &itReflexive, nil],
-    
-        ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
-        ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
-
-
-        // Possessiva reflexiva
-        ['min',     &itPossAdj, 'actor', nil, nil],
-        ['din',     &itPossAdj, 'actor', nil, nil],
-        ['sin',     &itPossAdj, 'actor', nil, nil],
-        ['deras',   &itPossAdj, 'actor', nil, nil],
-        ['dess',    &itPossAdj, 'actor', nil, nil],
-        ['vår',     &itPossAdj, 'actor', nil, nil],
-
-        ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
-        ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
 
 
         // Possessiva
@@ -4163,18 +4143,35 @@ langMessageBuilder: MessageBuilder
         ['ett/honom', &aNameObj, nil, &itReflexive, nil],
         ['ett/henne', &aNameObj, nil, &itReflexive, nil],
         
+        // Reflexiva former
 
-
-        // Reflexiv
         ['själv', &itReflexive, 'actor', nil, nil],
         ['själva', &itReflexive, 'actor', nil, nil],
-        ['migsjälv', &itReflexive, 'actor', nil, nil],
-        ['digsjälv', &itReflexive, 'actor', nil, nil],
-        ['sigsjälv', &itReflexive, 'actor', nil, nil],
-        ['osssjälv', &itReflexive, 'actor', nil, nil],
+        ['mig_själv', &itReflexive, 'actor', nil, nil],
+        ['dig_själv', &itReflexive, 'actor', nil, nil],
+        ['sig_själv', &itReflexive, 'actor', nil, nil],
+        ['oss_själva', &itReflexive, 'actor', nil, nil],
         ['ersjälv', &itReflexive, 'actor', nil, nil],
 
+        // TODO: OBS: mig och dig kan vara objekt också, bygg ut med motsvarande  ord för /obj /ref
+        ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+        ['dig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+        ['mig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+    
 
+        // Possessiva reflexiva
+        ['min',     &itPossAdj, 'actor', nil, nil],
+        ['din',     &itPossAdj, 'actor', nil, nil],
+        ['sin',     &itPossAdj, 'actor', nil, nil],
+        ['deras',   &itPossAdj, 'actor', nil, nil],
+        ['dess',    &itPossAdj, 'actor', nil, nil],
+        ['vår',     &itPossAdj, 'actor', nil, nil],
+
+        ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
+        ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
+
+
+        // Övrigt
         ['är', &verbToBe, nil, nil, true],
         ['var', &verbToBe, nil, nil, true],
         ['hade', &verbToHave, nil, nil, true],

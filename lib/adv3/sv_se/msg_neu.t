@@ -2894,19 +2894,19 @@ playerActionMessages: MessageHelper
     alreadyHoldingMsg = '{Du/han} {håller|höll} redan {den dobj/honom}. '
 
     /* actor taking self ("take me") */
-    takingSelfMsg = '{Du/han} {kan} inte plocka upp {digsjälv}. '
+    takingSelfMsg = '{Du/han} {kan} inte plocka upp {dig_själv}. '
 
     /* dropping an object not being carried */
     notCarryingMsg = '{Du/han} bär inte på {det dobj/honom}. '
 
     /* actor dropping self */
-    droppingSelfMsg = '{Du/han} {kan} inte släppa {digsjälv}. '
+    droppingSelfMsg = '{Du/han} {kan} inte släppa {dig_själv}. '
 
     /* actor putting self in something */
-    puttingSelfMsg = '{Du/han} {kan} inte göra det med {digsjälv}. '
+    puttingSelfMsg = '{Du/han} {kan} inte göra det med {dig_själv}. '
 
     /* actor throwing self */
-    throwingSelfMsg = '{Du/han} {kan} inte kasta {digsjälv}. '
+    throwingSelfMsg = '{Du/han} {kan} inte kasta {dig_själv}. '
 
     /* we can't put the dobj in the iobj because it's already there */
     alreadyPutInMsg = '{Den dobj/ref} {är} redan i {den iobj/honom}. '
@@ -3223,16 +3223,16 @@ playerActionMessages: MessageHelper
     cannotPutBehindMsg = '{Du/han} {kan} inte stoppa in någonting bakom {den iobj/honom}. '
 
     /* trying to put something in itself */
-    cannotPutInSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} i {sigsjälv dobj}. '
+    cannotPutInSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} i {sig_själv dobj}. '
 
     /* trying to put something on itself */
-    cannotPutOnSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} på {sigsjälv dobj}. '
+    cannotPutOnSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} på {sig_själv dobj}. '
 
     /* trying to put something under itself */
-    cannotPutUnderSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} under {sigsjälv dobj}. '
+    cannotPutUnderSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} under {sig_själv dobj}. '
 
     /* trying to put something behind itself */
-    cannotPutBehindSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} bakom {sigsjälv dobj}. '
+    cannotPutBehindSelfMsg = '{Du/han} {kan} inte stoppa {den dobj/honom} bakom {sig_själv dobj}. '
 
     /* can't put something in/on/etc a restricted container/surface/etc */
     cannotPutInRestrictedMsg =
@@ -3519,28 +3519,28 @@ playerActionMessages: MessageHelper
     giveAlreadyHasMsg = '{Den iobj/ref} {har|hade} redan {det/honom dobj}. '
 
     /* can't talk to yourself */
-    cannotTalkToSelfMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotTalkToSelfMsg = 'Att prata med {sig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't ask yourself about anything */
-    cannotAskSelfMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotAskSelfMsg = 'Att prata med {sig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't ask yourself for anything */
-    cannotAskSelfForMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotAskSelfForMsg = 'Att prata med {sig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't tell yourself about anything */
-    cannotTellSelfMsg = 'Att prata med {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotTellSelfMsg = 'Att prata med {sig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't give yourself something */
-    cannotGiveToSelfMsg = 'Att ge {den dobj/honom} till {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotGiveToSelfMsg = 'Att ge {den dobj/honom} till {sig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
     
     /* can't give something to itself */
-    cannotGiveToItselfMsg = 'Att ge {den dobj/honom} till {sigsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotGiveToItselfMsg = 'Att ge {den dobj/honom} till {sig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't show yourself something */
-    cannotShowToSelfMsg = 'Att visa {den dobj/honom} för {digsjälv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotShowToSelfMsg = 'Att visa {den dobj/honom} för {dig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't show something to itself */
-    cannotShowToItselfMsg = 'Att visa {den dobj/honom} för {sigsjälv dobj} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
+    cannotShowToItselfMsg = 'Att visa {den dobj/honom} för {sig_själv dobj} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
 
     /* can't give/show something to a non-actor */
     cannotGiveToMsg = '{Du/han} {kan} inte ge någonting till {en iobj/han}. '
@@ -3575,7 +3575,7 @@ playerActionMessages: MessageHelper
     notFollowableMsg = '{Du/han} {kan} inte följa {det dobj/honom}. '
 
     /* cannot follow yourself */
-    cannotFollowSelfMsg = '{Du/han} {kan} inte följa {digsjälv}. '
+    cannotFollowSelfMsg = '{Du/han} {kan} inte följa {dig_själv}. '
 
     /* following an object that's in the same location as the actor */
     followAlreadyHereMsg = '{Den dobj/ref} {är} precis {här}. '
@@ -3789,7 +3789,7 @@ playerActionMessages: MessageHelper
 
     /* cannot attach to self */
     cannotAttachToSelfMsg =
-        '{Du/han} {kan} inte fästa {den dobj/honom} på {sigsjälv dobj}. '
+        '{Du/han} {kan} inte fästa {den dobj/honom} på {sig_själv dobj}. '
 
     /* cannot attach because we're already attached to the given object */
     alreadyAttachedMsg =
@@ -4013,7 +4013,7 @@ playerActionMessages: MessageHelper
         
     /* can't throw something at itself */
     cannotThrowAtSelfMsg =
-        '{Du/han} {kan} inte kasta {det dobj/honom} på {sigsjälv}. '
+        '{Du/han} {kan} inte kasta {det dobj/honom} på {sig_själv}. '
 
     /* can't throw something at an object inside itself */
     cannotThrowAtContentsMsg = '{Du/han} {behöver|behövde} ta bort {den iobj/honom}
@@ -4099,7 +4099,7 @@ playerActionMessages: MessageHelper
         = '{Den dobj/ref} skulle antagligen inte {|ha} uppskatta{|t} det. '
 
     /* cannot kiss yourself */
-    cannotKissSelfMsg = '{Du/han} {kan} inte kyssa {digsjälv}. '
+    cannotKissSelfMsg = '{Du/han} {kan} inte kyssa {dig_själv}. '
 
     /* it is now dark at actor's location */
     newlyDarkMsg = 'Det {är} nu kolsvart. '
@@ -4295,12 +4295,12 @@ npcActionMessages: playerActionMessages
      *   the PC's responses to conversational actions applied to oneself
      *   need some reworking for NPC's 
      */
-    cannotTalkToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
-    cannotAskSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
-    cannotAskSelfForMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
-    cannotTellSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sigsjälv}. '
-    cannotGiveToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att ge {den dobj/honom} till {sigsjälv}. '
-    cannotShowToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att visa {den dobj/honom} för {sigsjälv}. '
+    cannotTalkToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sig_själv}. '
+    cannotAskSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sig_själv}. '
+    cannotAskSelfForMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sig_själv}. '
+    cannotTellSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att prata med {sig_själv}. '
+    cannotGiveToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att ge {den dobj/honom} till {sig_själv}. '
+    cannotShowToSelfMsg = '{Du/han} kommer inte åstadkomma någonting genom att visa {den dobj/honom} för {sig_själv}. '
 ;
 
 /* ------------------------------------------------------------------------ */

@@ -206,7 +206,7 @@ UnitTest '1:a person singular' run {
     'Han {såg} {mig} på torget.' -> ['Han såg mig på torget.'],  // itObj
     '{Min} hatt blås{er|te} bort.' -> ['Min hatt blåste bort.'],  // itPossAdj
     'Den hatten {är} {min}.' -> ['Den hatten var min.'],  // itPossNoun
-    '{Jag} {såg} {migsjälv} i spegeln.' -> ['Jag såg mig själv i spegeln.']  // itReflexive
+    '{Jag} {såg} {mig_själv} i spegeln.' -> ['Jag såg mig själv i spegeln.']  // itReflexive
 
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare1aPerspektiv);
@@ -225,7 +225,7 @@ UnitTest '1:a person plural (vi)' run {
     'De hitta{r|de} {oss} i skogen.'  -> ['De hittade oss i skogen.'], // itObj
     '{Vår} hund har rymt.'  -> ['Vår hund har rymt.'], // itPossAdj
     'Hunden {är} {vår spelare1aPerspektivVi}.'  -> ['Hunden var vår.'], // itPossNoun
-    '{Vi} försvarar {osssjälv}.' -> ['Vi försvarar oss själva.'] // itReflexive
+    '{Vi} försvarar {oss_själva}.' -> ['Vi försvarar oss själva.'] // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare1aPerspektivVi);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -242,7 +242,7 @@ UnitTest '2:a person singular (du)' run {
     'Jag {såg} {dig actor} vid bron.' -> ['Jag såg dig vid bron.'],  // itObj
     '{Din} bok {är} här.' -> ['Din bok var här.'],  // itPossAdj
     'Boken {är} {din}.' -> ['Boken var din.'],  // itPossNoun
-    '{Du} {såg} {digsjälv} i drömmen.' -> ['Du såg dig själv i drömmen.'] // itReflexive
+    '{Du} {såg} {dig_själv} i drömmen.' -> ['Du såg dig själv i drömmen.'] // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare2aPerspektivDu);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -283,7 +283,7 @@ UnitTest '3:e person neutrum (det)' run {
     'Hon {såg} {det tradet/honom} falla.' -> ['Hon såg det falla.'],  // itObj
     '{Dess tradet} blad vissnar.' -> ['Dess blad vissnar.'],  // itPossAdj
     'Bladen {är} {dess tradet}.' -> ['Bladen var dess.'],  // itPossNoun
-    '{Det tradet} betraktar {sigsjälv}.' -> ['Det betraktar sig självt.']  // itReflexive
+    '{Det tradet} betraktar {sig_själv}.' -> ['Det betraktar sig självt.']  // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivDet);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -304,7 +304,7 @@ UnitTest '3:e person maskulinum (han)' run {
     'Jag {hör} {honom bob} skrika.' ->['Jag hörde honom skrika.'],   // itObj
     '{Hans} sko {går} sönder.' ->['Hans sko gick sönder.'],   // itPossAdj
     'Skoavtrycket {är} {hans}.' ->['Skoavtrycket var hans.'],   // itPossNoun
-    '{Han} lura{r|de} {sigsjälv}.' ->['Han lurade sig själv.']   // itReflexive
+    '{Han} lura{r|de} {sig_själv}.' ->['Han lurade sig själv.']   // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivHan);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -323,7 +323,7 @@ UnitTest '3:e person femininum (hon)' run {
     'Vi hjälp{er|te} {henne}.' ->['Vi hjälpte henne.'], // itObj
     '{Hennes} mat {är} god.' ->['Hennes mat var god.'], // itPossAdj
     'Rätten {är} {hennes}.' ->['Rätten var hennes.'], // itPossNoun
-    '{Hon} tveka{r|de} på {sigsjälv}.' ->['Hon tvekade på sig själv.'] // itReflexive
+    '{Hon} tveka{r|de} på {sig_själv}.' ->['Hon tvekade på sig själv.'] // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivHon);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -342,7 +342,7 @@ UnitTest '3:e person plural (de)' run {
     'Vi möt{te|er} {dem} på vägen.' -> ['Vi möter dem på vägen.'],  // itObj
     '{Deras} bil {står|stod} {där}.' -> ['Deras bil stod där.'],  // itPossAdj
     'Bilen {är} {deras}.' -> ['Bilen var deras.'],  // itPossNoun
-    '{De} skapa{r|de} {sigsjälv}.' -> ['De skapade sig själva.']  // itReflexive
+    '{De} skapa{r|de} {sig_själv}.' -> ['De skapade sig själva.']  // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivDe);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -423,8 +423,8 @@ UnitTest 'Demonstrativa (behövs inte specialiserat thatNom / thatObj)' run {
         ['yours', &theNamePossNoun, 'actor', nil, nil],
         ['yourself/himself', &itReflexive, 'actor', nil, nil],
         ['yourself/herself', &itReflexive, 'actor', nil, nil],
-        ['digsjälv', &itReflexive, 'actor', nil, nil],
-        ['sigsjälv', &itReflexive, 'actor', nil, nil],
+        ['dig_själv', &itReflexive, 'actor', nil, nil],
+        ['sig_själv', &itReflexive, 'actor', nil, nil],
 
         // sig själv
         ['själv', &itReflexive, 'actor', nil, nil],
