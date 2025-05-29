@@ -4067,6 +4067,16 @@ langMessageBuilder: MessageBuilder
         ['du/han',    &theName, 'actor', nil, true],
         ['du/hon',    &theName, 'actor', nil, true],
 
+        ['den/ref',   &theName,  nil,    nil, true],
+        ['det/ref',   &theName,  nil,    nil, true],
+        ['de/ref',    &theName,  nil,    nil, true],
+        ['de/ref',    &theName,  nil,    nil, true],
+
+        // Dessa tas bort, använd den/ref istället
+        //['den/han', &theName, nil, nil, true],
+        //['den/hon', &theName, nil, nil, true],
+
+        // TODO: byt namn till den/subj etc...
         ['den/nom',   &itNom,    nil,    nil, true],
         ['det/nom',   &itNom,    nil,    nil, true],
         ['de/nom',    &itNom,    nil,    nil, true],
@@ -4079,6 +4089,18 @@ langMessageBuilder: MessageBuilder
 
         ['det/han',   &itNom,    nil,    nil, true],
         ['det/hon',   &itNom,    nil,    nil, true],
+
+
+        ['det/honom', &itObj, nil, &itReflexive, nil],
+        ['det/henne', &itObj, nil, &itReflexive, nil],
+
+        // Borde denna alltid användas före itObj?
+        ['den/honom', &theNameObj, nil, &itReflexive, nil],
+        ['den/henne', &theNameObj, nil, &itReflexive, nil],
+
+        ['den/obj', &itObj, nil, &itReflexive, nil],
+        ['det/obj', &itObj, nil, &itReflexive, nil],
+        ['dem/obj', &itObj, nil, &itReflexive, nil],
 
         ['mig',       &itObj,   'actor', nil, nil],
         ['dig',       &itObj,   'actor', nil, nil],
@@ -4130,13 +4152,6 @@ langMessageBuilder: MessageBuilder
 
         /* parameters that don't imply any target object */
 
-        ['den/han', &theName, nil, nil, true],
-        ['den/hon', &theName, nil, nil, true],
-        ['den/honom', &theNameObj, nil, &itReflexive, nil],
-        ['den/henne', &theNameObj, nil, &itReflexive, nil],
-
-
-
         
         ['en/han', &aName, nil, nil, true],
         ['en/hon', &aName, nil, nil, true],
@@ -4148,16 +4163,7 @@ langMessageBuilder: MessageBuilder
         ['ett/honom', &aNameObj, nil, &itReflexive, nil],
         ['ett/henne', &aNameObj, nil, &itReflexive, nil],
         
-        // TODO: hur blir det med it nominative vs that nominative i följande fall
-        // (just nu krockar det med that det/han det/hon)
 
-        // TODO: {mig} {dig} {sig} bör räcka. 
-        ['det/honom', &itObj, nil, &itReflexive, nil],
-        ['det/henne', &itObj, nil, &itReflexive, nil],
-
-        ['den/obj', &itObj, nil, &itReflexive, nil],
-        ['det/obj', &itObj, nil, &itReflexive, nil],
-        ['dem/obj', &itObj, nil, &itReflexive, nil],
 
         // Reflexiv
         ['själv', &itReflexive, 'actor', nil, nil],

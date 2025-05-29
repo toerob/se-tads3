@@ -133,7 +133,7 @@ UnitTest '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(hund, hus, spelare2aPerspektivNi);
   [
-    '{Den dobj/han} {är} {er}.' -> ['Huset var erat.']  // itPossNoun (plural)
+    '{Den dobj/ref} {är} {er}.' -> ['Huset var erat.']  // itPossNoun (plural)
 
   ].forEachAssoc(function(msg, msgPlusResult) {
     //gActor = spelare2aPerspektivNi;
