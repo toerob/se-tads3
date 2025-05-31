@@ -2278,8 +2278,8 @@ UnitTest 'askMissingLiteral(actor, action, which)' run {
     HintAction -> 'vill du visa ledtrådar',
     OopsAction -> 'vad vill du rätta',
     OopsIAction -> 'vill du rätta',
-    DoffAction -> 'vad vill du klä av',
-    WearAction -> 'vad vill du klä på'
+    DoffAction -> 'vad vill du ta av',
+    WearAction -> 'vad vill du ta på'
   ];
 
   actionTextPairs.forEachAssoc(function(action, msg) {
@@ -3162,3 +3162,4 @@ UnitTest 'npcActionMessages' run {
     assertThat(str).startsWith(expectedOutput);
   });
 };
+

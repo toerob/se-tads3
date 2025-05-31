@@ -133,7 +133,7 @@ UnitTest '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(hund, hus, spelare2aPerspektivNi);
   [
-    '{Den dobj/ref} {är} {er}.' -> ['Huset var erat.']  // itPossNoun (plural)
+    '{Den dobj/ref} {är} {din/erat}.' -> ['Huset var erat.']  // itPossNoun (plural)
 
   ].forEachAssoc(function(msg, msgPlusResult) {
     //gActor = spelare2aPerspektivNi;
@@ -170,15 +170,15 @@ UnitTest 'satsdelar' run {
     spelare2aPerspektivDu -> ['{Du/han} spelar på {din} luta', 'Du spelar på din luta'],
     spelare2aPerspektivDu -> ['{Du/hon} spelar på {din} luta', 'Du spelar på din luta'],
 
-    spelare3dePerspektivHan -> ['{Du} spelar på {min} luta', 'Bob spelar på hans luta'],
-    spelare3dePerspektivHan -> ['{Jag} spelar på {min} luta', 'Bob spelar på hans luta'],
-    spelare3dePerspektivHan -> ['{Du/han} spelar på {min} luta', 'Bob spelar på hans luta'],
-    spelare3dePerspektivHan -> ['{Du/hon} spelar på {min} luta', 'Bob spelar på hans luta'],
+    spelare3dePerspektivHan -> ['{Du} spelar på {sin luta} luta', 'Bob spelar på sin luta'],
+    spelare3dePerspektivHan -> ['{Jag} spelar på {sin luta} luta', 'Bob spelar på sin luta'],
+    spelare3dePerspektivHan -> ['{Du/han} spelar på {sin luta} luta', 'Bob spelar på sin luta'],
+    spelare3dePerspektivHan -> ['{Du/hon} spelar på {sin luta} luta', 'Bob spelar på sin luta'],
 
-    spelare3dePerspektivHon -> ['{Du} spelar på {sin} luta', 'Alice spelar på hennes luta'],
-    spelare3dePerspektivHon -> ['{Jag} spelar på {sin} luta', 'Alice spelar på hennes luta'],
-    spelare3dePerspektivHon -> ['{Du/han} spelar på {sin} luta', 'Alice spelar på hennes luta'],
-    spelare3dePerspektivHon -> ['{Du/hon} spelar på {sin} luta', 'Alice spelar på hennes luta'],
+    spelare3dePerspektivHon -> ['{Du} spelar på {sin luta} luta', 'Alice spelar på sin luta'],
+    spelare3dePerspektivHon -> ['{Jag} spelar på {sin luta} luta', 'Alice spelar på sin luta'],
+    spelare3dePerspektivHon -> ['{Du/han} spelar på {sin luta} luta', 'Alice spelar på sin luta'],
+    spelare3dePerspektivHon -> ['{Du/hon} spelar på {sin luta} luta', 'Alice spelar på sin luta'],
 
     spelare3dePerspektivDen -> ['{Du} spelar på {min} luta', 'Astronauten spelar på sin luta'],
     spelare3dePerspektivDen -> ['{Jag} spelar på {min} luta', 'Astronauten spelar på sin luta'],
@@ -260,7 +260,7 @@ UnitTest '2:a person plural (ni)' run {
     'Hon {hör} {dem} sjunga.' -> ['Hon hörde er sjunga.'],  // itObj (plural)
     '{Er} katt jamar.' -> ['Er katt jamar.'],  // itPossAdj (plural)
     'Katten {är} {er}.' -> ['Katten var er.'],  // itPossNoun (plural)
-    '{Ni} försvarar {ersjälv}.' -> ['Ni försvarar er själva.'] // itReflexive (plural)
+    '{Ni} försvarar {er_själva}.' -> ['Ni försvarar er själva.'] // itReflexive (plural)
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare2aPerspektivNi);
     gAction = ExamineAction.createActionInstance();
@@ -283,7 +283,7 @@ UnitTest '3:e person neutrum (det)' run {
     'Hon {såg} {det tradet/honom} falla.' -> ['Hon såg det falla.'],  // itObj
     '{Dess tradet} blad vissnar.' -> ['Dess blad vissnar.'],  // itPossAdj
     'Bladen {är} {dess tradet}.' -> ['Bladen var dess.'],  // itPossNoun
-    '{Det tradet} betraktar {sig_själv}.' -> ['Det betraktar sig självt.']  // itReflexive
+    '{Det tradet/han} betraktar {sig_själv}.' -> ['Det betraktar sig självt.']  // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivDet);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -300,11 +300,11 @@ UnitTest '3:e person maskulinum (han)' run {
   gMessageParams(bob);
 
   [
-    '{Han} spr{inger|ang} snabbt.' ->['Han sprang snabbt.'],   // itNom
+    '{Det/han bob} spr{inger|ang} snabbt.' ->['Han sprang snabbt.'],   // itNom
     'Jag {hör} {honom bob} skrika.' ->['Jag hörde honom skrika.'],   // itObj
-    '{Hans} sko {går} sönder.' ->['Hans sko gick sönder.'],   // itPossAdj
-    'Skoavtrycket {är} {hans}.' ->['Skoavtrycket var hans.'],   // itPossNoun
-    '{Han} lura{r|de} {sig_själv}.' ->['Han lurade sig själv.']   // itReflexive
+    '{Din/hans} sko {går} sönder.' ->['Hans sko gick sönder.'],   // itPossAdj
+    'Skoavtrycket {är} {din/hans}.' ->['Skoavtrycket var hans.'],   // itPossNoun
+    '{Han/den} lura{r|de} {sig_själv}.' ->['Han lurade sig själv.']   // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivHan);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -316,14 +316,14 @@ UnitTest '3:e person maskulinum (han)' run {
 UnitTest '3:e person femininum (hon)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(spelare3dePerspektivHon);
-  local bob = spelare3dePerspektivHon;
-  gMessageParams(bob);
+  local alice = spelare3dePerspektivHon;
+  gMessageParams(alice);
   [
     '{Hon} laga{r|de} mat.' ->['Hon lagade mat.'], // itNom
     'Vi hjälp{er|te} {henne}.' ->['Vi hjälpte henne.'], // itObj
-    '{Hennes} mat {är} god.' ->['Hennes mat var god.'], // itPossAdj
-    'Rätten {är} {hennes}.' ->['Rätten var hennes.'], // itPossNoun
-    '{Hon} tveka{r|de} på {sig_själv}.' ->['Hon tvekade på sig själv.'] // itReflexive
+    '{Din/hennes} mat {är} god.' ->['Hennes mat var god.'], // itPossAdj
+    'Rätten {är} {din/hennes}.' ->['Rätten var hennes.'], // itPossNoun
+    '{Hon/den} tveka{r|de} på {sig_själv}.' ->['Hon tvekade på sig själv.'] // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivHon);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -356,8 +356,8 @@ UnitTest 'Demonstrativa (behövs inte specialiserat thatNom / thatObj)' run {
   gMessageParams(spelare3dePerspektivDe, hund, smyckena, skrin, juvel);
   [
     '{De spelare3dePerspektivDe} {där} typerna alltså.' -> ['De där typerna alltså.'],              // thatNom
-    '{Det hund} {där} spelar apa.' -> ['Den där spelar apa.'],                                      // thatNom
-    '{Det skrin} {där} är dyrt.' -> ['Det där är dyrt.'],                                           // thatNom
+    '{Den hund/han} {där} spelar apa.' -> ['Den där spelar apa.'],                                      // thatNom
+    '{Det skrin/han} {där} är dyrt.' -> ['Det där är dyrt.'],                                           // thatNom
     '{Det/han spelare3dePerspektivDe} {där} var mina gamla klasskompisar.'  
                                                        -> ['De där var mina gamla klasskompisar.'], // thatNom
     'Jag {såg} {de spelare3dePerspektivDe} {där} smitarna.' 
@@ -367,7 +367,7 @@ UnitTest 'Demonstrativa (behövs inte specialiserat thatNom / thatObj)' run {
     'Hon tog {det skrin/obj} {där} utan lov.'      -> ['Hon tog det där utan lov.' ],               // thatObj
     'Hon tog {dem smyckena/obj} {där} utan lov.'   -> ['Hon tog dem där utan lov.' ],               // thatObj
 
-    'Jag hittade inte {det} {där} du pratade om.'  -> ['Jag hittade inte dem där du pratade om.' ]  // thatObj 
+    'Jag hittade inte {dem} {där} du pratade om.'  -> ['Jag hittade inte dem där du pratade om.' ]  // thatObj 
   ].forEachAssoc(function(msg, msgPlusResult) {
     setPlayer(spelare3dePerspektivDe);
     mainOutputStream.capturedOutputBuffer = new StringBuffer();

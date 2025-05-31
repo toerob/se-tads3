@@ -401,11 +401,13 @@ modify VocabObject
     initializeVocab()
     {
         local isNeuterDefinedAlready = propDefined(&isNeuter, PropDefDirectly);
+        /*
         #ifdef __DEBUG
             if(isNeuterDefinedAlready) {
                 tadsSay('<<self>>: isNeuter is set on directly, no override\n');
             }
         #endif
+        */
 
         /* inherit vocabulary from this class and its superclasses */
         inheritVocab(self, new Vector(10));
@@ -418,9 +420,9 @@ modify VocabObject
             local isUterEnding = definitiveForm.endsWith('n') || definitiveForm.endsWith('na');
             isNeuter = !isUterEnding;
             #ifdef __DEBUG
-            if(isNeuter) {
+            /*if(isNeuter) {
                 tadsSay('<<self>>: <<definitiveForm>> is now set to neuter\n');
-            }
+            }*/
             #endif
         }
     }
@@ -681,8 +683,14 @@ modify VocabObject
                                         //tadsSay('Tilldelar definitiv form då det saknas: <<definitiveForm>> \n');
                                     }
                                 }
-                                // Härled automatiskt 'name' om det saknas,
-                                //  så vi slipper skriva det explicit.
+
+                                // AUTOMATISK HÄRLEDNING AV 'NAME' OM DET SAKNAS 
+                                // 
+                                // OBS: Gäller bara Thing(s), inte Actor(s) eller Room(s)
+                                // Actor(s) får som default ett pronomen via name = (itNom), 
+                                // (så som "han", "hon", "den", "det") och det beteendet får vara intakt.
+                                // Om vi vill specificera namnet för en Actor bättre, så skriver vi själva det 
+                                // direkt efter vocabWords, precis som vanligt.
                                 if(name == '') {
                                     name = forms.standardForm;
                                     //tadsSay('Tilldelar objektets namn då det saknas: <<name>> \n');
@@ -697,7 +705,7 @@ modify VocabObject
                                 wordPart = sectPart; 
 
                                 // Härled automatiskt 'name' om det saknas, så vi slipper skriva det explicit.
-                                if(name == '') {
+                                if(name == '' ) {
                                     name = cur;
                                     //tadsSay('Tilldelar objektets namn då det saknas: <<name>> \n');
                                 }
@@ -802,7 +810,8 @@ modify VocabObject
     }
 ;
 
-enum neuter, uter;
+// TODO: bör kunna tas bort 
+// enum neuter, uter;
 
 /* ------------------------------------------------------------------------ */
 /*
@@ -820,9 +829,6 @@ enum neuter, uter;
  *   the English system.  
  */
 modify Thing
-
-    
-    article = 'ett'
 
     /*
      *   Flag that this object's name is rendered as a plural (this
@@ -1702,6 +1708,7 @@ modify Thing
       */
     aNameFrom(str)
     {
+        //tadsSay('\n[konstruerar aName från [<<str>>] via aNameFrom]\n');
         /* remember the original source string */
         local inStr = str;
 
@@ -1709,48 +1716,54 @@ modify Thing
         if (isQualifiedName)
             return str;
 
-        /* if it's plural or a mass noun, use "some" as the article */
-        if (isPlural || isMassNoun)
+        // För odelbara saker så som vatten, trä, popcorn etc, kan vi antingen skriva 
+        // "lite" eller skippa artikeln helt och hållet
+        if (isMassNoun) {
+            return str;
+            //return 'lite ' + str;
+        } 
+        // Använd några som artikel för plural-objekt
+        if(isPlural) {        
+            return 'några ' + str; 
+        } 
+
+        // The rest is unneccessary in swedish
+        local firstChar;
+
+        /* if it's empty, just use "a" */
+        if (inStr == '')
+            return 'ett';
+
+        /* get the first character of the name */
+        firstChar = inStr.substr(1, 1);
+
+        /* skip any leading HTML tags */
+        if (rexMatch(patTagOrQuoteChar, firstChar) != nil)
         {
-            /* use "some" as the article */
-            return 'några ' + str;
-        } else {
+            /*
+                *   Scan for tags.  Note that this pattern isn't quite
+                *   perfect, as it won't properly ignore close-brackets
+                *   that are inside quoted material, but it should be good
+                *   enough for nearly all cases in practice.  In cases too
+                *   complex for this pattern, the object will simply have
+                *   to override aDesc.
+                */
+            local len = rexMatch(patLeadingTagOrQuote, inStr);
 
-            // The rest is unneccessary in swedish
-            local firstChar;
-
-            /* if it's empty, just use "a" */
-            if (inStr == '')
-                return 'ett';
-
-            /* get the first character of the name */
-            firstChar = inStr.substr(1, 1);
-
-            /* skip any leading HTML tags */
-            if (rexMatch(patTagOrQuoteChar, firstChar) != nil)
+            /* if we got a match, strip out the leading tags */
+            if (len != nil)
             {
-                /*
-                 *   Scan for tags.  Note that this pattern isn't quite
-                 *   perfect, as it won't properly ignore close-brackets
-                 *   that are inside quoted material, but it should be good
-                 *   enough for nearly all cases in practice.  In cases too
-                 *   complex for this pattern, the object will simply have
-                 *   to override aDesc.
-                 */
-                local len = rexMatch(patLeadingTagOrQuote, inStr);
+                /* strip off the leading tags */
+                inStr = inStr.substr(len + 1);
 
-                /* if we got a match, strip out the leading tags */
-                if (len != nil)
-                {
-                    /* strip off the leading tags */
-                    inStr = inStr.substr(len + 1);
-
-                    /* re-fetch the first character */
-                    firstChar = inStr.substr(1, 1);
-                }
+                /* re-fetch the first character */
+                firstChar = inStr.substr(1, 1);
             }
-            return (!isNeuter?'en':'ett') + ' ' + str;
         }
+        local aName = (isNeuter?'ett':'en') + ' ' + str;
+        //tadsSay('<<aName>>\n');
+        return aName;
+        
     }
 
     /* pre-compile some regular expressions for aName */
@@ -4064,9 +4077,8 @@ langMessageBuilder: MessageBuilder
         // Nominativ
         ['jag',       &theName, 'actor', nil, true],
         ['du',        &theName, 'actor', nil, true],
-        ['du/han',    &theName, 'actor', nil, true],
-        ['du/hon',    &theName, 'actor', nil, true],
-
+        
+ 
         ['den/ref',   &theName,  nil,    nil, true],
         ['det/ref',   &theName,  nil,    nil, true],
         ['de/ref',    &theName,  nil,    nil, true],
@@ -4081,27 +4093,38 @@ langMessageBuilder: MessageBuilder
         ['det/nom',   &itNom,    nil,    nil, true],
         ['de/nom',    &itNom,    nil,    nil, true],
 
-        ['han',       &itNom,   'actor', nil, true],
-        ['hon',       &itNom,   'actor', nil, true],
+        // DE här två borde kanske vara hellre vara han/ref, hon/ref
+        ['du/han',    &theName, 'actor', nil, true],
+        ['du/hon',    &theName, 'actor', nil, true],
+
+        // Och hur blir det i praktiken de används? Bör dessa två hellre användas
+        // med theName i första hand?
+
         ['de',        &itNom,   'actor', nil, true],        
         ['vi',        &itNom,   'actor', nil, true],
         ['ni',        &itNom,   'actor', nil, true],
 
         ['det/han',   &itNom,    nil,    nil, true],
         ['det/hon',   &itNom,    nil,    nil, true],
-        
+        ['den/han',   &itNom,    nil,    nil, true],
+        ['den/hon',   &itNom,    nil,    nil, true],
+
+        ['han',       &itNom,   'actor', nil, true],
+        ['hon',       &itNom,   'actor', nil, true],
+
+
+        ['den/obj', &itObj, nil, &itReflexive, nil],
+        ['det/obj', &itObj, nil, &itReflexive, nil],
+        ['dem/obj', &itObj, nil, &itReflexive, nil],
+
         ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
         ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
         ['den/honom', &theNameObj, nil, &itReflexive, nil],
         ['den/henne', &theNameObj, nil, &itReflexive, nil],
         
-
         ['det/honom', &itObj, nil, &itReflexive, nil],
         ['det/henne', &itObj, nil, &itReflexive, nil],
 
-        ['den/obj', &itObj, nil, &itReflexive, nil],
-        ['det/obj', &itObj, nil, &itReflexive, nil],
-        ['dem/obj', &itObj, nil, &itReflexive, nil],
 
         ['mig',       &itObj,   'actor', nil, nil],
         ['dig',       &itObj,   'actor', nil, nil],
@@ -4109,21 +4132,22 @@ langMessageBuilder: MessageBuilder
         ['honom',     &itObj,   nil, nil, nil],
         ['henne',     &itObj,   nil, nil, nil],
 
-        ['den',       &itObj,   'actor', nil, nil],
-        ['det',       &itObj,   'actor', nil, nil],
+        // Flera av dessa bör övervägas om de ska tas bort, finns inget som
+        // tydliggör objektformen implicit annat än dem/oss/er:
+        //['den',       &itObj,   'actor', nil, nil],
+        //['det',       &itObj,   'actor', nil, nil],
+
+        // dem, er och oss är implicit objektform och behöver inte tilläggas /obj
         ['dem',       &itObj,   'actor', nil, nil],
-        ['er',        &itObj,   'actor', nil, nil],
         ['oss',       &itObj,   'actor', nil, nil],
+        ['er',        &itObj,   'actor', nil, nil],
 
 
-        // Possessiva
-        ['er',     &itPossNoun, 'actor', nil, nil],
-        //['erat',     &itPossNoun, 'actor', nil, nil],
-        //['eran',     &itPossNoun, 'actor', nil, nil],
-
-
-        ['hans',        &itPossNoun, 'actor', nil, nil],
-        ['hennes',      &itPossNoun, 'actor', nil, nil],
+        // Possessiva - användningen är lite otydlig
+        ['din/erat',     &itPossNoun, 'actor', nil, nil],
+        ['din/eran',     &itPossNoun, 'actor', nil, nil],
+        ['din/hans',        &itPossNoun, 'actor', nil, nil],
+        ['din/hennes',      &itPossNoun, 'actor', nil, nil],
         ['din/hans',    &itPossNoun, nil, nil, nil],
         ['din/hennes',  &itPossNoun, nil, nil, nil],
         ['dess/hennes', &itPossNoun, nil, nil, nil],
@@ -4151,7 +4175,7 @@ langMessageBuilder: MessageBuilder
         ['dig_själv', &itReflexive, 'actor', nil, nil],
         ['sig_själv', &itReflexive, 'actor', nil, nil],
         ['oss_själva', &itReflexive, 'actor', nil, nil],
-        ['ersjälv', &itReflexive, 'actor', nil, nil],
+        ['er_själva', &itReflexive, 'actor', nil, nil],
 
         // TODO: OBS: mig och dig kan vara objekt också, bygg ut med motsvarande  ord för /obj /ref
         ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
@@ -4160,6 +4184,7 @@ langMessageBuilder: MessageBuilder
     
 
         // Possessiva reflexiva
+        // TODO: dessa behöver ses över om de är korrekta, se satsdelar-testerna
         ['min',     &itPossAdj, 'actor', nil, nil],
         ['din',     &itPossAdj, 'actor', nil, nil],
         ['sin',     &itPossAdj, 'actor', nil, nil],
@@ -6005,7 +6030,7 @@ grammar completeNounPhraseWithAll(main):
 ;
 
 grammar terminalNounPhrase(allBut):
-    ('allt'|'alla'|'allting') 'förutom'|'bortsett' ('från'|)
+    ('allt'|'alla'|'allting') ('förutom'|'utom'|'bortsett') ('från'|)
         exceptList->except_
     : EverythingButProd
 ;
@@ -6016,7 +6041,7 @@ grammar terminalNounPhrase(allBut):
  */
 grammar terminalNounPhrase(pluralExcept):
     (qualifiedPluralNounPhrase->np_ | detPluralNounPhrase->np_)
-    ('förutom'|'bortsett' ('från'|)
+    ('förutom'|'utom'|'bortsett' ('från'|)
     | 'men' 'inte') exceptList->except_
     : ListButProd
 ;
@@ -6026,7 +6051,7 @@ grammar terminalNounPhrase(pluralExcept):
  */
 grammar terminalNounPhrase(anyBut):
     ('vad' 'som' 'helst' |'någon'|'något'|'valfri') nounPhrase->np_
-    ('förutom'|'bortsett' ('från'|)
+    ('förutom'|'utom'|'bortsett' ('från'|)
     | 'men' 'inte') exceptList->except_
     : IndefiniteNounButProd
 ;
@@ -6107,7 +6132,7 @@ grammar qualifiedSingularNounPhrase(possessive):
 grammar qualifiedSingularNounPhrase(anyPlural):
     //'any' 'of' explicitDetPluralNounPhrase->np_
     //'vilken' 'som' 'helst' 'av' explicitDetPluralNounPhrase->np_
-    ('någon'|'vilken' 'som' 'helst') 'av' explicitDetPluralNounPhrase->np_
+    (('någon'|'vilken') 'som' 'helst') 'av' explicitDetPluralNounPhrase->np_
     : ArbitraryNounProd
 ;
 
@@ -8292,7 +8317,7 @@ modify finishOptionRestore
 modify finishOptionRestart
     desc = "<<aHrefAlt('starta om', 'START', '<b>S</b>TARTA OM',
             'Starta om spelet från början')>> spelet"
-    responseKeyword = 'omstart'
+    responseKeyword = 'starta om'
     responseChar = 's'
 ;
 
@@ -9087,7 +9112,7 @@ modify TIAction
              *   match for the non-prepositional phrasing.  Otherwise, it's
              *   suspect, so rank it accordingly.
              */
-            if (rexMatch('(en|att|den|några|någon)<space>',
+            if (rexMatch('(en|att|den|några|lite|någon)<space>',
                          dobjMatch.getOrigText()) == nil)
             {
                 /* note this as weak phrasing level 100 */
@@ -9955,7 +9980,7 @@ VerbRule(TalkToWhat)
         dobjMatch.responseProd = onSingleNoun;
     }
 ;
-// TODO: kan inte användas.... varför?
+
 VerbRule(Topics)
     ('ä' | 'ämne' | 'ämnen' | 'samtalsämnen' | 'samtal')
     : TopicsAction
@@ -10440,7 +10465,7 @@ VerbRule(Starboard)
 ;
 
 VerbRule(In)
-    'gå' 'in'
+    'gå' 'in' 
     : InAction
     dirMatch: DirectionProd { dir = inDirection }
     verbPhrase = 'gå/går in'
@@ -10463,8 +10488,13 @@ VerbRule(GoThrough)
 
 //TODO: adaptera
 VerbRule(Enter)
-    ('gå' 'in' ('i'|) | 'in' 'till'
-     | ('vandra' | 'gå') ('till' | 'in' | 'in' 'till'))
+    //('gå'|'kliv') 'in' ('i'|)
+
+    (('gå'|'kliv') 'in' ('i'|) 
+    | 'in' 'till'
+    | ('vandra' | 'gå') ('till' 
+    | 'in' ('i'|)
+    | 'in' 'till'))
     singleDobj
     : EnterAction
     verbPhrase = 'gå/går in i (vad)'
@@ -10620,7 +10650,7 @@ VerbRule(TypeLiteralOnWhat)
 
 VerbRule(EnterOn)
     ('kliv'|'gå') singleLiteral
-        ('på' | 'in' | 'in' 'till' | 'med') singleDobj
+        ('på' | 'in' 'i' | 'in' 'till' | 'med') singleDobj
     : EnterOnAction
     verbPhrase = 'kliva/kliver (vad) på (vad)'
     askDobjResponseProd = singleNoun
@@ -11041,7 +11071,7 @@ VerbRule(GetOutOf)
 ;
 
 VerbRule(GetOffOf)
-    'kliv' ('av' | 'av' 'of' | 'ner' 'från') singleDobj
+    'kliv' ('av'| 'ner') ('från'|) singleDobj
     : GetOffOfAction
     verbPhrase = 'kliva/kliver av (från vad)'
     askDobjResponseProd = singleNoun
@@ -11173,14 +11203,14 @@ VerbRule(UnscrewWith)
 
 VerbRule(PushTravelDir)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
+    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
     : PushTravelDirAction
     verbPhrase = ('trycka/trycker (vad) ' + dirMatch.dir.name)
 ;
 
 VerbRule(PushTravelThrough)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('dra' | 'drag' | 'flytta') singleDobj singleDir
+    ('knuffa' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
     ('genom') singleIobj
     : PushTravelThroughAction
     verbPhrase = 'trycka/trycker (vad) (genom vad)'
@@ -11188,7 +11218,7 @@ VerbRule(PushTravelThrough)
 
 VerbRule(PushTravelEnter)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     ('in' ('till'|'i') ) singleIobj
     : PushTravelEnterAction
     verbPhrase = 'trycka/trycker (vad) (in i vad)'
@@ -11196,7 +11226,7 @@ VerbRule(PushTravelEnter)
 
 VerbRule(PushTravelGetOutOf)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     'ut' ('of' | ) singleIobj
     : PushTravelGetOutOfAction
     verbPhrase = 'trycka/trycker (vad) (ut ur vad)'
@@ -11205,7 +11235,7 @@ VerbRule(PushTravelGetOutOf)
 
 VerbRule(PushTravelClimbUp)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     'up' singleIobj
     : PushTravelClimbUpAction
     verbPhrase = 'trycka/trycker (vad) (up vad)'
@@ -11214,7 +11244,7 @@ VerbRule(PushTravelClimbUp)
 
 VerbRule(PushTravelClimbDown)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     'ner' singleIobj
     : PushTravelClimbDownAction
     verbPhrase = 'trycka/trycker (vad) (ner vad)'
@@ -11294,13 +11324,22 @@ DefineTIAction(WearPerson)
 VerbRule(Wear)
     ('ta'|'ikläd'|'klä'|'klär'|'kläd') ('på') dobjList
     : WearAction
-    verbPhrase = 'klä/klär på (vad)'
+    //verbPhrase = 'klä/klär på (vad)'
+    verbPhrase = 'ta/tar på (vad)'
+;
+
+VerbRule(WearPerson)
+    ('ta'|'ikläd'|'klä'|'kläd') 'på' singleIobj dobjList
+    : WearAction
+    //verbPhrase = 'klä/klär på (vad)' 
+    verbPhrase = 'ta/tar på (vad)' 
 ;
 
 VerbRule(Doff)
     ('tag'|'ta'|'klä'|'klär'|'kläd') 'av' dobjList
     : DoffAction
-    verbPhrase = 'klä/klär av (vad)'
+    //verbPhrase = 'klä/klär av (vad)' 
+    verbPhrase = 'ta/tar av (vad)' 
 ;
 
 
@@ -11310,15 +11349,10 @@ VerbRule(Doff)
 VerbRule(DoffPerson)
     ('tag'|'ta'|'klä'|'kläd') 'av' singleIobj dobjList
     : DoffAction
-    verbPhrase = 'klä/klär av (vad)'
+    //verbPhrase = 'klä/klär av (vad)' 
+    verbPhrase = 'ta/tar av (vad)' 
 ;
 
-
-VerbRule(WearPerson)
-    ('ta'|'ikläd'|'klä'|'kläd') 'på' singleIobj dobjList
-    : WearAction
-    verbPhrase = 'klä/klär på (vad)'
-;
 
 // TODO: hantera default för "klä på mig jackan" och "klä på dig jackan"
 
@@ -11649,9 +11683,11 @@ function createCompoundWordVariations(obj, cur, sectPart) {
     //tadsSay('Word variations: ' + wordVariations.mapAll({x: '<<x>>'}).join(', '));
     wordVariations.forEach(function(wordVariation) {
         cmdDict.addWord(obj, wordVariation, sectPart);  
+        /*
         #ifdef __DEBUG
             displayWordPart(sectPart, wordVariation, obj);
         #endif
+        */
     });
 
     return object {

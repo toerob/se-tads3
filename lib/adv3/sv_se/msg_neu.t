@@ -2953,14 +2953,14 @@ playerActionMessages: MessageHelper
     {
         // TODO: 
         return '{Du/han} {kan} inte ta {det/honom dobj}; '
-            + '{det dobj} {är} del av ' + loc.theNameObj + '. ';
+            + '{det dobj/han} {är} del av ' + loc.theNameObj + '. ';
     }
 
     /* trying to put a component in something */
     cannotPutComponentMsg(loc)
     {
         return '{Du/han} {kan} inte lägga {det/honom dobj} någonstans; '
-            + '{det dobj} {är} en del av ' + loc.theNameObj + '. ';
+            + '{det dobj/han} {är} en del av ' + loc.theNameObj + '. ';
     }
 
     /* specialized Immovable messages for TravelPushables */

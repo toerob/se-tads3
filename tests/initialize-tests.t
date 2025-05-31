@@ -4,6 +4,7 @@
 #include "../../../code/tads3/tads3-unit-test/unittest.h"
 
 
+
 /**
  * Tester för att säkerställa att olika sätt att skapa upp ett objekt med vocabWords beter sig enligt förväntat sätt.
  *   
@@ -403,6 +404,53 @@ UnitTest 'initialize äpple (ett-ord) utan +notation' run {
 };
 
 
+UnitTest 'initialize vatten isMassNoun=true' run {
+    local vatten = new Thing();
+    vatten.vocabWords = 'vatten/vattnet*vatten';
+    vatten.definitiveForm = 'vattnet';
+    vatten.isMassNoun = true;
+    vatten.isPlural = true;
+    vatten.isNeuter = true;
+
+    // Sut 
+    vatten.initializeVocabWith(vatten.vocabWords);
+    
+    // Assert
+    //tadsSay(getGrammarInfoFromCmdDict(vatten));
+    local count = getGrammarPartsFromCmdDict(vatten); 
+    assertThat(count).isEqualTo(3);
+
+    assertThat(vatten.isNeuter).isTrue(); 
+    
+    // Fundera på att ta bort artikeln helt och hållet vid isMassNoun = true
+    assertThat(vatten.aName).isEqualTo('vatten'); 
+    //assertThat(vatten.aName).isEqualTo('lite vatten'); 
+
+    assertThat(vatten.theName).isEqualTo('vattnet'); 
+    assertThat(vatten.definitiveForm).isEqualTo('vattnet'); 
+    
+};
+
+
+UnitTest 'initialize vatten isMassNoun=true' run {
+    local obj = new Thing();
+    obj.vocabWords = 'skor+na*skor';
+    obj.definitiveForm = 'skorna';
+    obj.isPlural = true;
+
+    // Sut 
+    obj.initializeVocabWith(obj.vocabWords);
+    
+    // Assert
+    //tadsSay(getGrammarInfoFromCmdDict(obj));
+    local count = getGrammarPartsFromCmdDict(obj); 
+    assertThat(count).isEqualTo(3);
+
+    assertThat(obj.isNeuter).isNil(); 
+    assertThat(obj.aName).isEqualTo('några skor'); 
+    assertThat(obj.theName).isEqualTo('skorna'); 
+    
+};
 
 
 /**

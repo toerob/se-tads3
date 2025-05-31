@@ -210,7 +210,7 @@ DefineTAction(Zarvo)
 VerbRule(Zarvo)
 	('zarvo' | 'v') dobjList
 	: ZarvoAction
-	verbPhrase = 'zarvo/zarvoing (what)'
+	verbPhrase = 'zarvo/zarvoerar (vad)'
 ;
 
 modify Thing {
@@ -223,11 +223,11 @@ modify Thing {
 
 		action()
 		{
-			"\^<<self.theName>> <<self.verbToBe>> ";
+			"\^<<self.theName>> ";
 			if (!self.location) {
-				"floating around in the nil outer space. ";
+				"flyter omkring i intet av den yttre rymden. ";
 			} else {
-				"in the location called <q><<self.location.name>></q>. ";
+				"<<self.verbToBe>> på platsen som kallas <q><<self.location.name>></q>. ";
 			}
 		}
 	}
@@ -342,9 +342,9 @@ DefineTAction(Pow)
 ;
 
 VerbRule(Pow)
-	('pow'|'gonear'|'gn') singleDobj | 'pow' 'to' singleDobj
+	('pow'|'gonear'|'gn') singleDobj | 'pow' 'till' singleDobj
 	: PowAction
-	verbPhrase = 'pow/powing to (where)'
+	verbPhrase = 'pow/powerar till (var)'
 ;
 
 modify Thing {
@@ -377,9 +377,9 @@ modify Thing {
 				      gActor.makePosture(standing); 
 				    
 					// We found a BasicLocation.  Let's pow there.
-					"You are engulfed in a cloud of orange smoke.  Coughing and gasping, you
-					emerge from the smoke and find that your surroundings have changed... ";
-
+					"Du omsluts av ett moln av orange rök. Hostande och flämtande 
+     			kommer du ut ur röken och upptäcker att din omgivning har förändrats... ";
+		
 					// Remember my original location - this is the
 					// location where the PC was before he powed.
 					local origin = gPlayerChar.location;
@@ -402,7 +402,7 @@ modify Thing {
 				dest = dest.location;
 			}
 			// We didn't find a BasicLocation.  We can't pow.
-			"I can't pow you there. ";
+			"JAg kan inte powa dig dit. ";
 		}
 	}
 }
@@ -434,7 +434,7 @@ modify Distant {
 	dobjFor(Pow)
 	{
 		preCond() { return inherited; }
-		verify() { logicalRank(70, 'distant'); }		
+		verify() { logicalRank(70, 'avlägsen'); }		
 		check() { inherited; }
 		action() { inherited; }
 	}
@@ -485,7 +485,7 @@ class MegaAction: IAction {
 		}
 
 		if (MegaAction.playerIsMega) {
-			"You are already imbued with superhuman abilities. ";
+			"Du genomsyras redan av supermänskliga färdigheter. ";
 		} else {
 			MegaAction.oldBulkCapacity   = gPlayerChar.bulkCapacity;
 			MegaAction.oldMaxSingleBulk  = gPlayerChar.maxSingleBulk;
@@ -499,8 +499,8 @@ class MegaAction: IAction {
 
 			MegaAction.playerIsMega = true;
 
-			"Phreeeow! You suddenly have superhuman strength, and you\'re surrounded by a
-			strange ethereal glow which permits you to enter darkened places with impunity! ";
+			"Phreeeow! Du har plötsligt supermänsklig styrka, och du är omgiven av ett
+			märklig etersisk lyster som tillåter dig att beträda mörka platser ostraffat! ";
 		}
 	}
 }
@@ -508,7 +508,7 @@ class MegaAction: IAction {
 VerbRule(Mega)
 	'mega'
 	: MegaAction
-	verbPhrase = 'mega/transforming you to a glowing superhuman'
+	verbPhrase = 'mega/transformerar dig till en lysande supermänniska'
 ;
 
 
@@ -527,7 +527,7 @@ class UnmegaAction: IAction {
 		}
 
 		if (!MegaAction.playerIsMega) {
-			"You\'re already a mere mortal! ";
+			"Du är redan en vanlig dödlig! ";
 		} else {
 			gPlayerChar.bulkCapacity   = MegaAction.oldBulkCapacity;
 			gPlayerChar.maxSingleBulk  = MegaAction.oldMaxSingleBulk;
@@ -536,8 +536,7 @@ class UnmegaAction: IAction {
 
 			MegaAction.playerIsMega = nil;
 
-			"Phreeeow! You\'re a puny human once more! You\'re also no longer doing that human
-			lightbulb thing. ";
+			"Phreeeow! Du är åter en vanlig dödlig! Du har dessutom tappat din förmåga att agera mänsklig glödlampa. ";
 		}
 	}
 }
@@ -545,7 +544,7 @@ class UnmegaAction: IAction {
 VerbRule(Unmega)
 	'unmega'
 	: UnmegaAction
-	VerbPhrase = 'unmega/transforming you to a puny human'
+	VerbPhrase = 'unmega/transformerar dig till en vanlig dödlig'
 ;
 
 
