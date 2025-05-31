@@ -1483,7 +1483,8 @@ libMessages: MessageHelper
     {
         // Byt ut ändelsen -'ut' till '-ifrån' när vi beskriver 
         // varifrån någon kom, tex: "En hobbit kom till Fylke norrifrån."
-        local dirNameEnding2 = dirName.splice(-2, 2, 'ifrån');
+        //local dirNameEnding2 = dirName.splice(-2, 2, 'ifrån');
+        local dirNameEnding2 = dirName + 'ifrån';
         "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerRemoteLocName>> <<dirNameEnding2>>. ";
     }
 

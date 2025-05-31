@@ -621,7 +621,7 @@ UnitTest 'sayDepartingDir' run {
     local dir = pair[1];
     local msg = pair[2];
     hobbit.location = fylke; 
-    libMessages.sayDepartingDir(hobbit, dir.name); 
+    libMessages.sayDepartingDir(hobbit, dir.name + dir.ending); 
     assertThat(o).startsWith(msg);
   });
 

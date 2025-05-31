@@ -337,7 +337,6 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
     dobjFor(Enter) remapTo(TravelVia, self)
 ;
 
-
 sodiumLamp: Flashlight, FueledLightSource, TravelPushable 
     'tung+a kraftig+a natrium+lampa+n' 'natriumlampa' @me
     "Det är en kraftig arkeologlampa, << isLit ? (fuelLevel < 10

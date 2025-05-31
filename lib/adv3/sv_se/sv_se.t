@@ -1158,7 +1158,7 @@ modify Thing
     itReflexive { return ['sig själv', 'han själv', 'hon själv', 'de själva'][pronounSelector]; }
 
 
-    // TODO: bör strykas
+    // Dessa används inte, men oklart om de ska få stanna ändå.
 
     /*
      *   Demonstrative pronoun, nominative case.  We'll use personal a
@@ -1704,7 +1704,7 @@ modify Thing
      */
 
      /**
-      * en eller ett i svenskan, TODO: använd artikel istället
+      * Artikel+namn i svenska
       */
     aNameFrom(str)
     {
@@ -3329,7 +3329,7 @@ modify Direction
     sayDeparting(traveler)
     {
         /* show the generic compass direction description */
-        gLibMessages.sayDepartingDir(traveler, name);
+        gLibMessages.sayDepartingDir(traveler, name + ending);
     }
 ;
 
@@ -3361,41 +3361,19 @@ DefineLangDir(down, 'ner'|'nedåt'|'n', 'tillbaka');
 DefineLangDir(in,  'in', 'tillbaka');
 DefineLangDir(out, 'ut', 'tillbaka');
 
-// NOTE: WIP - börja med att utgå från att det kommer räcka med:
-// strängkonkateneringar av +'ut' +'ifrån'
-// Tester kommer visa om det håller hela vägen
-// OBS: just nu löses det med en splice(-2, 2, 'ifrån') i libMessages.sayArrivingDir
-// TODO:  rätt plats behöver lokaliseras för när övriga väderstreck även ska konkateneras med 'ut'
-
-modify northDirection       name = 'norrut'; //dirFromName = 'norrifrån';
-modify southDirection       name = 'söderut'; //dirFromName = 'söderifrån';
-modify eastDirection        name = 'österut'; //dirFromName = 'österifrån';
-modify westDirection        name = 'västerut'; //dirFromName = 'västerifrån';
-modify northwestDirection   name = 'nordvästerut'; //dirFromName = 'nordvästerifrån';
-modify northeastDirection   name = 'nordösterut'; //dirFromName = 'nordösterifrån';
-modify southwestDirection   name = 'sydvästerut'; //dirFromName = 'sydvästerifrån';
-modify southeastDirection   name = 'sydösterut'; //dirFromName = 'sydösterifrån';
-modify upDirection          name = 'uppåt'; //dirFromName = 'ovanifrån';
-modify downDirection        name = 'neråt'; //dirFromName = 'nedanifrån';
-modify inDirection          name = 'inåt'; //dirFromName = 'insidan';
-modify outDirection         name = 'utåt'; //dirFromName = 'utsidan';
-
-/*
-// TODO: Ersätt med nedan då logiken gjorts om
-modify northDirection name = 'norr';
-modify southDirection name = 'söder';
-modify eastDirection name = 'öst';
-modify westDirection name = 'väst';
-modify northwestDirection name = 'nordväst';
-modify northeastDirection name = 'nordöst';
-modify southwestDirection name = 'sydväst';
-modify southeastDirection name = 'sydöst';
-modify upDirection name = 'upp';
-modify downDirection name = 'ner';
-modify inDirection name = 'in';
-modify outDirection name = 'ut';
-*/
-
+modify Direction ending = 'ut';
+modify northDirection       name = 'norr'; 
+modify southDirection       name = 'söder'; 
+modify eastDirection        name = 'öster'; 
+modify westDirection        name = 'väster'; 
+modify northwestDirection   name = 'nordväster'; 
+modify northeastDirection   name = 'nordöster'; 
+modify southwestDirection   name = 'sydväster'; 
+modify southeastDirection   name = 'sydöster'; 
+modify upDirection          name = 'upp' ending='åt'; 
+modify downDirection        name = 'ner' ending='åt'; 
+modify inDirection          name = 'in' ending='åt'; 
+modify outDirection         name = 'ut' ending='åt'; 
 
 /*
  *   The English-specific shipboard direction modifications.  Certain of
@@ -3406,6 +3384,8 @@ modify outDirection name = 'ut';
  *   compared to the compass directions and so are individually defined
  *   below.
  */
+
+ // Den svenska översättningen är också lite av en kompromiss
 
 DefineLangDir(port, 'babord' | 'b', 'tillbaka till')
     sayArriving(trav)
