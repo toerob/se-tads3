@@ -9689,7 +9689,7 @@ modify TopicTAction
  */
 
 VerbRule(Take)
-    ('ta' | 'tag' | 'plocka' 'upp' | 'hämta' ('upp'|)) dobjList
+    (('ta'|'tag') ('ner'|) | ('plocka'|'hämta') ('upp'|)) dobjList
     : TakeAction
     verbPhrase = 'ta/tar (vad)'
 ;
@@ -9716,7 +9716,7 @@ VerbRule(Drop)
 
 VerbRule(Examine)
     ('undersök' | 'inspektera' | 'x'
-     | 'titta' 'på' | 'l' 'på' | 'titta' | 'l') dobjList
+     | 'titta' 'på' | 'se' 'på' | 'titta' ) dobjList
     : ExamineAction
     verbPhrase = 'undersöka/undersöker (vad)'
 ;
