@@ -131,3 +131,32 @@ UnitTest 'Tändt virke/olja massnoun' run {
 
 };
 
+UnitTest 'spellIntOrdinalExt' run {
+  [ 1 -> 'första', 2 -> 'andra', 3 -> 'tredje', 4 -> 'fjärde', 5 -> 'femte', 
+    6 -> 'sjätte', 7 -> 'sjunde', 8 -> 'åttonde', 9 -> 'nionde', 10 -> 'tionde', 
+    11 -> 'elfte', 12 -> 'tolfte', 13 -> 'trettonde', 14 -> 'fjortonde', 15 -> 'femtonde', 
+    16 -> 'sextonde', 17 -> 'sjuttonde', 18 -> 'artonde', 19 -> 'nittonde', 
+ 
+    20 -> 'tjugonde', 21 -> 'tjugoförsta',  22 -> 'tjugoandra',23 -> 'tjugotredje',24 -> 'tjugofjärde',
+    25 -> 'tjugofemte', 26 -> 'tjugosjätte', 27 -> 'tjugosjunde', 28 -> 'tjugoåttonde', 29 -> 'tjugonionde',
+    30 -> 'trettionde', 31 -> 'trettioförsta', 32 -> 'trettioandra',
+    40 -> 'fyrtionde',
+    50 -> 'femtionde',
+    60 -> 'sextionde',
+    70 -> 'sjuttionde',
+    80 -> 'åttionde',
+    90 -> 'nittionde',
+    100 -> 'etthundrade', 
+    1000 -> 'etttusende', 
+    10000 -> 'tiotusende', 
+    100000 -> 'etthundratusende', 
+    1000000 -> 'enmiljonte',
+    1111111 -> 'enmiljonetthundraelvatusenetthundraelfte' // Svenskan är galen på sammansättningar!
+  ].forEachAssoc(function(n, expected) {
+    local x = spellIntOrdinalExt(n, SpellIntTeenHundreds & SpellIntAndTens & SpellIntCommas);
+    //tadsSay('<<x>>\n');
+    assertThat(x).isEqualTo(expected);
+
+  });
+};
+

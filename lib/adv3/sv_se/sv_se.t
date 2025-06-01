@@ -1966,7 +1966,7 @@ modify Thing
     verbWas { return tSel('var', 'hade varit'); }
 
     /* 'have' verb agreeing with this object as subject */
-    verbToHave { return tSel('har' , 'hade'); } // TODO: kontrollera att denna göra rätt
+    verbToHave { return tSel('har' , 'hade'); } 
 
     /*
      *   A few common irregular verbs and name-plus-verb constructs,
@@ -2032,10 +2032,7 @@ modify Thing
    
 
     //---------------------------------------------------
-    // TODO:
-    //  hoppar/hoppade
 
-    
     verbEndingR { return 'r'; }
 
     verbEndingA { return 'a'; }
@@ -3324,7 +3321,7 @@ modify Direction
 /*
  *   The Swedish-specific modifications for compass directions.
  */
- // TODO: kan ev. behöva göras annorlunda
+
  modify CompassDirection
     /* describe a traveler arriving from this direction */
     sayArriving(traveler)
@@ -3861,7 +3858,6 @@ modify litUnlitDistinguisher
  */
 modify LightSource
     /* provide lit/unlit names for litUnlitDistinguisher */
-    //nameLit = ((isLit ? 'tänd ' : 'otänd ') + name) // TODO: t/d/a
     nameLit = '<<isLit?'':'o'>>tän<<endingForNounDTDa>> <<name>>'
     aNameLit()
     {
@@ -4033,7 +4029,7 @@ typographicalOutputFilter: OutputFilter
      *   this property at start-up, and doesn't re-evaluate it while the
      *   game is running.  
      */
-    abbreviations = 'hr|fru|fröken|dr|prof' //TODO: prof?
+    abbreviations = 'hr|fr|frk|dr|prof'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -4788,10 +4784,10 @@ spellIntExt(val, flags)
     local str;
     local trailingSpace;
     local needAnd;
-    local powers = [1000000000, ' miljard ',
-                    1000000,    ' miljon ',
-                    1000,       ' tusen ',
-                    100,        ' hundra '];
+    local powers = [1000000000, 'miljard ',
+                    1000000,    'miljon ',
+                    1000,       'tusen ',
+                    100,        'hundra '];
 
     /* start with an empty string */
     str = '';
@@ -4882,7 +4878,7 @@ spellIntExt(val, flags)
         && val != 0)
     {
         /* add the 'and' */
-        str += 'and ';
+        str += 'och ';
         trailingSpace = true;
     }
 
@@ -4895,8 +4891,7 @@ spellIntExt(val, flags)
         val %= 10;
 
         /* if it's non-zero, we'll add the units, so add a hyphen */
-        if (val != 0)
-            str += '-';
+        //if (val != 0) str += '';
 
         /* we no longer have a trailing space in the string */
         trailingSpace = nil;
@@ -4919,7 +4914,7 @@ spellIntExt(val, flags)
     if (val != 0)
     {
         /* add the units name */
-        str += ['en', 'två', 'tre', 'fyra', 'fem',
+        str += ['ett', 'två', 'tre', 'fyra', 'fem',
                 'sex', 'sju', 'åtta', 'nio'][val];
 
         /* we have no trailing space now */
@@ -4930,6 +4925,10 @@ spellIntExt(val, flags)
     if (trailingSpace)
         str = str.substr(1, str.length() - 1);
 
+    if(rexMatch('(ett).*(ljard|ljon)', str)) {
+        str = rexReplace('ett', str, 'en', ReplaceOnce);
+    }
+    str = rexReplace(' ', str, '', ReplaceAll);
     /* return the string */
     return str;
 }
@@ -5006,28 +5005,22 @@ spellIntOrdinalExt(n, flags)
      *   'zeroeth'.  For everything else, just add 'th' to the spelled-out
      *   name
      */
-    if (s == 'noll')
-        return 'nollte';
-    if (s.endsWith('ett'))
-        return s.substr(1, s.length() - 3) + 'första';
-    else if (s.endsWith('två'))
-        return s.substr(1, s.length() - 3) + 'andra';
-    else if (s.endsWith('tre'))
-        return s.substr(1, s.length() - 5) + 'tredje';
-    else if (s.endsWith('fem'))
-        return s.substr(1, s.length() - 4) + 'femte';
-    else if (s.endsWith('sex'))
-        return s.substr(1, s.length() - 4) + 'sjätte';
-    else if (s.endsWith('sju'))
-        return s.substr(1, s.length() - 4) + 'sjunde';
-    else if (s.endsWith('åtta'))
-        return s.substr(1, s.length() - 5) + 'åttonde';
-    else if (s.endsWith('nio'))
-        return s.substr(1, s.length() - 4) + 'nioende';
-    else if (s.endsWith('o'))
-        return s.substr(1, s.length() - 1) + 'nde [TODO: test me]';
-    else
-        return s + 'nde [TODO: test me]';
+    if (s == 'noll') return 'nollte';
+    if (s.endsWith('ett')) return s.substr(1, s.length() - 3) + 'första';
+    else if (s.endsWith('två')) return s.substr(1, s.length() - 3) + 'andra';
+    else if (s.endsWith('tre')) return s + 'dje';
+    else if (s.endsWith('fyra')) return s.substr(1, s.length() - 3) + 'järde';
+    else if (s.endsWith('fem')) return s + 'te';
+    else if (s.endsWith('sex')) return s.substr(1, s.length() - 2) + 'jätte';
+    else if (s.endsWith('sju')) return s + 'nde';
+    else if (s.endsWith('åtta')) return s.substr(1, s.length() - 1) + 'onde';
+    else if (s.endsWith('o')) return s + 'nde';
+    else if (s.endsWith('elva')) return s.substr(1, s.length() - 2) + 'fte';
+    else if (s.endsWith('tolv')) return s.substr(1, s.length() - 1) + 'fte';
+    else if (s.endsWith('ton')) return s + 'de';
+    else if (s.endsWith('hundra')) return s + 'de';
+    else if (s.endsWith('tusen')) return s.substr(1, s.length() - 2) + 'ende';
+    return s + 'te';
 }
 
 /* ------------------------------------------------------------------------ */
