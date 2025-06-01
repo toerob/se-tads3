@@ -886,7 +886,8 @@ onBall: Room 'Pimpstensavsatsen' 'pimpstensavsatsen'
 
 stoneKey: Key 'sten+nyckel+n' ;
 
-booklet: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok' @me
+/*
+booklet: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok'
    "Sammanställd från de opålitliga litografierna av den legendariske berättaren och upptäcktsresanden <q>Greve</q> Jean Frederic Maximilien Waldeck (1766??-1875), innehåller denna guide det lilla som är känt om glyferna som används i den lokala forntida dialekten."
 
    correct = nil
@@ -940,6 +941,7 @@ booklet: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok' @
 
    topicNotFound = "Försök med <q>slå upp <namn på glyf> i boken.</q> "
 ;
+*/
 
 waldeck: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok' @me
    "Sammanställd från de opålitliga litografierna av den legendariske berättaren och upptäcktsresanden <q>Greve</q> Jean Frederic Maximilien Waldeck (1766??-1875), innehåller denna guide det lilla som är känt om glyferna som används i den lokala forntida dialekten."
@@ -1054,7 +1056,7 @@ priest: Actor 'mumifierad kalenderlig präst+en'
 
  /* We can match on a list of game objects */
 
-+ AskTopic [waldeck, booklet]
++ AskTopic [waldeck]
    "<q>Fågelglyfen... mycket roligt.<q>"
 ;
 
@@ -1111,7 +1113,7 @@ priest: Actor 'mumifierad kalenderlig präst+en'
   "Prästen har inget intresse av ditt smutsiga liv. "
 ;
 
-+ GiveShowTopic [waldeck, booklet]
++ GiveShowTopic [waldeck]
   topicResponse()
   {
      gDobj.correct = true;

@@ -1767,7 +1767,7 @@ UnitTest 'refuseCommand(targetActor, issuingActor)' run {
   gActor = spelare3dePerspektiv;
   local msg = playerActionMessages.refuseCommand(hobbit, gActor);
   "<<msg>>";
-  assertThat(o).startsWith('Hobbiten vägrade hans begäran.');
+  assertThat(o).startsWith('Hobbiten vägrade Bobs begäran.');
 };
 
 UnitTest 'notAddressableMsg(obj)' run {

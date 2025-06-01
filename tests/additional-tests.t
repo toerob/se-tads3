@@ -6,7 +6,7 @@
 // TODO: testa aNameFrom
 // TODO: testa theNameFrom
 // TODO: getQuestionInf(which)
-
+// TODO: testa av Resolver.resolvePronounAntecedent
 
 versionInfo: GameID
   IFID = '38da5fdf-9077-4043-bfe1-14c83c087c81'

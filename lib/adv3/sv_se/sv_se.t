@@ -4061,116 +4061,120 @@ langMessageBuilder: MessageBuilder
      */
     paramList_ =
     [
-        // Parametrar som implicerar nuvarande aktör (actor)
+        ///////////////////////////////////////////////////////////
+        // REFERENT - Du, Jag, Bob, Alice
+        ///////////////////////////////////////////////////////////
+        // Parametrar som implicerar nuvarande utförare av handling
 
-        // Nominativ
+        // - Första implicita formerna för 1a, 2a och 3:e person:  "jag", "du" & "ref"
+        // Exempelvis:
+        // "{Jag} drack kaffe" -> "Jag drack kaffe" (om jag: Actor 'jag' 'jag' pcReferralPerson = FirstPerson)
+        // "{Du} drack kaffe" -> "Du drack kaffe" (om du: Actor 'du' 'du' pcReferralPerson = SecondPerson)
+        // "{Ref} drack kaffe" -> "bob drack kaffe" (om bob: Actor 'bob' 'Bob' pcReferralPerson = ThirdPerson)
         ['jag',       &theName, 'actor', nil, true],
         ['du',        &theName, 'actor', nil, true],
+        ['ref',       &theName, 'actor', nil, true],
+
+        // - Explicit referensform, ange '/ref' för tydlighetens skull
+        // "{Den/ref} åt mat" -> "Bob åt mat" (om bob: Actor 'Bob').
         ['den/ref',   &theName,  nil,    nil, true],
         ['det/ref',   &theName,  nil,    nil, true],
         ['de/ref',    &theName,  nil,    nil, true],
-        ['de/ref',    &theName,  nil,    nil, true],
 
-        // Dessa två borde kanske vara hellre vara han/ref, hon/ref?
+        // TODO: Dessa två borde kanske vara hellre vara han/ref, hon/ref?
         ['du/han',    &theName, 'actor', nil, true],
         ['du/hon',    &theName, 'actor', nil, true],
 
-        // Subjektform, jag, du, han, hon, den, det + vi, ni, de
+        ///////////////////////////////////////////////////////////
+        // NOMINATIV / SUBJEKTFORM
+        ///////////////////////////////////////////////////////////
+        // Subjektform: jag, du, han, hon, den, det + vi, ni, de
+
+        // Först implicita formerna för utföraren av handlingen
+        // "{Han} hoppade" -> "Han hoppade" (om t ex: Actor isHim=true)
+        ['han',   &itNom,   'actor', nil, true],
+        ['hon',   &itNom,   'actor', nil, true],
+        ['den',   &itNom,   'actor', nil, true],
+        ['det',   &itNom,   'actor', nil, true],
+        ['vi',    &itNom,   'actor', nil, true],
+        ['ni',    &itNom,   'actor', nil, true],
+        ['de',    &itNom,   'actor', nil, true],
+
+        // Explicit subjektform med '/subj'
+        // "{Vi/subj} cyklade" -> "Vi cyklade" (om t ex: Actor isPlural=true)
         ['han/subj',   &itNom,    nil,    nil, true],
         ['hon/subj',   &itNom,    nil,    nil, true],
         ['den/subj',   &itNom,    nil,    nil, true],
         ['det/subj',   &itNom,    nil,    nil, true],
+        ['vi/subj',    &itNom,    nil,    nil, true],
+        ['ni/subj',    &itNom,    nil,    nil, true],
         ['de/subj',    &itNom,    nil,    nil, true],
 
-
-        // Och hur blir det i praktiken de används? Bör dessa två hellre användas
-        // med theName i första hand?
-
-        ['de',        &itNom,   'actor', nil, true],        
-        ['vi',        &itNom,   'actor', nil, true],
-        ['ni',        &itNom,   'actor', nil, true],
-
+        // TODO: ska dessa former få leva kvar eller tas bort?
         ['det/han',   &itNom,    nil,    nil, true],
         ['det/hon',   &itNom,    nil,    nil, true],
         ['den/han',   &itNom,    nil,    nil, true],
         ['den/hon',   &itNom,    nil,    nil, true],
 
-        ['han',       &itNom,   'actor', nil, true],
-        ['hon',       &itNom,   'actor', nil, true],
+
+        ///////////////////////////////////////////////////////////
+        // OBJEKTFORM
+        ///////////////////////////////////////////////////////////
+        // mig, dig, den, det, honom, henne,  oss, er, dem
 
 
-        ['den/obj', &itObj, nil, &itReflexive, nil],
-        ['det/obj', &itObj, nil, &itReflexive, nil],
-        ['dem/obj', &itObj, nil, &itReflexive, nil],
+        // OBS: Undantag från objektform objektet är beskrivet i tredjepersonsperspektiv (theNameObj).
+        // I första hand är det referenten, "ref", som ska användas, men om perspektivet 
+        /// för objektet är annat så blir det objektform:
+        ['ref/honom', &theNameObj, 'actor', &itReflexive, nil],
+        ['ref/henne', &theNameObj, 'actor', &itReflexive, nil],
+        ['ref/mig',   &theNameObj, 'actor', &itReflexive, nil],
+        ['ref/dig',   &theNameObj, 'actor', &itReflexive, nil],
 
-        ['du/honom', &theNameObj, 'actor', &itReflexive, nil],
-        ['du/henne', &theNameObj, 'actor', &itReflexive, nil],
-        ['den/honom', &theNameObj, nil, &itReflexive, nil],
-        ['den/henne', &theNameObj, nil, &itReflexive, nil],
-        
-        ['det/honom', &itObj, nil, &itReflexive, nil],
-        ['det/henne', &itObj, nil, &itReflexive, nil],
-
-
-        ['mig',       &itObj,   'actor', nil, nil],
-        ['dig',       &itObj,   'actor', nil, nil],
-        
-        ['honom',     &itObj,   nil, nil, nil],
-        ['henne',     &itObj,   nil, nil, nil],
-
-        // Flera av dessa bör övervägas om de ska tas bort, finns inget som
-        // tydliggör objektformen implicit annat än dem/oss/er:
-        //['den',       &itObj,   'actor', nil, nil],
-        //['det',       &itObj,   'actor', nil, nil],
-
-        // dem, er och oss är implicit objektform och behöver inte tilläggas /obj
+        // Nedan följer sedvanlig objektform, först implicit för 'actor' 
+        // mig, dig, den, det, honom, henne,  oss, er, dem
+        ['honom',     &itObj,   'actor', nil, nil],
+        ['henne',     &itObj,   'actor', nil, nil],
         ['dem',       &itObj,   'actor', nil, nil],
         ['oss',       &itObj,   'actor', nil, nil],
         ['er',        &itObj,   'actor', nil, nil],
 
-
-        // Possessiva - användningen är lite otydlig
-        ['din/erat',     &itPossNoun, 'actor', nil, nil],
-        ['din/eran',     &itPossNoun, 'actor', nil, nil],
-        ['din/hans',        &itPossNoun, 'actor', nil, nil],
-        ['din/hennes',      &itPossNoun, 'actor', nil, nil],
-        ['din/hans',    &itPossNoun, nil, nil, nil],
-        ['din/hennes',  &itPossNoun, nil, nil, nil],
-        ['dess/hennes', &itPossNoun, nil, nil, nil],
-        ['vår/hennes',  &itPossNoun, nil, nil, nil],
-        //['dess/hon', &itPossNoun, nil, nil, nil],
-
-        /* parameters that don't imply any target object */
-
-        
-        ['en/han', &aName, nil, nil, true],
-        ['en/hon', &aName, nil, nil, true],
-        ['en/honom', &aNameObj, nil, &itReflexive, nil],
-        ['en/henne', &aNameObj, nil, &itReflexive, nil],
-        
-        ['ett/han', &aName, nil, nil, true],
-        ['ett/hon', &aName, nil, nil, true],
-        ['ett/honom', &aNameObj, nil, &itReflexive, nil],
-        ['ett/henne', &aNameObj, nil, &itReflexive, nil],
-        
-        // Reflexiva former
-
-        ['själv', &itReflexive, 'actor', nil, nil],
-        ['själva', &itReflexive, 'actor', nil, nil],
-        ['mig_själv', &itReflexive, 'actor', nil, nil],
-        ['dig_själv', &itReflexive, 'actor', nil, nil],
-        ['sig_själv', &itReflexive, 'actor', nil, nil],
-        ['oss_själva', &itReflexive, 'actor', nil, nil],
-        ['er_själva', &itReflexive, 'actor', nil, nil],
-
-        // TODO: OBS: mig och dig kan vara objekt också, bygg ut med motsvarande  ord för /obj /ref
-        ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
-        ['dig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+        // Mig, dig, sig, er och oss
         ['mig', &itReflexiveSimple, 'actor', &itReflexive, nil],
-    
+        ['dig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+        ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
 
-        // Possessiva reflexiva
-        // TODO: dessa behöver ses över om de är korrekta, se satsdelar-testerna
+        // Sedan objektform med explicit '/obj'-suffix
+        // Exempelvis:
+        // "Det gick inte att lyfta {dem/obj sakerna}."
+        ['den/obj', &itObj, nil, &itReflexive, nil],
+        ['det/obj', &itObj, nil, &itReflexive, nil],
+        ['dem/obj', &itObj, nil, &itReflexive, nil],
+
+        // Några extra-former som känns förväntade att kunna skriva och som inte krockar med något annat
+        ['det/honom', &itObj, nil, &itReflexive, nil],
+        ['det/henne', &itObj, nil, &itReflexive, nil],
+        ['den/honom', &itObj, nil, &itReflexive, nil],
+        ['den/henne', &itObj, nil, &itReflexive, nil],
+
+        ///////////////////////////////////////////////////////////
+        // REFLEXIVA FORMER
+        ///////////////////////////////////////////////////////////
+
+        // Används för possessiva med namn i tredjepersonsperspektiv 
+        // eller reflexiva possesiva (mitt/ditt/mina, etc...)
+        ['din/ref',     &theNamePossAdj, 'actor', nil, nil],
+
+        // Vanliga possessiva reflexiva fökjer
+        ['din/erat',    &itPossNoun, 'actor', nil, nil],
+        ['din/eran',    &itPossNoun, 'actor', nil, nil],
+        
+        ['din/hennes',  &itPossNoun, 'actor', nil, nil],
+        ['din/hans',    &itPossNoun, 'actor', nil, nil],
+
+        ['dess/hennes', &itPossNoun, nil, nil, nil],
+        ['vår/hennes',  &itPossNoun, nil, nil, nil],    
+
         ['min',     &itPossAdj, 'actor', nil, nil],
         ['din',     &itPossAdj, 'actor', nil, nil],
         ['sin',     &itPossAdj, 'actor', nil, nil],
@@ -4182,6 +4186,23 @@ langMessageBuilder: MessageBuilder
         ['dina', &theNamePossAdjPlural, 'actor', nil, nil],
         ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
 
+        ['själv', &itReflexive, 'actor', nil, nil],
+        ['själva', &itReflexive, 'actor', nil, nil],
+        ['mig_själv', &itReflexive, 'actor', nil, nil],
+        ['dig_själv', &itReflexive, 'actor', nil, nil],
+        ['sig_själv', &itReflexive, 'actor', nil, nil],
+        ['oss_själva', &itReflexive, 'actor', nil, nil],
+        ['er_själva', &itReflexive, 'actor', nil, nil],
+
+        /* parameters that don't imply any target object */
+        ['en/han', &aName, nil, nil, true],
+        ['en/hon', &aName, nil, nil, true],
+        ['en/honom', &aNameObj, nil, &itReflexive, nil],
+        ['en/henne', &aNameObj, nil, &itReflexive, nil],        
+        ['ett/han', &aName, nil, nil, true],
+        ['ett/hon', &aName, nil, nil, true],
+        ['ett/honom', &aNameObj, nil, &itReflexive, nil],
+        ['ett/henne', &aNameObj, nil, &itReflexive, nil],    
 
         // Övrigt
         ['är', &verbToBe, nil, nil, true],
@@ -4209,7 +4230,7 @@ langMessageBuilder: MessageBuilder
         // Prepositioner
         ['på', &actorInName, nil, nil, nil],
         ['i', &actorInName, nil, nil, nil],
-        ['avur', &actorOutOfName, nil, nil, nil],
+        ['av_ur', &actorOutOfName, nil, nil, nil],
 
         /*
          *  Verbändelser
@@ -9675,7 +9696,7 @@ modify TopicTAction
  */
 
 VerbRule(Take)
-    (('ta'|'tag') ('ner'|) | ('plocka'|'hämta') ('upp'|)) dobjList
+    (('ta'|'tag') ('ner'|) | ('ta'|'tag'|'plocka'|'hämta') ('upp'|)) dobjList
     : TakeAction
     verbPhrase = 'ta/tar (vad)'
 ;
