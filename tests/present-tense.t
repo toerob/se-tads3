@@ -629,13 +629,6 @@ UnitTest 'sayDepartingDir' run {
 };
 
 
-// Överväg allternativen:
-//Han kommer från kajen akterifrån
-//Han kommer från kajen vid babord
-//Han kommer från styrbordssidan av kajen
-
-
-
 UnitTest 'sayArrivingShipDir' run {
   ////mainOutputStream.hideOutput = nil;
   [

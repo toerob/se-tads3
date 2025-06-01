@@ -33,6 +33,19 @@ lab: Room 'labbet' 'labbet';
 +tingest: Thing 'tingest+en';
 +skapet: Thing 'skåp+et';
 
++ljus: LightSource 'ljus+et*ljus';
++ljuskrona: LightSource 'ljus+krona+n*ljuskronor';
+
+// Båda dessa fungerar men inte den sista, fixa
+//+gatulyktor: LightSource 'gatu+lyktor+na' isPlural = true;
++gatulyktor: LightSource 'gatu+lyktor+na*gatulyktor+na' isPlural = true;
+//+gatulyktor: LightSource 'gatu+lyktor+na*gatulyktor' isPlural = true;
+
++virke: LightSource 'virke+t*virke' isMassNoun = true;
++olja: LightSource 'olja+n*olja' isMassNoun = true;
+
+
+
 #define __DEBUG
 
 modify testRunner 
@@ -45,6 +58,42 @@ modify Thing
     // the behavior of initializeVocabWith is easier to test
    }
 ;
+
+UnitTest 'Tänt ljus neutrum' run {
+  assertThat(ljus.nameLit).isEqualTo('tänt ljus');
+  assertThat(ljus.aNameLit()).isEqualTo('ett tänt ljus');
+  assertThat(ljus.theNameLit).isEqualTo('det tända ljuset');
+  assertThat(ljus.pluralNameLit).isEqualTo('tända ljus'); 
+
+};
+
+UnitTest 'Tänd ljuskrona utrum' run {
+  assertThat(ljuskrona.nameLit).isEqualTo('tänd ljuskrona');
+  assertThat(ljuskrona.aNameLit()).isEqualTo('en tänd ljuskrona');
+  assertThat(ljuskrona.theNameLit).isEqualTo('den tända ljuskronan');
+  assertThat(ljuskrona.pluralNameLit).isEqualTo('tända ljuskronor'); 
+};
+
+UnitTest 'Tända gatulyktor plural' run {
+  assertThat(gatulyktor.nameLit).isEqualTo('tända gatulyktor');
+  assertThat(gatulyktor.aNameLit()).isEqualTo('tända gatulyktor');
+  assertThat(gatulyktor.theNameLit).isEqualTo('de tända gatulyktorna');
+  assertThat(gatulyktor.pluralNameLit).isEqualTo('tända gatulyktor'); 
+};
+
+
+UnitTest 'Tändt virke/olja massnoun' run {
+  assertThat(virke.nameLit).isEqualTo('tänt virke');
+  assertThat(virke.aNameLit()).isEqualTo('tänt virke');
+  assertThat(virke.theNameLit).isEqualTo('det tända virket');
+  assertThat(virke.pluralNameLit).isEqualTo('tänt virke'); 
+
+  assertThat(olja.nameLit).isEqualTo('tänd olja');
+  assertThat(olja.aNameLit()).isEqualTo('tänd olja');
+  assertThat(olja.theNameLit).isEqualTo('den tända oljan');
+  assertThat(olja.pluralNameLit).isEqualTo('tänd olja'); 
+};
+
 
 /*
 UnitTest 'LiteralTAction.getOtherMessageObjectPronoun(which)' run {

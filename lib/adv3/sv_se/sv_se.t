@@ -665,8 +665,9 @@ modify VocabObject
                             // Detta då det oftare är jobbigare att böja till pluralName med pluralNameFrom()
                             if(sectPart == &plural) {
                                 if(!foundPluralName) {
-                                    foundPluralName=true;                                
+                                    foundPluralName=true;   
                                     pluralName = forms.standardForm;
+                                    //tadsSay('tilldelar pluralname <<pluralName>>\n');                             
                                 }
                             }                            
 
@@ -695,9 +696,17 @@ modify VocabObject
                                     name = forms.standardForm;
                                     //tadsSay('Tilldelar objektets namn då det saknas: <<name>> \n');
                                 }
+
+
                             }
                         } else {
-
+                            if(sectPart == &plural) {
+                                if(!foundPluralName) {
+                                    foundPluralName=true;   
+                                    pluralName = cur;
+                                    //tadsSay('tilldelar pluralname <<pluralName>>\n');                             
+                                }
+                            }                            
                             if(isNounOrPluralAndCorrespondingSectPart) {
                                 // wordPart blir till nuvarande sectPart. Detta eftersom
                                 // ordet läggs till senare med just innehållet i wordPart
@@ -709,7 +718,6 @@ modify VocabObject
                                     name = cur;
                                     //tadsSay('Tilldelar objektets namn då det saknas: <<name>> \n');
                                 }
-                                
                             }
                         }
                     }
@@ -1811,9 +1819,9 @@ modify Thing
          *   if it's marked as having plural usage, just use the ordinary
          *   name, since it's already plural
          */
-        if (isPlural)
+        if (isPlural || isMassNoun)
             return str;
-
+        
         /* check for a 'phrase of phrase' format */
         if (rexMatch(patOfPhrase, str) != nil)
         {
@@ -3853,26 +3861,29 @@ modify litUnlitDistinguisher
  */
 modify LightSource
     /* provide lit/unlit names for litUnlitDistinguisher */
-    nameLit = ((isLit ? 'tänd ' : 'otänd ') + name) // TODO: t/d/a
+    //nameLit = ((isLit ? 'tänd ' : 'otänd ') + name) // TODO: t/d/a
+    nameLit = '<<isLit?'':'o'>>tän<<endingForNounDTDa>> <<name>>'
     aNameLit()
     {
-        /*
-         *   if this is a mass noun or a plural name, just use the name
-         *   with lit/unlit; otherwise, add "a"
-         */
-        //TODO: TESTA rätt artikel en/ett/flera
-        if (isPlural || isMassNoun) {
-            return (isLit ? 'tända ' : 'otända ') + name;
+        local form = '<<isLit?'':'o'>>tän<<endingForNounDTDa>>';
+        if (isMassNoun || isPlural) {
+            // Vid antingen:
+            // Massnoun: tänt virke, tänd bensin (lite virke/bensin)
+            // Plural: tända lyktor (t ex några lyktor)
+            // så skippar vi artikeln
+            return '<<form>> <<name>>'; 
         }
-        if(isNeuter) {
-            return (isLit ? 'ett tänt ' : 'ett otänt ') + name;
-        }
-        return (isLit ? 'en tänd ' : 'en otänd ') + name;
-
+        
+        local article = isNeuter ? 'ett' : 'en';
+        return '<<article>> <<form>> <<name>>';
     }
+
     //TODO: den/det
-    theNameLit = ((isLit ? 'tända ' : 'släckta ') + name)
-    pluralNameLit = ((isLit ? 'tända ' : 'släckta ') + pluralName)
+    //theNameLit = ((isLit ? 'tända ' : 'släckta ') + definitiveForm)
+    //pluralNameLit = ((isLit ? 'tända ' : 'släckta ') + pluralName)
+    
+    theNameLit = (isPlural && !isMassNoun? 'de ' : isNeuter ? 'det ' : 'den ') + ((isLit ? 'tända ' : 'otända ') + definitiveForm)
+    pluralNameLit = ((isMassNoun? ('<<isNeuter?'tänt ':'tänd '>>') : ((isLit ? 'tända ' : 'otända '))) + pluralName)
 
     /*
      *   Allow 'lit' and 'unlit' as adjectives - but even though we define
@@ -3880,7 +3891,11 @@ modify LightSource
      *   one appropriate for our current state, thanks to our state
      *   objects.
      */
-    adjective = 'tänd' 'otänd'
+    adjective = 'tända' 'otända' 'tänd' 'otänd' 'tänt' 'otänt' 
+
+    // Går tyvärr inte:
+    //adjective = (isPlural ? ['tända', 'otända'] : isNeuter? ['tänt', 'otänt']  : ['tänd','otänd'] )
+
 ;
 
 /*
