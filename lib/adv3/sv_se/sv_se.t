@@ -3878,12 +3878,8 @@ modify LightSource
         return '<<article>> <<form>> <<name>>';
     }
 
-    //TODO: den/det
-    //theNameLit = ((isLit ? 'tända ' : 'släckta ') + definitiveForm)
-    //pluralNameLit = ((isLit ? 'tända ' : 'släckta ') + pluralName)
-    
-    theNameLit = (isPlural && !isMassNoun? 'de ' : isNeuter ? 'det ' : 'den ') + ((isLit ? 'tända ' : 'otända ') + definitiveForm)
-    pluralNameLit = ((isMassNoun? ('<<isNeuter?'tänt ':'tänd '>>') : ((isLit ? 'tända ' : 'otända '))) + pluralName)
+    theNameLit = (isPlural && !isMassNoun? 'de ' : isNeuter ? 'det ' : 'den ') + ((isLit?'':'o')+'tända ' + definitiveForm)
+    pluralNameLit = (isLit?'':'o')+'tän' + (isMassNoun? (isNeuter? 't':'d'):'da') + ' ' + pluralName
 
     /*
      *   Allow 'lit' and 'unlit' as adjectives - but even though we define
@@ -3893,9 +3889,6 @@ modify LightSource
      */
     adjective = 'tända' 'otända' 'tänd' 'otänd' 'tänt' 'otänt' 
 
-    // Går tyvärr inte:
-    //adjective = (isPlural ? ['tända', 'otända'] : isNeuter? ['tänt', 'otänt']  : ['tänd','otänd'] )
-
 ;
 
 /*
@@ -3904,10 +3897,11 @@ modify LightSource
  *   status.
  */
 lightSourceStateOn: ThingState 'avger ljus'
-    stateTokens = ['tänd']
+   stateTokens = (isPlural && !isMassNoun)? ['tända'] : isNeuter? ['tänt'] : ['tänd'] 
 ;
+
 lightSourceStateOff: ThingState
-    stateTokens = ['otänd']
+    stateTokens = (isPlural && !isMassNoun)? ['otända'] : isNeuter? ['otänt'] : ['otänd'] 
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -4072,25 +4066,22 @@ langMessageBuilder: MessageBuilder
         // Nominativ
         ['jag',       &theName, 'actor', nil, true],
         ['du',        &theName, 'actor', nil, true],
-        
- 
         ['den/ref',   &theName,  nil,    nil, true],
         ['det/ref',   &theName,  nil,    nil, true],
         ['de/ref',    &theName,  nil,    nil, true],
         ['de/ref',    &theName,  nil,    nil, true],
 
-        // Dessa tas bort, använd den/ref istället
-        //['den/han', &theName, nil, nil, true],
-        //['den/hon', &theName, nil, nil, true],
-
-        // TODO: byt namn till den/subj etc...
-        ['den/nom',   &itNom,    nil,    nil, true],
-        ['det/nom',   &itNom,    nil,    nil, true],
-        ['de/nom',    &itNom,    nil,    nil, true],
-
-        // DE här två borde kanske vara hellre vara han/ref, hon/ref
+        // Dessa två borde kanske vara hellre vara han/ref, hon/ref?
         ['du/han',    &theName, 'actor', nil, true],
         ['du/hon',    &theName, 'actor', nil, true],
+
+        // Subjektform, jag, du, han, hon, den, det + vi, ni, de
+        ['han/subj',   &itNom,    nil,    nil, true],
+        ['hon/subj',   &itNom,    nil,    nil, true],
+        ['den/subj',   &itNom,    nil,    nil, true],
+        ['det/subj',   &itNom,    nil,    nil, true],
+        ['de/subj',    &itNom,    nil,    nil, true],
+
 
         // Och hur blir det i praktiken de används? Bör dessa två hellre användas
         // med theName i första hand?

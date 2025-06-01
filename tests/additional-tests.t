@@ -29,6 +29,9 @@ lab: Room 'labbet' 'labbet';
   isProperName = true
   isHim = true
 ;
+++hatt: Wearable 'hatt+en'
+  isWorn =  true
+;
 
 +tingest: Thing 'tingest+en';
 +skapet: Thing 'skåp+et';
@@ -65,6 +68,13 @@ UnitTest 'Tänt ljus neutrum' run {
   assertThat(ljus.theNameLit).isEqualTo('det tända ljuset');
   assertThat(ljus.pluralNameLit).isEqualTo('tända ljus'); 
 
+  ljus.isLit = nil;
+  assertThat(ljus.nameLit).isEqualTo('otänt ljus');
+  assertThat(ljus.aNameLit()).isEqualTo('ett otänt ljus');
+  assertThat(ljus.theNameLit).isEqualTo('det otända ljuset');
+  assertThat(ljus.pluralNameLit).isEqualTo('otända ljus'); 
+  olja.isLit = true;
+
 };
 
 UnitTest 'Tänd ljuskrona utrum' run {
@@ -72,6 +82,13 @@ UnitTest 'Tänd ljuskrona utrum' run {
   assertThat(ljuskrona.aNameLit()).isEqualTo('en tänd ljuskrona');
   assertThat(ljuskrona.theNameLit).isEqualTo('den tända ljuskronan');
   assertThat(ljuskrona.pluralNameLit).isEqualTo('tända ljuskronor'); 
+
+  ljuskrona.isLit = nil;
+  assertThat(ljuskrona.nameLit).isEqualTo('otänd ljuskrona');
+  assertThat(ljuskrona.aNameLit()).isEqualTo('en otänd ljuskrona');
+  assertThat(ljuskrona.theNameLit).isEqualTo('den otända ljuskronan');
+  assertThat(ljuskrona.pluralNameLit).isEqualTo('otända ljuskronor'); 
+  ljuskrona.isLit = true;
 };
 
 UnitTest 'Tända gatulyktor plural' run {
@@ -79,6 +96,14 @@ UnitTest 'Tända gatulyktor plural' run {
   assertThat(gatulyktor.aNameLit()).isEqualTo('tända gatulyktor');
   assertThat(gatulyktor.theNameLit).isEqualTo('de tända gatulyktorna');
   assertThat(gatulyktor.pluralNameLit).isEqualTo('tända gatulyktor'); 
+
+  gatulyktor.isLit = nil;
+  assertThat(gatulyktor.nameLit).isEqualTo('otända gatulyktor');
+  assertThat(gatulyktor.aNameLit()).isEqualTo('otända gatulyktor');
+  assertThat(gatulyktor.theNameLit).isEqualTo('de otända gatulyktorna');
+  assertThat(gatulyktor.pluralNameLit).isEqualTo('otända gatulyktor'); 
+  gatulyktor.isLit = true;
+
 };
 
 
@@ -92,6 +117,15 @@ UnitTest 'Tändt virke/olja massnoun' run {
   assertThat(olja.aNameLit()).isEqualTo('tänd olja');
   assertThat(olja.theNameLit).isEqualTo('den tända oljan');
   assertThat(olja.pluralNameLit).isEqualTo('tänd olja'); 
+
+  olja.isLit = nil;
+
+  assertThat(olja.nameLit).isEqualTo('otänd olja');
+  assertThat(olja.aNameLit()).isEqualTo('otänd olja');
+  assertThat(olja.theNameLit).isEqualTo('den otända oljan');
+  assertThat(olja.pluralNameLit).isEqualTo('otänd olja'); 
+  olja.isLit = true;
+
 };
 
 
