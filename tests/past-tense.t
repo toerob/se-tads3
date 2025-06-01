@@ -79,7 +79,9 @@ papperetObjNeutrumSingular: Thing 'papper+et' 'papper' ;
 skyltarObjUtrumPlural: Thing 'skylt*skyltar+na' 'skyltar' isPlural=true;
 
 dorrenObjUtrumSingular: Thing 'dörr+en' 'dörr';
-skapetObjNeutrumSingular: Thing 'skåp+et' 'skåp' ;
+skapetObjNeutrumSingular: OpenableContainer 'skåp+et' 'skåp'
+  isOpen = true;
+
 +snickargladje: Component 'snickareglädje+n' 'snickargläde';
 
 dorrarObjUterPlural: Thing 'dörr+en*dörrar+na' 'dörrar' isPlural = true;
@@ -2637,7 +2639,7 @@ UnitTest 'playerActionMessages' run {
       &cannotDigWithMsg -> 'Du såg inget sätt att använda den så som en spade.',
       &alreadyHoldingMsg -> 'Du höll redan tingesten.',
       &takingSelfMsg -> 'Du kunde inte plocka upp dig själv',
-      &notCarryingMsg -> 'Du bär inte på den.',
+      &notCarryingMsg -> 'Du bar inte på den.',
       &droppingSelfMsg -> 'Du kunde inte släppa dig själv.',
       &puttingSelfMsg -> 'Du kunde inte göra det med dig själv.',
       &throwingSelfMsg -> 'Du kunde inte kasta dig själv.',
@@ -2912,7 +2914,7 @@ UnitTest 'npcActionMessages' run {
       &cannotDigWithMsg -> 'Bob såg inget sätt att använda den så som en spade.',
       &alreadyHoldingMsg -> 'Bob höll redan tingesten.',
       &takingSelfMsg -> 'Bob kunde inte plocka upp sig själv',
-      &notCarryingMsg -> 'Bob bär inte på den.',
+      &notCarryingMsg -> 'Bob bar inte på den.',
       &droppingSelfMsg -> 'Bob kunde inte släppa sig själv.',
       &puttingSelfMsg -> 'Bob kunde inte göra det med sig själv.',
       &throwingSelfMsg -> 'Bob kunde inte kasta sig själv.',
@@ -3147,6 +3149,403 @@ UnitTest 'npcActionMessages' run {
     
     assertThat(str).startsWith(expectedOutput);
   });
+};
+
+
+
+
+UnitTest 'roomLister' run {
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  setPlayer(spelare2aPerspektiv);
+  gActor = spelare2aPerspektiv;
+  roomLister.showListPrefixWide(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('Du såg');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  roomLister.showListSuffixWide(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith(' där.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  roomLister.showListPrefixTall(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('Du såg:');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  roomLister.showListContentsPrefixTall(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('Du såg:');
+
+};
+
+
+UnitTest 'darkRoomLister' run {
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  darkRoomLister.showListPrefixWide(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('I mörkret kunde du se');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  darkRoomLister.showListSuffixWide(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  darkRoomLister.showListPrefixTall(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('I mörkret kunde du se:');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  darkRoomLister.showListContentsPrefixTall(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('I mörkret kunde du se:');
+
+};
+
+
+UnitTest 'RemoteRoomLister' run {
+  local lister = new RemoteRoomLister(baren);
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  lister.showListPrefixWide(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('\^i baren, såg du');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  lister.showListSuffixWide(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  lister.showListPrefixTall(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('\^i baren, såg du:');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  lister.showListContentsPrefixTall(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('\^i baren, såg du:');
+
+};
+
+
+
+UnitTest 'actorSingleInventoryLister' run {
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorSingleInventoryLister.showListPrefixWide(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('Du bar på');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorSingleInventoryLister.showListSuffixWide(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorSingleInventoryLister.showListPrefixTall(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('Du bar på:');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorSingleInventoryLister.showListContentsPrefixTall(0, nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('Du, som bar på:');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorSingleInventoryLister.showListEmpty(nil, spelare2aPerspektiv);
+  assertThat(o).startsWith('Du var tomhänt');
+};
+
+
+
+UnitTest 'actorInventoryLister.showCombinedInventoryList 2a-perspektiv' run {
+  actorInventoryLister.showCombinedInventoryList(spelare2aPerspektiv, 'en jacka', 'en mössa');
+  assertThat(o).startsWith('Du bar på en jacka, och du hade på dig en mössa.');
+};
+
+UnitTest 'LiteralTAction.getOtherMessageObjectPronoun(which)' run {
+  actorInventoryLister.showCombinedInventoryList(spelare2aPerspektiv, '', 'en mössa');
+  assertThat(o).startsWith('Du bar inte på någonting, och hade på dig en mössa.');
+};
+
+UnitTest 'LiteralTAction.getOtherMessageObjectPronoun(which)' run {
+  actorInventoryLister.showCombinedInventoryList(spelare2aPerspektiv, 'en jacka', '');
+  assertThat(o).startsWith('Du bar på en jacka.');
+};
+
+UnitTest 'LiteralTAction.getOtherMessageObjectPronoun(which)' run {
+  actorInventoryLister.showCombinedInventoryList(spelare2aPerspektiv, '', '');
+  assertThat(o).startsWith('Du var tomhänt.');
+};
+
+
+
+UnitTest 'actorInventoryLister.showCombinedInventoryList 3e-perspektiv' run {
+  actorInventoryLister.showCombinedInventoryList(spelare3dePerspektiv, 'en jacka', 'en mössa');
+  assertThat(o).startsWith('Bob bar på en jacka, och han hade på sig en mössa.');
+};
+
+UnitTest 'LiteralTAction.getOtherMessageObjectPronoun(which)' run {
+  actorInventoryLister.showCombinedInventoryList(spelare3dePerspektiv, '', 'en mössa');
+  assertThat(o).startsWith('Bob bar inte på någonting, och hade på sig en mössa.');
+};
+
+UnitTest 'LiteralTAction.getOtherMessageObjectPronoun(which)' run {
+  actorInventoryLister.showCombinedInventoryList(spelare3dePerspektiv, 'en jacka', '');
+  assertThat(o).startsWith('Bob bar på en jacka.');
+};
+
+UnitTest 'LiteralTAction.getOtherMessageObjectPronoun(which)' run {
+  actorInventoryLister.showCombinedInventoryList(spelare3dePerspektiv, '', '');
+  assertThat(o).startsWith('Bob var tomhänt.');
+};
+
+
+
+
+UnitTest 'actorHoldingDescInventoryListerLong 2a-person' run {
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerLong.showInventoryWearingOnly(spelare2aPerspektiv, 'en mössa');
+  assertThat(o).contains('Du hade på dig en mössa.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerLong.showInventoryCarryingOnly(spelare2aPerspektiv, 'en mössa');
+  assertThat(o).contains('Du bar på en mössa.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerLong.showInventoryShortLists(spelare2aPerspektiv, 'en mössa', 'en jacka');
+  assertThat(o).contains('Du bar på en mössa, och du hade på dig en jacka.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerLong.showInventoryLongLists(spelare2aPerspektiv, 'en mössa', 'en jacka');
+  assertThat(o).contains('Du bar på en mössa.');
+  assertThat(o).contains('Du hade på dig en jacka.');
+  
+};
+
+
+UnitTest 'actorHoldingDescInventoryListerLong 3e-person' run {
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerLong.showInventoryWearingOnly(spelare3dePerspektiv, 'en mössa');
+  assertThat(o).contains('Bob hade på sig en mössa.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerLong.showInventoryCarryingOnly(spelare3dePerspektiv, 'en mössa');
+  assertThat(o).contains('Bob bar på en mössa.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerLong.showInventoryShortLists(spelare3dePerspektiv, 'en mössa', 'en jacka');
+  assertThat(o).contains('Bob bar på en mössa, och han hade på sig en jacka.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerLong.showInventoryLongLists(spelare3dePerspektiv, 'en mössa', 'en jacka');
+  assertThat(o).contains('Bob bar på en mössa.');
+  assertThat(o).contains('Han hade på sig en jacka.');
+  
+};
+
+UnitTest 'actorHoldingDescInventoryListerShort' run {
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerShort.showInventoryWearingOnly(spelare3dePerspektiv, 'en mössa');
+  assertThat(o).contains('Han hade på sig en mössa.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerShort.showInventoryCarryingOnly(spelare3dePerspektiv, 'en mössa');
+  assertThat(o).contains('Han bar på en mössa.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerShort.showInventoryShortLists(spelare3dePerspektiv, 'en mössa', 'en jacka');
+  assertThat(o).contains('Han bar på en mössa, och han hade på sig en jacka.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerShort.showInventoryLongLists(spelare3dePerspektiv, 'en mössa', 'en jacka');
+  assertThat(o).contains('Han bar på en mössa.');
+  assertThat(o).contains('Han hade på sig en jacka.');
+  
+};
+
+
+
+UnitTest 'actorHoldingDescInventoryListerShort' run {
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerShort.showInventoryWearingOnly(spelare3dePerspektiv, 'en mössa');
+  assertThat(o).contains('Han hade på sig en mössa.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerShort.showInventoryCarryingOnly(spelare3dePerspektiv, 'en mössa');
+  assertThat(o).contains('Han bar på en mössa.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerShort.showInventoryShortLists(spelare3dePerspektiv, 'en mössa', 'en jacka');
+  assertThat(o).contains('Han bar på en mössa, och han hade på sig en jacka.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  actorHoldingDescInventoryListerShort.showInventoryLongLists(spelare3dePerspektiv, 'en mössa', 'en jacka');
+  assertThat(o).contains('Han bar på en mössa.');
+  assertThat(o).contains('Han hade på sig en jacka.');
+  
+};
+
+
+UnitTest 'BaseThingContentsLister' run {
+  local lister = new BaseThingContentsLister();
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  lister.showListPrefixWide(0, nil, skapetObjNeutrumSingular);
+  assertThat(o).startsWith('\^skåpet innehöll');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  lister.showListSuffixWide(0, nil, skapetObjNeutrumSingular);
+  assertThat(o).startsWith('.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  lister.showListPrefixTall(0, nil, skapetObjNeutrumSingular);
+  assertThat(o).startsWith('\^skåpet innehöll:');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  lister.showListContentsPrefixTall(0, nil, skapetObjNeutrumSingular);
+  assertThat(o).startsWith('ett skåp, som innehöll:');
+
+};
+
+
+
+UnitTest 'thingDescContentsLister' run {
+  thingDescContentsLister.showListPrefixWide(0, nil, skapetObjNeutrumSingular);
+  assertThat(o).startsWith('\^det innehöll');
+
+};
+
+UnitTest 'openableDescContentsLister' run {
+  openableDescContentsLister.showListEmpty(0, skapetObjNeutrumSingular);
+  assertThat(o).startsWith('\^det var öppet.');
+
+  mainOutputStream.capturedOutputBuffer = new StringBuffer();
+  openableDescContentsLister.showListPrefixWide(0, nil, skapetObjNeutrumSingular);
+  assertThat(o).startsWith('\^det var öppet, och innehöll');
+
+};
+
+
+UnitTest 'LookWhereContentsLister' run {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    gTranscript = new CommandTranscript();
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = ExamineAction.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular]);
+    
+    new LookWhereContentsLister().showListEmpty(nil, skapetObjNeutrumSingular);
+
+    gTranscript.showReports(true);
+    gTranscript.clearReports();  
+    assertThat(o).contains('Du såg ingenting i skåpet.');
+
+};
+
+
+UnitTest 'LookWhereContentsLister' run {
+    gTranscript = new CommandTranscript();
+    setPlayer(pirat);
+    gActor = pirat;
+    gAction = ExamineAction.createActionInstance();
+    gAction.setCurrentObjects([skapetObjNeutrumSingular]);
+    
+    thingLookInLister.showListEmpty(nil, skapetObjNeutrumSingular);
+    
+    gTranscript.showReports(true);
+    gTranscript.clearReports();  
+    assertThat(o).contains('Du såg inget ovanligt i skåpet.');
+};
+
+
+UnitTest 'openableOpeningLister.showListPrefixWide' run {
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    openableOpeningLister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
+    assertThat(o).contains('Bob öppnade skåpet och fann');
+};
+
+
+UnitTest 'BaseContentsLister' run {
+    local lister = new BaseContentsLister();
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    lister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
+    assertThat(o).contains('\^i skåpet var');
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    lister.showListPrefixTall(0, nil, skapetObjNeutrumSingular);
+    assertThat(o).startsWith('\^i skåpet var:');
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    lister.showListContentsPrefixTall(0, nil, skapetObjNeutrumSingular);
+    assertThat(o).startsWith('ett skåp, i vilket var:');
+
+};
+
+UnitTest 'BaseContentsLister' run {
+    local lister = new BaseUndersideContentsLister();
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    lister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
+    assertThat(o).contains('\^i skåpet var');
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    lister.showListPrefixTall(0, nil, skapetObjNeutrumSingular);
+    assertThat(o).startsWith('\^i skåpet var:');
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    lister.showListContentsPrefixTall(0, nil, skapetObjNeutrumSingular);
+    assertThat(o).startsWith('ett skåp, i vilket var:');
+
+};
+
+
+UnitTest 'undersideAbandonContentsLister' run {
+    local lister = undersideAbandonContentsLister;
+
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    lister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
+    assertThat(o).contains('Vid flytten av skåpet avslöjades');
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    lister.showListSuffixWide(0, nil, skapetObjNeutrumSingular);
+    assertThat(o).startsWith(' nedanför.');
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    lister.showListPrefixTall(0, nil, skapetObjNeutrumSingular);
+    assertThat(o).startsWith('Vid flytten av skåpet avslöjades:');
+
+};
+
+UnitTest 'rearAbandonContentsLister' run {
+    local lister = rearAbandonContentsLister;
+
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    lister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
+    assertThat(o).contains('Vid flytten av skåpet avslöjades');
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    lister.showListSuffixWide(0, nil, skapetObjNeutrumSingular);
+    assertThat(o).startsWith(' bakom det.');
+
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    lister.showListPrefixTall(0, nil, skapetObjNeutrumSingular);
+    assertThat(o).startsWith('Vid flytten av skåpet avslöjades:');
+
+};
+
+UnitTest 'rearDescContentsLister' run {
+    local lister = rearDescContentsLister;
+
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    lister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
+    assertThat(o).contains('Bakom skåpet var');
+};
+
+UnitTest 'BaseInlineContentsLister' run {
+    local lister = new BaseInlineContentsLister();
+
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    lister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
+    assertThat(o).contains(' (i vilket var');
+};
+
+UnitTest 'inlineListingContentsLister' run {
+    local lister = inlineListingContentsLister;
+
+    setPlayer(spelare3dePerspektiv);
+    gActor = spelare3dePerspektiv;
+    lister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
+    assertThat(o).contains(' (som innehöll');
 };
 
 

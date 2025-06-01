@@ -30,7 +30,11 @@ lab: Room 'labbet' 'labbet';
   isHim = true
 ;
 ++hatt: Wearable 'hatt+en/kläd+er'
-  //isWorn =  true
+  wornBy = spelare2aPerspektiv 
+;
+
+++jacka: Wearable 'jacka+n/kläd+er' 
+  wornBy = spelare2aPerspektiv
 ;
 
 +tingest: Thing 'tingest+en';
@@ -47,7 +51,6 @@ lab: Room 'labbet' 'labbet';
 +virke: LightSource 'virke+t*virke' isMassNoun = true;
 +olja: LightSource 'olja+n*olja' isMassNoun = true;
 
-+jacka: Wearable 'jacka+n/kläd+er';
 
 #define __DEBUG
 
@@ -128,14 +131,3 @@ UnitTest 'Tändt virke/olja massnoun' run {
 
 };
 
-
-/*
-UnitTest 'LiteralTAction.getOtherMessageObjectPronoun(which)' run {
-  gAction = TurnToAction.createActionInstance();
-  gAction.setCurrentObjects([tingest]);
-  gAction.setActors([gActor]);
-  setPlayer(spelare2aPerspektiv);
-  assertThat(gAction.getOtherMessageObjectPronoun(DirectObject)).contains('det');
-  assertThat(gAction.getQuestionInf(DirectObject)).contains('vrida');
-};
-*/

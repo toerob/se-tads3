@@ -2585,10 +2585,6 @@ modify Actor
     {
         return tSel(['har', 'har', 'har', 'har', 'har', 'har']
                     [conjugationSelector], 'hade');
-
-
-        //return tSel(['hade', 'hade', 'har', 'hade', 'hade', 'hade']
-        //            [conjugationSelector], 'hade');
     }
 
     /*

@@ -2898,7 +2898,7 @@ playerActionMessages: MessageHelper
     takingSelfMsg = '{Du/han} {kan} inte plocka upp {dig_själv}. '
 
     /* dropping an object not being carried */
-    notCarryingMsg = '{Du/han} bär inte på {det dobj/honom}. '
+    notCarryingMsg = '{Du/han} {bär|bar} inte på {det dobj/honom}. '
 
     /* actor dropping self */
     droppingSelfMsg = '{Du/han} {kan} inte släppa {dig_själv}. '
@@ -4400,12 +4400,12 @@ class RemoteRoomLister: Lister
     construct(room) { remoteRoom = room; }
     
     showListPrefixWide(itemCount, pov, parent)
-        { "\^<<remoteRoom.inRoomName(pov)>>, {du/han} {ser} "; }
+        { "\^<<remoteRoom.inRoomName(pov)>>, {ser} {du/han} "; }
     showListSuffixWide(itemCount, pov, parent)
         { ". "; }
 
     showListPrefixTall(itemCount, pov, parent)
-        { "\^<<remoteRoom.inRoomName(pov)>>, {du/han} {ser}:"; }
+        { "\^<<remoteRoom.inRoomName(pov)>>, {ser} {du/han}:"; }
 
     /* the remote room we're viewing */
     remoteRoom = nil
@@ -4450,7 +4450,7 @@ actorSingleInventoryLister: InventoryLister
         { "<<buildSynthParam('En/han', parent)>>, som {bär|bar} på:"; }
 
     showListEmpty(pov, parent)
-        { "<<buildSynthParam('Den/ref', parent)>> {är} --tomhänt. "; }
+        { "<<buildSynthParam('Den/ref', parent)>> {är} tomhänt. "; }
 ;
 
 /*
@@ -4567,8 +4567,9 @@ actorInventoryLister: DividedInventoryLister
     }
     showInventoryWearingOnly(parent, wearing)
     {
+        local nm = gSynthMessageParam(parent);
         /* we're carrying nothing but wearing some items */
-        "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på ingenting, och {har} på {sig} <<wearing>>. ";
+        "<<buildParam('Den/ref', nm)>> {bär|bar} inte på någonting, och {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
@@ -4582,7 +4583,7 @@ actorInventoryLister: DividedInventoryLister
         // TODO: it\'s
         /* short lists - combine carried and worn in a single sentence */
         "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>,
-        och <<buildParam('den/ref', nm)>>{subj} {har} på {sig} <<wearing>>. ";
+        och <<buildParam('han/subj', nm)>>{subj} {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
     {
@@ -4591,7 +4592,7 @@ actorInventoryLister: DividedInventoryLister
         // TODO:
         /* long lists - show carried and worn in separate sentences */
         "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>.
-        <<buildParam('Det/han', nm)>> {har} på {sig} <<wearing>>. ";
+        <<buildParam('Det/han', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
 
     /*
@@ -4622,8 +4623,9 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
     }
     showInventoryWearingOnly(parent, wearing)
     {
+        local nm = gSynthMessageParam(parent);
         /* we're carrying nothing but wearing some items */
-        "<.p><<buildSynthParam('Den/ref', parent)>> {har} på {sig} <<wearing>>. ";
+        "<.p><<buildParam('Den/ref', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
@@ -4635,16 +4637,15 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
         local nm = gSynthMessageParam(parent);
 
         /* short lists - combine carried and worn in a single sentence */
-        "<.p><<buildParam('Den/ref', nm)>> bär på <<carrying>>,
-        och <<buildParam('det/han', nm)>>{subj} {har} på {sig} <<wearing>>. ";
+        "<.p><<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>,
+        och <<buildParam('han/subj', nm)>>{subj} {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
     {
         local nm = gSynthMessageParam(parent);
 
         /* long lists - show carried and worn in separate sentences */
-        "<.p><<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>.
-        <<buildParam('det/han', nm)>> {har} på {sig} <<wearing>>. ";
+        "<.p><<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>. <<buildParam('Det/han', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
 ;
 
@@ -4656,8 +4657,9 @@ actorHoldingDescInventoryListerShort: actorInventoryLister
     }
     showInventoryWearingOnly(parent, wearing)
     {
+        local nm = gSynthMessageParam(parent);
         /* we're carrying nothing but wearing some items */
-        "<<buildSynthParam('Det/han', parent)>> {har} på {sig} <<wearing>>. ";
+        "<<buildParam('Det/han', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
@@ -4670,7 +4672,7 @@ actorHoldingDescInventoryListerShort: actorInventoryLister
 
         /* short lists - combine carried and worn in a single sentence */
         "<<buildParam('Det/han', nm)>> {bär|bar} på <<carrying>>, och
-        <<buildParam('det/han', nm)>>{subj} {har} på {sig} <<wearing>>. ";
+        <<buildParam('det/han', nm)>>{subj} {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
     {
@@ -4678,7 +4680,7 @@ actorHoldingDescInventoryListerShort: actorInventoryLister
 
         /* long lists - show carried and worn in separate sentences */
         "<<buildParam('Det/han', nm)>> {bär|bar} på <<carrying>>.
-        <<buildParam('det/han', nm)>> {har} på {sig} <<wearing>>. ";
+        <<buildParam('Det/han', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
 ;
 
@@ -4716,7 +4718,7 @@ thingContentsLister: ContentsLister, BaseThingContentsLister
  */
 thingDescContentsLister: DescContentsLister, BaseThingContentsLister
     showListPrefixWide(itemCount, pov, parent)
-        { "\^<<parent.itVerb('innehåller')>> "; }
+        { "\^<<parent.itVerb('{innehåller|innehöll}')>> "; }
 ;
 
 /*
@@ -4746,8 +4748,7 @@ class LookWhereContentsLister: DescContentsLister
     showListEmpty(pov, parent)
     {
         /* show a default message indicating the surface is empty */
-        gMessageParams(parent);
-        defaultDescReport('{Du/han} {ser} ingenting ' + parent.objInPrep + ' {ref parent/honom}. ');
+        defaultDescReport('{Du/han} {ser} ingenting <<parent.objInPrep>> <<parent.theNameObj>>. ');
     }
 ;
 
@@ -4769,7 +4770,7 @@ thingLookInLister: LookWhereContentsLister, BaseThingContentsLister
          *   specially-described contents. 
          */
         gMessageParams(parent);
-        defaultDescReport('{Du/han} {ser} inget ovanligt i {ref parent/honom}. ');
+        defaultDescReport('{Du/han} {ser} inget ovanligt i <<parent.theNameObj>>. ');
     }
 ;
 
@@ -4915,11 +4916,11 @@ undersideLookUnderLister: LookWhereContentsLister, BaseUndersideContentsLister
 undersideAbandonContentsLister: undersideLookUnderLister
     showListEmpty(pov, parent) { }
     showListPrefixWide(itemCount, pov, parent)
-        { "Flyttandet av  <<parent.theNameObj>> avslöja<<tSel('r', 'de')>> "; }
+        { "Vid flytten av <<parent.theNameObj>> avslöja<<tSel('s', 'des')>> "; }
     showListSuffixWide(itemCount, pov, parent)
         { " nedanför. "; }
     showListPrefixTall(itemCount, pov, parent)
-        { "Flyttandet av  <<parent.theNameObj>> avslöja<<tSel('r', 'de')>>:"; }
+        { "Vid flytten av <<parent.theNameObj>> avslöja<<tSel('s', 'des')>>:"; }
 ;
  
 /* contents lister for an Underside, used in a long description */
@@ -4950,11 +4951,11 @@ rearLookBehindLister: LookWhereContentsLister, BaseRearContentsLister
 rearAbandonContentsLister: undersideLookUnderLister
     showListEmpty(pov, parent) { }
     showListPrefixWide(itemCount, pov, parent)
-        { "Flyttandet av <<parent.theNameObj>> avslöja<<tSel('r', 'de')>> "; }
+        { "Vid flytten av <<parent.theNameObj>> avslöja<<tSel('s', 'des')>> "; }
     showListSuffixWide(itemCount, pov, parent)
         { " bakom <<parent.itObj>>. "; }
     showListPrefixTall(itemCount, pov, parent)
-        { "Flyttandet av <<parent.theNameObj>> avslöja<<tSel('r', 'de')>>:"; }
+        { "Vid flytten av <<parent.theNameObj>> avslöja<<tSel('s', 'des')>>:"; }
 ;
  
 /* long-description contents lister for a RearContainer/Surface */
@@ -5047,7 +5048,7 @@ keyringExamineContentsLister: DescContentsLister
  */
 aboardVehicleLister: Lister
     showListPrefixWide(itemCount, pov, parent)
-        { " (håller i "; }
+        { " ({håller|höll} i "; }
     showListSuffixWide(itemCount, pov, parent)
         { ")"; }
 
