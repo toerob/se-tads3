@@ -29,8 +29,8 @@ lab: Room 'labbet' 'labbet';
   isProperName = true
   isHim = true
 ;
-++hatt: Wearable 'hatt+en'
-  isWorn =  true
+++hatt: Wearable 'hatt+en/kläd+er'
+  //isWorn =  true
 ;
 
 +tingest: Thing 'tingest+en';
@@ -47,7 +47,7 @@ lab: Room 'labbet' 'labbet';
 +virke: LightSource 'virke+t*virke' isMassNoun = true;
 +olja: LightSource 'olja+n*olja' isMassNoun = true;
 
-
++jacka: Wearable 'jacka+n/kläd+er';
 
 #define __DEBUG
 

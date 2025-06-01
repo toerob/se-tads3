@@ -558,7 +558,7 @@ libMessages: MessageHelper
     /* greeting actor while actor is already talking to us */
     alreadyTalkingTo(actor, greeter)
     {
-        "\^<<greeter.theName>> {har|hade} redan <<actor.theNamePossAdj>> uppmärksamhet. ";
+        "\^<<greeter.theName>> {har} redan <<actor.theNamePossAdj>> uppmärksamhet. ";
     }
 
     /* no topics to suggest when we're not talking to anyone */
@@ -2864,7 +2864,7 @@ playerActionMessages: MessageHelper
     //notWearingMsg = '{You\'re} not wearing {that dobj/him}. '
 
     /* not wearing (item being doffed) */
-    notWearingMsg = '{Du/han} {har|hade} inte på {sig} {det dobj/honom}. '
+    notWearingMsg = '{Du/han} {har} inte på {sig} {det dobj/honom}. '
 
     /* default response to 'wear obj' */
     okayWearMsg = 'Okej, {du/han} {klär|klädde} på {dig} {ref dobj/honom}. '
@@ -2885,7 +2885,7 @@ playerActionMessages: MessageHelper
         'Upplåst<<gDobj.isPlural?'a':''>>. ', '{Du/han} lås{er/te} upp {ref dobj/honom}. ')
 
     /* cannot dig here */
-    cannotDigMsg = '{Du/han} {har|hade} ingen anledning att gräva i {det dobj/honom} där. '
+    cannotDigMsg = '{Du/han} {har} ingen anledning att gräva i {det dobj/honom} där. '
 
     /* not a digging implement */
     cannotDigWithMsg =
@@ -3324,7 +3324,7 @@ playerActionMessages: MessageHelper
     takeFromNotBehindMsg = '{Den dobj/ref} {är} inte bakom {det iobj/honom}. '
 
     /* taking dobj from an actor, but actor doesn't have iobj */
-    takeFromNotInActorMsg = '{Den iobj/ref} {har|hade} inte {det dobj/honom}. '
+    takeFromNotInActorMsg = '{Den iobj/ref} {har} inte {det dobj/honom}. '
 
     /* actor won't let go of a possession */
     willNotLetGoMsg(holder, obj)
@@ -3517,7 +3517,7 @@ playerActionMessages: MessageHelper
     }
 
     /* trying to give something to someone who already has the object */
-    giveAlreadyHasMsg = '{Den iobj/ref} {har|hade} redan {det/obj dobj}. '
+    giveAlreadyHasMsg = '{Den iobj/ref} {har} redan {det/obj dobj}. '
 
     /* can't talk to yourself */
     cannotTalkToSelfMsg = 'Att prata med {sig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
@@ -3591,7 +3591,7 @@ playerActionMessages: MessageHelper
         {här}, men {du/han} {kan} inte se {det dobj/honom}. '
 
     /* trying to follow an object, but don't know where it went from here */
-    followUnknownMsg = '{Du/han} {är} inte säker på var {den dobj/ref} {har|hade} gått {h|d}ärifrån. '
+    followUnknownMsg = '{Du/han} {är} inte säker på var {den dobj/ref} {har} gått {h|d}ärifrån. '
 
     /*
      *   we're trying to follow an actor, but we last saw the actor in the
@@ -3617,7 +3617,7 @@ playerActionMessages: MessageHelper
     uselessToAttackMsg = '{Du/han} {kan} inte attackera {det dobj/honom}. '
 
     /* pushing object has no effect */
-    pushNoEffectMsg = 'Att trycka på {ref dobj/honom} {har|hade} ingen effekt. '
+    pushNoEffectMsg = 'Att trycka på {ref dobj/honom} {har} ingen effekt. '
 
     /* default 'push button' acknowledgment */
     okayPushButtonMsg = '<q>Klick.</q> '
@@ -3669,7 +3669,7 @@ playerActionMessages: MessageHelper
     cannotSetToMsg = '{Du/han} {kan} inte ställa {det dobj/honom} till någonting. '
 
     /* invalid setting for generic Settable */
-    setToInvalidMsg = '{Den dobj/ref} {har|hade} ingen sådan inställning. '
+    setToInvalidMsg = '{Den dobj/ref} {har} ingen sådan inställning. '
 
     /* default 'set to' acknowledgment */
     okaySetToMsg(val)
@@ -3686,7 +3686,7 @@ playerActionMessages: MessageHelper
         '{Du/han} {kan} inte vrida någonting med {det iobj/honom}. '
 
     /* invalid setting for dial */
-    turnToInvalidMsg = '{Den dobj/ref} {har|hade} ingen sådan inställning. '
+    turnToInvalidMsg = '{Den dobj/ref} {har} ingen sådan inställning. '
 
     /* default 'turn to' acknowledgment */
     okayTurnToMsg(val)
@@ -4093,7 +4093,7 @@ playerActionMessages: MessageHelper
 
     /* cannot kiss something */
     //cannotKissMsg = 'Kissing {ref dobj/honom} {has|had} no obvious effect. '
-    cannotKissMsg = 'Att kyssa {ref dobj/honom} {har|hade} ingen uppenbar effekt. '
+    cannotKissMsg = 'Att kyssa {ref dobj/honom} {har} ingen uppenbar effekt. '
 
     /* person uninterested in being kissed */
     cannotKissActorMsg
@@ -4568,7 +4568,7 @@ actorInventoryLister: DividedInventoryLister
     showInventoryWearingOnly(parent, wearing)
     {
         /* we're carrying nothing but wearing some items */
-        "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på ingenting, och {är} {bär|bar} på <<wearing>>. ";
+        "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på ingenting, och {har} på {sig} <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
@@ -4581,8 +4581,8 @@ actorInventoryLister: DividedInventoryLister
         
         // TODO: it\'s
         /* short lists - combine carried and worn in a single sentence */
-        "<<buildParam('Den/ref', nm)>> {är} bär på <<carrying>>,
-        och <<buildParam('den/ref', nm)>>{subj} är iklädd <<wearing>>. ";
+        "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>,
+        och <<buildParam('den/ref', nm)>>{subj} {har} på {sig} <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
     {
@@ -4591,7 +4591,7 @@ actorInventoryLister: DividedInventoryLister
         // TODO:
         /* long lists - show carried and worn in separate sentences */
         "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>.
-        <<buildParam('Det/han', nm)>> {bär|bar} <<wearing>>. ";
+        <<buildParam('Det/han', nm)>> {har} på {sig} <<wearing>>. ";
     }
 
     /*
@@ -4623,7 +4623,7 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
     showInventoryWearingOnly(parent, wearing)
     {
         /* we're carrying nothing but wearing some items */
-        "<.p><<buildSynthParam('Den/ref', parent)>> {bär|bar} på <<wearing>>. ";
+        "<.p><<buildSynthParam('Den/ref', parent)>> {har} på {sig} <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
@@ -4636,7 +4636,7 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
 
         /* short lists - combine carried and worn in a single sentence */
         "<.p><<buildParam('Den/ref', nm)>> bär på <<carrying>>,
-        och <<buildParam('det/han', nm)>>{subj} iklädd <<wearing>>. ";
+        och <<buildParam('det/han', nm)>>{subj} {har} på {sig} <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
     {
@@ -4644,7 +4644,7 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
 
         /* long lists - show carried and worn in separate sentences */
         "<.p><<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>.
-        <<buildParam('det/han', nm)>> {bär|bar} på <<wearing>>. ";
+        <<buildParam('det/han', nm)>> {har} på {sig} <<wearing>>. ";
     }
 ;
 
@@ -4657,7 +4657,7 @@ actorHoldingDescInventoryListerShort: actorInventoryLister
     showInventoryWearingOnly(parent, wearing)
     {
         /* we're carrying nothing but wearing some items */
-        "<<buildSynthParam('Det/han', parent)>> {är} {har|hade} på sig <<wearing>>. ";
+        "<<buildSynthParam('Det/han', parent)>> {har} på {sig} <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
@@ -4670,7 +4670,7 @@ actorHoldingDescInventoryListerShort: actorInventoryLister
 
         /* short lists - combine carried and worn in a single sentence */
         "<<buildParam('Det/han', nm)>> {bär|bar} på <<carrying>>, och
-        <<buildParam('det/han', nm)>>{subj} {har|hade} på sig <<wearing>>. ";
+        <<buildParam('det/han', nm)>>{subj} {har} på {sig} <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
     {
@@ -4678,7 +4678,7 @@ actorHoldingDescInventoryListerShort: actorInventoryLister
 
         /* long lists - show carried and worn in separate sentences */
         "<<buildParam('Det/han', nm)>> {bär|bar} på <<carrying>>.
-        <<buildParam('det/han', nm)>> {har|hade} på sig <<wearing>>. ";
+        <<buildParam('det/han', nm)>> {har} på {sig} <<wearing>>. ";
     }
 ;
 
@@ -5580,7 +5580,7 @@ class SuggestedTopicLister: Lister
         if (isExplicit)
         {
             gMessageParams(askingActor, targetActor);
-            "<<isExplicit ? '' : '('>>{Du askingActor/han} {har|hade} ingenting
+            "<<isExplicit ? '' : '('>>{Du askingActor/han} {har} ingenting
             specifikt just {nu|då} att diskutera med 
             {ref targetActor/honom}.<<isExplicit ? '' : ')'>> ";
         }

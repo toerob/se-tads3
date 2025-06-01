@@ -2583,8 +2583,12 @@ modify Actor
     /* 'have' verb agreeing with this object as subject */
     verbToHave
     {
-        return tSel(['hade', 'hade', 'har', 'hade', 'hade', 'hade']
+        return tSel(['har', 'har', 'har', 'har', 'har', 'har']
                     [conjugationSelector], 'hade');
+
+
+        //return tSel(['hade', 'hade', 'har', 'hade', 'hade', 'hade']
+        //            [conjugationSelector], 'hade');
     }
 
     /*
@@ -4140,9 +4144,9 @@ langMessageBuilder: MessageBuilder
         ['er',        &itObj,   'actor', nil, nil],
 
         // Mig, dig, sig, er och oss
-        ['mig', &itReflexiveSimple, 'actor', &itReflexive, nil],
-        ['dig', &itReflexiveSimple, 'actor', &itReflexive, nil],
-        ['sig', &itReflexiveSimple, 'actor', &itReflexive, nil],
+        ['mig', &itReflexiveSimple, 'actor', nil, nil],
+        ['dig', &itReflexiveSimple, 'actor', nil, nil],
+        ['sig', &itReflexiveSimple, 'actor', nil, nil],
 
         // Sedan objektform med explicit '/obj'-suffix
         // Exempelvis:
@@ -10360,24 +10364,20 @@ VerbRule(About)
     verbPhrase = 'visa/visar information om berättelse'
 ;
 
-
-// TODO: hitta bättre ord för scriptande etc....
-// ..........................................................
-
 VerbRule(Script)
-    'script' | 'script' 'på'
+    'skript' | 'skript' 'på'
     : ScriptAction
     verbPhrase = 'starta/startar skriptande'
 ;
 
 VerbRule(ScriptString)
-    'script' quotedStringPhrase->fname_
+    'skript' quotedStringPhrase->fname_
     : ScriptStringAction
     verbPhrase = 'starta/startar skriptande'
 ;
 
 VerbRule(ScriptOff)
-    'script' 'av' | 'unscript'
+    'skript' 'av' | 'unscript'
     : ScriptOffAction
     verbPhrase = 'avsluta/avslutar skriptande'
 ;
@@ -10493,10 +10493,7 @@ VerbRule(GoThrough)
     askDobjResponseProd = singleNoun
 ;
 
-//TODO: adaptera
 VerbRule(Enter)
-    //('gå'|'kliv') 'in' ('i'|)
-
     (('gå'|'kliv') 'in' ('i'|) 
     | 'in' 'till'
     | ('vandra' | 'gå') ('till' 
@@ -10942,8 +10939,6 @@ VerbRule(AttachTo)
     askIobjResponseProd = toSingleNoun
     verbPhrase = 'sätt fast/sätter fast (vad) (med vad)'
 ;
-// TODO: ändra alla sätta till sätt, 
-// (kliv upp och lås upp dörren och öppna den först)
 
 VerbRule(AttachToWhat)
     [badness 500] ('koppla') dobjList
@@ -11359,7 +11354,6 @@ VerbRule(DoffPerson)
     //verbPhrase = 'klä/klär av (vad)' 
     verbPhrase = 'ta/tar av (vad)' 
 ;
-
 
 // TODO: hantera default för "klä på mig jackan" och "klä på dig jackan"
 
