@@ -60,8 +60,8 @@ DebugCtl: object
 /* The Debug Action with various options */
 DefineLiteralAction(Debug2)
     execAction() {
-        //gLiteral = cmd.dobj.name.toLower;
-        tadsSay('x: [<<gLiteral>>]');
+        // gLiteral = cmd.dobj.name.toLower;
+        // tadsSay('x: [<<gLiteral>>]');
         switch(gLiteral)
         {       
         case 'status':

@@ -2826,24 +2826,24 @@ modify lying
  *   from the short name fairly easily.
  */
 modify SuggestedAskTopic
-    fullName = ('fråga {den targetActor/honom} om ' + name)
+    fullName = ('fråga {ref targetActor/honom} om ' + name)
 ;
 
 modify SuggestedTellTopic
-    fullName = ('berätta för {den targetActor/honom} om ' + name)
+    fullName = ('berätta för {ref targetActor/honom} om ' + name)
 ;
 
 modify SuggestedAskForTopic
     // Alt. "Be om"
-    fullName = ('fråga {den targetActor/honom} efter ' + name)
+    fullName = ('fråga {ref targetActor/honom} efter ' + name)
 ;
 
 modify SuggestedGiveTopic
-    fullName = ('ge {den targetActor/honom} ' + name)
+    fullName = ('ge {ref targetActor/honom} ' + name)
 ;
 
 modify SuggestedShowTopic
-    fullName = ('visa {den targetActor/honom} ' + name)
+    fullName = ('visa {ref targetActor/honom} ' + name)
 ;
 
 modify SuggestedYesTopic

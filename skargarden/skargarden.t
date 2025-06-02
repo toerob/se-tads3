@@ -72,11 +72,11 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
     theName = 'sakerna';
 
 //++skapLuckeUtrymme: ComplexContainer,OpenableContainer 'insida+n' 'insida';
-/*++skapLuckor: ContainerDoor, ComplexComponent 'skåplucka+n/lucka/*luckor+na skåpluckor+na' 'skåpluckor' 
-    isPlural = true
-;*/
 
-+sofia: Actor 'Sofia' 'Sofia' isShe = true isProperName = true;
++sofia: Actor 'Sofia' 'Sofia' 
+    isHer = true 
+    isProperName = true
+;
 ++sofiasMossa: Wearable 'sofias mössa+n' 'mössa' wornBy = sofia;
 ++ sofiaChatting : InConversationState
     specialDesc = "Sofia stod alldeles framför dig "
