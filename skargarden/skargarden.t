@@ -13,9 +13,9 @@
 
 // Översättningsproblem
 // TODO: lös att det inte går att skriva följande nu och få "årorna var för tunga" istället för "de åror var för tunga":
-//  ++Thing, Heavy 'åror[-na]' 'åror'     isPlural = true;
+//  ++Thing, Heavy 'åror+na' 'åror'     isPlural = true;
 // En workaround är:
-//++Thing, Heavy 'åra*åror[-na]' 'åror' "..."
+//++Thing, Heavy 'åra*åror+na' 'åror' "..."
 //    isPlural = true
 
 // TODO:
@@ -48,7 +48,7 @@ gameMain: GameMainDef
 ;
 
 
-plankGolv: Floor 'golv[-et]*plankor[-na]' 'plankor';
+plankGolv: Floor 'golv+et*plankor+na' 'plankor';
 
 
 
@@ -68,16 +68,16 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
 // TODO: alternativ syntax
 // +saken: Thing 'saker^n' 'saker' isPlural = true
 
-+saken: Thing 'saker[-na]' 'saker' isPlural = true
++saken: Thing 'saker+na' 'saker' isPlural = true
     theName = 'sakerna';
 
-//++skapLuckeUtrymme: ComplexContainer,OpenableContainer 'insida[-n]' 'insida';
-/*++skapLuckor: ContainerDoor, ComplexComponent 'skåplucka[-n]/lucka/*luckor[-na] skåpluckor[-na]' 'skåpluckor' 
+//++skapLuckeUtrymme: ComplexContainer,OpenableContainer 'insida+n' 'insida';
+/*++skapLuckor: ContainerDoor, ComplexComponent 'skåplucka+n/lucka/*luckor+na skåpluckor+na' 'skåpluckor' 
     isPlural = true
 ;*/
 
 +sofia: Actor 'Sofia' 'Sofia' isShe = true isProperName = true;
-++sofiasMossa: Wearable 'sofias mössa[-n]' 'mössa' wornBy = sofia;
+++sofiasMossa: Wearable 'sofias mössa+n' 'mössa' wornBy = sofia;
 ++ sofiaChatting : InConversationState
     specialDesc = "Sofia stod alldeles framför dig "
     stateDesc = "Hon stod vänd mot dig och väntade på att du skulle tala. "
@@ -121,7 +121,7 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
 ;
 
 
-+vedboDorrUtsida: LockableWithKey, Door 'vedbodörr[-en]/dörr[-en]*dörrar[-na]' 'vedbodörr'
++vedboDorrUtsida: LockableWithKey, Door 'vedbodörr+en/dörr+en*dörrar+na' 'vedbodörr'
     knownKeyList = [forradsdorrsnyckel]
     keyList = [forradsdorrsnyckel]
 ;
@@ -139,7 +139,7 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
     
 ;
 
-+stugdorrUtsida: LockableWithKey, Door 'stugdörr[-en]/dörr[-en]*dörrar[-na]' 'stugdörr'
++stugdorrUtsida: LockableWithKey, Door 'stugdörr+en/dörr+en*dörrar+na' 'stugdörr'
     knownKeyList = [stugdorrsnyckel]
     keyList = [stugdorrsnyckel]
     makeOpen(stat) {
@@ -148,7 +148,7 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
     }
 ;
 
-+dorrmatta: Underside 'dörrmatta[-n]/matta[-n]' 'dörrmatta'
++dorrmatta: Underside 'dörrmatta+n/matta+n' 'dörrmatta'
     // Search, Turn
     dobjFor(Search) asDobjFor(LookUnder)
     dobjFor(Turn) asDobjFor(LookUnder)
@@ -183,7 +183,7 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
     }
 ;
 
-stugdorrsnyckel: Hidden, Key 'stugdörrsnyckel[-n]/nyckel[-n]' 'stugdörrsnyckel'; 
+stugdorrsnyckel: Hidden, Key 'stugdörrsnyckel+n/nyckel+n' 'stugdörrsnyckel'; 
 
 
 
@@ -198,7 +198,7 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
 
 ;
 
-+lysknapp: Component, OnOffControl 'lysknapp[-en]/knapp[-en]/lyset/lampknapp[-en]/ljusknapp[-en]' 'lysknapp'
++lysknapp: Component, OnOffControl 'lysknapp+en/knapp+en/lyset/lampknapp+en/ljusknapp+en' 'lysknapp'
   "En liten plastbit monterad i väggen som man kan vika uppåt för att tända taklampan eller neråt för att släcka den. "
   dobjFor(Light) asDobjFor(TurnOn)
   dobjFor(Extinguish) asDobjFor(TurnOff)
@@ -209,7 +209,7 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
   }
 ;
 
-+stugansTaklampa: Fixture, LightSource 'lampa[-n]/taklampa[-n]' 'taklampa'
++stugansTaklampa: Fixture, LightSource 'lampa+n/taklampa+n' 'taklampa'
     isLit = nil
     dobjFor(TurnOn) remapTo(TurnOn, lysknapp)
     dobjFor(Light) remapTo(TurnOn, lysknapp)
@@ -217,21 +217,21 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
     dobjFor(Extinguish) remapTo(TurnOff, lysknapp)
 ;
 
-+soffa: Chair, Heavy 'soffa[-n]' 'soffa'
++soffa: Chair, Heavy 'soffa+n' 'soffa'
     bulkCapacity = 30 // Seating capacity for three  
 ;
 
-+eldstaden: Fixture, ComplexContainer 'eldstad[-en]' 'eldstad' 
-    subSurface: ComplexComponent, Surface 'spiselkrans[-en]/krans[-en]' 'spiselkrans' { 
++eldstaden: Fixture, ComplexContainer 'eldstad+en' 'eldstad' 
+    subSurface: ComplexComponent, Surface 'spiselkrans+en/krans+en' 'spiselkrans' { 
         bulkCapacity = 5 
     }
-    subContainer: ComplexComponent, Container 'öppna spis[-en]' 'öppna spisen'  { 
+    subContainer: ComplexComponent, Container 'öppna spis+en' 'öppna spisen'  { 
         bulkCapacity = 10 isQualifiedName = true 
     }
 ;
-+hylla: Fixture, Container 'hylla[-n]' 'hylla';
++hylla: Fixture, Container 'hylla+n' 'hylla';
 
-++telefon: Thing 'röd telefon[-en]' 'telefon'
+++telefon: Thing 'röd telefon+en' 'telefon'
     "En röd telefon hängde på väggen. "
     dobjFor(Call) {
         verify() {}
@@ -275,7 +275,7 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
     has scenery static;
 */
 
-+telefonkatalog: Readable 'telefonkatalog[-en]/katalog[-en]' 'telefonkatalog';
++telefonkatalog: Readable 'telefonkatalog+en/katalog+en' 'telefonkatalog';
 /*
         !initial [;
         !    "Nedanför telefonen, var en enkel hylla med en telefonkatalog på. ";
@@ -308,7 +308,7 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
 */
 
 
-+stugdorrInsida: LockableWithKey, Door 'stugdörr[-en]/dörr[-en]*dörrar[-na]' 'stugdörr'
++stugdorrInsida: LockableWithKey, Door 'stugdörr+en/dörr+en*dörrar+na' 'stugdörr'
     "<<if isOpen>>Stugdörren stod öppen och där ute knattrade regner mot taket och ner altanen.<<end>>"
     //openDesc = "Stugdörren stod öppen och där ute knattrade regner mot taket och ner altanen. "
     masterObject = stugdorrUtsida
@@ -324,11 +324,11 @@ vedbod: Room 'vedboden' 'vedboden'
     north asExit(out)
 ;
 
-+vedboDorrInsida: Door 'vedbodörr/dörr[-en]*dörrar[-na]' 'vedbodörr'
++vedboDorrInsida: Door 'vedbodörr/dörr+en*dörrar+na' 'vedbodörr'
     masterObject = vedboDorrUtsida
 ;
 
-+verktygsbank: Fixture 'verktygsbänk[-en]/bänk[-en]' 'verktygsbänk'
++verktygsbank: Fixture 'verktygsbänk+en/bänk+en' 'verktygsbänk'
     feelDesc() {
             // TODO: inform -> tads equiv: if(location==thedark) {
         "Mats kände med handen över träytan på bänken <<if ficklampa.discovered>> men fann inget mer. <<end>>";
@@ -340,7 +340,7 @@ vedbod: Room 'vedboden' 'vedboden'
     }
 ;
 
-+ficklampa: Hidden, Flashlight 'ficklampa[-n]/lampa[-n]' 'ficklampa';
++ficklampa: Hidden, Flashlight 'ficklampa+n/lampa+n' 'ficklampa';
 /*
         before[;
             !TODO: batteriet i kylskåpet
@@ -356,10 +356,10 @@ vedbod: Room 'vedboden' 'vedboden'
         ],
     has switchable;
 */
-+sag: Thing 'såg[-en]' 'såg';
-+lie: Thing 'lie[-n]' 'lie';
++sag: Thing 'såg+en' 'såg';
++lie: Thing 'lie+n' 'lie';
 
-+vedtran: Thing 'ved[-en]/vedträ*vedträn[-a]' 'hög med vedträn' 
++vedtran: Thing 'ved+en/vedträ*vedträn[-a]' 'hög med vedträn' 
 ;
 /*
 Object -> logPile "vedträn"
@@ -390,7 +390,7 @@ Object -> logPile "vedträn"
 
 */
 
-bryggan: Floor, Attachable 'brygga[-n]' 'bryggan' isQualifiedName = true;
+bryggan: Floor, Attachable 'brygga+n' 'bryggan' isQualifiedName = true;
 
 bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
     "Diset låg tätt och svårt för honom att se något annat av skärgårdsmiljön där ute, än anade gröna nyanser där avlägsna stränder och holmar låg. Långt bort åt norr syntes ett ljus blinka ungefär varannan sekund i en återkommande puls. "
@@ -410,7 +410,7 @@ bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
 
 
 
-+baten: Attachable, Heavy, Container, Vehicle  /*Enterable -> (location.south)*/ 'båt[-en]*båtar[-na]' 'båten'
++baten: Attachable, Heavy, Container, Vehicle  /*Enterable -> (location.south)*/ 'båt+en*båtar+na' 'båten'
     "Det var en träfärgad ~snipa~ med plats för två. Mats brukade använda den till att fiska och åka runt på upptäcktsfärder i skärgården. "
     specialDesc = "Mot bryggans södra del låg Mats båt förtöjd. "
     isQualifiedName = true
@@ -418,18 +418,18 @@ bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
     north  = bryggplatsen
 ;
 
-++Component, Fixture 'ankare[-t]' 'ankare'
+++Component, Fixture 'ankare+t' 'ankare'
     cannotTakeMsg = "Ankaret satt fast med en kedja i båten. "
 ;
-++Component, Fixture 'kedja[-n]' 'kedja'
+++Component, Fixture 'kedja+n' 'kedja'
     cannotTakeMsg = "Kedjan satt fast i ankaret och båten. "
 ;
-++Attachable, Thing 'rep[-et]' 'rep'
+++Attachable, Thing 'rep+et' 'rep'
     //"<<if baten.arAnkrad>>Båten var förtöjd med ett rep fastsatt i en metallring i bryggan.<<end>>"
     attachedObjects = [baten, bryggan] // TODO: fungerar inte 
 ;
 
-++Thing, Heavy 'åra*åror[-na]' 'åror' "..."
+++Thing, Heavy 'åra*åror+na' 'åror' "..."
     isPlural = true
     isListed = true
     /*
@@ -461,7 +461,7 @@ Mats: Actor 'mats/du' 'Mats' @grasmattan
 stugansKok: DarkRoom 'stugans kök' 'köket'
     west = stugansVardagsrum
 ;
-+OpenableContainer, Fixture, LightSource 'kylskåp[-et]/kyl[-en]/skåp[-et]' 'kylskåp'
++OpenableContainer, Fixture, LightSource 'kylskåp+et/kyl+en/skåp+et' 'kylskåp'
     isLit = nil
     makeOpen(stat) {
         inherited(stat);
@@ -470,7 +470,7 @@ stugansKok: DarkRoom 'stugans kök' 'köket'
 ;
 
 // TODO: Flytta in i köket sedan
-+skap: Heavy, ComplexContainer 'skåp[-et]' 'skåp'
++skap: Heavy, ComplexContainer 'skåp+et' 'skåp'
     subSurface: ComplexComponent, Surface {}
     subContainer: ComplexComponent, OpenableContainer  {
         //descContentsLister = thingDescContentsLister
@@ -491,7 +491,7 @@ Object -> fridge "kylskåp"
     has neuter openable container static;
 */
 
-+batterier: Thing 'batterier[-na]' 'batterier' isPlural = true
++batterier: Thing 'batterier+na' 'batterier' isPlural = true
     theName = 'batterierna'
 ;
 
@@ -499,7 +499,7 @@ Object -> fridge "kylskåp"
 
 
 
-+forradsdorrsnyckel: Key 'förrådsnyckel[-n]/förrådsdörrsnyckel[-n]/nyckel[-n]' 'förrådsdörrsnyckel'; 
++forradsdorrsnyckel: Key 'förrådsnyckel+n/förrådsdörrsnyckel+n/nyckel+n' 'förrådsdörrsnyckel'; 
 
 // TODO: darkroom
 stugansSovrum: Room 'stugans sovrum' 'sovrummet'
@@ -507,7 +507,7 @@ stugansSovrum: Room 'stugans sovrum' 'sovrummet'
     west = stugansBadrum
 ;
 
-+stugansSovrumsSang: BasicBed 'säng[-en]' 'säng'
++stugansSovrumsSang: BasicBed 'säng+en' 'säng'
     dobjFor(Search) {
         action() {
             "Under sängen låg en hel dammråttsfamilj. ";
@@ -515,33 +515,33 @@ stugansSovrum: Room 'stugans sovrum' 'sovrummet'
     }
 ;
 
-+garderob: OpenableContainer, Fixture 'garderob[-en]' 'garderob'
++garderob: OpenableContainer, Fixture 'garderob+en' 'garderob'
     cannotEnterMsg = "Den var inte tillräckligt stor för att rymmas i."
 ;
 
-++dammsugare: Thing 'dammsugare[-n]' 'dammsugare';
+++dammsugare: Thing 'dammsugare+n' 'dammsugare';
 
-+nattduksbord: ComplexContainer, Heavy 'bord[-et]/nattduksbord[-et]' 'nattduksbord'    "Ett nattduksbord med en låda. "
++nattduksbord: ComplexContainer, Heavy 'bord+et/nattduksbord+et' 'nattduksbord'    "Ett nattduksbord med en låda. "
     subSurface: ComplexComponent, Surface { }
-    /*subContainer: ComplexComponent, OpenableContainer 'låda[-n]' 'låda' {
+    /*subContainer: ComplexComponent, OpenableContainer 'låda+n' 'låda' {
         bulkCapacity = 10
     }*/
     subContainer = drawer
     cannotTakeMsg = "Det var för otympligt för att gå runt att bära på."
 ;
-++drawer: Component, OpenableContainer 'låda[-n]' 'låda' {
+++drawer: Component, OpenableContainer 'låda+n' 'låda' {
     bulkCapacity = 10
 }
 
 
-oljelampa: Thing 'oljelampa[-n]/lampa[-n]' 'oljelampa' 
+oljelampa: Thing 'oljelampa+n/lampa+n' 'oljelampa' 
     location = nattduksbord.subSurface
 ;
 
-tandsticksask: OpenableContainer 'ask[-en]/tändsticka/tändstickor[-na]/tändsticksask[-en]' 'tändsticksask' 
+tandsticksask: OpenableContainer 'tändstick^s+ask+en' 'tändsticksask' 
     location = nattduksbord.subContainer
 ; 
-+tandstickor: Thing 'tändsticka*tändstickor[-na]' 'tändstickor' isPlural=true;
++tandstickor: Thing 'tändsticka+n*tändstickor+na' 'tändstickor' isPlural=true;
 
 
 
@@ -551,7 +551,7 @@ stugansBadrum: DarkRoom 'stugans badrum'
 /*
 TODO: ska det saknas lampa där? Anpassa annars:
 
-+lysknapp: Component, OnOffControl 'lysknapp[-en]/knapp[-en]/lyset/lampknapp[-en]/ljusknapp[-en]' 'lysknapp'
++lysknapp: Component, OnOffControl 'lysknapp+en/knapp+en/lyset/lampknapp+en/ljusknapp+en' 'lysknapp'
   "En liten plastbit monterad i väggen som man kan vika uppåt för att tända taklampan eller neråt för att släcka den. "
   dobjFor(Light) asDobjFor(TurnOn)
   dobjFor(Extinguish) asDobjFor(TurnOff)
@@ -561,7 +561,7 @@ TODO: ska det saknas lampa där? Anpassa annars:
   }
 ;
 
-+stugansTaklampa: Fixture, LightSource 'lampa[-n]/taklampa[-n]' 'taklampa'
++stugansTaklampa: Fixture, LightSource 'lampa+n/taklampa+n' 'taklampa'
     isLit = nil
     dobjFor(TurnOn) remapTo(TurnOn, lysknapp)
     dobjFor(Light) remapTo(TurnOn, lysknapp)
@@ -570,24 +570,24 @@ TODO: ska det saknas lampa där? Anpassa annars:
 ;
 */
 
-+Fixture 'dusch[-en]' 'dusch';
-+Fixture, OpenableContainer 'spegel[-n]' 'spegel';
-+Fixture, Surface 'toalett[-en]' 'toalett';
-+Fixture, OpenableContainer 'lock[-et]/toalettlock[-et]' 'toalettlock';
++Fixture 'dusch+en' 'dusch';
++Fixture, OpenableContainer 'spegel+n' 'spegel';
++Fixture, Surface 'toalett+en' 'toalett';
++Fixture, OpenableContainer 'lock+et/toalettlock+et' 'toalettlock';
 
-+tvattstall: ComplexContainer 'handfat[-et]/fat[-et]/tvättställ[-et]' 'tvättställ'
-    subSurface: ComplexComponent, Surface 'kant[-en]/tvättställskant[-en]' 'tvättställskanten' { }
++tvattstall: ComplexContainer 'handfat+et/fat+et/tvättställ+et' 'tvättställ'
+    subSurface: ComplexComponent, Surface 'kant+en/tvättställskant+en' 'tvättställskanten' { }
     subContainer: ComplexComponent  {
         bulkCapacity = 3
     }
 ;
 
-Component, Switch  'vattenkran[-en]/kran[-en]' 'vattenkran'
+Component, Switch  'vattenkran+en/kran+en' 'vattenkran'
     location = tvattstall.subSurface
     dobjFor(Open) asDobjFor(TurnOn)
     dobjFor(Close) asDobjFor(TurnOff)
 ;
-Thing 'tvål[-en]' 'tvål'
+Thing 'tvål+en' 'tvål'
     location = tvattstall.subContainer
 ;
 

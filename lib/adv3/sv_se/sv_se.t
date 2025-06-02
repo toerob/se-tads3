@@ -4000,7 +4000,7 @@ langMessageBuilder: MessageBuilder
         ['det/ref',   &theName,  nil,    nil, true],
         ['de/ref',    &theName,  nil,    nil, true],
 
-        // TODO: Dessa två borde kanske vara hellre vara han/ref, hon/ref?
+        // TODO: Dessa två borde hellre vara han/ref, hon/ref.
         ['du/han',    &theName, 'actor', nil, true],
         ['du/hon',    &theName, 'actor', nil, true],
 
@@ -7220,12 +7220,10 @@ grammar simplePluralPhrase(adjAndOnes): adjective->adj_ 'ena'
 ;
 
 /*
- * TODO: Vad var problemet med denna?
  *   If the command has qualifiers that require a plural, but omits
  *   everything else, we can have an empty simple noun phrase.
  */
- /*
-grammar simplePluralPhrase(empty): [badness 600] : NounPhraseWithVocab
+ grammar simplePluralPhrase(empty): [badness 600] : NounPhraseWithVocab
     getVocabMatchList(resolver, results, extraFlags)
     {
         // we have an empty noun phrase 
@@ -7236,7 +7234,6 @@ grammar simplePluralPhrase(empty): [badness 600] : NounPhraseWithVocab
         return [];
     }
 ;
-*/
 
 /*
  *   A simple plural phrase can match unknown words as a last resort.
@@ -7649,7 +7646,7 @@ grammar disambigPhrase(list): disambigList->lst_ : DisambigProd
 ;
 
 /*
-TODO: svenska motsvarigheten
+(NOTE: Ser inte riktigt behovet av den svenska motsvarigheten ännu)
 grammar disambigPhrase(ordinalList):
     disambigOrdinalList->lst_ 'ones'
     | 'the' disambigOrdinalList->lst_ 'ones'
@@ -7663,7 +7660,8 @@ grammar disambigPhrase(ordinalList):
 
     //the response list consists of my single ordinal list item
     getResponseList() { return [lst_]; }
-;*/
+;
+*/
 
 /*
  *   A disambig list consists of one or more disambig list items, connected
@@ -9508,7 +9506,7 @@ modify TopicTAction
         else
         {
             /* return a generic pronoun for the topic */
-            return 'det'; // TODO: testa av med topics
+            return 'det'; 
         }
     }
 
@@ -10607,13 +10605,11 @@ VerbRule(ConsultWhatAbout)
     }
 ;
 
-//TODO: adaptera
 VerbRule(Switch)
-    'tryck' 'på' dobjList
+    ('tryck'|'slå') 'på' dobjList
     : SwitchAction
     verbPhrase = 'trycka/trycker på (vad)'
 ;
-
 
 VerbRule(Flip)
     'vänd' dobjList
@@ -11180,9 +11176,6 @@ VerbRule(Debug)
 DefineTIAction(WearPerson)
 ;
 
-
-
-
 VerbRule(Wear)
     ('ta'|'ikläd'|'klä'|'klär'|'kläd') ('på') dobjList
     : WearAction
@@ -11215,105 +11208,8 @@ VerbRule(DoffPerson)
     verbPhrase = 'ta/tar av (vad)' 
 ;
 
-// TODO: hantera default för "klä på mig jackan" och "klä på dig jackan"
 
-/**
- *  "WearPerson"
- * Denna behövs, då det i svenskan är uttrycket "ta på mig/dig jackan", vanligt. Inte bara "ta på jackan"
- */
- /*
-modify Wearable 
-    dobjFor(WearPerson)
-    {
-        preCond = [objHeld]
-        verify()
-        {
-            "HEKJ";
-            //"<<self.theName>>";
-            //"<<gActor.theName>>";
-            //make sure the actor isn't already wearing the item 
-            if (isWornBy(gActor)) {
-                illogicalAlready(&alreadyWearingMsg);
-            }
-        }
-        
-        action()
-        {
-            "<<gActor.theName>>";
-            "<<self.theName>>";
-            // make the item worn and describe what happened 
-            makeWornBy(gActor);
-            defaultReport(&okayWearMsg);
-        }
-    }
-;*/
-
-/*
-
-VerbRule(WearWhat)
-    [badness 500] ('ta'|'ikläd'|'klä'|'kläd') ('på'|) singleNoun
-    : WearAction
-    verbPhrase = 'klä på/klär på (vad)'
-    construct()
-    {
-        //set up the empty indirect object phrase
-        iobjMatch = new EmptyNounPhraseProd();
-        iobjMatch.responseProd = inSingleNoun;
-    }
-;
-*/
-
-
-
-/*
-VerbRule(AskAboutWhat)
-    [badness 500] 'fråga' singleDobj
-    : AskAboutAction
-    verbPhrase = 'fråga/frågar (vem) (om vad)'
-    askDobjResponseProd = singleNoun
-    omitIobjInDobjQuery = true
-    construct()
-    {
-        // set up the empty topic phrase
-        topicMatch = new EmptyNounPhraseProd();
-        topicMatch.responseProd = aboutTopicPhrase;
-    }
-;
-*/
-
-swedishHelperGlobals: object 
-  wordFormPattern = static R'(.*)[{](.*)[}]'
-  //wordFormPattern = static R'(.*)[%](.*)[%]]'
-;
-
-
-function displayWordPartOnly(wordPart) {
-    if(wordPart == &noun) {
-        tadsSay(' &noun ');
-    }
-    if(wordPart == &plural) {
-        tadsSay(' &plural ');
-    }
-    if(wordPart == &adjective) {
-        tadsSay(' &noun ');
-    }
-}
-
-function displayWordPart(wordPart, cur, obj) {
-    if(wordPart == &noun) {
-        tadsSay('\ <<cur>> (substantiv)');
-    }
-    if(wordPart == &plural) {
-        tadsSay('\ <<cur>> (plural)');
-    }
-    if(wordPart == &adjective) {
-        tadsSay('\ <<cur>> (adjektiv)');
-    }
-    tadsSay('\t\t\t\t\t\t -> \ [<<obj.name>>]\n');
-}
-
-
-//Om det fungerar kör på ett anonymt objekt istället, det ska ändå bara slängas sen
+// Liten konstruktion som har som syfte att hålla en ordkomponent med ändelse och eventuellt foge-s.
 class WordPart: object {
     word = nil
     ending = nil
@@ -11665,5 +11561,35 @@ VerbRule(Ord)
     :OrdAction 
     verbPhrase = 'ord/orda (vad)'
 ; 
+
+
+
+
+function displayWordPartOnly(wordPart) {
+    if(wordPart == &noun) {
+        tadsSay(' &noun ');
+    }
+    if(wordPart == &plural) {
+        tadsSay(' &plural ');
+    }
+    if(wordPart == &adjective) {
+        tadsSay(' &noun ');
+    }
+}
+
+function displayWordPart(wordPart, cur, obj) {
+    if(wordPart == &noun) {
+        tadsSay('\ <<cur>> (substantiv)');
+    }
+    if(wordPart == &plural) {
+        tadsSay('\ <<cur>> (plural)');
+    }
+    if(wordPart == &adjective) {
+        tadsSay('\ <<cur>> (adjektiv)');
+    }
+    tadsSay('\t\t\t\t\t\t -> \ [<<obj.name>>]\n');
+}
+
+
 
 #endif
