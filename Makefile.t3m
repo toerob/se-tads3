@@ -54,16 +54,15 @@
 
 #-source skargarden/skargarden
 
-#-I../../code/tads3/tads3-unit-test
 
 # TESTER 
 
 #####-source tests/main
 
--source ../../code/tads3/tads3-unit-test/unittest.t
-#-source tests/present-tense
+-source tests/testunit.t
+-source tests/present-tense
 #-source tests/past-tense
--source tests/satsdelar
+#-source tests/satsdelar
 #-source tests/initialize-tests
 #-source tests/additional-tests
 

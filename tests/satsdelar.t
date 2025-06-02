@@ -1,7 +1,7 @@
 #charset "utf-8"
 #include <adv3.h>
 #include <sv_se.h> 
-#include "../../../code/tads3/tads3-unit-test/unittest.h"
+#include "testunit.h"
 
 /*
 "{din} hand" är en beskrivning av ett objekt (handen),
@@ -129,7 +129,7 @@ luta: Actor 'luta[-n]' 'luta'
 
 // https://tads.dev/docs/adv3/doc/techman/t3msg.htm
 
-UnitTest '2:a person plural (ni)' run {
+TestUnit '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(hund, hus, spelare2aPerspektivNi);
   [
@@ -149,14 +149,14 @@ UnitTest '2:a person plural (ni)' run {
 
 
 // Test Assertions
-UnitTest 'satsdelar' run {
+TestUnit 'satsdelar' run {
   mainOutputStream.hideOutput = nil;
   setPlayer(spelare2aPerspektivDu);
   "{Du/han actor} går hem till {ditt}";
   assertThat(o).isEqualTo('Du går hem till ditt');
 } skip=true; // TODO
 
-UnitTest 'satsdelar' run {
+TestUnit 'satsdelar' run {
   gMessageParams(luta);
   //mainOutputStream.hideOutput = nil;
   [
@@ -199,7 +199,7 @@ UnitTest 'satsdelar' run {
 };
 
 
-UnitTest '1:a person singular' run {
+TestUnit '1:a person singular' run {
   //mainOutputStream.hideOutput = nil;
   [
     '{Jag} {går} till staden.' -> ['Jag gick till staden.'],  // itNom
@@ -217,7 +217,7 @@ UnitTest '1:a person singular' run {
 };
 
 
-UnitTest '1:a person plural (vi)' run {
+TestUnit '1:a person plural (vi)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(spelare1aPerspektivVi, hund);
   [
@@ -234,7 +234,7 @@ UnitTest '1:a person plural (vi)' run {
   });
 };
 
-UnitTest '2:a person singular (du)' run {
+TestUnit '2:a person singular (du)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(hund);
   [
@@ -252,7 +252,7 @@ UnitTest '2:a person singular (du)' run {
 };
 
 
-UnitTest '2:a person plural (ni)' run {
+TestUnit '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(katt, hus, spelare2aPerspektivNi, spelare2aPerspektivDu);
   [
@@ -274,7 +274,7 @@ UnitTest '2:a person plural (ni)' run {
 
 tradet: Thing 'träd+et' 'träd' isNeuter = true;
 
-UnitTest '3:e person neutrum (det)' run {
+TestUnit '3:e person neutrum (det)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(tradet);
   gMessageParams(hund);
@@ -293,7 +293,7 @@ UnitTest '3:e person neutrum (det)' run {
 };
 
 
-UnitTest '3:e person maskulinum (han)' run {
+TestUnit '3:e person maskulinum (han)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(spelare3dePerspektivHan);
   local bob = spelare3dePerspektivHan;
@@ -313,7 +313,7 @@ UnitTest '3:e person maskulinum (han)' run {
   });
 };
 
-UnitTest '3:e person femininum (hon)' run {
+TestUnit '3:e person femininum (hon)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(spelare3dePerspektivHon);
   local alice = spelare3dePerspektivHon;
@@ -332,7 +332,7 @@ UnitTest '3:e person femininum (hon)' run {
   });
 };
 
-UnitTest '3:e person plural (de)' run {
+TestUnit '3:e person plural (de)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(spelare3dePerspektivDe);
   local bob = spelare3dePerspektivDe;
@@ -351,7 +351,7 @@ UnitTest '3:e person plural (de)' run {
   });
 };
 
-UnitTest 'Demonstrativa (behövs inte specialiserat thatNom / thatObj)' run {
+TestUnit 'Demonstrativa (behövs inte specialiserat thatNom / thatObj)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(spelare3dePerspektivDe, hund, smyckena, skrin, juvel);
   [

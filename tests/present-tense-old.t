@@ -1,7 +1,7 @@
 #charset "utf-8"
 #include <adv3.h>
 #include <sv_se.h> 
-#include "../../../code/tads3/tads3-unit-test/unittest.h"
+#include "../../../code/tads3/tads3-unit-test/TestUnit.h"
 
 versionInfo: GameID
   IFID = '38da5fdf-9077-4043-bfe1-14c83c087c81'
@@ -73,63 +73,63 @@ testObjNeuterPlural: Thing 'skåp[-et]**skåp[-en]' 'skåpen' isPlural = true is
 
 // Test Assertions
 
-UnitTest 'openMsg - uterum singular' run {
+TestUnit 'openMsg - uterum singular' run {
   assertThat(libMessages.openMsg(testObjUterSingular)).isEqualTo('öppen');
 };
-UnitTest 'openMsg - neutrum singular' run {
+TestUnit 'openMsg - neutrum singular' run {
   assertThat(libMessages.openMsg(testObjNeuterSingular)).isEqualTo('öppet');
 };
-UnitTest 'openMsg - uterum plural' run {
+TestUnit 'openMsg - uterum plural' run {
   assertThat(libMessages.openMsg(testObjUterPlural)).isEqualTo('öppnade');
 };
-UnitTest 'openMsg - neutrum plural' run {
+TestUnit 'openMsg - neutrum plural' run {
   assertThat(libMessages.openMsg(testObjNeuterPlural)).isEqualTo('öppnade');
 };
 
-UnitTest 'distantThingDesc - neutrum plural' run {
+TestUnit 'distantThingDesc - neutrum plural' run {
   libMessages.distantThingDesc(testObjUterSingular);
   assertThat(o).startsWith('Den är för långt borta för att kunna utgöra några detaljer'); 
 };
 
 
-UnitTest 'obscuredThingDesc first person' run {
+TestUnit 'obscuredThingDesc first person' run {
   gPlayerChar = testPlayer1stPerspective;
   libMessages.obscuredThingDesc(testObjNeuterPlural, testObjNeuterPlural);
   assertThat(o).startsWith('Jag kan inte utgöra några detaljer genom dem.');
 };
 
-UnitTest 'obscuredThingDesc second person' run {
+TestUnit 'obscuredThingDesc second person' run {
   gPlayerChar = testPlayer2stPerspective;
   libMessages.obscuredThingDesc(testObjNeuterPlural, testObjNeuterPlural);
   assertThat(o).startsWith('Du kan inte utgöra några detaljer genom dem.');
 };
 
-UnitTest 'obscuredThingDesc third person' run {
+TestUnit 'obscuredThingDesc third person' run {
   gPlayerChar = testPlayer3stPerspective;
   libMessages.obscuredThingDesc(testObjNeuterPlural, testObjNeuterPlural);
   assertThat(o).startsWith('Bob kan inte utgöra några detaljer genom dem.');
 };
 
 
-UnitTest 'thingTasteDesc neuter singular' run {
+TestUnit 'thingTasteDesc neuter singular' run {
   gPlayerChar = testPlayer2stPerspective;
   libMessages.thingTasteDesc(testObjNeuterSingular);
   assertThat(o).startsWith('Det smakar ungefär som du förväntade dig.');
 };
 
-UnitTest 'thingTasteDesc uterum singular' run {
+TestUnit 'thingTasteDesc uterum singular' run {
   gPlayerChar = testPlayer2stPerspective;
   libMessages.thingTasteDesc(testObjUterSingular);
   assertThat(o).startsWith('Den smakar ungefär som du förväntade dig.');
 };
 
-UnitTest 'thingTasteDesc plural' run {
+TestUnit 'thingTasteDesc plural' run {
   gPlayerChar = testPlayer2stPerspective;
   libMessages.thingTasteDesc(testObjNeuterPlural);
   assertThat(o).startsWith('De smakar ungefär som du förväntade dig.');
 };
 
-UnitTest 'announceRemappedAction neutrum dobj' run {
+TestUnit 'announceRemappedAction neutrum dobj' run {
   mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
   gAction.setCurrentObjects([testObjNeuterSingular]);
@@ -138,7 +138,7 @@ UnitTest 'announceRemappedAction neutrum dobj' run {
 };
 
 
-UnitTest 'announceRemappedAction uterum dobj' run {
+TestUnit 'announceRemappedAction uterum dobj' run {
   mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
   gAction.setCurrentObjects([testObjUterSingular]);
@@ -147,7 +147,7 @@ UnitTest 'announceRemappedAction uterum dobj' run {
 };
 
 
-UnitTest 'announceRemappedAction plural dobj' run {
+TestUnit 'announceRemappedAction plural dobj' run {
   mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
   gAction.setCurrentObjects([testObjNeuterPlural]);
@@ -155,7 +155,7 @@ UnitTest 'announceRemappedAction plural dobj' run {
     .contains('öppnar skåpen');
 };
 
-UnitTest 'announceImplicitAction neutrum dobj tryingImpCtx' run {
+TestUnit 'announceImplicitAction neutrum dobj tryingImpCtx' run {
   mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
   gAction.setCurrentObjects([testObjNeuterSingular]);
@@ -163,7 +163,7 @@ UnitTest 'announceImplicitAction neutrum dobj tryingImpCtx' run {
     .contains('försöker öppna skåpet först');
 };
 
-UnitTest 'announceImplicitAction uterum dobj tryingImpCtx' run {
+TestUnit 'announceImplicitAction uterum dobj tryingImpCtx' run {
   mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
   gAction.setCurrentObjects([testObjUterSingular]);
@@ -171,7 +171,7 @@ UnitTest 'announceImplicitAction uterum dobj tryingImpCtx' run {
     .contains('försöker öppna dörren först');
 };
 
-UnitTest 'announceImplicitAction plural dobj tryingImpCtx' run {
+TestUnit 'announceImplicitAction plural dobj tryingImpCtx' run {
   mainOutputStream.hideOutput = nil;
   gAction = OpenAction.createActionInstance();
   gAction.setCurrentObjects([testObjNeuterPlural]);
@@ -180,7 +180,7 @@ UnitTest 'announceImplicitAction plural dobj tryingImpCtx' run {
 };
 
 
-UnitTest 'announceMoveToBag plural dobj tryingImpCtx' run {
+TestUnit 'announceMoveToBag plural dobj tryingImpCtx' run {
   mainOutputStream.hideOutput = nil;
   gAction = MoveAction.createActionInstance();
   gAction.setCurrentObjects([testObjNeuterPlural]);

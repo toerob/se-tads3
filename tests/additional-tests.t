@@ -1,7 +1,7 @@
 #charset "utf-8"
 #include <adv3.h>
 #include <sv_se.h> 
-#include "../../../code/tads3/tads3-unit-test/unittest.h"
+#include "testunit.h"
 
 // TODO: testa aNameFrom
 // TODO: testa theNameFrom
@@ -65,7 +65,7 @@ modify Thing
    }
 ;
 
-UnitTest 'Tänt ljus neutrum' run {
+TestUnit 'Tänt ljus neutrum' run {
   assertThat(ljus.nameLit).isEqualTo('tänt ljus');
   assertThat(ljus.aNameLit()).isEqualTo('ett tänt ljus');
   assertThat(ljus.theNameLit).isEqualTo('det tända ljuset');
@@ -80,7 +80,7 @@ UnitTest 'Tänt ljus neutrum' run {
 
 };
 
-UnitTest 'Tänd ljuskrona utrum' run {
+TestUnit 'Tänd ljuskrona utrum' run {
   assertThat(ljuskrona.nameLit).isEqualTo('tänd ljuskrona');
   assertThat(ljuskrona.aNameLit()).isEqualTo('en tänd ljuskrona');
   assertThat(ljuskrona.theNameLit).isEqualTo('den tända ljuskronan');
@@ -94,7 +94,7 @@ UnitTest 'Tänd ljuskrona utrum' run {
   ljuskrona.isLit = true;
 };
 
-UnitTest 'Tända gatulyktor plural' run {
+TestUnit 'Tända gatulyktor plural' run {
   assertThat(gatulyktor.nameLit).isEqualTo('tända gatulyktor');
   assertThat(gatulyktor.aNameLit()).isEqualTo('tända gatulyktor');
   assertThat(gatulyktor.theNameLit).isEqualTo('de tända gatulyktorna');
@@ -110,7 +110,7 @@ UnitTest 'Tända gatulyktor plural' run {
 };
 
 
-UnitTest 'Tänt virke/tänd olja (massnoun)' run {
+TestUnit 'Tänt virke/tänd olja (massnoun)' run {
   assertThat(virke.nameLit).isEqualTo('tänt virke');
   assertThat(virke.aNameLit()).isEqualTo('tänt virke');
   assertThat(virke.theNameLit).isEqualTo('det tända virket');
@@ -131,7 +131,7 @@ UnitTest 'Tänt virke/tänd olja (massnoun)' run {
 
 };
 
-UnitTest 'spellIntOrdinalExt' run {
+TestUnit 'spellIntOrdinalExt' run {
   [ 1 -> 'första', 2 -> 'andra', 3 -> 'tredje', 4 -> 'fjärde', 5 -> 'femte', 
     6 -> 'sjätte', 7 -> 'sjunde', 8 -> 'åttonde', 9 -> 'nionde', 10 -> 'tionde', 
     11 -> 'elfte', 12 -> 'tolfte', 13 -> 'trettonde', 14 -> 'fjortonde', 15 -> 'femtonde', 
@@ -161,7 +161,7 @@ UnitTest 'spellIntOrdinalExt' run {
 };
 
 
-UnitTest 'LiteralTAction.getOtherMessageObjectPronoun' run {
+TestUnit 'LiteralTAction.getOtherMessageObjectPronoun' run {
   local a = LiteralTAction.createActionInstance();
   local x = a.getOtherMessageObjectPronoun(DirectObject);
   assertThat(x).isEqualTo('det'); // TODO: Håll koll på denna, oklart om det håller.

@@ -1,8 +1,7 @@
 #charset "utf-8"
 #include <adv3.h>
 #include <sv_se.h> 
-#include "../../../code/tads3/tads3-unit-test/unittest.h"
-
+#include "testunit.h"
 
 
 /**
@@ -43,7 +42,7 @@ modify Thing
 ;
 
 
-UnitTest 'initialize äpple med +notation (ett-ord)' run {
+TestUnit 'initialize äpple med +notation (ett-ord)' run {
 
     local appleAvancerat = new Thing();
     appleAvancerat.vocabWords = 'röda smakfulla äpple+t/frukt+en*äpplen+a frukter+na';
@@ -80,7 +79,7 @@ UnitTest 'initialize äpple med +notation (ett-ord)' run {
 
 };
 
-UnitTest 'initialize dörr med +notation (en-ord)' run {
+TestUnit 'initialize dörr med +notation (en-ord)' run {
     local obj = new Thing();
     obj.vocabWords = 'rustik+a gamla gammelmodig+a dörr+en/port+en*dörrar+na portar+na';
     obj.name = 'dörr';
@@ -119,7 +118,7 @@ UnitTest 'initialize dörr med +notation (en-ord)' run {
 
 };
 
-UnitTest 'initialize tranbärsjuice med +notation (en-ord)' run {
+TestUnit 'initialize tranbärsjuice med +notation (en-ord)' run {
     local obj = new Thing();
     obj.vocabWords = 'tranbär^s+juice+n';
     obj.name = 'tranbärsjuice';
@@ -143,7 +142,7 @@ UnitTest 'initialize tranbärsjuice med +notation (en-ord)' run {
 };
 
 // Böja adjektiv med foge-S
-UnitTest 'initialize adjektiv med +notation och foge-S' run {
+TestUnit 'initialize adjektiv med +notation och foge-S' run {
     local obj = new Thing();
     obj.vocabWords = 'orsak^s+analytisk+a uggla+n';
     obj.name = 'uggla';
@@ -178,7 +177,7 @@ UnitTest 'initialize adjektiv med +notation och foge-S' run {
 };
 
 // Böja substantiv med foge-S
-UnitTest 'initialize neutrum substantiv med +notation och foge-S' run {
+TestUnit 'initialize neutrum substantiv med +notation och foge-S' run {
     local obj = new Thing();
     obj.vocabWords = 'papper^s+flyg+plan+et';
 
@@ -211,7 +210,7 @@ UnitTest 'initialize neutrum substantiv med +notation och foge-S' run {
 };
 
 // Böja substantiv med foge-S
-UnitTest 'initialize utrum substantiv med +notation och foge-S' run {
+TestUnit 'initialize utrum substantiv med +notation och foge-S' run {
     local obj = new Thing();
     obj.vocabWords = 'ansvar:et^s+känsla+n';
 
@@ -240,7 +239,7 @@ UnitTest 'initialize utrum substantiv med +notation och foge-S' run {
 
 
 // Böja substantiv med foge-S
-UnitTest 'initialize utrum substantiv med +notation' run {
+TestUnit 'initialize utrum substantiv med +notation' run {
     local obj = new Thing();
     obj.vocabWords = 'cyckel+slang+en';
 
@@ -269,7 +268,7 @@ UnitTest 'initialize utrum substantiv med +notation' run {
 };
 
 
-UnitTest 'initialize plural utan +notation' run {
+TestUnit 'initialize plural utan +notation' run {
     local obj = new Thing();
     obj.vocabWords = 'glass';
     obj.name = 'glass';
@@ -287,7 +286,7 @@ UnitTest 'initialize plural utan +notation' run {
     //assertThat(obj.definitiveForm).isEqualTo('glass'); 
 }; 
 
-UnitTest 'initialize singular utan +notation' run {
+TestUnit 'initialize singular utan +notation' run {
     local obj = new Thing();
     obj.vocabWords = 'grävling';
     obj.name = 'grävling';
@@ -306,7 +305,7 @@ UnitTest 'initialize singular utan +notation' run {
 }; 
 
 
-UnitTest 'initialize plural med +notation' run {
+TestUnit 'initialize plural med +notation' run {
     local obj = new Thing();
     obj.vocabWords = 'stolar+na';
     obj.name = 'stolarna';
@@ -328,7 +327,7 @@ UnitTest 'initialize plural med +notation' run {
 
 
 
-UnitTest 'initialize stege (en-ord) utan +notation' run {
+TestUnit 'initialize stege (en-ord) utan +notation' run {
 
     local ladder = new Thing();
     ladder.vocabWords = 'ranglig rangliga stege/stegen*stegar';
@@ -365,7 +364,7 @@ UnitTest 'initialize stege (en-ord) utan +notation' run {
     
 };
 
-UnitTest 'initialize äpple (ett-ord) utan +notation' run {
+TestUnit 'initialize äpple (ett-ord) utan +notation' run {
 
     local leafSimple = new Thing();
     leafSimple.vocabWords = 'gröna blad/bladet/grönsak*bladen grönsaker';
@@ -404,7 +403,7 @@ UnitTest 'initialize äpple (ett-ord) utan +notation' run {
 };
 
 
-UnitTest 'initialize vatten isMassNoun=true' run {
+TestUnit 'initialize vatten isMassNoun=true' run {
     local vatten = new Thing();
     vatten.vocabWords = 'vatten/vattnet*vatten';
     vatten.definitiveForm = 'vattnet';
@@ -432,7 +431,7 @@ UnitTest 'initialize vatten isMassNoun=true' run {
 };
 
 
-UnitTest 'initialize vatten isMassNoun=true' run {
+TestUnit 'initialize vatten isMassNoun=true' run {
     local obj = new Thing();
     obj.vocabWords = 'skor+na*skor';
     obj.definitiveForm = 'skorna';
