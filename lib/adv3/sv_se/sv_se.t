@@ -416,12 +416,12 @@ modify VocabObject
         // så försöker vi härleda det ur den definitiva formen.
         // Om den definitiva formen slutar på -n eller -na så är det utrum,
         // vi flippar om detta till inversen för neutrum.
-        if(!isNeuterDefinedAlready && definitiveForm) {
-            local isUterEnding = definitiveForm.endsWith('n') || definitiveForm.endsWith('na');
+        if(!isNeuterDefinedAlready && definiteForm) {
+            local isUterEnding = definiteForm.endsWith('n') || definiteForm.endsWith('na');
             isNeuter = !isUterEnding;
             #ifdef __DEBUG
             /*if(isNeuter) {
-                tadsSay('<<self>>: <<definitiveForm>> is now set to neuter\n');
+                tadsSay('<<self>>: <<definiteForm>> is now set to neuter\n');
             }*/
             #endif
         }
@@ -492,13 +492,15 @@ modify VocabObject
     // t ex: 'vit+a sten+en' blir ajektiv: vit, vita och substantiv sten, stenen
     combineVocabWords = true 
 
+    plusNotationPat = static new RexPattern('.+(<plus>.+)+')
+
     initializeVocabWith(str)
     {
         local sectPart;
         local modList = [];
         
         local foundPluralName = nil;         // Håller reda på om vi definierat det första hittade pluralName
-        local foundTheDefinitiveForm = nil;  // Håller reda på om vi definierat den första hittade bestämda formen
+        local foundTheDefiniteForm = nil;  // Håller reda på om vi definierat den första hittade bestämda formen
 
         sectPart = &adjective;              // vocabWords inleds i adjektivsektionen (adj adj adj noun/noun/noun*plural plural)
 
@@ -591,7 +593,7 @@ modify VocabObject
                     local isNounOrPluralAndCorrespondingSectPart = isPluralAndSectPartPlural || isNounAndSectPartNoun;
 
                     if(combineVocabWords) {
-                        matchCombineVocabWordsNotation = rexMatch(R'.+(<plus>.+)+', cur);
+                        matchCombineVocabWordsNotation = rexMatch(plusNotationPat, cur);
                         if(matchCombineVocabWordsNotation) {
                             local forms = createCompoundWordVariations(self, cur, sectPart);
 
@@ -604,15 +606,15 @@ modify VocabObject
                                 }
                             }                            
 
-                            // Tilldela definitiveForm den första definitiva formen vi hittar i vocabWords
+                            // Tilldela definiteForm den första definitiva formen vi hittar i vocabWords
                             // Vi gör detta enbart när +notation använts eftersom det är enbart då vi med 
                             // säkerhet vet att den definitiva formen har använts.
-                            // (theNameFrom kommer att använda definitiveForm om den inte är nil. )
+                            // (theNameFrom kommer att använda definiteForm om den inte är nil. )
                             if(isNounOrPluralAndCorrespondingSectPart) {
-                                if(definitiveForm == nil) {
-                                    if(!foundTheDefinitiveForm) {
-                                        foundTheDefinitiveForm = true;
-                                        definitiveForm = forms.definitiveForm; 
+                                if(definiteForm == nil) {
+                                    if(!foundTheDefiniteForm) {
+                                        foundTheDefiniteForm = true;
+                                        definiteForm = forms.definiteForm; 
                                     }
                                 }
 
@@ -1279,17 +1281,17 @@ modify Thing
     
     //theNameFrom(str) { return (isQualifiedName ? '' : 'the ') + str; }
 
-    definitiveForm = nil
+    definiteForm = nil
 
     theNameFrom(str) { 
 
         if(isQualifiedName) {
             return str;
         }
-        //tadsSay('theNameFrom <<definitiveForm>>');
+        //tadsSay('theNameFrom <<definiteForm>>');
             
-        if(definitiveForm) {
-            return definitiveForm;
+        if(definiteForm) {
+            return definiteForm;
         }
         return (isPlural ? 'de ' : (isNeuter? 'det ' : 'den ')) + str; 
     }
@@ -3797,7 +3799,7 @@ modify LightSource
         return '<<article>> <<form>> <<name>>';
     }
 
-    theNameLit = (isPlural && !isMassNoun? 'de ' : isNeuter ? 'det ' : 'den ') + ((isLit?'':'o')+'tända ' + definitiveForm)
+    theNameLit = (isPlural && !isMassNoun? 'de ' : isNeuter ? 'det ' : 'den ') + ((isLit?'':'o')+'tända ' + definiteForm)
     pluralNameLit = (isLit?'':'o')+'tän' + (isMassNoun? (isNeuter? 't':'d'):'da') + ' ' + pluralName
 
     /*
@@ -11471,7 +11473,7 @@ function createCompoundWordVariations(obj, cur, sectPart) {
 
     return object {
         standardForm = wordWithoutEnding
-        definitiveForm = wordWithEnding
+        definiteForm = wordWithEnding
     };
 }
 

@@ -75,7 +75,7 @@ TestUnit 'initialize äpple med +notation (ett-ord)' run {
 
     assertThat(appleAvancerat.isNeuter).isNil(); // Härleds från den bestämda formen av äpple+t
     assertThat(appleAvancerat.isPlural).isNil(); 
-    assertThat(appleAvancerat.definitiveForm).isEqualTo('äpplet'); 
+    assertThat(appleAvancerat.definiteForm).isEqualTo('äpplet'); 
 
 };
 
@@ -114,7 +114,7 @@ TestUnit 'initialize dörr med +notation (en-ord)' run {
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
-    assertThat(obj.definitiveForm).isEqualTo('dörren'); 
+    assertThat(obj.definiteForm).isEqualTo('dörren'); 
 
 };
 
@@ -138,7 +138,7 @@ TestUnit 'initialize tranbärsjuice med +notation (en-ord)' run {
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
-    assertThat(obj.definitiveForm).isEqualTo('tranbärsjuicen'); 
+    assertThat(obj.definiteForm).isEqualTo('tranbärsjuicen'); 
 };
 
 // Böja adjektiv med foge-S
@@ -146,7 +146,7 @@ TestUnit 'initialize adjektiv med +notation och foge-S' run {
     local obj = new Thing();
     obj.vocabWords = 'orsak^s+analytisk+a uggla+n';
     obj.name = 'uggla';
-    obj.definitiveForm = 'ugglan';
+    obj.definiteForm = 'ugglan';
 
     // Sut
     obj.initializeVocabWith(obj.vocabWords);
@@ -173,7 +173,7 @@ TestUnit 'initialize adjektiv med +notation och foge-S' run {
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
-    assertThat(obj.definitiveForm).isEqualTo('ugglan'); 
+    assertThat(obj.definiteForm).isEqualTo('ugglan'); 
 };
 
 // Böja substantiv med foge-S
@@ -206,7 +206,7 @@ TestUnit 'initialize neutrum substantiv med +notation och foge-S' run {
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
     assertThat(obj.name).isEqualTo('pappersflygplan'); 
-    assertThat(obj.definitiveForm).isEqualTo('pappersflygplanet'); 
+    assertThat(obj.definiteForm).isEqualTo('pappersflygplanet'); 
 };
 
 // Böja substantiv med foge-S
@@ -218,7 +218,7 @@ TestUnit 'initialize utrum substantiv med +notation och foge-S' run {
     obj.initializeVocabWith(obj.vocabWords);
 
     // Assert
-    //tadsSay(getGrammarInfoFromCmdDict(obj));
+    // tadsSay(getGrammarInfoFromCmdDict(obj));
     assertThat(cmdDict.findWord('ansvar', &noun)[1]).isEqualTo(obj);
     assertThat(cmdDict.findWord('ansvaret', &noun)[1]).isEqualTo(obj);
     
@@ -234,7 +234,7 @@ TestUnit 'initialize utrum substantiv med +notation och foge-S' run {
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
     assertThat(obj.name).isEqualTo('ansvarskänsla'); 
-    assertThat(obj.definitiveForm).isEqualTo('ansvarskänslan'); 
+    assertThat(obj.definiteForm).isEqualTo('ansvarskänslan'); 
 };
 
 
@@ -264,7 +264,7 @@ TestUnit 'initialize utrum substantiv med +notation' run {
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
     assertThat(obj.name).isEqualTo('cyckelslang'); 
-    assertThat(obj.definitiveForm).isEqualTo('cyckelslangen'); 
+    assertThat(obj.definiteForm).isEqualTo('cyckelslangen'); 
 };
 
 
@@ -283,7 +283,7 @@ TestUnit 'initialize plural utan +notation' run {
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isTrue();
-    //assertThat(obj.definitiveForm).isEqualTo('glass'); 
+    //assertThat(obj.definiteForm).isEqualTo('glass'); 
 }; 
 
 TestUnit 'initialize singular utan +notation' run {
@@ -301,7 +301,7 @@ TestUnit 'initialize singular utan +notation' run {
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil();
-    //assertThat(obj.definitiveForm).isEqualTo('grävling'); 
+    //assertThat(obj.definiteForm).isEqualTo('grävling'); 
 }; 
 
 
@@ -321,7 +321,7 @@ TestUnit 'initialize plural med +notation' run {
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isTrue();
-    assertThat(obj.definitiveForm).isEqualTo('stolarna'); 
+    assertThat(obj.definiteForm).isEqualTo('stolarna'); 
 
 }; 
 
@@ -334,7 +334,7 @@ TestUnit 'initialize stege (en-ord) utan +notation' run {
     ladder.name = 'stege';
 
     // OBS: Den definitiva formen härleds inte i den enkla varianten utan +notation, det får man sätta dit själv 
-    ladder.definitiveForm = 'stegen';
+    ladder.definiteForm = 'stegen';
 
     // OBS: neutrum härleds inte i den enkla varianten utan +notation, det får man sätta dit själv
     ladder.isNeuter = true;
@@ -360,7 +360,7 @@ TestUnit 'initialize stege (en-ord) utan +notation' run {
     assertThat(ladder.isNeuter).isTrue(); 
     assertThat(ladder.isPlural).isNil(); 
     assertThat(ladder.theName).isEqualTo('stegen'); 
-    assertThat(ladder.definitiveForm).isEqualTo('stegen'); 
+    assertThat(ladder.definiteForm).isEqualTo('stegen'); 
     
 };
 
@@ -371,7 +371,7 @@ TestUnit 'initialize äpple (ett-ord) utan +notation' run {
     leafSimple.name = 'blad';
 
     // OBS: Den definitiva formen härleds inte i den enkla varianten utan +notation, det får man sätta dit själv 
-    leafSimple.definitiveForm = 'bladet';
+    leafSimple.definiteForm = 'bladet';
 
     // OBS: neutrum härleds inte i den enkla varianten utan +notation, det får man sätta dit själv
     leafSimple.isNeuter = true;
@@ -398,7 +398,7 @@ TestUnit 'initialize äpple (ett-ord) utan +notation' run {
     assertThat(leafSimple.isNeuter).isTrue(); 
     assertThat(leafSimple.isPlural).isNil(); 
     assertThat(leafSimple.theName).isEqualTo('bladet'); 
-    assertThat(leafSimple.definitiveForm).isEqualTo('bladet'); 
+    assertThat(leafSimple.definiteForm).isEqualTo('bladet'); 
     
 };
 
@@ -406,7 +406,7 @@ TestUnit 'initialize äpple (ett-ord) utan +notation' run {
 TestUnit 'initialize vatten isMassNoun=true' run {
     local vatten = new Thing();
     vatten.vocabWords = 'vatten/vattnet*vatten';
-    vatten.definitiveForm = 'vattnet';
+    vatten.definiteForm = 'vattnet';
     vatten.isMassNoun = true;
     vatten.isPlural = true;
     vatten.isNeuter = true;
@@ -426,7 +426,7 @@ TestUnit 'initialize vatten isMassNoun=true' run {
     //assertThat(vatten.aName).isEqualTo('lite vatten'); 
 
     assertThat(vatten.theName).isEqualTo('vattnet'); 
-    assertThat(vatten.definitiveForm).isEqualTo('vattnet'); 
+    assertThat(vatten.definiteForm).isEqualTo('vattnet'); 
     
 };
 
@@ -434,7 +434,7 @@ TestUnit 'initialize vatten isMassNoun=true' run {
 TestUnit 'initialize vatten isMassNoun=true' run {
     local obj = new Thing();
     obj.vocabWords = 'skor+na*skor';
-    obj.definitiveForm = 'skorna';
+    obj.definiteForm = 'skorna';
     obj.isPlural = true;
 
     // Sut 
