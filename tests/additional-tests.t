@@ -110,7 +110,7 @@ UnitTest 'Tända gatulyktor plural' run {
 };
 
 
-UnitTest 'Tändt virke/olja massnoun' run {
+UnitTest 'Tänt virke/tänd olja (massnoun)' run {
   assertThat(virke.nameLit).isEqualTo('tänt virke');
   assertThat(virke.aNameLit()).isEqualTo('tänt virke');
   assertThat(virke.theNameLit).isEqualTo('det tända virket');
@@ -160,3 +160,9 @@ UnitTest 'spellIntOrdinalExt' run {
   });
 };
 
+
+UnitTest 'LiteralTAction.getOtherMessageObjectPronoun' run {
+  local a = LiteralTAction.createActionInstance();
+  local x = a.getOtherMessageObjectPronoun(DirectObject);
+  assertThat(x).isEqualTo('det'); // TODO: Håll koll på denna, oklart om det håller.
+};

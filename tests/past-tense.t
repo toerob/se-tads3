@@ -1052,7 +1052,7 @@ UnitTest 'mustGetOnMsg' run {
   gPlayerChar = gActor;
   local msg = playerActionMessages.mustGetOnMsg(bankraden);
   "<<msg>>";
-  assertThat(o).startsWith('Jag behövde komma upp på bänkraden först.');
+  assertThat(o).startsWith('Jag behövde placera mig på bänkraden först.');
 };
 
 UnitTest 'mustBeInMsg' run {
@@ -2354,17 +2354,17 @@ UnitTest 'npcDeferredMessagesDirect.askMissingObject' run {
   //mainOutputStream.hideOutput = nil;
   local actionTextPairs = 
   [
-      AttackWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle attackera med.</q>',
-      DigWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle gräva med.</q>',
-      MoveWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle flytta med.</q>',
-      TurnWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle vrida med.</q>',
-      BurnWithAction-> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle tända med.</q>',
-      CutWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle klippa med.</q>',
-      CleanWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle rengöra med.</q>',
-      LockWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle låsa med.</q>',
-      UnlockWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle låsa upp med.</q>',
-      ScrewWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle skruva med.</q>',
-      UnscrewWithAction -> '\^matrosen sade, <q>Jag visste inte vad du ville att jag skulle skruva loss med.</q>'
+      AttackWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska attackera med.</q>',
+      DigWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska gräva med.</q>',
+      MoveWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska flytta med.</q>',
+      TurnWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska vrida med.</q>',
+      BurnWithAction-> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska tända med.</q>',
+      CutWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska klippa med.</q>',
+      CleanWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska rengöra med.</q>',
+      LockWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska låsa med.</q>',
+      UnlockWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska låsa upp med.</q>',
+      ScrewWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska skruva med.</q>',
+      UnscrewWithAction -> '\^matrosen sade, <q>Jag förstår inte vad du vill att jag ska skruva loss med.</q>'
   ];
   actionTextPairs.forEachAssoc(function(action, msg) {
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -2568,7 +2568,7 @@ UnitTest 'playerMessages.nothingInLocation 3d' run {
   assertThat(o).contains('\^apan såg inget ovanligt på marken.');
 };
 
-UnitTest 'libMessages' run {
+UnitTest 'libMessages (general)' run {
     local pairs = [
       &finishDeathMsg -> 'DU DOG',
       &finishVictoryMsg -> 'DU VANN',
@@ -2582,7 +2582,6 @@ UnitTest 'libMessages' run {
     assertThat(str).isEqualTo(expectedOutput);
   });
 };
-
 
 UnitTest 'playerActionMessages sig/dig' run {
   //mainOutputStream.hideOutput = nil;
@@ -3549,7 +3548,96 @@ UnitTest 'inlineListingContentsLister' run {
 };
 
 
+UnitTest 'libMessages (objects)' run {
+    local pairs = [
+      [&currentlyOpen, skapetObjNeutrumSingular]  -> 'Det var för närvarande öppet.',
+      [&currentlyClosed, skapetObjNeutrumSingular] -> 'Det var för närvarande stängt.',
+      [&currentlyOpen, dorrenObjUtrumSingular]  -> 'Den var för närvarande öppen.',
+      [&currentlyClosed, dorrenObjUtrumSingular] -> 'Den var för närvarande stängd.',
+      [&currentlyOpen, skapenObjNeuterPlural]  -> 'De var för närvarande öppna.',
+      [&currentlyClosed, skapenObjNeuterPlural] -> 'De var för närvarande stängda.',
 
+      [&currentlyUnlocked, skapetObjNeutrumSingular]  -> 'Det var för närvarande olåst.',
+      [&currentlyLocked, skapetObjNeutrumSingular] -> 'Det var för närvarande låst.',
+      [&currentlyUnlocked, dorrenObjUtrumSingular]  -> 'Den var för närvarande olåst.',
+      [&currentlyLocked, dorrenObjUtrumSingular] -> 'Den var för närvarande låst.',
+      [&currentlyUnlocked, skapenObjNeuterPlural]  -> 'De var för närvarande olåsta.',
+      [&currentlyLocked, skapenObjNeuterPlural] -> 'De var för närvarande låsta.'
+
+  ];
+  pairs.forEachAssoc(function(pair, expectedOutput) {
+    local prop = pair[1];
+    local obj = pair[2];
+
+    gAction = DoffAction.createActionInstance();
+    gAction.setCurrentObjects([obj]);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+     "<<libMessages.(prop)>>";
+    assertThat(o).startsWith(expectedOutput);
+  });
+};
+
+
+UnitTest 'npcMessages.commandNotHeard(actor)' run {
+  npcMessages.commandNotHeard(pirat);
+  assertThat(o).startsWith('\^piraten svarade ej.');
+};
+
+UnitTest 'libMessages.noMatchCannotSee' run {
+  npcMessages.noMatchCannotSee(pirat, 'xyzzy');
+  assertThat(o).startsWith('\^piraten såg inget liknande xyzzy.');
+};
+
+UnitTest 'npcMessages.noMatchNotAware' run {
+  npcMessages.noMatchNotAware(pirat, 'xyzzy');
+  assertThat(o).startsWith('\^piraten var inte medveten om något liknande xyzzy.');
+};
+
+
+UnitTest 'npcMessages.ambiguousNounPhrase okänt' run {  
+  npcMessages.ambiguousNounPhrase(pirat, 'xyzzy', nil, nil);
+  assertThat(o).contains('piraten förstod inte vad du menade med det.');
+};
+
+UnitTest 'npcMessages.ambiguousNounPhrase neutrum' run {  
+  npcMessages.ambiguousNounPhrase(pirat, 'äpple', nil, nil);
+  assertThat(o).contains('piraten förstod inte vilket äpple du menade.');
+};
+
+UnitTest 'npcMessages.ambiguousNounPhrase utrum' run {  
+  npcMessages.ambiguousNounPhrase(pirat, 'nyckel', nil, nil);
+  assertThat(o).contains('piraten förstod inte vilken nyckel du menade.');
+};
+
+UnitTest 'npcMessages.ambiguousNounPhrase plural' run {  
+  npcMessages.ambiguousNounPhrase(pirat, 'sopor', nil, nil);
+  assertThat(o).contains('piraten förstod inte vilka sopor du menade.');
+};
+
+
+UnitTest 'npcDeferredMessagesDirect.ambiguousNounPhrase okänt' run {  
+  npcDeferredMessagesDirect.ambiguousNounPhrase(pirat, 'xyzzy', nil, nil);
+  assertThat(o).contains('\^piraten sade, <q>Jag kan inte avgöra vad du menar.</q>');
+};
+
+UnitTest 'npcDeferredMessagesDirect.ambiguousNounPhrase neutrum' run {  
+  npcDeferredMessagesDirect.ambiguousNounPhrase(pirat, 'äpple', nil, nil);
+  assertThat(o).contains('\^piraten sade, <q>Jag kan inte avgöra vilket äpple du menar.</q>');
+};
+
+UnitTest 'npcDeferredMessagesDirect.ambiguousNounPhrase utrum' run {  
+  npcDeferredMessagesDirect.ambiguousNounPhrase(pirat, 'nyckel', nil, nil);
+  assertThat(o).contains('\^piraten sade, <q>Jag kan inte avgöra vilken nyckel du menar.</q>');
+};
+
+UnitTest 'npcDeferredMessagesDirect.ambiguousNounPhrase plural' run {  
+  npcDeferredMessagesDirect.ambiguousNounPhrase(pirat, 'sopor', nil, nil);
+  assertThat(o).contains('\^piraten sade, <q>Jag kan inte avgöra vilka sopor du menar.</q>');
+};
+
+
+
+//only=true; // TODO: ta bort sen
 /*
 TODO: openStatusMsg
 
@@ -3608,63 +3696,8 @@ singleObjectRequired(actor, txt)
 ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
 askMissingObject(actor, action, which)
 
-[actorInventoryLister, actorHoldingDescInventoryListerLong, actorHoldingDescInventoryListerShort]:
-showInventoryEmpty(parent)
-showInventoryWearingOnly(parent, wearing)
-showInventoryCarryingOnly(parent, carrying)
-showInventoryShortLists(parent, carrying, wearing)
-showInventoryLongLists(parent, carrying, wearing)
-
-showListEmpty(pov, parent)
-
-showListPrefixWide(itemCount, pov, parent)
-showListEmpty(pov, parent)
-showListEmpty(pov, parent)
-showListPrefixWide(itemCount, pov, parent)
-showListPrefixWide(itemCount, pov, parent)
-showListSuffixWide(itemCount, pov, parent)
-showListPrefixTall(itemCount, pov, parent)
-showListContentsPrefixTall(itemCount, pov, parent)
-isListed(obj)
-isListed(obj)
-isListed(obj)
-showListPrefixWide(itemCount, pov, parent)
-showListPrefixWide(itemCount, pov, parent)
-showListPrefixWide(cnt, pov, parent)
-showListEmpty(pov, parent)
-showListPrefixWide(cnt, pov, parent)
-showListSuffixWide(itemCount, pov, parent)
-showListSuffixWide(cnt, pov, parent)
-showListPrefixWide(cnt, pov, parent)
-showListSuffixWide(cnt, pov, parent)
-showListItem(obj, options, pov, infoTab)
-showListSeparator(options, curItemNum, totalItems)
-showListItem(obj, options, pov, infoTab)
-showListSeparator(options, curItemNum, totalItems)
-showListPrefixWide(cnt, pov, parent)
-showListItem(obj, options, pov, infoTab)
-showListSeparator(options, curItemNum, totalItems)
-showListItemDirName(obj, initCap)
-showListItem(obj, options, pov, infoTab)
-showListSeparator(options, curItemNum, totalItems)
-showListPrefixWide(cnt, pov, parent)
-showListPrefixWide(cnt, pov, parent)
-showListItem(obj, options, pov, infoTab)
-showListSuffixWide(cnt, pov, parent)
-showListSeparator(options, curItemNum, totalItems)
-showListEmpty(pov, parent)
-showListEmpty(pov, parent)
-showListPrefixWide(cnt, pov, parent)
-showListSuffixWide(cnt, pov, parent)
-showListItem(obj, options, pov, infoTab)
-showListSeparator(options, curItemNum, totalItems)
 compositeMessage(lst)
 construct(asker, askee, explicit)
-showListPrefixWide(cnt, pov, parent)
-showListSuffixWide(cnt, pov, parent)
-showListEmpty(pov, parent)
-showListSeparator(options, curItemNum, totalItems)
-showListItem(obj, options, pov, infoTab)
 showGroupItem(sublister, obj, options, pov, infoTab)
 showGroupList(pov, lister, lst, options, indent, infoTab)
 
@@ -3691,4 +3724,30 @@ soundDescSeparator()
 
 
 
+*/
+
+
+
+/*
+UnitTest 'libMessages (objects)' run {
+    local pairs = [
+      
+      [npcMessages, &noMatchCannotSee]  -> '\^piraten såg inget liknande xyzzy.',
+      [npcMessages, &noMatchNotAware]  -> '\^piraten var inte medveten om något liknande xyzzy.'
+  ];
+  pairs.forEachAssoc(function(pair, expectedOutput) {
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    local obj = pair[1];
+    local prop = pair[2];
+    gAction = DoffAction.createActionInstance();
+    gAction.setCurrentObjects([obj]);
+    gAction.setActors(pirat, pirat);
+    //gActor = pirat;
+    local actor = pirat;
+    gMessageParams(actor);
+    obj.(prop)( pirat , 'xyzzy');
+
+    assertThat(o).startsWith(expectedOutput);
+  });
+};
 */

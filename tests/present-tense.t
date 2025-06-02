@@ -1053,7 +1053,7 @@ UnitTest 'mustGetOnMsg' run {
   gPlayerChar = gActor;
   local msg = playerActionMessages.mustGetOnMsg(bankraden);
   "<<msg>>";
-  assertThat(o).startsWith('Jag behöver komma upp på bänkraden först.');
+  assertThat(o).startsWith('Jag behöver placera mig på bänkraden först.');
 };
 
 UnitTest 'mustBeInMsg' run {
@@ -2360,17 +2360,17 @@ UnitTest 'npcDeferredMessagesDirect.askMissingObject' run {
   //mainOutputStream.hideOutput = nil;
   local actionTextPairs = 
   [
-      AttackWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska attackera med.</q>',
-      DigWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska gräva med.</q>',
-      MoveWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska flytta med.</q>',
-      TurnWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska vrida med.</q>',
-      BurnWithAction-> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska tända med.</q>',
-      CutWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska klippa med.</q>',
-      CleanWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska rengöra med.</q>',
-      LockWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska låsa med.</q>',
-      UnlockWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska låsa upp med.</q>',
-      ScrewWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska skruva med.</q>',
-      UnscrewWithAction -> '\^matrosen säger, <q>Jag vet inte vad du vill att jag ska skruva loss med.</q>'
+      AttackWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska attackera med.</q>',
+      DigWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska gräva med.</q>',
+      MoveWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska flytta med.</q>',
+      TurnWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska vrida med.</q>',
+      BurnWithAction-> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska tända med.</q>',
+      CutWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska klippa med.</q>',
+      CleanWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska rengöra med.</q>',
+      LockWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska låsa med.</q>',
+      UnlockWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska låsa upp med.</q>',
+      ScrewWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska skruva med.</q>',
+      UnscrewWithAction -> '\^matrosen säger, <q>Jag förstår inte vad du vill att jag ska skruva loss med.</q>'
   ];
   actionTextPairs.forEachAssoc(function(action, msg) {
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -3543,6 +3543,94 @@ UnitTest 'inlineListingContentsLister' run {
     gActor = spelare3dePerspektiv;
     lister.showListPrefixWide(0, spelare3dePerspektiv, skapetObjNeutrumSingular);    
     assertThat(o).contains(' (som innehåller');
+};
+
+
+
+UnitTest 'libMessages (objects)' run {
+    local pairs = [
+      [&currentlyOpen, skapetObjNeutrumSingular]  -> 'Det är för närvarande öppet.',
+      [&currentlyClosed, skapetObjNeutrumSingular] -> 'Det är för närvarande stängt.',
+      [&currentlyOpen, dorrenObjUtrumSingular]  -> 'Den är för närvarande öppen.',
+      [&currentlyClosed, dorrenObjUtrumSingular] -> 'Den är för närvarande stängd.',
+      [&currentlyOpen, skapenObjNeuterPlural]  -> 'De är för närvarande öppna.',
+      [&currentlyClosed, skapenObjNeuterPlural] -> 'De är för närvarande stängda.',
+
+      [&currentlyUnlocked, skapetObjNeutrumSingular]  -> 'Det är för närvarande olåst.',
+      [&currentlyLocked, skapetObjNeutrumSingular] -> 'Det är för närvarande låst.',
+      [&currentlyUnlocked, dorrenObjUtrumSingular]  -> 'Den är för närvarande olåst.',
+      [&currentlyLocked, dorrenObjUtrumSingular] -> 'Den är för närvarande låst.',
+      [&currentlyUnlocked, skapenObjNeuterPlural]  -> 'De är för närvarande olåsta.',
+      [&currentlyLocked, skapenObjNeuterPlural] -> 'De är för närvarande låsta.'
+
+  ];
+  pairs.forEachAssoc(function(pair, expectedOutput) {
+    local prop = pair[1];
+    local obj = pair[2];
+
+    gAction = DoffAction.createActionInstance();
+    gAction.setCurrentObjects([obj]);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+     "<<libMessages.(prop)>>";
+    assertThat(o).startsWith(expectedOutput);
+  });
+};
+
+
+UnitTest 'npcMessages.commandNotHeard(actor)' run {
+  npcMessages.commandNotHeard(pirat);
+  assertThat(o).startsWith('\^piraten svarar ej.');
+};
+
+UnitTest 'libMessages.noMatchCannotSee' run {
+  npcMessages.noMatchCannotSee(pirat, 'xyzzy');
+  assertThat(o).startsWith('\^piraten ser inget liknande xyzzy.');
+};
+
+UnitTest 'npcMessages.noMatchNotAware' run {
+  npcMessages.noMatchNotAware(pirat, 'xyzzy');
+  assertThat(o).startsWith('\^piraten är inte medveten om något liknande xyzzy.');
+};
+
+UnitTest 'npcMessages.ambiguousNounPhrase okänt' run {  
+  npcMessages.ambiguousNounPhrase(pirat, 'xyzzy', nil, nil);
+  assertThat(o).contains('piraten förstår inte vad du menar med det.');
+};
+
+UnitTest 'npcMessages.ambiguousNounPhrase neutrum' run {  
+  npcMessages.ambiguousNounPhrase(pirat, 'äpple', nil, nil);
+  assertThat(o).contains('piraten förstår inte vilket äpple du menar.');
+};
+
+UnitTest 'npcMessages.ambiguousNounPhrase utrum' run {  
+  npcMessages.ambiguousNounPhrase(pirat, 'nyckel', nil, nil);
+  assertThat(o).contains('piraten förstår inte vilken nyckel du menar.');
+};
+
+UnitTest 'npcMessages.ambiguousNounPhrase plural' run {  
+  npcMessages.ambiguousNounPhrase(pirat, 'sopor', nil, nil);
+  assertThat(o).contains('piraten förstår inte vilka sopor du menar.');
+};
+
+
+UnitTest 'npcDeferredMessagesDirect.ambiguousNounPhrase okänt' run {  
+  npcDeferredMessagesDirect.ambiguousNounPhrase(pirat, 'xyzzy', nil, nil);
+  assertThat(o).contains('\^piraten säger, <q>Jag kan inte avgöra vad du menar.</q>');
+};
+
+UnitTest 'npcDeferredMessagesDirect.ambiguousNounPhrase neutrum' run {  
+  npcDeferredMessagesDirect.ambiguousNounPhrase(pirat, 'äpple', nil, nil);
+  assertThat(o).contains('\^piraten säger, <q>Jag kan inte avgöra vilket äpple du menar.</q>');
+};
+
+UnitTest 'npcDeferredMessagesDirect.ambiguousNounPhrase utrum' run {  
+  npcDeferredMessagesDirect.ambiguousNounPhrase(pirat, 'nyckel', nil, nil);
+  assertThat(o).contains('\^piraten säger, <q>Jag kan inte avgöra vilken nyckel du menar.</q>');
+};
+
+UnitTest 'npcDeferredMessagesDirect.ambiguousNounPhrase plural' run {  
+  npcDeferredMessagesDirect.ambiguousNounPhrase(pirat, 'sopor', nil, nil);
+  assertThat(o).contains('\^piraten säger, <q>Jag kan inte avgöra vilka sopor du menar.</q>');
 };
 
 

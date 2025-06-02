@@ -1644,13 +1644,8 @@ libMessages: MessageHelper
     }
 
     /* object is currently open/closed */
-    //currentlyOpen = '{Detär dobj} för närvarande öpp en/na öppe<<obj.isNeuter?'t':'n'>>. '
-    //currentlyClosed = '{Detär dobj} för närvarande stäng<<obj.isNeuter?'t':'d'>>. '
-    currentlyOpen = '{Denär dobj} för närvarande öpp{en/et/na}. ' // TODO: ta bort sammansättningen
-    currentlyClosed = '{Detär dobj} för närvarande stäng{d/t/da}. ' // TODO: ta bort sammansättningen
-
-    // eval buildParam('en/ett/na', buildSynthParam(stugdorrUtsida))
-
+    currentlyOpen = '{Det dobj} {är} för närvarande öpp{en/et/na}. '
+    currentlyClosed = '{Det dobj} {är} för närvarande stäng{d/t/da}. '
 
     /* stand-alone independent clause describing current open status */
     openStatusMsg(obj) { return obj.itNom + ' ' + obj.verbToBe + ' ' + obj.openDesc; }
@@ -1665,8 +1660,8 @@ libMessages: MessageHelper
     }
 
     /* object is currently locked/unlocked */
-    currentlyLocked = '{Denär dobj} för närvarande låst{a}. '
-    currentlyUnlocked = '{Denär dobj} för närvarande olåst{a}. '
+    currentlyLocked = '{Det dobj} {är} för närvarande låst{a}. '
+    currentlyUnlocked = '{Det dobj} {är} för närvarande olåst{a}. '
 
     /*
      *   on/off status - these are simply adjectives that can be used to
@@ -2173,12 +2168,12 @@ npcMessages: playerMessages
     /* the target cannot hear a command we gave */
     commandNotHeard(actor)
     {
-        "\^<<actor.nameDoes>> svara{r|de} ej. ";
+        "\^<<actor.theName>> svara{r|de} ej. ";
     }
 
     /* no match for a noun phrase */
     noMatchCannotSee(actor, txt) { 
-        "\^<<actor.nameSees>> inget liknande <<txt>>. ";  // TODO: genitiv
+        "\^<<actor.nameSees>> inget liknande <<txt>>. ";  
     }
     noMatchNotAware(actor, txt)
         { "\^<<actor.nameIs>> inte medveten om något liknande <<txt>>. "; }
@@ -2207,7 +2202,15 @@ npcMessages: playerMessages
      */
     ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
     {
-        "<.parser>\^<<actor.nameDoes>> vet inte [TODO: vilket/vilken/vilka] <<originalText>> du mena<<tSel('r', 'de')>>.<./parser> ";
+        gMessageParams(actor);
+        local match = cmdDict.findWord(originalText);
+        if(match != nil && match.length > 0) {
+            match = match[1];
+            local which = match.isPlural ? 'vilka' : (match.isNeuter ? 'vilket' : 'vilken');
+            "<.parser>\^<<actor.theName>> {förstår|förstod} inte <<which>> <<originalText>> du mena{r|de}.<./parser> ";
+        } else {
+            "<.parser>\^<<actor.theName>> {förstår|förstod} inte vad du mena{r|de} med det.<./parser> ";
+        }
     }
 
     /*
@@ -2544,15 +2547,21 @@ npcDeferredMessagesDirect: npcDeferredMessages
      */
     ambiguousNounPhrase(actor, originalText, matchList, fullMatchList)
     {
+        local which = 'vad';
+        local match = cmdDict.findWord(originalText);
+        if(match != nil && match.length > 0) {
+            match = match[1];
+            which = (match.isPlural ? 'vilka' : (match.isNeuter ? 'vilket' : 'vilken')) + ' ' + originalText;
+        }
         "\^<<actor.nameSays>>,
-        <q>[TODO:2492]Jag kunde inte avgöra vilket/vilken/vilka <<originalText>> du menade.</q> ";
+        <q>Jag kan inte avgöra <<which>> du menar.</q> ";
     }
 
     /* an object phrase was missing */
     askMissingObject(actor, action, which)
     {
-        reportQuestion('\^<<actor.nameSays>>, <q>Jag {vet|visste} inte '
-                       + action.whatObj(which) + ' du {vill|ville} att jag {ska|skulle} '
+        reportQuestion('\^<<actor.nameSays>>, <q>Jag förstår inte '
+                       + action.whatObj(which) + ' du vill att jag ska '
                        + action.getQuestionInf(which) + '.</q> ');
     }
 
@@ -2699,16 +2708,13 @@ playerActionMessages: MessageHelper
     }
 
     /* must get on/in object */
-    // TODO: undersök
     mustGetOnMsg(obj)
     {
         gMessageParams(obj);
-        //return '{You/he} {must} get {i obj} first. ';
-        return '{Du/han} {behöver|behövde} komma upp {i obj} först. '; 
+        return '{Du/han} {behöver|behövde} placera {mig} {i obj} först. '; 
     }
 
     /* object must be in loc before doing that */
-    // TODO: undersök
     mustBeInMsg(obj, loc)
     {
         gMessageParams(obj, loc);
@@ -2723,7 +2729,6 @@ playerActionMessages: MessageHelper
     }
 
     /* generic "that's not important" message for decorations */
-    // TODO: undersök
     decorationNotImportantMsg(obj)
     {
         gMessageParams(obj);
@@ -2952,7 +2957,6 @@ playerActionMessages: MessageHelper
     /* trying to take a component object */
     cannotTakeComponentMsg(loc)
     {
-        // TODO: 
         return '{Du/han} {kan} inte ta {det/obj dobj}; '
             + '{det dobj/han} {är} del av ' + loc.theNameObj + '. ';
     }
@@ -3214,7 +3218,7 @@ playerActionMessages: MessageHelper
     notAContainerMsg = '{Du/han} {kan} inte stoppa någonting i {ref iobj/honom}. '
 
     /* trying to put an object on a non-surface */
-    notASurfaceMsg = 'Det {finns|fanns} ingen bra yta på {ref iobj/honom}. ' // TODO: genitiv
+    notASurfaceMsg = 'Det {finns|fanns} ingen bra yta på {ref iobj/honom}. '
 
     /* can't put anything under iobj */
     cannotPutUnderMsg =
@@ -3387,9 +3391,7 @@ playerActionMessages: MessageHelper
     /* enclosing room is too high to reach by GETTING OUT OF here */
     nestedRoomTooHighToExitMsg(obj)
     {
-        // TODO: testa denna
         return 'Det {är} alltför långt fall ner för att kunna göra det {h|d}ärifrån. ';
-        //return 'It{&rsquo;s| was} too long a drop to do that från {här}. ';
     }
 
     /* cannot carry out a command from a nested room */
@@ -3643,8 +3645,6 @@ playerActionMessages: MessageHelper
         fjädra{r|de} tillbaka till {dess/hennes dobj} startposition så snart som 
         {du/han} släpp{er/te} taget om {det dobj/honom}. '
 
-//TODO: fortsätt uppåt
-
     /* moving object has no effect */
     moveNoEffectMsg = 'Att flytta {ref dobj/honom} skulle inte ge någon effekt. '
 
@@ -3855,7 +3855,6 @@ playerActionMessages: MessageHelper
     /* already open/closed */
     alreadyOpenMsg = '{Den dobj/ref} {är} redan öppe<<gDobj && gDobj.isNeuter?'t':'n'>>. '
     
-    // TODO: Går det att hitta ett bättre sätt?
     alreadyClosedMsg = '{Den dobj/ref} {är} redan stäng<<gDobj && gDobj.isNeuter?'t':'d'>>. '
 
     /* already locked/unlocked */
@@ -3900,8 +3899,6 @@ playerActionMessages: MessageHelper
         return '{You/he} tr{ies/ied} each key on {the ring/him}, and
             {find[s actor]|found} that {the key/he} fit{s/ted} the lock. ';
         */
-        // TODO: undersök hur denna fungerar
-        //  {find[s actor]|finner} 
         gMessageParams(ring, key);
         return '{Du/han} försök{er|te} varje nyckel på {ref ring/honom}, och upptäck{er|te} att {den key/ref} passa{r|de} låset. ';
     }
@@ -4580,7 +4577,6 @@ actorInventoryLister: DividedInventoryLister
     {
         local nm = gSynthMessageParam(parent);
         
-        // TODO: it\'s
         /* short lists - combine carried and worn in a single sentence */
         "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>,
         och <<buildParam('han/subj', nm)>>{subj} {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
@@ -4589,7 +4585,6 @@ actorInventoryLister: DividedInventoryLister
     {
         local nm = gSynthMessageParam(parent);
 
-        // TODO:
         /* long lists - show carried and worn in separate sentences */
         "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>.
         <<buildParam('Det/han', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
