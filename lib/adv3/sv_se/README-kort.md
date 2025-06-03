@@ -41,7 +41,7 @@ ansvarskanslan: Thing 'ansvar:et^s+känsla+n';
 
 Plusnotation fungerar när `combineVocabWords = true` (standard). Sätt till `nil` för att stänga av funktionaliteten.
 
-För att debugga, använd flaggan "-D __DEBUG" vid kompilering och använd verbet "ord" i spelet.
+För att debugga, använd flaggan "-D __DEBUG" vid kompilering och använd verbet "ord <valfritt substantiv>" i spelet för att granska vilka ord som genererats för samma objekt.
 
 
 
