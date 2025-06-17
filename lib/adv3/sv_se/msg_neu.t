@@ -116,7 +116,7 @@ libMessages: MessageHelper
     /* announce a completely remapped action */
     announceRemappedAction(action)
     {
-        return '<./p0>\n<.assume>' + action.getParticiplePhrase()
+        return '<./p0>\n<.assume>' + action.getActivePhrase()
             + '<./assume>\n';
     }
 
@@ -1281,13 +1281,13 @@ libMessages: MessageHelper
     {
         /* mention any posture other than standing */
         if (actor.posture != standing) {
-            " (<<actor.posture.participle>>)";
+            " (<<actor.posture.active>>)";
         }
     }
 
     /* show a status line addendum: standing in/on something */
     actorInRoomStatus(actor, room)
-        { " (<<actor.posture.participle>> <<room.actorInName>>)"; }
+        { " (<<actor.posture.active>> <<room.actorInName>>)"; }
 
     /* generic short description of a dark room */
     roomDarkName = 'I mörkret'
@@ -1301,7 +1301,7 @@ libMessages: MessageHelper
      */
     roomActorHereDesc(actor)
     {
-        "\^<<actor.theName>> <<actor.posture.participle>> <<tSel('här', 'där')>>. ";
+        "\^<<actor.theName>> <<actor.posture.active>> <<tSel('här', 'där')>>. ";
     }
 
     /*
@@ -1311,8 +1311,8 @@ libMessages: MessageHelper
      */
     roomActorThereDesc(actor)
     {
-        //"\^<<actor.nameIs>> <<actor.posture.participle>> i närheten. ";
-        "\^<<actor.theName>> <<actor.posture.participle>> i närheten. ";
+        //"\^<<actor.nameIs>> <<actor.posture.active>> i närheten. ";
+        "\^<<actor.theName>> <<actor.posture.active>> i närheten. ";
     }
 
     /*
@@ -1322,8 +1322,8 @@ libMessages: MessageHelper
      */
     actorInRoom(actor, cont)
     {
-        //"\^<<actor.nameIs>> <<actor.posture.participle>> <<cont.actorInName>>. ";
-        "\^<<actor.theName>> <<actor.posture.participle>> <<cont.actorInName>>. ";
+        //"\^<<actor.nameIs>> <<actor.posture.active>> <<cont.actorInName>>. ";
+        "\^<<actor.theName>> <<actor.posture.active>> <<cont.actorInName>>. ";
     }
 
     /*
@@ -1334,7 +1334,7 @@ libMessages: MessageHelper
      */
     actorInRoomPosture(actor, room)
     {
-        "{Det actor/han} <<actor.posture.participle>> <<room.actorInName>>. ";
+        "{Det actor/han} <<actor.posture.active>> <<room.actorInName>>. ";
     }
 
     /*
@@ -1345,7 +1345,7 @@ libMessages: MessageHelper
     roomActorPostureDesc(actor)
     {
         if (actor.posture != standing) {
-            "{Det actor/han} <<actor.posture.participle>>. ";
+            "{Det actor/han} <<actor.posture.active>>. ";
         }
     }
 
@@ -1358,7 +1358,7 @@ libMessages: MessageHelper
     actorInRemoteRoom(actor, room, pov)
     {
         /* say that the actor is in the room, using its remote in-name */
-        "\^<<actor.theName>> <<actor.posture.participle>> <<room.inRoomName(pov)>>. ";
+        "\^<<actor.theName>> <<actor.posture.active>> <<room.inRoomName(pov)>>. ";
     }
 
     /*
@@ -1374,7 +1374,7 @@ libMessages: MessageHelper
          *   well 
          */
         "\^<<actor.nameIs>> <<outer.inRoomName(pov)>>,
-        <<actor.posture.participle>> <<inner.actorInName>>. ";
+        <<actor.posture.active>> <<inner.actorInName>>. ";
     }
 
     /*
@@ -1388,7 +1388,7 @@ libMessages: MessageHelper
     {
         // Inget behov av är/var i svenskan, vi går direkt på verbet
         //" <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
-        " <<posture.participle>> <<cont.actorInName>>. ";
+        " <<posture.active>> <<cont.actorInName>>. ";
     }
 
     /*
@@ -1401,7 +1401,7 @@ libMessages: MessageHelper
     actorInRemoteGroupSuffix(pov, posture, cont, remote, lst)
     {
         //" <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
-        " <<remote.inRoomName(pov)>>, <<posture.participle>>
+        " <<remote.inRoomName(pov)>>, <<posture.active>>
         <<cont.actorInName>>. ";
     }
 
@@ -1421,7 +1421,7 @@ libMessages: MessageHelper
     actorHereGroupSuffix(posture, lst)
     {
         // e.g "Bob och Bill står här"
-        " <<posture.participle>> <<tSel('här', 'där')>>. ";
+        " <<posture.active>> <<tSel('här', 'där')>>. ";
     }
 
     /*
@@ -1434,7 +1434,7 @@ libMessages: MessageHelper
     actorThereGroupSuffix(pov, posture, remote, lst)
     {
         //" <<lst.length() == 1 ? tSel('är', 'var') : tSel('är', 'var')>>
-        " <<posture.participle>> <<remote.inRoomName(pov)>>. ";
+        " <<posture.active>> <<remote.inRoomName(pov)>>. ";
     }
 
     /* a traveler is arriving, but not from a compass direction */
@@ -3981,7 +3981,7 @@ playerActionMessages: MessageHelper
     {
         gMessageParams(obj);
         return 'Ok, {du/han} <<posture.msgVerbT>>{ nu | }{på obj}. ';
-        // ( {är} nu ' + posture.participle + ' {på obj}. )';
+        // ( {är} nu ' + posture.active + ' {på obj}. )';
     }
 
     /* default report for getting off of a platform */

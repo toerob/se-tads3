@@ -589,8 +589,8 @@ modify VocabObject
                     sectPart = oneWordOnly && isPlural? &plural : sectPart;
 
                     local isPluralAndSectPartPlural = isPlural && sectPart == &plural;
-                    local isNounAndSectPartNoun = !isPlural && sectPart == &noun;
-                    local isNounOrPluralAndCorrespondingSectPart = isPluralAndSectPartPlural || isNounAndSectPartNoun;
+                    local isNotPluralAndSectPartNoun = !isPlural && sectPart == &noun;
+                    local isNounOrPluralAndCorrespondingSectPart = isPluralAndSectPartPlural || isNotPluralAndSectPartNoun;
 
                     if(combineVocabWords) {
                         matchCombineVocabWordsNotation = rexMatch(plusNotationPat, cur);
@@ -2791,8 +2791,8 @@ modify Posture
     /* our past-tense transitive form ("he stood on the chair") */
     // msgVerbTPast = 'stood'
 
-    /* our participle form */
-    // participle = 'standing'
+    /* our active form */
+    // active = 'standing'
 ;
 
 modify standing
@@ -2801,7 +2801,7 @@ modify standing
     msgVerbTPresent = 'står'
     msgVerbTPast = 'stod'
     //participle = 'ståendes'
-    participle = 'står'
+    active = 'står'
 ;
 
 modify sitting
@@ -2810,7 +2810,7 @@ modify sitting
     msgVerbTPresent = 'sitter'
     msgVerbTPast = 'satt'
     //participle = 'sittande'
-    participle = 'sitter'
+    active = 'sitter'
 ;
 
 modify lying
@@ -2819,7 +2819,7 @@ modify lying
     msgVerbTPresent = 'ligger'
     msgVerbTPast = 'lade {själv}'
     //participle = 'liggande'
-    participle = 'ligger'
+    active = 'ligger'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -8286,9 +8286,9 @@ defaultGetVerbPhraseContext: GetVerbPhraseContext
  */
 class ImplicitAnnouncementContext: object
     /*
-     *   Should we use the infinitive form of the verb, or the participle
+     *   Should we use the infinitive form of the verb, or the active
      *   form for generating the announcement?  By default, use use the
-     *   participle form: "(first OPENING THE BOX)".
+     *   active form: "(ÖPPNAR LÅDAN först)".
      */
 
     useInfPhrase = nil
@@ -8581,25 +8581,29 @@ modify Action
     announceAllDefaultObjects(allResolved) { }
 
     /*
-     *   Return a phrase describing the action performed implicitly, as a
-     *   participle phrase.  'ctx' is an ImplicitAnnouncementContext object
-     *   describing the context in which we're generating the phrase.
+     *   Returnera en fras som beskriver den implicita handlingen som en
+     *   aktiv fras. 'ctx' är ett ImplicitAnnouncementContext-objekt
+     *   som beskriver sammanhanget i vilket vi genererar frasen.
      *
-     *   This comes in two forms: if the context indicates we're only
-     *   attempting the action, we'll return an infinitive phrase ("open
-     *   the box") for use in a larger participle phrase describing the
-     *   attempt ("trying to...").  Otherwise, we'll be describing the
-     *   action as actually having been performed, so we'll return a
-     *   present participle phrase ("opening the box").
+     *   Detta kommer i två former: om kontexten indikerar att vi bara
+     *   försöker utföra handlingen, kommer vi att returnera en infinitivfras 
+     *   ("öppna lådan") för användning i en större aktiv fras som beskriver
+     *   försöket ("försöker..."). Annars kommer vi att beskriva
+     *   handlingen som ett faktiskt utförande, så vi returnerar en
+     *   aktiv presensform ("öppnar lådan"). 
+     * 
+     *   OBS: Detta skiljer sig från den engelska versionen, där participformen används 
+     *   istället för den aktiva formen. Anledningen till detta är att svenska meningar 
+     *   inte låter välformulerade när man använder particip på detta sätt som engelska
+     *   meningar gör.
      */
     getImplicitPhrase(ctx)
     {
         /*
-         *   Get the phrase.  Use the infinitive or participle form, as
+         *   Get the phrase.  Use the infinitive or active form, as
          *   indicated in the context.
          */
         local x = getVerbPhrase(ctx.useInfPhrase, ctx.getVerbCtx);
-        //tadsSay('(Get the phrase: <<x>>)');
         return x;
     }
 
@@ -8615,7 +8619,6 @@ modify Action
     {
         /* return the verb phrase in infinitive form */
         local x = getVerbPhrase(true, nil);
-        //tadsSay('(infinitive form <<x>>)');
         return x;
     }
 
@@ -8648,32 +8651,43 @@ modify Action
     }
 
     /*
-     *   Get a string describing the full action in present participle
+     *   Get a string describing the full action in present active
      *   form, using the current command objects: "taking the watch",
      *   "putting the book on the shelf"
      */
+    // getParticiplePhrase() - OBSERVERA att denna metod inte används  
+    // av språkmodulen så som engelska språkmodulen så därför har den 
+    // här bytt namn. För spårbarhetens skull behålls en den gamla 
+    // metodens namn här bortkommenterad. 
+    // getParticiplePhrase kan komma att behöva användas i svenska 
+    // språkmodulen längre fram, men i så fall troligen på ett annat 
+    // sätt än som i engelskan. Se getActivePhrase() istället.
 
-    /**
-    * Observera att i svenskan finns det ingen större nytta att använda particip-formen för att konstruera 
-    * meningar så som: "öppnande dörren" eller "tagande boken".
-    * (motsvarande "opening the door" eller "first taking the book")
-    * 
-    * Istället görs här en trade-off till att skapa meningar så som:
-    *  - "(kliver upp och försöker låsa upp dörren först)",  eller:
-    *  - "(försöker ta boken först)" eller "(tar boken först)" osv.
-    * 
-    * Vi lagrar med andra ord i verbPhrase formerna "öppna/öppnar" och "ta/tar" osv.
-    */
-    getParticiplePhrase()
+    /*
+     *   Hämtar en sträng som beskriver hela handlingen i aktiv presensform, 
+     *   med de nuvarande kommandoobjekten: "tar klockan",
+     *   "stoppar boken på hyllan"
+
+     * Observera att i svenskan finns det ingen bra anledning att använda 
+     * engelskans particip-form för att konstruera meningar så som: 
+     * "öppnandes dörren" eller "tagandes boken först".
+     * (motsvarande "opening the door" eller "first taking the book")
+     * 
+     * Istället görs här en trade-off till att skapa meningar i aktiv form istället:
+     * "öppnar dörren först" eller "tar boken först" osv.
+     *
+     * Vi lagrar med andra ord i verbPhrase: infinitiv/aktiv-formerna "öppna/öppnar" och "ta/tar" osv.
+     */
+    getActivePhrase()
     {
-        /* return the verb phrase in participle form */
+        /* return the verb phrase in active form */
         return getVerbPhrase(nil, nil);
     }
 
     /*
-     *   Get the full verb phrase in either infinitive or participle
+     *   Get the full verb phrase in either infinitive or active
      *   format.  This is a common handler for getInfinitivePhrase() and
-     *   getParticiplePhrase().
+     *   getActivePhrase().
      *
      *   'ctx' is a GetVerbPhraseContext object, which lets us keep track
      *   of antecedents when we're stringing together multiple verb
@@ -8699,7 +8713,7 @@ modify Action
         }
         else
         {
-            /* participle - it's the part after the slash */
+            /* active form - it's the part after the slash */
             return rexGroup(2)[3] + rexGroup(3)[3];
         }
     }
@@ -8784,7 +8798,7 @@ modify TAction
     getQuestionInf(which)
     {
         /*
-         *   Show the present-tense verb form (removing the participle
+         *   Show the present-tense verb form (removing the active form
          *   part - the "/xxxing" part).  Include any prepositions
          *   attached to the verb itself or to the direct object (inside
          *   the "(vad)" parens).
@@ -8796,7 +8810,7 @@ modify TAction
             + spPrefix(rexGroup(3)[3]);
     }
 
-    /* get the verb phrase in infinitive or participle form */
+    /* Hämta verbfrasen i antingen infinitiv eller aktiv form */
     getVerbPhrase(inf, ctx)
     {
         local dobj;
@@ -8838,21 +8852,21 @@ modify TAction
      *   single object.
      *
      *   'inf' is a flag indicating whether to use the infinitive form
-     *   (true) or the present participle form (nil); 'vp' is the
+     *   (true) or the active form (nil); 'vp' is the
      *   verbPhrase string; 'dobjText' is the direct object phrase's text;
      *   and 'dobjIsPronoun' is true if the dobj text is rendered as a
      *   pronoun.
+     *  
      */
+    
     getVerbPhrase1(inf, vp, dobjText, dobjIsPronoun)
     {
         local ret;
         local dprep;
         local vcomp;
 
-        //"verb phrase: [[<<vp>>]]";
-
         /*
-        *   parse the verbPhrase: pick out the 'infinitive/participle'
+        *   parse the verbPhrase: pick out the 'infinitive/active'
         *   part, the complementizer part up to the '(vad)' direct
         *   object placeholder, and any preposition within the '(vad)'
         *   specifier
@@ -8861,7 +8875,7 @@ modify TAction
                 + '<lparen>(.*?)<space>*?<alpha>+<rparen>(.*)',
                 vp);
 
-        /* start off with the infinitive or participle, as desired */
+        /* start off with the infinitive or active form, as desired */
         if (inf)
             ret = rexGroup(1)[3];
         else
@@ -9031,9 +9045,9 @@ modify TIAction
         /*
          *   Check the full phrasing - if we're showing the direct object,
          *   but an indirect object was supplied, use the verb's
-         *   participle form ("asking bob") in the default string, since
+         *   active form ("frågar bob") in the default string, since
          *   we must clarify that we're not tagging the default string on
-         *   to the command line.  Don't include the participle form if we
+         *   to the command line.  Don't include the active form if we
          *   don't know all the objects yet, since in this case we are in
          *   fact tagging the default string onto the command so far, as
          *   there's nothing else in the command to get in the way.
@@ -9041,7 +9055,7 @@ modify TIAction
         if (whichObj == DirectObject && resolvedAllObjects)
         {
             /*
-             *   extract the verb's participle form (including any
+             *   extract the verb's active form (including any
              *   complementizer phrase)
              */
             rexSearch('/(<^lparen>+) <lparen>', verbPhrase);
@@ -9194,7 +9208,7 @@ modify TIAction
         }
     }
 
-    /* get the verb phrase in infinitive or participle form */
+    /* get the verb phrase in infinitive or active form */
     getVerbPhrase(inf, ctx)
     {
         local dobj, dobjText, dobjIsPronoun;
@@ -9250,7 +9264,7 @@ modify TIAction
                  + '<space>+<lparen>(.*?)<space>*<alpha>+<rparen>',
                  vp);
 
-        /* start off with the infinitive or participle, as desired */
+        /* start off with the infinitive or active form, as desired */
         if (inf)
             ret = rexGroup(1)[3];
         else
