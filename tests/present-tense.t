@@ -577,18 +577,18 @@ TestUnit 'sayTravelingRemotely' run {
 TestUnit 'sayArrivingDir' run {
   //mainOutputStream.hideOutput = nil;
   [
-    [northDirection, '\^en hobbit kommer till Fylke norrifrån.'],
-    [southDirection, '\^en hobbit kommer till Fylke söderifrån.'],
-    [eastDirection, '\^en hobbit kommer till Fylke österifrån.'],
-    [westDirection, '\^en hobbit kommer till Fylke västerifrån.'],
-    [northeastDirection, '\^en hobbit kommer till Fylke nordösterifrån.'],
-    [northwestDirection, '\^en hobbit kommer till Fylke nordvästerifrån.'],
-    [southeastDirection, '\^en hobbit kommer till Fylke sydösterifrån.'],
-    [southwestDirection, '\^en hobbit kommer till Fylke sydvästerifrån.'],
-    [upDirection, '\^en hobbit kommer till Fylke uppifrån.'],
-    [downDirection, '\^en hobbit kommer till Fylke nerifrån.'],
-    [inDirection, '\^en hobbit kommer till Fylke inifrån.'],
-    [outDirection, '\^en hobbit kommer till Fylke utifrån.']
+    [northDirection, '\^en hobbit anländer till Fylke norrifrån.'],
+    [southDirection, '\^en hobbit anländer till Fylke söderifrån.'],
+    [eastDirection, '\^en hobbit anländer till Fylke österifrån.'],
+    [westDirection, '\^en hobbit anländer till Fylke västerifrån.'],
+    [northeastDirection, '\^en hobbit anländer till Fylke nordösterifrån.'],
+    [northwestDirection, '\^en hobbit anländer till Fylke nordvästerifrån.'],
+    [southeastDirection, '\^en hobbit anländer till Fylke sydösterifrån.'],
+    [southwestDirection, '\^en hobbit anländer till Fylke sydvästerifrån.'],
+    [upDirection, '\^en hobbit anländer till Fylke uppifrån.'],
+    [downDirection, '\^en hobbit anländer till Fylke nerifrån.'],
+    [inDirection, '\^en hobbit anländer till Fylke inifrån.'],
+    [outDirection, '\^en hobbit anländer till Fylke utifrån.']
   ].forEach(function(pair) {
     hobbit.location = fylke;   
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
@@ -605,20 +605,20 @@ TestUnit 'sayDepartingDir' run {
   hobbit.location = fylke; 
   
   [
-    [northDirection, '\^en hobbit lämnar Fylke norrut.'],
-    [southDirection, '\^en hobbit lämnar Fylke söderut.'],
-    [eastDirection, '\^en hobbit lämnar Fylke österut.'],
-    [westDirection, '\^en hobbit lämnar Fylke västerut.'],
-    [northeastDirection, '\^en hobbit lämnar Fylke nordösterut.'],
-    [northwestDirection, '\^en hobbit lämnar Fylke nordvästerut.'],
-    [southeastDirection, '\^en hobbit lämnar Fylke sydösterut.'],
-    [southwestDirection, '\^en hobbit lämnar Fylke sydvästerut.'],
+    [northDirection, '\^en hobbit beger sig från Fylke norrut.'],
+    [southDirection, '\^en hobbit beger sig från Fylke söderut.'],
+    [eastDirection, '\^en hobbit beger sig från Fylke österut.'],
+    [westDirection, '\^en hobbit beger sig från Fylke västerut.'],
+    [northeastDirection, '\^en hobbit beger sig från Fylke nordösterut.'],
+    [northwestDirection, '\^en hobbit beger sig från Fylke nordvästerut.'],
+    [southeastDirection, '\^en hobbit beger sig från Fylke sydösterut.'],
+    [southwestDirection, '\^en hobbit beger sig från Fylke sydvästerut.'],
     
     // TODO: snygga till meningarna nedan:
-    [upDirection, '\^en hobbit lämnar Fylke uppåt.'], 
-    [downDirection, '\^en hobbit lämnar Fylke neråt.'],
-    [inDirection, '\^en hobbit lämnar Fylke inåt.'],
-    [outDirection, '\^en hobbit lämnar Fylke utåt.']
+    [upDirection, '\^en hobbit beger sig från Fylke uppåt.'], 
+    [downDirection, '\^en hobbit beger sig från Fylke neråt.'],
+    [inDirection, '\^en hobbit beger sig från Fylke inåt.'],
+    [outDirection, '\^en hobbit beger sig från Fylke utåt.']
   ].forEach(function(pair) {
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
     local dir = pair[1];

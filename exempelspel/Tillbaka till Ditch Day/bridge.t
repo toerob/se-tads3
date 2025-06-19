@@ -15,14 +15,14 @@
 /*
  *   Bridge entryway 
  */
-bridgeEntry: Room 'Bridge Lab Entryway' 'the Bridge entryway' 'hall'
-    "This entry hall reflects the different sense of proportion 
-    architects had in the 1920s: it's a bit too narrow and a bit too
-    tall to the modern eye.  At the south end of the hall, stairs
-    lead up and down, and a doorway at the north end leads outside.
-    A display case is set into the east wall. "
+bridgeEntry: Room 'Brolabbets entré' 'Brons entré' 'hall'
+    "Denna entréhall återspeglar den annorlunda proportionskänsla
+    som arkitekter hade på 1920-talet: den är lite för smal och lite för
+    hög för det moderna ögat. I hallens södra ände leder trappor
+    upp och ner, och en dörröppning i den norra änden leder utomhus.
+    Ett utställningsskåp är inbyggt i den östra väggen. "
 
-    vocabWords = 'bridge lab laboratory entry entryway/hall'
+    vocabWords = 'bro labb laboratorium entré entrèhall/hall'
 
     north = millikanPond
     out asExit(north)
@@ -32,19 +32,19 @@ bridgeEntry: Room 'Bridge Lab Entryway' 'the Bridge entryway' 'hall'
     roomParts = (inherited() - defaultEastWall)
 ;
 
-+ ExitPortal 'doorway' 'doorway'
-    "The doorway leads outside to the north. "
++ ExitPortal 'dörröppning' 'dörröppning'
+    "Dörröppningen leder utomhus norrut. "
 ;
 
-+ Decoration 'east e wall*walls' 'east wall'
-    "A display case is set into the wall. "
++ Decoration 'öst ö vägg*väggar' 'östra väggen'
+    "Ett utställningsskåp är inbyggt i väggen. "
 ;
 
-++ Fixture, Container 'display case/glass' 'display case'
-    "The case contains an assortment of items of historical
-    significance in physics.  Among other things, there's a lab
-    notebook, a tiny motor, and various bits of experimental
-    equipment. "
+++ Fixture, Container 'utställning:en^s+skåp+et/glas+et/monter+n' 'utställningsskåp'
+    "Skåpet innehåller ett urval av föremål av historisk
+    betydelse inom fysiken. Bland annat finns det en labb-
+    anteckningsbok, en liten motor och diverse experimentell
+    utrustning. "
     isOpen = nil
     material = glass
 
@@ -58,53 +58,52 @@ bridgeEntry: Room 'Bridge Lab Entryway' 'the Bridge entryway' 'hall'
     dobjFor(Break)
     {
         verify() { }
-        action() { "There's no reason to vandalize this display. "; }
+        action() { "Det finns ingen anledning att vandalisera detta utställningsskåp. "; }
     }
 ;
 
 +++ Readable
-    'robert a. millikan\'s lab laboratory cursive
-    page/book/notebook/tables/calculations/data/handwriting' 'lab notebook'
-    "The notebook is open to a page showing a series of 
-    tables and calculations in precise cursive handwriting.
-    The caption reads:
-    <q>Robert A.\ Millikan's laboratory notebook, 1910.
-    These pages show data taken during his famous <q>oil drop
-    experiment,</q> in which he determined for the first time the
-    charge of the electron.  This work led to the Nobel Prize in
-    Physics in 1924.</q> "
+    'robert a. millikans labb laboratorium kursiv
+    sida/bok/anteckningsbok/tabeller/beräkningar/data/handstil' 'labbanteckningsbok'
+    "Anteckningsboken är öppen på en sida som visar en serie
+    tabeller och beräkningar i precis kursiv handstil.
+    Bildtexten lyder:
+    <q>Robert A. Millikans labbanteckningsbok, 1910.
+    Dessa sidor visar data som samlats in under hans berömda <q>oljedroppsexperiment,</q>
+    där han för första gången bestämde elektronens laddning. Detta arbete ledde till
+    Nobelpriset i fysik 1924.</q> "
 
     isListed = nil
 ;
 
-+++ Thing 'tiny world\'s smallest magnifying motor/engine/(glass)'
-    'tiny motor'
-    "A magnifying glass positioned in front of the tiny device
-    makes it recognizable as an electric motor.  The caption reads:
-    <q>In 1959, Richard Feynman offered a prize of $1,000 to the first
-    person who could build a working motor that fit into a 1/64th-inch
-    cube.  William McLellan, a Caltech graduate, took the prize
-    in 1960 with this motor, which is only 15 thousandths of an
-    inch on a side.  (Unfortunately, the motor no longer works.)</q> "
++++ Thing 'liten världens minsta förstorande motor/maskin/(glas)'
+    'liten motor'
+    "Ett förstoringsglas placerat framför den lilla anordningen
+    gör att den kan identifieras som en elektrisk motor. Bildtexten lyder:
+    <q>1959 erbjöd Richard Feynman ett pris på 1 000 dollar till den första
+    person som kunde bygga en fungerande motor som passade in i en 1/64-tums
+    kub. William McLellan, en Caltech-examen, tog priset
+    1960 med denna motor, som bara är 15 tusendelar av en
+    tum på varje sida. (Tyvärr fungerar motorn inte längre.)</q> "
 
     isListed = nil
 ;
 
-+++ Thing 'various experimental bits/equipment' 'experimental equipment'
-    "The equipment is all hand-built stuff from the early 20th
-    century. "
++++ Thing 'diverse experimentella bitar/utrustning' 'experimentell utrustning'
+    "Utrustningen är allt handbyggt material från det tidiga 1900-
+    talet. "
     isMassNoun = true
 
     isListed = nil
 ;
 
 + beStairsUp: StairwayUp ->b201Stairs
-    'stair stairs stairway up' 'stairs up' "The stairs lead up. "
+    'trappa trappor trappuppgång upp' 'trappor upp' "Trapporna leder uppåt. "
     isPlural = true
 ;
 
 + beStairsDown: StairwayDown ->bbeStairs
-    'stair stairs stairway down' 'stairs down' "The stairs lead down. "
+    'trappa trappor trappuppgång ner' 'trappor ner' "Trapporna leder nedåt. "
     isPlural = true
 ;
 
@@ -112,33 +111,33 @@ bridgeEntry: Room 'Bridge Lab Entryway' 'the Bridge entryway' 'hall'
 /*
  *   201 Bridge lecture hall
  */
-bridge201: Room 'Lecture Hall' '201 Bridge' 'lecture hall'
-    "This is 201 Bridge, the lecture hall where the freshman physics
-    class is taught.  About 250 austere wooden seats, arranged in
-    steeply-raked rows, face a lab bench that runs the width of the
-    room and a wall of sliding blackboards behind the bench.  The
-    exit is a stairway leading down, on the south side of the room. "
+bridge201: Room 'Föreläsningssal' '201 Bridge' 'föreläsningssal'
+    "Detta är 201 Bridge, föreläsningssalen där fysikkursen för förstaårsstudenter
+    undervisas. Omkring 250 spartanska träsäten, arrangerade i
+    brant sluttande rader, vetter mot en labbänk som löper längs rummets bredd
+    och en vägg av skjutbara svarta tavlor bakom bänken. Utgången
+    är en trappa som leder nedåt, på rummets södra sida. "
 
-    vocabWords = '201 bridge lecture hall'
+    vocabWords = '201 bridge föreläsningssal'
 
     down = b201Stairs
     south asExit(down)
 ;
 
-+ b201Stairs: StairwayDown 'stair stairs stairway down' 'stairs down'
-    "The stairs lead down. "
++ b201Stairs: StairwayDown 'trappa trappor trappuppgång ner' 'trappor ner'
+    "Trapporna leder nedåt. "
     isPlural = true
 ;
 
-+ Fixture, Surface 'lab laboratory bench' 'lab bench'
-    "The lab bench runs the width of the room.  It serves as a
-    platform for equipment used in demonstrations, and also as an
-    oversized podium for the lecturer. "
++ Fixture, Surface 'labb laboratorium+bänk+en/labb+bänk+en' 'labbänk'
+    "Labbänken löper längs rummets bredd. Den fungerar som en
+    plattform för utrustning som används i demonstrationer, och även som
+    en överdimensionerad talarstol för föreläsaren. "
 ;
 
-+ Fixture 'steeply-raked austere wooden seat/seats/row/rows' 'seats'
-    "The seats are unpadded wood.  They're not designed for comfort,
-    perhaps a minor reflection of the overall Phys 1 <i>gestalt</i>. "
++ Fixture 'brant sluttande spartanska trä säte/säten/rad/rader' 'säten'
+    "Sätena är obonade trästolar. De är inte designade för komfort,
+    kanske en mindre återspegling av den övergripande Phys 1 <i>gestalten</i>. "
     isPlural = true
 
     dobjFor(SitOn)
@@ -146,23 +145,23 @@ bridge201: Room 'Lecture Hall' '201 Bridge' 'lecture hall'
         verify() { }
         check()
         {
-            "There's no lecture going on right now, and, frankly,
-            standing is more comfortable. ";
+            "Det pågår ingen föreläsning just nu, och ärligt talat
+            är det bekvämare att stå. ";
             exit;
         }
     }
 ;
 
 + Fixture, Readable
-    'elaborate sliding black blackboards/board/boards/panel/(wall)/(set)'
-    'blackboards'
-    "The wall behind the lab bench is hung with an elaborate set
-    of blackboards that slide up and down on rollers, like double-hung
-    windows.  After the lecturer fills up one panel, he or she can
-    push it up and pull a fresh panel down to replace it. "
+    'elaborerade skjutbara svarta tavlor/tavla/tavlor/panel/(vägg)/(uppsättning)'
+    'svarta tavlor'
+    "Väggen bakom labbänken är upphängd med en elaborerad uppsättning
+    svarta tavlor som glider upp och ner på rullar, som dubbelhängda
+    fönster. Efter att föreläsaren har fyllt en panel kan han eller hon
+    skjuta upp den och dra ner en ny panel för att ersätta den. "
 
-    readDesc = "You see a few miscellaneous differential equations and
-        integrals left over from a recent lecture. "
+    readDesc = "Du ser några diverse differentialekvationer och
+        integraler kvar från en nyligen genomförd föreläsning. "
 
     isPlural = true
 
@@ -172,23 +171,23 @@ bridge201: Room 'Lecture Hall' '201 Bridge' 'lecture hall'
         {
             /* we can only move the blackboards up and down */
             if (gAction.getDirection() not in (upDirection, downDirection))
-                illogical('The blackboards only move up and down. ');
+                illogical('De svarta tavlorna rör sig bara upp och ner. ');
         }
-        action() { "You slide the blackboards around a little for fun. "; }
+        action() { "Du skjuter runt de svarta tavlorna lite för skojs skull. "; }
     }
     dobjFor(Move)
     {
         verify() { }
-        action() { "You slide the blackboards around a little for fun. "; }
+        action() { "Du skjuter runt de svarta tavlorna lite för skojs skull. "; }
     }
     dobjFor(Push) asDobjFor(Move)
     dobjFor(Pull) asDobjFor(Move)
 ;
 ++ Decoration
-    'miscellaneous differential equations/integrals/formulas/formulae'
-    'formulas'
-    "It's hard to tell what the formulas relate to without knowing
-    the context of the lecture. "
+    'diverse differentialekvationer/integraler/formler'
+    'formler'
+    "Det är svårt att säga vad formlerna relaterar till utan att känna till
+    föreläsningens sammanhang. "
     isPlural = true
 ;
 
@@ -196,19 +195,19 @@ bridge201: Room 'Lecture Hall' '201 Bridge' 'lecture hall'
 /*
  *   Bridge basement - east end
  */
-bridgeBasementEast: Room 'Basement Hall' 'the basement hall' 'hallway'
-    "It's just the basement, but this hallway has an almost
-    oppressively subterranean feel, as though it were buried
-    deep underground: the air is damp and musty, the lighting
-    dim, the slightly-arched ceiling so low that you can't quite
-    stand up straight.  The hall continues west, and ends to the
-    east in a stairway leading up, back to the land of the
-    surface dwellers.
+bridgeBasementEast: Room 'Källarhall' 'källarhallen' 'korridor'
+    "Det är bara källaren, men denna korridor har en nästan
+    förtryckande underjordisk känsla, som om den vore begravd
+    djupt under marken: luften är fuktig och unken, belysningen
+    svag, det lätt välvda taket så lågt att du inte riktigt
+    kan stå rak. Korridoren fortsätter västerut och slutar i
+    öster med en trappa som leder upp, tillbaka till de
+    levandes land.
 
-    <.p>A door labeled 021 leads south, and another numbered
-    022 leads north.  The hall continues to the west. "
+    <.p>En dörr märkt 021 leder söderut, och en annan numrerad
+    022 leder norrut. Korridoren fortsätter västerut. "
 
-    vocabWords = 'basement hall/hallway'
+    vocabWords = 'källare hall/korridor'
 
     south = door021
     north = door022
@@ -220,28 +219,28 @@ bridgeBasementEast: Room 'Basement Hall' 'the basement hall' 'hallway'
 ;
 
 + SimpleOdor
-    desc = "The air here is noticeably damp and musty. "
+    desc = "Luften här är märkbart fuktig och unken. "
 ;
 
-+ Decoration 'low arched ceiling' 'ceiling'
-    "The ceiling is slightly arched, and it's so low that you
-    have to keep your head down just a bit to avoid bumping it. "
++ Decoration 'lågt välvt tak' 'tak'
+    "Taket är lätt välvt, och det är så lågt att du
+    måste hålla huvudet lite nedböjt för att undvika att stöta i det. "
 ;
 
-+ bbeStairs: StairwayUp 'stair stairs stairway up' 'stairs'
-    "The stairs lead up. "
++ bbeStairs: StairwayUp 'trappa trappor trappuppgång upp' 'trappor'
+    "Trapporna leder uppåt. "
     isPlural = true
 ;
 
-+ door021: AlwaysLockedDoor 'south s 021 o21 21 door*doors' 'door 021'
-    "It's a wide, low door, labeled with the room number 021. "
-    theName = 'door 021'
++ door021: AlwaysLockedDoor 'syd s 021 o21 21 dörr*dörrar' 'dörr 021'
+    "Det är en bred, låg dörr, märkt med rumsnummer 021. "
+    theName = 'dörr 021'
 ;
 
 + door022: LockableWithKey, Door ->blDoor
-    'north n 022 o22 22 door*doors' 'door 022'
-    "It's a wide, low door, marked with the room number 022. "
-    theName = 'door 022'
+    'nord n 022 o22 22 dörr*dörrar' 'dörr 022'
+    "Det är en bred, låg dörr, märkt med rumsnummer 022. "
+    theName = 'dörr 022'
 
     keyList = [labKey]
 
@@ -253,15 +252,15 @@ bridgeBasementEast: Room 'Basement Hall' 'the basement hall' 'hallway'
 /*
  *   Stamer's lab 
  */
-basementLab: Room 'Lab 022' 'the lab' 'lab'
-    "Improvised equipment is packed into this small lab, which feels
-    a bit like an underground parking garage thanks to the low ceiling
-    and concrete surfaces.  The room is dominated by a big steel lab
-    bench roughly in the center of the lab, and pieces of equipment are
-    arrayed around the bench and along the walls.  A set of shelves
-    on the back wall are laden with yet more equipment. "
+basementLab: Room 'Labb 022' 'labbet' 'labb'
+    "Improviserad utrustning är packad i detta lilla labb, som känns
+    lite som ett underjordiskt parkeringsgarage tack vare det låga taket
+    och betongytorna. Rummet domineras av en stor stållabbänk
+    ungefär i mitten av labbet, och utrustningsdelar är
+    uppställda runt bänken och längs väggarna. En uppsättning hyllor
+    på bakre väggen är lastade med ännu mer utrustning. "
 
-    vocabWords = '022 lab/laboratory'
+    vocabWords = '022 labb/laboratorium'
 
     south = blDoor
     out asExit(south)
@@ -298,40 +297,40 @@ basementLab: Room 'Lab 022' 'the lab' 'lab'
     roomParts = static (inherited - defaultNorthWall - defaultCeiling)
 ;
 
-+ Fixture 'low ceiling' 'ceiling' "The ceiling is uncomfortably low. "
++ Fixture 'lågt tak' 'tak' "Taket är obehagligt lågt. "
 ;
-+ Decoration 'concrete surface/surfaces' 'concrete surfaces'
-    "Everything is made of concrete, making the lab feel a lot like
-    a parking garage. "
++ Decoration 'betong yta/ytor' 'betongytor'
+    "Allt är gjort av betong, vilket får labbet att kännas mycket som
+    ett parkeringsgarage. "
     isPlural = true
 ;
 
-+ blDoor: Lockable, Door 'door' 'door'
-    "The door leads out to the south. "
++ blDoor: Lockable, Door 'dörr+en' 'dörr'
+    "Dörren leder ut söderut. "
 ;
 
-+ Fixture, Surface 'big steel lab laboratory bench/table' 'lab bench'
-    "The bench is ten feet on a side, so it takes up most of the
-    room.  There's a lot of equipment on it, which all looks
-    carefully set up for an experiment.  The main part of the
-    experiment is a ring of what look like big electromagnets. "
++ Fixture, Surface 'stor+a stål labb laboratorium+bänk+en/bord+et' 'labbänk'
+    "Bänken är tre meter på varje sida, så den tar upp större delen av
+    rummet. Det finns mycket utrustning på den, som alla ser ut att vara
+    noggrant uppställda för ett experiment. Huvuddelen av
+    experimentet är en ring av vad som ser ut som stora elektromagneter. "
 
-    lookInDesc = "A lot of equipment is on the bench, looking carefully
-        set up for an experiment.<.p>"
+    lookInDesc = "Mycket utrustning finns på bänken, noggrant uppställd
+        för ett experiment.<.p>"
 ;
 
 ++ calculator: Keypad, Thing, OnOffControl, QuantumItem
-    '4-function four-function pocket calculator' 'pocket calculator'
+    '4-funktions fyra-funktions fick+räknare+n/miniräknare+n' 'fickräknare'
     desc()
     {
-        "It's a simple four-function pocket calculator, with buttons
-        for the digits, the decimal point, and the arithmetic operators
-        <q>+</q>, <q>-</q>, <q>*</q>, <q>/</q>, and <q>=</q>.  There's
-        also a button marked <q>C</q> for <q>clear.</q>  It's currently
-        turned <<onDesc>>";
+        "Det är en enkel fyra-funktions fickräknare, med knappar
+        för siffrorna, decimalpunkten och de aritmetiska operatorerna
+        <q>+</q>, <q>-</q>, <q>*</q>, <q>/</q>, och <q>=</q>. Det finns
+        också en knapp märkt <q>C</q> för <q>rensa.</q> Den är för närvarande
+        <<onDesc>>";
 
         if (isOn)
-            ", and the display reads <q><tt><<curDisplay>></tt></q>";
+            ", och displayen visar <q><tt><<curDisplay>></tt></q>";
 
         ". ";
     }
@@ -347,9 +346,9 @@ basementLab: Room 'Lab 022' 'the lab' 'lab'
     {
         /* rationalize purloining this item if this is the first time */
         if (!moved)
-            extraReport('Technically, Stamer\'s note only invited you to
-                help yourself to what\'s on the shelves, but you doubt anyone
-                would mind if you borrowed the calculator for the day.<.p>');
+            extraReport('Tekniskt sett bjöd Stamers anteckning dig bara att
+                hjälpa dig själv till det som finns på hyllorna, men du tvivlar på att någon
+                skulle ha något emot om du lånade räknaren för dagen.<.p>');
 
         /* do the normal work */
         inherited(obj);
@@ -378,8 +377,8 @@ basementLab: Room 'Lab 022' 'the lab' 'lab'
                  *   immediately chime in with the final display after
                  *   entering the keys.  
                  */
-                defaultReport('The calculator is now on.  The
-                    display reads <q><tt>' + curDisplay + '</tt></q> ');
+                defaultReport('Fickräknaren är nu påslagen.  På displayen
+                    står det <q><tt>' + curDisplay + '</tt></q> ');
 
                 /* if we don't have a Hovarth table yet, create one now */
                 if (hovarthTab == nil)
@@ -627,9 +626,9 @@ basementLab: Room 'Lab 022' 'the lab' 'lab'
             /* ensure we have a valid string */
             if (rexMatch('[-+/*=0-9.Cc]+$', str, 1) == nil)
             {
-                "The calculator only has the digit keys, the decimal
-                point, the arithmetic operator keys (<q>+</q>, <q>-</q>,
-                <q>*</q>, and <q>/</q>), and the <q>C</q> key. ";
+                "Räknaren har bara sifferknapparna, decimalpunkten,
+                de aritmetiska operationsknapparna (<q>+</q>, <q>-</q>,
+                <q>*</q>, och <q>/</q>), samt <q>C</q>-tangenten. ";
                 return;
             }
 
@@ -963,40 +962,38 @@ basementLab: Room 'Lab 022' 'the lab' 'lab'
              */
             if (isIn(quantumPlatform) && quantumButton.isOn)
             {
-                "Your hand becomes slightly blurry as you reach into
-                the shimmering air over the platform.  This makes it
-                hard to be sure you're finding the right key<<
-                  str.length() == 1 ? '' : 's'>>, but you try your best.
-                You pull your hand back as soon as you're done.
-                <.p>The calculator's display blurs, the digits turning
-                into fuzzy blobs of light.  For that matter, the entire
-                calculator seems oddly out of focus.
-                <.p>The humming of the equipment starts dropping in
-                pitch like a turbine winding down.  The calculator
-                suddenly snaps into sharp focus, the display 
-                reading <q><tt><<curDisplay>></tt></q>.  The noise of the
-                equipment fades out and then stops entirely. ";
-
+                "Din hand blir något suddig när du sträcker dig in i
+                den skimrande luften över plattformen. Detta gör det
+                svårt att vara säker på att du hittar rätt tangent<<
+                    str.length() == 1 ? '' : 'er'>>, men du gör ditt bästa.
+                Du drar tillbaka handen så snart du är klar.
+                <.p>Räknarens display blir suddig, siffrorna förvandlas
+                till suddiga ljusfläckar. För den delen verkar hela
+                räknaren märkligt ur fokus.
+                <.p>Utrustningens surrande börjar sjunka i
+                tonhöjd som en turbin som varvar ner. Räknaren
+                kommer plötsligt i skarpt fokus, displayen 
+                visar <q><tt><<curDisplay>></tt></q>. Ljudet från
+                utrustningen tonar ut och upphör sedan helt. ";
                 /* this immediately turns off the equipment */
                 quantumButton.isOn = nil;
             }
             else
-                "You press the key<<
-                  str.length() == 1 ? '' : 's in sequence'>>.
-                The display now reads <q><tt><<curDisplay>></tt></q>. ";
-
+                "Du trycker på tangent<<
+                    str.length() == 1 ? 'en' : 'erna i sekvens'>>.
+                Displayen visar nu <q><tt><<curDisplay>></tt></q>. ";
             /* if we got the winning stack number, say so */
             if (gotStackNum)
             {
-                "<.p>Assuming Jay's programming worked, that should be
-                the number for the stack.  Now you just have to go enter
-                it into the black box.  Fortunately, that should be
-                relatively easy: earlier, when you were looking at the
-                black box with the oscilloscope, you noticed that part
-                of the circuit was a ten-level voltage digitizer.  That
-                must be the input device.  All you need is a way to
-                produce voltages in the right range, which you should be
-                able to do with the signal generator.
+                "<.p>Förutsatt att Jays programmering fungerade, borde det vara
+                numret för stacken. Nu måste du bara gå och mata in
+                det i den svarta lådan. Lyckligtvis borde det vara
+                relativt enkelt: tidigare, när du tittade på den
+                svarta lådan med oscilloskopet, märkte du att en del
+                av kretsen var en tio-nivåers spänningsdigitaliserare. Det
+                måste vara inmatningsenheten. Allt du behöver är ett sätt att
+                producera spänningar i rätt intervall, vilket du borde
+                kunna göra med signalgeneratorn.
                 <.reveal hovarth-solved> ";
 
                 /* 
@@ -1015,28 +1012,28 @@ basementLab: Room 'Lab 022' 'the lab' 'lab'
     dobjFor(TypeLiteralOn) asDobjFor(EnterOn)
 
     /* an achievement for getting the Hovarth number for the stack */
-    scoreMarker: Achievement { +10 "calculating the Hovarth number" }
+    scoreMarker: Achievement { +10 "Räkna ut Hovarths nummer" }
 
     /* a game-clock event for solving the hovarth puzzle */
     readPlotEvent: ClockEvent { eventTime = [2, 16, 22] }
 ;
 +++ ComponentDeferrer, Component, Readable
-    'calculator display' 'calculator display'
+    'räknar:e+display+en' 'räknardisplay'
     desc()
     {
         if (location.isOn)
-            "The display currently reads
+            "Displayen visar för närvarande
             <q><tt><<location.curDisplay>></tt></q>. ";
         else
-            "The display is currently blank (probably because the
-            calculator is turned off). ";
+            "Displayen är för närvarande tom (förmodligen eftersom
+            räknaren är avstängd). ";
     }
 ;
 class CalcButton: Button, Component
-    'calculator key/button*keys*buttons'
+    'räknare tangent/knapp+en*tangenter*knappar'
 
-    name = perInstance('calculator <q>' + calcStr + '</q> button')
-    desc = "The button is marked <q><<calcStr>></q>. "
+    name = perInstance('räknarens <q>' + calcStr + '</q> knapp')
+    desc = "Knappen är märkt <q><<calcStr>></q>. "
 
     /* the string I enter on the calculator when pushed */
     calcStr = nil
@@ -1063,8 +1060,8 @@ class CalcButton: Button, Component
              *   it's easier to enter whole strings 
              */
             if (CalcButton.pushCount++ == 0)
-                "<.p>(Rather than pressing keys individually, you can
-                simply ENTER a formula on the calculator, if you prefer.) ";
+                "<.p>(Istället för att trycka på en tangent i taget, så kan du
+                helt enkelt ANGE en formula på kalkylatorn, om du skulle föredra det.) ";
         }
     }
 
@@ -1077,13 +1074,13 @@ class CalcButton: Button, Component
     /* defer to our collective group object for some actions */
     collectiveGroups = [calcButtonGroup]
 ;
-+++ CalcButton '"c" "clear" -' calcStr = 'c';
++++ CalcButton '"c" "nollställ" -' calcStr = 'c';
 +++ CalcButton '"+" "plus" -' calcStr = '+';
 +++ CalcButton '"-" "minus" -' calcStr = '-';
-+++ CalcButton '"*" "times" -' calcStr = '*';
-+++ CalcButton '"/" "divide" "divided by" -' calcStr = '/';
-+++ CalcButton '"=" "equals" -' calcStr = '=';
-+++ CalcButton '"." "decimal point" "point" -' calcStr = '=';
++++ CalcButton '"*" "multiplicerat" -' calcStr = '*';
++++ CalcButton '"/" "dela" "dela med -' calcStr = '/';
++++ CalcButton '"=" "lika med" -' calcStr = '=';
++++ CalcButton '"." "decimalpunkt" "punkt" -' calcStr = '=';
 
 +++ CalcButton '0 -' calcStr = '0';
 +++ CalcButton '1 -' calcStr = '1';
@@ -1098,12 +1095,13 @@ class CalcButton: Button, Component
 
 /* a collective group for the buttons */
 +++ calcButtonGroup: CollectiveGroup, Component
-    'calculator key/button*keys*buttons' 'calculator buttons'
-    "The calculator has a button for each digit, a decimal
-    point button labeled <q>.</q>, arithmetic buttons labeled
-    <q>+</q>, <q>-</q>, <q>*</q>, <q>/</q>, and <q>=</q>, and
-    a <q>C</q> button. "
+    'räknare tangent+en/knapp+en*tangenter+na räknar+knappar+na' 'räknarknappar'
+    "Räknaren har en knapp för varje siffra, en decimal-
+    punktsknapp märkt <q>.</q>, aritmetiska knappar märkta
+    <q>+</q>, <q>-</q>, <q>*</q>, <q>/</q>, och <q>=</q>, samt
+    en <q>C</q>-knapp. "
 
+    isPlural = true
     /* take over Examine, Push, and Enter */
     isCollectiveAction(action, whichObj)
     {
@@ -1119,8 +1117,8 @@ class CalcButton: Button, Component
     dobjFor(Push)
     {
         verify() { logicalRank(70, 'calc button entry'); }
-        action() { "(If you want to use the calculator, you can just
-            ENTER a formula on it.) "; }
+        action() { "(Om du vill använda kalkylatorn kan du bara 
+                    ANGE en formel på den.) "; }
     }
     dobjFor(Enter) asDobjFor(Push)
 
@@ -1133,22 +1131,22 @@ class CalcButton: Button, Component
 ;
 
 class ExperimentPart: CustomImmovable
-    cannotTakeMsg = 'You don\'t want to disturb the experiment. '
+    cannotTakeMsg = 'Du ville inte störa experimentet. '
 ;
 
-++ ExperimentPart 'thick black electrical cabling/cables/(cable)/wires/wire'
-    'electrical cabling'
-    "The cables are huge; they must have to carry a lot of current. "
+++ ExperimentPart 'tjock svart elektrisk kablage/kablar/(kabel)/ledningar/ledning'
+    'elektriskt kablage'
+    "Kablarna är enorma; de måste kunna bära mycket ström. "
 ;
 
 ++ quantumButton: ExperimentPart
-    'big giant green mushroom electrical junction button/(box)'
-    'green mushroom button'
-    "It's a two-inch-diameter green mushroom button, like the big
-    emergency stop buttons on industrial equipment.  It's part of
-    what looks like an electrical junction box, which is tethered to
-    the other equipment with one of the same thick black cables
-    that connects the electromagnets together. "
+    'stor jätte grön svamp elektrisk anslutning knapp/(låda)'
+    'grön svampknapp'
+    "Det är en fem centimeter i diameter grön svampknapp, som de stora
+    nödstoppsknapparna på industriell utrustning. Den är en del av
+    vad som ser ut som en elektrisk kopplingsdosa, som är fäst vid
+    den andra utrustningen med en av samma tjocka svarta kablar
+    som förbinder elektromagneterna. "
 
     dobjFor(Push)
     {
@@ -1160,19 +1158,19 @@ class ExperimentPart: CustomImmovable
             /* if I'm already on, nothing extra happens */
             if (isOn)
             {
-                "The equipment keeps humming away, but nothing more
-                seems to happen. ";
+                "Utrustningen fortsätter att surra, men inget mer
+                verkar hända. ";
                 return;
             }
 
             /* start the show */
-            "You push down on the giant button.  There's an immediate
-            clunk from somewhere in the room, then a deep humming
-            sound that gradually rises in pitch.  The humming keeps
-            rising and getting louder until it sounds like a car
-            horn.
-            <.p>The air over the glass platform in the center of
-            the ring of magnets starts to shimmer. ";
+            "Du trycker ner den jättestora knappen. Det hörs omedelbart
+            ett dunk någonstans i rummet, sedan ett djupt brummande
+            ljud som gradvis stiger i tonhöjd. Brummandet fortsätter
+            att stiga och bli högre tills det låter som en bil-
+            tuta.
+            <.p>Luften över glasplattformen i mitten av
+            magnetringen börjar skimra. ";
 
             /* check to see if we have a special item on the dinner plate */
             if ((plc = quantumPlatform.contents).length() == 0
@@ -1183,9 +1181,9 @@ class ExperimentPart: CustomImmovable
                  *   having to describe quantum effects for everything,
                  *   simply power down the machine immediately.  
                  */
-                "<.p>The machinery continues to hum for a few moments,
-                then the noise starts dropping in pitch like a turbine
-                winding down, until it ceases completely. ";
+                "<.p>Maskineriet fortsätter att surra i några ögonblick,
+                sedan börjar ljudet sjunka i tonhöjd som en turbin
+                som varvar ner, tills det upphör helt. ";
             }
             else
             {
@@ -1214,9 +1212,9 @@ class ExperimentPart: CustomImmovable
          */
         if (isOn)
         {
-            "<.p>The noise from the experiment's machinery starts to
-            drop in pitch like a turbine winding down.  After a few
-            more moments, it ceases completely. ";
+            "<.p>Ljudet från experimentets maskineri börjar
+            sjunka i tonhöjd som en turbin som varvar ner. Efter några
+            ögonblick till upphör det helt. ";
 
             /* we're no longer on */
             isOn = nil;
@@ -1232,8 +1230,8 @@ class ExperimentPart: CustomImmovable
         if (isOn
             && gActionIs(Examine)
             && (gDobj.isIn(quantumPlatform) || gDobj == quantumPlatform))
-            "<.p>The air all around {the dobj/him} is shimmering
-            strangely. ";
+            "<.p>Luften runt omkring {the dobj/him} skimrar
+            märkligt. ";
     }
 
     /* did we turn the equipment on? */
@@ -1241,8 +1239,8 @@ class ExperimentPart: CustomImmovable
 ;
 
 +++ SimpleNoise
-    desc = "The experiment's machinery is humming loudly.  It sounds
-        like a nearby car horn. "
+    desc = "Experimentets maskineri brummar högt. Det låter
+        som ett närliggande bilhorn. "
         
     /* we're only here if the machine is on */
     soundPresence = (location.isOn)
@@ -1255,17 +1253,17 @@ class ExperimentPart: CustomImmovable
 class QuantumItem: object;
 
 ++ ExperimentPart
-    'fine metal tire-sized big experiment/(ring)/coil/coils/(wire)/
-    tube/tubes/frameworks/electromagnets/magnets/machine/machinery'
-    'ring of electromagnets'
-    "The focus of the experiment looks to be a ring of about a dozen
-    big devices that are probably electromagnets---tire-sized coils of
-    fine wire wrapped around and through frameworks of metal tubes,
-    with a tangle of thick black electrical cabling interconnecting
-    them and the other equipment.  One of the cables leads to an
-    electrical junction box with a big green mushroom button protruding.
-    A glass platform that looks like a dinner plate is at the center
-    of the ring. "
+    'fin metall däckstorlek stor experiment/(ring)/spole/spolar/(tråd)/
+    rör/rör/ramar/elektromagneter/magneter/maskin/maskineri'
+    'ring av elektromagneter'
+    "Experimentets fokus verkar vara en ring av ungefär ett dussin
+    stora enheter som förmodligen är elektromagneter---däckstora spolar av
+    fin tråd lindad runt och genom ramar av metallrör,
+    med en trasslig massa av tjocka svarta elektriska kablar som sammankopplar
+    dem och den övriga utrustningen. En av kablarna leder till en
+    elektrisk kopplingsdosa med en stor grön svampknapp som sticker ut.
+    En glasplattform som ser ut som en tallrik är i mitten
+    av ringen. "
     
     isPlural = true
 
@@ -1284,10 +1282,10 @@ class QuantumItem: object;
 ;
 
 +++ quantumPlatform: ExperimentPart, Surface
-    'thick round clear glass dinner platform/plate/pillar' 'glass platform'
-    "The platform looks to be clear glass.  It's about the size and
-    shape of a dinner plate, and it's raised up a few inches above
-    the surface of the bench by a thick glass pillar. "
+    'tjock+a rund+a klar+a glas+aktiga middag plattform+en/platta+n/tallrik+en/pelare+n' 'glasplattform'
+    "Plattformen verkar vara av klart glas. Den är ungefär lika stor och
+    formad som en tallrik, och den är upphöjd några centimeter över
+    bänkens yta av en tjock glaspelare. "
 
     /* only allow one thing at a time on the platform */
     iobjFor(PutOn) { preCond { return inherited() + objEmpty; }}
@@ -1303,15 +1301,15 @@ class QuantumItem: object;
     contentsListed = nil
 ;
 
-++++ QuantumItem, Thing, Container 'clear plastic dice-o-matic/dome'
-    name = (described ? 'dice-o-matic' : 'clear plastic dome')
-    desc = "It's a dome of clear plastic with <q>Dice-O-Matic</q>
-        faintly inscribed on the top.  Inside are two six-sided
-        dice.
-        <.p>You can't remember which one it is, but there's a
-        classic board game that came with the Dice-O-Matic.  You
-        just push down on the dome, and a little spring-loaded
-        mechanism in the bottom tosses the dice into the air. "
+++++ QuantumItem, Thing, Container 'klar plast tärnings-o-matic/kupol'
+    name = (described ? 'tärnings-o-matic' : 'klar plastkupol')
+    desc = "Det är en kupol av klar plast med <q>Tärnings-O-Matic</q>
+        svagt ingraverat på toppen. Inuti finns två sexsidiga
+        tärningar.
+        <.p>Du kan inte komma ihåg vilket det är, men det finns ett
+        klassiskt brädspel som kom med Tärnings-O-Matic. Du
+        trycker bara ner på kupolen, och en liten fjäderbelastad
+        mekanism i botten kastar upp tärningarna i luften. "
 
     /* we're transparent but unopenable */
     material = glass
@@ -1333,36 +1331,36 @@ class QuantumItem: object;
             /* check to see if we do quantum rolling */
             if (isIn(quantumPlatform) && quantumButton.isOn)
             {
-                "It's a little weird reaching into the shimmering
-                air over the platform; your hand seems to become
-                a bit of a blur.  You push down on the dome---you
-                try to, at least; it's actually kind of hard to tell,
-                with everything getting blurrier and blurrier and
-                your hand tingling and feeling strangely disconnected
-                from your arm.
-                <.p>You snap your hand away from the Dice-O-Matic
-                and see just a blur of dice inside---not the kind of
-                blur you'd see if they were moving really fast, but
-                the kind you see when cross-eyed, or in a photograph
-                that's been exposed over and over.  You can clearly
-                see dozens of different dice lying there, others
-                tumbling, others bouncing, all sharing the little
-                bubble and overlapping like ghosts.
-                <.p>The humming of the equipment starts dropping
-                in pitch like a turbine winding down, then ceases
-                entirely.  The jumble of ghostly dice becomes
-                two ordinary dice showing <<die1>> and <<die2>>;
-                the change is sudden and undramatic, as though
-                your eyes just snapped into focus. ";
+                "Det är lite konstigt att sträcka sig in i den skimrande
+                luften över plattformen; din hand verkar bli
+                lite suddig. Du trycker ner på kupolen---du
+                försöker i alla fall; det är faktiskt ganska svårt att avgöra,
+                med allt som blir suddigare och suddigare och
+                din hand som kittlar och känns märkligt frånkopplad
+                från din arm.
+                <.p>Du rycker bort handen från Tärnings-O-Matic
+                och ser bara en suddig massa av tärningar inuti---inte den typ av
+                suddighet du skulle se om de rörde sig riktigt snabbt, utan
+                den typ du ser när du är skelögd, eller i ett fotografi
+                som har exponerats om och om igen. Du kan tydligt
+                se dussintals olika tärningar som ligger där, andra
+                som tumlar, andra som studsar, alla delar den lilla
+                bubblan och överlappar som spöken.
+                <.p>Utrustningens brummande börjar sjunka
+                i tonhöjd som en turbin som varvar ner, och upphör sedan
+                helt. Röran av spöklika tärningar blir
+                två vanliga tärningar som visar <<die1>> och <<die2>>;
+                förändringen är plötslig och odramatisk, som om
+                dina ögon bara plötsligt kom i fokus. ";
 
                 /* this immediately turns off the equipment */
                 quantumButton.isOn = nil;
             }
             else
-                "You push down on the dome until it clicks, then
-                release.  The dice pop into the air, tumble around
-                inside the dome for a moment, and land showing <<die1>>
-                and <<die2>>. ";
+                "Du trycker ner på kupolen tills den klickar, sedan
+                släpper du. Tärningarna hoppar upp i luften, tumlar runt
+                inuti kupolen ett ögonblick och landar och visar <<die1>>
+                och <<die2>>. ";
         }
     }
 
@@ -1377,10 +1375,10 @@ class QuantumItem: object;
      */
     examineListContents() { }
 ;
-+++++ Thing 'white six-sided pair/dice' 'dice'
-    "They're white six-sided dice like you'd find packaged
-    in any board game.  They're currently showing <<location.die1>>
-    and <<location.die2>>. "
++++++ Thing 'vita sexsidiga par/tärningar' 'tärningar'
+    "De är vita sexsidiga tärningar som du skulle hitta förpackade
+    i vilket brädspel som helst. De visar för närvarande <<location.die1>>
+    och <<location.die2>>. "
     isPlural = true
 
     /* to roll the dice, push on the dome */
@@ -1388,20 +1386,20 @@ class QuantumItem: object;
 ;
 
 ++ researchReport: Readable
-    'light blue stamer\'s research report 6 paper/folder/draft'
-    name = (isRead ? 'research paper' : 'report folder')
+    'ljusblå+a stamers sjätte 6 forskning^s+rapport+en/mapp+en/utkast+et'
+    name = (isRead ? 'forskningsartikel' : 'rapportmapp')
 
-    desc = "It's a light blue report folder, with <q>DRAFT 6</q>
-        written across the cover.  The report within looks to
-        be about thirty pages. "
+    desc = "Det är en ljusblå rapportmapp, med <q>UTKAST 6</q>
+        skrivet över omslaget. Rapporten inuti ser ut
+        att vara omkring trettio sidor. "
 
     /* make an ethical comment when first taken */
     moveInto(obj)
     {
         /* rationalize it */
         if (!moved)
-            extraReport('You figure no one will need this today; you\'ll
-                just have to remember to return it later.<.p>');
+            extraReport('Du tänker att ingen kommer att behöva den idag; du
+                måste bara komma ihåg att lämna tillbaka den senare.<.p>');
         
         /* do the normal work */
         inherited(obj);
@@ -1411,9 +1409,9 @@ class QuantumItem: object;
     {
         local extraRef = nil;
         
-        "<q>Spin Decorrelation and Bulk Matter Decoherence
-        Isolation - DRAFT.</q>  It seems to be a recent draft of
-        a research paper that Stamer's lab group is working on.<.p>";
+        "<q>Spindekorrelerande och bulkmateria dekoherens
+        isolering - UTKAST.</q> Det verkar vara ett nytt utkast av
+        en forskningsartikel som Stamers labbgrupp arbetar med.<.p>";
 
         /* check our background knowledge */
         if (gRevealed('decoherence')
@@ -1421,21 +1419,21 @@ class QuantumItem: object;
             && gRevealed('QM-intro'))
         {
             /* we have the full background, so we can understand a lot */
-            "Parts of the paper are well beyond your grasp of the
-            subject, but all of the background reading you've done
-            actually lets you follow a lot of the material.  Stamer's
-            group is apparently working on a way to prevent a quantum
-            system from <q>decohering,</q> not only when it comes into
-            contact with its surroundings, but when parts of the system
-            itself interact with one another.  According to the paper,
-            they've successfully suppressed decoherence for a matter
-            of seconds at a time throughout tens of grams of
-            material---apparently quite stunning results in a realm
-            more typically numbered in femtoseconds and picograms.
-            They hope to use this to create large-scale quantum
-            computers built out of ordinary components.
-            <.p>At the end are some bibliographic references, including
-            the <q>introductory</q> material you've already seen: ";
+            "Delar av artikeln är långt bortom din förståelse av
+            ämnet, men all bakgrundsläsning du har gjort
+            låter dig faktiskt följa mycket av materialet. Stamers
+            grupp arbetar tydligen på ett sätt att förhindra ett kvantsystem
+            från att <q>dekoherera,</q> inte bara när det kommer i
+            kontakt med sin omgivning, utan när delar av systemet
+            själv interagerar med varandra. Enligt artikeln
+            har de framgångsrikt undertryckt dekoherens under en
+            period av sekunder i taget genom tiotals gram av
+            material---uppenbarligen ganska häpnadsväckande resultat i ett område
+            som vanligtvis räknas i femtosekunder och pikogram.
+            De hoppas kunna använda detta för att skapa storskaliga kvantdatorer
+            byggda av vanliga komponenter.
+            <.p>I slutet finns några bibliografiska referenser, inklusive
+            det <q>introducerande</q> material du redan har sett: ";
 
             /* award some points for this */
             scoreMarker.awardPointsOnce();
@@ -1448,38 +1446,37 @@ class QuantumItem: object;
                  || gRevealed('QM-intro'))
         {
             /* some background - we understand a bit, but not all */
-            "It helps a bit that you've been reading some background
-            material; at least you know what some of the words mean
-            now, and you can follow bits and pieces of the paper.  You
-            can see it has a lot to do with quantum computation, but
-            you still can't figure out what it all means.  You come
-            again to the references at the end, and scan the ones
-            called out as <q>introductory</q>: ";
+            "Det hjälper lite att du har läst en del bakgrundsmaterial;
+            åtminstone vet du nu vad några av orden betyder,
+            och du kan följa bitar och delar av artikeln. Du
+            kan se att det har mycket att göra med kvantberäkning, men
+            du kan fortfarande inte förstå vad allt betyder. Du kommer
+            igen till referenserna i slutet och skannar de som
+            kallas <q>introducerande</q>: ";
         }
         else
         {
             /* we have no background - we're basically baffled */
-            "You make it about halfway into the abstract before you
-            realize you have no idea what it's about.  You flip through
-            the paper a bit, but the only thing you really remember about
-            quantum physics is some stuff about semiconductor band-gaps
-            from EE 11.
-            <.p>At the back are a bunch of bibliographic references that
-            mostly look as intimidating as the paper itself, although a
-            couple are called out as <q>introductory</q>: ";
+            "Du kommer ungefär halvvägs in i sammanfattningen innan du
+            inser att du inte har någon aning om vad det handlar om. Du bläddrar
+            igenom artikeln lite, men det enda du verkligen kommer ihåg om
+            kvantfysik är lite om halvledarens bandgap från EE 11.
+            <.p>I slutet finns en massa bibliografiska referenser som
+            mestadels ser lika skrämmande ut som själva artikeln, även om
+            ett par kallas <q>introducerande</q>: ";
         }
 
-        "a paper in the journal <i>Quantum Review Letters</i> number
-        70:11c, an article in <i>Science &amp; Progress</i> magazine
-        number XLVI-3, and a chapter in a textbook, <i>Introductory
-        Quantum Physics</i> by Bl&ouml;mner.
+        "en artikel i tidskriften <i>Quantum Review Letters</i> nummer
+        70:11c, en artikel i <i>Science &amp; Progress</i> tidningen
+        nummer XLVI-3, och ett kapitel i en lärobok, <i>Introduktion till
+        Kvantfysik</i> av Bl&ouml;mner.
         <.reveal bibliography> ";
 
         /* show the extra reference if appropriate */
         if (extraRef)
-            "<.p>You notice a reference to another article by Stamer's
-            group, this one published in <i>Quantum Review Letters</i>
-            number 73:9a.<.reveal understood-stamer-article> ";
+            "<.p>Du märker en referens till en annan artikel av Stamers
+            grupp, denna publicerad i <i>Quantum Review Letters</i>
+            nummer 73:9a.<.reveal understood-stamer-article> ";
     }
 
     /* 
@@ -1504,14 +1501,14 @@ class QuantumItem: object;
             && gRevealed('spin-decorr')
             && gRevealed('QM-intro')
             && !gRevealed('understood-stamer-article'))
-            "<.p>You feel like you're starting to catch on to some of
-            the ideas in Stamer's research report.  You make a mental
-            note to go back and read the report again in more detail,
-            when you have the time. ";
+            "<.p>Du känner att du börjar förstå några av
+            idéerna i Stamers forskningsrapport. Du gör en mental
+            notering om att gå tillbaka och läsa rapporten igen mer detaljerat,
+            när du har tid. ";
     }
 
     /* points for understanding the paper */
-    scoreMarker: Achievement { +5 "figuring out the research report" }
+    scoreMarker: Achievement { +5 "att förstå forskningsrapporten" }
 
     /* OPEN REPORT is just like reading it, as is LOOK IN REPORT */
     dobjFor(Open) asDobjFor(Read)
@@ -1531,21 +1528,21 @@ class QuantumItem: object;
 ;
 
 ++ Decoration
-    'improvised signal electronic vacuum power stepping extra
-    piece/pieces/equipment/generators/oscilloscopes/meter/meters/
-    instruments/pump/laser/lasers/motor/motors/supply/supplies/
-    microscope/part/parts/panel/panels/innard/innards/device/devices'
-    'equipment'
-    "Most of the equipment around the lab is electronic---signal
-    generators, oscilloscopes, various meters and instruments, power
-    supplies.  There's also a vacuum pump, a couple of lasers, stepping
-    motors, and a microscope.  Many of the devices look like they've
-    been modified: panels are missing, exposing the innards of the
-    equipment, and extra parts have been added in and clamped on. "
+    'improviserad signal elektronisk vakuum kraft steg extra
+    bit/bitar/utrustning/generatorer/oscilloskop/mätare/mätare/
+    instrument/pump/laser/lasrar/motor/motorer/nätaggregat/nätaggregat/
+    mikroskop/del/delar/panel/paneler/innanmäte/innanmäten/enhet/enheter'
+    'utrustning'
+    "Det mesta av utrustningen runt labbet är elektronisk---signal
+    generatorer, oscilloskop, olika mätare och instrument, nätaggregat.
+    Det finns också en vakuumpump, ett par lasrar, stegmotorer,
+    och ett mikroskop. Många av enheterna ser ut som om de har
+    modifierats: paneler saknas, vilket exponerar utrustningens innanmäten,
+    och extra delar har lagts till och klämts fast. "
 
     isMassNoun = true
-    notImportantMsg = 'You don\'t want to disturb anything, since it\'s
-        probably all set up for an experiment. '
+    notImportantMsg = 'Du vill inte störa något, eftersom det
+        förmodligen är allt uppställt för ett experiment. '
 
     /* 
      *   This object represents equipment all over the room, including on
@@ -1556,14 +1553,14 @@ class QuantumItem: object;
     isNominallyIn(obj) { return inherited(obj) || obj == blShelves; }
 ;
 
-+ Fixture 'back north n wall*walls' 'north wall'
-    "A set of metal shelves are fastened to the north wall. "
++ Fixture 'bakre norra n vägg*väggar' 'norra väggen'
+    "En uppsättning metallhyllor är fästa på den norra väggen. "
 ;
 
-++ blShelves: Fixture, Surface 'metal shelf/shelves' 'shelves'
-    "The metal shelves are fastened to the north wall, and run all
-    the way up to the low ceiling.  Like all of the other horizontal
-    surfaces in the lab, the shelves are packed with equipment. "
+++ blShelves: Fixture, Surface 'metall hylla/hyllor' 'hyllor'
+    "Metallhyllorna är fästa på den norra väggen och sträcker sig
+    hela vägen upp till det låga taket. Precis som alla andra horisontella
+    ytor i labbet är hyllorna packade med utrustning. "
     isPlural = true
 
     /* 
@@ -1573,11 +1570,11 @@ class QuantumItem: object;
      */
     descContentsLister: surfaceDescContentsLister {
         showListPrefixWide(itemCount, pov, parent)
-            { "Among the piles of equipment, you notice "; }
+            { "Bland högarna av utrustning lägger du märke till "; }
     }
     lookInLister: surfaceLookInLister {
         showListPrefixWide(itemCount, pov, parent)
-            { "Among the piles of equipment, you notice "; }
+            { "Bland högarna av utrustning lägger du märke till "; }
     }
 
     /* don't show our contents with the room message */
@@ -1607,12 +1604,13 @@ class LabShelfItem: object
         {
             local moveObj = self;
             gMessageParams(moveObj);
-            extraReport('You start to lift {the moveObj/him} off the shelf,
-                but {it/he} get{s} stuck on something.  You feel around
-                the sides and find some tangled cords, and finally manage
-                to get {the/him} free.  As you pull {it/him} away from
-                the shelf, you notice a small white ball, connected
-                to a blue cable, dropping onto the shelf. <.p>');
+
+            extraReport('Du börjar lyfta {ref moveObj/honom} från hyllan, 
+                men {det/han} fastnar på någonting. Du känner dig omkring 
+                sidorna  och hittar några trassliga sladdar, och till slut 
+                lyckas du få  {den/honom} fri. När du drar bort {det/honom} 
+                från hyllan, lägger du märke till en liten vit boll, 
+                ansluten till en blå kabel, som faller ner på hyllan.');
 
             /* mark the camera as found, and move it here */
             spy9.isFound = true;
@@ -1624,7 +1622,7 @@ class LabShelfItem: object
             scoreMarker.awardPointsOnce();
     }
 
-    scoreMarker: Achievement { +2 "gathering the test equipment" }
+    scoreMarker: Achievement { +2 "samla ihop testutrustningen" }
 ;
     
 
@@ -1644,8 +1642,8 @@ class TestGear: PlugAttachable, NearbyAttachable
     explainCannotAttachTo(other)
     {
         gMessageParams(self, other);
-        "{The other/he} do{es}n't seem to have any suitable
-        place to connect {the self/him}. ";
+        "{Den other/ref} verkar inte ha någon passande 
+        plats att ansluta till {den self/honom}. ";
     }
 
     /* 
@@ -1653,6 +1651,7 @@ class TestGear: PlugAttachable, NearbyAttachable
      *   precondition to ATTACH TO requiring that we're not attached to
      *   anything.
      */
+    dobjFor(FastenTo) asDobjFor(AttachTo) // TODO: TEST
     dobjFor(AttachTo) { preCond = (inherited() + objNotAttached) }
     iobjFor(AttachTo) { preCond = (inherited() + objNotAttached) }
 
@@ -1688,7 +1687,7 @@ class TestGear: PlugAttachable, NearbyAttachable
     }
 
     /* show what happens when we probe with the oscilloscope */
-    probeWithScope() { "The oscilloscope screen just shows a flat line. "; }
+    probeWithScope() { "Oscilloskopets skärm visar bara en platt linje. "; }
 
     /* show what happens we we turn on the signal generator attached here */
     turnOnSignalGen() { }
@@ -1732,7 +1731,7 @@ class TestGearProbe: PermanentAttachmentChild, PluggableComponent
  */
 class TestGearAttachable: NearbyAttachable
     /* show what happens when we probe with the oscilloscope */
-    probeWithScope() { "The oscilloscope screen just shows a flat line. "; }
+    probeWithScope() { "Oscilloskopets skärm visar bara en platt linje. "; }
 
     /* show what happens when we attach the signal generator */
     probeWithSignalGen() { }
@@ -1740,8 +1739,9 @@ class TestGearAttachable: NearbyAttachable
     /* show what happens we we turn on the signal generator attached here */
     turnOnSignalGen() { }
 
+    iobjFor(FastenTo) asIobjFor(AttachTo) // TODO: TEST
     /* testing this kind of thing is likely */
-    dobjFor(Test) { verify() { } }
+    dobjFor(TestObj) { verify() { } }
 
     /*
      *   These objects are always the "major" items when attached to test
@@ -1756,10 +1756,10 @@ class TestGearAttachable: NearbyAttachable
 ;
 
 +++ oscilloscope: LabShelfItem, TestGear, OnOffControl
-    'portable solid-state oscilloscope/scope' 'oscilloscope'
-    "This is a relatively small solid-state model, easily portable.
-    On the top are a display screen and the controls, and a probe
-    is attached with a coaxial cable.  <<screenDesc>> "
+    'portabelt portabla solid-state oscilloskop+et/skop+et' 'oscilloskop'
+    "Detta är en relativt liten solid-state modell, lätt att bära med sig.
+    På ovansidan finns en displayskärm och kontrollerna, och en prob
+    är ansluten med en koaxialkabel. <<screenDesc>> "
 
     /* this item is a little larger than the default */
     bulk = 2
@@ -1777,11 +1777,11 @@ class TestGearAttachable: NearbyAttachable
          *   confusion.  To avoid being annoying, have this note show up
          *   only a few times each session.  
          */
-        if (rexSearch('attach|plug', gAction.getOrigText()) != nil
-            && oscilloscopeNoteTracker.noteCount++ < 3)
-            "(Note that you can't permanently attach the scope to
-            anything, since its needle tip only allows momentary
-            contact with the circuit you're probing.)<.p>";
+        if (rexSearch('fäst|koppla|sätt', gAction.getOrigText()) != nil
+           && oscilloscopeNoteTracker.noteCount++ < 3)
+            "(Observera att du inte kan permanent fästa oscilloskopet på
+            något, eftersom dess nålspets endast tillåter momentan
+            kontakt med kretsen du undersöker.)<.p>";
         
         /* let the other object tell us what happens */
         other.probeWithScope();
@@ -1796,11 +1796,12 @@ class TestGearAttachable: NearbyAttachable
     screenDesc()
     {
         if (!isOn)
-            "The scope is currently turned off. ";
+            "Oscilloskopet är för närvarande avstängt. ";
         else
-            "The display screen shows a flat line. ";
+            "Displayen visar en platt linje. ";
     }
 
+    //dobjFor(Switch) asDobjFor(TurnOn) // TODO
     dobjFor(TurnOn)
     {
         action()
@@ -1812,14 +1813,14 @@ class TestGearAttachable: NearbyAttachable
              */
             if (!gAction.isImplicit)
             {
-                "You turn on the oscilloscope, and it comes to life
-                almost instantly. ";
+                "Du slår på oscilloskopet, och det vaknar till liv 
+                nästan ögonblickligen. ";
 
                 if (timesOn++ == 0)
-                    "You adjust the controls a bit and get a nice
-                    flat line; it looks like it's working properly,
-                    at least as far as you can tell without connecting
-                    it to something. ";
+                    "Du justerar kontrollerna lite och får en trevlig 
+                    platt linje; det ser ut som att det fungerar som 
+                    det ska, Åtminstone så vitt du kan se utan att 
+                    ansluta det till något.";
             }
 
             /* mark it as on */
@@ -1842,56 +1843,56 @@ class TestGearAttachable: NearbyAttachable
              *   the screen goes dark 
              */
             if (!gAction.isImplicit)
-                "You turn off the scope, and the screen goes dark. ";
+                "Du stänger av oscilloskopet, och skärmen blir mörk. ";
         }
     }
 ;
 ++++ Component
-    '(oscilloscope) (scope) control/controls'
-    'oscilloscope controls'
-    "The controls let you turn the scope on and off, and make
-    various adjustments to the display, such as the time and voltage
-    scales and the DC offset. "
+    '(oscilloskop) (skop) kontroll/kontroller'
+    'oscilloskopkontroller'
+    "Kontrollerna låter dig slå på och stänga av oscilloskopet, och göra
+    olika justeringar av displayen, såsom tids- och spänningsskalor
+    och DC-offset. "
 
     dobjFor(Push)
     {
         verify() { }
-        action() { "You don't need to make any adjustments to the
-            oscilloscope settings right now. "; }
+        action() { "Du behöver inte göra några justeringar av
+            oscilloskopinställningarna just nu. "; }
     }
     dobjFor(Pull) asDobjFor(Push)
     dobjFor(Turn) asDobjFor(Push)
     dobjFor(Move) asDobjFor(Push)
 ;
 ++++ Component
-    '(oscilloscope) (scope) display screen/display' 'oscilloscope display'
+    '(oscilloskop) (skop) display skärm/display' 'oscilloskopdisplay'
     desc()
     {
         if (location.isOn)
             location.screenDesc();
         else
-            "The screen is blank. ";
+            "Skärmen är tom. ";
     }
 
     isOn = nil
 ;
 ++++ ComponentDeferrer, TestGearProbe
-    '(oscilloscope) (scope) long metal coaxial insulated sharp pointed needle
-    grip/probe/cable/pin/(tip)'
-    'oscilloscope probe'
-    "The probe consists of an insulated grip with a two-inch metal pin
-    protruding.  The pin has a sharp, pointed tip to allow precise
-    positioning when working with small circuitry.  The probe is
-    attached to the oscilliscope with a coaxial cable. "
+    '(oscilloskop) (skop) lång metall koaxial isolerad vass spetsig nål
+    grepp/prob/kabel/stift/(spets)'
+    'oscilloskopprob'
+    "Proben består av ett isolerat grepp med en två tum lång metallstift
+    som sticker ut. Stiftet har en vass, spetsig ände för att möjliggöra exakt
+    positionering när man arbetar med små kretsar. Proben är
+    ansluten till oscilloskopet med en koaxialkabel. "
 ;
 
 +++ signalGen: LabShelfItem, TestGear, OnOffControl
-    'signal function generator' 'signal generator'
-    "The signal generator lets you feed different waveforms into a
-    circuit, to test how the circuit behaves electrically.  This is
-    a compact model, the size of a hardback book.  It has a set of
-    buttons on the front, an amplitude knob, and a connector. It's
-    currently turned <<onDesc>>. "
+    'signal+en signal+generator+n/funktion^s+generator+n/generator+n' 'signalgenerator'
+    "Signalgeneratorn låter dig mata olika vågformer in i en
+    krets, för att testa hur kretsen beter sig elektriskt. Detta är
+    en kompakt modell, i storlek med en inbunden bok. Den har en uppsättning
+    knappar på framsidan, en amplitudknapp och en kontakt. Den är
+    för närvarande <<onDesc>>. "
 
     /* this item is a little larger than the default */
     bulk = 2
@@ -1899,9 +1900,9 @@ class TestGearAttachable: NearbyAttachable
     probeWithScope()
     {
         if (isOn)
-            "You run through a few different waveform patterns on the
-            signal generator to check that they're all displayed properly
-            on the scope.  Everything looks fine. ";
+            "Du kör igenom några olika vågformsmönster på
+            signalgeneratorn för att kontrollera att de alla visas korrekt
+            på oscilloskopet. Allt ser bra ut. ";
         else
             inherited();
     }
@@ -1931,7 +1932,7 @@ class TestGearAttachable: NearbyAttachable
             local equip = getAttachedEquipment();
 
             /* switch it on */
-            "You switch on the signal generator. ";
+            "Du slår på signalgeneratorn. ";
             makeOn(true);
             
             /* if we're attached to anything, let it know */
@@ -1942,21 +1943,21 @@ class TestGearAttachable: NearbyAttachable
 
     dobjFor(TypeLiteralOn)
     {
-        verify() { logicalRank(50, 'not a keypad'); }
+        verify() { logicalRank(50, 'inte en knappsats'); }
         action()
         {
-            "The signal generator doesn't have anything like a keypad,
-            but it does have a knob you can turn to different settings. ";
+            "Signalgeneratorn har inget som liknar en knappsats,
+            men den har en ratt som du kan vrida till olika inställningar. ";
         }
     }
     dobjFor(EnterOn) asDobjFor(TypeLiteralOn)
     dobjFor(TypeOn) asDobjFor(TypeLiteralOn)
 ;
 ++++ signalGenKnob: NumberedDial, Component
-    '(signal) (generator) amplitude knob/dial' 'amplitude knob'
-    "It's a knob numbered from 0 to 9.  It adjusts the voltage level
-    of the signal being generated, within the range selected by the
-    current waveform parameters. It's currently set to <<curSetting>>. "
+    '(signal) (generator) amplitud ratt/vred' 'amplitudratt'
+    "Det är en ratt numrerad från 0 till 9. Den justerar spänningsnivån
+    på signalen som genereras, inom det intervall som valts av de
+    aktuella vågformsparametrarna. Den är för närvarande inställd på <<curSetting>>. "
     curSetting = '3'
     minSetting = 0
     maxSetting = 9
@@ -1964,10 +1965,11 @@ class TestGearAttachable: NearbyAttachable
     /* handle ENTER ON as TURN TO */
     dobjFor(EnterOn) asDobjFor(TurnTo)
 ;
-++++ Component '(signal) (generator) button/buttons/set'
-    'signal generator buttons'
-    "The buttons let you select the shape of the waveform being
-    generated and adjust its parameters. "
+++++ Component '(signal) (generator) knapp+uppsättning+en*knappar+na'
+    'signalgeneratorns knappar'
+    "Knapparna låter dig välja formen på vågformen som
+    genereras och justera dess parametrar. "
+    isPlural = true
 
     dobjFor(Push)
     {
@@ -1980,33 +1982,33 @@ class TestGearAttachable: NearbyAttachable
             logicalRank(50, 'decoration-only');
         }
         
-        action() { "There are no changes you need to make to the
-            signal generator output right now. "; }
+        action() { "Det finns inga ändringar du behöver göra på
+            signalgeneratorns utdata just nu. "; }
     }
 ;
 ++++ TestGearProbe
-    '(signal) (generator) connector/lead/leads'
-    'signal generator connector'
-    "The connector is a simple set of leads connected to the
-    signal generator. "
+    '(signal) (generator) kontakt/ledning/ledningar'
+    'signalgeneratorns kontakt'
+    "Kontakten är en enkel uppsättning ledningar anslutna till
+    signalgeneratorn. "
 ;
-    
+
 +++ spy9: PresentLater, PermanentAttachment, Immovable
-    'small white plastic spy-9 camera/ball'
-    name = (described ? 'SPY-9 camera' : 'small white ball')
-    shortName = (described ? 'camera' : 'white plastic ball')
-    desc = "It's a small white ball, about the size of a golf ball
-        but made of smooth plastic.  A blue network cable comes out
-        the back, and <<
+    'liten lilla vit+a plast spy-9 kamera+n/boll+en'
+    name = (described ? 'SPY-9-kamera' : 'liten vit boll')
+    shortName = (described ? 'kamera' : 'vit plastboll')
+    desc = "Det är en liten vit boll, ungefär i storlek med en golfboll
+        men gjord av slät plast. En blå nätverkskabel kommer ut
+        från baksidan, och <<
           described
-          ? "a tiny lens is in front.  You recognize it as a
-            SPY-9 camera"
-          : "there's a small clear spot in front---a lens.  You
-            suddenly realize what this is: it's a SPY-9 camera"
-          >>, that heinous product marketed with a ceaseless barrage
-        of pop-up internet ads, designed for such virtuous uses as
-        spying on your nanny, spouse, employees, boss, or the women's
-        locker room. "
+          ? "en liten lins är framtill. Du känner igen den som en
+            SPY-9-kamera"
+          : "det finns en liten klar fläck framtill---en lins. Du
+            inser plötsligt vad detta är: det är en SPY-9-kamera"
+          >>, den avskyvärdiga produkten som marknadsförs med en oändlig ström
+        av pop-up-annonser på internet, designad för sådana dygdiga användningsområden som
+        att spionera på din barnvakt, make/maka, anställda, chef eller damernas
+        omklädningsrum. "
 
     /* 
      *   it's immovable, but this isn't obvious looking at it, so list it
@@ -2018,39 +2020,39 @@ class TestGearAttachable: NearbyAttachable
     isFound = nil
 
     /* we can't be moved because of the cable tethering us to the wall */
-    cannotTakeMsg = 'You can\'t get {the dobj/him} free of the cable. '
-    cannotMoveMsg = 'The cable doesn\'t let you move {the dobj/him} more
-        than a few inches. '
+    cannotTakeMsg = 'Du kan inte få loss {ref dobj/honom} från kabeln. '
+    cannotMoveMsg = 'Kabeln låter dig inte flytta {the dobj/honom} mer
+        än några centimeter. '
     cannotPutMsg = (cannotTakeMsg)
 
     /* we can't detach from the cable */
     cannotDetachMsg(obj)
     {
-        return 'There\'s no obvious way to disconnect the cable; it seems
-            to be an integral part of ' + theNameObj + '. ';
+        return 'Det finns inget uppenbart sätt att koppla bort kabeln; den verkar
+            vara en integrerad del av ' + theNameObj + '. ';
     }
 
     /* pulling on the camera is just like pulling on the wire */
     dobjFor(Pull) remapTo(Pull, spy9Wire)
 ;
-++++ Component 'clear tiny (camera) (spy-9) spot/lens/(camera)' 'spy-9 lens'
-    "It's the tiny lens of the camera. "
+++++ Component 'klar liten lilla (kamera) (spy-9) fläck+en/lins+en/(kamera+n)' 'spy-9-lins'
+    "Det är kamerans lilla lins. "
 ;
 ++++ spy9Wire: PermanentAttachment, Immovable
-    '(spy-9) (camera) blue network cable/wire/insulation' 'network cable'
-    "It looks like a fairly standard blue network cable.  It seems to
-    be hard-wired to the <<location.shortName>>, and at the other end
-    feeds into a wall plate.  Strangely, it runs directly through the
-    wall plate---there's no plug.  This cable probably runs all the way
-    to the wiring closet down in the sub-basement. <<tagNote>> "
+    '(spy-9) (kamera) blå+a nätverks+kabel+en/sladd+en/isolering+en' 'nätverkskabel'
+    "Den ser ut som en ganska standard blå nätverkskabel. Den verkar vara
+    fast ansluten till <<location.shortName>>, och i andra änden
+    går den in i en väggplatta. Märkligt nog går den direkt genom
+    väggplattan---det finns ingen kontakt. Den här kabeln går förmodligen hela vägen
+    till kopplingsskåpet nere i källaren. <<tagNote>> "
 
     tagNote()
     {
         /* add a note about the tag if the tag has been exposed */
         if (spy9Tag.isIn(self))
-            "A bright green tag, marked with the digits
-            <<infoKeys.spy9JobNumber>>, is wrapped around the wire
-            near the wall plate.";
+            "En ljusgrön etikett, markerad med siffrorna
+            <<infoKeys.spy9JobNumber>>, är lindad runt tråden 
+                nära väggplattan.";
     }
 
     dobjFor(Pull)
@@ -2060,13 +2062,13 @@ class TestGearAttachable: NearbyAttachable
         {
             if (bwirBlueWire.location == nil)
             {
-                "You pull the wire away from the wall plate, not hard
-                enough to break it but enough to take up any slack in
-                the behind-the-wall wiring.  You pull it a couple of
-                inches, and a little paper tag wrapped around the
-                wire pops out from behind the wall plate.  You get
-                a couple more inches of wire before the runs out of
-                slack. ";
+                "Du drar bort vajern från väggplattan, inte hårt 
+                tillräckligt för att ta sönder det, men tillräckligt 
+                för att ta upp eventuellt slack i ledningarna bakom väggen. 
+                Du drar i den ett par tum, och en liten pappersetikett 
+                lindad runt tråd hoppar ut bakom väggplattan. Du får 
+                ett par centimeter tråd till innan slacket 
+                tar slut. ";
 
                 /* reveal the tag */
                 spy9Tag.makePresent();
@@ -2076,67 +2078,69 @@ class TestGearAttachable: NearbyAttachable
                 bwirHole.makePresent();
             }
             else
-                "You give it a tug, but there's no more play in the wire. ";
+                "Du ger den ett ryck, men det finns inget mer spel kvar i tråden. ";
+
         }
     }
 
-    cannotTakeMsg = 'The cable feeds through the wall plate; there\'s no
-        obvious way to remove it. '
-    cannotMoveMsg = 'There\'s very little play in the cable. '
+    cannotTakeMsg = 'Kabeln matas genom väggplattan; det finns inget 
+                    uppenbart sätt att ta bort det. '
+
+    cannotMoveMsg = 'Det är väldigt lite spel i kabeln. '
     cannotPutMsg = (cannotTakeMsg)
 
     attachedObjects = [spy9, spy9WallPlate]
     cannotDetachMsg(obj)
     {
         return (obj == nil
-                ? 'The cable seems to be permanently attached. '
+                ? 'Kabeln verkar vara permanent ansluten. '
                 : obj.cannotDetachMsg(self));
     }
 
     dobjFor(Follow)
     {
         verify() { logicalRank(50, 'not followable'); }
-        action() { "You can only follow it as far as the wall plate. "; }
+        action() { "Du kan bara följa den så långt som fram till väggplattan. "; }
     }
 ;
 +++++ spy9Tag: PresentLater, PermanentAttachment, CustomImmovable, Readable
-    'bright green little small paper tag' 'paper tag'
-    "The bright green tag is marked with the digits
-    <<infoKeys.spy9JobNumber>>.  You can also make out faint, tiny
-    type on the edge reading <q>NIC.</q>  The tag is folded over the
-    wire and glued in place with a strong adhesive. "
+    'ljusgrön+a liten lilla papper:et^s+lapp+en/etikett+en' 'papperslapp'
+    "Den ljusgröna lappen är märkt med siffrorna
+    <<infoKeys.spy9JobNumber>>. Du kan också urskilja svag, liten
+    text på kanten som lyder <q>NIC.</q> Lappen är vikt över
+    kabeln och limmad på plats med ett starkt lim. "
 
     attachedObjects = [spy9Wire]
     cannotDetachMsg(obj) { return cannotTakeMsg; }
-    cannotTakeMsg = 'The tag seems to be thoroughly stuck to the wire. '
+    cannotTakeMsg = 'Lappen verkar vara ordentligt fastklistrad på kabeln. '
 ;
     
 ++++ spy9WallPlate: PermanentAttachment, Fixture
-    'wall plate' 'wall plate'
-    "The blue cable feeds into the wall plate without any plug or
-    connector.  Someone must have set this up as part of the room
-    wiring for some reason---the cable must run all the way down to
-    the wiring closet in the sub-basement. "
+    'väggplatta+n' 'väggplatta'
+    "Den blå kabeln går in i väggplattan utan någon kontakt eller
+    anslutning. Någon måste ha satt upp detta som en del av rummets
+    kabeldragning av någon anledning---kabeln måste gå hela vägen ner till
+    kopplingsskåpet i källaren. "
 
-    cannotDetachMsg(obj) { return 'The cable feeds into the wall plate
-        without any obvious plug, so there\'s no way to detach it. '; }
+    cannotDetachMsg(obj) { return 'Kabeln går in i väggplattan
+        utan någon uppenbar kontakt, så det finns inget sätt att koppla loss den. '; }
 
-    dobjFor(LookBehind) { action() { "You can't see behind the plate
-        without removing it, but there's no obvious way to do that. "; } }
+    dobjFor(LookBehind) { action() { "Du kan inte se bakom plattan
+        utan att ta bort den, men det finns inget uppenbart sätt att göra det. "; } }
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   Bridge basement hall - west end 
  */
-bridgeBasementWest: Room 'Basement Hall West'
-    'the west basement hallway' 'hallway'
-    "The low, dimly-lit hallway ends here and continues to the east.
-    On the south side of the hall is a door labeled 023, and on the
-    north side another labeled 024.  At the west end of the hall,
-    a very narrow, steep stairway leads down into shadow. "
+bridgeBasementWest: Room 'Källarhall Väst'
+    'den västra källarhallen' 'hallen'
+    "Den låga, svagt upplysta hallen slutar här och fortsätter österut.
+    På södra sidan av hallen finns en dörr märkt 023, och på
+    norra sidan en annan märkt 024. I hallens västra ände
+    leder en mycket smal, brant trappa ner i skuggan. "
 
-    vocabWords = 'basement hall/hallway'
+    vocabWords = 'källare hall/korridor'
 
     east = bridgeBasementEast
     south = door023
@@ -2146,42 +2150,42 @@ bridgeBasementWest: Room 'Basement Hall West'
 ;
 
 + bbwStair: StairwayDown ->bsubStair
-    'very narrow steep concrete stairs/stairway/shaft' 'stairs'
-    "The concrete stairway is so narrow it almost looks like it's
-    descending straight down a shaft. "
+    'mycket smal+a brant+a betong trappa+n/schakt+et*trappor+na' 'trappor'
+    "Betongtrappan är så smal att den nästan ser ut som om den
+    går rakt ner i ett schakt. "
     isPlural = true
 ;
 
 + SimpleOdor
-    desc = "The air here is damp and musty. "
+    desc = "Luften här är fuktig och unken. "
 ;
 
-+ door023: AlwaysLockedDoor 'south s 023 door*doors' 'door 023'
-    "It's labeled with room number 023. "
-    theName = 'door 023'
++ door023: AlwaysLockedDoor 'syd s 023 dörr*dörrar' 'dörr 023'
+    "Den är märkt med rumsnummer 023. "
+    theName = 'dörr 023'
 ;
 
-+ door024: AlwaysLockedDoor 'north n 024 door*doors' 'door 024'
-    "The door is labeled with room number 024. "
-    theName = 'door 024'
++ door024: AlwaysLockedDoor 'nord n 024 dörr*dörrar' 'dörr 024'
+    "Dörren är märkt med rumsnummer 024. "
+    theName = 'dörr 024'
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   Bridge sub-basement hall
  */
-bridgeSubHall: Room 'Sub-basement Hall' 'the sub-basement hall' 'hallway'
-    "The ceiling in this short hallway is too low for you to
-    stand up straight, and the walls are just unpainted concrete.
-    It would be too cruel to put anyone's office down here---even
-    grad students---so this sub-basement is used mainly for storage
-    and the building's systems.  The hall is piled with junk,
-    evidently overflow from the storage rooms.  Faded lettering on
-    the north door reads <q>Electro-Mechanical,</q> and the east
-    and south doors are unlabeled.  To the west, a steep stairway
-    leads up. "
+bridgeSubHall: Room 'Undre källarhall' 'den undre källarhallen' 'korridor'
+    "Taket i denna korta korridor är för lågt för att du ska kunna
+    stå rak, och väggarna är bara omålad betong.
+    Det skulle vara för grymt att placera någons kontor här nere---även
+    doktorander---så denna undre källare används främst för förvaring
+    och byggnadens system. Hallen är full av skräp,
+    uppenbarligen överskott från förrådsrummen. Bleknad text på
+    den norra dörren lyder <q>Elektro-Mekanisk,</q> och de östra
+    och södra dörrarna är omärkta. Västerut leder en brant trappa
+    uppåt. "
 
-    vocabWords = 'sub-basement subbasement hall/hallway'
+    vocabWords = 'undre källare underkällare hall+en/korridor+en'
 
     up = bsubStair
     west asExit(up)
@@ -2192,73 +2196,72 @@ bridgeSubHall: Room 'Sub-basement Hall' 'the sub-basement hall' 'hallway'
     roomParts = [defaultFloor]
 ;
 
-+ Fixture 'low ceiling' 'ceiling' "The ceiling is so low you can't
-    stand up straight. "
++ Fixture 'lågt tak' 'tak' "Taket är så lågt att du inte kan
+    stå rak. "
 ;
-+ Fixture 'north south east west n s e w concrete wall/walls' 'wall'
-    "The walls here are unpainted concrete. "
++ Fixture 'nord syd öst väst n s ö v betong vägg/väggar' 'vägg'
+    "Väggarna här är omålad betong. "
 ;
 
 + Decoration
-    'leftover construction
-    materials/junk/pile/piles/sheetrock/piece/pieces/wood/pipe/pipes/lengths'
-    'junk'
-    "It looks like leftover construction materials, mostly: pieces of
-    sheetrock and wood, lengths of pipe, that sort of thing. "
+    'överblivet överblivna byggmaterial+et/skräp+et/hög+en/bit+en/trä+et/rör+et/längder*högar+na gipsskivor+na bitar+na' 
+    'skräp'
+    "Det ser ut som överblivet byggmaterial, mestadels: bitar av
+    gipsskivor och trä, rörlängder, den sortens saker. "
     
     isMassNoun = true
 
     dobjFor(Take)
     {
         verify() { }
-        action() { "You take a quick look through the
-            junk to see if there's anything useful you could borrow,
-            but you find nothing interesting. "; }
+        action() { "Du tar en snabb titt genom
+            skräpet för att se om det finns något användbart du kan låna,
+            men du hittar inget intressant. "; }
     }
     dobjFor(Search) asDobjFor(Take)
 ;
 
-+ bsubStair: StairwayUp 'very narrow steep uneven concrete stairs/stairway'
-    'stairs'
-    "The uneven concrete stairs lead up. "
++ bsubStair: StairwayUp 'mycket smal brant ojämn betong trappa/trappor'
+    'trappor'
+    "De ojämna betongtrapporna leder uppåt. "
     isPlural = true
 ;
 
 + SimpleOdor
-    desc = "The air here is dry and stale. "
+    desc = "Luften här är torr och unken. "
 ;
 
 + bsubNorthDoor: Door ->bwirDoor
-    'north n electro-mechanical door' 'north door'
-    "Faded lettering on the door reads <q>Electro-Mechanical.</q> "
+    'nord n elektro-mekanisk+a elektro+mekanisk+a dörr+en' 'norra dörren'
+    "Bleknad text på dörren lyder <q>Elektro-Mekanisk.</q> "
 ;
-++ Component 'hand-painted faded lettering' 'faded lettering'
-    "<q>Electro-Mechanical.</q>  The faded lettering looks
-    like it was hand-painted a long time ago. "
-;
-
-+ bsubEastDoor: Door ->bstorWestDoor 'east e door' 'east door'
-    "The door is unmarked. "
+++ Component 'handmålad bleknad text+en' 'bleknad text'
+    "<q>Elektro-Mekanisk.</q> Den bleknade texten ser ut
+    som om den var handmålad för länge sedan. "
 ;
 
-+ bsubSouthDoor: AlwaysLockedDoor 'south s door' 'south door'
-    "The door is unmarked. "
++ bsubEastDoor: Door ->bstorWestDoor 'öst ö dörr+en' 'östra dörren'
+    "Dörren är omärkt. "
+;
+
++ bsubSouthDoor: AlwaysLockedDoor 'syd s dörr+en' 'södra dörren'
+    "Dörren är omärkt. "
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   Bridge sub-basement wiring closet 
  */
-bridgeWiringCloset: Room 'Wiring Closet' 'the wiring closet'
-    "When you were a student, you helped wire a couple of the Bridge
-    labs for a primitive computer network, which involved pulling a
-    bunch of garden-hose-sized cables through the walls and connecting
-    them to a bank of transponder boxes in this wiring closet.  All of
-    that has been long since ripped out and replaced with more modern
-    phone-style wiring.
-    <.p>A door leads south, out to the hall. "
+bridgeWiringCloset: Room 'Kopplingsskåp' 'kopplingsskåpet'
+    "När du var student hjälpte du till att dra kablar i ett par av Bridge-
+    labben för ett primitivt datornätverk, vilket innebar att dra en
+    massa kablar i trädgårdsslangs-storlek genom väggarna och ansluta
+    dem till en rad transponderboxar i detta kopplingsskåp. Allt detta
+    har sedan länge rivits ut och ersatts med mer modern
+    telefonliknande kabeldragning.
+    <.p>En dörr leder söderut, ut till korridoren. "
 
-    vocabWords = 'wiring closet'
+    vocabWords = 'kopplingsskåp'
 
     south = bwirDoor
     out asExit(south)
@@ -2266,46 +2269,46 @@ bridgeWiringCloset: Room 'Wiring Closet' 'the wiring closet'
     roomParts = static [defaultFloor]
 ;
 
-+ bwirDoor: Door 'south s door' 'door' "The door leads out to the south. "
++ bwirDoor: Door 'syd s dörr+en' 'dörr' "Dörren leder ut söderut. "
 ;
 
 + bsubWiring: Immovable, Consultable
-    'blue red white yellow orange green
-    modern phone phone-style network wire/wires/wiring/mass' 'wiring'
-    "There's a huge mass of wires here, mostly along the north wall,
-    coming into the room through small openings in the ceiling and
-    walls.  The wires are in numerous colors: blue, red, white, yellow,
-    orange, green. <<
+    'blå+a röd+a vit+a gul+a orange grön+a
+    modern+a telefon+en telefonliknande kabel+n/nätverk^s+kabel+n/kabeldragning+en/massa+n*kablar+na ledningar+na' 'kabeldragning'
+    "Det finns en enorm massa kablar här, mestadels längs den norra väggen,
+    som kommer in i rummet genom små öppningar i taket och
+    väggarna. Kablarna är i många färger: blå, röd, vit, gul,
+    orange, grön. <<
       bwirBlueWire.location != nil
-      ? "One blue wire stands out, because it's been pulled tight---you
-        can see it's the one you tugged on upstairs. " : "" >> "
+      ? "En blå kabel sticker ut, eftersom den har dragits åt hårt---du
+        kan se att det är den du drog i på övervåningen. " : "" >> "
     isMassNoun = true
 
     lookInDesc() { searchResponse(); }
     searchResponse()
     {
-        "There are so many wires, you really don't have any chance
-        of finding a specific one without something that would
-        really set it apart. ";
+        "Det finns så många kablar att du verkligen inte har någon chans
+        att hitta en specifik utan något som verkligen skulle
+        få den att sticka ut. ";
 
         /* if we haven't found the blue wire yet, hint how we could */
         if (bwirBlueWire.location == nil)
-            "Back when you were helping with the Bridge wiring project,
-            for example, the easiest way of sorting out what went where
-            was to have someone upstairs give their end of a wire a good
-            tug, and see which one down here moved. ";
+            "När du hjälpte till med Bridge-kabeldragningsprojektet,
+            till exempel, var det enklaste sättet att sortera ut vad som gick vart
+            att ha någon på övervåningen ge sin ände av en kabel ett ordentligt
+            ryck, och se vilken som rörde sig här nere. ";
         else
-            "You can pick out the blue wire you pulled on, though,
-            since it's the one that's been pulled tight enough to
-            stand out in front of the others. ";
+            "Du kan urskilja den blå kabeln du drog i, dock,
+            eftersom det är den som har dragits åt tillräckligt hårt för att
+            sticka ut framför de andra. ";
     }
     dobjFor(Follow) asDobjFor(LookIn)
     
     dobjFor(Pull)
     {
         verify() { }
-        action() { "Better not; you don't want to run the risk of
-            accidentally disconnecting something. "; }
+        action() { "Bättre att låta bli; du vill inte riskera att
+            oavsiktligt koppla ur något. "; }
     }
     dobjFor(Move) asDobjFor(Pull)
     dobjFor(Push) asDobjFor(Pull)
@@ -2319,14 +2322,14 @@ bridgeWiringCloset: Room 'Wiring Closet' 'the wiring closet'
 ;
 
 + bwirBlueWire: PresentLater, Immovable
-    'blue network pulled tight wire/cable/insulation'
-    'blue cable'
-    "It's a blue network cable, pulled tight so that it stands
-    by itself in front of the mass of wire.
-    Like many of the other wires, it threads in through an opening
-    in the ceiling.  You trace the wire through the mass of
-    cabling to see where it's connected, and find that it disappears
-    into a tiny hole drilled in the north wall.
+    'blå+a spänd+a sträckt+a nätverk:et^s+kabel+n/kabel+n/sladd+en/isolering+en'
+    'blå kabel'
+    "Det är en blå nätverkskabel, spänd så att den står
+    för sig själv framför massan av kablar.
+    Precis som många av de andra kablarna, går den in genom en öppning
+    i taket. Du följer kabeln genom massan av
+    kablar för att se var den är ansluten, och upptäcker att den försvinner
+    in i ett litet hål borrat i den norra väggen.
     <<traceIntoTunnel()>> "
 
     /* trace the wire into the steam tunnels */
@@ -2363,7 +2366,7 @@ bridgeWiringCloset: Room 'Wiring Closet' 'the wiring closet'
              *   generic wire object 
              */
             if (np.getOrigTokenList()
-                .indexWhich({x: getTokVal(x) == 'blue'}) != nil)
+                .indexWhich({x: getTokVal(x) == 'blå'}) != nil)
             {
                 /* they said 'blue' - throw out the generic wiring */
                 lst = lst.removeElementAt(idx);
@@ -2384,8 +2387,7 @@ bridgeWiringCloset: Room 'Wiring Closet' 'the wiring closet'
     dobjFor(Pull)
     {
         verify() { }
-        action() { "Better not; you might lose it in the crowd if
-            you added the slack back into it again. "; }
+        action() { "Bättre att låta bli; du riskerar att tappa bort den bland alla andra kablar om du släpper efter på spänningen igen. "; }
     }
 
     isNominallyIn(obj)
@@ -2396,55 +2398,55 @@ bridgeWiringCloset: Room 'Wiring Closet' 'the wiring closet'
 ;
 
 + bwirWalls: Fixture
-    'north south east west n s e w wall/walls/ceiling' 'ceiling'
-    "A lot of wires are threaded into the room through openings in
-    the walls and ceiling. "
+    'nord syd öst väst n s ö v vägg/väggar/tak' 'tak'
+    "En mängd kablar är dragna in i rummet genom öppningar i
+    väggarna och taket. "
 ;
-++ bwirOpenings: Fixture 'small openings' 'openings'
-    "The openings lead into conduits running through the walls,
-    providing a wiring path from labs from labs on other floors
-    to this wiring closet.  All of the openings are jam-packed with wires. "
+++ bwirOpenings: Fixture 'små öppningar' 'öppningar'
+    "Öppningarna leder in i ledningar som löper genom väggarna,
+    och ger en kabelväg från labb på andra våningar
+    till detta kopplingsskåp. Alla öppningar är proppfulla med kablar. "
     isPlural = true
 
-    lookInDesc = "The openings are packed with wires. "
+    lookInDesc = "Öppningarna är packade med kablar. "
 ;
-++ bwirHole: PresentLater, Fixture 'small tiny drill-hole/hole' 'drill-hole'
-    "It's a tiny hole drilled in the north wall, seemingly deliberately
-    concealed behind the mass of wiring.  A single blue wire is
-    threaded through the hole. "
+++ bwirHole: PresentLater, Fixture 'litet lilla pyttelitet pyttelilla borrhål+et/hål+et' 'borrhål'
+    "Det är ett pyttelitet hål borrat i den norra väggen, till synes avsiktligt
+    dolt bakom massan av kablar. En enda blå kabel är
+    dragen genom hålet. "
 
-    lookInDesc = "A single blue wire is threaded into the hole. "
-    dobjFor(LookThrough) { action() { "The hole is too small to see
-        anything on the other side. "; } }
+    lookInDesc = "En enda blå kabel är dragen genom hålet. "
+    dobjFor(LookThrough) { action() { "Hålet är för litet för att se
+        något på andra sidan. "; } }
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   Sub-basement storage room 
  */
-bridgeStorage: Room 'Storage Room' 'the storage room'
-    "This is a huge storage area, mostly for old furniture: the
-    room is stacked with desks, file cabinets, bookcases.  Cardboard
-    boxes are also piled here and there, and a bunch of scrap
-    wood is leaning against the wall in the northwest corner<<
+bridgeStorage: Room 'Förrådsrum' 'förrådsrummet'
+    "Detta är ett enormt förvaringsutrymme, mestadels för gamla möbler:
+    rummet är fullt av skrivbord, arkivskåp och bokhyllor. Kartonger
+    är också staplade här och där, och en hög med skräpvirke
+    lutar mot väggen i det nordvästra hörnet<<
       bstorNorthDoor.isIn(self)
       ? bstorWood.pathCleared
-      ? ", next to door leading north"
-      : ", in front of a door leading north"
-      : " of the room"
-      >>.  A door leads out to the west. "
+      ? ", bredvid en dörr som leder norrut"
+      : ", framför en dörr som leder norrut"
+      : " av rummet"
+      >>. En dörr leder ut västerut. "
 
-    vocabWords = 'storage room'
+    vocabWords = 'förråds rum'
 
     west = bstorWestDoor
     out asExit(west)
 ;
 
-+ bstorWestDoor: Door 'west w door' 'west door' "The door leads west. "
++ bstorWestDoor: Door 'väst v dörr+en' 'västra dörren' "Dörren leder västerut. "
 ;
 
 + bstorNorthDoor: PresentLater, Door
-    'north n door' 'north door' "The door leads north. "
+    'nord n dörr+en' 'norra dörren' "Dörren leder norrut. "
     /* find the door */
     makeFound()
     {
@@ -2466,8 +2468,8 @@ bridgeStorage: Room 'Storage Room' 'the storage room'
         {
             if (!bstorWood.pathCleared)
             {
-                "You can't get the door open with all the sheets of
-                scrap wood in the way. ";
+                "Du kan inte öppna dörren med alla skivor av
+                skräpvirke i vägen. ";
                 exit;
             }
         }
@@ -2475,25 +2477,25 @@ bridgeStorage: Room 'Storage Room' 'the storage room'
 ;
 
 + bstorWood: CustomImmovable
-    'large scrap bunch/piece/pieces/plywood/wood/sheet/sheets' 'scrap wood'
+    'stor+a skräp+et hög+en/bit+en/trä+et/plywood+en/virket+t/skiva+n*skivor+na träbitar+na' 'skräpvirke'
     desc()
     {
-        "The wood looks like assorted leftovers from construction
-        projects, mostly sheets of plywood around six feet by eight
-        feet, leaning against the wall. ";
+        "Virket ser ut som diverse rester från byggprojekt,
+        mestadels plywoodskivor omkring två meter gånger två och en halv meter,
+        lutande mot väggen. ";
 
         if (!pathCleared)
         {
-            "On closer inspection, you notice that the wood is stacked
-            in front of a door leading north. ";
+            "Vid närmare inspektion märker du att virket är staplat
+            framför en dörr som leder norrut. ";
             bstorNorthDoor.makeFound();
         }
     }
 
     isMassNoun = true
 
-    cannotTakeMsg = 'The sheets of wood are too large and heavy to
-        carry; at most you could move them a few feet. '
+    cannotTakeMsg = 'Virkesskivorna är för stora och tunga för att
+        bära; som mest skulle du kunna flytta dem några meter. '
 
     /* flag: a path has been cleared to the door */
     pathCleared = nil
@@ -2504,8 +2506,8 @@ bridgeStorage: Room 'Storage Room' 'the storage room'
         {
             if (!pathCleared)
             {
-                "You notice that the wood is stacked in front of a door
-                leading north. ";
+                "Du märker att virket är staplat framför en dörr
+                som leder norrut. ";
                 bstorNorthDoor.makeFound();
             }
             else
@@ -2519,20 +2521,20 @@ bridgeStorage: Room 'Storage Room' 'the storage room'
         {
             if (!pathCleared)
             {
-                "You manage to shove the pile of wood a couple of
-                feet over, <<
+                "Du lyckas skjuta virkestraven ett par
+                meter åt sidan, <<
                   bstorNorthDoor.location != nil
-                  ? "clearing the way to the door. "
-                  : "which reveals a door leading north.
-                    You move the wood far enough to clear the way to
-                    the door. "
+                  ? "och röjer vägen till dörren. "
+                  : "vilket avslöjar en dörr som leder norrut.
+                    Du flyttar virket tillräckligt långt för att röja vägen till
+                    dörren. "
                   >>";
                 
                 pathCleared = true;
                 bstorNorthDoor.makeFound();
             }
             else
-                "There's no room to move it any further. ";
+                "Det finns inget utrymme att flytta det längre. ";
         }
     }
     dobjFor(Push) asDobjFor(Move)
@@ -2542,54 +2544,54 @@ bridgeStorage: Room 'Storage Room' 'the storage room'
 ;
 
 + Decoration
-    'file furniture/desk/desks/cabinets/bookcases/pile/piles/stack/stacks'
-    'furniture'
-    "The furniture is stacked up two or three high in places and packed
-    together without a lot of leftover space. "
+    'möbel+n/skrivbord+et/skåp+et/hög+en/stapel+n*skrivborden bokhyllor+na högar+na staplar+na möbler+na'
+    'möbler'
+    "Möblerna är staplade två eller tre högt på sina ställen och packade
+    tätt tillsammans utan mycket överbliven plats. "
     isMassNoun = true
 
-    lookInDesc = "You look look through some of the piles, but
-        it's just old furniture; you find nothing interesting. "
+    lookInDesc = "Du tittar igenom några av högarna, men
+        det är bara gamla möbler; du hittar inget intressant. "
 
     dobjFor(Search) asDobjFor(LookIn)
     
-    notImportantMsg = 'The furniture is all packed in tightly; it
-        would take a huge effort to do anything with it. '
+    notImportantMsg = 'Möblerna är alla tätt packade; det
+        skulle kräva en enorm ansträngning att göra något med dem. '
 ;
 
 + Decoration
-    'cardboard box/boxes' 'cardboard boxes'
-    "They look like they've been here quite a while.  They're all
-    sealed up, and there's no indication what's inside. "
+    'kartong låda/lådor' 'kartonger'
+    "De ser ut som om de har varit här ganska länge. De är alla
+    förseglade, och det finns ingen indikation på vad som finns inuti. "
     
     isPlural = true
 
-    lookInDesc = "They're all sealed up; you wouldn't want to disturb them. "
+    lookInDesc = "De är alla förseglade; du vill inte störa dem. "
 
     dobjFor(Open) asDobjFor(LookIn)
     dobjFor(Search) asDobjFor(LookIn)
     dobjFor(Read)
     {
         verify() { }
-        action() { "The boxes are unlabeled. "; }
+        action() { "Lådorna är omärkta. "; }
     }
 
     dobjFor(Take)
     {
         verify() { }
-        action() { "There are far too many boxes to carry around. "; }
+        action() { "Det finns alldeles för många lådor att bära omkring. "; }
     }
     dobjFor(Move)
     {
         verify() { }
-        action() { "There are so many boxes that all you can do is
-            shift them around a little. "; }
+        action() { "Det finns så många lådor att allt du kan göra är
+            att flytta runt dem lite. "; }
     }
     dobjFor(Pull) asDobjFor(Move)
     dobjFor(Push) asDobjFor(Move)
     dobjFor(PushTravel) asDobjFor(Move)
     
-    notImportantMsg = 'You really shouldn\'t disturb the boxes. '
+    notImportantMsg = 'Du bör verkligen inte störa lådorna. '
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2598,49 +2600,49 @@ bridgeStorage: Room 'Storage Room' 'the storage room'
  */
 class SteamTunnelRoom: Room
     atmosphereList: ShuffledEventList { [
-        'A tapping noise echoes down one of the pipes for a few
-        moments, then stops. ',
-        'A deep rumbling reverberates briefly through the tunnel. ',
-        'A wave of hot, dry air blows past. ',
-        'One of the pipes makes a sudden loud hissing noise. ',
-        'A distant rumbling, like the sound of a big truck,
-        comes closer and closer until you\'re sure one of the pipes
-        is about to burst, but it goes right past and fades into
-        the distance. ',
-        'One of the pipes vibrates visibly for a few moments. ',
-        'It seems to be getting a little warmer. ',
-        'A sharp clang sounds right beside you, as though someone
-        smacked one of the pipes with a wrench. ',
-        'Something creaks and groans overhead. ']
+        'Ett knackande ljud ekar ner genom ett av rören i några
+        ögonblick, sedan upphör det. ',
+        'Ett djupt mullrande vibrerar kort genom tunneln. ',
+        'En våg av het, torr luft blåser förbi. ',
+        'Ett av rören ger ifrån sig ett plötsligt högt väsande ljud. ',
+        'Ett avlägset mullrande, som ljudet av en stor lastbil,
+        kommer närmare och närmare tills du är säker på att ett av rören
+        är på väg att spricka, men det passerar förbi och tonar bort
+        i fjärran. ',
+        'Ett av rören vibrerar synligt i några ögonblick. ',
+        'Det verkar bli lite varmare. ',
+        'En skarpt klang ljuder precis bredvid dig, som om någon
+        slog ett av rören med en skiftnyckel. ',
+        'Något knakar och stönar ovanför. ']
 
         eventPercent = 80
         eventReduceAfter = 5
         eventReduceTo = 60
     }
 
-    name = 'steam tunnel'
-    vocabWords = 'steam tunnel'
+    name = 'ångtunnel'
+    vocabWords = 'ång tunnel'
 
     /* what we see when we look behind the steam pipes */
-    lookBehindPipes() { "You give the pipes a cursory examination,
-        but there are a lot of them packed closely together---it'd
-        be easy to miss something unless you knew exactly where
-        to look. "; }
+    lookBehindPipes() { "Du ger rören en flyktig undersökning,
+        men det finns många av dem tätt packade tillsammans---det skulle
+        vara lätt att missa något om du inte visste exakt var
+        du skulle titta. "; }
 ;
 
 MultiLoc, SimpleOdor
     initialLocationClass = SteamTunnelRoom
-    desc = "The air is very warm and dry, and smells of dust and metal. "
+    desc = "Luften är mycket varm och torr, och luktar av damm och metall. "
 ;
 
 MultiInstance
     initialLocationClass = SteamTunnelRoom
     instanceObject: Fixture {
-        'steam two-inch big huge pvc pipe/pipes/conduits/plumbing'
-        'steam pipes'
-        "Numerous pipes and conduits run along the walls, ranging
-        from ordinary two-inch PVC plumbing like you'd find in a house,
-        to huge, industrial-strength pipes two feet in diameter. "
+        'ånga två-tums stor enorm pvc rör/ledningar/ledningssystem/rörledningar'
+        'ångrör'
+        "Talrika rör och ledningar löper längs väggarna, från
+        vanliga två-tums PVC-rör som du skulle hitta i ett hus,
+        till enorma, industriella rör två fot i diameter. "
         isPlural = true
         
         dobjFor(LookBehind)
@@ -2653,29 +2655,29 @@ MultiInstance
 ;
 + SimpleNoise
     initialLocationClass = SteamTunnelRoom
-    desc = "Hissing, rumbling, and tapping noises echo intermittently
-        through the pipes. "
+    desc = "Väsande, mullrande och knackande ljud ekar intermittent
+        genom rören. "
 ;
 
 MultiInstance
     initialLocationClass = SteamTunnelRoom
     instanceObject: Decoration {
-        'bare low-wattage light protective wire
-        lightbulb/bulb/bulbs/cage/cages'
-        'light bulb'
-        "The bulbs emit a feeble yellow light from within their
-        protective wire cages. "
+        'bar lågenergi ljus skyddande tråd
+        glödlampa/lampa/lampor/bur/burar'
+        'glödlampa'
+        "Lamporna avger ett svagt gult ljus inifrån sina
+        skyddande trådburar. "
 
-        notImportantMsg = 'The light bulbs aren\'t important (apart
-            from helping you see where you\'re going, of course). '
+        notImportantMsg = 'Glödlamporna är inte viktiga (bortsett
+            från att hjälpa dig se var du går, förstås). '
 
         dobjFor(Take)
         {
             verify() { }
-            action() { "How many Techers does it take to change a light
-                bulb?  Now that you think about it, you've never heard
-                a Caltech light bulb joke, amazingly enough.  In any case,
-                these light bulbs aren't important. "; }
+            action() { "Hur många Techers behövs det för att byta en glödlampa?
+                Nu när du tänker på det har du aldrig hört
+                ett Caltech glödlampsskämt, förvånansvärt nog. I vilket fall som helst,
+                dessa glödlampor är inte viktiga. "; }
         }
         dobjFor(Unscrew) asDobjFor(Take)
     }
@@ -2685,13 +2687,13 @@ MultiInstance
 /*
  *   Steam tunnel near storage room 
  */
-steamTunnel1: SteamTunnelRoom 'Steam Tunnel at Door'
-    'the steam tunnel near the door'
-    "This is a section of steam tunnel running east and west past
-    a door, which leads out of the tunnel to the south.  Pipes and
-    conduits run along the walls, and bare, low-wattage light bulbs
-    are spaced every ten feet or so along the ceiling, providing just
-    enough light to see by. "
+steamTunnel1: SteamTunnelRoom 'Ångtunnel vid Dörren'
+    'ångtunneln nära dörren'
+    "Detta är en sektion av ångtunneln som löper öster och väster förbi
+    en dörr, som leder ut ur tunneln söderut. Rör och
+    ledningar löper längs väggarna, och nakna glödlampor med låg effekt
+    är placerade med ungefär tre meters mellanrum längs taket, vilket ger precis
+    tillräckligt med ljus för att se. "
 
     east = steamTunnel2
     west = steamTunnel5
@@ -2701,14 +2703,14 @@ steamTunnel1: SteamTunnelRoom 'Steam Tunnel at Door'
     roomParts = static (inherited - defaultEastWall - defaultWestWall)
 ;
 
-+ st1Door: Door ->bstorNorthDoor 'south s door' 'south door'
-    "The door leads out of the tunnel to the south. "
++ st1Door: Door ->bstorNorthDoor 'syd s dörr+en' 'södra dörren'
+    "Dörren leder ut ur tunneln söderut. "
 ;
 
-+ st1Wire: PresentLater, Unthing 'blue network cable/wire' 'blue wire'
-    "You don't see the wire here, but if you have your bearings correct,
-    you wouldn't expect to---the wiring closet ought to be just west of
-    here. "
++ st1Wire: PresentLater, Unthing 'blå nätverks kabel/ledning' 'blå kabel'
+    "Du ser inte kabeln här, men om du har din orientering rätt,
+    skulle du inte förvänta dig det---kopplingsskåpet borde vara precis väster om
+    här. "
 
     plKey = 'stWire'
 ;
@@ -2717,22 +2719,22 @@ steamTunnel1: SteamTunnelRoom 'Steam Tunnel at Door'
 /*
  *   narrow tunnel 
  */
-steamTunnel5: SteamTunnelRoom 'Narrow Tunnel' 'the narrow tunnel'
-    "The steam tunnel is quite narrow here; it widens a bit to the
-    east and west.
+steamTunnel5: SteamTunnelRoom 'Smal Tunnel' 'den smala tunneln'
+    "Ångtunneln är ganska smal här; den vidgas lite åt
+    öster och väster.
     <<st5Hole.isIn(self)
-      ? "<.p>You notice a tiny point of light in the south wall---a
-        small hole, almost hidden behind one of the big steam pipes.
-        You never would have noticed it, except that you have the
-        sense this spot is roughly aligned with the wiring closet. "
+      ? "<.p>Du märker en liten ljuspunkt i den södra väggen---ett
+        litet hål, nästan dolt bakom ett av de stora ångrören.
+        Du skulle aldrig ha lagt märke till det, förutom att du har en
+        känsla av att denna plats är ungefär i linje med kopplingsskåpet. "
       : ""
       >> "
 
     lookBehindPipes()
     {
         if (st5Hole.isIn(self))
-            "You find a blue wire fastened along the back of one of the
-            big pipes. ";
+            "Du hittar en blå kabel fäst längs baksidan av ett av de
+            stora rören. ";
         else
             inherited();
     }
@@ -2742,36 +2744,36 @@ steamTunnel5: SteamTunnelRoom 'Narrow Tunnel' 'the narrow tunnel'
     roomParts = [defaultFloor, defaultCeiling, defaultNorthWall]
 ;
 
-+ Fixture 'south s wall*walls' 'south wall'
++ Fixture 'syd s vägg*väggar' 'södra väggen'
     desc()
     {
         if (st5Hole.isIn(self))
-            "You notice a small hole in the wall, admitting a little
-            pinprick of light from the other side. ";
+            "Du märker ett litet hål i väggen, som släpper in en liten
+            prick av ljus från andra sidan. ";
         else
-            "You see nothing unusual about it, although you have the
-            sense the wiring closet should be on the other side. ";
+            "Du ser inget ovanligt med den, även om du har en
+            känsla av att kopplingsskåpet borde vara på andra sidan. ";
     }
 ;
 
 ++ st5Hole: PresentLater, Fixture
-    'small tiny hole/pinpoint/(light)' 'small hole'
-    "The hole is almost completely hidden behind one of the big
-    steam pipes.  A blue wire comes in through the hole, and then
-    snakes along the back of one of the big pipes, running down
-    the tunnel to the west. "
+    'litet pyttelitet hål/prick/(ljus)' 'lilla hålet'
+    "Hålet är nästan helt dolt bakom ett av de stora
+    ångrören. En blå kabel kommer in genom hålet, och
+    slingrar sig sedan längs baksidan av ett av de stora rören, och löper ner
+    tunneln västerut. "
 
     plKey = 'stWire'
 
-    lookInDesc = "A single blue wire is threaded into the hole. "
-    dobjFor(LookThrough) { action() { "All you can see is a pinpoint
-        of light. "; } }
+    lookInDesc = "En enda blå kabel är dragen genom hålet. "
+    dobjFor(LookThrough) { action() { "Allt du kan se är en prick
+        av ljus. "; } }
 ;
 
-+ st5Wire: PresentLater, Immovable 'blue network cable/wire' 'blue wire'
-    "The wire comes in through the small hole in the south wall,
-    then snakes along the back of one of the big steam pipes,
-    stretching down the tunnel to the west. "
++ st5Wire: PresentLater, Immovable 'blå nätverks kabel/ledning' 'blå kabel'
+    "Kabeln kommer in genom det lilla hålet i den södra väggen,
+    slingrar sig sedan längs baksidan av ett av de stora ångrören,
+    och sträcker sig ner i tunneln västerut. "
 
     plKey = 'stWire'
 
@@ -2781,8 +2783,8 @@ steamTunnel5: SteamTunnelRoom 'Narrow Tunnel' 'the narrow tunnel'
     dobjFor(Follow)
     {
         verify() { }
-        action() { "The wire continue down the tunnel to the west,
-            and leaves the tunnel through the small hole. "; }
+        action() { "Kabeln fortsätter ner i tunneln västerut,
+            och lämnar tunneln genom det lilla hålet. "; }
     }
 ;
 
@@ -2790,20 +2792,20 @@ steamTunnel5: SteamTunnelRoom 'Narrow Tunnel' 'the narrow tunnel'
 /*
  *   Intersection 
  */
-steamTunnel6: SteamTunnelRoom 'T-Intersection' 'the T-intersection'
-    "This is a T-intersection, with a north-south tunnel meeting another
-    tunnel continuing east.  The pipes are arranged in an elaborate
-    network of crossings, some going straight past the intersection,
-    others turning the corner.
+steamTunnel6: SteamTunnelRoom 'T-Korsning' 'T-korsningen'
+    "Detta är en T-korsning, där en nord-sydlig tunnel möter en annan
+    tunnel som fortsätter österut. Rören är arrangerade i ett invecklat
+    nätverk av korsningar, vissa går rakt förbi korsningen,
+    andra svänger runt hörnet.
     <<st6Wire.isIn(self)
-      ? "<.p>You notice a blue wire concealed behind one of the
-        large-diameter steam pipes. "
+      ? "<.p>Du märker en blå kabel dold bakom ett av de
+        stora ångrören. "
       : "">> "
 
     lookBehindPipes()
     {
         if (st6Wire.isIn(self))
-            "There's a blue wire concealed behind a large pipe.
+            "Det finns en blå kabel dold bakom ett stort rör.
             <<st6Wire.wireDesc>> ";
         else
             inherited();
@@ -2814,12 +2816,12 @@ steamTunnel6: SteamTunnelRoom 'T-Intersection' 'the T-intersection'
     north = steamTunnel13
 ;
 
-+ st6Wire: PresentLater, Immovable 'blue network cable/wire' 'blue wire'
-    "The wire is concealed behind the steam pipes. <<wireDesc>> "
-    wireDesc = "You trace its path and find that it follows a large
-        steam pipe going down the tunnel to the east, runs up another
-        pipe, crosses overhead, runs down a pipe on the west side, and
-        then follows a pipe down the tunnel south. "
++ st6Wire: PresentLater, Immovable 'blå nätverks kabel/ledning' 'blå kabel'
+    "Kabeln är dold bakom ångrören. <<wireDesc>> "
+    wireDesc = "Du följer dess väg och upptäcker att den följer ett stort
+        ångrör som går ner i tunneln österut, löper upp längs ett annat
+        rör, korsar över huvudet, löper ner längs ett rör på västra sidan, och
+        följer sedan ett rör ner i tunneln söderut. "
 
     plKey = 'stWire'
 
@@ -2830,9 +2832,9 @@ steamTunnel6: SteamTunnelRoom 'T-Intersection' 'the T-intersection'
 /*
  *   Musty tunnel 
  */
-steamTunnel13: SteamTunnelRoom 'Musty Tunnel' 'the musty tunnel'
-    "This dimly-lit section of tunnel has a slight musty
-    odor.  The tunnel runs north and south from here. "
+steamTunnel13: SteamTunnelRoom 'Unken Tunnel' 'den unkna tunneln'
+    "Denna svagt upplysta del av tunneln har en lätt unken
+    lukt. Tunneln löper norrut och söderut härifrån. "
 
     south = steamTunnel6
     north = steamTunnel14
@@ -2840,8 +2842,8 @@ steamTunnel13: SteamTunnelRoom 'Musty Tunnel' 'the musty tunnel'
     roomParts = static (inherited - [defaultNorthWall, defaultSouthWall])
 ;
 
-+ SimpleOdor 'musty odor/air' 'musty odor'
-    "A slightly musty odor is in the air. "
++ SimpleOdor 'unken lukt/luft' 'unken lukt'
+    "En lätt unken lukt finns i luften. "
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2849,9 +2851,9 @@ steamTunnel13: SteamTunnelRoom 'Musty Tunnel' 'the musty tunnel'
  *   Corner at stairs 
  */
 steamTunnel14: SteamTunnelRoom
-    'Tunnel at Stairs' 'the tunnel near the stairs'
-    "This is the north end of a north-south section of tunnel.
-    To the east, a steep stairway leads down into a side passage. "
+    'Tunnel vid Trappan' 'tunneln nära trappan'
+    "Detta är den norra änden av en nord-sydlig tunnelsektion.
+    Österut leder en brant trappa ner i en sidopassage. "
 
     south = steamTunnel13
     east = st14Stairs
@@ -2860,13 +2862,13 @@ steamTunnel14: SteamTunnelRoom
     roomParts = static (inherited - defaultSouthWall)
 ;
 
-+ EntryPortal ->(location.east) 'east e narrow side passage' 'side passage'
-    "A steep stairway descends into the passage. "
++ EntryPortal ->(location.east) 'öst ö smal sidopassage' 'sidopassage'
+    "En brant trappa går ner i passagen. "
 ;
 
 + st14Stairs: StairwayDown ->st15Stairs
-    'steep stair/stairs/stairway' 'steep stairway'
-    "The stairs lead down into the east passage. "
+    'brant trappa/trappor/trappuppgång' 'brant trappa'
+    "Trappan leder ner i den östra passagen. "
 ;
     
 /* ------------------------------------------------------------------------ */
@@ -2874,48 +2876,48 @@ steamTunnel14: SteamTunnelRoom
  *   North-south crawl
  */
 steamTunnel15: SteamTunnelRoom
-    'Tunnel at Crawl' 'the tunnel at the north-south crawl'
-    "This is an older section of steam tunnel, running east and
-    west.  The tunnel ascends a steep stairway to the west.
-    <.p>Cut into the north wall is a low, narrow service tunnel;
-    a pair of giant asbestos-wrapped pipes, each almost a meter
-    in diameter, turn the corner into the service tunnel, leaving
-    just enough space for a person to snake through by lying down
-    flat on top of the steam pipe.  This is what you referred to
-    as the north-south crawl in your undergraduate years: the only
-    known connection between the north and south tunnel systems. "
+    'Tunnel vid Krypgången' 'tunneln vid nord-syd krypgången'
+    "Detta är en äldre sektion av ångtunneln, som löper öster och
+    väster. Tunneln stiger upp via en brant trappa västerut.
+    <.p>Uthuggen i den norra väggen finns en låg, smal servicetunnel;
+    ett par gigantiska asbestinklädda rör, vardera nästan en meter
+    i diameter, svänger in i servicetunneln och lämnar
+    precis tillräckligt med utrymme för en person att slingra sig igenom genom att ligga
+    platt ovanpå ångröret. Detta är vad du kallade
+    nord-syd krypgången under dina studieår: den enda
+    kända förbindelsen mellan de norra och södra tunnelsystemen. "
 
     west = st15Stairs
     up asExit(west)
     east = steamTunnel16
-    north: NoTravelMessage { "You snaked your way through the crawlway
-        several times in your undergraduate years, and it was a tight
-        squeeze then; you really doubt you'd fit any more. " }
+    north: NoTravelMessage { "Du slingrade dig genom krypgången
+        flera gånger under dina studieår, och det var trångt
+        redan då; du tvivlar verkligen på att du skulle få plats längre. " }
 
     roomParts = static (inherited - [defaultEastWall, defaultWestWall,
                                      defaultNorthWall])
 ;
 
-+ st15Stairs: StairwayUp 'steep stair/stairs/stairway' 'steep stairway'
-    "The stairs lead up to the west. "
++ st15Stairs: StairwayUp 'brant trappa/trappor/trappuppgång' 'brant trappa'
+    "Trappan leder upp västerut. "
 ;
 
-+ Fixture 'north n wall*walls' 'north wall'
-    "A service tunnel, known as the north-south crawl, is cut
-    into the north wall. "
++ Fixture 'nord n vägg*väggar' 'norra väggen'
+    "En servicetunnel, känd som nord-syd krypgången, är uthuggen
+    i den norra väggen. "
 ;
 
 + EntryPortal ->(location.north)
-    'narrow north-south service crawl/crawlway/tunnel'
-    'north-south crawl'
-    "Two large asbestos-wrapped pipes run through the tunnel,
-    leaving barely enough room for a person to fit through by
-    snaking one's way along the top of the pipes. "
+    'smal nord-syd service kryp/krypgång/tunnel'
+    'nord-syd krypgång'
+    "Två stora asbestinklädda rör löper genom tunneln,
+    och lämnar knappt tillräckligt med utrymme för en person att ta sig igenom genom att
+    slingra sig längs toppen av rören. "
 ;
 
-+ Fixture 'giant asbestos-wrapped pipe/pipes' 'asbestos-wrapped pipes'
-    "The pipes are roughly three feet in diameter.  They run through
-    the service tunnel branching off to the north. "
++ Fixture 'gigantiska asbestinklädda rör/ledningar' 'asbestinklädda rör'
+    "Rören är ungefär en meter i diameter. De löper genom
+    servicetunneln som grenar av sig norrut. "
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2923,10 +2925,10 @@ steamTunnel15: SteamTunnelRoom
  *   Older tunnel 
  */
 steamTunnel16: SteamTunnelRoom
-    'Older Tunnel' 'the older tunnel'
-    "This section of tunnel runs east and west.  The tunnel looks
-    especially old here.  On the south wall, next to what looks like
-    a circuit-breaker box, the stenciled letters <i>DEI</i> are painted. "
+    'Äldre Tunnel' 'den äldre tunneln'
+    "Denna del av tunneln löper öster och väster. Tunneln ser
+    särskilt gammal ut här. På den södra väggen, bredvid vad som ser ut som
+    en säkringsdosa, är bokstäverna <i>DEI</i> målade med schablon. "
 
     west = steamTunnel15
     east = steamTunnel9
@@ -2935,32 +2937,32 @@ steamTunnel16: SteamTunnelRoom
                                      defaultSouthWall])
 ;
 
-+ Fixture 'south s wall*walls' 'south wall'
-    "The stenciled letters <i>DEI</i> are painted next to an
-    electrical junction box. "
++ Fixture 'syd s vägg*väggar' 'södra väggen'
+    "Bokstäverna <i>DEI</i> är målade med schablon bredvid en
+    elektrisk kopplingsdosa. "
 
     /* read wall -> read letters */
     dobjFor(Read) remapTo(Read, dei)
 ;
 
-++ dei: Fixture 'stenciled painted letters "dei" dei' 'stenciled letters'
-    "<q>DEI</q> is a Techer inside joke that's so inside that no one
-    even knows exactly what it means.  It's widely supposed to stand
-    for <q>Dabney eats it,</q> which is widely supposed to refer to
-    some food-service incident from the misty past, but there's no
-    definitive record of exactly when or why or who or what. Despite
-    its mysterious origins, the trigraph has long been used as a
-    sort of secret handshake to covertly identify something as
-    Caltech-related.  The steam tunnel DEI's come from decades ago
-    when the TV show <i>Operation: Danger</i> filmed an episode down
-    here, and some students took the opportunity to sneak the insignia
-    into the show. "
+++ dei: Fixture 'schablonmålade målade bokstäver "dei" dei' 'schablonmålade bokstäver'
+    "<q>DEI</q> är ett Techer-internskämt som är så internt att ingen
+    ens vet exakt vad det betyder. Det antas allmänt stå för
+    <q>Dabney äter det,</q> vilket i sin tur antas syfta på
+    någon matserveringsincident från det dimmiga förflutna, men det finns ingen
+    definitiv dokumentation om exakt när eller varför eller vem eller vad. Trots
+    sitt mystiska ursprung har trigrafin länge använts som
+    en sorts hemligt handslag för att i hemlighet identifiera något som
+    Caltech-relaterat. Ångtunnelns DEI:er kommer från årtionden tillbaka
+    när TV-programmet <i>Operation: Danger</i> spelade in ett avsnitt här nere,
+    och några studenter tog tillfället i akt att smyga in insignian
+    i programmet. "
     
     isPlural = true
 ;
-+ Fixture 'circuit breaker electrical junction (dei) ("dei") box'
-    'electrical box'
-    "It's an electrical junction box of some kind. "
++ Fixture 'säkrings elektrisk kopplings (dei) ("dei") säkring^s+dosa+n/säkring^s+skåp+et'
+    'elektrisk dosa'
+    "Det är någon form av elektrisk kopplingsdosa. "
 
     /* read wall -> read letters */
     dobjFor(Read) remapTo(Read, dei)
@@ -2968,8 +2970,8 @@ steamTunnel16: SteamTunnelRoom
     dobjFor(Open)
     {
         verify() { }
-        action() { "There's no obvious way to open the box, at least
-            without special tools. "; }
+        action() { "Det finns inget uppenbart sätt att öppna dosan, åtminstone
+            inte utan specialverktyg. "; }
     }
     dobjFor(LookIn)
     {
@@ -2984,23 +2986,23 @@ steamTunnel16: SteamTunnelRoom
 /*
  *   Wide tunnel 
  */
-steamTunnel7: SteamTunnelRoom 'Dim Tunnel' 'the dim tunnel'
-    "The lights must be spaced out a little more widely than usual
-    here, because this section of north-south tunnel seems especially
-    dark.
+steamTunnel7: SteamTunnelRoom 'Mörk Tunnel' 'den mörka tunneln'
+    "Lamporna måste vara placerade lite glesare än vanligt
+    här, eftersom denna del av nord-sydtunneln verkar särskilt
+    mörk.
     <<st7Crawl.isIn(self)
-      ? "In the shadows, low on the west wall, an opening is just
-        barely visible. " : "">>
+      ? "I skuggorna, lågt på den västra väggen, är en öppning knappt
+        synlig. " : "">>
     <<st7Wire.isIn(self)
-      ? "You can make out a blue wire concealed behind one of the
-        large pipes. " : "">> "
+      ? "Du kan urskilja en blå kabel dold bakom ett av de
+        stora rören. " : "">> "
 
     lookBehindPipes()
     {
         if (st7Wire.isIn(self))
         {
-            "You find a blue wire concealed behind one of the
-            large steam pipes. ";
+            "Du hittar en blå kabel dold bakom ett av de
+            stora ångrören. ";
             st7Wire.descWire;
         }
         else
@@ -3014,50 +3016,50 @@ steamTunnel7: SteamTunnelRoom 'Dim Tunnel' 'the dim tunnel'
     roomParts = [defaultFloor, defaultCeiling, defaultEastWall]
 ;
 
-+ st7Wire: PresentLater, Immovable 'blue network cable/wire' 'blue wire'
-    "The wire is concealed behind one of the large pipes. <<descWire>> "
-    descWire = "It follows the pipe to the north<<revealCrawl>> "
++ st7Wire: PresentLater, Immovable 'blå nätverks kabel/ledning' 'blå kabel'
+    "Kabeln är dold bakom ett av de stora rören. <<descWire>> "
+    descWire = "Den följer röret norrut<<revealCrawl>> "
     revealCrawl()
     {
         if (!st7Crawl.isIn(location))
         {
-            ", but it seems to disappear to the south.  You trace it
-            carefully, and discover that it goes into an opening low
-            in the west wall.  The opening is well concealed in
-            shadows under the pipes; you wouldn't even have seen it
-            if you hadn't been following the wire. ";
+            ", men den verkar försvinna söderut. Du följer den
+            noggrant och upptäcker att den går in i en öppning lågt
+            på den västra väggen. Öppningen är väl dold i
+            skuggorna under rören; du skulle inte ens ha sett den
+            om du inte hade följt kabeln. ";
 
             st7Crawl.makePresent();
         }
         else
-            ", and goes into an opening low in the west wall. ";
+            ", och går in i en öppning lågt på den västra väggen. ";
     }
     dobjFor(Follow) asDobjFor(Examine)
 
     plKey = 'stWire'
 ;
 
-+ Fixture 'west w wall*walls' 'west wall'
++ Fixture 'väst v vägg*väggar' 'västra väggen'
     desc()
     {
         if (st7Crawl.isIn(self))
-            "An opening is just barely visible low on the wall. ";
+            "En öppning är knappt synlig lågt på väggen. ";
         else
-            "You see nothing unusual about it. ";
+            "Du ser inget ovanligt med den. ";
     }
 ;
 
 ++ st7Crawl: PresentLater, TravelWithMessage, ThroughPassage ->st8Crawl
-    'dark opening/crawlspace' 'opening'
-    "The opening is well concealed in shadows under the steam pipes.
-    It must have been intended to accommodate a couple of the large
-    pipes, but it looks like it's empty right now except for the blue
-    wire, so there might be enough space for you to squeeze through. "
+    'mörk öppning/kryputrymme' 'öppning'
+    "Öppningen är väl dold i skuggorna under ångrören.
+    Den måste ha varit avsedd att rymma ett par av de stora
+    rören, men det ser ut som om den är tom just nu förutom den blå
+    kabeln, så det kan finnas tillräckligt med utrymme för dig att klämma dig igenom. "
 
-    travelDesc = "You crouch down on the floor and crawl into the
-        opening head-first.  It's an uncomfortably tight squeeze,
-        but you manage to work your way through the eight feet or so
-        of the passage, finally emerging into another tunnel. "
+    travelDesc = "Du hukar dig ner på golvet och kryper in i
+        öppningen med huvudet först. Det är obehagligt trångt,
+        men du lyckas ta dig igenom de cirka två och en halv meterna
+        av passagen och kommer slutligen ut i en annan tunnel. "
 
     /* treat LOOK IN the same as EXAMINE */
     dobjFor(LookIn) asDobjFor(Examine)
@@ -3067,9 +3069,9 @@ steamTunnel7: SteamTunnelRoom 'Dim Tunnel' 'the dim tunnel'
 /*
  *   Tunnel at door
  */
-steamTunnel12: SteamTunnelRoom 'Tunnel at Door' 'the tunnel near the door'
-    "This section of tunnel ends to the south at a wide metal door
-    marked <q>Steam Plant.</q>  The tunnel continues to the north. "
+steamTunnel12: SteamTunnelRoom 'Tunnel vid Dörr+en' 'tunneln nära dörren'
+    "Denna del av tunneln slutar i söder vid en bred metalldörr
+    märkt <q>Ångverk.</q> Tunneln fortsätter norrut. "
 
     north = steamTunnel7
     south = st12Door
@@ -3077,17 +3079,17 @@ steamTunnel12: SteamTunnelRoom 'Tunnel at Door' 'the tunnel near the door'
     roomParts = static (inherited - defaultNorthWall)
 ;
 
-+ st12Door: AlwaysLockedDoor 'wide metal steam plant door' 'metal door'
-    "It's a wide metal door marked <q>Steam Plant.</q> "
++ st12Door: AlwaysLockedDoor 'bred metall ångverk dörr+en' 'metalldörr'
+    "Det är en bred metalldörr märkt <q>Ångverk.</q> "
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   Sloping tunnel 
  */
-steamTunnel2: SteamTunnelRoom 'Sloping Tunnel' 'the sloping tunnel'
-    "This section of tunnel runs east and west, sloping sharply down
-    to the east.  The steam pipes follow the slope of the tunnel. "
+steamTunnel2: SteamTunnelRoom 'Sluttande Tunnel' 'den sluttande tunneln'
+    "Denna del av tunneln löper öster och väster, och sluttar brant
+    nedåt mot öster. Ångrören följer tunnelns lutning. "
 
     west = steamTunnel1
     up asExit(west)
@@ -3101,12 +3103,12 @@ steamTunnel2: SteamTunnelRoom 'Sloping Tunnel' 'the sloping tunnel'
 /*
  *   Tunnel corner 
  */
-steamTunnel3: SteamTunnelRoom 'Bend in Tunnel'
-    'the bend in the tunnel'
-    "The steam tunnel turns a corner here, continuing to the north
-    and to the west.  The pipes and conduits running in from each
-    branch of the tunnel intersect, some making the turn and others
-    continuing straight on through the walls. "
+steamTunnel3: SteamTunnelRoom 'Krök i Tunneln'
+    'kröken i tunneln'
+    "Ångtunneln svänger i en krök här och fortsätter norrut
+    och västerut. Rören och ledningarna som kommer in från varje
+    gren av tunneln korsar varandra, vissa följer svängen medan andra
+    fortsätter rakt igenom väggarna. "
 
     north = steamTunnel4
     west = steamTunnel2
@@ -3116,10 +3118,10 @@ steamTunnel3: SteamTunnelRoom 'Bend in Tunnel'
 /*
  *   Tunnel T
  */
-steamTunnel4: SteamTunnelRoom 'T-Intersection' 'the T-intersection'
-    "Two steam tunnels meet here, forming a <font face='tads-sans'>T</font>:
-    one tunnel runs north and south, and another tunnel continues off to
-    the east. "
+steamTunnel4: SteamTunnelRoom 'T-Korsning' 'T-korsningen'
+    "Två ångtunnlar möts här och bildar ett <font face='tads-sans'>T</font>:
+    en tunnel löper norrut och söderut, och en annan tunnel fortsätter
+    österut. "
 
     north = steamTunnel9
     south = steamTunnel3
@@ -3132,9 +3134,9 @@ steamTunnel4: SteamTunnelRoom 'T-Intersection' 'the T-intersection'
 /*
  *   Dead end 
  */
-steamTunnel9: SteamTunnelRoom 'Tunnel Corner' 'the corner in the tunnel'
-    "The steam tunnel turns a corner here, one branch running
-    south, the other running west. "
+steamTunnel9: SteamTunnelRoom 'Tunnelkrök' 'kröken i tunneln'
+    "Ångtunneln svänger i en krök här, en gren löper
+    söderut, den andra västerut. "
 
     south = steamTunnel4
     west = steamTunnel16
@@ -3146,11 +3148,11 @@ steamTunnel9: SteamTunnelRoom 'Tunnel Corner' 'the corner in the tunnel'
 /*
  *   Under quad manhole
  */
-steamTunnel10: SteamTunnelRoom 'Bottom of Shaft' 'the bottom of the shaft'
-    "A column of sunlight spills in from a shaft above, piercing
-    the gloom of the tunnel.  A ladder built into the wall ascends
-    into the shaft.  The tunnel continues west, and descends a
-    few concrete steps to the east. "
+steamTunnel10: SteamTunnelRoom 'Botten av Schaktet' 'botten av schaktet'
+    "En pelare av solljus strömmar in från ett schakt ovanför och tränger
+    igenom tunnelns dunkel. En stege inbyggd i väggen leder uppåt
+    in i schaktet. Tunneln fortsätter västerut och går ner några
+    betongtrappsteg österut. "
 
     west = steamTunnel4
     east = st10Stairs
@@ -3181,48 +3183,48 @@ steamTunnel10: SteamTunnelRoom 'Bottom of Shaft' 'the bottom of the shaft'
 ;
 
 + st10Stairs: StairwayDown ->st11Stairs
-    'short concrete step/steps/stair/stairs/stairway' 'concrete stairs'
-    "The stairway leads a few steps down to the east. "
+    'kort betongsteg/betongsteg/trappa/trappor/trappuppgång' 'betongtrappor'
+    "Trappuppgången leder några steg ner österut. "
 ;
 
-+ Vaporous 'column/sunlight/light' 'column of sunlight'
-    "The sunlight spills into the tunnel from the opening at
-    the top of the shaft above. "
++ Vaporous 'pelare/solljus/ljus' 'pelare av solljus'
+    "Solljuset strömmar in i tunneln från öppningen i
+    toppen av schaktet ovanför. "
 ;
 
-+ Fixture 'tunnel ceiling' 'ceiling'
-    "A shaft above the tunnel leads up to the surface. "
++ Fixture 'tunneltak' 'tak'
+    "Ett schakt ovanför tunneln leder upp till ytan. "
 ;
 
 + workOrders: Readable, Consultable
-    'work order overstuffed three-ring thick brown binder/form/forms'
-    'three-ring binder'
-    "It's a brown three-ring binder, bulging with papers. "
+    'arbetsorder överfylld treringad tjock brun pärm/blankett/blanketter'
+    'treringad pärm'
+    "Det är en brun treringad pärm, svällande av papper. "
 
     /* 
      *   this is the kind of thing that takes some effort to read as
      *   opposed to just looking at it, so we have a separate read desc 
      */
-    readDesc = "The binder is stuffed with paper.  Flipping through,
-        it seems to be a collection of official Network Installer
-        Company <q>Work Order</q> forms.  You sample a few at random,
-        and find they're all pretty much the same: install network
-        port wiring for office X in building Y.  These guys must have
-        a contract to rewire the whole campus, from the looks of it.
-        The forms seem to be sorted in order of the Job Number stamped
-        at the top of each form, so it'd be easy to look up a specific
-        one given the number. "
+    readDesc = "Pärmen är fylld med papper. När du bläddrar igenom
+        verkar det vara en samling officiella <q>Arbetsorder</q>-blanketter
+        från Network Installer Company. Du tittar på några slumpmässigt
+        och upptäcker att de alla är ganska lika: installera nätverksuttag
+        för kontor X i byggnad Y. Dessa killar måste ha ett kontrakt
+        för att dra om kablar i hela campus, av utseendet att döma.
+        Blanketterna verkar vara sorterade efter Jobbnumret som är stämplat
+        överst på varje blankett, så det skulle vara lätt att hitta en specifik
+        om man vet numret. "
     
     topicNotFound()
     {
         local jobnum = gTopic.getTopicText();
         
-        if (rexMatch('(job<space>+)?(number<space>+)?[0-9]{4}-[0-9]{4}$',
+        if (rexMatch('(jobb<space>+)?(nummer<space>+)?[0-9]{4}-[0-9]{4}$',
                      jobnum) != jobnum.length())
         {
             /* it's not even the right format */
-            "You don't see any job numbers like that; they all seem
-            to be in the format 1234-5678. ";
+            "Du ser inga jobbnummer som ser ut så; de verkar alla
+            vara i formatet 1234-5678. ";
         }
         else
         {
@@ -3269,8 +3271,7 @@ steamTunnel10: SteamTunnelRoom 'Bottom of Shaft' 'the bottom of the shaft'
             }
 
             /* it's a valid number, but it's not there... */
-            "There doesn't seem to be a work order form with
-            that number. ";
+            "Det verkar inte finnas ett arbetsorderformulär med numret.";
         }
     }
 
@@ -3290,8 +3291,7 @@ steamTunnel10: SteamTunnelRoom 'Bottom of Shaft' 'the bottom of the shaft'
     {
         /* if we haven't been moved yet, add our description to the spools */
         if (!moved)
-            "An overstuffed three-ring binder is on the floor next
-            to the spools. ";
+            "En överfylld treringarspärm ligger på golvet bredvid spolarna. ";
     }
 
     /* OPEN and LOOK IN are the same as READ for this */
@@ -3324,8 +3324,9 @@ steamTunnel10: SteamTunnelRoom 'Bottom of Shaft' 'the bottom of the shaft'
                 nomDest = dest.getNominalDropDestination();
                 
                 /* mention that the sheet falls out of the binder */
-                "As you open the binder, a dingy sheet of paper falls
-                out and flutters <<nomDest.putInName()>>.<.p>";
+                "När du öppnar pärmen faller ett grådaskigt pappersark 
+                ut och fladdrar <<nomDest.putInName()>>.<.p>"; // TODO: testa 
+                //"As you open the binder, a dingy sheet of paper falls out and flutters <<nomDest.putInName()>>.<.p>";
 
                 /* move the instruction sheet to the drop destination */
                 netAnInstructions.moveInto(dest);
@@ -3348,14 +3349,14 @@ steamTunnel10: SteamTunnelRoom 'Bottom of Shaft' 'the bottom of the shaft'
 ;
 
 class JobOrderTopic: ConsultTopic
-    topicResponse = "You scan through the binder and find a page
-        with that job number:
-        <.p><.blockquote><tt><i><b>ATTENTION</b>: All IP address
-        assignments <b>MUST</b> be made through the Campus Network
-        Office (Jorgensen Lab).  Report <b>ALL</b> IP changes to the
+    topicResponse = "Du bläddrar igenom pärmen och hittar en sida
+        med det jobnumret:
+        <.p><.blockquote><tt><i><b>OBS</b>: Alla IP-adress
+        tilldelningar <b>MÅSTE</b> göras genom Campus Nätverkskontor
+        (Jorgensen Lab). Rapportera <b>ALLA</b> IP-ändringar till
         CNO.</i>
-        <.p>Job desc: <<jobDesc>>
-        <br><br>Special notes: <<jobNotes>></tt><./blockquote>
+        <.p>Jobbeskrivning: <<jobDesc>>
+        <br><br>Särskilda anteckningar: <<jobNotes>></tt><./blockquote>
         <<jobExtra>> "
 
     jobNumber = nil
@@ -3380,7 +3381,7 @@ class JobOrderTopic: ConsultTopic
         return (jobNumber == nil
                 ? nil
                 : new RexPattern(
-                    '(job<space>+)?(number<space>+)?' + jobNumber + '$'));
+                    '(jobb<space>+)?(nummer<space>+)?' + jobNumber + '$'));
     }
 ;
 
@@ -3396,38 +3397,38 @@ class JobOrderTopic: ConsultTopic
  *   about the same number again.  
  */
 ++ randomJob1: JobOrderTopic
-    jobDesc = "Install new Gb FO connection in Athenaeum, room 271.
-        Std FO cabling.  Std wall plate parts."
-    jobNotes = "Do not drill in N wall w/o checking studs."
+    jobDesc = "Installera ny Gb FO-anslutning i Athenaeum, rum 271.
+        Std FO-kabeldragning. Std väggplattdelar."
+    jobNotes = "Borra inte i N-väggen utan att kontrollera reglarna."
 ;
 ++ randomJob2: JobOrderTopic
-    jobDesc = "Repair 100TX wiring, Bridge Lab, room 023."
-    jobNotes = "No voltage. Checked wall wiring 4/17, bad conn
-        prob.\ in s/b wiring closet."
+    jobDesc = "Reparera 100TX-kabeldragning, Bridge Lab, rum 023."
+    jobNotes = "Ingen spänning. Kontrollerade väggkabeldragning 17/4, dålig anslutning
+        troligen i s/b kabelskåp."
 ;
 ++ randomJob3: JobOrderTopic
-    jobDesc = "Add 2 new ports, Steele 237. Std cat5e cabling.
-        Std wall plate parts."
-    jobNotes = "Need conduit if possible."
+    jobDesc = "Lägg till 2 nya portar, Steele 237. Std cat5e-kabeldragning.
+        Std väggplattdelar."
+    jobNotes = "Behöver kabelrör om möjligt."
 ;
 ++ JobOrderTopic
     jobNumber = static (infoKeys.spy9JobNumber)
-    jobDesc = "Install SPY-9 in Bridge Lab, room 022.  Std cat5
-        cabling.  Std cam wiring profile - pull via s/b wiring
-        closet, tunnel 7g, term at router S-24."
-    jobNotes = "NITE CREW ONLY.  Position cam for clear view of
-        main bench area.  REF <<infoKeys.spy9IPJobNumber>>."
+    jobDesc = "Installera SPY-9 i Bridge Lab, rum 022. Std cat5
+        kabeldragning. Std kam-kabelprofil - dra via s/b kabelskåp,
+        tunnel 7g, avsluta vid router S-24."
+    jobNotes = "ENDAST NATTSKIFT. Placera kameran för klar sikt över
+        huvudbänkområdet. REF <<infoKeys.spy9IPJobNumber>>."
 ;
 ++ JobOrderTopic
     jobNumber = static (infoKeys.spy9IPJobNumber)
-    jobDesc = "Need static IP address for SPY-9."
-    jobExtra = "<.p>Below this are big hand-written numbers:
+    jobDesc = "Behöver statisk IP-adress för SPY-9."
+    jobExtra = "<.p>Under detta finns stora handskrivna siffror:
         <<infoKeys.spy9IPDec>>.<.reveal spy9-ip> "
 ;
 ++ JobOrderTopic
     jobNumber = static (infoKeys.syncJobNumber)
-    jobDesc = "Install new network port, Sync Lab Office (2nd floor)."
-    jobNotes = "Door combo is <<infoKeys.syncLabCombo>>."
+    jobDesc = "Installera ny nätverksport, Sync Lab-kontor (2:a våningen)."
+    jobNotes = "Dörrkombinationen är <<infoKeys.syncLabCombo>>."
 
     topicResponse()
     {
@@ -3438,29 +3439,29 @@ class JobOrderTopic: ConsultTopic
         scoreMarker.awardPointsOnce();
     }
 
-    scoreMarker: Achievement { +10 "finding out about the Sync Lab Office" }
+    scoreMarker: Achievement { +10 "hitta information om Sync Lab-kontoret" }
 ;
 
-+ st10Ladder: StairwayUp 'iron ladder/rung/rungs' 'ladder'
-    "The ladder consists of a series of iron rungs embedded in the
-    wall.  It goes up the wall into the tunnel. "
++ st10Ladder: StairwayUp 'järnstege/stegpinne/stegpinnar' 'stege'
+    "Stegen består av en serie järnpinnar inbäddade i
+    väggen. Den går upp längs väggen in i tunneln. "
 
     dobjFor(TravelVia)
     {
         action()
         {
-            "You climb the ladder, emerging into the sunlight on
-            the Quad.  Just as you get to the top of the ladder,
-            two big guys in bright green jumpsuits grab you by
-            the arms and lift you out of the shaft.
-            <.p><q>What the heck do you think you're doing down
-            there?</q> one of the bearded workers asks.  They
-            hustle you past the yellow tape they've set up around
-            the shaft and give you a shove.
-            <.p><q>I'm sick of you people getting in our way all
-            the time,</q> the worker says, jabbing his index finger
-            at you.  <q>You're lucky I don't call the cops.</q>  He
-            stomps back to the edge of the shaft. ";
+            "Du klättrar upp för stegen och kommer ut i solljuset på
+            Quad. Precis när du når toppen av stegen
+            griper två stora killar i ljusgröna overaller tag i dina
+            armar och lyfter dig ur schaktet.
+            <.p><q>Vad i helvete tror du att du gör där nere?</q> frågar en av de
+            skäggiga arbetarna. De
+            skyndar dig förbi den gula tejpen de har satt upp runt
+            schaktet och ger dig en knuff.
+            <.p><q>Jag är trött på att ni folk hela tiden är i vägen för oss,</q>
+            säger arbetaren och pekar med pekfingret
+            mot dig. <q>Du har tur att jag inte ringer polisen.</q> Han
+            stampar tillbaka till kanten av schaktet. ";
 
             /* off to the quad */
             gActor.travelTo(quad, self, nil);
@@ -3469,24 +3470,24 @@ class JobOrderTopic: ConsultTopic
 ;
 
 + st10Spools: CustomImmovable
-    'big phone network wooden spool/spools/wire/(pile)/(piles)'
-    'spools of wire'
-    "They're two-foot-diameter wooden spools wound with wire,
-    which looks like some kind of phone or network wire. "
+    'stor telefon nätverk trä rulle/rullar/kabel/(hög)/(högar)'
+    'kabelvindor'
+    "De är två fot i diameter träspolar lindade med kabel,
+    som ser ut att vara någon form av telefon- eller nätverkskabel. "
 
-    specialDesc = "Several big wooden spools of wire are piled up
-        along the tunnel wall. <<workOrders.spoolDesc>> "
+    specialDesc = "Flera stora träspolar med kabel är staplade
+        längs tunnelväggen. <<workOrders.spoolDesc>> "
 
     isPlural = true
 
-    cannotTakeMsg = 'The spools of wire are big and heavy, and you\'d
-        rather not waste a lot effort moving them around. '
+    cannotTakeMsg = 'Kabelrullarna är stora och tunga, och du vill
+        hellre inte slösa en massa kraft på att flytta runt dem. '
 ;
 
-+ OutOfReach, Fixture 'shaft/top/opening' 'shaft'
-    "It's a rectangular shaft that rises from the ceiling of
-    the tunnel to the surface above.  The shaft is open at
-    the top.  A ladder built into the wall ascends into the shaft. "
++ OutOfReach, Fixture 'schakt/topp/öppning' 'schakt'
+    "Det är ett rektangulärt schakt som stiger från tunnelns tak
+    till ytan ovanför. Schaktet är öppet i
+    toppen. En stege inbyggd i väggen går upp i schaktet. "
 
     dobjFor(Enter) remapTo(ClimbUp, st10Ladder)
     dobjFor(Board) remapTo(ClimbUp, st10Ladder)
@@ -3494,12 +3495,12 @@ class JobOrderTopic: ConsultTopic
     dobjFor(ClimbUp) remapTo(ClimbUp, st10Ladder)
     dobjFor(Climb) remapTo(ClimbUp, st10Ladder)
 
-    dobjFor(LookThrough) { action() { "You can't see anything beyond
-        the shaft except sunlight. "; } }
+    dobjFor(LookThrough) { action() { "Du kan inte se något bortom
+        schaktet förutom solljus. "; } }
     dobjFor(LookIn) asDobjFor(LookThrough)
 
-    cannotReachFromOutsideMsg(dest) { return 'You can\'t quite reach
-        the shaft from here. '; }
+    cannotReachFromOutsideMsg(dest) { return 'Du kan inte riktigt nå
+        schaktet härifrån. '; }
 ;
 
 /* 
@@ -3508,9 +3509,9 @@ class JobOrderTopic: ConsultTopic
  *   of the workers above.  
  */
 ++ st10QuadWorkers: PresentLater, Actor
-    'big heavy unruly workers/man/men/beard/beards' 'workers'
-    "You can't see them from here; the only thing you see through the
-    shaft is sunlight. "
+    'stora tunga bråkiga arbetare/man/män/skägg' 'arbetare'
+    "Du kan inte se dem härifrån; det enda du ser genom
+    schaktet är solljus. "
 
     isPlural = true
 
@@ -3519,13 +3520,13 @@ class JobOrderTopic: ConsultTopic
 
     /* as these guys are out of view, downgrade conversational actions */
     dobjFor(AskAbout)
-        { verify() { logicalRank(70, 'out of view'); inherited(); } }
+        { verify() { logicalRank(70, 'utom synhåll'); inherited(); } }
     dobjFor(TellAbout)
-        { verify() { logicalRank(70, 'out of view'); inherited(); } }
+        { verify() { logicalRank(70, 'utom synhåll'); inherited(); } }
     iobjFor(ShowTo)
-        { verify() { logicalRank(70, 'out of view'); inherited(); } }
+        { verify() { logicalRank(70, 'utom synhåll'); inherited(); } }
     iobjFor(GiveTo)
-        { verify() { logicalRank(70, 'out of view'); inherited(); } }
+        { verify() { logicalRank(70, 'utom synhåll'); inherited(); } }
 ;
 
 /* we don't want to allow talking to them while Plisnik is here */
@@ -3533,16 +3534,16 @@ class JobOrderTopic: ConsultTopic
     isActive = (plisnik.inOrigLocation)
 ;
 ++++ DefaultAnyTopic, ShuffledEventList
-    ['<q>Hey, Plisnik,</q> one of the workers above calls down,
-    <q>you got someone down there with you?  Better make sure it\'s
-    not a giant talking rat!  Har! Har!</q> ',
+    ['<q>Hej, Plisnik,</q> ropar en av arbetarna ovanför,
+    <q>har du någon där nere med dig? Se till att det inte är
+    en jättestor talande råtta! Ha! Ha!</q> ',
 
-     '<q>Shut up, Plisnik,</q> one of the workers calls down,
-     <q>we\'re on break!</q> ',
+     '<q>Håll käften, Plisnik,</q> ropar en av arbetarna ner,
+     <q>vi har rast!</q> ',
 
-     '<q>Who\'s down there with you, Plisnik?</q> one of the
-     workers above calls down. <q>Tell whoever it is to get lost!
-     You got work to do.</q> ']
+     '<q>Vem är där nere med dig, Plisnik?</q> ropar en av
+     arbetarna ovanför. <q>Säg åt vem det än är att dra!
+     Du har jobb att göra.</q> ']
 ;
 
 /*
@@ -3553,20 +3554,20 @@ class JobOrderTopic: ConsultTopic
  *   puzzle.  
  */
 +++ ConvNode 'plisnik-check'
-    npcGreetingMsg = "<.p>You hear a worker above call down. <q>Hey,
-        Plisnik, what\'s going on down there?</q>  His voice becomes
-        taunting. <q>You see a rat or something?</q> He chuckles. "
+    npcGreetingMsg = "<.p>Du hör en arbetare ovanför ropa ner. <q>Hej,
+        Plisnik, vad händer där nere?</q> Hans röst blir
+        retsam. <q>Ser du en råtta eller något?</q> Han skrattar. "
 ;
 ++++ YesTopic
-    "<q>Yeah, a big, ugly one, but he's gone now,</q> you say, hoping
-    they don't notice it's not Plisnik's voice.  You hear the workers
-    above laugh and laugh.
+    "<q>Ja, en stor, ful en, men den är borta nu,</q> säger du och hoppas
+    att de inte märker att det inte är Plisniks röst. Du hör arbetarna
+    ovanför skratta och skratta.
     <.reveal plisnik-checked> "
 ;
 ++++ NoTopic
-    "<q>No, no problem down here,</q> you say.
-    <.p><q>Hey,</q> one of them calls down, <q>I think I see one
-    now!</q>  You can hear the two of them laugh and laugh.
+    "<q>Nej, inga problem här nere,</q> säger du.
+    <.p><q>Hej,</q> ropar en av dem ner, <q>jag tror jag ser en
+    nu!</q> Du kan höra de två skratta och skratta.
     <.reveal plisnik-checked> "
 ;
 
@@ -3577,11 +3578,11 @@ class JobOrderTopic: ConsultTopic
 ++++ AskTellAboutForTopic @quadAnalyzer
     topicResponse()
     {
-        "<q>Hey, can you hand down the Netbisco?</q> you call up
-        to the workers above.
-        <.p>One of them reaches down into the shaft, lowering the
-        network box.  <q>Watch out, Plisnik,</q> he says. <q>I think
-        I saw a rat inside it earlier.  Har! Har!</q> ";
+        "<q>Hej, kan ni skicka ner Netbiscon?</q> ropar du upp
+        till arbetarna ovanför.
+        <.p>En av dem sträcker sig ner i schaktet och sänker ner
+        nätverkslådan. <q>Se upp, Plisnik,</q> säger han. <q>Jag tror
+        jag såg en råtta inuti den tidigare. Ha! Ha!</q> ";
 
         /* 
          *   Get rid of the fake analyzer on the quad, move the real
@@ -3597,8 +3598,8 @@ class JobOrderTopic: ConsultTopic
 
         /* and now we can mention that we took it, assuming we did */
         if (netAnalyzer.isIn(me))
-            "You reach up and take it from him, being careful to stay
-            in shadow. ";
+            "Du sträcker dig upp och tar den från honom, noga med att stanna
+            i skuggan. ";
 
         /* this is worth some points */
         scoreMarker.awardPointsOnce();
@@ -3607,50 +3608,50 @@ class JobOrderTopic: ConsultTopic
         me.setPronounObj(netAnalyzer);
     }
 
-    scoreMarker: Achievement { +10 "obtaining the Netbisco 9099"; }
+    scoreMarker: Achievement { +10 "erhålla Netbisco 9099"; }
 ;
 +++++ AltTopic
-    "<q>Hey, guys, how do I work the Netbisco?</q> you say.
-    <.p><q>Working that thing's your job, Plisnik,</q> one of the
-    workers calls down. "
+    "<q>Hej killar, hur använder jag Netbiscon?</q> säger du.
+    <.p><q>Att använda den där grejen är ditt jobb, Plisnik,</q> ropar en av
+    arbetarna ner. "
 
     /* this topic takes over once we get the analyzer */
     isActive = (quadAnalyzer.location == nil)
 ;
 
 ++++ AskTellTopic @supplyRoomTopic
-    "<q>Hey,</q> you call to the workers above, <q>what's the
-    combo to the supply room?</q>
-    <.p><q>How should I know?</q> one of the workers shouts.
-    <q>You're the one who works down in the tunnels.</q> "
+    "<q>Hej,</q> ropar du till arbetarna ovanför, <q>vad är
+    kombinationen till förrådet?</q>
+    <.p><q>Hur skulle jag veta det?</q> skriker en av arbetarna.
+    <q>Det är du som jobbar nere i tunnlarna.</q> "
 ;
 
 ++++ AskForTopic @st10Spools
-    "You call up to the workers above. <q>Could you guys hand down
-    some more wire?</q>
-    <.p><q>What do I look like, a delivery man?</q> shouts one of
-    the workers. <q>You got tons of wire down there already.</q> "
+    "Du ropar upp till arbetarna ovanför. <q>Kan ni killar skicka ner
+    mer kabel?</q>
+    <.p><q>Vad ser jag ut som, en springpojke?</q> skriker en av
+    arbetarna. <q>Du har massor av kabel där nere redan.</q> "
 ;
 
 ++++ DefaultAnyTopic
-    "<q>You sound funny, Plisnik,</q> one of the workers shouts
-    down the shaft. <q>That rat must have scared you good.</q> "
+    "<q>Du låter konstig, Plisnik,</q> skriker en av arbetarna
+    ner i schaktet. <q>Den där råttan måste ha skrämt dig ordentligt.</q> "
 ;
 
 + plisnik: IntroPerson
-    'nervous-looking jittery pale gaunt stringy
-    worker/man/beard/plisnik*men'
-    'worker'
-    "He's a pale, gaunt, nervous-looking man with a stringy beard.
-    He's wearing the same sort of green overalls and hardhat as the
-    workers you saw on the Quad. "
+    'nervös skakig blek mager gänglig
+    arbetare/man/skägg/plisnik*män'
+    'arbetare'
+    "Han är en blek, mager, nervös man med ett gängligt skägg.
+    Han bär samma sorts gröna overall och skyddshjälm som
+    arbetarna du såg på Quad. "
 
     isHim = true
 
     properName = 'Plisnik'
     specialDescName = (introduced
                        ? properName
-                       : 'a heavy, bearded man in green overalls')
+                       : 'en kraftig, skäggig man i grön overall')
 
     /* am I in my original location? */
     inOrigLocation = (isIn(steamTunnel10))
@@ -3670,8 +3671,8 @@ class JobOrderTopic: ConsultTopic
         /* if they're trying to get my binder or spools, don't let them */
         if (gActionIs(Take) && gDobj is in(st10Spools, workOrders))
         {
-            "<q>Hey,</q> {the plisnik/he} shouts, standing in your
-            way, <q>that's my stuff!</q> ";
+            "<q>Hej,</q> ropar {the plisnik/han} och ställer sig i din
+            väg, <q>det där är mina grejer!</q> ";
             exit;
         }
     }
@@ -3691,12 +3692,12 @@ class JobOrderTopic: ConsultTopic
     /* the toy car+rat combo will call this when it comes into our presence */
     eekARat()
     {
-        "<.p>You hear girlish shrieking from nearby, then {a plisnik/he}
-        comes running down the tunnel in a panic.  He practically
-        crashes into you, but stops and grabs you by the arms.
-        <q>Rat!</q> he shouts at you. <q>Huge, ugly, mean!
-        It's not safe down here!</q>  He lets you go and continues
-        running, disappearing down the tunnel. ";
+        "<.p>Du hör flickaktiga skrik från närheten, sedan kommer {a plisnik/han}
+        springande genom tunneln i panik. Han kraschar nästan
+        in i dig, men stannar och griper tag i dina armar.
+        <q>Råtta!</q> skriker han åt dig. <q>Enorm, ful, elak!
+        Det är inte säkert här nere!</q> Han släpper dig och fortsätter
+        springa, försvinner ner i tunneln. ";
 
         /* make this the current 'him', since we're mentioned prominently */
         me.setPronounObj(self);
@@ -3708,27 +3709,27 @@ class JobOrderTopic: ConsultTopic
     /* receive notification that the toy car is leaving under its own power */
     ratLeaving()
     {
-        "<.p>{The plisnik/he} watches the rat leave. <q>Your pet rat
-        just left!</q> he says, sounding a little frantic.  <q>You'd
-        better go catch him before he gets away.</q> ";
+        "<.p>{The plisnik/Han} tittar på när råttan lämnar. <q>Din sällskapsråtta
+        stack just!</q> säger han och låter lite frenetisk. <q>Du borde
+        gå och fånga den innan den kommer undan.</q> ";
     }
 
     /* receive notification that the rat is moving around locally */
     ratMoving() { ratMovingScript.doScript(); }
     ratMovingScript: StopEventList { [
-        '<.p>{The plisnik/he} shrinks back a little, being careful
-        to keep his distance from the rat. <q>You shouldn\'t let your
-        pet rat wander around down here without a leash on,</q> he
-        says.  <q>It\'s a good thing I saw you come in carrying him.
-        I don\'t know what I would have done if that were a <i>wild</i>
-        rat.</q> ',
+        '<.p>{The plisnik/Han} ryggar tillbaka lite, noga med
+        att hålla avstånd från råttan. <q>Du borde inte låta din
+        sällskapsråtta vandra omkring här nere utan koppel,</q> säger
+        han. <q>Det är tur att jag såg dig komma in bärande på den.
+        Jag vet inte vad jag skulle ha gjort om det var en <i>vild</i>
+        råtta.</q> ',
 
-        '<.p>{The plisnik/he} watches nervously as the rat toy
-        moves around. <q>I wish you\'d get that thing out of here,</q>
-        he says. <q>Even if he is a pet, I still don\'t trust rats.</q> ',
+        '<.p>{The plisnik/Han} tittar nervöst på när råttleksaken
+        rör sig omkring. <q>Jag önskar att du tog bort den där saken härifrån,</q>
+        säger han. <q>Även om det är ett husdjur, litar jag fortfarande inte på råttor.</q> ',
 
-        '<.p>{The plisnik/he} watches the rat toy nervously.  <q>I wish
-        you\'d get that rat out of here,</q> he says. ']
+        '<.p>{The plisnik/Han} tittar nervöst på råttleksaken. <q>Jag önskar
+        att du tog bort den där råttan härifrån,</q> säger han. ']
     }
 
     /* get hit with a thrown object */
@@ -3747,30 +3748,30 @@ class JobOrderTopic: ConsultTopic
     }
 
     ratScript: StopEventList { [
-        'The rat puppet hits {the plisnik/him} and falls to the
-        floor.  He sees what it is and shrinks back in horror,
-        but only for a moment; his expression turns suspicious,
-        and he goes in for a closer look.  <q>That\'s not very
-        nice,</q> he says, <q>throwing a fake rat at someone.  Rats
-        are no joking matter.</q> ',
+        'Råttdockan träffar {the plisnik/honom} och faller till
+        golvet. Han ser vad det är och ryggar tillbaka i skräck,
+        men bara för ett ögonblick; hans uttryck blir misstänksamt,
+        och han går närmare för att titta. <q>Det är inte särskilt
+        snällt,</q> säger han, <q>att kasta en falsk råtta på någon. Råttor
+        är inget att skämta om.</q> ',
 
-        'The rat puppet hits {the plisnik/him} and falls to the
-        floor.  He\'s startled, but only for a moment.  <q>I didn\'t
-        think it was very funny the first time,</q> he says. ']
+        'Råttdockan träffar {the plisnik/honom} och faller till
+        golvet. Han blir överraskad, men bara för ett ögonblick. <q>Jag tyckte
+        inte det var särskilt roligt första gången heller,</q> säger han. ']
     }
 ;
-++ InitiallyWorn 'bright green hard overalls/hardhat/uniform/hat'
+++ InitiallyWorn 'ljusgrön hård overall/skyddshjälm/uniform/hjälm'
     'uniform'
-    "His bright green overalls and matching hardhat are marked
-    <q>Network Installer Company</q> in blocky white letters.
+    "Hans ljusgröna overall och matchande skyddshjälm är märkta
+    med <q>Network Installer Company</q> i kantiga vita bokstäver.
     <.reveal NIC> "
     isListedInInventory = nil
 ;
 
 /* since we mention his hand... */
 ++ DisambigDeferrer, Decoration
-    'his plisnik\'s man\'s worker\'s hand/hands' 'his hand'
-    "There's nothing remarkable about his hands. "
+    'hans plisnik\'s mannens arbetarens hand/händer' 'hans hand'
+    "Det är inget anmärkningsvärt med hans händer. "
     isQualifiedName = true
 
     /* never confuse this with the PC's hands */
@@ -3778,50 +3779,50 @@ class JobOrderTopic: ConsultTopic
 ;
 
 ++ plisnikTalking: InConversationState
-    specialDesc = "\^<<getActor().specialDescName>> is standing
-        here watching you warily. "
+    specialDesc = "\^<<getActor().specialDescName>> står
+        här och tittar vaksamt på dig. "
 
     /* infinite timeout - he never stops talking to us while we're here */
     attentionSpan = nil
 ;
 +++ ConversationReadyState
     isInitState = true
-    specialDesc = "\^<<getActor().specialDescName>> is doing some kind
-        of work on the wiring in the tunnel. "
+    specialDesc = "\^<<getActor().specialDescName>> håller på med någon
+        form av arbete på ledningarna i tunneln. "
 ;
     
 ++ ConvNode 'plisnik-intro'
-    npcGreetingMsg = "<.p>\^<<getActor().theName>> abruptly drops
-        what he's doing and turns to face you, taking a step back.
-        <q>Who are you?</q> he asks. "
+    npcGreetingMsg = "<.p>\^<<getActor().theName>> släpper abrupt
+        det han håller på med och vänder sig mot dig, tar ett steg bakåt.
+        <q>Vem är du?</q> frågar han. "
 ;
-+++ SpecialTopic 'ask who he is'
-    ['ask', 'the', 'man', 'him', 'who', 'he', 'is', 'are', 'you']
-    "<q>Who are you?</q> you ask right back.
-    <.p>He squints and eyes you suspiciously. <q>I'm Plisnik,</q>
-    he says. <q>You haven't seen any rats down here, have you?</q>
++++ SpecialTopic 'fråga vem han är'
+    ['fråga', 'mannen', 'honom', 'vem', 'han', 'är', 'du']
+    "<q>Vem är du?</q> frågar du tillbaka.
+    <.p>Han kisar och tittar misstänksamt på dig. <q>Jag är Plisnik,</q>
+    säger han. <q>Du har inte sett några råttor här nere, eller hur?</q>
     <<getActor().setIntroduced()>>
     <.convnode plisnik-rat> "
 ;
 +++ HelloTopic
     topicResponse() { replaceAction(TellAbout, plisnik, me); }
 ;
-+++ SpecialTopic 'introduce yourself'
-    ['introduce','myself','me','you','yourself']
++++ SpecialTopic 'presentera dig själv'
+    ['presentera','mig','dig','själv']
     topicResponse() { replaceAction(TellAbout, plisnik, me); }
 ;
 +++ GiveShowTopic [alumniID, driverLicense]
     topicResponse() { replaceAction(TellAbout, plisnik, me); }
 ;
 +++ TellTopic @me
-    "<q>I'm Doug,</q> you say.
-    <.p>He eyes you suspiciously. <q>I'm Plisnik,</q> he says
-    at last. <q>You haven't seen any rats  down here, have you?</q>
+    "<q>Jag är Doug,</q> säger du.
+    <.p>Han tittar misstänksamt på dig. <q>Jag är Plisnik,</q> säger han till slut. <q>Du har inte sett några råttor här nere, eller hur?</q>
     <<getActor().setIntroduced()>>
     <.convnode plisnik-rat> "
 ;
+
 +++ DefaultAnyTopic
-    "<q>I want to know who you are first,</q> he says nervously.
+    "<q>Jag vill veta vem du är först,</q> säger han nervöst.
     <.convstay> "
 
     /* let the rat puppet through to the enclosing topic database */
@@ -3829,82 +3830,82 @@ class JobOrderTopic: ConsultTopic
 ;
 
 ++ ConvNode 'plisnik-rat'
-    npcGreetingMsg = "<.p>Plisnik drops what he's doing and faces you.
-        <q>Oh, you again,</q> he says, but the recognition doesn't
-        seem to make him any less nervous.  <q>Hey, you haven't seen
-        any rats down here, have you?</q> "
+    npcGreetingMsg = "<.p>Plisnik släpper det han håller på med och vänder sig mot dig.
+        <q>Åh, du igen,</q> säger han, men igenkännandet verkar
+        inte göra honom mindre nervös. <q>Hej, du har inte sett
+        några råttor här nere, eller hur?</q> "
 ;
 +++ YesTopic
-    "<q>Yeah, I've seen a few,</q> you say.
-    <.p>He shrinks back and his eyes dart wildly around the tunnel.
-    <q>Well, don't let any come near me!</q> he says. "
+    "<q>Jo, jag har sett några,</q> säger du.
+    <.p>Han ryggar tillbaka och hans ögon flackar vilt omkring i tunneln.
+    <q>Nå, låt dem inte komma nära mig!</q> säger han. "
 ;
 +++ NoTopic
-    "<q>I don't think so,</q> you say.
-    <.p><q>Good,</q> he says, looking suspiciously around the
-    tunnel floor. "
+    "<q>Jag tror inte det,</q> säger du.
+    <.p><q>Bra,</q> säger han och tittar misstänksamt runt
+    tunnelgolvet. "
 ;
 +++ DefaultAnyTopic
-    "<q>Hey!</q> he says. <q>I asked if you've seen any rats.
-    Have you?</q><.convstay> "
+    "<q>Hej!</q> säger han. <q>Jag frågade om du har sett några råttor.
+    Har du det?</q><.convstay> "
 
     /* let the rat puppet through to the enclosing topic database */
     excludeMatch = [ratPuppet]
 ;
 
 ++ AskTellTopic @quadWorkers
-    "<q>What's with your co-workers outside?</q>
-    <.p><q>They're jerks,</q> he says. <q>Yesterday they caught
-    a rat and dropped it down here.  The thing nearly bit me!  See?</q>
-    He holds out his hand, presumably to show you the spot where
-    he was almost bitten, but of course an almost-rat-bite doesn't
-    leave a lot of visible evidence.  He retracts his hand when he
-    sees your lack of amazement. <q>I hate those guys.</q> "
+    "<q>Vad är det med dina arbetskamrater utanför?</q>
+    <.p><q>De är idioter,</q> säger han. <q>Igår fångade de
+    en råtta och släppte ner den här. Den bet mig nästan! Se?</q>
+    Han sträcker fram sin hand, förmodligen för att visa dig stället där
+    han nästan blev biten, men naturligtvis lämnar ett nästan-råttbett
+    inte mycket synliga bevis. Han drar tillbaka handen när han
+    ser din brist på förvåning. <q>Jag hatar de där typerna.</q> "
 ;
 ++ AskTellTopic @plisnik
-    "<q>What are you working on?</q> you ask.
-    <.p><q>I'm just trying to do some network wiring,</q> he says.
-    <q>But the rats are trying to stop me.</q> "
+    "<q>Vad arbetar du med?</q> frågar du.
+    <.p><q>Jag försöker bara dra några nätverkskablar,</q> säger han.
+    <q>Men råttorna försöker stoppa mig.</q> "
 ;
 ++ AskTellTopic @nicTopic
-    "<q>I've never heard of Network Installer Company before,</q> you say.
-    <.p><q>Look, mister, what you've never heard of could fill a book.
-    You have no idea what's going on in the world today.  If you did,
-    you wouldn't be down here where the rats live and breed.</q> He
-    looks around nervously. "
+    "<q>Jag har aldrig hört talas om Network Installer Company förut,</q> säger du.
+    <.p><q>Hör du, det du aldrig har hört talas om skulle kunna fylla en bok.
+    Du har ingen aning om vad som pågår i världen idag. Om du hade det,
+    skulle du inte vara här nere där råttorna lever och förökar sig.</q> Han
+    ser sig nervöst omkring. "
 ;
 ++AskTellTopic @ratTopic
-    "<q>Why are you so worried about rats?</q>
-    <.p>His face turns red and his eyes dart around wildly. <q>I'm not
-    worried,</q> he says. <q>I'm scared out of my mind!  And you would
-    be too if you had any idea, any idea, what they were up to.</q> "
+    "<q>Varför är du så orolig för råttor?</q>
+    <.p>Hans ansikte blir rött och hans ögon flackar vilt. <q>Jag är inte
+    orolig,</q> säger han. <q>Jag är skräckslagen! Och det skulle du också vara
+    om du hade någon aning, någon aning, om vad de håller på med.</q> "
 ;
 ++ AskTellShowTopic @workOrders
-    "<q>What's in that binder?</q> you ask.
-    <.p>He shifts a little closer to the binder. <q>None of your
-    business,</q> he says. <q>It's confidential.  Proprietary.</q> "
+    "<q>Vad finns i den där pärmen?</q> frågar du.
+    <.p>Han flyttar sig lite närmare pärmen. <q>Det angår inte
+    dig,</q> säger han. <q>Det är konfidentiellt. Företagshemligheter.</q> "
 ;
 ++ AskForTopic @workOrders
-    "<q>Could I see your binder for a moment?</q> you ask.
-    <.p><q>No!</q> he says. <q>It's important confidential
+    "<q>Skulle jag kunna få se din pärm ett ögonblick?</q> frågar du.
+    <.p><q>Nej!</q> säger han. <q>Det är viktig konfidentiell
     information.</q> "
 ;
 ++ AskTellAboutForTopic [netAnalyzer, quadAnalyzer]
-    "<q>Do you have a network analyzer I could borrow?</q> you ask.
-    <.p>His eyes narrow. <q>If I did, I couldn't let you borrow it.
-    That's important business-related equipment.</q> "
+    "<q>Har du en nätverksanalysator jag skulle kunna låna?</q> frågar du.
+    <.p>Hans ögon smalnar. <q>Om jag hade det, skulle jag inte kunna låna ut den.
+    Det är viktig arbetsrelaterad utrustning.</q> "
 ;
 
 ++ DefaultAnyTopic, ShuffledEventList
-    ['<q>Rats are behind fluoridation of drinking water, you know,</q>
-    he says knowingly. ',
-     'He just looks at you suspiciously. ',
-     '<q>You know what the source of every human disease is?</q> he
-     asks, then answers his own question: <q>Rats,</q> he says, nodding. ',
-     '<q>I bet you didn\'t know that rats are the only mammal whose
-     DNA they\'ve never sequenced,</q> he says. <q>That should tell
-     you something about who\'s in control.</q> ',
-     'He just stares at you. ']
+    ['<q>Råttor ligger bakom fluoridering av dricksvatten, vet du,</q>
+    säger han vetande. ',
+     'Han bara tittar misstänksamt på dig. ',
+     '<q>Vet du vad källan till varje mänsklig sjukdom är?</q> frågar
+     han, och svarar sedan på sin egen fråga: <q>Råttor,</q> säger han, nickande. ',
+     '<q>Jag slår vad om att du inte visste att råttor är det enda däggdjur vars
+     DNA de aldrig har sekvenserat,</q> säger han. <q>Det borde säga
+     dig något om vem som har kontrollen.</q> ',
+     'Han bara stirrar på dig. ']
 ;
 
 /*
@@ -3913,56 +3914,56 @@ class JobOrderTopic: ConsultTopic
  *   again.  In addition, differentiate its use when worn and not worn. 
  */
 ++ GiveShowTopic @ratPuppet
-    "{The plisnik/he} recoils when he sees the toy rat, but then takes
-    a closer look and relaxes a bit. <q>That's not very nice,</q>
-    he says, <q>trying to scare me with a toy rat.  I almost thought
-    it was real until I saw it wasn't moving.</q>
+    "{The plisnik/he} rycker tillbaka när han ser leksaksråttan, men tar sedan
+    en närmare titt och slappnar av lite. <q>Det där är inte särskilt snällt,</q>
+    säger han, <q>att försöka skrämma mig med en leksaksråtta. Jag trodde nästan
+    den var äkta tills jag såg att den inte rörde sig.</q>
     <.reveal show-plisnik-rat>
     <.convstay> "
 ;
 +++ AltTopic
-    "{The plisnik/he} takes a look at the rat. <q>It's not very nice
-    trying to scare me with that toy rat,</q> he says. <q>It's a good
-    thing it's not moving or I would have thought it was real.</q>
+    "{The plisnik/he} tittar på råttan. <q>Det är inte särskilt snällt
+    att försöka skrämma mig med den där leksaksråttan,</q> säger han. <q>Det är tur
+    att den inte rör sig, annars skulle jag ha trott att den var äkta.</q>
     <.convstay> "
 
     isActive = gRevealed('show-plisnik-rat')
 ;
 +++ AltTopic
-    "You hold up the rat and wiggle your fingers a little to make
-    its nose twitch like a real rat.  {The plisnik/he} cringes and
-    jumps back, but then he takes a closer look and relaxes a bit.
-    <q>That's not very nice,</q> he says.  <q>I almost thought
-    that was a real rat, until I saw your hand in it.</q>
+    "Du håller upp råttan och rör lite på fingrarna för att få
+    dess nos att rycka som en riktig råtta. {The plisnik/he} ryser och
+    hoppar bakåt, men tar sedan en närmare titt och slappnar av lite.
+    <q>Det där är inte särskilt snällt,</q> säger han. <q>Jag trodde nästan
+    att det var en riktig råtta, tills jag såg din hand i den.</q>
     <.reveal show-plisnik-rat>
     <.convstay> "
     
     isActive = (ratPuppet.isWornBy(me))
 ;
 +++ AltTopic
-    "You wiggle your fingers to make the rat's nose twitch.
-    <q>That's not very nice,</q> {the plisnik/he} says. <q>I almost
-    thought it was real until I saw your hand in it.</q>
+    "Du rör på fingrarna för att få råttans nos att rycka.
+    <q>Det där är inte särskilt snällt,</q> säger {the plisnik/he}. <q>Jag trodde nästan
+    den var äkta tills jag såg din hand i den.</q>
     <.convstay> "
     
     isActive = (ratPuppet.isWornBy(me) && gRevealed('show-plisnik-rat'))
 ;
 
 + netAnalyzer: Keypad, PresentLater, PlugAttachable, NearbyAttachable, Thing
-    'netbisco 9099 network analyzer' 'network analyzer'
-    "The Netbisco 9099 network analyzer looks a little like the
-    kind of oversized telephone you'd find on a receptionist's
-    desk in a large office.  It has a sixteen-digit hexadecimal
-    keypad (with keys numbered 0-F), a small display screen, and
-    a short cord with a special plug on the end. <<screenDesc>> "
+    'netbisco 9099 nätverksanalysator' 'nätverksanalysator'
+    "Netbisco 9099 nätverksanalysatorn ser ut lite som en
+    överdimensionerad telefon som man skulle hitta på en receptionists
+    skrivbord på ett stort kontor. Den har en sextonställig hexadecimal
+    knappsats (med knappar numrerade 0-F), en liten displayskärm och
+    en kort sladd med en speciell kontakt i änden. <<screenDesc>> "
 
     /* we can only attach to one thing at a time */
     dobjFor(AttachTo) { preCond = (inherited() + objNotAttached) }
     iobjFor(AttachTo) { preCond = (inherited() + objNotAttached) }
 
     /* it doesn't need to turn on and off */
-    cannotTurnOnMsg = 'It doesn\'t seem to have an on/off switch.  If you
-        recall correctly, these boxes get powerby connecting to a router. '
+    cannotTurnOnMsg = 'Den verkar inte ha någon på/av-knapp. Om du
+        minns rätt får dessa enheter ström genom att ansluta till en router. '
     cannotTurnOffMsg = (cannotTurnOnMsg)
 
     /* entering/typing on me redirects to the keypad */
@@ -3971,18 +3972,18 @@ class JobOrderTopic: ConsultTopic
 
     /* we can plug into the router */
     canAttachTo(obj) { return obj == nrRouter; }
-    explainCannotAttachTo(obj) { "The plug only fits a certain kind
-        of multi-prong jack on compatible network routers. "; }
+    explainCannotAttachTo(obj) { "Kontakten passar bara i en viss typ
+        av flerstiftsuttag på kompatibla nätverksroutrar. "; }
 
     /* on attaching to a compatible device, power up */
     handleAttach(other)
     {
-        "As soon as you plug in the connector, the display screen
-        flashes a series of random gibberish, then displays
-        <q>READY.</q> ";
+        "Så snart du kopplar in kontakten blinkar displayskärmen
+        med en serie slumpmässigt nonsens, och visar sedan
+        <q>REDO.</q> ";
 
         /* reset it */
-        dispData = 'READY';
+        dispData = 'REDO';
         sourceIP = nil;
     }
 
@@ -3999,17 +4000,17 @@ class JobOrderTopic: ConsultTopic
          */
         if (isOn)
         {
-            "The screen is currently displaying ";
+            "Skärmen visar för närvarande ";
             if (sourceIP == nil)
                 "<tt><<dispData>></tt> ";
             else if (sourceIP == infoKeys.spy9IP)
-                "the number <tt><<infoKeys.spy9DestIP>></tt>, repeated
-                on three lines.  You work out the decimal conversion of
-                that address, and come up with <<infoKeys.spy9DestIPDec>>. ";
+                "numret <tt><<infoKeys.spy9DestIP>></tt>, upprepat
+                på tre rader. Du räknar ut den decimala konverteringen av
+                den adressen och kommer fram till <<infoKeys.spy9DestIPDec>>. ";
             else if (sourceIP.startsWith('C0A8'))
-                "a series of numbers that scroll by as you watch. ";
+                "en serie nummer som rullar förbi medan du tittar. ";
             else
-                "<tt>READING...</tt> ";
+                "<tt>LÄSER...</tt> ";
         }
     }
 
@@ -4017,37 +4018,37 @@ class JobOrderTopic: ConsultTopic
     readDisplay()
     {
         if (!isOn)
-            "It's currently blank. ";
+            "Den är för närvarande blank. ";
         else
         {
-            "It's a low-resolution dot-matrix LCD screen. ";
+            "Det är en lågupplöst punktmatris-LCD-skärm. ";
             if (sourceIP == nil)
             {
                 /* no IP, so just use the display data */
-                "It's currently displaying <tt><<dispData>></tt>. ";
+                "Den visar för närvarande <tt><<dispData>></tt>. ";
             }
             else if (sourceIP == infoKeys.spy9IP)
             {
                 /* we're showing the camera IP */
-                "It's currently displaying:
+                "Den visar för närvarande:
                 \b<tt>\t<<infoKeys.spy9DestIP>>
                 \n\t<<infoKeys.spy9DestIP>>
                 \n\t<<infoKeys.spy9DestIP>></tt>
-                \bYou work out the decimal version of that address,
-                and come up with <<infoKeys.spy9DestIPDec>>. ";
+                \bDu räknar ut den decimala versionen av den adressen,
+                och kommer fram till <<infoKeys.spy9DestIPDec>>. ";
             }
             else if (sourceIP.startsWith('C0A8'))
             {
                 /* non-camera but valid IP; show random addresses */
-                "It's currently displaying:
+                "Den visar för närvarande:
                 \b<tt>\t<<randIP>>\n\t<<randIP>>\n\t<<randIP>></tt>
-                \bAs you watch, the display keeps scrolling, with
-                new numbers appearing at the bottom. ";
+                \bMedan du tittar fortsätter displayen att rulla,
+                med nya nummer som dyker upp längst ner. ";
             }
             else
             {
                 /* invalid IP; we just sit here and get nothing */
-                "It's currently displaying <tt>READING...</tt> ";
+                "Den visar för närvarande <tt>LÄSER...</tt> ";
             }
         }
     }
@@ -4089,10 +4090,10 @@ class JobOrderTopic: ConsultTopic
     }
 ;
 ++ PluggableComponent
-    '(netbisco) (9099) (network) (analyzer) short special cord/plug'
-    'network analyzer plug'
-    "The plug is a special design that fits the diagnostic port on
-    certain kinds of compatible routers. "
+    '(netbisco) (9099) (nätverk) (analysator) kort speciell sladd/kontakt'
+    'nätverksanalysatorns kontakt'
+    "Kontakten har en speciell design som passar diagnostikporten på
+    vissa typer av kompatibla routrar. "
 
     /* map ATTACH and USE to our parent */
     dobjFor(PutIn) remapTo(AttachTo, location, IndirectObject)
@@ -4103,16 +4104,16 @@ class JobOrderTopic: ConsultTopic
     iobjFor(UseOn) remapTo(UseOn, DirectObject, location)
 ;
 ++ Component, Readable
-    '(netbisco) (9099) (network) (analyzer) small display
-    dot-matrix lcd screen'
-    'network analyzer display'
+    '(netbisco) (9099) (nätverk) (analysator) liten display
+    punktmatris lcd skärm'
+    'nätverksanalysatorns display'
 
     desc() { location.readDisplay(); }
 ;
 ++ netAnKeypad: Keypad, Component
-    '(netbisco) (9099) (network) (analyzer) sixteen-digit hexadecimal keypad'
-    'network analyzer keypad'
-    "The keypad has digits 0-9 and A-F, for entering hexademical numbers. "
+    '(netbisco) (9099) (nätverk) (analysator) sextonställig hexadecimal knappsats'
+    'nätverksanalysatorns knappsats'
+    "Knappsatsen har siffrorna 0-9 och A-F, för att mata in hexadecimala tal. "
 
     dobjFor(TypeLiteralOn) asDobjFor(EnterOn)
     dobjFor(EnterOn)
@@ -4129,21 +4130,21 @@ class JobOrderTopic: ConsultTopic
             /* make sure it's a hex number */
             if (rexMatch('[0-9A-F]+', str) != str.length())
             {
-                reportFailure('(The keypad only accepts hexademical
-                    digits, 0 to 9 and A to F.) ');
+                reportFailure('(Knappsatsen accepterar endast hexadecimala
+                    siffror, 0 till 9 och A till F.) ');
                 return;
             }
 
             /* whatever happens, we key in the numbers... */
-            "You key in the sequence. ";
+            "Du knappar in sekvensen. ";
 
             /* if we're not plugged in, obviously nothing happens */
             if (!location.isOn)
             {
-                reportFailure('The display remains blank. ');
+                reportFailure('Displayen förblir blank. ');
                 return;
             }
-            
+
             /* 
              *   if we're clearing the screen, and we have an existing IP
              *   address, show the startup for that address again
@@ -4163,16 +4164,16 @@ class JobOrderTopic: ConsultTopic
                 if (addr == infoKeys.spy9IP)
                 {
                     /* it's the camera - show the other side */
-                    "The display clears, then it shows
-                    <tt><<infoKeys.spy9DestIP>></tt>.  In a few moments,
-                    the same number repeats on a new line, then on a
-                    third line.  You watch for a little bit, but all
-                    the packets seem to be going to the same place.
-                    <.p>That's good---it means there's only one computer
-                    you need to track down.  You convert the hex numbers
-                    to decimal, and come up with <<infoKeys.spy9DestIPDec>>.
-                    Now you just need to find out where the computer
-                    with that address is.
+                    "Displayen rensas, sedan visar den
+                    <tt><<infoKeys.spy9DestIP>></tt>. Efter några ögonblick
+                    upprepas samma nummer på en ny rad, sedan på en
+                    tredje rad. Du tittar en liten stund, men alla
+                    paket verkar gå till samma plats.
+                    <.p>Det är bra---det betyder att det bara finns en dator
+                    som du behöver spåra. Du konverterar hexadecimaltalen
+                    till decimaler och kommer fram till <<infoKeys.spy9DestIPDec>>.
+                    Nu behöver du bara ta reda på var datorn
+                    med den adressen finns.
                     <.reveal spy9-dest-ip> ";
 
                     /* this merits some points */
@@ -4184,26 +4185,25 @@ class JobOrderTopic: ConsultTopic
                      *   a valid 192.168 address, but not one we know;
                      *   show random results 
                      */
-                    "The display clears, then the display shows
-                    <tt>READING...</tt> for a split-second, then
-                    the display starts showing numbers that
-                    scroll by:
+                     "Displayen rensas, sedan visar den
+                    <tt>READING...</tt> under en bråkdel av en sekund, sedan 
+                    börjar Displayen visa siffror som skrollar förbi:
                     \b<tt>\t<<location.randIP>>
                     \n\t<<location.randIP>>
                     \n\t<<location.randIP>></tt>
-                    \bNew numbers keep appearing, scrolling the old
-                    numbers off the screen. ";
+                    \bNya nummer fortsätter att dyka upp, och skrollar 
+                    bort de gamla siffrorna från skärmen. ";
                 }
                 else
                 {
                     /* not a valid 192.168 address; show no traffic */
-                    "The display clears and shows <tt>READING...</tt> ";
+                    "Displayen rensas och visar <tt>READING...</tt> ";
                 }
             }
             else if (str == '55')
             {
                 /* not sniffing packets - just show READY */
-                "The display changes to show <tt>READY</tt>. ";
+                "Displayen ändras till att visa <tt>READY</tt>. ";
                 resp = 'READY';
             }
             else
@@ -4227,18 +4227,18 @@ class JobOrderTopic: ConsultTopic
         }
     }
 
-    scoreMarker: Achievement { +5 "tracing the camera data packets" }
+    scoreMarker: Achievement { +5 "spåra kamerans datapaket" }
 ;
 ++ Button, Component
-    '(netbisco) (9099) (network) (analyzer) (keypad)
-    0 1 2 3 4 5 6 7 8 9 "a" "b" "c" "d" "e" "f" button*buttons'
-    'network analyzer keypad button'
+    '(netbisco) (9099) (nätverk) (analysator) (knappsats)
+    0 1 2 3 4 5 6 7 8 9 "a" "b" "c" "d" "e" "f" knapp*knappar'
+    'nätverksanalysatorns knappsatsknapp'
 
     dobjFor(Push)
     {
-        verify() { logicalRank(50, 'decorative buttons'); }
-        action() { "(You don't need to push the buttons
-            individually; just type the digits on the keypad.) "; }
+        verify() { logicalRank(50, 'dekorativa knappar'); }
+        action() { "(Du behöver inte trycka på knapparna
+            individuellt; skriv bara in siffrorna på knappsatsen.) "; }
     }
 ;
 
@@ -4247,46 +4247,46 @@ class JobOrderTopic: ConsultTopic
  *   actually anywhere until then 
  */
 netAnInstructions: PresentLater, Readable
-    'dingy ragged nth-generation photocopy/sheet/paper'
-    'dingy sheet of paper'
-    "The sheet of paper is dingy and a bit ragged, like it's
-    been handled a lot.  It looks like an nth-generation photocopy.
+    'smutsigt slitet n:te generationens fotokopia/ark/papper'
+    'smutsigt pappersark'
+    "Pappersarket är smutsigt och lite slitet, som om det
+    har hanterats mycket. Det ser ut som en n:te generationens fotokopia.
     <.p>
     <.blockquote><tt>
     <center>-12-</center>
     <br><br>
-    not for user inserting up.  WARMING: ALWAYS NOT TO SETUP IF
-    PLUG POWER OFF!!!  But when opened is, keystroke inserted be
-    must.  Page 52 instruction continuation referencize to also.
+    inte för användarinsättning upp. VARNING: ALLTID INTE ATT INSTALLERA OM
+    KONTAKT STRÖM AV!!! Men när öppnad är, knapptryckning insatt vara
+    måste. Sida 52 instruktion fortsättning referera till också.
 
-    <br><br><u>PACKET SMELL</u><br>
-    To monitoring data packet going to and fro.  If know nice IP
-    adress to source, then user found IP also destination.  MUST
-    TO TYPE IP IN HEXADECIMAL.  User to keypadenter FUNCTIONCODE 71
-    then keypadenter IP source address.  ALL TO GETHER!!!  E.i.,
-    710ABCDEF1 if IP source as 10.188.222.241.  Because 0A=10 -
-    BC=188 - DE=222 - F1=241, so IP number dotted notationing to
-    10.188.222.241.  BUT MODEL 9099 NOT TO USE FUNCTIONCODE 71!!!
-    Must to referencize page 59 instructioning for MODEL 9099
-    SPECIALCODES.
+    <br><br><u>PAKETLUKT</u><br>
+    För övervakning datapaket gå till och från. Om vet trevlig IP
+    adress till källa, då användare hittade IP också destination. MÅSTE
+    ATT SKRIVA IP I HEXADECIMAL. Användare till knappsatsinmatning FUNKTIONSKOD 71
+    sedan knappsatsinmatning IP källadress. ALLT TILLSAMMANS!!! T.ex.,
+    710ABCDEF1 om IP källa som 10.188.222.241. Eftersom 0A=10 -
+    BC=188 - DE=222 - F1=241, så IP nummer punktnotation till
+    10.188.222.241. MEN MODELL 9099 INTE ATT ANVÄNDA FUNKTIONSKOD 71!!!
+    Måste att referera sida 59 instruktion för MODELL 9099
+    SPECIALKODER.
 
-    <br><br>After keypadenteration, IP address to DESTINATION show
-    on displaywindow upon data packet transmittering.  IP TO
-    DESTINATION TOO IN HEX!!!  Make normal dot notationing with
-    DECIMAL convertate.  I.g., upon displaywindow show 0ABCDEF1,
-    convertate for 10.188.222.241.  Enjoy so easy!  NOTE.  If
-    data packets many transmitterate, displaywindow full get will.
-    Displaywindow hesitate, later to scroll.  FUNCTIONCODE 72
-    displaywindow to emptyize.
+    <br><br>Efter knappsatsinmatning, IP adress till DESTINATION visa
+    på displayfönster vid datapaket överföring. IP TILL
+    DESTINATION OCKSÅ I HEX!!! Gör normal punktnotation med
+    DECIMAL konvertera. T.ex., på displayfönster visa 0ABCDEF1,
+    konvertera för 10.188.222.241. Njut så lätt! OBS. Om
+    datapaket många överföra, displayfönster fullt bli kommer.
+    Displayfönster tveka, senare att rulla. FUNKTIONSKOD 72
+    displayfönster att tömma.
 
-    <br><br><u>PUT ADDRES \" I P \" TO PORT</u><br>
-    Nice IP address must assigned be when configurate router.  NOT TO
-    REPETITION IP ADDRESS IN TWO PORT PLACES SAMETIME!!! Or bad
-    collisionating happen.  Referencize to page 40 for collisionation
-    resolviating if suspicioned to happen,
+    <br><br><u>SÄTT ADRESS \"I P\" TILL PORT</u><br>
+    Trevlig IP adress måste tilldelad vara när konfigurera router. INTE ATT
+    UPPREPA IP ADRESS I TVÅ PORT PLATSER SAMTIDIGT!!! Eller dålig
+    kollision hända. Referera till sida 40 för kollision
+    lösning om misstänkt att hända,
     </tt><./blockquote>
 
-    <.p>Handwritten at the bottom of the page are a few numbers:
+    <.p>Handskrivet längst ner på sidan finns några siffror:
     <font face='tads-sans'>9099: 70=07, 71=09, 72=55, 57=18</font> "
 ;
 
@@ -4294,10 +4294,10 @@ netAnInstructions: PresentLater, Readable
 /*
  *   Tunnel end
  */
-steamTunnel11: SteamTunnelRoom 'Ath Tunnel' 'the tunnel near the Ath'
-    "The steam pipes thin out a bit here, and the tunnel ends to
-    the east at a door that leads into the Ath, if you recall correctly.
-    The tunnel continues west, up a short concrete stairway. "
+steamTunnel11: SteamTunnelRoom 'Ath Tunnel' 'tunneln nära Ath'
+    "Ångledningarna tunnas ut lite här, och tunneln slutar
+    österut vid en dörr som leder in i Ath, om du minns rätt.
+    Tunneln fortsätter västerut, upp för en kort betongtrappa. "
 
     west = st11Stairs
     up asExit(west)
@@ -4305,36 +4305,35 @@ steamTunnel11: SteamTunnelRoom 'Ath Tunnel' 'the tunnel near the Ath'
 ;
 
 + st11Stairs: StairwayUp
-    'short concrete step/steps/stair/stairs/stairway' 'short stairway'
-    "The stairway leads up a few steps to the west. "
+    'kort betong steg/trappsteg/trappa/trappor' 'kort trappa'
+    "Trappan leder upp några steg västerut. "
 ;
 
-+ st11Door: AlwaysLockedDoor 'ath athenaeum east e door' 'Ath door'
-    "The door is unmarked, but your recollection is that it leads
-    into the Ath basement. "
++ st11Door: AlwaysLockedDoor 'ath athenaeum öst ö dörr+en' 'Ath-dörren'
+    "Dörren är omärkt, men du minns att den leder
+    in i Ath-källaren. "
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   Steam tunnel at dead end
  */
-steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
+steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     "<<seen ? "" :
-      "You spent a lot of time exploring the steam tunnel system
-      during your years here as a student, but you don't think you've
-      encountered this section before.<.p>">>
-    The steam tunnel from the south reaches a dead end here; it
-    widens slightly at the northeast corner, creating a shadowy nook a
-    couple of feet deep.  On the west side of the tunnel is a door
-    labeled <q>Supplies.</q>  A small opening low on the east wall leads
-    into a crawlspace.
-    <.p>You notice a blue wire partially concealed behind the steam
-    pipes. "
+      "Du tillbringade mycket tid med att utforska ångtunnelsystemet
+      under dina år här som student, men du tror inte att du har
+      stött på den här sektionen tidigare.<.p>">>
+    Ångtunneln från söder når en återvändsgränd här; den
+    vidgas något i det nordöstra hörnet och skapar en skuggig nisch ett
+    par fot djup. På tunnelns västra sida finns en dörr
+    märkt <q>Förråd.</q> En liten öppning lågt på östra väggen leder
+    in i ett kryputrymme.
+    <.p>Du lägger märke till en blå kabel delvis dold bakom ångledningarna. "
 
     lookBehindPipes()
     {
-        "There's a blue network wire partially concealed behind
-        one of the large steam pipes. <<st8Wire.wireDesc>> ";
+        "Det finns en blå nätverkskabel delvis dold bakom
+        en av de stora ångledningarna. <<st8Wire.wireDesc>> ";
     }
 
     east = st8Crawl
@@ -4349,9 +4348,9 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
                 if (lexicalParent.workersPresent)
                 {
                     /* the workers are in the room, so get them out here */
-                    "You start down the tunnel, but the door opens before
-                    you make it past, and two workers in bright green
-                    overalls step out. ";
+                    "Du börjar gå ner i tunneln, men dörren öppnas innan
+                    du hinner förbi, och två arbetare i ljusgröna
+                    overaller kliver ut. ";
                 }
                 else
                 {
@@ -4359,10 +4358,10 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
                      *   the workers aren't in the room, so they come in
                      *   from the tunnel 
                      */
-                    "Before you get very far, a couple of workers in
-                    bright green overalls come walking up the tunnel
-                    from the south.  They abruptly stop talking when
-                    they see you. ";
+                    "Innan du hinner särskilt långt kommer ett par arbetare i
+                    ljusgröna overaller gående upp genom tunneln
+                    från söder. De slutar abrupt att prata när
+                    de ser dig. ";
                 }
 
                 /* in either case, cue the workers, and we're done */
@@ -4380,7 +4379,7 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
     workersReturning = nil
 
     /* our score award for making it here */
-    scoreMarker: Achievement { +10 "tracing the camera wire" }
+    scoreMarker: Achievement { +10 "spåra kamerakabeln" }
 
     /* number of consecutive turns we've been here */
     hereCount = 0
@@ -4439,9 +4438,9 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
                 if (hereCount == 3)
                 {
                     /* warn that they're about to leave */
-                    "<.p>Someone on the other side of the door opens it
-                    slightly.  You hear a male voice say, <q>Come on,
-                    let's go.</q> ";
+                    "<.p>Någon på andra sidan dörren öppnar den något. 
+                    Du hör en mansröst säga: <q>Kom igen, 
+                    kom så går vi.</q>";
                     
                     /* mark the door as unlocked and ajar */
                     st8Door.makeLocked(nil);
@@ -4460,8 +4459,7 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
                 if (workersReturning && hereCount == 2)
                 {
                     /* warn that the workers are coming back */
-                    "<.p>You hear someone approaching from the tunnel
-                    to the south. ";
+                    "<.p>Du hör någon närma sig från tunneln till söder. ";
                     
                     /* start the fuse to bring them back */
                     st8Workers.setEntryFuse();
@@ -4471,15 +4469,15 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
     }
 ;
 
-+ st8Workers: PresentLater, Person 'larger smaller workers*men' 'workers'
-    "The two men are wearing bright green overalls marked
-    <q>Network Installer Company</q> in white letters.  The larger
-    of the two is built like a football player.  They're standing
-    uncomfortably close to you, their arms crossed, suspicion on
-    their faces.<.reveal NIC> "
++ st8Workers: PresentLater, Person 'större mindre arbetare*män' 'arbetarna'
+    "De två männen bär ljusgröna overaller märkta
+    <q>Network Installer Company</q> i vita bokstäver. Den större
+    av de två är byggd som en fotbollsspelare. De står
+    obehagligt nära dig, med armarna i kors och misstänksamhet i
+    ansiktena.<.reveal NIC> "
 
-    actorHereDesc = "The two workers are standing menacingly close to you,
-        their arms crossed. "
+    actorHereDesc = "De två arbetarna står hotfullt nära dig,
+        med armarna i kors. "
 
     isPlural = true
     isHim = true
@@ -4541,60 +4539,60 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
             {
                 /* our arrival mode depends on where we're coming from */
                 if (fromDoor)
-                    "<.p>The door opens fully and two workers in bright
-                    green overalls step out, closing the door behind them. ";
+                    "<.p>Dörren öppnas helt och två arbetare i ljusgröna
+                    overaller kliver ut och stänger dörren bakom sig. ";
                 else
-                    "<.p>Two workers in bright green overalls walk in from
-                    the south tunnel. ";
+                    "<.p>Två arbetare i ljusgröna overaller kommer gående från
+                    den södra tunneln. ";
             }
 
             /* are we hiding? */
             if (me.isIn(st8Nook) || me.isIn(st8CrawlOpening))
             {
                 if (me.isIn(st8Nook))
-                    "You pretend you're in a spy film and press yourself
-                    against the wall, hiding behind some steam pipes
-                    near the corner.  Which seems to work---the two don't
-                    seem to notice you. ";
+                    "Du låtsas att du är i en spionfilm och pressar dig
+                    mot väggen, gömmer dig bakom några ångrör
+                    nära hörnet. Vilket verkar fungera---de två
+                    verkar inte märka dig. ";
                 else
-                    "They don't seem to notice you hiding in the crawlway. ";
+                    "De verkar inte märka att du gömmer dig i krypgången. ";
 
                 if (fromDoor)
                 {
-                    "They shut the door and head south down the tunnel.
-                    After a few steps, you hear one of them say <q>Hang
-                    on, I forgot something.</q>  ";
+                    "De stänger dörren och går söderut ner i tunneln.
+                    Efter några steg hör du en av dem säga <q>Vänta
+                    lite, jag glömde något.</q> ";
 
                     if (me.isIn(st8Nook))
-                        "You watch from behind the cover of the pipes
-                        as the smaller guy returns to the door and
-                        enters a combination, which you manage to
-                        make out: <<st8Door.showCombo>>. ";
+                        "Du tittar från bakom skyddet av rören
+                        när den mindre killen återvänder till dörren och
+                        slår in en kombination, som du lyckas
+                        uppfatta: <<st8Door.showCombo>>. ";
                     else
-                        "You watch as the smaller guy returns to the door
-                        and enters a combination, but you can't quite make
-                        out the digits from such a low vantage point. ";
+                        "Du tittar när den mindre killen återvänder till dörren
+                        och slår in en kombination, men du kan inte riktigt urskilja
+                        siffrorna från en så låg utsiktspunkt. ";
 
-                    "He slips into the room for a moment, then he's
-                    back, closing the door behind him.  The two head
-                    south; you hear their steps recede down the tunnel. ";
+                    "Han slinker in i rummet ett ögonblick, sedan är han
+                    tillbaka och stänger dörren bakom sig. De två går
+                    söderut; du hör deras steg avlägsna sig ner i tunneln. ";
                 }
                 else
                 {
                     if (me.isIn(st8Nook))
-                        "You watch from behind the cover of the pipes as
-                        the smaller guy goes to the door and keys in a
-                        combination, which you just manage to make out:
+                        "Du tittar från bakom skyddet av rören när
+                        den mindre killen går till dörren och slår in en
+                        kombination, som du precis lyckas uppfatta:
                         <<st8Door.showCombo>>. ";
                     else
-                        "You watch as the smaller guy goes to the door
-                        and keys in a combination, but you can't quite
-                        make out the digits from such a low vantage point. ";
+                        "Du tittar när den mindre killen går till dörren
+                        och slår in en kombination, men du kan inte riktigt
+                        urskilja siffrorna från en så låg utsiktspunkt. ";
 
-                    "He goes through the door; the bigger guy stays
-                    outside.  After a few moments, the smaller worker
-                    comes out the door.  <q>Got it,</q> he says, closing
-                    the door. The two walk off down the tunnel. ";
+                    "Han går genom dörren; den större killen stannar
+                    utanför. Efter några ögonblick kommer den mindre arbetaren
+                    ut genom dörren. <q>Fixat,</q> säger han och stänger
+                    dörren. De två går iväg ner i tunneln. ";
                 }
 
                 if (me.isIn(st8Nook))
@@ -4664,8 +4662,8 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
             || gDobj == st8Crawl)
         {
             /* kick them out */
-            "The bigger worker moves even closer, blocking you.
-            <q>Oh, no you don't,</q> he says. ";
+            "Den större arbetaren flyttar sig ännu närmare och blockerar dig.
+            <q>Åh nej, det gör du inte,</q> säger han. ";
             escortOut();
 
             /* don't continue with the original command */
@@ -4676,8 +4674,8 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
         /* special handling for "yell" */
         if (gActionIs(Yell))
         {
-            "On second thought, it might not be that great an idea to
-            attract even more attention. ";
+            "Vid närmare eftertanke kanske det inte är en så bra idé att
+            dra till sig ännu mer uppmärksamhet. ";
             exit;
         }
     }
@@ -4709,13 +4707,13 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
     /* kick the player out of the steam tunnel */
     escortOut()
     {
-        "<.p>He roughly grabs you by the arm, and starts steering
-        you down the tunnel.  There's not much you can do to resist.
-        He marches you through a series of turns, up a stairway, and
-        out a door into the sunlight.
-        <.p><q>You're lucky I don't call Security,</q> he says.
-        <q>Don't let me catch you trespassing again!</q> He lets
-        you go, goes back through the door, and slams it shut. ";
+        "<.p>Han tar tag i din arm med ett hårt grepp och börjar styra
+        dig ner i tunneln. Det finns inte mycket du kan göra för att stå emot.
+        Han marscherar dig genom en serie svängar, upp för en trappa, och
+        ut genom en dörr till solljuset.
+        <.p><q>Du ska vara glad att jag inte ringer väktarna,</q> säger han.
+        <q>Låt mig inte komma på dig med att inkräkta igen!</q> Han släpper
+        dig, går tillbaka genom dörren och smäller igen den. ";
 
         /* move me out */
         me.moveIntoForTravel(ldCourtyard);
@@ -4744,99 +4742,99 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
     }
 ;
 
-++ InitiallyWorn 'bright green hard overalls/uniforms' 'overalls'
-    "The workers are wearing bright green overalls and matching hardhats,
-    marked <q>Network Installer Company</q> in blocky white letters.
+++ InitiallyWorn 'ljusgröna hårda overaller/uniformer' 'overaller'
+    "Arbetarna bär ljusgröna overaller och matchande skyddshjälmar,
+    märkta <q>Network Installer Company</q> i kantiga vita bokstäver.
     <.reveal NIC> "
     isPlural = true
     isListedInInventory = nil
 ;
 
 ++ ConvNode 'intruder-alert'
-    npcGreetingMsg = "They look at you suspiciously.
-        <.p><q>Hey! Who are you?</q> asks the larger of the two,
-        the one built like a football player.  He moves menacingly
-        close to you, crossing his arms, frowning."
+    npcGreetingMsg = "De tittar misstänksamt på dig.
+        <.p><q>Hej! Vem är du?</q> frågar den större av de två,
+        den som är byggd som en fotbollsspelare. Han rör sig hotfullt
+        nära dig, korsar armarna och rynkar pannan."
 ;
 
-+++ SpecialTopic 'say that you\'re lost'
-    ['say','that','i\'m','i','am','you','are','you\'re','lost']
-    "<q>I somehow got lost,</q> you say.
-    <.p>The bigger guy squints at you. <q>Lost?</q> he says. <q>Well,
-    let me help you find your way.</q><<st8Workers.escortLater>> "
++++ SpecialTopic 'säg att du har gått vilse'
+    ['säg','att','jag','är','du','är','vilse']
+    "<q>Jag har på något sätt gått vilse,</q> säger du.
+    <.p>Den större killen kisar mot dig. <q>Vilse?</q> säger han. <q>Tja,
+    låt mig hjälpa dig att hitta vägen.</q><<st8Workers.escortLater>> "
 ;
-+++ SpecialTopic 'explain about the camera'
-    ['explain','about','the','camera']
-    "<q>So, I found this, um...</q>  It suddenly occurs to you that
-    it might not be such a great idea to tell just anyone about the
-    camera, at least until you have a better idea about what's going
-    on.  And these guys don't even look like they're Caltech staff,
-    after all.  <q>...um, overheating steam pipe...</q>
-    <.p><q>Well, maybe you should call B-and-G and report it, then.
-    Here, let me help you find a phone.</q>
++++ SpecialTopic 'förklara om kameran'
+    ['förklara','om','kameran']
+    "<q>Så, jag hittade den här, öh...</q> Det slår dig plötsligt att
+    det kanske inte är en så bra idé att berätta för vem som helst om
+    kameran, åtminstone inte förrän du har en bättre uppfattning om vad som pågår.
+    Och dessa killar ser inte ens ut som Caltech-personal, trots allt.
+    <q>...öh, överhettade ångröret...</q>
+    <.p><q>Tja, kanske du borde ringa B-and-G och rapportera det. 
+    Här, låt mig hjälpa dig att hitta en telefon.</q>
     <<st8Workers.escortLater>> "
 ;
-+++ SpecialTopic 'claim to be a supervisor'
-    ['claim','to','be','a','supervisor']
-    "<q>The main office sent me down to, uh, check your productivity.
-    I want to see your time cards right now, please.</q>
-    <.p>The two look at each other.  <q>I don't see your uniform,</q>
-    the bigger guy says. <q>I don't see your badge, either.  I suppose
-    you left them in the <q>main office.</q>  Here, let me show you the
-    way there.</q><<st8Workers.escortLater>> "
++++ SpecialTopic 'påstå att du är en arbetsledare'
+    ['påstå','att','jag','är','en','arbetsledare']
+    "<q>Huvudkontoret skickade ner mig för att, öh, kontrollera er produktivitet.
+    Jag vill se era tidkort just nu, tack.</q>
+    <.p>De två tittar på varandra. <q>Jag ser inte din uniform,</q>
+    säger den större killen. <q>Jag ser inte ditt ID-kort heller. Jag antar
+    att du lämnade dem på <q>huvudkontoret.</q> Här, låt mig visa dig
+    vägen dit.</q><<st8Workers.escortLater>> "
 ;
 +++ DefaultAnyTopic
-    "The bigger guy grunts. <q>Whoever you are, you're not allowed
-    down here,</q> he says. <q>You're coming with me.</q>
+    "Den större killen grymtar. <q>Vem du än är, så är du inte tillåten
+    här nere,</q> säger han. <q>Du kommer med mig.</q>
     <<st8Workers.escortLater>> "
 ;
 
-+ st8Wire: Immovable 'blue network cable/wire' 'blue wire'
-    "The wire is partially concealed behind a large steam pipe. <<wireDesc>> "
-    wireDesc = "The wire comes in from the crawlspace, then follows one
-        of the large pipes north along the east wall, turns to follow
-        another pipe across the north wall, and turns again along
-        the west wall.  Just a couple of inches from the door, the
-        wire disappears into a tiny hole drilled in the wall. "
++ st8Wire: Immovable 'blå nätverkskabel/tråd' 'blå tråd'
+    "Tråden är delvis dold bakom ett stort ångrör. <<wireDesc>> "
+    wireDesc = "Tråden kommer in från kryputrymmet, följer sedan ett
+        av de stora rören norrut längs östra väggen, vänder för att följa
+        ett annat rör över norra väggen, och vänder igen längs
+        västra väggen. Bara ett par tum från dörren försvinner
+        tråden in i ett litet hål borrat i väggen. "
 
     dobjFor(Follow) asDobjFor(Examine)
     isNominallyIn(obj) { return obj == st8Hole || inherited(obj); }
 ;
 
-+ Fixture 'west w wall*walls' 'west wall'
-    "The blue wire is threaded into a tiny hole in the wall, a few
-    inches from the door. "
++ Fixture 'västra v vägg*väggar' 'västra väggen'
+    "Den blå tråden är trädd genom ett litet hål i väggen, några
+    tum från dörren. "
 ;
 
-++ st8Hole: Fixture 'tiny hole' 'tiny hole'
-    "The hole is a couple of inches away from the door.  The blue
-    wire is threaded into the hole. "
+++ st8Hole: Fixture 'litet hål' 'litet hål'
+    "Hålet är ett par tum från dörren. Den blå
+    tråden är trädd genom hålet. "
 
-    lookInDesc = "The blue wire is threaded into the hole. "
+    lookInDesc = "Den blå tråden är trädd genom hålet. "
 ;
 
-+ Fixture 'east e wall*walls' 'east wall'
-    "Low on the wall is an opening to a tight crawlspace. "
++ Fixture 'östra ö vägg*väggar' 'östra väggen'
+    "Lågt på väggen finns en öppning till ett trångt kryputrymme. "
 ;
 
 ++ st8Crawl: TravelWithMessage, ThroughPassage
-    'tight low opening/crawlspace/crawlway/tunnel' 'crawlspace'
-    "The opening looks just large enough to crawl into. "
+    'trång låg öppning/kryputrymme/krypgång/tunnel' 'kryputrymme'
+    "Öppningen ser precis stor nog ut för att krypa in i. "
 
-    travelDesc = "You crawl head-first into the passage, and drag
-        yourself along for eight feet or so before emerging into
-        another steam tunnel. "
+    travelDesc = "Du kryper in med huvudet först i passagen och drar
+        dig fram ungefär åtta fot innan du kommer ut i
+        en annan ångtunnel. "
 
     dobjFor(HideIn) remapTo(LieOn, st8CrawlOpening)
 ;
 
 /* secret nested room for when we're hiding in the tunnel */
 + st8CrawlOpening: OutOfReach, Fixture, BasicChair
-    name = 'crawlspace'
+    name = 'krypgång'
 
-    objInPrep = 'in'
-    actorInPrep = 'in'
-    actorOutOfPrep = 'out of'
+    objInPrep = 'i'
+    actorInPrep = 'i'
+    actorOutOfPrep = 'ut från'
 
     obviousPostures = [lying]
     allowedPostures = [lying]
@@ -4862,8 +4860,8 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
             inherited();
 
             /* mention that we're hiding in the opening */
-            "You crawl backwards into the opening, far enough that
-            you're out of view. ";
+            "Du kryper baklänges in i öppningen, så pass långt att 
+            du är utom synhåll. ";
         }
     }
 
@@ -4873,13 +4871,11 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
         gActor.makePosture(location.defaultPosture);
         gActor.travelWithin(location);
 
-        "You crawl out of the tunnel and stand up. ";
+        "Du kryper ut ur tunneln och ställer dig upp. ";
     }
 
     /* we can't go east from here */
-    east: NoTravelMessage { "It's too hard to crawl backwards through
-        such a tight space; you'll have to get out first so you can
-        turn around. "; }
+    east: NoTravelMessage { "Det är för svårt att krypa baklänges genom en sån trång passage; du måste ta dig ut först så du kan vända dig om. "; }
 
     /* likewise for ENTER CRAWLWAY */
     tryMakingTravelReady(conn)
@@ -4891,13 +4887,13 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
     }
 ;
 
-+ st8Nook: OutOfReach, Fixture, Platform 'shadowy dark nook/shadows' 'nook'
-    "The nook is a couple of feet deep---enough to stand in, but it
-    doesn't go anywhere.  It's almost all in shadow. "
++ st8Nook: OutOfReach, Fixture, Platform 'skuggig mörk nisch/skuggor' 'nisch'
+    "Nischen är ett par fot djup---tillräckligt för att stå i, men den
+    leder ingenstans. Den är nästan helt i skugga. "
 
-    objInPrep = 'in'
-    actorInPrep = 'in'
-    actorOutOfPrep = 'out of'
+    objInPrep = 'i'
+    actorInPrep = 'i'
+    actorOutOfPrep = 'ut ur'
     dobjFor(Enter) asDobjFor(StandOn)
     tryRemovingFromNested() { return tryImplicitAction(GetOutOf, self); }
 
@@ -4911,7 +4907,7 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
 
             /* add an extra message if we succeeded */
             if (gActor.isIn(self))
-                "You step into the nook's shadows. ";
+                "Du kliver in i nischens skugga. ";
         }
     }
 
@@ -4937,9 +4933,9 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
     }
 ;
 
-+ st8Door: Keypad, Lockable, Door '"supplies" supply room west w door' 'door'
-    "The door is labeled <q>Supplies,</q> and it has one of those
-    mechanical-keypad locks. "
++ st8Door: Keypad, Lockable, Door '"förråd"  väst+ra v förråd:et^s+dörr+en' 'dörr'
+    "Dörren är märkt <q>Förråd,</q> och den har ett av de där
+    mekaniska kodlåsen. "
 
     /* 
      *   we're locked if we're closed and the right combo isn't on the
@@ -4951,7 +4947,7 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
     isAjar = nil
 
     /* supplement the open status message for the "ajar" state */
-    openDesc = (isAjar ? 'slightly ajar' : inherited)
+    openDesc = (isAjar ? 'lite på glänt' : inherited)
 
     /* the internal combo - this is just the string of combo digits */
     internCombo = static (infoKeys.st8DoorCombo)
@@ -4990,10 +4986,7 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
             if (isAjar && steamTunnel8.workersPresent)
             {
                 /* the workers are inside */
-                "You reach to open the door, but someone opens it from
-                the other side first.  Two workers in bright green
-                overalls step out into the tunnel and close the
-                door behind them. ";
+                "Du räcker din hand för att öppna dörren, men någon öppnar den från andra sidan först. Två arbetare i ljusgrönt overaller kliver ut i tunneln och stänger dörren bakom dem. ";
 
                 /* trigger the workers */
                 st8Workers.workerEntry(nil);
@@ -5007,19 +5000,17 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
                 st8DoorLock.resetCombo();
 
                 /* mention what happens */
-                "You try the door, but the only effect is some clicking
-                from the lock mechanism. ";
-                
+                "Du provar dörren, men det enda som händer är ett klickande klick från låsmekanismen. ";
+
                 /* terminate the action */
                 exit;
             }
             else if (steamTunnel8.workersPresent)
             {
                 /* the workers are inside */
-                "You open the door, revealing a pair of workers in
-                bright green overalls.  They look at you with a start,
-                then step out into the hallway, closing the door behind
-                them. ";
+                "Du öppnar dörren och upptäcker ett par arbetare i
+                ljusgröna overaller. De tittar upp förvånat på dig,
+                och kliver sedan ut i korridoren och stänger dörren bakom sig. ";
 
                 /* cue the workers */
                 st8Workers.workerEntry(nil);
@@ -5049,8 +5040,8 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
             if (isOpen)
             {
                 /* mention it */
-                "The lock mechanism clicks and whirs, and the door swings
-                open. ";
+                "Låsmekanismen klickar och surrar, och dörren svänger
+                upp. ";
 
                 /* reset it */
                 st8DoorLock.resetCombo();
@@ -5066,9 +5057,10 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
         verify() { logicalRank(50, 'self-locking door'); }
         check()
         {
-            "There's no obvious way to lock the door, but your past
-            experience is that the door will re-lock automatically
-            each time it's opened and then closed again. ";
+            "Det finns inget uppenbart sätt att låsa dörren, 
+            men din tidigare erfarenhet säger att dörren 
+            kommer att låsa sig automatiskt varje gång den 
+            öppnas och sedan stängs igen. ";
             exit;
         }
     }
@@ -5084,8 +5076,8 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
              */
             if (!usedCombo)
             {
-                "It looks like you'll have to enter a combination on
-                the keypad to unlock the door. ";
+                 "Det verkar som om du måste ange en kombination på
+                knappsatsen för att låsa upp dörren. ";
                 exit;
             }
         }
@@ -5095,7 +5087,7 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
              *   if we made it this far, we know the combo, so just say
              *   we're using it 
              */
-            "You key in the combination on the keypad. ";
+            "Du knappar in kombinationen på knappsatsen. ";
             st8DoorLock.resetCombo();
             st8DoorLock.addToCombo(internCombo);
         }
@@ -5106,32 +5098,32 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
 
     dobjFor(Knock)
     {
-        action()
+       action()
         {
-            "The sound of your knocking echoes down the tunnel. ";
+            "Ljudet av din knackning ekar genom tunneln. ";
 
             if (steamTunnel8.workersPresent)
             {
-                "The door opens, revealing a large man in bright green
-                overalls.  He steps out, along with another, shorter
-                man dressed the same way, and they close the door. ";
+                "Dörren öppnas och avslöjar en stor man i ljusgröna
+                overaller. Han kliver ut, tillsammans med en annan,
+                kortare man klädd på samma sätt, och de stänger dörren. ";
 
                 st8Workers.workerEntry(nil);
             }
             else
-                "There doesn't seem to be any response. ";
+                "Det verkar inte komma något svar. ";
         }
     }
 ;
 
 ++ st8DoorLock: Keypad, Fixture
-    'mechanical-keypad keypad (door) lock locking (key)
-    key-pad/pad/lock/mechanism/keypad'
-    'keypad lock'
-    "It's a kind of lock you've seen before in offices and other
-    public buildings.  The keypad has push-buttons labeled 0 to 9,
-    arranged in two columns, plus a larger <q>Reset</q> button at
-    the bottom. "
+    'mekanisk-knappsats knappsats (dörr) lås låsning (nyckel)
+    nyckel-sats/sats/lås/mekanism/knappsats'
+    'knappsatslås'
+    "Det är en typ av lås du har sett förut i kontor och andra
+    offentliga byggnader. Knappsatsen har tryckknappar märkta 0 till 9,
+    ordnade i två kolumner, plus en större <q>Återställ</q>-knapp längst
+    ner. "
 
     /* reset the combination */
     resetCombo() { comboAcc = ''; }
@@ -5161,7 +5153,7 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
             /* make sure it looks valid */
             if (rexMatch('[0-9]+', combo, 1) != combo.length())
             {
-                "You can only enter digits on the keypad. ";
+                "Du kan bara skriva in siffror på knappsatsen. ";
                 return;
             }
 
@@ -5169,47 +5161,47 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
             addToCombo(combo);
 
             /* let them know it worked */
-            "You push the buttons in sequence: ";
+            "Du trycker på knapparna i sekvens: ";
             for (local i = 1, local len = combo.length() ; i <= len ; ++i)
             {
                 say(combo.substr(i, 1));
                 if (i != len)
                     "-";
             }
-            ". The mechanism in the keypad clicks with each button push. ";
+            ". mekanismen i knappsatsen klickar för varje knapptryckning. ";
         }
     }
     dobjFor(TypeLiteralOn) asDobjFor(EnterOn)
 ;
 +++ Button, Component
-    '(lock) (keypad) numbered metal 0 1 2 3 4 5 6 7 8 9 "reset"
-    push-button/button*buttons*push-buttons'
-    'lock keypad button'
-    "Numbered buttons labeled 0 to 9 are arranged in two columns, and
-    at the bottom is a larger button labeled <q>Reset.</q> "
+    '(lås) (knappsats) numrerade metall 0 1 2 3 4 5 6 7 8 9 "återställ"
+    tryck-knapp/knapp*knappar*tryck-knappar'
+    'låsknappsatsknapp'
+    "Numrerade knappar märkta 0 till 9 är ordnade i två kolumner, och
+    längst ner finns en större knapp märkt <q>Återställ.</q> "
 
-    dobjFor(Push) { action() { "(You don't need to push the buttons
-        individually; just enter the combination on the keypad.) "; } }
+    dobjFor(Push) { action() { "(Du behöver inte trycka på knapparna
+        individuellt; ange bara kombinationen på knappsatsen.) "; } }
 ;
 
 +++ Button, Component
-    '"reset" metal push-button/button*buttons*push-buttons'
-    '<q>Reset</q> button'
-    "It's a metal push-button labeled <q>Reset.</q> "
+    '"återställ" metall tryck-knapp/knapp*knappar*tryck-knappar'
+    '<q>Återställ</q>-knapp'
+    "Det är en metallknapp märkt <q>Återställ.</q> "
 
     dobjFor(Push)
     {
         action()
         {
-            "The mechanism inside the lock clicks several times as
-            you push in the button. ";
+            "Mekanismen inuti låset klickar flera gånger när
+            du trycker in knappen. ";
             location.resetCombo();
         }
     }
 ;
 
 ++ SimpleNoise
-    desc = "You think you hear voices on the other side of the door. "
+    desc = "Du tycker dig höra röster på andra sidan dörren. "
     soundPresence = (steamTunnel8.workersPresent)
 ;
 
@@ -5217,18 +5209,18 @@ steamTunnel8: SteamTunnelRoom 'Dead End' 'the dead end'
 /*
  *   The network room in the tunnels 
  */
-networkRoom: Room 'Network Room' 'the network room'
-    "The door outside is labeled <q>Supplies,</q> but that's apparently
-    out of date; it looks like this is actually being used as a network
-    control room.  The room is dominated by a floor-standing network
-    router box, connected to which are hundreds of orange, white,
-    and yellow network cables.  The cables are gathered into giant
-    bundles the size of fire hoses, which feed into conduits leading
-    out through the walls.
-    <.p>A lone blue network cable comes in through a small hole in
-    the wall next to the door, which leads out of the room to the east. "
+networkRoom: Room 'Nätverksrum' 'nätverksrummet'
+    "Dörren utanför är märkt <q>Förråd,</q> men det är tydligen
+    inaktuellt; det ser ut som om detta faktiskt används som ett nätverk
+    kontrollrum. Rummet domineras av en golvstående nätverks-
+    router, till vilken hundratals orange, vita,
+    och gula nätverkskablar är anslutna. Kablarna är samlade i jättelika
+    buntar i storlek med brandslang, som leder in i ledningar som går
+    ut genom väggarna.
+    <.p>En ensam blå nätverkskabel kommer in genom ett litet hål i
+    väggen bredvid dörren, som leder ut ur rummet österut. "
 
-    vocabWords = 'network room'
+    vocabWords = 'nätverksrum'
 
     east = nrDoor
     out asExit(east)
@@ -5239,73 +5231,73 @@ networkRoom: Room 'Network Room' 'the network room'
         scoreMarker.awardPointsOnce();
         inherited(traveler, conn);
     }
-    scoreMarker: Achievement { +5 "getting into the network room" }
+    scoreMarker: Achievement { +5 "att komma in i nätverksrummet" }
 
     roomParts = static (inherited - defaultEastWall)
 ;
 
-+ nrDoor: Door ->st8Door 'east e door' 'door'
-    "The door leads out of the room to the east. "
++ nrDoor: Door ->st8Door 'öst+ra ö dörr+en' 'dörr'
+    "Dörren leder ut ur rummet österut. "
 
     dobjFor(Lock)
     {
         verify() { logicalRank(50, 'auto-locking'); }
-        action() { "There's no obvious way to lock the door; it probably
-            locks automatically when closed. "; }
+        action() { "Det finns inget uppenbart sätt att låsa dörren; den låser
+            förmodligen automatiskt när den stängs. "; }
     }
     dobjFor(Unlock)
     {
         verify() { logicalRank(50, 'auto-locking'); }
-        action() { "There's no obvious way to unlock it, but the door
-            can be opened from this side without unlocking it. "; }
+        action() { "Det finns inget uppenbart sätt att låsa upp den, men dörren
+            kan öppnas från denna sida utan att låsa upp den. "; }
     }
 ;
 
-+ Fixture 'east e wall*walls' 'east wall'
-    "A blue wire is threaded through a small hole in the wall next
-    to the door. "
++ Fixture 'öst ö vägg*väggar' 'östra väggen'
+    "En blå tråd är trädd genom ett litet hål i väggen bredvid
+    dörren. "
 ;
-++ nrHole: Fixture 'small tiny hole' 'small hole'
-    "The hole is right next to the door.  A blue network cable comes
-    in through the hole. "
-    lookInDesc = "A blue network wire is threaded through the hole. "
+++ nrHole: Fixture 'litet pyttelitet hål' 'litet hål'
+    "Hålet är precis bredvid dörren. En blå nätverkskabel kommer
+    in genom hålet. "
+    lookInDesc = "En blå nätverkstråd är trädd genom hålet. "
 ;
 
 + PlugAttachable, PermanentAttachment, Immovable
-    'lone blue network wire/cable' 'blue network cable'
-    "The blue wire is threaded through a small hole in the wall,
-    next to the door.  It joins into one of the big bundles of
-    cables---but it's the only blue wire, so it's easy to follow it to
-    the router box, where it terminates in one of the router sockets.
-    <.p>There's obviously no way to trace the blue wire's physical
-    connection any further; the router must connect to the main
-    campus network, so the camera is effectively connected to every
-    computer on campus.  The only way to trace it from here would be
-    to hook up a network analyzer and see where the data packets are
-    going.
+    'ensam blå nätverkstråd/kabel' 'blå nätverkskabel'
+    "Den blå tråden är trädd genom ett litet hål i väggen,
+    bredvid dörren. Den ansluter till en av de stora buntarna av
+    kablar---men det är den enda blå tråden, så det är lätt att följa den till
+    routerlådan, där den avslutas i ett av routeruttagen.
+    <.p>Det finns uppenbarligen inget sätt att spåra den blå trådens fysiska
+    anslutning längre; routern måste ansluta till huvudcampus
+    nätverk, så kameran är effektivt ansluten till varje
+    dator på campus. Det enda sättet att spåra den härifrån skulle vara
+    att koppla in en nätverksanalysator och se vart datapaketen
+    går.
     <.reveal need-net-analyzer> "
 
     attachedObjects = [nrRouter, nrRouterSockets]
-    cannotDetachMsg(obj) { return 'You\'re probably better leaving it as
-        it is, so no one gets suspicious that you\'re snooping around. '; }
+    cannotDetachMsg(obj) { return 'Du är förmodligen bättre att lämna den som
+        den är, så att ingen blir misstänksam att du snokar omkring. '; }
 
     isNominallyIn(obj) { return obj == nrHole || inherited(obj); }
 ;
 
-+ nrConduits: Fixture 'conduits' 'conduits'
-    "Big bundles of network cable feed through the conduits, which
-    presumably lead out to nearby buildings. "
++ nrConduits: Fixture 'ledningar' 'ledningar'
+    "Stora buntar av nätverkskabel matar genom ledningarna, som
+    förmodligen leder ut till närliggande byggnader. "
     isPlural = true
 
     dobjFor(LookIn) asDobjFor(Examine)
 ;
 
 + PlugAttachable, PermanentAttachment, Immovable
-    'big giant white yellow orange network wire/wires/cable/cables/bundles'
-    'bundles of cable'
-    "Hundreds of white, yellow, and orange cables are connected to the
-    router.  The cables are gathered into giant bundles, which feed into
-    conduits. "
+    'stor jättelik vit gul orange nätverkstråd/trådar/kabel/kablar/buntar'
+    'kabelbuntar'
+    "Hundratals vita, gula och orange kablar är anslutna till
+    routern. Kablarna är samlade i jättelika buntar, som matar in i
+    ledningar. "
     isPlural = true
 
     isNominallyIn(obj)
@@ -5314,18 +5306,18 @@ networkRoom: Room 'Network Room' 'the network room'
     }
 
     attachedObjects = [nrRouter, nrRouterSockets]
-    cannotDetachMsg(obj) { return 'You shouldn\'t do that; you don\'t want
-        to interrupt anyone\'s network service. '; }
+    cannotDetachMsg(obj) { return 'Du bör inte göra det; du vill inte
+        avbryta någons nätverkstjänst. '; }
 ;
 
 + nrRouter: PlugAttachable, NearbyAttachable, Heavy
-    'floor-standing network router box' 'network router'
-    "It's a big piece of equipment, the size of a tall bookcase.
-    Hundreds of network wires are connected to sockets arrayed across
-    the front of the box.  One one side is a multi-prong diagnostic jack. "
+    'golvstående nätverksrouterlåda' 'nätverksrouter'
+    "Det är en stor utrustning, i storlek med en hög bokhylla.
+    Hundratals nätverkstrådar är anslutna till uttag utspridda över
+    framsidan av lådan. På ena sidan finns ett flerstifts diagnostikuttag. "
 
-    cannotDetachMsg(obj) { return 'You shouldn\'t do that; you don\'t
-        want to interrupt anyone\'s network service. '; }
+    cannotDetachMsg(obj) { return 'Du bör inte göra det; du vill inte
+        avbryta någons nätverkstjänst. '; }
 
     iobjFor(PutIn) remapTo(PlugInto, DirectObject, self)
 ;
@@ -5335,23 +5327,23 @@ networkRoom: Room 'Network Room' 'the network room'
  *   that we don't otherwise enumerate with its own object.
  */
 ++ nrRouterSockets: PermanentAttachment, Component
-    'network socket/sockets' 'network sockets'
-    "The router has hundreds of sockets; wires are connected to most
-    of them. "
+    'nätverksuttag/uttag' 'nätverksuttag'
+    "Routern har hundratals uttag; trådar är anslutna till de flesta
+    av dem. "
 
     isPlural = true
 
     dobjFor(LookIn) asDobjFor(Examine)
-    iobjFor(PutIn) { verify() { illogical('{That dobj/he} doesn\'t
-        look like it will fit any of the network sockets. '); } }
+    iobjFor(PutIn) { verify() { illogical('{That dobj/he} ser inte
+        ut att passa i något av nätverksuttagen. '); } }
     iobjFor(PlugInto) asIobjFor(PutIn)
     iobjFor(AttachTo) asIobjFor(PutIn)
 ;
 
 ++ PluggableComponent
-    'diagnostic multi-prong jack/port/socket' 'diagnostic jack'
-    "It's a jack for a special kind of connector, probably for
-    a network analyzer.<.reveal need-net-analyzer> "
+    'diagnostiskt flerstifts uttag/port/socket' 'diagnostikuttag'
+    "Det är ett uttag för en speciell typ av kontakt, förmodligen för
+    en nätverksanalysator.<.reveal need-net-analyzer> "
 
     iobjFor(PutIn) remapTo(AttachTo, DirectObject, self)
 ;

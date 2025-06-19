@@ -1,0 +1,13 @@
+IFID: TADS3-B4445266034D48C99DA08C2EC3C1B229
+Name: Tillbaka till Ditch Day
+Byline: av Michael J. Roberts
+HtmlByline: av <a href="mailto:mjr_@hotmail.com">Michael J. Roberts</a>
+AuthorEmail: M.J. Roberts <mjr_@hotmail.com>
+Desc: Det har gått ett decennium sedan du tog examen, men nu ser det ut som att du måste lösa ytterligare en Ditch Day-stack. \nDu spelar en Caltech-alumn vars storföretag skickar dig tillbaka till campus för att rekrytera en stjärnstudent. Men när du kommer dit, finner du rollerna omvända när din kandidat får dig att provspela för att bli hans arbetsgivare. Vad måste du göra för att vinna din nya rekryt? Du måste bara lösa en liten Ditch Day-stack, såklart. \nReturn to Ditch day är ett omfattande interaktivt äventyr, delvis skattjakt, delvis mysterium, delvis science fiction. Det skrevs som en demonstration och exempel på TADS 3, den senaste generationen av TADS författarverktyg för Interaktiv Fiktion, men det är inte bara en demo - det är ett fullfjädrat spel, med en expansiv och detaljerad miljö, en fängslande handling, en uppsättning excentriska karaktärer, och massor av utmanande och logiska pussel. Och spelet ger dig en ovanlig mängd kontroll över hur historien utvecklas: du kan helt enkelt fullfölja dina "officiella" mål, eller du kan också undersöka ett elaborerat dolt mysterium.
+Version: 2-sv1
+ReleaseDate: 2025-06-24
+FirstPublished: 2005
+Language: sv-SE
+LicenseType: Freeware
+CopyingRules: Nominal cost only; compilations allowed
+PresentationProfile: Default

@@ -39,9 +39,9 @@ gameMain: GameMainDef
         från Maui, förstås.\b";
 
         /* visa spelets titel */
-        "<b>Tillbaka till Skolkningsdagen</b>\n
+        "<b>Tillbaka till Ditch Day</b>\n
         av Michael J.\ Roberts\n
-        Översatt av Tomas Öberg användades Copilot/Tabnine
+        Översatt av Tomas Öberg genom Copilot/Tabnine\n
         Version <<versionInfo.version>> (<<versionInfo.serialNum>>)\n
         \b";
     }
@@ -49,7 +49,7 @@ gameMain: GameMainDef
     /* show our "goodbye" message */
     showGoodbye()
     {
-        "<.p>Tack för att du spelade <i>Tillbaka till Skolkningsdagen</i>!\b";
+        "<.p>Tack för att du spelade <i>Tillbaka till Ditch Day</i>!\b";
     }
     
     /* 
@@ -175,15 +175,15 @@ gameMain: GameMainDef
         </center>\b\b";
         
         /* show the title/author/version and startup options */
-        "\b<b>Tillbaka till Skolkningsdagen</b>
+        "\b<b>Tillbaka till Ditch Day</b>
         \nVersion <<versionInfo.version>> (<<versionInfo.serialNum>>)
         \nCopyright &copy;2004, 2013 Michael J.\ Roberts
         / Gratisprogram / Skriv <<aHref('copyright', 'COPYRIGHT')>> för detaljer\n
         
         <.p>Om det här är första gången du spelar detta spel, vänligen skriv
-        <<aHref('about', 'ABOUT')>> (eller bara 'A') för viktig
+        <<aHref('om', 'OM')>> för viktig
         information. För att återställa en tidigare sparad position, skriv
-        <<aHref('restore', 'RESTORE')>> (eller 'R').
+        <<aHref('ladda', 'LADDA')>> 
         <.p>För att <<aHref('', 'börja spelet')>>, tryck bara på Enter-tangenten. ";
 
         /* keep going as long as they want to stay here */
@@ -223,7 +223,7 @@ gameMain: GameMainDef
                  *   don't require it.  Then we accept spaces, and then the
                  *   string has to end.  
                  */
-                '<space>*(rq|replay)'
+                '<space>*(rq|återspela)'
                 + '<space>+([\'"])(((?!%2).)+)%2?<space>*$', cmd) != nil)
             {
                 /* get the keyword */
@@ -239,12 +239,12 @@ gameMain: GameMainDef
             }
 
             /* check which keyword we got */
-            if ('about'.startsWith(kw))
+            if ('om'.startsWith(kw))
             {
                 /* they want the ABOUT information */
                 versionInfo.showAbout();
             }
-            else if ('restore'.startsWith(kw))
+            else if ('ladda'.startsWith(kw))
             {
                 /* try restoring a game */
                 if (RestoreAction.askAndRestore())
@@ -253,22 +253,22 @@ gameMain: GameMainDef
                     return 2;
                 }
             }
-            else if ('quit'.startsWith(kw))
+            else if ('avsluta'.startsWith(kw))
             {
                 /* do they really want to quit? */
                 libMessages.confirmQuit();
                 if (yesOrNo())
                     return 3;
                 else
-                    "Okay. ";
+                    "Okej. ";
             }
-            else if ('hints'.startsWith(kw))
+            else if ('ledtrådar'.startsWith(kw))
             {
                 /* there's no point in showing hints yet; explain this */
                 "Tyvärr finns inga ledtrådar tillgängliga just nu. Ledtrådar kommer att vara
                 tillgängliga så snart du börjar spelet. ";
             }
-            else if ('instructions'.startsWith(kw))
+            else if ('instruktioner'.startsWith(kw))
             {
                 /* show the instructions */
                 InstructionsAction.execSystemAction();
@@ -278,14 +278,14 @@ gameMain: GameMainDef
                 /* show the copyright/license information */
                 versionInfo.showCopyright();
             }
-            else if (kw == 'rq' || 'replay'.startsWith(kw))
+            else if (kw == 'rq' || 'återspela'.startsWith(kw))
             {
                 /* if there's no argument, ask for one */
                 if (rqArg == nil)
                 {
                     /* there's no file, so ask for one */
                     local result = inputManager.getInputFile(
-                        'Enter command file', InFileOpen, FileTypeCmd, 0);
+                        'Skriv in kommandofil', InFileOpen, FileTypeCmd, 0);
                     
                     /* if we got a file, it's the file argument */
                     if (result[1] == InFileSuccess)
@@ -304,8 +304,8 @@ gameMain: GameMainDef
             }
             
             /* refresh them on what to do next */
-            "\b(Vänligen skriv <<aHref('about', 'ABOUT')>> för information om
-            hur man spelar, eller <<aHref('restore', 'RESTORE')>> för att återställa
+            "\b(Vänligen skriv <<aHref('OM', 'OM')>> för information om
+            hur man spelar, eller <<aHref('ladda', 'LADDA')>> för att återställa
             en sparad position. För att <<aHref('', 'börja spelet')>>, tryck bara
             på Enter-tangenten.) ";
         }
@@ -480,10 +480,10 @@ finishOptionAfterword: FinishOption
         return true;
     }
 
-    desc = "read the <<aHrefAlt('afterword', 'AFTERWORD', 'AFTER<b>W</b>ORD',
-                                'Show the Afterword')>>"
-    responseKeyword = 'afterword'
-    responseChar = 'w'
+    desc = "läs <<aHrefAlt('efterord', 'EFTERORD', 'EFTER<b>O</b>RD',
+                                'Visa Efterord')>>"
+    responseKeyword = 'efterord'
+    responseChar = 'o'
     
 ;
 

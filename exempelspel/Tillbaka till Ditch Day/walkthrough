@@ -1,0 +1,853 @@
+Walkthrough
+Part 1: Prologue in Asia
+The story begins with Doug in the control room of Government Power Plant #6, somewhere in south Asia. You need to fix a malfunctioning SCU-1100DX for an important demo, then get a contract signed.
+
+Control Room
+
+If you work quickly, you can avoid getting a beverage.
+
+> x Xojo. x Guanmgon. x SCU.
+
+Guanmgon asks if you want Koffee. You can accept or decline; it's your choice.
+
+> say yes. x CT-22. take HV chip.
+
+Xojo gives you the Koffee. Ignore it for now.
+
+> x tester. read stickers. open tester. (+2)
+
+> take LV chip. put it in socket.
+
+> put CT in slot. turn on SCU. (+10)
+
+> w. w.
+
+West End of Hallway
+
+Mitachron helicopters fly past while you and Xojo wait for the elevator.
+
+> ask Xojo about Mitachron. smell Koffee. drink it. w.
+
+Elevator
+
+Xojo gives you his résumé soon after entering the elevator. For what it's worth, none of the elevator buttons work if you try pushing them during this journey.
+
+> x me. tell Xojo about hiring freeze.
+
+> x contract. x resume. ask Xojo about Kowtuan.
+
+> ask Xojo about ChipTechNo. ask Xojo about Magnxi.
+
+The elevator goes past your stop.
+
+> ask Xojo about elevator. x watch.
+
+> ask Xojo about power plant. ask Xojo about Guanmgon.
+
+The elevator finally reaches the bottom of the shaft. The door doesn't open.
+
+> open door. ask Xojo about elevator. g.
+
+> x ceiling. x panel. open panel.
+
+> climb Xojo. open panel. u. (+5)
+
+Elevator Shaft
+
+> x cable. pull it. x protrusions.
+
+> open door. x mechanism. put resume in mechanism.
+
+> x panel. take it. put it in mechanism. open door. e. (+2)
+
+West End of Hallway
+
+> ask Xojo about elevator. e.
+
+Middle of Hallway
+
+Amusingly, try going east when Xojo is trying to get you to go north.
+
+> e. n. n. n.
+
+Utility Platform
+
+> x bridge. x main bridge. x canyon.
+
+> ask Xojo about bridge. g. g. g. n. n.
+
+Middle of Rope Bridge
+
+> ask Xojo about bridge. n.
+
+Hanging on a Rope Bridge
+
+> d. ask Xojo about bridge. u.
+
+Edge of Canyon
+
+> ask Xojo about bridge. ne. in.
+
+Lobby
+
+> x Magnxi. x hat. x uniform.
+
+> talk to Magnxi. g. g. (+1)
+
+> x crowd.
+
+Xojo gives you a print-out before he leaves.
+
+> x Belker. x band. x food. x waiter.
+
+> x print-out.
+
+Part 2: Starting the Challenge
+It's three weeks later. Doug is now at Caltech campus and needs to make his appointment at the Career Center in the Student Services building.
+
+San Pasqual St.
+
+> n. e. s. (+1)
+
+Career Center Office
+
+> x woman. x rack. x mortera. x toxicola. x locktheon.
+
+Frosst Belker enters. He's here to hire Brian too.
+
+> x Belker.
+
+Ms. Dinsdale finally gets off the phone and talks to both of you.
+
+> yes. yes. read note. accept. (+1)
+
+Belker too accepts Brian Stamer's challenge. The receptionist tells you that Stamer lives in Dabney House, room 4, and that Ditch Day runs until 5:00 pm. Belker leaves. The first thing to do is find Stamer's room and see what exactly his stack is. You can follow Belker there if you don't waste turns doing something else.
+
+> n. w. s. w. s. s. e. n. n. (+1)
+
+Alley One North
+
+When you and Belker arrive outside Stamer's door, you find two other students here: Aaron and Erin.
+
+> x sign. x Aaron. x Erin.
+
+Belker pays them $5 each to go find another stack to work on. They take it. Before they go, Erin gives you a key to the lab, which the sign said is at 022 Bridge.
+
+> x box. x connector.
+
+A steady stream of Mitachron movers start bringing in boxes and crates. This will go on for a while. You might take a moment to check out what you brought with you today. The tote bag is your player's holdall, of course.
+
+> x table. look under table. x wires.
+
+> i. x tote bag. x wallet. open it.
+
+> x credit card. x alumni card. x license. put wallet in pocket.
+
+Now go find that lab. You have a map with you, which can help direct you, by the way.
+
+> s. s. w. n.
+
+Quad
+
+> x workers. x gear. (It's a Netbisco 9099 network analyzer.)
+
+> w. w. w. s.
+
+Bridge Lab Entryway
+
+Ah, a little history. Don't be afraid to dawdle. Although the clock is ticking, many actions take a lot less game time than you'd think.
+
+> x case. x notebook. x motor. d.
+
+Basement Hall
+
+Note that the game is clever enough to auto-unlock a door if you have the key for it.
+
+> n.
+
+Lab 022
+
+> x calculator. take it. x folder. take it. read it.
+
+Note the references to a journal (Quantum Review Letters number 70:11c), a magazine (Science & Progress XLVI-3), and a textbook (Introductory Quantum Physics by Blömner).
+
+> x bench. x experiment. push green button. x platform.
+
+> x shelves. take generator. x it. x knob. x connector.
+
+> take oscilloscope. (+2) x probe.
+
+> x ball. (It's a SPY-9 camera.)
+
+> take camera. x cable. pull it. x tag.
+
+The blue cable's tag has 3349-2016 printed on it, and "NIC" in tiny print. I should note that solving the mystery of the spy camera is optional, but there's also points awarded for figuring out why it's there. So, let's try to follow the cable and see what we can find.
+
+By the way, don't worry about leaving doors open and unlocked or about taking all sorts of things that don't belong to you. This game does not penalize you either for not covering your tracks or being a kleptomaniac. Just assume Doug will return everything to their owners after the game's over.
+
+Part 3: Following the Blue Cable
+Lab 022
+
+> s. w. d. n.
+
+Wiring Closet
+
+If we hadn't pulled the blue cable tight, we wouldn't have been able to pick it out here.
+
+> x wiring. x blue wire. s. e.
+
+Storage Room
+
+> x furniture. x boxes. x wood. move wood. n. w.
+
+Narrow Tunnel
+
+> x hole. x wire. w.
+
+T-Intersection
+
+> x wire. s.
+
+Dim Tunnel
+
+Note the west passage doesn't even exist for you until you examine the wire.
+
+> x wire. w. (+10)
+
+Dead End
+
+> x wire. x door.
+
+Oops, the door's opening! Hide!
+
+> hide in nook.
+
+You see the workers use the doorcode 57212 before they leave towards the south.
+
+> type 57212 on door. w. (+5)
+
+Network Room
+
+> x blue cable. (I guess you'll need that analyzer.)
+
+> e. e. n. e. e. e. e. n. e.
+
+Bottom of Shaft
+
+This worker is Plisnik. He's afraid of rats, as should be obvious.
+
+> introduce myself. no. ask Plisnik about rats.
+
+> a himself. x binder. a binder. a nic.
+
+> a analyzer. u.
+
+Part 4: Campus Shopping
+Doug needs to "pick up" a few things around the campus.
+
+Quad
+
+> nw.
+
+Bookstore
+
+The newspaper is how you find out about Jay Santoshnimoorthy, a whiz at programming calculators. You'll meet him later.
+
+> x stand. take newspaper. x animals. take rat.
+
+> x clerk. buy newspaper. take it. read it.
+
+> put rat on counter. yes. open wallet. give credit card to clerk.
+
+> put credit card in wallet. x receipt.
+
+> put wallet in pocket. put rat, receipt, and newspaper in bag.
+
+> se. w. n. e.
+
+Robotics Lab
+
+> x car. x remote. put car and remote in bag.
+
+> w. s. e. n. ne.
+
+Physical Plant Office
+
+And here's your intro to Ernst and Gunther, dueling maintenance men. You'll meet them later too.
+
+If you're having trouble remembering which is which, note that Ernst and Electrician both start with E and that Gunther and Gardener both start with G.
+
+> read memo. read pink card. read yellow card.
+
+> read blue card. read green card. put all from counter in bag.
+
+Let's head back to the stack.
+
+> sw. s. s. e. n. n.
+
+Part 5: Self-education
+Alley One North
+
+Belker and various Mitachron techies are busy with a MegaTester 3000.
+
+> x computer. attach generator to box. turn on generator.
+
+Huh. Xojo, a.k.a. probationary employee 119297, is here.
+
+> x Xojo. ask Xojo about himself. yes.
+
+> take scope. turn on scope. probe box connector with scope.
+
+You are strongly encouraged to ask students for a good EE textbook to consult. You are also encouraged to find something simpler to practice on.
+
+> take generator and scope. s. s. e.
+
+Courtyard
+
+Doug has no use for this mountain, but look at it anyway.
+
+> x mountain. climb mountain. x canisters. s.
+
+Pinball Room
+
+The instruction card is how we learn about Scott in room 39 (Alley 7).
+
+> x Positron. x instruction card. x service door. open it.
+
+> n. u. n.
+
+Upper Seven South
+
+Almost every hallway in Dabney Hovse has graffiti in it, but this one interested me since QUBITS turns out to be a valid topic to ask characters about.
+
+> read graffiti. n.
+
+Upper Seven North
+
+Ah, here's where Aaron and Erin ended up. And Scott's door is here too. Plus an extra challenge: the Commandant 64 stack. I didn't solve that part of the game; I'll add it later to this walkthrough if I do.
+
+> x sign. x computer. ask Erin about stack.
+
+> ask Erin about EE. (+2. They recommend a book by Yves MORGEN.)
+
+> ask Erin about qubits. ask Erin about Jay. (Jay's working in Alley Four.)
+
+> knock on 39. (Aaron says Scott's working in Alley 3.)
+
+Off to the library next. We've got lots of books to read.
+
+> look up library on map. s. s. d. w. w.
+
+Orange Walk
+
+> look up library on map. n. w. w. w. w.
+
+DIRECTORY
+2 - Chemistry/Periodicals
+3 - Electrical Engineering
+4 - Aeronautics/Materials Science
+5 - Astronomy
+6 - Physics/Mathematics
+7 - Biology
+8 - Computer Science
+9 - Geology
+Millikan Lobby
+
+> x receptionist. x textbook. a textbook. g. g.
+
+> open wallet. show alumni card to him. put wallet in pocket.
+
+> read directory. x elevator. push up. n.
+
+Elevator
+
+> push 3. z. z. s.
+
+Third floor
+
+> look up morgen. read it. (+1. Mentions a TOWNSEND manual.)
+
+> look up townsend. (+2) read it.
+
+> push up. n.
+
+Elevator
+
+> push 6. z. z. s.
+
+Sixth floor
+
+> look up blomner. read it.
+
+> look up 70:11c. read it.
+
+> push down. n.
+
+Elevator
+
+> push 2. z. z. s.
+
+Second floor
+
+> look up XLVI-3. read it. (Mild prompting to re-read Stamer's paper, now that you've read all the introductory references.)
+
+> read report. (+5. New ref: Quantum Review Letters 73:9a.)
+
+> push up. n.
+
+Elevator
+
+> push 6. z. z. s.
+
+Sixth floor
+
+> look up 73:9a. read it.
+
+> push down. n.
+
+Elevator
+
+You'll automatically check out the books with the librarian when you leave.
+
+> push 1. z. z. s. e.
+
+Part 6: Network analysis
+Doug "borrows" a network analyzer and traces the blue cable signals further.
+
+Millikan Pond
+
+> s. d. w. d. e. n. e. e. n.
+
+T-Intersection
+
+> take car. put rat on car. drop car. x car.
+
+> take remote. x it. x joystick. push joystick east.
+
+Plisnik screams and races past you. We don't see him again.
+
+> e.
+
+Bottom of Shaft
+
+A worker calls down to Plisnik if he saw a rat.
+
+> yes. ask workers for analyzer. (+10)
+
+> take car. take binder. read it.
+
+Look up the number we saw on the blue cable's tag.
+
+> look up 3349-2016 in binder. (REF 3312-8622, eh?)
+
+> look up 3312-8622 in binder. (IP address: 192.168.72.214)
+
+Don't forget that a dingy sheet fell out of the binder when we took it.
+
+> take dingy sheet. read it.
+
+Ouch. Bad English overload. Anyway, we need to convert the IP address into hex; you know how to do that, right? And the handwritten note at the bottom of the sheet tells us the equivalent function codes for the Netbisco 9099. So instead of using code 71 to sniff data packets, use code 09. Head over to the Network Room and put all this to work.
+
+> w. s. w. w. w. w. s. w. w.
+
+Network Room
+
+> x box. plug analyzer into jack.
+
+So 192.168.72.214 becomes C0A848D6 in hex, and preface with 09 to start tracing.
+
+> type 09C0A848D6 on analyzer. (+5)
+
+A new IP address: 192.168.11.38. Which computer has that address? The Network Office can help, but it doesn't open until 1pm, after lunch.
+
+Let's head back to Dabney, after a slight detour in the tunnels.
+
+> e. e. n. n. n. e. e.
+
+Older Tunnel
+
+This is optional stuff.
+
+> x breaker box. x DEI. e. s. e. u. s. e. e.
+
+Part 7: Chickens and Positron
+It's time for giant chickens and some Positron repair work.
+
+Courtyard
+
+Aaron and Erin said Scott's doing the giant chicken stack in Alley 3.
+
+> sw. e.
+
+Alley Three East
+
+> x chickens. x notebook. read it. (Chickens can only talk to other chickens!)
+
+> x cardboard box. enter it.
+
+Chickenator
+
+You can't carry anything while in the chicken suit.
+
+> read sign. put all except suit in bag. drop bag.
+
+> wear suit. pull switch. out.
+
+Alley Three East
+
+Alas, you can't wander all over campus as a giant chicken. While wearing it, you're restricted to the locations in Alley Three.
+
+> ask chickens about Scott. ask Scott about Positron.
+
+> ask what's wrong. offer to repair it. yes.
+
+> explain about Stamer's stack. pay for repairs. (+5. You now have a brass key.)
+
+> in.
+
+Chickenator
+
+> pull switch. remove suit. put suit on hook.
+
+> take bag. out. w. n. s.
+
+Pinball Room
+
+> unlock door. open it. take sack. x it. search it.
+
+> x boards. probe boards with scope. turn game on.
+
+> probe boards with scope. look up video amps in manual.
+
+> probe video amps with scope. look up 1a80 in manual.
+
+> probe 1a80 with scope. put bad crystal in bag.
+
+> search sack. put new crystal in socket. turn game on. (+10)
+
+> take scope and yellow note. turn off game. close door. lock it.
+
+> n. w. n. n.
+
+Part 8: Explosion, lunch, and secret message
+Doug tries again to probe the black box's secrets, but an explosion interrupts. Instead, Doug has lunch with Aaron and Erin and they chat. After lunch, Doug does learn one of the black box's secrets.
+
+Alley One North
+
+> connect generator to box. turn on generator. probe box connector with scope.
+
+Er, did the MegaTester explode? You're flung to Breezeway, and thick smoke prevents you or Belker continuing with the stack for now. Belker orders his men to lunch. Where exactly they go is unclear. Surprisingly, the Athenaeum Dining Room doesn't open for lunch, so that's not an option.
+
+Breezeway
+
+> x smoke. n.
+
+Aaron and Erin arrive.
+
+> tell Erin about explosion. ask Erin about lunch. e. e. n.
+
+Dining Room
+
+Erin takes the lead in most conversations; it's easy to forget Aaron is there too.
+
+> x food. eat food. tell Erin about Omegatron.
+
+> t job. t job offers. t bureaucracy. t start-up.
+
+> t stack. x watch. (It's after 1pm; you should get back to the stack.)
+
+> s. w. w. n. n.
+
+Alley One North
+
+Belker, Xojo, and the techies are back. The computer is new, though. Your generator and oscilloscope are undamaged.
+
+> x computer. probe box connector with scope. (+10)
+
+You found a hidden message: "HOVARTH(17281392)". You're prompted to look it up in a DRD math table.
+
+> take generator and scope. s. s. w. n. w. w. w. w.
+
+Millikan Lobby
+
+> push up. n.
+
+Elevator
+
+> push 6. z. z. s.
+
+Sixth floor
+
+> look up DRD. read it. look up hovarth in DRD.
+
+> push down. n.
+
+Elevator
+
+> push 1. z. z. s. e. e. e. e.
+
+Quad
+
+Since it's after 1pm, we can visit the Network Office now.
+
+> n. n. n. w.
+
+Network Office
+
+> x man. x desk. x binders.
+
+> ask man about router. ask man about NIC.
+
+> ask man about 192.168.11.38. t camera.
+
+> a job number. (1082-9686.)
+
+> look up 1082-9686 in binder. (+10)
+
+The computer that the spy camera is reporting to is in Sync Lab Office (2nd floor), door combo 16974.
+
+> e. s. s. s. s. w.
+
+Sync Lot
+
+Not getting in that way without a key.
+
+> x sync lab. x door. open door.
+
+> e. e. e.
+
+Part 9: Jay, Ernst, and Gunther
+Doug wants a Hovarth number calculated, but he can't write the program himself. He read in the newspaper that Jay can program calculators, and Erin told you Jay's working in Alley Four...
+
+Courtyard
+
+> sw. u.
+
+Alley Four
+
+> x papers. x blueprint map. x envelopes.
+
+> ask students about Jay. ask Jay about programming.
+
+> a hovarth. a programming hovarth numbers.
+
+> t 73:9a. give it to Jay. w.
+
+Alley Four West
+
+> read sign. e.
+
+Alley Four
+
+Jay should be finished reading the journal.
+
+> give calculator to Jay. ask Jay about Guggenheim.
+
+Jay wants the Turbo Power Squirrel in the Guggenheim wind tunnel before he'll program your calculator. Can we get in there?
+
+> d. n. w. w. n. w.
+
+West Olive walk
+
+> sw. se. (Both the Guggenheim and Firestone are locked.)
+
+> x Guggenheim. x wind tunnel. x windows of Guggenheim.
+
+> x Firestone. x grills. climb grills. x bridge.
+
+Oh, I need a cherry picker, do I?
+
+> s.
+
+pink	E, go to Lauritsen
+blue	E, go to Orange Walk
+green	G, go to Lawn near Beckman
+yellow	G, go to East Olive Walk
+Lauritsen-Downs Courtyard
+
+> x door. x man. ask man about Guggenheim.
+
+> ask man about Ernst. ask man about Gunther.
+
+We want Ernst and Gunther to meet, but no pair of index cards send them to the same place. However, their routes between their assignments all pass through the Quad, so this is a timing puzzle, to get them both in the Quad at the same time.
+
+Ernst is slower (he has to put his stuff away first) and Gunther moves immediately on getting a new assignment, so we have to show an index card to Ernst first, then race over to Gunther and show him his card second. I don't know if there's multiple answers for this puzzle, but it works when both men are returning to their original locations.
+
+> show blue card to Ernst. n. e. n. w.
+
+Lawn near Beckman
+
+> ask gardener about Gunther. show yellow card to Gunther. e. s. s.
+
+Orange Walk
+
+Okay, do this part quickly without extra steps.
+
+> show pink card to Ernst. n. e.
+
+East Olive Walk
+
+> show green card to Gunther. w. (+5)
+
+Quad
+
+Oh, dear. I hope Ernst is a good runner. (Pause.) I'm sure he'll be okay. Anyway, yay, we got a cherry picker to play with!
+
+> x picker. enter basket. e.
+
+East Olive Walk
+
+"Mr. Happy Gear" is an Easter Egg in the cannon barrel; you don't need it. Maybe it's a memento from Ditch Day Drifter?
+
+Also, in case you're wondering, the cherry picker is limited to just eight outdoor locations. You cannot reach Millikan Pond with it (the path west of Rock Garden is too narrow), nor reach Orange Walk south of Quad (because of stairs), nor enter San Pasqual St. with it (the cherry picker isn't road safe). So you can't check out the top of the mountain in the Dabney House courtyard with this thing.
+
+> raise basket. look in cannon. take gear. x gear.
+
+> w. w.
+
+Part 10: Guggenheim and Sync Lab
+Doug rescues Turbo Power Squirrel from the Guggenheim wind tunnel. He also discovers Belker's secret office inside the Sync Lab, where the spy camera's video feed is going.
+
+West Olive Walk
+
+Save at this point. There's a bug with the stairs button in the Sync Lab; pushing it can accidentally lock yourself out of victory. Part of the problem is that the cherry picker's controls are entirely in its basket; you can't lower the basket from the ground level.
+
+> save. raise basket. climb grill. u. w.
+
+Roof of Guggenheim
+
+> x tunnel. x panel. open panel. s.
+
+Wind Tunnel Lab
+
+> x tunnel. open tunnel. take squirrel. x it.
+
+> n. e. se.
+
+Roof of Sync Lab
+
+> x fixture. open door. d. n. e.
+
+Catwalk at Gap
+
+Unfortunately, the panel is jammed and the buttons do nothing.
+
+> x bridge. x panel. push green button. push red button.
+
+> w. s. s. ne.
+
+Open Area
+
+> x crate. look under crate. n. sw.
+
+Under Stairs
+
+> push crate east.
+
+Open Area
+
+> push crate north.
+
+Under Catwalk
+
+> s. sw. n. n. e. e. e. (+5) e.
+
+Catwalk, Outside Office
+
+Remember, you learned the door combo from Plisnik's binder after talking to the guy in the Network Office.
+
+> x door. type 16974 on door. n. (+10)
+
+Office
+
+Unfortunately, I have no idea what topic to find in the binders.
+
+> x computer. read computer. x monitors. x lab.
+
+> x desk. x binders.
+
+Let's head back to Dabney House.
+
+> s. w. w. w. w. s. s. ne. n. e.
+
+Tunnel
+
+CAUTION: Don't push the button. The button should lower the stairs from the Office, but instead, the game seems to remove the other stairs in the southwest corner of the lab. If you push this button, you can no longer reach the Guggenheim wind tunnel nor the Sync Lab office.
+
+> s. e. e. e. e.
+
+Part 11: Calculating Hovarth
+Doug uses quantum physics to calculate a large Hovarth number, thanks to Jay's programming skills and Brian's lab experiment.
+
+Courtyard
+
+> sw. u.
+
+Alley Four
+
+Remember that Jay must also read 73:9a (which we did earlier) for this to work. Don't forget what he says about typing plus-plus-plus quickly when "the quantum thingy is going".
+
+> give squirrel to Jay. (+5) give calculator to Jay.
+
+Now back to Brian's lab.
+
+> d. n. w. w. n. w. w. w. s. d. n.
+
+Lab 022
+
+> take dome. type 17281392 on calculator. put calculator on plate.
+
+> push green button. type +++ on calculator.
+
+The answer is 35506392. You also believe you know a way to communicate that number to the black box using the signal generator.
+
+In this walkthrough, we're going to head straight back to the black box and finish this. But if there's still lots of time before 5 pm (examine your watch), try examining all the graffiti in Dabney House or help Aaron and Erin solve the stack in Upper Seven North.
+
+This walkthrough also skipped over three other stacks in the game: blasting through a concrete block, removing fruit flies, and solving a marble maze. Although you can play with the maze, you can't really do much but observe these other stacks.
+
+> take calculator. s. u. n.
+
+> e. e. e. s. e. n. n.
+
+Part 12: Endgame
+Doug solves the black box and offers Brian a job at his company. But which company?
+
+Alley One North
+
+Belker will notice your activity and taunt you all through this.
+
+> connect generator to box.
+
+> set amplitude to 3. set it to 5. g. set it to 0.
+
+> set it to 6. set it to 3. set it to 9. set it to 2. (+10)
+
+> w.
+
+Room 4
+
+> look under bed. x snacks.
+
+Aaron and Erin arrive.
+
+> ask Erin about stack. eat snacks. x bookshelves.
+
+Brian Stamer arrives.
+
+> yes. tell Brian about stack. yes.
+
+> tell Brian about camera. tell Brian about Omegatron.
+
+Belker enters after your spiel.
+
+> x cap. (If you try talking, Belker totally interrupts you.)
+
+Belker gloats with the news that Omegatron has just been taken over by Mitachron!
+
+> wear cap. (Brian offers you a job in his new start-up.)
+
+> yes. tell Belker I quit.
+
+*** YOU HAVE SUCCEEDED ***
+
+> afterword. amusing. credits. full score. quit.

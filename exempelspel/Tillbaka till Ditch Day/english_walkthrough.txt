@@ -1,0 +1,717 @@
+x Xojo.
+x Guanmgon.
+x SCU.
+say yes.
+x CT-22.
+take HV chip.
+x tester.
+read stickers.
+open tester.
+take LV chip.
+put it in socket.
+put CT in slot.
+turn on SCU.
+w.
+w.
+ask Xojo about Mitachron.
+smell Koffee.
+drink it.
+w.
+x me.
+tell Xojo about hiring freeze.
+x contract.
+x resume.
+ask Xojo about Kowtuan.
+ask Xojo about ChipTechNo.
+ask Xojo about Magnxi.
+ask Xojo about elevator.
+x watch.
+ask Xojo about power plant.
+ask Xojo about Guanmgon.
+open door.
+ask Xojo about elevator.
+g.
+x ceiling.
+x panel.
+open panel.
+climb Xojo.
+open panel.
+u.
+x cable.
+pull it.
+x protrusions.
+open door.
+x mechanism.
+put resume in mechanism.
+x panel.
+take it.
+put it in mechanism.
+open door.
+e.
+ask Xojo about elevator.
+e.
+e.
+n.
+n.
+n.
+x bridge.
+x main bridge.
+x canyon.
+ask Xojo about bridge.
+g.
+g.
+g.
+n.
+n.
+ask Xojo about bridge.
+n.
+d.
+ask Xojo about bridge.
+u.
+ask Xojo about bridge.
+ne.
+in.
+x Magnxi.
+x hat.
+x uniform.
+talk to Magnxi.
+g.
+g.
+x crowd.
+x Belker.
+x band.
+x food.
+x waiter.
+x print-out.
+n.
+e.
+s.
+x woman.
+x rack.
+x mortera.
+x toxicola.
+x locktheon.
+x Belker.
+yes.
+yes.
+read note.
+accept.
+n.
+w.
+s.
+w.
+s.
+s.
+e.
+n.
+n.
+x sign.
+x Aaron.
+x Erin.
+x box.
+x connector.
+x table.
+look under table.
+x wires.
+i.
+x tote bag.
+x wallet.
+open it.
+x credit card.
+x alumni card.
+x license.
+put wallet in pocket.
+s.
+s.
+w.
+n.
+x workers.
+x gear.
+w.
+w.
+w.
+s.
+x case.
+x notebook.
+x motor.
+d.
+n.
+x calculator.
+take it.
+x folder.
+take it.
+read it.
+x bench.
+x experiment.
+push green button.
+x platform.
+x shelves.
+take generator.
+x it.
+x knob.
+x connector.
+take oscilloscope.
+x ball.
+take camera.
+x cable.
+pull it.
+x tag.
+s.
+w.
+d.
+n.
+x wiring.
+x blue wire.
+s.
+e.
+x furniture.
+x boxes.
+x wood.
+move wood.
+n.
+w.
+x hole.
+x wire.
+w.
+x wire.
+s.
+x wire.
+w.
+x wire.
+x door.
+hide in nook.
+type 57212 on door.
+w.
+x blue cable.
+e.
+e.
+n.
+e.
+e.
+e.
+e.
+n.
+e.
+introduce myself.
+no.
+ask Plisnik about rats.
+a himself.
+x binder.
+a binder.
+a nic.
+a analyzer.
+u.
+nw.
+x stand.
+take newspaper.
+x animals.
+take rat.
+x clerk.
+buy newspaper.
+take it.
+read it.
+put rat on counter.
+yes.
+open wallet.
+give credit card to clerk.
+put credit card in wallet.
+x receipt.
+put wallet in pocket.
+put rat, receipt, and newspaper in bag.
+se.
+w.
+n.
+e.
+x car.
+x remote.
+put car and remote in bag.
+w.
+s.
+e.
+n.
+ne.
+read memo.
+read pink card.
+read yellow card.
+read blue card.
+read green card.
+put all from counter in bag.
+sw.
+s.
+s.
+e.
+n.
+n.
+x computer.
+attach generator to box.
+turn on generator.
+x Xojo.
+ask Xojo about himself.
+yes.
+take scope.
+turn on scope.
+probe box connector with scope.
+take generator and scope.
+s.
+s.
+e.
+x mountain.
+climb mountain.
+x canisters.
+s.
+x Positron.
+x instruction card.
+x service door.
+open it.
+n.
+u.
+n.
+read graffiti.
+n.
+x sign.
+x computer.
+ask Erin about stack.
+ask Erin about EE.
+ask Erin about qubits.
+ask Erin about Jay.
+knock on 39.
+look up library on map.
+s.
+s.
+d.
+w.
+w.
+look up library on map.
+n.
+w.
+w.
+w.
+w.
+x receptionist.
+x textbook.
+a textbook.
+g.
+g.
+open wallet.
+show alumni card to him.
+put wallet in pocket.
+read directory.
+x elevator.
+push up.
+n.
+push 3.
+z.
+z.
+s.
+look up morgen.
+read it.
+look up townsend.
+push up.
+n.
+push 6.
+z.
+z.
+s.
+look up blomner.
+read it.
+look up 70:11c.
+read it.
+push down.
+n.
+push 2.
+z.
+z.
+s.
+look up XLVI-3.
+read it.
+read report.
+push up.
+n.
+push 6.
+z.
+z.
+s.
+look up 73:9a.
+read it.
+push down.
+n.
+push 1.
+z.
+z.
+s.
+e.
+s.
+d.
+w.
+d.
+e.
+n.
+e.
+e.
+n.
+take car.
+put rat on car.
+drop car.
+x car.
+take remote.
+x it.
+x joystick.
+push joystick east.
+e.
+yes.
+ask workers for analyzer.
+take car.
+take binder.
+read it.
+look up 3349-2016 in binder.
+look up 3312-8622 in binder.
+take dingy sheet.
+read it.
+w.
+s.
+w.
+w.
+w.
+w.
+s.
+w.
+w.
+x box.
+plug analyzer into jack.
+type 09C0A848D6 on analyzer.
+e.
+e.
+n.
+n.
+n.
+e.
+e.
+x breaker box.
+x DEI.
+e.
+s.
+e.
+u.
+s.
+e.
+e.
+sw.
+e.
+x chickens.
+x notebook.
+read it.
+x cardboard box.
+enter it.
+read sign.
+put all except suit in bag.
+drop bag.
+wear suit.
+pull switch.
+out.
+ask chickens about Scott.
+ask Scott about Positron.
+ask what's wrong.
+offer to repair it.
+yes.
+explain about Stamer's stack.
+pay for repairs.
+You now have a brass key.
+in.
+pull switch.
+remove suit.
+put suit on hook.
+take bag.
+out.
+w.
+n.
+s.
+unlock door.
+open it.
+take sack.
+x it.
+search it.
+x boards.
+probe boards with scope.
+turn game on.
+probe boards with scope.
+look up video amps in manual.
+probe video amps with scope.
+look up 1a80 in manual.
+probe 1a80 with scope.
+put bad crystal in bag.
+search sack.
+put new crystal in socket.
+turn game on.
+take scope and yellow note.
+turn off game.
+close door.
+lock it.
+n.
+w.
+n.
+n.
+connect generator to box.
+turn on generator.
+probe box connector with scope.
+x smoke.
+n.
+tell Erin about explosion.
+ask Erin about lunch.
+e.
+e.
+n.
+x food.
+eat food.
+tell Erin about Omegatron.
+t job.
+t job offers.
+t bureaucracy.
+t start-up.
+t stack.
+x watch.
+s.
+w.
+w.
+n.
+n.
+x computer.
+probe box connector with scope.
+take generator and scope.
+s.
+s.
+w.
+n.
+w.
+w.
+w.
+w.
+push up.
+n.
+push 6.
+z.
+z.
+s.
+look up DRD.
+read it.
+look up hovarth in DRD.
+push down.
+n.
+push 1.
+z.
+z.
+s.
+e.
+e.
+e.
+e.
+n.
+n.
+n.
+w.
+x man.
+x desk.
+x binders.
+ask man about router.
+ask man about NIC.
+ask man about 192.168.11.38.
+t camera.
+a job number.
+look up 1082-9686 in binder.
+e.
+s.
+s.
+s.
+s.
+w.
+x sync lab.
+x door.
+open door.
+e.
+e.
+e.
+sw.
+u.
+x papers.
+x blueprint map.
+x envelopes.
+ask students about Jay.
+ask Jay about programming.
+a hovarth.
+a programming hovarth numbers.
+t 73:9a.
+give it to Jay.
+w.
+read sign.
+e.
+give calculator to Jay.
+ask Jay about Guggenheim.
+d.
+n.
+w.
+w.
+n.
+w.
+sw.
+se.
+/ Guggenheim.
+x wind tunnel.
+x windows of Guggenheim.
+x Firestone.
+x grills.
+climb grills.
+x bridge.
+s.
+x door.
+x man.
+ask man about Guggenheim.
+ask man about Ernst.
+ask man about Gunther.
+show blue card to Ernst.
+n.
+e.
+n.
+w.
+ask gardener about Gunther.
+show yellow card to Gunther.
+e.
+s.
+s.
+show pink card to Ernst.
+n.
+e.
+show green card to Gunther.
+w.
+x picker.
+enter basket.
+e.
+raise basket.
+look in cannon.
+take gear.
+x gear.
+w.
+w.
+
+raise basket.
+climb grill.
+u.
+w.
+x tunnel.
+x panel.
+open panel.
+s.
+x tunnel.
+open tunnel.
+take squirrel.
+x it.
+n.
+e.
+se.
+x fixture.
+open door.
+d.
+n.
+e.
+x bridge.
+x panel.
+push green button.
+push red button.
+w.
+s.
+s.
+ne.
+x crate.
+look under crate.
+n.
+sw.
+push crate east.
+push crate north.
+s.
+sw.
+n.
+n.
+e.
+e.
+e.
+x door.
+type 16974 on door.
+n.
+x computer.
+read computer.
+x monitors.
+x lab.
+x desk.
+x binders.
+s.
+w.
+w.
+w.
+w.
+s.
+s.
+ne.
+n.
+e.
+s.
+e.
+e.
+e.
+e.
+sw.
+u.
+give squirrel to Jay.
+d.
+n.
+w.
+w.
+n.
+w.
+w.
+w.
+s.
+d.
+n.
+take dome.
+type 17281392 on calculator.
+put calculator on plate.
+push green button.
+type +++ on calculator.
+take calculator.
+s.
+u.
+n.
+e.
+e.
+e.
+s.
+e.
+n.
+n.
+connect generator to box.
+set amplitude to 3.
+set it to 5.
+g.
+set it to 0.
+set it to 6.
+set it to 3.
+set it to 9.
+set it to 2.
+w.
+look under bed.
+x snacks.
+ask Erin about stack.
+eat snacks.
+x bookshelves.
+yes.
+tell Brian about stack.
+yes.
+tell Brian about camera.
+tell Brian about Omegatron.
+x cap.
+wear cap.
+yes.
+tell Belker I quit.
+afterword.
+amusing.
+credits.
+full score.
+quit.

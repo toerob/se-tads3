@@ -247,8 +247,8 @@ property knownFollowDest;
 
 + AlwaysWorn 'armbandsur/klocka/ur' 'armbandsur'
     "Det är inget fancy; bara en billig analog modell. Den visar för närvarande 
-    <<clockManager.checkTimeFmt('[am][pm]h:mm a')>>. "
-
+    <<clockManager.checkTimeFmt('24 h:mm')>>. "
+    // NOTE that in the original it is AM/PM: <<clockManager.checkTimeFmt('[am][pm]h:mm a')>>. "
     dobjFor(Open) { verify() { illogical('Du skulle behöva speciella 
         urmakeriverktyg för att öppna klockan, och du skulle förmodligen 
         bara ha sönder den om du gjorde det. '); } }

@@ -15,6 +15,7 @@
 -pre
 -nodef
 -D LANGUAGE=sv_se
+-D __DEBUG
 -D MESSAGESTYLE=neu
 -D INSTRUCTIONS_MENU
 -FI ../../include
@@ -33,7 +34,9 @@
 
 # Extra during translation. Remove later
 -source ../../lib/dynfunc
+
 -source ../../debug
+-source tests2/tests2
 
 
 -source ../../lib/reflect
@@ -60,7 +63,10 @@
 -source pathfind
 -source elev
 -source subtime
+
 -source speltester
+
+
 
 -res
 gameinfo.txt

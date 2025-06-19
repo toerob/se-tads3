@@ -9,17 +9,18 @@
 #include <sv_se.h>
 #include "ditch3.h"
 
+
 /* ------------------------------------------------------------------------ */
 /*
  *   The bookstore
  */
-bookstore: Room 'Bookstore' 'the bookstore'
-    "Most of this large, bright space is crammed with low bookshelves
-    in narrow rows, but the front part is a little more open, with books
-    displayed on a series of tables.  The exit is southeast, and
-    next to it is the check-out counter and a small newspaper stand. "
+bookstore: Room 'Bokhandel' 'bokhandeln'
+    "Större delen av detta stora, ljusa utrymme är fyllt med låga bokhyllor
+    i smala rader, men den främre delen är lite mer öppen, med böcker
+    utställda på en rad bord. Utgången är åt sydost, och
+    bredvid den finns kassan och ett litet tidningsställ. "
 
-    vocabWords = '(book) bookstore/store'
+    vocabWords = '(bok) bokhandel/affär'
 
     southeast = quad
     out asExit(southeast)
@@ -44,8 +45,8 @@ bookstore: Room 'Bookstore' 'the bookstore'
         if (lst.length() != 0)
         {
             /* complain about it */
-            "You realize you're carrying unpurchased merchandise;
-            you shouldn't leave until you pay for it. ";
+            "Du inser att du bär på obetalda varor;
+            du bör inte lämna förrän du har betalat för dem. ";
             
             /* stop the action short */
             exit;
@@ -56,8 +57,8 @@ bookstore: Room 'Bookstore' 'the bookstore'
          *   us to take it 
          */
         if (bookstoreCounter.contents.indexWhich({x: x.isPaidFor}) != nil)
-            "The clerk calls after you.  <q>Sir! Don't forget your
-            purchase!</q><.p>";
+            "Expediten ropar efter dig. <q>Herrn! Glöm inte ditt
+            inköp!</q><.p>";
     }
 
     /* construct a list of all buyable objects in the bookstore */
@@ -65,61 +66,61 @@ bookstore: Room 'Bookstore' 'the bookstore'
         Buyable, {x: x.bookstorePrice != nil}))
 ;
 
-+ Fixture, Container 'small newspaper stand/basket/legs' 'newspaper stand'
-    "It's just a little basket on legs, for holding a stack of
-    folded newspapers. "
++ Fixture, Container 'litet lilla tidning^s+ställ+et/korg+en/ben+et/ställ+et' 'tidningsställ'
+    "Det är bara en liten korg på ben, för att hålla en hög
+    vikta tidningar. "
 
     /* don't list my contents in the room description */
     contentsListed = nil
 ;
 ++ newspaper: Buyable, Readable
-    'student california comic paper/newspaper/tech/copy/
-    article/articles/reviews/strip'
+    'student+en kalifornien komisk+t tidning+en/papper+et/tech/exemplar+et/
+    artikel+n/recension+en/serie+n*artiklar+na recensioner+na'
     '<i>California Tech</i>'
-    "The <i>California Tech</i> is the student newspaper.  It's
-    only a few pages, so it wouldn't take long to read. "
+    "<i>California Tech</i> är studenttidningen. Den är
+    bara några sidor lång, så det skulle inte ta lång tid att läsa den. "
 
-    aName = 'a copy of the <i>California Tech</i>'
+    aName = 'ett exemplar av <i>California Tech</i>'
 
-    readDesc = "You glance through the few pages of the paper.
-        There's an article on some esoteric matter of politics
-        in Ricketts, another on proposed changes to the undergrad
-        humanities requirements, a review of a new local restaurant,
-        another of a Theater Arts play.  You read through an amusing
-        article about Jay Santoshnimoorthy, a current Darb, who got
-        on the Wayne Alders show (the late-night cable talk show)
-        with his amazing ability to program pocket calculators.  On
-        the show, the article says, he programmed a basic four-function
-        solar-powered calculator to speak the little catch-phrases
-        that Wayne's announcer/sidekick Phil is always saying.  There's
-        also a home-grown comic strip; in this episode, the characters
-        are in some kind of sleep-deprivation economics experiment. "
+    readDesc = "Du bläddrar igenom de få sidorna i tidningen.
+        Det finns en artikel om någon esoterisk politisk fråga
+        i Ricketts, en annan om föreslagna ändringar i grundutbildningens
+        humaniorakrav, en recension av en ny lokal restaurang,
+        en annan om en teaterföreställning. Du läser igenom en rolig
+        artikel om Jay Santoshnimoorthy, en nuvarande Darb, som kom
+        med i Wayne Alders show (den sena nattens kabel-talkshow)
+        med sin fantastiska förmåga att programmera miniräknare. På
+        showen, säger artikeln, programmerade han en enkel fyra-funktions
+        soldriven miniräknare att säga de små slagorden
+        som Waynes programledare/sidekick Phil alltid säger. Det finns
+        också en hemmagjord tecknad serie; i denna episod är karaktärerna
+        i någon slags sömnbristexperiment i ekonomi. "
 
     /* it's bookstore merchandise, but it's free */
     bookstorePrice = 0
 ;
 
-+ bookstoreClerk: Person 'older lanky man/clerk/cashier*men*people' 'clerk'
-    "He's an older man, very lanky, wearing reading glasses. "
++ bookstoreClerk: Person 'äldre gänglig man/expedit/kassör*män*personer' 'expedit'
+    "Han är en äldre man, mycket gänglig, som bär läsglasögon. "
 
     isHim = true
-    actorHereDesc = "A clerk is standing behind the counter. "
+    actorHereDesc = "En expedit står bakom disken. "
 
     defaultGreetingResponse(actor)
     {
         if (bookstoreRegister.curBalance != 0)
             initiateConversation(nil, 'clerk-checkout');
         else
-            "<q>Hi,</q> you say.
-            <.p><q>Welcome to the bookstore,</q> he says. ";
+            "<q>Hej,</q> säger du.
+            <.p><q>Välkommen till bokhandeln,</q> säger han. ";
     }
 
     dobjFor(Pay)
     {
         verify() { }
-        action() { "The clerk indicates the counter.  <q>Just put
-            anything you want to buy here for me, and I'll ring
-            it up.</q> "; }
+        action() { "Expediten pekar mot disken. <q>Lägg bara
+            allt du vill köpa här till mig, så slår jag
+            in det.</q> "; }
     }
 
     dobjFor(PayFor) asDobjFor(Pay)
@@ -134,9 +135,9 @@ bookstore: Room 'Bookstore' 'the bookstore'
             replaceAction(Pay, self);
     }
 ;
-++ InitiallyWorn 'thin little wire reading rectangles/frame/glass/glasses'
-    'reading glasses'
-    "They're just thin little rectangles of glass in a wire frame. "
+++ InitiallyWorn 'tunna små tråd läs rektanglar/båge/glas/glasögon'
+    'läsglasögon'
+    "De är bara tunna små rektanglar av glas i en trådbåge. "
     isPlural = true
     isListedInInventory = nil
 ;
@@ -145,17 +146,16 @@ bookstore: Room 'Bookstore' 'the bookstore'
  *   thing to talk about if we just TALK TO CLERK 
  */
 ++ HelloTopic
-    "<q>Hi,</q> you say.
-    <.p>The clerk looks at you over his reading glasses. <q>Hello.
-    What can I do for you?</q> "
+    "<q>Hej,</q> säger du.
+    <.p>Expediten tittar på dig över sina läsglasögon. <q>Hej.
+    Vad kan jag hjälpa dig med?</q> "
 ;
 +++ AltTopic
-    "<q>Hi,</q> you say.
-    <.p><q>Hello again,</q> the clerk says. <q>Ready to check out?</q>
+    "<q>Hej,</q> säger du.
+    <.p><q>Hej igen,</q> säger expediten. <q>Redo att betala?</q>
     <.convnode clerk-checkout> "
     isActive = (bookstoreRegister.curBalance != 0)
 ;
-
 /* 
  *   asking about unpurchased goods elicits some kind of response; if the
  *   goods are on the counter, it initiates check-out 
@@ -164,10 +164,9 @@ bookstore: Room 'Bookstore' 'the bookstore'
     /* we match on anything buyable */
     matchObj = (bookstore.allBuyables)
 
-    topicResponse = "<q>Is this the check-out counter?</q> you ask
-        the clerk.
-        <.p><q>Yes,</q> he says, looking over his reading glasses.
-        <q>Just put your order on the counter, and I'll ring it up.</q> "
+    topicResponse = "<q>Är det här kassan?</q> frågar du expediten.
+        <.p><q>Ja,</q> säger han och tittar över sina läsglasögon.
+        <q>Lägg bara din beställning på disken, så slår jag in den.</q> "
 ;
 ++ AskTellShowTopic
     /* we match on anything buyable that's on the counter */
@@ -177,97 +176,96 @@ bookstore: Room 'Bookstore' 'the bookstore'
     /* override the plain buyable topic by using a higher score */
     matchScore = 110
 
-    topicResponse = "<q>I'm ready to checkout,</q> you say.
-        <.p><q>Okay,</q> the clerk says.  He looks at the register.
-        <q>That'll be <<bookstoreRegister.curBalanceSpelled>>,
-        please.</q> "
+    topicResponse = "<q>Jag är redo att betala,</q> säger du.
+        <.p><q>Okej,</q> säger expediten. Han tittar på kassan.
+        <q>Det blir <<bookstoreRegister.curBalanceSpelled>>,
+        tack.</q> "
 ;
 
-++ AskTopic, SuggestedAskTopic 'buying( things)?'
-    "<q>Is this the check-out counter?</q> you ask the clerk.
-    <.p>He peers at you over his reading glasses. <q>Yes,</q> he
-    says. <q>Just put your order on the counter here and I'll
-    ring it up.</q> "
+++ AskTopic, SuggestedAskTopic 'köp+a( saker)?'
+    "<q>Är det här kassan?</q> frågar du expediten.
+    <.p>Han tittar på dig över sina läsglasögon. <q>Ja,</q> säger
+    han. <q>Lägg bara din beställning på disken här så slår jag
+    in den.</q> "
 
     name = 'buying things'
 ;
 ++ AskTellTopic [bookstore, bookstoreClerk]
-    "<q>Do you work here?</q>
-    <.p><q>Yes,</q> he says. <q>I can help you with checking out
-    when you're ready.</q> "
+    "<q>Arbetar du här?</q>
+    <.p><q>Ja,</q> säger han. <q>Jag kan hjälpa dig med att betala
+    när du är redo.</q> "
 ;
+
 ++ AskTellAboutForTopic +90
     [eeTextbookRecTopic, eeTextTopic, morgenBook,
      eeLabRecTopic, labManualTopic, townsendBook]
+    "<q>Var har ni böckerna om elektroteknik?</q> frågar du.
+    <.p>Expediten rycker på axlarna. <q>Tyvärr, </q> vi har mestadels
+    slut på läroböcker för året.  Du kan kanske prova biblioteket. 
+    Stor, hög byggnad, där bortåt.</q>  Han håller ut sin arm, 
+    pekandes ungefär västerut.";
 
-    "<q>Where do you keep electrical engineering books?</q> you ask.
-    <.p>The clerk shrugs. <q>Sorry,</q> he says. <q>We're mostly
-    sold out of textbooks for the year.  You might try the
-    library.  Big, tall building, thataway.</q>  He holds out
-    his arm, pointing roughly west. "
-;
 +++ AltTopic
-    "<q>Could you recommend a good electrical engineering
-    textbook?</q> you ask.
-    <.p>He scratches his chin. <q>We're more or less out of stock
-    on most of our textbooks right now,</q> he says. <q>You missed
-    by about eight weeks.  The library should have anything you
-    need, though.</q> He holds out his arm and points roughly west.
-    <q>It's the big tall building a ways thataway.</q> "
+    "<q>Kan du rekommendera en bra lärobok för elektroteknik?</q> frågar du.
+    <.p>Han kliar sin hak. <q>Vi är mer eller mindre utsålda 
+    på de flesta av våra läroböcker just nu,</q> säger han. <q>Du missade
+    på ungefär åtta veckor.  Biblioteket bör ha allt du 
+    behöver, dock.</q> Han håller ut sin arm och pekar ungefär västerut.
+    <q>Det är den stora höga byggnaden en bit bort.</q> "
 
     isActive = gRevealed('need-ee-text')
 ;
+
 ++ AskTellTopic [bsBooks, physicsTextTopic, drdTopic,
                  bloemnerTopic, bloemnerBook]
-    "<q>I'm looking for a textbook,</q> you say.
-    <.p>The clerk shakes his head apologetically. <q>You're a little
-    late in the term,</q> he says.  <q>We're mostly sold out for this
-    year.  Try the library.</q>  He points roughly west. <q>Tall
-    building.  Can't miss it.</q> "
+    "<q>Jag letar efter en lärobok,</q> säger du.
+    <.p>Expediten skakar på huvudet ursäktande. <q>Du är lite
+    sent ute i terminen,</q> säger han. <q>Vi är mestadels utsålda för i
+    år. Prova biblioteket.</q> Han pekar ungefär västerut. <q>Högt
+    hus. Kan inte missa det.</q> "
 ;
 
 ++ AskTellTopic @cxCard
-    "<q>Do you take Consumer Express?</q> you ask.
-    <.p><q>Last I checked, we did,</q> he says. <q>I haven't seen
-    one of those in a long time, though.</q> "
+    "<q>Tar ni Consumer Express?</q> frågar du.
+    <.p><q>Sist jag kollade gjorde vi det,</q> säger han. <q>Jag har inte sett
+    ett sådant på länge dock.</q> "
 ;
 ++ ShowTopic @cxCard
-    "You hold out your credit card for the clerk to see.  <q>Do you
-    take Consumer Express</q> you ask.
-    <.p><q>Last I checked, we did,</q> he says. <q>I haven't seen
-    one of those in a long time, though.</q> "
+    "Du håller fram ditt kreditkort för expediten att se. <q>Tar ni
+    Consumer Express</q> frågar du.
+    <.p><q>Sist jag kollade gjorde vi det,</q> säger han. <q>Jag har inte sett
+    ett sådant på länge dock.</q> "
 ;
 ++ DefaultGiveTopic
-    "The clerk points to the counter. <q>Just put your order on
-    the counter here, and I'll ring it up.</q> "
+    "Expediten pekar på disken. <q>Lägg bara din beställning på
+    disken här, så slår jag in den.</q> "
 ;
-++ DefaultAnyTopic "The clerk just hums and fusses with things behind
-    the counter. "
+++ DefaultAnyTopic "Expediten bara hummar och pysslar med saker bakom
+    disken. "
 ;
 ++ ConvNode 'clerk-checkout'
-    npcGreetingMsg = "<.p><q>Is that everything?</q> he asks. "
+    npcGreetingMsg = "<.p><q>Är det allt?</q> frågar han. "
 ;
 +++ YesTopic
-    "<q>That's it,</q> you say.
-    <.p><q>Okay, that'll be <<bookstoreRegister.curBalanceSpelled>>,</q>
-    he says, pointing to the register. "
+    "<q>Det är allt,</q> säger du.
+    <.p><q>Okej, det blir <<bookstoreRegister.curBalanceSpelled>>,</q>
+    säger han och pekar på kassan. "
 ;
 +++ NoTopic
-    "<q>Not quite yet,</q> you say.
-    <.p><q>Okay, just let me know when you're ready,</q> he says. "
+    "<q>Inte riktigt än,</q> säger du.
+    <.p><q>Okej, låt mig bara veta när du är klar,</q> säger han. "
 ;
 ++ GiveTopic, StopEventList @cxCard
-    ['You hand over your card.  The clerk turns it over a couple of
-    times, looking at it carefully, almost suspiciously.  <q>I haven\'t
-    seen one of these in a long while,</q> he says.  <q>I didn\'t know
-    they still made them.</q>  He shrugs and runs it through the
-    register, then waits a few moments until the register starts
-    printing a receipt.  He hands you back the card along with the
-    receipt.
-    <q>Thanks for coming in,</q> he says. ',
-     'You give the clerk your card.  He runs it through the register,
-     waits for the receipt, and hands you the card and the receipt.
-     <q>Have a good day,</q> he says. ']
+    ['Du räcker över ditt kort. Expediten vänder på det ett par
+    gånger och tittar noga på det, nästan misstänksamt. <q>Jag har inte
+    sett ett sådant här på länge,</q> säger han. <q>Jag visste inte
+    att de fortfarande tillverkade dem.</q> Han rycker på axlarna och drar det genom
+    kassan, väntar sedan några ögonblick tills kassan börjar
+    skriva ut ett kvitto. Han ger dig tillbaka kortet tillsammans med kvittot.
+    <q>Tack för besöket,</q> säger han. ',
+     'Du ger expediten ditt kort. Han drar det genom kassan,
+     väntar på kvittot och ger dig kortet och kvittot.
+     <q>Ha en bra dag,</q> säger han. ']
     
     handleTopic(fromActor, topic)
     {
@@ -306,25 +304,26 @@ bookstore: Room 'Bookstore' 'the bookstore'
     }
 ;
 +++ AltTopic
-    "You hold out your credit card, but the clerk ignores it.
-    <q>I don't need that until after I've rung up your order,</q>
-    he says. "
+
+    "Du håller fram ditt kreditkort, men expediten ignorerar det.
+    <q>Jag behöver inte det förrän efter jag har slagit in din beställning,</q>
+    säger han. "
 
     /* until something's on the counter, this one takes precedence */
     isActive = (bookstoreRegister.curBalance == 0)
 ;
 
 class BookstoreReceipt: Readable
-    'bookstore slip/paper/receipt*slips*receipts' 'bookstore receipt'
-    "It's a narrow <<receiptColor>> slip of paper.  It reads:
+    'bokhandel^s+kvitto+t/kvitto+t*kvitton+a' 'bokhandelskvitto'
+    "Det är en avlång <<receiptColor>>färgad papperslapp.  Kvittot lyder:
     <tt>
-    \bCaltech Bookstore
+    \bCaltechs Bokhandel
     \b<<listLineItems()>>
-    \bTax CA 8.25%\t\ <<totalTax>>
-    \nTOTAL\t\t\t$<<totalPrice>>
-    \nCredit - CUMEX 8771XXXXXXXXXXX
-    \b** Thank You!\ **
-    \n** Come Again **
+    \bSkatt CA 8.25%\t\ <<totalTax>>
+    \nTOTALT\t\t\t$<<totalPrice>>
+    \nKredit - CUMEX 8771XXXXXXXXXXX
+    \b** Tack!\ **
+    \n** Välkommen Tillbaka **
     </tt> "
 
     /* the plural name doesn't include the differentiating color */
@@ -376,8 +375,8 @@ class BookstoreReceipt: Readable
      *   all that much we can buy; at most, we need one per purchasable
      *   item.  
      */
-    diffAdjs = ['white', 'pink', 'yellow', 'gray', 'beige', 'mauve',
-                'chartreuse', 'lavender', 'burgundy', 'maroon', 'cyan']
+    diffAdjs = ['vit', 'purpur', 'gul', 'grå', 'beige', 'lila',
+                'chartreuse', 'lavendel', 'vinröds', 'rödbruns', 'cyan']
 
     /* we always create these dynamically */
     construct(prices, total)
@@ -424,25 +423,24 @@ class BookstoreReceipt: Readable
         return p;
     }
 ;
-
 + bsBooks: CustomImmovable, Readable, Consultable
-    'narrow low book series/table/tables/row/rows/
-    bookshelf/bookshelves/shelf/shelves/book*books'
-    'bookshelves'
-    "You notice that the store isn't stocking much in the way of textbooks
-    right now; the mix of books is more like you'd find in any ordinary
-    bookstore.  That makes sense given how late it is in the academic year;
-    students will have finished purchasing their textbooks weeks ago, and
-    next year's orders won't have been placed yet. "
+    'trång låg bok+serie+n/bord+et/rad+en
+    bok+hylla+n/bok*bok+hyllor+na böcker borden+a rader+na '
+    'bokhyllor'
+    "Du märker att butiken inte har så mycket i form av läroböcker
+    just nu; blandningen av böcker är mer som du skulle hitta i vilken
+    vanlig bokhandel som helst. Det är logiskt med tanke på hur sent
+    det är på läsåret; studenterna har redan köpt sina läroböcker för
+    veckor sedan, och nästa års beställningar har inte lagts än. "
     
     isPlural = true
 
-    cannotTakeMsg = 'You should probably resist the temptation to buy
-        a bunch of books right now.  You can come back later, after
-        you\'re done with Ditch Day, when you have some free time. '
+    cannotTakeMsg = 'Du bör nog motstå frestelsen att köpa
+        en massa böcker just nu. Du kan komma tillbaka senare, efter
+        att du är klar med Ditch Day, när du har lite ledig tid. '
 
-    readDesc = "You should probably avoid getting sucked into browsing
-        here until you're done with Ditch Day. "
+    readDesc = "Du bör nog undvika att fastna i att bläddra
+        här tills du är klar med Ditch Day. "
 
     dobjFor(Buy) asDobjFor(Take)
 
@@ -451,31 +449,31 @@ class BookstoreReceipt: Readable
         verify() { }
         check()
         {
-            "Better not leave things lying around here; someone
-            might mistake them for merchandise. ";
+            "Bättre att inte lämna saker liggande här; någon
+            kanske misstar dem för varor. ";
             exit;
         }
     }
     dobjFor(PutIn) asDobjFor(PutOn)
     
-    lookInDesc = "You wander through the rows of books for a little
-        while.  You can always find plenty of interesting books
-        browsing in a bookstore, but you see nothing you need for
-        the task at hand. "
+    lookInDesc = "Du vandrar genom raderna av böcker en liten
+        stund. Du kan alltid hitta massor av intressanta böcker
+        när du bläddrar i en bokhandel, men du ser inget du behöver för
+        den aktuella uppgiften. "
 
     dobjFor(Enter) asDobjFor(LookIn)
     dobjFor(Board) asDobjFor(LookIn)
 ;
-++ DefaultConsultTopic "You search through the books a bit, but
-    you don't see what you're looking for. "
+++ DefaultConsultTopic "Du letar igenom böckerna lite, men
+    du ser inte vad du letar efter. "
 ;
 
 + bookstoreCounter: Fixture, Surface
-    'long check-out counter' 'check-out counter'
-    "It's a long counter with a cash register at one end. "
+    'lång betalning^s+disk+en' 'betalningsdisk'
+    "Det är en lång disk med en kassaapparat i ena änden. "
 
-    dobjFor(LookBehind) { action() { "The area behind the counter
-        is for employees only. "; } }
+    dobjFor(LookBehind) { action() { "Området bakom disken
+        är endast för anställda. "; } }
 
     iobjFor(PutOn)
     {
@@ -485,47 +483,47 @@ class BookstoreReceipt: Readable
             if (gDobj == cxCard)
                 replaceAction(GiveTo, cxCard, bookstoreClerk);
 
-            /* we can only put for-sale items here */
+            /* vi kan bara lägga till saluförda varor här */
             if (gDobj.bookstorePrice == nil)
             {
-                "{That's dobj} not for sale here; better not confuse
-                matters by putting it on the check-out counter. ";
+                "{Det dobj} där är inte till salu här; bättre att inte
+                förvirra saker genom att lägga det på kassan. ";
                 exit;
             }
 
-            /* ...and only if they haven't already been purchased */
+            /* ...och bara om de inte redan har köpts */
             if (gDobj.isPaidFor)
             {
-                "You've already paid for {that dobj/him}; no need to
-                pay for it again. ";
+                "Du har redan betalat för {det dobj/honom} där; ingen anledning att
+                betala för det igen. ";
                 exit;
             }
         }
     }
 
-    /* on adding objects, add price to cash register balance */
+    /* vid tillägg av objekt, lägg till pris till kassaregisterbalansen */
     notifyInsert(obj, newCont)
     {
         if (obj.bookstorePrice != nil)
         {
             gMessageParams(obj);
             if (obj.bookstorePrice == 0)
-                "<q>There's no charge for {that obj/him},</q> the
-                clerk says as you put {it/him} on the counter. ";
+                "<q>Det är ingen kostnad för {det obj/honom} där,</q> säger
+                expediten när du lägger {det/honom} på disken. ";
             else
-                "As you put {the obj/him} on the counter, the clerk picks
-                it up, carefully turns it over, and punches some keys on
-                the cash register. ";
+                "När du lägger {det obj/honom} där på disken, plockar expediten
+                upp det, vänder försiktigt på det, och trycker på några knappar på
+                kassaapparaten. ";
 
-            /* add the price to the register total */
+            /* lägg till priset till registertotalen */
             bookstoreRegister.curBalance += obj.bookstorePrice;
 
             /* 
-             *   If we have anything to check out, schedule check-out.
-             *   (Schedule it for the end of the action, rather than just
-             *   doing it directly - this will ensure that we only do it
-             *   once for this turn, even if the player is putting a list
-             *   of objects on the counter with a single command.) 
+             *   Om vi har något att checka ut, schemalägg utcheckning.
+             *   (Schemalägg det till slutet av åtgärden, snarare än att
+             *   göra det direkt - detta kommer att säkerställa att vi bara
+             *   gör det en gång för denna tur, även om spelaren lägger en lista
+             *   med objekt på disken med ett enda kommando.) 
              */
             if (bookstoreRegister.curBalance != 0)
                 gAction.callAfterActionMain(checkoutNotifier);
@@ -533,43 +531,42 @@ class BookstoreReceipt: Readable
     }
 
     /*
-     *   Checkout notifier - this is an abstract object we use purely to
-     *   register for afterActionMain notification.  This is called at the
-     *   end of an action where we put something buyable on the counter. 
+     *   Utcheckningsnotifierare - detta är ett abstrakt objekt vi använder
+     *   enbart för att registrera för afterActionMain-notifiering. Detta
+     *   kallas i slutet av en åtgärd där vi lägger något köpbar på disken. 
      */
     checkoutNotifier: object {
         afterActionMain()
         {
-            /* initiate the checkout conversation */
+            /* initiera utcheckningskonversationen */
             bookstoreClerk.initiateConversation(nil, 'clerk-checkout');
         }
     }
 
-    /* on removing objects, deduct price from cash register balance */
+    /* vid borttagning av objekt, dra av pris från kassaregisterbalansen */
     notifyRemove(obj)
     {
         if (obj.bookstorePrice not in (nil, 0) && !obj.isPaidFor)
         {
             gMessageParams(obj);
-            "The clerk makes a little <q>hmm</q> sound and punches
-            some keys on the cash register. ";
+            "Expediten gör ett litet <q>hmm</q>-ljud och trycker
+            på några knappar på kassaapparaten. ";
 
-            /* deduct the price from the register total */
+            /* dra av priset från registertotalen */
             bookstoreRegister.curBalance -= obj.bookstorePrice;
         }
     }
 ;
-++ bookstoreRegister: Decoration 'cash register' 'cash register'
-    "The cash register is currently displaying a total of $<<
-      curBalanceString>>. "
+++ bookstoreRegister: Decoration 'kassa+apparat+en' 'kassaapparaten'
+    "Kassaapparaten visar för närvarande en total på $<<curBalanceString>>. "
 
-    notImportantMsg = 'As a matter of standard shopping protocol,
-        customers don\'t play with cash registers. '
+    notImportantMsg = 'Som en del av standardprotokollet för shopping,
+        leker inte kunder med kassaapparater. '
 
-    /* current balance */
+    /* nuvarande balans */
     curBalance = 0
 
-    /* current balance as a string */
+    /* nuvarande balans som en sträng */
     curBalanceString()
     {
         local total = (curBalance * 10825 + 5000) / 10000;
@@ -581,7 +578,7 @@ class BookstoreReceipt: Readable
             + toString(cents);
     }
 
-    /* current balance, spelled out */
+    /* nuvarande balans, utskriven */
     curBalanceSpelled()
     {
         local total = (curBalance * 10825 + 5000) / 10000;
@@ -594,18 +591,18 @@ class BookstoreReceipt: Readable
     }
 ;
 
-+ Immovable 'colorful cardboard sign/picture' 'cardboard sign'
-    "The sign is bright and colorful.  <q>Lab Pals!</q> is emblazoned
-    in pudgy yellow letters over a picture showing numerous friendly,
-    anthropomorphized animals. "
++ Immovable 'färgglad kartong skylt/bild' 'kartongskylt'
+    "Skylten är ljus och färgglad. <q>Labbkompisar!</q> står skrivet
+    med knubbiga gula bokstäver över en bild som visar många vänliga,
+    förmänskligade djur. "
 ;
-+ Fixture, Container, Consultable 'grid shiny wire display bin' 'display bin'
-    "The bin is made of a grid of shiny wire, and it stands about
-    three feet high.  A colorful cardboard sign above the bin
-    announces <q>Lab Pals!</q> "
++ Fixture, Container, Consultable 'rutnät glänsande tråd utställningslåda' 'utställningslåda'
+    "Lådan är gjord av ett rutnät av glänsande tråd och är ungefär
+    en meter hög. En färgglad kartongskylt ovanför lådan
+    annonserar <q>Labbkompisar!</q> "
 
-    specialDesc = "Next to one of the tables is a display bin
-        filled with stuffed animals. "
+    specialDesc = "Bredvid ett av borden finns en utställningslåda
+        fylld med gosedjur. "
 
     /* don't include my contents in the room description */
     contentsListed = nil
@@ -617,15 +614,15 @@ class BookstoreReceipt: Readable
      */
     descContentsLister: thingDescContentsLister {
         showListEmpty(pov, parent)
-            { "The bin contains numerous stuffed animals. "; }
+            { "Lådan innehåller många gosedjur. "; }
         showListPrefixWide(itemCount, pov, parent)
-            { "The bin contains lots of animals, including "; }
+            { "Lådan innehåller massor av djur, inklusive "; }
     }
     lookInLister: thingLookInLister {
         showListEmpty(pov, parent)
-            { "The bin contains numerous stuffed animals. "; }
+            { "Lådan innehåller många gosedjur. "; }
         showListPrefixWide(itemCount, pov, parent)
-            { "The bin contains lots of animals, including "; }
+            { "Lådan innehåller massor av djur, inklusive "; }
     }
 
     /* treat SEARCH <self> as FIND <nothing> IN <self> */
@@ -639,60 +636,60 @@ class BookstoreReceipt: Readable
          *   around or on the counter 
          */
         if (gActionIs(Take) || gActionIs(PutIn))
-            logicalRank(70, 'in bin');
+            logicalRank(70, 'i lådan');
     }
 ;
-++ DefaultConsultTopic "The bin is stuffed with a random assortment
-    of animals; it would take too long to go through them all. "
+++ DefaultConsultTopic "Lådan är fylld med ett slumpmässigt urval
+    av djur; det skulle ta för lång tid att gå igenom dem alla. "
 ;
-++ Decoration 'stuffed animals' 'stuffed animals'
-    "The bin contains lots of stuffed animals. "
+++ Decoration 'gosedjur' 'gosedjur'
+    "Lådan innehåller massor av gosedjur. "
 
     isPlural = true
-    notImportantMsg = 'The bin has many more stuffed animals than
-        you could handle right now. '
+    notImportantMsg = 'Lådan har många fler gosedjur än
+        du skulle kunna hantera just nu. '
 
     dobjFor(Examine) remapTo(LookIn, location)
     dobjFor(ConsultAbout) remapTo(ConsultAbout, location, IndirectObject)
 ;
 
 ++ Buyable, Thing
-    'plush stuffed rhesus toy monkey toy/animal*toys*animals'
-    'plush rhesus monkey'
-    "It's a cute little stuffed monkey.  You kind of hope they don't
-    sell an intracranial electrode accessory kit. "
+    'plysch mjuk rhesus leksak apa leksak/djur*leksaker*djur'
+    'plysch rhesusapa'
+    "Det är en söt liten mjukisapa. Du hoppas lite att de inte
+    säljer ett tillbehörsset med intrakraniella elektroder. "
 
     bookstorePrice = 1599
-    bookstoreReceiptName = 'Plsh Mnky'
+    bookstoreReceiptName = 'Plysch Apa'
     isPaidFor = nil
 ;
 
-++ Buyable, Thing 'plush stuffed guinea toy pig toy/animal*toys*animals'
-    'plush guinea pig'
-    "It's a cute stuffed guinea pig, almost life-sized. "
+++ Buyable, Thing 'plysch mjuk marsvin leksak djur*leksaker*djur'
+    'marsvin av plysch'
+    "Det är ett sött mjukismarsvin, nästan i naturlig storlek. "
 
     bookstorePrice = 1499
-    bookstoreReceiptName = 'Plsh GP'
+    bookstoreReceiptName = 'Plysch Marsvin'
     isPaidFor = nil
 ;
 
 ++ ratPuppet: Buyable, HandWearable
-    'black thick plush stuffed rat toy
-    hand-puppet/puppet/toy/animal/rat/fur*toys*animals'
-    'plush rat toy'
-    "It's a cute stuffed rat, a little larger than life-sized,
-    with thick black fur.  It's slightly anthropomorphized,
-    but reasonably realistic.
-    <.p>On closer inspection, it looks to be a hand-puppet---an opening
-    in the bottom lets you put your hand in.
+    'svart+a tjock+a plysch+iga mjuk+a rått+aktig+a leksak+en
+    handdocka+n/docka+n/leksak+en/djur+et/råtta+n/päls+en*leksaker+na*djur+en'
+    'plyschråttleksak'
+    "Det är en söt mjukisråtta, lite större än i naturlig storlek,
+    med tjock svart päls. Den är något förmänskligad,
+    men ganska realistisk.
+    <.p>Vid närmare inspektion ser den ut att vara en handdocka - en öppning
+    i botten låter dig stoppa in handen.
     << isIn(toyCar)
-      ? "It's currently being <q>worn</q> by a toy car; it covers most
-        of the car, leaving only the wheels sticking out the bottom."
+      ? "Den <q>bärs</q> för närvarande av en leksaksbil; den täcker större delen
+        av bilen och lämnar bara hjulen stickandes ut i botten."
       : "">> "
 
     /* this is merchandise at the bookstore */
     bookstorePrice = 1249
-    bookstoreReceiptName = 'Plsh Rat'
+    bookstoreReceiptName = 'Plysch Råtta'
     isPaidFor = nil
 
     dobjFor(Wear)
@@ -704,7 +701,7 @@ class BookstoreReceipt: Readable
 
             /* ...but customize the message if it succeeds */
             if (isWornBy(gActor))
-                "You put the rat puppet on your hand. ";
+                "Du sätter råttdockan på din hand. ";
         }
     }
 
@@ -716,8 +713,8 @@ class BookstoreReceipt: Readable
         {
             if (gDobj != toyCar && gDobj != myHands)
             {
-                "The rat puppet doesn't have much room inside; it's
-                not designed to hold things. ";
+                "Råttdockan har inte mycket utrymme inuti; den är
+                inte designad för att hålla saker. ";
                 exit;
             }
         }
@@ -749,7 +746,7 @@ class BookstoreReceipt: Readable
              *   up the rat/car combo 
              */
             if (wasInCar && !isIn(toyCar))
-                "You remove the rat puppet from the toy car. ";
+                "Du tar bort råttdockan från leksaksbilen. ";
         }
     }
 
@@ -772,13 +769,12 @@ class BookstoreReceipt: Readable
                 replaceAction(ShowTo, self, plisnik);
             else
             {
-                "You wiggle your fingers to make the rat's nose twitch. ";
+                "Du rör på fingrarna för att få råttans nos att rycka. ";
                 exit;
             }
         }
     }
 ;
-+++ Component '(rat) (puppet) (hand-puppet) hand opening' 'rat puppet opening'
++++ Component '(råtta) (docka) (handdocka) hand öppning' 'råttdocka öppning'
     iobjFor(PutIn) remapTo(PutIn, DirectObject, location)
 ;
-

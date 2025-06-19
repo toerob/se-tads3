@@ -325,6 +325,21 @@ modify TadsObject
 ;
 
 
+VerbRule(Evaluate)
+    'eval' singleLiteral  // literalPhrase->literalMatch
+    : EvaluateAction
+    verbPhrase = 'evaluera/evaluering (what)'
+;
+
+
+
+#endif // __DEBUG
+
+
+
+
+
+#ifdef __USE_TEST_VERB
 /* 
  *   Adaptation for use with adv3Lite of the tests extension based on work by
  *   Ben Cressy, Eric Eve, and N.R.Turner
@@ -437,13 +452,6 @@ VerbRule(DoTest)
     //missingQ = 'which sequence do you want to test'
 ;
 
-VerbRule(Evaluate)
-    'eval' singleLiteral  // literalPhrase->literalMatch
-    : EvaluateAction
-    verbPhrase = 'evaluera/evaluering (what)'
-    //missingQ = 'which sequence do you want to test'
-;
-
 
 /* 
  *   A Test object can be used to create a series of testing commands in your
@@ -536,7 +544,8 @@ class Test: object
                 // Display the command to be executed 
                 "\b><bold><<x>></bold>\b";
                 libGlobal.playerChar.addPendingCommand(true, libGlobal.playerChar, toks);
-                libGlobal.playerChar.executeTurn();
+                libGlobal.playerChar.executeTurn(); // Fungerar inte riktigt som tänkt. Actors utför inte det som de ska...
+                //libGlobal.playerChar.executeActorTurn();
             }
         });
     }
@@ -579,6 +588,6 @@ allTests: object
 ;
 
 
-#endif // __DEBUG
 
 
+#endif // __USE_TEST_VERB

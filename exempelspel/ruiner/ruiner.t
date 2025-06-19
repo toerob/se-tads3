@@ -24,6 +24,29 @@ versionInfo: GameID
     authorEmail = 'Tomas yourmail@address.com'
     desc = 'Ett Interaktivt bearbetat exempel'
     htmlDesc = 'Ett Interaktivt bearbetat exempel'
+
+    showCredit()
+    {
+      "<i>Ruins</i> was originally written by Graham Nelson for the
+       <i>Inform Designer's Manual</i>. This port is published with
+       his kind permission.\b
+       ncDebugActions by Nikos Chantziaras (and tweaked a bit by Eric Eve).\n
+       cQuotes by Stephen Granade.\n
+       The TADS 3 language and adv3 library were written by Michael
+       J. Roberts. ";
+    }
+    
+    showAbout()
+    {
+      "This is TADS 3 port of the <i>Ruins</i> game originally written 
+       by Graham Nelson for the <i>Inform Designer's Manual</i>. It tries
+       in the main to be reasonably faithful to the original, with just
+       one or two minor tweaks.\b
+       The main purpose of this port is to provide a sample of TADS 3 code
+       that can be compared with a widely-available Inform original, which
+       was itself designed to demonstrate a wide range of programming features. ";
+    }
+
 ;
 
 modify Room

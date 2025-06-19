@@ -1440,6 +1440,8 @@ libMessages: MessageHelper
     /* a traveler is arriving, but not from a compass direction */
     sayArriving(traveler)
     {
+        // TODO: fixa så att det fungerar om travelerLocName == ''
+
         //"\^<<traveler.travelerName(true)>> enter<<traveler.verbEndingSEd>> <<traveler.travelerLocName>>. ";
         "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerLocName>>. ";
     }
@@ -1447,6 +1449,7 @@ libMessages: MessageHelper
     /* a traveler is departing, but not in a compass direction */
     sayDeparting(traveler)
     {
+        // TODO: fixa så att det fungerar om travelerLocName == ''
         "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<traveler.travelerLocName>>. ";
     }
 
@@ -1456,6 +1459,9 @@ libMessages: MessageHelper
      */
     sayArrivingLocally(traveler, dest)
     {
+        // TODO: fixa så att det fungerar om travelerLocName == ''
+        //"\^<<traveler.travelerName(true)>> enter<<traveler.verbEndingSEd>>
+        //<<traveler.travelerLocName>>. ";
         "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerLocName>>. ";
     }
 
@@ -1465,6 +1471,7 @@ libMessages: MessageHelper
      */
     sayDepartingLocally(traveler, dest)
     {
+        // TODO: fixa så att det fungerar om travelerLocName == ''
         "\^<<traveler.travelerName(true)>> <<traveler.verbToLeave>> <<traveler.travelerLocName>>. ";
     }
 
@@ -1476,31 +1483,32 @@ libMessages: MessageHelper
     {
         //"\^<<traveler.travelerName(true)>> <<traveler.verbToGo>> to <<traveler.travelerLocName>>. ";
         "\^<<traveler.travelerName(true)>> <<traveler.verbToGo>> till <<traveler.travelerLocName>>. ";
+
     }
 
     /* a traveler is arriving from a compass direction */
     sayArrivingDir(traveler, dirName)
     {
-        // Byt ut ändelsen -'ut' till '-ifrån' när vi beskriver 
-        // varifrån någon kom, tex: "En hobbit kom till Fylke norrifrån."
-        //local dirNameEnding2 = dirName.splice(-2, 2, 'ifrån');
+        // tex: "En hobbit anländer till Fylke norrifrån."
+        // tex: "En hobbit anlände norrifrån."
         local dirNameEnding2 = dirName + 'ifrån';
-        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerRemoteLocName>> <<dirNameEnding2>>. ";
+        local nextRoom = traveler.travelerRemoteLocName; // OBS: == '' om huvudkaraktären redan är där 
+        "\^<<traveler.travelerName(true)>> <<traveler.verbToCome2>><<if nextRoom != ''>> till <<traveler.travelerRemoteLocName>><<end>> <<dirNameEnding2>>. ";
     }
 
     /* a traveler is leaving in a given compass direction */
     sayDepartingDir(traveler, dirName)
     {
-        local nm = traveler.travelerRemoteLocName;
         /* ORG:
             "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>>
             to the <<dirName>><<nm != '' ? ' from ' + nm : ''>>. ";
         */
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<nm>> <<dirName>>. ";
 
-        //"\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>>   <<dirName>><<nm != '' ? ' från ' + nm : ''>>. ";
-        //"\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> 
-        //to the <<dirName>><<nm != '' ? ' from ' + nm : ''>>. ";
+        local nm = traveler.travelerRemoteLocName;
+        local nextRoom = traveler.travelerRemoteLocName; // OBS: == '' om huvudkaraktären redan är där 
+        // hobbiten begav sig till Fylke norrut
+        // hobbiten beger sig norrut.
+        "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave3>> <<traveler.itReflexiveSimple>><<if nextRoom != ''>> från <<end>><<nm>> <<dirName>>. ";
     }
     
     /* a traveler is arriving from a shipboard direction */

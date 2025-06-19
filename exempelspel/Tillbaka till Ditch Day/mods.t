@@ -23,14 +23,14 @@
  *   entirely straightforward to guess, so allow USE in these cases. 
  */
 DefineTAction(Use);
-VerbRule(Use) 'use' singleDobj : UseAction
-    verbPhrase = 'use/using (what)'
+VerbRule(Use) 'använd' singleDobj : UseAction
+    verbPhrase = 'använda/använder (vad)'
 ;
 
 /* similarly, a generic USE ON */
 DefineTIAction(UseOn);
-VerbRule(UseOn) 'use' singleDobj 'on' singleIobj : UseOnAction
-    verbPhrase = 'use/using (what) (on what)'
+VerbRule(UseOn) 'använd' singleDobj ('med'|'på') singleIobj : UseOnAction
+    verbPhrase = 'använda/använder (vad) (på vad)'
 ;
 
 /* 
@@ -38,11 +38,11 @@ VerbRule(UseOn) 'use' singleDobj 'on' singleIobj : UseOnAction
  *   knock at some of them 
  */
 DefineTAction(Knock);
-VerbRule(Knock) 'knock' ('on' | 'at') singleDobj : KnockAction
-    verbPhrase = 'knock/knocking (on what)'
+VerbRule(Knock) 'knacka' ('på'|) singleDobj : KnockAction
+    verbPhrase = 'knacka/knackar (på vad)'
 ;
-VerbRule(KnockWhat) 'knock' : KnockAction
-    verbPhrase = 'knock/knocking (on what)'
+VerbRule(KnockWhat) 'knacka' : KnockAction
+    verbPhrase = 'knacka/knackar (på vad)'
     construct()
     {
         dobjMatch = new EmptyNounPhraseProd();
@@ -50,9 +50,10 @@ VerbRule(KnockWhat) 'knock' : KnockAction
     }
 ;
 
+// TODO: testa
 /* add a grammar rule for using either 'on' or 'at' to answer a question */
 grammar atOnSingleNoun(main):
-   ( | 'at' | 'on' ) singleNoun->np_ : PrepSingleNounProd
+   ( | 'vid' | 'på' ) singleNoun->np_ : PrepSingleNounProd
 ;
 
 /*
@@ -61,27 +62,30 @@ grammar atOnSingleNoun(main):
  *   recognize the syntax.  
  */
 DefineTAction(Repair);
-VerbRule(Repair) ('repair' | 'fix') singleDobj : RepairAction
-    verbPhrase = 'repair/repairing (what)'
+VerbRule(Repair) ('reparera' | 'laga') singleDobj : RepairAction
+    verbPhrase = 'reparera/reparerar (vad)'
 ;
 
+// TODO: kontrollera om dessa behövs eller om vokabulären ska utökas i biblioteket
 /* make 'power on/up/off/down' equivalent to 'turn on/off'  */
 VerbRule(PowerOn)
-    'power' ('on' | 'up') dobjList | 'power' dobjList ('on' | 'up')
+    'sätt' 'på' dobjList 
+    | 'sätt' 'igång' dobjList 
     : TurnOnAction
-    verbPhrase = 'power/powering on (what)'
+    verbPhrase = 'power/powering on (vad)'
 ;
 VerbRule(PowerOff)
-    'power' ('off' | 'down') dobjList | 'power' dobjList ('off' | 'down')
+    'stäng' ('av' | 'ner') dobjList 
+    | 'stäng' dobjList ('av' | 'ner')
     : TurnOffAction
-    verbPhrase = 'power/powering off (what)'
+    verbPhrase = 'power/powering off (vad)'
 ;
 
 /* we talk about "accompanying" xojo; make this the same as "follow" */
 VerbRule(Accompany)
-    ('accompany' | 'go' 'with') singleDobj
+    ('ackompanjera' | 'gå' 'med') singleDobj
     : FollowAction
-    verbPhrase = 'accompany/accompanying (whom)'
+    verbPhrase = 'följa/följer (vem)'
 ;
 
 /* 
@@ -89,30 +93,30 @@ VerbRule(Accompany)
  *   able to scratch them 
  */
 DefineTAction(Scratch);
-VerbRule(Scratch) 'scratch' singleDobj : ScratchAction
-    verbPhrase = 'scratch/scratching (what)'
+VerbRule(Scratch) 'klia' singleDobj : ScratchAction
+    verbPhrase = 'klia/kliar (vad)'
 ;
 
 /* it would be good to be able to swat mosquitoes as well */
-VerbRule(Swat) 'swat' singleDobj : AttackAction
-    verbPhrase = 'swat/swatting (what)'
+VerbRule(Swat) 'slå' 'ihjäl' singleDobj : AttackAction
+    verbPhrase = 'slå/slår ihjäl (vad)'
 ;
 
 /* we might want to test things with the tester in the introduction */
-DefineTAction(Test);
-VerbRule(Test) ('testa' | 'probe') singleDobj : TestAction
+DefineTAction(TestObj);
+VerbRule(TestObj) ('testa' | 'sondera') singleDobj : TestAction
     verbPhrase = 'testa/testa (vad)'
 ;
 DefineTIAction(TestWith);
 VerbRule(TestWith)
-    ('test' | 'probe') singleDobj 'with' singleIobj : TestWithAction
-    verbPhrase = 'test/testing (what) (with what)'
+    ('testa'|'proba') singleDobj 'med' singleIobj : TestWithAction
+    verbPhrase = 'testa/testar (vad) (med vad)'
 ;
 
 /* there's a game we can play */
 DefineTAction(Play);
-VerbRule(Play) 'play' singleDobj : PlayAction
-    verbPhrase = 'play/playing (what)'
+VerbRule(Play) 'spela' singleDobj : PlayAction
+    verbPhrase = 'spela/spelar (vad)'
 ;
 
 /* 
@@ -121,9 +125,11 @@ VerbRule(Play) 'play' singleDobj : PlayAction
  */
 DefineTAction(Hold);
 VerbRule(Hold)
-    (('hold' | 'grab') ('on' 'to' | 'onto' | )
-     | 'take' 'hold' 'of' | 'grab' | 'grip') singleDobj : HoldAction
-    verbPhrase = 'hold/holding (what)'
+    //(('hold' | 'grab') ('on' 'to' | 'onto' | )
+    // | 'take' 'hold' 'of' | 'grab' | 'grip') singleDobj : HoldAction
+    ('greppa'|'grip'|'håll'|'fatta'|'ta') 'tag' ('på'|'i') singleDobj : HoldAction
+
+    verbPhrase = 'hålla/håller (vad)'
 ;
 
 /* 
@@ -132,11 +138,14 @@ VerbRule(Hold)
  *   ON than IN when we're consulting a map.  
  */
 VerbRule(ConsultMapAbout)
-    'look' ('up' | 'for') singleTopic 'on' singleDobj
-    | 'look' singleTopic 'up' 'on' singleDobj
-    | 'find' singleTopic 'on' singleDobj
+    //'look' ('up' | 'for') singleTopic 'on' singleDobj
+    //| 'look' singleTopic 'up' 'on' singleDobj
+    //| 'find' singleTopic 'on' singleDobj
+    
+    'slå' 'upp' singleTopic 'i' singleDobj
+    | ('se'|'hitta') singleTopic 'i' singleDobj
     : ConsultAboutAction
-    verbPhrase = 'find/finding (what) (on what)'
+    verbPhrase = 'slå/slår upp (vad) (i vad)'
     whichMessageTopic = DirectObject
     askDobjResponseProd = singleNoun
 ;
@@ -146,32 +155,32 @@ VerbRule(ConsultMapAbout)
  *   cases where the atomic action involved is obvious.  
  */
 DefineTAction(Raise);
-VerbRule(Raise) 'raise' singleDobj : RaiseAction
-    verbPhrase = 'raise/raising (what)'
+VerbRule(Raise) 'höj' singleDobj : RaiseAction
+    verbPhrase = 'höja/höjer (vad)'
 ;
 
 DefineTAction(Lower);
-VerbRule(Lower) 'lower' singleDobj : LowerAction
-    verbPhrase = 'lower/lowering (what)'
+VerbRule(Lower) 'sänk' singleDobj : LowerAction
+    verbPhrase = 'sänka/sänker (vad)'
 ;
 
 /*
  *   The Dice-O-Matic needs PUSH DOWN ON, to roll the dice.  Just make
  *   this a synonym for PUSH. 
  */
-VerbRule(PushDownOn) 'push' 'down' 'on' singleDobj : PushAction
-    verbPhrase = 'push/pushing (what)'
+VerbRule(PushDownOn) ('tryck'|'pressa') 'ner' 'på' singleDobj : PushAction
+    verbPhrase = 'tryck/trycka (vad)'
 ;
 
 /*
  *   We want to be able to hang the chicken suit on the hooks. 
  */
 DefineTIAction(HangOn);
-VerbRule(HangOn) 'hang' dobjList 'on' singleIobj : HangOnAction
-    verbPhrase = 'hang/hanging (what) (on what)'
+VerbRule(HangOn) 'häng' dobjList 'på' singleIobj : HangOnAction
+    verbPhrase = 'hänga/hänger (vad) (på vad)'
 ;
-VerbRule(HangOnWhat) 'hang' dobjList : HangOnAction
-    verbPhrase = 'hang/hanging (what) (on what)'
+VerbRule(HangOnWhat) 'häng' dobjList : HangOnAction
+    verbPhrase = 'hänga/hänger (vad) (på vad)'
     construct()
     {
         iobjMatch = new EmptyNounPhraseProd();
@@ -183,63 +192,69 @@ VerbRule(HangOnWhat) 'hang' dobjList : HangOnAction
  *   There's a bridge; we should be able to cross it 
  */
 DefineTAction(Cross);
-VerbRule(Cross) 'cross' singleDobj : CrossAction
-    verbPhrase = 'cross/crossing (what)'
+VerbRule(Cross) 'korsa' singleDobj : CrossAction
+    verbPhrase = 'korsa/korsar (vad)'
 ;
 
 /*
  *   We can buy things at the bookstore 
  */
 DefineTAction(Buy);
-VerbRule(Buy) ('buy' | 'pay' 'for') singleDobj : BuyAction
-    verbPhrase = 'buy/buying (what)'
+VerbRule(Buy) ('köp' | 'betala' 'för') singleDobj : BuyAction
+    verbPhrase = 'köpa/köper (vad)'
 ;
 
 DefineTAction(Pay);
-VerbRule(Pay) 'pay' singleDobj : PayAction
-    verbPhrase = 'pay/paying (whom)'
+VerbRule(Pay) 'köp' singleDobj : PayAction
+    verbPhrase = 'köpa/köper (vem)'
 ;
 
 DefineTIAction(PayFor);
 VerbRule(PayFor)
-    'pay' singleDobj 'for' singleIobj
-    | 'buy' singleIobj 'from' singleDobj
+    'betala' singleDobj 'för' singleIobj
+    | 'köp' singleIobj 'från' singleDobj
     : PayForAction
-    verbPhrase = 'pay/paying (whom) (for what)'
+    verbPhrase = 'betala/betalar (vem) (för vad)'
 ;
 
+/*
 DefineTAction(Slide);
 VerbRule(Slide) 'slide' dobjList : SlideAction
-    verbPhrase = 'slide/sliding (what)'
+    verbPhrase = 'slide/sliding (vad)'
+;*/
+
+DefineTAction(Slide);
+VerbRule(Slide) 'skjut' dobjList : SlideAction
+    verbPhrase = 'skjuta/skjuter (vad)'
 ;
 
 DefineTAction(Roll);
-VerbRule(Roll) 'roll' dobjList : RollAction
-    verbPhrase = 'roll/rolling (what)'
+VerbRule(Roll) 'rulla' dobjList : RollAction
+    verbPhrase = 'rulla/rullar (vad)'
 ;
 
 /* SLIDE NORTH and ROLL NORTH, etc, are just synonyms for MOVE NORTH, etc */
 VerbRule(SlideTravelDir)
-    ('slide' | 'roll') dobjList singleDir
+    ('skjut' | 'rulla') dobjList singleDir
     : PushTravelDirAction
-    verbPhrase = ('push/pushing (what) ' + dirMatch.dir.name)
+    verbPhrase = ('skjut/skjuter (vad) ' + dirMatch.dir.name)
 ;
 
 /* SLIDE THROUGH -> MOVE THROUGH */
 VerbRule(SlideTravelThrough)
-    ('slide' | 'roll') dobjList ('through' | 'thru') singleIobj
+    ('skjut' | 'rulla') dobjList ('genom' | ('in' 'i')) singleIobj
     : PushTravelThroughAction
-    verbPhrase = 'move/moving (what) (through what)'
+    verbPhrase = 'skjuta/skjuter (vad) (genom vad)'
 ;
 
 /* there's at least one place where it might be nice to hide */
 DefineTAction(HideIn);
-VerbRule(HideIn) 'hide' 'in' singleDobj : HideInAction
-    verbPhrase = 'hide/hiding (in what)'
+VerbRule(HideIn) ('göm'|'dölj') ('mig'|'dig'|) ('i'|'inuti') singleDobj : HideInAction
+    verbPhrase = 'gömma/gömmer (i vad)'
 ;
 
-VerbRule(HideInWhat) 'hide' : HideInAction
-    verbPhrase = 'hide/hiding (in what)'
+VerbRule(HideInWhat) 'göm' : HideInAction
+    verbPhrase = 'gömma/gömmer (i vad)'
     construct()
     {
         dobjMatch = new EmptyNounPhraseProd();
@@ -249,16 +264,16 @@ VerbRule(HideInWhat) 'hide' : HideInAction
 
 /* add THROW INTO as a synonym for THROW AT */
 VerbRule(ThrowInto)
-    ('throw' | 'toss') dobjList ('in' | 'into' | 'in' 'to') singleIobj
+    ('kasta' | 'slänga') dobjList ('i' | 'in' 'i') singleIobj
     : ThrowAtAction
-    verbPhrase = 'throw/throwing (what) (at what)'
+    verbPhrase = 'kasta/kastar (vad) (på vad)'
 ;
 
 /* CLIMB THROUGH is the same as GO THROUGH for most purposes */
 VerbRule(ClimbThrough)
-    'climb' ('through' | 'thru') singleDobj
+    'klättra' ('genom' | ('in' 'genom')) singleDobj
     : GoThroughAction
-    verbPhrase = 'go/going (through what)'
+    verbPhrase = 'gå/går (genom vad)'
     askDobjResponseProd = singleNoun
 ;
 
@@ -276,12 +291,13 @@ VerbRule(ClimbThrough)
 backDirection: Direction
     dirProp = &backDirLink
 ;
+
 VerbRule(PushTravelBack)
-    ('push' | 'pull' | 'drag' | 'move') dobjList 'back'
-    | ('push' | 'pull' | 'drag' | 'move') 'back' dobjList
+    ('skjut' | 'dra' | 'släpa' | 'flytta') dobjList 'tillbaka'
+    | ('skjut' | 'dra' | 'släpa' | 'flytta') 'tillbaka' dobjList
     : PushTravelDirAction
 
-    verbPhrase = 'push/pushing (what) back'
+    verbPhrase = 'skjuta/skjuter (vad) tillbaka'
     getDirection = backDirection
 ;
 
@@ -290,13 +306,13 @@ VerbRule(PushTravelBack)
  *   and DOWN.  (This won't overshadow the standard, transitive versions
  *   of these phrases.)  
  */
-VerbRule(ClimbUpI) 'climb' 'up' : TravelAction
+VerbRule(ClimbUpI) 'klättra' 'upp' : TravelAction
     getDirection = upDirection
-    verbPhrase = 'go/going up'
+    verbPhrase = 'gå/går uppåt'
 ;
-VerbRule(ClimbDownI) 'climb' 'down' : TravelAction
+VerbRule(ClimbDownI) 'klättra' 'ner' : TravelAction
     getDirection = downDirection
-    verbPhrase = 'go/going down'
+    verbPhrase = 'gå/går nedåt'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -309,36 +325,36 @@ modify Thing
     {
         preCond = [touchObj]
         verify() { }
-        action() { "There's no reason to do that. "; }
+        action() { "Det finns ingen anledning att göra det. "; }
     }
 
     dobjFor(Repair)
     {
         preCond = [touchObj]
         verify() { }
-        action() { "{You/he} will have to be more specific about
-            how to do that. "; }
+        action() { "{Du/han} måste vara mer specifik om
+            hur du ska göra det. "; }
     }
 
     dobjFor(Knock)
     {
         preCond = [touchObj]
-        verify() { logicalRank(50, 'why knock'); }
-        action() { "There's no obvious effect. "; }
+        verify() { logicalRank(50, 'varför knacka'); }
+        action() { "Det har ingen uppenbar effekt. "; }
     }
 
     dobjFor(Use)
     {
         verify() { }
-        action() { "{You/he} will have to be more specific about how
-            you want to use {the dobj/him}. "; }
+        action() { "{Du/han} måste vara mer specifik om hur
+            du vill använda {den dobj/honom}. "; }
     }
 
     dobjFor(UseOn)
     {
         verify() { }
-        action() { "{You/he} will have to be more specific about how
-            you want to use {the dobj/him}. "; }
+        action() { "{Du/han} måste vara mer specifik om hur
+            du vill använda {den dobj/honom}. "; }
     }
     iobjFor(UseOn)
     {
@@ -346,40 +362,40 @@ modify Thing
         action() { }
     }
 
-    dobjFor(Test)
+    dobjFor(TestObj)
     {
-        verify() { logicalRank(50, 'not testable'); }
+        verify() { logicalRank(50, 'inte testbar'); }
         action() { askForIobj(TestWith); }
     }
 
     dobjFor(TestWith)
     {
-        verify() { logicalRank(50, 'not testable'); }
+        verify() { logicalRank(50, 'inte testbar'); }
     }
     iobjFor(TestWith)
     {
-        verify() { illogical('{You/he} can\'t test anything
-            with {the iobj/him}. '); }
+        verify() { illogical('{Du/han} kan inte testa något
+            med {den iobj/honom}. '); }
     }
 
     dobjFor(HangOn)
     {
         verify() { }
-        action() { reportFailure('There\'s no need to do that. '); }
+        action() { reportFailure('Det finns ingen anledning att göra det. '); }
     }
     iobjFor(HangOn)
     {
         verify()
         {
-            illogical('There\'s no obvious way to hang anything
-                on {the iobj/him}. ');
+            illogical('Det finns inget uppenbart sätt att hänga något
+                på {den iobj/honom}. ');
         }
     }
 
     dobjFor(Cross)
     {
-        verify() { illogical('{That dobj/he} {is}n\'t something
-            {you/he} can cross. '); }
+        verify() { illogical('{Den dobj/Han} är inte något
+            {du/han} kan korsa. '); }
     }
 
     /* by default, treat 'hold' as equivalent to 'take' */
@@ -387,21 +403,21 @@ modify Thing
 
     dobjFor(Buy)
     {
-        verify() { illogical('{That dobj/he} {is}n\'t something
-            {you/he} can buy. '); }
+        verify() { illogical('{Den dobj/Han} är inte något
+            {du/han} kan köpa. '); }
     }
     dobjFor(Pay)
     {
-        verify() { illogical('There\'s no need to pay {the dobj/him}. '); }
+        verify() { illogical('Det finns ingen anledning att betala {den dobj/honom}. '); }
     }
     dobjFor(PayFor)
     {
-        verify() { illogical('There\'s no need to pay {the dobj/him}. '); }
+        verify() { illogical('Det finns ingen anledning att betala {den dobj/honom}. '); }
     }
     iobjFor(PayFor)
     {
-        verify() { illogical('{That dobj/he} {is}n\'t something
-            {you/he} can buy. '); }
+        verify() { illogical('{Den dobj/Han} är inte något
+            {du/han} kan köpa. '); }
     }
 
     /* SLIDE and ROLL are synonyms for MOVE for most purposes */
@@ -410,8 +426,8 @@ modify Thing
 
     dobjFor(HideIn)
     {
-        verify() { illogical('{That/he dobj} do{es}n\'t look like a
-            viable hiding place. '); }
+        verify() { illogical('{Den/Han dobj} ser inte ut som ett
+            lämpligt gömställe. '); }
     }
 ;
 
@@ -420,7 +436,7 @@ modify Thing
  *   add some default vocabulary to Person 
  */
 modify Person
-    vocabWords = 'person*persons people'
+    vocabWords = 'person*personer folk'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -431,10 +447,14 @@ modify Door
     dobjFor(Knock)
     {
         verify() { }
-        action() { "You knock on {the dobj/him}, but there doesn't
-            seem to be any reply. "; }
+        action() { "Du knackar på {den dobj/honom}, men det verkar
+            inte komma något svar. "; }
     }
 ;
+
+
+
+
 
 /* ------------------------------------------------------------------------ */
 /*
@@ -446,8 +466,8 @@ class Buyable: object
     dobjFor(Buy)
     {
         verify() { }
-        action() { "You'll have to be more specific about how
-            to do that. "; }
+        action() { "Du måste vara mer specifik om hur
+            du ska göra det. "; }
     }
     iobjFor(PayFor)
     {
@@ -466,8 +486,8 @@ class Buyable: object
  *   administration building'.  
  */
 grammar compoundNounPhrase(doorTo):
-    ('door'->door_ | 'doors'->door_ | 'entrance'->door_ | 'exit'->door_)
-    'to'->to_ ( | 'the'->the_)
+    ('dörr'->door_ | 'dörrar'->door_ | 'ingång'->door_ | 'utgång'->door_)
+    'till'->to_ ( | 'den'->the_)
     compoundNounPhrase->np_
     : NounPhraseWithVocab
 
@@ -530,9 +550,9 @@ class SpecialNounPhraseProd: NounPhraseWithVocab
 /*
  *   Add present participles to the standard postures.
  */
-modify standing presentParticiple = 'standing';
-modify sitting presentParticiple = 'sitting';
-modify lying presentParticiple = 'lying';
+modify standing pastTense = 'stått';
+modify sitting pastTense = 'suttit';
+modify lying pastTense = 'legat';
 
 /* ------------------------------------------------------------------------ */
 /*
@@ -596,8 +616,8 @@ class AlwaysWorn: Wearable
             exit;
         }
     }
-    cannotDoffMsg = "You really don't have any reason to get
-        undressed right now. "
+    cannotDoffMsg = "Du har verkligen ingen anledning att klä av dig
+                just nu. "
 
     /* exclude these from DROP ALL and DOFF ALL */
     hideFromAll(action)
@@ -744,7 +764,7 @@ handsEmpty: PreCondition
     autoBag = true
 
     /* the failure message */
-    failureMsg = '{You/he}\'ll have to put everything down first. '
+    failureMsg = '{Du/han} måste lägga ner allting först. '
 
     /*
      *   Are we required to drop the given object?  By default, we'll
@@ -756,7 +776,7 @@ handsEmpty: PreCondition
 /* special implied action announcement for emptying hands */
 class ImplicitHandsEmptyAnnouncement: ImplicitActionAnnouncement
     /* use custom message text */
-    getMessageText([params]) { return 'putting everything away'; }
+    getMessageText([params]) { return 'lägger undan allt'; }
 
     /* the bag of holding we're moving things into */
     bag_ = nil
@@ -783,7 +803,7 @@ objTurnedOff: PreCondition
 
         /* couldn't turn it off implicitly, so complain and give up */
         gMessageParams(obj);
-        "You'll have to turn off {the obj/him} first. ";
+        "Du måste stänga av {den obj/ref} först.";
         exit;
     }
 ;
@@ -809,7 +829,7 @@ objTurnedOn: PreCondition
 
         /* couldn't turn it off implicitly, so complain and give up */
         gMessageParams(obj);
-        reportFailure('{You/he}\'ll have to turn on {the obj/him} first. ');
+        reportFailure('{Du/han} måste slå på {den obj/honom} first. ');
         exit;
     }
 ;
@@ -860,7 +880,7 @@ objsNotWorn: PreCondition
     autoDoff = true
 
     /* the failure message */
-    failureMsg = '{You/he}\'ll have to take off {the wornobj/him} first. '
+    failureMsg = '{Du/han} måste ta av {den wornobj/honom} first. '
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -1097,7 +1117,7 @@ class MultiChair: Chair
             if (!gActor.isIn(self))
                 chooseChairSitMsg;
             else
-                "You sit on the chair. ";
+                "Du sitter på stolen. ";
 
             /* do the normal work */
             inherited();
@@ -1111,15 +1131,16 @@ class MultiChair: Chair
             if (!gActor.isIn(self))
                 chooseChairStandMsg;
             else
-                "You stand and step up onto the chair. ";
+                "Du ställer dig upp och kliver upp på stolen. ";
+
 
             /* do the normal work */
             inherited();
         }
     }
 
-    chooseChairSitMsg = "You pick a chair and sit down. "
-    chooseChairStandMsg = "You pick a chair and step up onto it. ";
+    chooseChairSitMsg = "Du väljer en stol och sätter dig ner. "
+    chooseChairStandMsg = "Du väljer en stol och kliver upp på den. ";
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -1147,15 +1168,15 @@ modify libScore
         local points = totalScore;
         local maxPoints = gameMain.maxScore;
 
-        /* show the  normal message */
-        "In <<turns>> move<<turns == 1 ? '' : 's'>>, you have
-        scored <<points>> of a possible <<maxPoints>> point<<
-          maxPoints == 1 ? '' : 's'>>";
+        /* show the normal message */
+        "På <<turns>> drag har du
+        fått <<points>> av möjliga <<maxPoints>> poäng<<
+            maxPoints == 1 ? '' : ''>>";
 
         /* add the extra credit message if appropriate */
         if (totalExtraCredit != 0)
-            ", <i>plus</i> <<totalExtraCredit>> point<<
-              totalExtraCredit == 1 ? '' : 's'>> of extra credit";
+            ", <i>plus</i> <<totalExtraCredit>> extrapoäng<<
+                totalExtraCredit == 1 ? '' : ''>>";
 
         ". ";
     }
@@ -1174,8 +1195,7 @@ class ExtraCreditAchievement: Achievement
     /* show myself in a full-score listing */
     listFullScoreItem()
     {
-        "<<points>> extra-credit point<<points == 1 ? '' : 's'>> for
-        <<desc>>";
+        "<<points>> extrapoäng för <<desc>>";
     }
 
     addToScoreOnce(points)
@@ -1223,9 +1243,8 @@ modify scoreNotifier
                 local delta = libScore.totalExtraCredit - lastExtraCredit;
 
                 /* tell them about it */
-                "<.commandsep><.notification>You have just earned
-                <<delta>> point<<delta == 1 ? '' : 's'>> of extra
-                credit.<./notification> ";
+                "<.commandsep><.notification>Du har just tjänat
+                <<delta>> extrapoäng.<./notification> ";
             }
 
             /* remember the current score for next time */
@@ -1281,8 +1300,8 @@ modify InstructionsAction
      *   since we want to be able to claim that the list of example
      *   commands is comprehensive, we need to add our extras to the list 
      */
-    customVerbs = ['PUSH CART NORTH (or PUSH IT EAST, and so on)',
-                   'PLUG ANTENNA INTO TV']
+    customVerbs = ['SKJUT VAGNEN NORRUT (eller SKJUT DEN ÖSTERUT, och så vidare)',
+                   'ANSLUT ANTENNEN TILL TV:N']
 ;
 
 /* ------------------------------------------------------------------------ */

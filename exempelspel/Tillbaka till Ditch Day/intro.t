@@ -30,16 +30,16 @@ omegatronTopic: Topic 'mitt omegatron/företag';
 mitachronTopic: Topic 'mitachron';
 
 /* phone call */
-phoneCallTopic: Topic 'telefon mobil mobiltelefon cell samtal';
+phoneCallTopic: Topic 'telefon+en mobil+en mobil+telefonen cell+en samtal';
 
 /* elevators in general */
-elevatorTopic: Topic 'hiss/elevator/lift';
+elevatorTopic: Topic 'hiss+en/elevator+n/lift+en';
 
 /* some resume-related topics */
-hiringFreezeTopic: Topic 'omegatron anställningsstop';
+hiringFreezeTopic: Topic 'omegatron+s anställning^s+stopp+et';
 kowtuan: Topic 'kowtuan tekniska institut/universitet/skola';
 chipTechNo: Topic 'halvledare kemisk applikator
-    chiptechno/tillverkare/operationer/åtgärder';
+    chiptechno/tillverkare/operation+er/åtgärder';
 
 /* the power plant itself */
 powerPlant6: Topic '6 regeringskraftverk';
@@ -163,7 +163,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
  *   another location for actor travel.  
  */
 + powerControlDoorway: Fixture, ThroughPassage
-    'väst v dörr/dörröppning' 'dörröppning'
+    'väst v dörr+öppning+en' 'dörröppning'
     "Det är bara en dörröppning utan dörr som leder västerut. "
 
     /*
@@ -603,12 +603,13 @@ class XojoErrandState: ActorState
 ;
 
 ++ koffee: Food
-    'koffee brand business (man\'s) aluminum aluminium 12-ounce 12 ounce
-    beverage/koffee/coffee/can'
-    'burk Koffee'
+    'koffee brand business (man\'s) aluminum+burk+en 340-gram 340 gram
+    dryck/beverage/koffee/kaffe+t/burk+en'
+    'burk med Koffee'
+
     "Ja, det är Koffee med K: Koffee brand Business Man's Beverage,
     det 100% oorganiska valet, förpackat i en 33 cl aluminiumburk.
-    Det verkar som att du stöter på denna hemska ToxiCola Corporation-produkt
+    Det verkar som att du stöter på denna hemska företagsprodukt från ToxiCola 
     varje gång du besöker en kund utanför USA. "
 
     dobjFor(Taste) asDobjFor(Eat)
@@ -693,12 +694,12 @@ class XojoEscortState: GuidedTourState
 ++ xojoHallEast: XojoEscortState
     stateLoc = powerHallEast
 
-    arrivingWithDesc = "Xojo holds his hand out to indicate the far
-                        end of the hall, and waits for you to proceed. "
-    stateDesc = "He's waiting for you to accompany him down the hall
-                 to the west. "
-    specialDesc = "Xojo is waiting for you to follow him down the
-                   hall to the west. "
+    arrivingWithDesc = "Xojo håller ut handen för att indikera den bortre
+                        änden av korridoren och väntar på att du ska gå vidare. "
+    stateDesc = "Han väntar på att du ska följa med honom ner för korridoren
+                 västerut. "
+    specialDesc = "Xojo väntar på att du ska följa honom ner för
+                   korridoren västerut. "
     escortDest = (powerHallEast.west)
     stateAfterEscort = xojoHallWest
 ;
@@ -711,19 +712,19 @@ class XojoEscortState: GuidedTourState
     arrivingTurn()
     {
         if (plantElevator.isOnCall)
-            "Xojo stop and waits with you for the elevator. ";
+            "Xojo stannar och väntar med dig på hissen. ";
         else if (plantElevator.isAtTop)
         {
-            "Xojo pulls open the elevator door and pushes aside
-            the gate, and waits for you to get in. ";
+            "Xojo drar upp hissdörren och skjuter undan
+            gallret, och väntar på att du ska gå in. ";
             
             plantElevatorGate.makeOpen(true);
         }
         else
         {
             /* the elevator hasn't even been called yet - call it */
-            "Xojo reaches out and pushes the elevator call button.
-            The neon lamp above the button lights dimly. ";
+            "Xojo sträcker ut handen och trycker på hissens anropsknapp.
+            Neonlampan ovanför knappen lyser svagt. ";
             
             plantElevator.callToTop();
         }
@@ -731,25 +732,25 @@ class XojoEscortState: GuidedTourState
     stateDesc()
     {
         if (plantElevatorGate.isOpen)
-            "He's waiting for you to get in the elevator. ";
+            "Han väntar på att du ska gå in i hissen. ";
         else
-            "He's waiting with you for the elevator to arrive. ";
+            "Han väntar med dig på att hissen ska anlända. ";
     }
     specialDesc()
     {
         if (plantElevator.isAtTop)
-            "Xojo is here, holding the elevator door open for you. ";
+            "Xojo är här och håller hissdörren öppen för dig. ";
         else
-            "Xojo is here, waiting with you for the elevator. ";
+            "Xojo är här och väntar med dig på hissen. ";
     }
     escortDest = (plantElevatorGate.isOpen ? powerHallWest.west : nil)
     stateAfterEscort = xojoElevator
 ;
-+++ AskTellShowTopic @plantHallElevatorDoor 'stair(s|way)?'
-    "<q>Couldn\'t we take the stairs instead?</q> you ask, worried
-    about the time.
-    <.p>Xojo laughs nervously. <q>Stairs, no,</q> he says. <q>For fire
-    safety reasons, only the elevator is provided in this sector.</q> "
++++ AskTellShowTopic @plantHallElevatorDoor 'trapp(a|or)?'
+    "<q>Kan vi inte ta trapporna istället?</q> frågar du, orolig
+    över tiden.
+    <.p>Xojo skrattar nervöst. <q>Trappor, nej,</q> säger han. <q>Av brandsäkerhetsskäl
+    finns endast hissen tillgänglig i denna sektor.</q> "
 ;
 
 ++ xojoElevator: InConversationState
@@ -764,9 +765,9 @@ class XojoEscortState: GuidedTourState
         if (!plantElevator.isAtTop)
             return;
 
-        "Xojo lets the door swing shut and closes the gate, then
-        pushes the <q>G</q> button.  The elevator lurches and starts
-        slowly descending. ";
+        "Xojo låter dörren svänga igen och stänger gallret, sedan
+        trycker han på <q>G</q>-knappen. Hissen skakar till och börjar
+        långsamt sjunka. ";
 
         /* kick off Xojo's resume offer after we get going */
         xojo.scheduleInitiateConversation(nil, 'xojo-resume', 1);
@@ -783,37 +784,37 @@ class XojoEscortState: GuidedTourState
     nextState = self
 ;
 +++ AskTellShowTopic @powerElevPanel
-    "<q>Is that a service panel up there?</q> you ask.
-    <.p><q>The answering of such questions is not within the scope
-    of my responsibilities,</q> Xojo says.  <q>Our very fine department
-    of vertical conveyance is in command of such matters.</q> "
+    "<q>Är det en servicepanel där uppe?</q> frågar du.
+    <.p><q>Att besvara sådana frågor ligger inte inom ramen
+    för mina ansvarsområden,</q> säger Xojo. <q>Vår mycket fina avdelning
+    för vertikal transport har befäl över sådana frågor.</q> "
 ;
 ++++ AltTopic
-    "You point to the service panel.  <q>Do you think we could get
-    out through that panel?</q>
-    <.p>Xojo looks at it appraisingly. <q>Perhaps, but the height is
-    too far above for me to reach it.  Perhaps I could lift you, and
-    you could attempt reaching.  Shall we try?</q><.convnode offer-boost> "
+    "Du pekar på servicepanelen. <q>Tror du att vi skulle kunna ta
+    oss ut genom den panelen?</q>
+    <.p>Xojo tittar på den uppskattande. <q>Kanske, men höjden är
+    för hög för att jag ska nå den. Kanske jag skulle kunna lyfta dig, och
+    du skulle kunna försöka nå. Ska vi prova?</q><.convnode offer-boost> "
 
     isActive = (plantElevator.isAtBottom)
 ;
 ++++ AltTopic
-    "<q>I need to get up to the service panel again,</q> you say.
-    <.p><q>Would you like me to lift you again?</q> Xojo asks.
+    "<q>Jag behöver komma upp till servicepanelen igen,</q> säger du.
+    <.p><q>Vill du att jag ska lyfta dig igen?</q> frågar Xojo.
     <.convnode offer-boost> "
 
     isActive = (xojo.boostCount != 0)
 ;
 ++++ AltTopic
-    "<q>Thanks for your help with the service panel,</q> you say.
-    <.p><q>It is a duty and a pleasure to assist,</q> he says. "
+    "<q>Tack för din hjälp med servicepanelen,</q> säger du.
+    <.p><q>Det är en plikt och ett nöje att hjälpa till,</q> säger han. "
 
     isActive = (me.isIn(atopPlantElevator))
 ;
 
 ++ xojoElevatorBoosting: InConversationState
-    stateDesc = "He's holding you on his shoulders. "
-    specialDesc = "Xojo is holding you on his shoulders. "
+    stateDesc = "Han håller dig på sina axlar. "
+    specialDesc = "Xojo håller dig på sina axlar. "
     attentionSpan = nil
 
     afterAction()
@@ -1008,55 +1009,55 @@ class XojoEscortState: GuidedTourState
     {
         /* open the door if it's not already */
         if (s2HallEastDoor.isOpen)
-            "Xojo indicates the door.  <q>This way,</q> he says. ";
+            "Xojo pekar på dörren. <q>Den här vägen,</q> säger han. ";
         else
         {
             s2HallEastDoor.makeOpen(true);
-            "Xojo opens the door. <q>This way, please,</q> he says,
-            indicating the door. ";
+            "Xojo öppnar dörren. <q>Den här vägen, tack,</q> säger han
+            och pekar på dörren. ";
         }
     }
-    stateDesc = "He's waiting for you to accompany him through
-                 the door. "
-    specialDesc = "Xojo is waiting for you to accompany him through
-                   the door. "
+    stateDesc = "Han väntar på att du ska följa med honom genom
+                 dörren. "
+    specialDesc = "Xojo väntar på att du ska följa med honom genom
+                   dörren. "
     escortDest = (s2HallEast.north)
     stateAfterEscort = xojoS2Storage
 ;
 
 ++ xojoS2Storage: XojoEscortState
     stateLoc = s2Storage
-    arrivingWithDesc = "<q>The clutter is formidable,</q> Xojo says,
-                        <q>but the way north is passable.</q> "
-    stateDesc = "He's waiting for you to accompany him through
-                 the junk to the north. "
-    specialDesc = "Xojo is waiting for you to accompany him through
-                   the junk to the north. "
+    arrivingWithDesc = "<q>Röran är formidabel,</q> säger Xojo,
+                        <q>men vägen norrut är framkomlig.</q> "
+    stateDesc = "Han väntar på att du ska följa med honom genom
+                 skräpet norrut. "
+    specialDesc = "Xojo väntar på att du ska följa med honom genom
+                   skräpet norrut. "
     escortDest = (s2Storage.north)
     stateAfterEscort = xojoS2Utility
 ;
 
 ++ xojoS2Utility: XojoEscortState
     stateLoc = s2Utility
-    arrivingWithDesc = "Xojo points to the opening. <q>My apologies,
-                        but this is the way for proceeding,</q> he
-                        says. "
-    stateDesc = "He's waiting for you to go through the opening
-                 in the wall. "
-    specialDesc = "Xojo is by the opening in the wall, waiting for
-                   you to go through. "
+    arrivingWithDesc = "Xojo pekar på öppningen. <q>Jag ber om ursäkt,
+                        men detta är vägen att fortsätta,</q> säger
+                        han. "
+    stateDesc = "Han väntar på att du ska gå genom öppningen
+                 i väggen. "
+    specialDesc = "Xojo står vid öppningen i väggen och väntar på
+                   att du ska gå igenom. "
     escortDest = (s2Utility.north)
     stateAfterEscort = xojoS2Platform
 ;
 
 ++ xojoS2Platform: XojoEscortState
     stateLoc = s2Platform
-    arrivingWithDesc = "<q>Apologies once again,</q> Xojo says,
-         indicating the rope bridge.  <q>It is relatively safe,
-         in contrast to appearances.</q> "
-    stateDesc = "He's waiting by the rope bridge for you. "
-    specialDesc = "Xojo is waiting for you to start across the
-                   rope bridge. "
+    arrivingWithDesc = "<q>Ursäkta igen,</q> säger Xojo och
+         pekar på repbron. <q>Den är relativt säker,
+         i motsats till vad det ser ut som.</q> "
+    stateDesc = "Han väntar vid repbron på dig. "
+    specialDesc = "Xojo väntar på att du ska börja gå över
+                   repbron. "
     escortDest = (s2Platform.north)
     stateAfterEscort = xojoRopeBridge1
 
@@ -1080,29 +1081,29 @@ class SilentGuidedInTravelState: GuidedInTravelState
 
 ++ xojoRopeBridge1: XojoEscortState
     stateLoc = ropeBridge1
-    arrivingWithDesc = "Xojo waits for you to catch up. "
-    stateDesc = "He's waiting for you to continue across the bridge. "
-    specialDesc = "Xojo is waiting for you to keep going across
-                   the bridge. "
+    arrivingWithDesc = "Xojo väntar på att du ska komma ikapp. "
+    stateDesc = "Han väntar på att du ska fortsätta över bron. "
+    specialDesc = "Xojo väntar på att du ska fortsätta gå över
+                   bron. "
     escortDest = (ropeBridge1.north)
     stateAfterEscort = xojoRopeBridge2
 ;
 
 ++ xojoRopeBridge2: XojoEscortState
     stateLoc = ropeBridge2
-    arrivingWithDesc = "Xojo waits for you to catch up. "
-    stateDesc = "He's waiting for you to continue across the bridge. "
-    specialDesc = "Xojo is waiting for you to continue across the bridge. "
+    arrivingWithDesc = "Xojo väntar på att du ska komma ikapp. "
+    stateDesc = "Han väntar på att du ska fortsätta över bron. "
+    specialDesc = "Xojo väntar på att du ska fortsätta över bron. "
     escortDest = (ropeBridge2.north)
     stateAfterEscort = xojoRopeBridge3
 ;
 
 ++ xojoRopeBridge3: XojoEscortState
     stateLoc = ropeBridge3
-    arrivingWithDesc = "Xojo is just above, hanging on to the ropes.
-                        <q>I think we can climb up from here,</q> he says. "
-    stateDesc = "He's waiting for you to try climbing up the ropes. "
-    specialDesc = "Xojo is waiting for you to try climbing up the ropes. "
+    arrivingWithDesc = "Xojo är precis ovanför, hängande i repen.
+                        <q>Jag tror vi kan klättra upp härifrån,</q> säger han. "
+    stateDesc = "Han väntar på att du ska försöka klättra upp för repen. "
+    specialDesc = "Xojo väntar på att du ska försöka klättra upp för repen. "
     escortDest = (ropeBridge3.up)
     stateAfterEscort = xojoCanyonNorth
 ;
@@ -1115,32 +1116,32 @@ class SilentGuidedInTravelState: GuidedInTravelState
     {
         if (firstTime)
         {
-            "<.p>Xojo sits on the ground, catching his breath. <q>Ha,
-            ha,</q> he forces a laugh.  <q>Perhaps I should have mentioned.
-            The senior leaders sometimes find it is useful to partially cut
-            the ropes anchoring the bridge, as a surprise to those crossing
-            it.  This reminds Junior Peons of the importance of remaining
-            alert.</q>  He gets to his feet. <q>This way,</q> he says,
-            pointing to the path. ";
+            "<.p>Xojo sätter sig på marken och hämtar andan. <q>Ha,
+            ha,</q> framtvingar han ett skratt. <q>Kanske jag borde ha nämnt.
+            De högre ledarna finner det ibland användbart att delvis skära av
+            repen som förankrar bron, som en överraskning för dem som korsar
+            den. Detta påminner Junior Peons om vikten av att förbli
+            uppmärksamma.</q> Han reser sig. <q>Den här vägen,</q> säger han
+            och pekar på stigen. ";
 
             firstTime = nil;
         }
         else
-            "Xojo points to the path. <q>This way,</q> he says. ";
+            "Xojo pekar på stigen. <q>Den här vägen,</q> säger han. ";
     }
     firstTime = true
     
-    stateDesc = "He's waiting by the path. "
-    specialDesc = "Xojo is waiting by the path. "
+    stateDesc = "Han väntar vid stigen. "
+    specialDesc = "Xojo väntar vid stigen. "
     escortDest = (canyonNorth.northeast)
     stateAfterEscort = xojoCourtyard
 ;
 
 ++ xojoCourtyard: XojoEscortState
     stateLoc = plantCourtyard
-    arrivingWithDesc = "Xojo points to the doors into the building. "
-    stateDesc = "He's waiting for you to go into the building. "
-    specialDesc = "Xojo is waiting for you to enter the building. "
+    arrivingWithDesc = "Xojo pekar på dörrarna in i byggnaden. "
+    stateDesc = "Han väntar på att du ska gå in i byggnaden. "
+    specialDesc = "Xojo väntar på att du ska gå in i byggnaden. "
     escortDest = (plantCourtyard.in)
     stateAfterEscort = xojoAdmin
 ;
@@ -1149,17 +1150,17 @@ class SilentGuidedInTravelState: GuidedInTravelState
     arrivingWithDesc = ""
     arrivingTurn()
     {
-        "<.p>Xojo taps you on the shoulder. <q>Behold, Colonel
-        Magnxi!</q> he shouts, pointing to the Colonel.  You hadn't
-        picked her out of the crowd yet, but now you see her standing
-        nearby.
-        <.p>So this is your chance.  You wish you didn't look like
-        you'd just been hit by a bus, but this is no time to worry
-        about trivial details such as looking presentable.  Besides,
-        the Colonel looks a little ridiculous herself---the military
-        uniform she's wearing is funny-looking enough, but she's worn
-        that every other time you've met with her.  It's the hat she
-        has on that crosses the line from eccentric to bizarre. ";
+        "<.p>Xojo knackar dig på axeln. <q>Se, Överste
+        Magnxi!</q> ropar han och pekar på Översten. Du hade inte
+        plockat ut henne ur folkmassan än, men nu ser du henne stå
+        i närheten.
+        <.p>Så detta är din chans. Du önskar att du inte såg ut som
+        om du just blivit påkörd av en buss, men det här är ingen tid att oroa sig
+        för triviala detaljer som att se presentabel ut. Dessutom
+        ser Översten själv lite löjlig ut - militär-
+        uniformen hon har på sig är rolig nog, men hon har haft på sig
+        den varje gång du träffat henne. Det är hatten hon
+        har på sig som går över gränsen från excentrisk till bisarr. ";
 
         /* no need to follow the player any longer */
         xojo.followingActor = nil;
@@ -1168,24 +1169,24 @@ class SilentGuidedInTravelState: GuidedInTravelState
         magnxi.moveIntoForTravel(adminLobby);
     }
 
-    stateDesc = "He's watching the band. "
-    specialDesc = "Xojo is here, watching the band. "
-    noResponse = "Xojo can't seem to hear you over the music. "
+    stateDesc = "Han tittar på bandet. "
+    specialDesc = "Xojo är här och tittar på bandet. "
+    noResponse = "Xojo verkar inte kunna höra dig över musiken. "
 ;
 
 ++ xojoEmailAgenda: ConvAgendaItem, DelayedAgendaItem
     invokeItem()
     {
-        "<.p>Xojo taps you on the shoulder and hands you a piece of
-        paper---a print-out from an old-style line printer, with
-        alternating green and white horizontal stripes across the
-        page.  <q>This arrived in the nightly batch of electronic
-        e-mail,</q> he says.  <q>I express my sympathy for your
-        unfortunate non-success,</q> he adds. <q>I wish you improvement
-        of fortune for your future endeavors.  Now, I must return
-        to assist Guanmgon in dismantling your very wonderful
-        SCU-1100DX product.</q>  You shake hands, and he disappears
-        into the crowd. ";
+        "<.p>Xojo knackar dig på axeln och räcker dig ett papper -
+        en utskrift från en gammal radskrivare, med
+        omväxlande gröna och vita horisontella ränder över
+        sidan. <q>Detta anlände i nattens sändning av elektronisk
+        e-post,</q> säger han. <q>Jag uttrycker mitt medlidande för din
+        olyckliga misslyckande,</q> tillägger han. <q>Jag önskar dig förbättring
+        av lycka för dina framtida strävanden. Nu måste jag återvända
+        för att hjälpa Guanmgon att demontera din mycket underbara
+        SCU-1100DX-produkt.</q> Ni skakar hand och han försvinner
+        in i folkmassan. ";
 
         /* move the email */
         adminEmail.moveInto(me);
@@ -1204,10 +1205,10 @@ class SilentGuidedInTravelState: GuidedInTravelState
 /*
  *   Our other assistant. 
  */
-+ guanmgon: Person 'guanmgon/guan/man/bureaucrat*men' 'Guanmgon'
-    "He's a mid-level bureaucrat assigned to assist you with the
-    installation.  He's wearing a suit that looks a bit too small
-    for him.  Guanmgon looks like he's in his forties. "
++ guanmgon: Person 'guanmgon/guan/man/byråkrat*män' 'Guanmgon'
+    "Han är en byråkrat på mellannivå som tilldelats att hjälpa dig med
+    installationen. Han bär en kostym som ser lite för liten ut
+    för honom. Guanmgon ser ut att vara i fyrtioårsåldern. "
 
     isProperName = true
     isHim = true
@@ -1234,17 +1235,17 @@ class SilentGuidedInTravelState: GuidedInTravelState
         {
         case 16:
             /* start the phone call */
-            "<.p>You hear the opening notes of Beethoven's Fifth as rendered
-            in piezo-electric square waves: Guanmgon's cell phone ringing.
-            He frantically pulls out the phone, drops it, catches it in
-            mid-air, drops it again, picks it up, pokes at the keypad,
-            and finally puts it to his ear.  His conversation isn't in
-            English, so you don't have any idea what's being said, but
-            you can tell it's not good news.  You'd bet it's his
-            superiors calling for yet another update.  Needless to
-            say, the bill of goods they were sold didn't include six
-            long weeks just to get the demo working, and they haven't
-            been hiding their impatience lately. ";
+            "<.p>Du hör öppningstonerna från Beethovens femma återgivna
+            i piezoelektriska fyrkantsvågor: Guanmgons mobiltelefon ringer.
+            Han drar frenetiskt fram telefonen, tappar den, fångar den i
+            luften, tappar den igen, plockar upp den, petar på knappsatsen,
+            och sätter den slutligen mot örat. Hans konversation är inte på
+            engelska, så du har ingen aning om vad som sägs, men
+            du kan se att det inte är goda nyheter. Du skulle gissa att det är hans
+            överordnade som ringer för ännu en uppdatering. Det säger sig självt
+            att det de blev lovade inte inkluderade sex
+            långa veckor bara för att få demon att fungera, och de har inte
+            dolt sin otålighet på sistone. ";
 
             /* switch to my 'on the phone' state */
             setCurState(guanmgonOnPhone);
@@ -1253,10 +1254,10 @@ class SilentGuidedInTravelState: GuidedInTravelState
 
         case 17:
             /* continue the call */
-            "<.p>Guanmgon continues talking on the phone.  More listening
-            than talking, actually; even without understanding the language,
-            you can tell that every time he starts to say something he gets
-            interrupted. ";
+            "<.p>Guanmgon fortsätter att prata i telefonen. Mer lyssnande
+            än pratande, faktiskt; även utan att förstå språket
+            kan du se att varje gång han börjar säga något blir han
+            avbruten. ";
             break;
 
         case 18:
@@ -1264,10 +1265,10 @@ class SilentGuidedInTravelState: GuidedInTravelState
             xojo.endErrand();
 
             /* finish the call */
-            "<.p>Guanmgon fumbles with the phone, almost dropping it, and
-            puts it away.  Xojo asks him something, and you hear
-            <q>Mitachron</q> a couple of times in Guanmgon's reply,
-            accompanied by heavy sighs. ";
+            "<.p>Guanmgon fumlar med telefonen, nästan tappar den, och
+            lägger undan den. Xojo frågar honom något, och du hör
+            <q>Mitachron</q> ett par gånger i Guanmgons svar,
+            åtföljt av tunga suckar. ";
 
             /* switch back to the base state */
             setCurState(guanmgonInit);
@@ -1282,17 +1283,18 @@ class SilentGuidedInTravelState: GuidedInTravelState
     }
 ;
 ++ InitiallyWorn
-    'narrow vertical broad striped checked small brown slightly mismatched
-    suit/slacks/pants/jacket/stripe/stripes/check/checks/pattern'
-    'Guanmgon\'s suit'
-    "Apart from looking a little too small, the thing that makes
-    Guanmgon's suit look odd is that the jacket and slacks don't
-    quite match.  They're both brown, but the jacket has a narrow
-    vertical striped pattern, and the pants have broad checks. "
+    'smal vertikal bred randig rutig liten brun något missanpassad
+    kostym/byxor/jacka/rand/ränder/ruta/rutor/mönster'
+    'Guanmgons kostym'
+    "Förutom att den ser lite för liten ut, är det som gör
+    Guanmgons kostym udda att jackan och byxorna inte
+    riktigt matchar. De är båda bruna, men jackan har ett smalt
+    vertikalt randigt mönster, och byxorna har breda rutor. "
 
     isQualifiedName = true
     isListedInInventory = nil
 ;
+
 
 /* our initial state - standing nearby watching us try to repair the SCU */
 ++ guanmgonInit: ActorState, EventList
@@ -1816,12 +1818,10 @@ class GuanmgonAgendaItem: ConvAgendaItem
     makeContainerLook = true
 
     /* we're not really a container, but make it look like we are */
-    lookInDesc = "The unit is stuffed full of stacked electronics modules. "
+    lookInDesc = "Enheten är fullpackad med staplade elektronikmoduler. "
 
-    dobjFor(Open) { verify() { illogical('The 1100DX doesn\'t have a
-        door, to keep the modules inside easily accessible. '); } }
-    dobjFor(Close) asDobjFor(Open)
-
+    dobjFor(Open) { verify() { illogical('1100DX har ingen dörr, för att hålla modulerna lätt tillgängliga. '); } }    
+    dobjFor(Switch) asDobjFor(TurnOn)
     dobjFor(TurnOn)
     {
         check()
@@ -1829,8 +1829,8 @@ class GuanmgonAgendaItem: ConvAgendaItem
             /* allow activation only after repair */
             if (!isWorking)
             {
-                "You have no reason to turn it on until you've fixed
-                the problem with the CT-22. ";
+                "Du har ingen anledning att slå på den förrän du har fixat
+                problemet med CT-22. ";
                 exit;
             }
         }
@@ -1843,27 +1843,27 @@ class GuanmgonAgendaItem: ConvAgendaItem
             xojo.endErrand();
 
             /* success! */
-            "You cross your fingers and flip the switch.
-            The SCU-1100DX clicks and hums as it starts its
-            power-on self-test sequence.  Many seconds pass.
-            You hold your breath.  Guanmgon and Xojo lean in
-            from the doorway, as though there were something
-            to see.  Then, four short beeps: successful
-            start-up!  You carefully scan the modules, and
-            see that everything's working.  After six weeks,
-            you\'ve finally done it; at last, you can give
-            the demo and, hopefully, get a contract signed.
+            "Du håller tummarna och slår på strömbrytaren.
+            SCU-1100DX klickar och surrar när den startar sin
+            självtestsekvens vid uppstart. Många sekunder passerar.
+            Du håller andan. Guanmgon och Xojo lutar sig in
+            från dörröppningen, som om det fanns något
+            att se. Sedan, fyra korta pip: lyckad
+            uppstart! Du skannar noggrant modulerna och
+            ser att allt fungerar. Efter sex veckor
+            har du äntligen gjort det; äntligen kan du ge
+            demon och förhoppningsvis få ett kontrakt underskrivet.
             <.p>
-            Guanmgon sees the SCU power up, and squeezes into
-            the room to check the control boards.  <q>It is
-            working,</q> he says with amazement.  <q>This is
-            so wonderful!  Dreadful disgrace is not for us now!
-            But we must act quickly.  Xojo!  Escort Mr.\ Mittling
-            to see the Colonel at once.  Hurry with maximum haste!
-            Do not delay!  Quickly, quickly, hurry!</q>
+            Guanmgon ser SCU:n starta och tränger sig in i
+            rummet för att kontrollera kontrollpanelerna. <q>Den
+            fungerar,</q> säger han förvånat. <q>Det här är
+            så underbart! Fruktansvärd skam är inte för oss nu!
+            Men vi måste agera snabbt. Xojo! Eskortera herr Mittling
+            för att träffa Översten omedelbart. Skynda med maximal hast!
+            Dröj inte! Snabbt, snabbt, skynda!</q>
             <.p>
-            Xojo nods, then turns to you and indicates the
-            doorway. ";
+            Xojo nickar, vänder sig sedan mot dig och pekar mot
+            dörröppningen. ";
 
             /* set xojo to follow us around from now on */
             xojo.followingActor = me;
@@ -1878,16 +1878,15 @@ class GuanmgonAgendaItem: ConvAgendaItem
         }
     }
 
-    scoreMarker: Achievement { +10 "repairing the SCU-1100DX" }
+    scoreMarker: Achievement { +10 "reparera SCU-1100DX" }
 
     /* once it's on, don't allow turning it off */
     dobjFor(TurnOff)
     {
         check()
         {
-            "Are you out of your mind?  There's no way you're going to
-            risk going through a power cycle now that you've got it
-            ready to demo. ";
+            "Är du från vettet? Du tänker väl inte riskera en full 
+            omstart nu när du har fått den redo för demo? ";
             exit;
         }
     }
@@ -1897,11 +1896,11 @@ class GuanmgonAgendaItem: ConvAgendaItem
         action()
         {
             mainReport(isWorking && isOn
-                       ? 'But it\'s already repaired! '
-                       : 'It sure would be nice if it were that easy,
-                       wouldn\'t it?  Sadly, you don\'t have any magical
-                       powers of electronics repair, so you\'ll have to do
-                       something besides just willing it to start working. ');
+                       ? 'Men den är redan reparerad! '
+                       : 'Det skulle verkligen vara trevligt om det var så enkelt,
+                       eller hur? Tyvärr har du inga magiska
+                       krafter för elektronisk reparation, så du måste göra
+                       något annat än att bara önska att den ska börja fungera. ');
         }
     }
 
@@ -1911,7 +1910,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
 ;
 
 ++ scuSlot: TestableCircuit, Component, RestrictedContainer
-    'tom modul/modullucka[-n]/plats[-en]/lucka[-n]' 'tom lucka'
+    'tom+ma modul:en+lucka+n/plats+en/lucka+n/fack+et' 'tom lucka'
     "Det är luckan där CT-22 diagnostikmodulen ska vara. "
 
    /* only allow the CT-22 to go in the slot */
@@ -1924,12 +1923,11 @@ class GuanmgonAgendaItem: ConvAgendaItem
            if (gDobj != ct22)
            {
                /* only allow my module to go in the slot */
-               reportFailure('{That dobj} do{es}n\'t belong in the slot. ');
+               reportFailure('{Den dobj/obj} här inte hemma i luckan. ');
            }
            else if (!xt772lv.isIn(ct22))
            {
-               reportFailure('There\'s no reason to re-install the module
-                   until you\'ve fixed it. ');
+               reportFailure('Det finns ingen anledning att återinstallera modulen innan du lagat den. ');
            }
            else
            {
@@ -1959,25 +1957,24 @@ class GuanmgonAgendaItem: ConvAgendaItem
                scu1100dx.isWorking = true;
 
                /* explain what happened */
-               mainReport('The module slides into place&mdash;not quite
-                   smoothly, but at this point it\'s enough that it fits
-                   at all.  You give it a firm push to make sure the
-                   connectors are all seated properly.  Now all that
-                   remains is switching on the SCU, and hoping there\'s
-                   not yet another problem lurking. ');
+               mainReport('Modulen glider på plats&mdash;inte helt smidigt,
+                        men vid det här laget räcker det att den passar
+                        överhuvudtaget. Du ger den en bestämd knuff för att
+                        försäkra dig om att alla kontakter sitter ordentligt.
+                        Nu återstår bara att slå på SCU:n och hoppas att det
+                        inte lurar något ytterligare problem. ');
            }
        }
    }
 ;
 
 ++ moduleStack: TestableCircuit, Immovable
-    'stacked installed electronics module/modules/stack' 'electronics modules'
-    "Each module is about the shape of a pizza box, and the modules
-    are stacked one on top of another inside the 1100DX.
+    'staplade installerade elektronik modul/moduler/stack' 'elektronikmoduler'
+    "Varje modul är ungefär formad som en pizzakartong, och modulerna
+    är staplade på varandra inuti 1100DX.
     << scu1100dx.isWorking
-    ? "The repaired CT-22 is back in place. "
-    : "There's one empty slot, where the CT-22 module goes. " >> "
-
+    ? "Den reparerade CT-22 är tillbaka på plats. "
+    : "Det finns en tom plats där CT-22-modulen ska sitta. " >> "
     isPlural = true
 
     dobjFor(Take)
@@ -1991,28 +1988,27 @@ class GuanmgonAgendaItem: ConvAgendaItem
     }
 
     dobjFor(Open) asDobjFor(LookIn)
-    lookInDesc = "The modules are all kind of jury-rigged into place
-        at the moment; you don't want to risk breaking something by
-        taking them apart. "
+    lookInDesc = "Modulerna är alla lite provisoriskt monterade för tillfället;
+        du vill inte riskera att ha sönder något genom att ta isär dem. "
+
 
     /*
      *   For disambiguation purposes, refer to this object as the
      *   "installed modules" to more clearly differentiate it from the
      *   single uninstalled module (the ct-22).  
      */
-    disambigName = 'installed modules'
+    disambigName = 'installerade moduler'
 
-    cannotTakeMsg = 'It took a while to get everything plugged in
-                     properly, so you\'d rather leave everything where
-                     it is. '
-    cannotMoveMsg = 'The modules are all seated properly, so it\'s best
-                     not to jiggle them. '
-    cannotPutMsg = 'You don\'t want to move the modules anywhere, since
-                    it took a while to get them all positioned properly. '
+    cannotTakeMsg = 'Det tog ett tag att få allt inkopplat ordentligt,
+                     så du vill hellre lämna allt där det är. '
+    cannotMoveMsg = 'Modulerna sitter alla ordentligt, så det är bäst
+                     att inte skaka dem. '
+    cannotPutMsg = 'Du vill inte flytta modulerna någonstans, eftersom
+                    det tog ett tag att få dem alla placerade ordentligt. '
 ;
 
 + ct22: TestableCircuit, Thing
-    'ct ct-22 ct22 diagnostic modul[-en]' 'CT-22 diagnostikmodul'
+    'ct ct-22 ct22 diagnostik^s+modul+en' 'CT-22 diagnostikmodul'
     "<< xt772lv.isIn(self)
     ? "Det är diagnostikmodulen som är ansvarig för många av
     dina bekymmer här. Som tur är verkar den äntligen vara lagad: ett
@@ -2081,12 +2077,12 @@ class GuanmgonAgendaItem: ConvAgendaItem
 ;
 
 ++ s901: TestableCircuit, Component, SingleContainer, RestrictedContainer
-    's901 chip 97-pin medium-density hybrid square/square socket'
+    's901 chip 97-pinn:s^s+medeldensitet^s+hybrid^s+fyrkant+en/fyrkant^s+sockel+n/uttag+et'
     'S901 socket'
-    "It's a 97-pin medium-density hybrid square/square socket. "
+    "Det är en 97-pinns medeldensitetshybridsfyrkant/fyrkantssockel. "
 
     /* this is a special case for a/an because of the leading initial */
-    aName = 'an S901 socket'
+    aName = 'en S901-sockel'
 
     /* don't show my contents in listings of containing objects */
     contentsListed = nil
@@ -2095,7 +2091,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
     validContents = [xt772lv, xt772hv]
 ;
 +++ xt772hv: TestableCircuit, Thing
-    'felaktig[-a] xt772 hv xt772-hv högeffekt hög effekt chip/version'
+    'felaktig+a xt772 xt772-hv hög+a effekt+en högeffekt:en^s+version:en^s+chip+et/hv+chip+et/hv+-chip+et'
     'XT772-HV chip'
     "Det är en högeffektsversion av XT772-chipet. Det är rätt sorts
     chip för de flesta andra modulerna, men fel sort för 
@@ -2135,9 +2131,9 @@ class GuanmgonAgendaItem: ConvAgendaItem
  *   interior container; all we have to do is set a property,
  *   subContainer, to point to the interior container object.  
  */
-+ tester: ComplexContainer 'mitachron dynatest multifunktions kretstestare[-n]/testare[-en]'
++ tester: ComplexContainer 'mitachron dynatest multifunktion^s+kretstestare+n/testare+n'
     'kretstestare'
-    "Detta är din Mitachron DynaTest multifunktions kretstestare.
+    "Detta är din Mitachron DynaTest multifunktionskretstestare.
     Du känner dig alltid lite generad över att ett av dina viktigaste
     vardagliga ingenjörsverktyg är tillverkat av din största konkurrent, men
     Omegatron har aldrig haft någon större framgång med sina egna produkter i detta
@@ -2154,12 +2150,12 @@ class GuanmgonAgendaItem: ConvAgendaItem
         verify() { }
         action() { noNeedToTest(nil); }
     }
-    cannotTurnOffMsg = 'It\'s already off. '
+    cannotTurnOffMsg = 'Den är redan avstängd. '
 
     noNeedToTest(other)
     {
         if (other != nil && !other.ofKind(TestableCircuit))
-            "Testaren är inte designad för att testa {that iobj/him}. ";
+            "Testaren är inte designad för att testa {den iobj/obj} där. ";
         else if (scu1100dx.isWorking)
             "Ingen anledning; SCU:n är redan fixad. ";
         else
@@ -2195,8 +2191,8 @@ class GuanmgonAgendaItem: ConvAgendaItem
 ;
 
 ++ testerProbe: ComponentDeferrer, Component
-    '(circuit) (tester) elektrisk (koax) (koaxial)
-    prob/set/kontakter/kabel' 'prob'
+    '(kretstestare) elektrisk (koax) (koaxial)
+    prob/set/kontakt+en/kabel+n*kontakter+na kablar+na' 'prob'
     "Det är en uppsättning elektriska kontakter, anslutna till testaren via
     en koaxialkabel, som du fäster på kretsen du vill testa. "
 
@@ -2236,7 +2232,7 @@ class TestableCircuit: object
     iobjFor(PlugInto) remapTo(AttachTo, DirectObject, self)
 
     /* "test <self>" requires something to test it with */
-    dobjFor(Test)
+    dobjFor(TestObj)
     {
         verify() { }
         action() { askForIobj(TestWith); }
@@ -2292,7 +2288,7 @@ class TestableCircuit: object
      *   we don't want this object to appear to the player as a separate
      *   object from the tester, so just refer to us as the tester 
      */
-    name = 'tester'
+    name = 'testare'
 
     /* only allow the xt772's to go in here */
     validContents = [xt772lv, xt772hv]
@@ -2308,8 +2304,7 @@ class TestableCircuit: object
         showListEmpty(pov, parent)
         {
             if (parent.isOpen)
-                "The back cover is open, revealing the circuitry inside
-                the tester. ";
+                "Baksidan är öppen, och kretsarna inuti testaren syns. ";
         }
         
         showListPrefixWide(itemCount, pov, parent)
@@ -2319,8 +2314,7 @@ class TestableCircuit: object
              *   since otherwise we wouldn't have any visible contents to
              *   list 
              */
-            "The back cover of the tester is open, revealing the circuitry
-            inside, including ";
+             "Baksidan av testaren är öppen, och avslöjar kretsarna inuti, det inkluderar ";
         }
     }
     descContentsLister = (contentsLister)
@@ -2330,8 +2324,8 @@ class TestableCircuit: object
     openingLister: openableOpeningLister {
         showListPrefixWide(itemCount, pov, parent)
         {
-            "Opening the tester reveals the circuitry inside,
-            including ";
+            "Då du öppnar blir kretsarna inuti synliga,
+            det inkluderar ";
         }
     }
 
@@ -2349,7 +2343,7 @@ class TestableCircuit: object
              *   apart an everyday object like this.  
              */
             if (!isOpen)
-                illogicalNow('You\'d have to take it apart to do that. ');
+                illogicalNow('Du skulle behöva ta isär den för att göra det. ');
 
             /* inherit the default handling as well */
             inherited();
@@ -2379,8 +2373,8 @@ class TestableCircuit: object
             if (scoreMarker.awardPointsOnce())
             {
                 /* mention that we've found something special */
-                reportAfter('<.p>Of course!  The DynaTest is just the
-                    kind of low-power application where you\'d find an
+                reportAfter('<.p>Så klart!  DynaTestaren är precis den
+                    typen av lågströmsapplikation där du skulle hitta en 
                     XT772-LV! ');
 
                 /* note that we've found it */
@@ -2406,22 +2400,22 @@ class TestableCircuit: object
     }
 
     /* achievement object to track finding the xt772-lv chip */
-    scoreMarker: Achievement { +2 "finding the XT772-LV chip" }
+    scoreMarker: Achievement { +2 "hitta XT772-LV-kretsen" }
 ;
 
-+++ Fixture 'tester circuitry/circuits' 'tester circuitry'
-    "The circuitry has the usual Mitachron look of chaotic design,
-    as though the parts wouldn't quite fit and had to be force into
-    place with a hammer. "
++++ Fixture 'testare krets+testare+n' 'kretstestare'
+    "Kretsarna har det vanliga Mitachron-utseendet med kaotisk design,
+    som om delarna inte riktigt passade och tvingades på plats
+    med en hammare. "
 ;
 
 +++ xt772lv: TestableCircuit, Thing
-    'xt772 lv xt772-lv low-power low power chip/version'
-    'XT772-LV chip'
-    "It's the low-power version of the XT772 chip. "
+    'xt772 xt772-lv låg+a lågeffekt:en^s+version:en^s+chip+et/lv+chip+et/lv+-chip+et chip/version'
+    'XT772-LV-chip'
+    "Det är lågeffektsversionen av XT772-chipet. "
 
     /* we need to override the a/an name because of the leading initial */
-    aName = 'an XT772-LV chip'
+    aName = 'ett XT772-LV-chip'
 
     /* mark it as known in advance */
     isKnown = true
@@ -2436,11 +2430,11 @@ class TestableCircuit: object
     okayForPocket = true
 ;
 
-++ Component 'warning stickers/warnings' 'warning stickers'
-    "Lightning bolts inside yellow triangles.
-    <font color=red bgcolor=yellow><b>DO NOT OPEN!</b></font>
-    No user-serviceable parts inside!
-    <b>Opening may invalidate warranty!</b>  The usual stuff. "
+++ Component 'varning:en^s+etikett+en klistermärke+t*varningar varning:ar^s+etiketter+na' 'varningsetiketter'
+    "Blixtar inuti gula trianglar.
+    <font color=red bgcolor=yellow><b>ÖPPNA INTE!</b></font>
+    Inga delar som kan underhållas av användaren!
+    <b>Öppnande kan ogiltigförklara garantin!</b> De gamla  vanliga sakerna. "
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2448,15 +2442,16 @@ class TestableCircuit: object
  *   Some objects in common to both hallways 
  */
 
+
 /* class for power hall rooms */
 class PowerPlantHallRoom: PowerPlantRoom
-    north: NoTravelMessage { "You're five stories up; better take the
-        elevator instead. " }
-    south: NoTravelMessage { "The plant floor is five stories below;
-        better take the elevator instead. " }
+    north: NoTravelMessage { "Du är fem våningar upp; det är bättre att ta
+        hissen istället. " }
+    south: NoTravelMessage { "Anläggningens golv är fem våningar nedanför;
+        det är bättre att ta hissen istället. " }
 
-    name = 'hallway'
-    vocabWords = 'hall/hallway'
+    name = 'korridor'
+    vocabWords = 'hall/korridor'
 
     /* 
      *   these rooms don't have normal north and south walls (we provide
@@ -2472,14 +2467,13 @@ class PowerPlantHallRoom: PowerPlantRoom
             switch (curScriptState++)
             {
             case 1:
-                "A distant rumbling sound drifts in from somewhere out in
-                the jungle.  At first you think it's thunder, but it grows
-                a bit louder and you realize it's an approaching helicopter.
-                A scan of the horizon shows nothing in the air.  Suddenly
-                the noise is deafening, and a black shape swoops into view
-                from overhead, racing away toward the buildings across the
-                river.  As the helicopter flies past, you spot the yellow
-                Mitachron logo on the tail. ";
+                "Ett avlägset mullrande ljud hörs någonstans från djungeln.
+                Först tror du att det är åska, men det blir lite högre och du
+                inser att det är en annalkande helikopter. En granskning av
+                horisonten visar inget i luften. Plötsligt är ljudet öronbedövande,
+                och en svart form sveper in i synfältet ovanifrån och rasar iväg
+                mot byggnaderna på andra sidan floden. När helikoptern flyger förbi
+                ser du den gula Mitachron-logotypen på stjärtbommen. ";
 
                 /* add the first helicopter */
                 helicopter1.moveIntoAdd(powerHallEast);
@@ -2490,12 +2484,11 @@ class PowerPlantHallRoom: PowerPlantRoom
                 break;
 
             case 2:
-                "The sound of another approaching helicopter drifts in
-                from the jungle, and within a few moments it
-                appears&mdash;along with three others, flying in
-                formation, heading the same way as the previous one.
-                The four fly across the river and land next to the
-                first. ";
+                "Ljudet av en annan annalkande helikopter hörs från djungeln,
+                och inom några ögonblick dyker den upp&mdash;tillsammans med
+                tre andra, som flyger i formation, på väg åt samma håll som
+                den föregående. De fyra flyger över floden och landar bredvid
+                den första. ";
 
                 /* replace the single helicopter with the five */
                 helicopter1.moveInto(nil);
@@ -2507,15 +2500,13 @@ class PowerPlantHallRoom: PowerPlantRoom
                 break;
 
             case 3:
-                "The arrival of the Mitachron people is awfully
-                worrying; they must really want this deal to have
-                sent such a large group.  At least they'll have to do
-                their own demo, so you're ahead of them on that count.
-                Even so, direct competitive situations with Mitachron
-                never seem to go well for Omegatron.  Maybe if you can
-                get to the Colonel quickly enough, you'll be able to get
-                your contract signed before the Mitachron reps even
-                get a meeting with her. ";
+                "Ankomsten av Mitachron-folket är oroväckande; de måste verkligen
+                vilja ha den här affären för att ha skickat en så stor grupp.
+                Åtminstone måste de göra sin egen demonstration, så du ligger före
+                dem på den punkten. Ändå verkar direkta konkurrenssituationer med
+                Mitachron aldrig gå bra för Omegatron. Kanske om du kan nå Översten
+                tillräckligt snabbt, kan du få ditt kontrakt undertecknat innan
+                Mitachron-representanterna ens får ett möte med henne. ";
                 break;
             }
         }
@@ -2529,30 +2520,30 @@ MultiInstance
 ;
 
 + Fixture
-    'north n waist high waist-high wall' 'north wall'
-    "It's only waist-high, leaving the hallway open to the jungle. "
+    'norra n midjehög midja-hög vägg' 'norra väggen'
+    "Den är bara midjehög, vilket lämnar korridoren öppen mot djungeln. "
 ;
 + Fixture
-    'south s waist high waist-high wall' 'south wall'
-    "It's only waist-high, leaving the hallway open to the plant
-    interior. "
+    'södra s midjehög midja-hög vägg' 'södra väggen'
+    "Den är bara midjehög, vilket lämnar korridoren öppen mot anläggningens
+    interiör. "
 ;
-+ Fixture 'concrete widely-spaced space columns' 'columns'
-    "They're just concrete columns holding up the roof. "
++ Fixture 'betong vitt-placerade placerade pelare' 'pelare'
+    "De är bara betongpelare som håller upp taket. "
     isPlural = true
 ;
-+ Distant 'cavernous plant interior/plant/(floor)'
-    'plant interior'
-    "The plant interior is a cavernous space to the south.  This
-    hallway is essentially a balcony, five stores up, along the
-    north wall.  From here, you have a good view of the giant
-    industrial equipment that runs the plant. "
++ Distant 'enorma+a anläggning^s+interiör+en/anläggning+en/(golv)'
+    'anläggningens interiör'
+    "Anläggningens interiör är ett enormt utrymme söderut. Denna
+    korridor är i princip en balkong, fem våningar upp, längs den
+    norra väggen. Härifrån har du en bra utsikt över den gigantiska
+    industriella utrustningen som driver anläggningen. "
 ;
-+ Distant 'giant industrial steam age steam-age
-    equipment/turbines/transformers/boilers/pipe/pipes/cable/cables'
-   'equipment'
-    "Turbines, transformers, boilers, all connected with a vast
-    web of pipes and cables.  All very steam-age looking. "
++ Distant 'gigantisk industriell ångålder^s+utrustning+en
+            /turbiner/transformatorer/pannor/rör/kablar'
+   'utrustning'
+    "Turbiner, transformatorer, pannor, alla sammankopplade med ett stort
+    nätverk av rör och kablar. Allt ser väldigt ångåldersmässigt ut. "
 
     /* 
      *   'equipment' is used as a 'mass noun' - it refers to mutiple
@@ -2560,63 +2551,63 @@ MultiInstance
      */
     isMassNoun = true
 ;
-+ Distant 'jungle' 'jungle'
-    "The scenery is great from this elevated vantage.  Directly to
-    the north is the deep gorge of the Xtuyong River Canyon; the plant
-    is built right on the edge of the cliffs.  On the opposite
-    rim of the canyon is the complex of administrative buildings,
-    where the Colonel's office is.  Beyond that is untamed jungle
-    to the horizon.  A bridge spans the canyon. "
++ Distant 'djungel' 'djungel'
+    "Utsikten är fantastisk från denna upphöjda position. Direkt norrut
+    ligger den djupa ravinen Xtuyong-flodkanjonen; anläggningen
+    är byggd precis på kanten av klipporna. På den motsatta
+    kanten av kanjonen ligger komplexet av administrativa byggnader,
+    där Överstens kontor finns. Bortom det är det otämjd djungel
+    ända till horisonten. En bro spänner över kanjonen. "
 ;
-+ Distant 'vegetation/plants' 'vegetation'
-    "There's quite a lot of it, this being a jungle and all. "
++ Distant 'vegetation/växter' 'vegetation'
+    "Det finns gott om det, eftersom detta är en djungel. "
 ;
-+ Distant 'xtuyong river deep canyon/gorge' 'canyon'
-    "Two hundred meters deep and a hundred across, carved out
-    over the eons by the steady flow of water from the rain forest
-    highlands to the west.  A bridge spans the canyon. "
++ Distant 'xtuyong flod djup kanjon/ravin' 'kanjon'
+    "Tvåhundra meter djup och hundra meter bred, urholkad
+    under årtusenden av det stadiga vattenflödet från regnskogens
+    högland i väster. En bro spänner över kanjonen. "
 ;
-+ Distant 'concrete steel structure/bridge' 'bridge'
-    "You've been across it many times now; it's a broad, modern structure
-    built of steel and concrete.  The bridge connects the power plant on
-    this side of the canyon with the administrative buildings on the
-    other side. "
++ Distant 'betong stål struktur+en/bro+n' 'bro'
+    "Du har varit över den många gånger nu; det är en bred, modern struktur
+    byggd av stål och betong. Bron förbinder kraftverket på
+    denna sida av kanjonen med de administrativa byggnaderna på
+    andra sidan. "
 ;
-+ Distant 'office administrative complex/buildings'
-    'administrative complex'
-    "It's a sprawling complex of office buildings housing the
-    power plant's extensive bureaucracy. "
++ Distant 'kontor administrativt komplex/byggnader'
+    'administrativa komplexet'
+    "Det är ett vidsträckt komplex av kontorsbyggnader som inhyser
+    kraftverkets omfattande byråkrati. "
 ;
-+ Distant 'sky' 'sky'
-    "It's a deep, bright blue. "
++ Distant 'himmel' 'himmel'
+    "Den är djupt, klart blå. "
 ;
 
-class HeliTail: Distant 'helicopter tail' 'helicopter tail'
-    "It appears to be marked with the Mitachron logo. "
+class HeliTail: Distant 'helikopter+stjärt+bomm+en/fenstron+axel+n' 'stjärtbommen'
+    "Den verkar vara märkt med Mitachron-logotypen. "
    ;
-class HeliTailLogo: Distant 'yellow mitachron logo' 'Mitachron logo'
-    "You can just barely make it out from here, but you think
-    you recognize the tail markings as the Mitachron logo: a big yellow
-    <q>M</q> in a heavy sans-serif action-slant font, superimposed over
-    a light yellow outline of a globe. "
+class HeliTailLogo: Distant 'gul mitachron logotyp' 'Mitachron-logotyp'
+    "Du kan knappt urskilja den härifrån, men du tror
+    att du känner igen stjärtmarkeringarna som Mitachron-logotypen: ett stort gult
+    <q>M</q> i ett kraftigt sans-serif-typsnitt med lutning, överlagrat på
+    en ljusgul kontur av en glob. "
 ;
 
 /* the first helicopter */
-helicopter1: MultiLoc, Distant 'black mitachron helicopter/chopper/copter'
-    'black helicopter'
-    "It's just setting down near the administrative complex. "
+helicopter1: MultiLoc, Distant 'svart+a mitachron+helikopter+n/chopper+n'
+    'svart helikopter'
+    "Den håller just på att landa nära det administrativa komplexet. "
 ;
 + HeliTail;
 ++ HeliTailLogo;
 
 /* the full group of helicopters */
 helicopter5: MultiLoc, Distant
-    'five black mitachron helicopters/choppers/copters/group'
-    'five black helicopters'
-    "All five helicopters are parked together near the administration
-    complex.  They're too far away, and there's too much vegetation
-    in the way, to see if there's any activity near them or if anyone
-    has disembarked. "
+    'fem svart+a mitachron+helikopter+n/choppers/grupp+en*mitachron+helikoptrar+na'
+    'fem svarta helikoptrar'
+    "Alla fem helikoptrar är parkerade tillsammans nära administrations-
+    komplexet. De är för långt borta, och det finns för mycket vegetation
+    i vägen, för att se om det är någon aktivitet nära dem eller om någon
+    har stigit ur. "
     isPlural = true
     aName = (name)
 ;
@@ -2629,14 +2620,14 @@ helicopter5: MultiLoc, Distant
  *   The hallway outside the control room 
  */
 powerHallEast: PowerPlantHallRoom
-    'East End of Hallway' 'the east end of the hallway'
-    "Like every other part of the plant structure, this wide
-    fifth-floor hallway is built entirely of concrete.  The north
-    and south walls are only waist-high, apart from a few widely-spaced
-    columns supporting the roof, leaving the hallway open
-    to the jungle to the north and to the cavernous interior of
-    the plant to the south.  The hall ends in a doorway to the
-    east, and continues to the west. "
+    'Östra änden av korridoren' 'den östra änden av korridoren'
+    "Precis som varje annan del av anläggningens struktur är denna breda
+    korridor på femte våningen helt byggd av betong. De norra
+    och södra väggarna är bara midjehöga, bortsett från några glest placerade
+    pelare som stödjer taket, vilket lämnar korridoren öppen
+    mot djungeln i norr och mot anläggningens enorma interiör i
+    söder. Korridoren slutar i en dörröppning i
+    öster och fortsätter västerut. "
 
     east = powerHallDoorway
     in asExit(east)
@@ -2651,9 +2642,9 @@ powerHallEast: PowerPlantHallRoom
 ;
 
 + powerHallDoorway: Fixture, ThroughPassage -> powerControlDoorway
-    'east e door/doorway/sign' 'doorway'
-    "You assume that the sign says <q>Control Room,</q> although
-    it's not in an alphabet you can read.  The doorway leads to the east. "
+    'öst ö dörr+öppning+en/skylt+en' 'dörröppning'
+    "Du antar att skylten säger <q>Kontrollrum,</q> även om
+    det inte är på ett alfabet du kan läsa. Dörröppningen leder österut. "
 ;
    
 /* ------------------------------------------------------------------------ */
@@ -2661,11 +2652,11 @@ powerHallEast: PowerPlantHallRoom
  *   The west end of the hall, at the elevator 
  */
 powerHallWest: PowerPlantHallRoom
-    'West End of Hallway' 'the west end of the hallway'
-    "This wide hallway has waist-high walls open to the jungle
-    to the north, and to the enormous plant interior to the south; a
-    few widely-spaced columns support the roof.  The hall ends at an
-    elevator door to the west, and continues to the east. "
+    'Västra änden av korridoren' 'den västra änden av korridoren'
+    "Denna breda korridor har midjehöga väggar öppna mot djungeln
+    i norr och mot anläggningens enorma interiör i söder; några
+    glest placerade pelare stödjer taket. Korridoren slutar vid en
+    hissdörr i väster och fortsätter österut. "
 
     east = powerHallEast
     west = plantHallElevatorDoor
@@ -2677,11 +2668,11 @@ powerHallWest: PowerPlantHallRoom
 ;
 
 + plantHallElevatorDoor: Door, BasicContainer ->plantElevatorGate
-    'elevator lift door/elevator/lift' 'elevator door'
-    "It's one of those old-style elevators with an ordinary swinging
-    door, painted a pale blue-green.  A round, black call button is
-    next to the door, and above the button is a small neon lamp (currently
-    <<plantElevator.isOnCall ? 'lit' : 'unlit'>>). "
+    'hiss+dörr+en/lift+dörr+en' 'hissdörr'
+    "Det är en av de där gamla hissarna med en vanlig svängdörr,
+    målad i en blek blågrön färg. En rund, svart anropsknapp är
+    bredvid dörren, och ovanför knappen finns en liten neonlampa (för närvarande
+    <<plantElevator.isOnCall ? 'tänd' : 'släckt'>>). "
 
     /* it's initially closed - we can't open it until the elevator arrives */
     initiallyOpen = nil
@@ -2693,7 +2684,7 @@ powerHallWest: PowerPlantHallRoom
             /* if the elevator isn't here, we can't open it */
             if (!plantElevator.isAtTop)
             {
-                "The door can't be opened until the elevator arrives. ";
+                "Dörren kan inte öppnas förrän hissen anländer. ";
                 exit;
             }
 
@@ -2708,7 +2699,7 @@ powerHallWest: PowerPlantHallRoom
             /* if xojo is here, don't allow the player to close it */
             if (xojo.isIn(location))
             {
-                "Xojo is holding it open for you; no need to be rude. ";
+                "Xojo håller den öppen för dig; ingen anledning att vara oartig. ";
                 exit;
             }
         }
@@ -2717,18 +2708,19 @@ powerHallWest: PowerPlantHallRoom
     dobjFor(Board) remapTo(TravelVia, self)
 ;
 
-++ Fixture 'folding metal elevator lift gate' 'elevator gate'
-    "It's a folding metal gate that serves as the elevator's
-    inner door. "
+++ Fixture 'vikbar metall hiss lift grind' 'hissgrind'
+    "Det är en vikbar metallgrind som fungerar som hissens
+    inre dörr. "
 ;
 
-+ Button, Fixture 'round black elevator lift call button' 'call button'
-    "It's a big black button sticking out from the wall about
-    a centimeter. "
++ Button, Fixture 'rund+a svart+a hiss+anrop^s+knapp+en/lift+anrop^s+knapp+en ' 'anropsknapp'
+//+ Button, Fixture 'rund svart hiss lift anropsknapp' 'anropsknapp'
+    "Det är en stor svart knapp som sticker ut från väggen ungefär
+    en centimeter. "
 ;
 
-+ Fixture 'small neon lamp' 'neon lamp'
-    "It's currently <<plantElevator.isOnCall ? 'lit' : 'unlit'>>. "
++ Fixture 'liten lilla neon+lampa+n' 'neonlampa'
+    "Den är för närvarande <<plantElevator.isOnCall ? 'tänd' : 'släckt'>>. "
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2738,20 +2730,19 @@ powerHallWest: PowerPlantHallRoom
  *   this elevator's behavior is quirky, so our general elevator classes
  *   don't apply well here.  
  */
-plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
-    "This is a big, sturdily-built elevator, like something you'd
-    find in an old warehouse.  There's been no attempt at decoration;
-    just dull metal walls, a folding metal gate to the east,
-    a handrail on the back wall, <<powerElevPanel.isOpen
-    ? 'a two-by-three-foot opening' : 'a recessed service panel'
-    >> in the ceiling, a bare bulb dimly burning at the top corner of
-    the back wall.  Protruding black buttons are labeled, from the
-    bottom, S2, S1, G, and 2 through 5.
-    <<isDescending ? "The bare concrete of the shaft wall slides by
-    beyond the gate." : "Beyond the gate is the bare concrete of
-    the shaft wall." >> "
+plantElevator: PowerPlantRoom 'Hiss' 'hissen'
+    "Detta är en stor, robust byggd hiss, som något du skulle
+    hitta i ett gammalt lager. Det har inte gjorts något försök till dekoration;
+    bara matta metallväggar, en vikbar metallgrind i öster,
+    ett handräcke på bakväggen, <<powerElevPanel.isOpen
+    ? 'en två gånger tre fot stor öppning' : 'en infälld servicepanel'
+    >> i taket, en naken glödlampa som lyser svagt i det övre hörnet av
+    bakväggen. Utstickande svarta knappar är märkta, nerifrån
+    och upp, S2, S1, G, och 2 till 5.
+    <<isDescending ? "Den nakna betongen i schaktväggen glider förbi
+    bortom grinden." : "Bortom grinden är schaktväggens nakna betong." >> "
 
-    vocabWords = 'elevator/lift'
+    vocabWords = 'hiss/lift'
 
     east = plantElevatorGate
     out asExit(east)
@@ -2821,14 +2812,14 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
     /* fuse - arrive at the top floor when called */
     arriveAtTop()
     {
-        "A loud buzzer sounds from the elevator, and the neon
-        lamp above the call button goes out. ";
+        "En hög summer ljuder från hissen, och neonlampan
+        ovanför anropsknappen släcks. ";
 
         /* if xojo is here, have him open the door */
         if (xojo.isIn(powerHallWest))
         {
-            "<.p>Xojo pulls opens the door and pushes aside the elevator's
-            folding metal gate for you, and waits for you to get in. ";
+            "<.p>Xojo öppnar dörren och skjuter undan hissens
+            vikbara metallgrind för dig, och väntar på att du ska gå in. ";
             
             plantElevatorGate.makeOpen(true);
         }
@@ -2854,7 +2845,7 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
         if (btn != nil)
         {
             /* we have a button, so we just passed a door */
-            "<.p>The elevator descends past a door marked
+            "<.p>Hissen passerar en dörr märkt
             <q><<btn.nominalFloor>>.</q> ";
 
             /*
@@ -2864,13 +2855,13 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
              */
             if (btn.internalFloor == 2)
             {
-                "Strange; you thought that was your stop.
-                <.p>Xojo, looking a little alarmed, starts punching
-                buttons.  <q>No reason for panic,</q> he says, not very
-                convincingly, but then he seems to calm down and stop
-                fooling with the buttons.  <q>The elevator programming
-                is sometimes faulty.  We should be halted soon,
-                since the shaft is nearly at bottom.</q> ";
+                "Konstigt; du trodde att det var din våning.
+                <.p>Xojo, som ser lite orolig ut, börjar trycka på
+                knappar. <q>Ingen anledning till panik,</q> säger han, inte särskilt
+                övertygande, men sedan verkar han lugna ner sig och sluta
+                pilla med knapparna. <q>Hissprogrammeringen
+                är ibland felaktig. Vi borde stanna snart,
+                eftersom schaktet nästan är i botten.</q> ";
 
                 /* cancel any conversation */
                 xojo.setConvNode(nil);
@@ -2878,18 +2869,18 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
             else if (btn.internalFloor == -2)
             {
                 /* we've reached the bottom of the shaft */
-                "<.p>Xojo grips the handrail tightly.  <q>Be firm, the
-                stopping is ready to be abrupt.</q>  You grab the handrail
-                and brace yourself.
+                "<.p>Xojo griper tag i handräcket hårt. <q>Var beredd, 
+                stoppet kommer att bli abrupt.</q> Du tar tag i handräcket
+                och förbereder dig.
                 <.p>
-                The shaft wall keeps going by for a few more moments, showing
-                no sign of slowing, then: thud!  Not a jerk from the cable
-                above, but the sharp shock of hitting something below.
-                The whole elevator shudders.  Outside the gate, the shaft
-                wall is suddenly motionless.
+                Schaktväggen fortsätter att glida förbi i några ögonblick till, utan
+                tecken på att sakta ner, sedan: duns! Inte ett ryck från kabeln
+                ovanför, utan den skarpa chocken av att träffa något nedanför.
+                Hela hissen skakar. Utanför grinden är schaktväggen
+                plötsligt stilla.
                 <.p>
-                <q>All is safe now,</q> Xojo says, relaxing. <q>Now we
-                need do no more than wait patiently for rescue.</q> ";
+                <q>Allt är säkert nu,</q> säger Xojo och slappnar av. <q>Nu
+                behöver vi bara vänta tålmodigt på räddning.</q> ";
                 
                 /* no longer descending, since we're at the bottom */
                 isDescending = nil;
@@ -2902,8 +2893,8 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
                 xojo.setConvNode(nil);
             }                
             else if (btn.isPushed)
-                "Strange that the elevator didn't stop here, given that
-                you pushed the button. ";
+                "Konstigt att hissen inte stannade här, med tanke på att
+                du tryckte på knappen. ";
         }
         else if (curFloor == 9)
         {
@@ -2914,20 +2905,20 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
         }
         else if (curFloor == 5)
         {
-            "<.p>The elevator continues its lethargic descent.
-            Rationally, you know that the few minutes of this elevator
-            ride aren't going to cost you the deal, but that doesn't
-            stop the irrational part of your brain from pumping out
-            anxiety hormones. ";
+            "<.p>Hissen fortsätter sin långsamma nedstigning.
+            Rationellt sett vet du att de få minuterna av denna hissfärd
+            inte kommer att kosta dig affären, men det hindrar inte
+            den irrationella delen av din hjärna från att pumpa ut
+            ångesthormon. ";
         }
         else if (curFloor == 3)
         {
-            "<.p>The elevator plods on.  Come on, come on, come on... ";
+            "<.p>Hissen kämpar vidare. Kom igen, kom igen, kom igen... ";
         }
         else
         {
             /* there's no button, so we're just going by shaft wall */
-            "<.p>The elevator continues its slow descent. ";
+            "<.p>Hissen fortsätter sin långsamma nedstigning. ";
         }
     }
 
@@ -2943,42 +2934,41 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
             replaceAction(Climb, xojo);
     }
 ;
-
-+ Fixture 'shaft wall' 'shaft wall'
-    "The shaft wall is plain concrete.
-    <<location.isDescending ? 'The elevator\'s motion creates the
-    illusion that the shaft wall is sliding slowly upwards.' : ''>> "
++ Fixture 'schaktvägg' 'schaktvägg'
+    "Schaktväggen är av enkel betong.
+    <<location.isDescending ? 'Hissens rörelse skapar
+    illusionen att schaktväggen glider långsamt uppåt.' : ''>> "
 
     /* this wall is slightly more interesting than the elevator walls */
-    dobjFor(Examine) { verify() { logicalRank(110, 'shaft'); } }
+    dobjFor(Examine) { verify() { logicalRank(110, 'schakt'); } }
 ;
 
 + Fixture
-    'dull metal elevator lift north south west n s w back top
-    wall/corner*walls'
-    'elevator walls'
-    "The elevator walls are a bare, dull metal. A handrail is attached
-    to the back wall. "
+    'matt metall hiss lift nord syd väst n s v bak övre
+    vägg/hörn*väggar'
+    'hissväggar'
+    "Hissväggarna är av bar, matt metall. Ett handräcke är fäst
+    på bakväggen. "
     isPlural = true
 ;
 
-+ Fixture 'metal hand rail/handrail' 'handrail'
-    "It's a simple metal handrail. "
++ Fixture 'metall hand räcke/handräcke' 'handräcke'
+    "Det är ett enkelt metallhandräcke. "
 
     dobjFor(Hold)
     {
         verify() { }
-        action() { "You hold the handrail for a moment. "; }
+        action() { "Du håller i handräcket ett ögonblick. "; }
     }
     dobjFor(StandOn)
     {
         verify() { }
         action()
         {
-            "You try to climb onto the handrail, but it's too
-            narrow to get a good footing, and there's nothing else to
-            hold onto.  You try attacking it from a few different angles,
-            but you can't seem to make it work. ";
+            "Du försöker klättra upp på handräcket, men det är för
+            smalt för att få ett bra fotfäste, och det finns inget annat att
+            hålla i. Du försöker angripa det från några olika vinklar,
+            men du kan inte få det att fungera. ";
 
             xojo.observeClimb(self);
         }
@@ -2988,25 +2978,25 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
     dobjFor(Board) asDobjFor(StandOn)
 ;
 
-+ plantElevatorGate: Door 'folding metal elevator lift door/gate' 'gate'
-    "Instead of a door, there's only this folding metal gate to
-    separate passengers from the shaft wall while the elevator is
-    in motion. "
++ plantElevatorGate: Door 'vikbar metall hiss lift dörr/grind' 'grind'
+    "Istället för en dörr finns det bara denna vikbara metallgrind för att
+    separera passagerare från schaktväggen medan hissen är
+    i rörelse. "
 
     dobjFor(Open)
     {
         action()
         {
-            "You try, but it won't budge.  Presumably, the gate 
-            automatically locks while the elevator is in
-            motion<< location.isDescending ? "" : " (or stuck
-            between floors)" >>. ";
+            "Du försöker, men den rör sig inte. Förmodligen låser grinden
+            automatiskt medan hissen är i
+            rörelse<< location.isDescending ? "" : " (eller fastnad
+            mellan våningar)" >>. ";
         }
     }
 
     dobjFor(LookThrough)
     {
-        action() { "You see the shaft wall. "; }
+        action() { "Du ser schaktväggen. "; }
     }
 
     /* once the elevator is moving, the apparent destination is nowhere */
@@ -3023,9 +3013,9 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
         verify() { }
         action()
         {
-            "You tentatively try climbing the gate the way you would
-            a chain-link fence, but it's too wobbly; you'd be sure
-            to get your fingers badly pinched, so you don't risk it. ";
+            "Du försöker försiktigt klättra på grinden som du skulle göra
+            på ett stängsel, men den är för vinglig; du skulle säkert
+            få dina fingrar ordentligt klämda, så du riskerar det inte. ";
 
             xojo.observeClimb(self);
         }
@@ -3037,9 +3027,9 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
  *   the ceiling and its contents are out of reach (until Xojo gives us a
  *   boost) 
  */
-+ OutOfReach, NestedRoom, Fixture 'ceiling' 'ceiling'
-    "Dull, bare metal like the walls; the only feature is a recessed
-    service panel. "
++ OutOfReach, NestedRoom, Fixture 'tak' 'tak'
+    "Matt, bar metall som väggarna; den enda detaljen är en infälld
+    servicepanel. "
 
     /* we can reach Xojo when he's giving us a boost */
     canReachFromInside(obj, dest)
@@ -3047,12 +3037,12 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
     cannotReachFromOutsideMsg(dest)
     {
         gMessageParams(dest);
-        return '{The dest/he} {is} too high up to reach from here. ';
+        return '{The dest/he} {is} för högt upp för att nå härifrån. ';
     }
     cannotReachFromInsideMsg(dest)
     {
         gMessageParams(dest);
-        return 'You can\'t reach {that dest/him} from up here. ';
+        return 'Du kan inte nå {that dest/him} härifrån uppe. ';
     }
 
     /* the only way we can be inside here is to be in xojoBoost */
@@ -3065,12 +3055,13 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
     getDropDestination(objToDrop, path) { return location; }
 ;
 
-++ Fixture 'bare light bulb' 'light bulb'
-    "It's providing the dull illumination in here. "
+++ Fixture 'naken glödlampa' 'glödlampa'
+    "Den ger den matta belysningen här inne. "
 
-    cannotTakeMsg = 'You have no desire to eliminate the only
-        source of light here. '
+    cannotTakeMsg = 'Du har ingen önskan att eliminera den enda
+        ljuskällan här. '
 ;
+
 
 /*
  *   A secret internal platform for we're on Xojo's shoulders.  We can't
@@ -3083,21 +3074,21 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
  *   everything outside the ceiling out of reach while we're here.  
  */
 ++ xojoBoost: SecretFixture, Platform
-    name = 'Xojo\'s shoulders'
+    name = 'Xojos axlar'
     isQualifiedName = true
     isPlural = true
 
     /* show special descriptions while here */
-    roomActorStatus(actor) { " (on Xojo's shoulders)"; }
-    roomActorPostureDesc(actor) { "You're on Xojo's shoulders. "; }
+    roomActorStatus(actor) { " (på Xojos axlar)"; }
+    roomActorPostureDesc(actor) { "Du är på Xojos axlar. "; }
 
     /* we can't stand here */
-    makeStandingUp() { reportFailure('You and Xojo are having a difficult
-        enough time keeping balanced as it is. '); }
+    makeStandingUp() { reportFailure('Du och Xojo har det svårt nog att 
+        hålla er i balans så som det är. '); }
 
     /* ...but we can implicitly dismount if needed */
     tryMakingTravelReady(conn) { return tryImplicitAction(GetOffOf, self); }
-    notTravelReadyMsg = 'You\'ll have to get off Xojo\'s shoulders first. '
+    notTravelReadyMsg = 'Du skulle behöva komma ner från Xojos axlar först. '
 
     /* 
      *   obviously, we don't want xojo following us here; we can prevent
@@ -3129,7 +3120,7 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
          *   loop.  
          */
         if (!gAction.isImplicit
-            && gAction.getOrigText.find('down') == nil
+            && (gAction.getOrigText.find('ner') == nil && gAction.getOrigText.find('ned') == nil) // TODO: testa av
             && gActionIn(GetOut, Out))
         {
             if (powerElevPanel.isOpen)
@@ -3150,18 +3141,18 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
     out = noTravel
 ;
 
+
 ++ powerElevPanel: Door
-    'recessed metal ceiling service panel/plate/hatch' 'service panel'
+    'infälld metall tak service+panel+en/tak+metall+lucka+n' 'servicepanel'
     desc()
     {
         if (isOpen)
-            "It's an opening in the ceiling, about two feet by
-            three feet. ";
+            "Det är en öppning i taket, ungefär sextio centimeter gånger
+            nittio centimeter. ";
         else
-            "It's a recessed metal plate set into the ceiling,
-            about two feet by three feet.  You'd guess it's a
-            service hatch, providing access to the roof of the
-            elevator car. ";
+            "Det är en infälld metallplatta i taket,
+            ungefär sextio centimeter gånger nittio centimeter. Du gissar att det är en
+            servicelucka som ger tillgång till hissens tak. ";
     }
 
     initiallyOpen = nil
@@ -3172,17 +3163,17 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
         action()
         {
             /* add a description of the traversal */
-            "You lift yourself through the opening, first propping yourself
-            on your elbows, then using the leverage to lift the rest of
-            your body. ";
+            "Du lyfter dig själv genom öppningen, först genom att stödja dig
+            på dina armbågar, sedan använder du hävstångseffekten för att lyfta resten av
+            din kropp. ";
 
             /* an unfortunate side effect the first time through... */
             if (scoreMarker.scoreCount == 0)
             {
-                "Just as you're almost through, you hear the sound of
-                tearing cloth---you realize you managed to snag the leg
-                of your pants on the edge of the opening, making a huge
-                rip down half the leg.<.p>";
+                "Precis när du nästan är igenom hör du ljudet av
+                tyg som rivs - du inser att du lyckades fastna med benet
+                av dina byxor på kanten av öppningen, vilket orsakar en stor
+                reva längs halva benet.<.p>";
 
                 khakis.makeTorn(true);
             }
@@ -3200,27 +3191,27 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
              */
             xojo.moveIntoForTravel(destination);
 
-            "<.p>You extend your hand to Xojo and help him climb up
-            from the elevator. ";
+            "<.p>Du sträcker ut din hand till Xojo och hjälper honom att klättra upp
+            från hissen. ";
         }
     }
     dobjFor(Board) asDobjFor(TravelVia)
     dobjFor(ClimbUp) asDobjFor(TravelVia)
 
-    scoreMarker: Achievement { +5 "escaping the stalled elevator" }
+    scoreMarker: Achievement { +5 "fly från den fastnade hissen" }
 
     dobjFor(Open)
     {
         action()
         {
-            "You give the plate a push, and it lifts away easily.
-            You slide it aside, leaving a two-by-three foot opening
-            in the ceiling. ";
+            "Du ger plattan en knuff, och den lyfts enkelt bort.
+            Du skjuter den åt sidan och lämnar en sextio gånger nittio centimeter stor öppning
+            i taket. ";
 
             makeOpen(true);
 
             /* it's now an opening */
-            initializeVocabWith('two-by-three-foot opening');
+            initializeVocabWith('sextio-gånger-nittio-centimeter öppning');
         }
     }
     dobjFor(Push) remapTo(Open, self)
@@ -3229,7 +3220,7 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
     dobjFor(Move) remapTo(Open, self)
     dobjFor(PushTravel) remapTo(Open, self)
 
-    dobjFor(Close) { action() { "There's no reason to do that. "; }}
+    dobjFor(Close) { action() { "Det finns ingen anledning att göra det. "; }}
 
     /* 
      *   to traverse this connector, we don't need a staging location,
@@ -3242,8 +3233,8 @@ plantElevator: PowerPlantRoom 'Elevator' 'the elevator'
 ;
 
 class PlantElevButton: Button, Fixture
-    'black protruding button*buttons' 'button'
-    "It's a round, black button protruding about a centimeter. "
+    'svart utstickande knapp*knappar' 'knapp'
+    "Det är en rund, svart knapp som sticker ut ungefär en centimeter. "
     collectiveGroups = [plantElevButtonGroup]
 
     /* flag: I've been pushed */
@@ -3261,43 +3252,43 @@ class PlantElevButton: Button, Fixture
         action()
         {
             if (plantElevator.isAtBottom)
-                "You push the button, hoping it'll unfreeze the elevator,
-                but nothing seems to happen. ";
+                "Du trycker på knappen i hopp om att det ska låsa upp hissen,
+                men ingenting verkar hända. ";
             else if (internalFloor >= plantElevator.curFloor)
-                "You push the button, but you doubt it'll have
-                any effect, since the elevator has already passed
-                that floor.  Xojo gives you a quizzical look. ";
+                "Du trycker på knappen, men du tvivlar på att det kommer ha
+                någon effekt, eftersom hissen redan har passerat
+                den våningen. Xojo ger dig en frågande blick. ";
             else if (internalFloor == 2)
-                "You push the button, which shouldn't be necessary
-                given that you already saw Xojo push it. ";
+                "Du trycker på knappen, vilket inte borde vara nödvändigt
+                med tanke på att du redan såg Xojo trycka på den. ";
             else if (isPushed)
-                "You push the button.  You doubt it'll have any
-                effect, since you've already pushed it. ";
+                "Du trycker på knappen. Du tvivlar på att det kommer ha någon
+                effekt, eftersom du redan har tryckt på den. ";
             else
-                "You push the button.  Xojo looks like he wants
-                to object, but it's too late. ";
+                "Du trycker på knappen. Xojo ser ut som om han vill
+                invända, men det är för sent. ";
 
             /* note that this button has been pushed */
             isPushed = true;
         }
     }
 ;
-+ PlantElevButton '"s2" button' '<q>S2</q> button'
++ PlantElevButton '"s2" knapp' '<q>S2</q> knapp'
     internalFloor = -2
     nominalFloor = 'S2'
 ;
-+ PlantElevButton '"s1" button' '<q>S1</q> button'
++ PlantElevButton '"s1" knapp' '<q>S1</q> knapp'
     internalFloor = 0
     nominalFloor = 'S1'
 ;
-+ PlantElevButton '"g" button' '<q>G</q> button'
++ PlantElevButton '"g" knapp' '<q>G</q> knapp'
     internalFloor = 2
     nominalFloor = 'G'
 ;
-+ PlantElevButton '2 -' '<q>2</q> button' internalFloor = 4;
-+ PlantElevButton '3 -' '<q>3</q> button' internalFloor = 6;
-+ PlantElevButton '4 -' '<q>4</q> button' internalFloor = 8;
-+ PlantElevButton '5 -' '<q>5</q> button' internalFloor = 10;
++ PlantElevButton '2 -' '<q>2</q> knapp' internalFloor = 4;
++ PlantElevButton '3 -' '<q>3</q> knapp' internalFloor = 6;
++ PlantElevButton '4 -' '<q>4</q> knapp' internalFloor = 8;
++ PlantElevButton '5 -' '<q>5</q> knapp' internalFloor = 10;
 
 /* 
  *   A "collective group" object for the buttons.  For most actions, when
@@ -3307,108 +3298,107 @@ class PlantElevButton: Button, Fixture
  *   is you're trying to do. 
  */
 plantElevButtonGroup: ElevatorButtonGroup
-    'black protruding elevator lift -' 'elevator buttons'
-    "The buttons are arranged in a column.  From the bottom, they're
-    labeled S2, S1, G, 2, 3, 4, 5. "
+    'svart utstickande hiss lift -' 'hissknappar'
+    "Knapparna är ordnade i en kolumn. Nerifrån och upp är de
+    märkta S2, S1, G, 2, 3, 4, 5. "
 ;
-
 
 /* ------------------------------------------------------------------------ */
 /*
  *   Atop the elevator.  We get here after making it through the escape
  *   hatch.  
  */
-atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
-    "The roof of the elevator car doesn't make a very good place to stand,
-    crowded as it is with mechanical protrusions and cable attachments.
-    A service hatch provides access to the elevator's interior.
-    The main cable hangs limply from the top of the shaft far above.
-    <.p>To the east is a door marked <q>S2</q>, just a little above
-    the top of the elevator. "
+atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
+    "Taket på hisskorgen är inte en särskilt bra plats att stå på,
+    trångt som det är med mekaniska utsprång och kabelanslutningar.
+    En servicelucka ger tillgång till hissens interiör.
+    Huvudkabeln hänger slappt från toppen av schaktet långt ovanför.
+    <.p>Österut finns en dörr märkt <q>S2</q>, precis lite ovanför
+    toppen av hissen. "
 
     down = elevRoofHatch
     east = doorS2inner
     out asExit(east)
-    up: NoTravelMessage { "The only way of going up would be to climb
-        the cable, but it's too greasy to get a good grip. "; }
+    up: NoTravelMessage { "Det enda sättet att gå uppåt skulle vara att klättra
+        på kabeln, men den är för oljig för att få ett bra grepp. "; }
 
     roomParts = []
     roomFloor = apeFloor
 ;
 
-+ Fixture 'shaft concrete wall/walls' 'shaft walls'
-    "The shaft walls are bare concrete.  Rails  "
++ Fixture 'schakt betong vägg/väggar' 'schaktväggar'
+    "Schaktväggarna är av bar betong. Skenor "
     isPlural = true
 ;
 
-+ Fixture 'elevator lift rail/rails' 'rails'
-    "The rails presumably guide the elevator car as it travels up
-    and down the shaft. "
++ Fixture 'hiss skena/skenor' 'skenor'
+    "Skenorna vägleder förmodligen hisskorgen när den färdas upp
+    och ner i schaktet. "
     isPlural = true
 
     dobjFor(Climb)
     {
         verify() { }
-        action() { reportFailure('They\'re too narrow; there\'s no way
-            to get a good enough grip. '); }
+        action() { reportFailure('De är för smala; det finns inget sätt
+            att få ett tillräckligt bra grepp. '); }
     }
     dobjFor(ClimbUp) asDobjFor(Climb)
 ;
 
-+ apeFloor: Floor 'elevator lift elevator/lift/roof/car/floor' 'elevator roof'
-    "It's not a very easy place to stand because of the many
-    mechanical protrusions. "
++ apeFloor: Floor 'hiss hiss tak/korg/golv' 'hisstak'
+    "Det är inte en särskilt lätt plats att stå på grund av de många
+    mekaniska utsprången. "
 ;
 
-+ Fixture 'mechanical cable bolts/attachments/protrusions' 'protrusions'
-    "They're just a bunch of bolts and cable attachments and the like. "
++ Fixture 'mekanisk kabel bultar/anslutningar/utsprång' 'utsprång'
+    "De är bara en massa bultar och kabelanslutningar och liknande. "
     isPlural = true
 ;
 
-+ Fixture 'elevator lift shaft/top' 'shaft'
-    "The shaft must be about seven or eight stories, but there's not
-     enough light that you can really tell by looking at it. "
++ Fixture 'hiss schakt/topp' 'schakt'
+    "Schaktet måste vara ungefär sju eller åtta våningar högt, men det finns inte
+     tillräckligt med ljus för att du verkligen kan avgöra det genom att titta på det. "
 ;
 
-+ elevatorCable: Fixture 'main elevator lift cable/cables' 'cable'
-    "It's just hanging limply, which is consistent with the way the
-    elevator crashed into the bottom of the shaft. "
++ elevatorCable: Fixture 'huvud hiss kabel/kablar' 'kabel'
+    "Den hänger bara slappt, vilket stämmer överens med hur
+    hissen kraschade i botten av schaktet. "
 
     dobjFor(Climb)
     {
         verify() { }
-        action() { reportFailure('The cable is well oiled; there\'s
-            no way to get a good enough grip. '); }
+        action() { reportFailure('Kabeln är väl oljad; det finns
+            inget sätt att få ett tillräckligt bra grepp. '); }
     }
     dobjFor(ClimbUp) asDobjFor(Climb)
 
     dobjFor(Pull)
     {
         verify() { }
-        action() { "You give the cable a tug.  This sends a lovely
-            sine wave propagating up the cable.  You're sure you could
-            calculate several properties of the cable by observing
-            the propagation velocity of the wave, but you're in too
-            much of a hurry for such diversions right now. "; }
+        action() { "Du drar i kabeln. Detta sänder en vacker
+            sinusvåg som fortplantar sig uppåt kabeln. Du är säker på att du skulle kunna
+            beräkna flera egenskaper hos kabeln genom att observera
+            vågens fortplantningshastighet, men du har för
+            bråttom för sådana avledningar just nu. "; }
     }
 ;
 
-+ elevPanelCover: Thing 'service hatch opening metal plate/cover/panel'
-    'metal plate'
-    "It's a rectangular metal plate, about two feet by three feet,
-    a few millimeters thick.  It serves as the cover for the elevator
-    service hatch. "
++ elevPanelCover: Thing 'metall+en lucka+n/servicelucka+n/serviceluck^s+öppning^s+platta+n/lock+et/panel+en'
+    'metallplatta'
+    "Det är en rektangulär metallplatta, ungefär sextio gånger nittio centimeter,
+    några millimeter tjock. Den fungerar som lock för hissens
+    servicelucka. "
 
-    initSpecialDesc = "The service hatch cover is lying next to the opening. "
+    initSpecialDesc = "Serviceluckans lock ligger bredvid öppningen. "
 
-    cannotUnlockWithMsg = 'You\'ll have to be more specific about
-        how you intend to do that. '
+    cannotUnlockWithMsg = 'Du måste vara mer specifik om
+        hur du tänker göra det. '
 ;
 
 /* the escape hatch, as seen from above */
 + elevRoofHatch: TravelWithMessage, ThroughPassage -> powerElevPanel
-    'service access opening/hatch' 'service hatch'
-    "It's a two-by-three-foot opening in the roof of the elevator. "
+    'service+åtkomst^s+lucka+n/service+åtkomst^s+öppning+en' 'servicelucka'
+    "Det är en sextio gånger nittio centimeter stor öppning i hissens tak. "
 
     /* 
      *   our destination is the elevator itself, not the ceiling (where the
@@ -3417,15 +3407,15 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
     destination = plantElevator
 
     /* this travel merits some extra description */
-    travelDesc = "You carefully lower yourself through the service access
-                  hatch.  Once you're through, you let go, and drop
-                  the several feet to the elevator floor. "
+    travelDesc = "Du sänker dig försiktigt genom serviceluckan.
+                  När du är igenom släpper du taget och faller
+                  de få metrarna till hissgolvet. "
 
     dobjFor(Close)
     {
         verify() { }
-        action() { reportFailure('There\'s no need to do that, and it
-            would take away the main source of light here. '); }
+        action() { reportFailure('Det finns inget behov av att göra det, och det
+            skulle ta bort den huvudsakliga ljuskällan här. '); }
     }
     iobjFor(PutOn)
     {
@@ -3435,25 +3425,25 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
             if (gDobj == elevPanelCover)
                 replaceAction(Close, self);
             else
-                reportFailure('That\'s not a good place to put
+                reportFailure('Det är inte en bra plats att lägga
                     {that/him dobj}. ');
         }
     }
     iobjFor(PutIn)
     {
         verify() { }
-        action() { "Better not; it's a long drop. "; }
+        action() { "Bättre att inte göra det; det är ett långt fall. "; }
     }
 ;
 
-+ doorS2inner: TravelWithMessage, Door '"s2" door' 'door'
-    "Like the other doors in this shaft, it's the kind that
-    swings outward rather than the sliding type more typical of modern
-    elevators.  The bottom of the door is a couple of feet above the
-    top of the elevator.  The marking <q>S2</q> has been painted on with
-    a stencil, and at the edge of the door is a locking mechanism. 
-    <<isOpen ? "You're holding it open. "
-             : isLocked ? '' : "It's just slightly ajar. " >> "
++ doorS2inner: TravelWithMessage, Door '"s2" hiss+dörr+en' 'dörr'
+    "Precis som de andra dörrarna i detta schakt är det den typ som
+    svänger utåt snarare än den skjutbara typ som är mer typisk för moderna
+    hissar. Dörrens nedre del är ungefär sextio centimeter ovanför
+    toppen av hissen. Markeringen <q>S2</q> har målats på med
+    en schablon, och vid kanten av dörren finns en låsmekanism.
+    <<isOpen ? "Du håller den öppen. "
+             : isLocked ? '' : "Den är bara lite på glänt. " >> "
 
     descContentsLister = thingContentsLister
     isLocked = true
@@ -3464,19 +3454,19 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
         {
             if (isLocked)
             {
-                "The door won\'t budge.  You notice a locking
-                mechanism at the edge of the door: probably a
-                safety feature that keeps the door from being
-                opened when the elevator isn\'t stopped at this
-                floor. ";
+                "Dörren rör sig inte. Du märker en låsmekanism
+                vid kanten av dörren: förmodligen en
+                säkerhetsfunktion som förhindrar att dörren öppnas
+                när hissen inte har stannat på denna
+                våning. ";
                 gActor.setIt(self);
                 exit;
             }
         }
         action()
         {
-            "You give the door a push and it swings open.  It's
-            spring-loaded, so you have to hold it open. ";
+            "Du ger dörren en knuff och den svänger upp.
+            Den är fjäderbelastad, så du måste hålla den öppen. ";
             makeOpen(true);
         }
     }
@@ -3485,51 +3475,51 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
     dobjFor(Move) remapTo(Open, self)
     dobjFor(Unlock) remapTo(Unlock, elevLockSlot)
 
-    cannotUnlockMsg = 'You\'ll have to be more specific about how
-        you intend to do that. '
+    cannotUnlockMsg = 'Du måste vara mer specifik om hur
+        du tänker göra det. '
 
     beforeTravel(traveler, connector)
     {
         if (connector != self && isOpen)
         {
-            "The elevator door slams shut as soon as you let go.<.p> ";
+            "Hissdörren slår igen så fort du släpper taget.<.p> ";
             makeOpen(nil);
             isLocked = true;
         }
     }
 
-    travelDesc = "You climb the couple of feet over the raised threshold. "
+    travelDesc = "Du klättrar de få decimetrarna över den upphöjda tröskeln. "
 ;
-++ Component 'stenciled s2 marking s2' '<q>S2</q> marking'
-    "It's just a stenciled marking reading <q>S2</q>; it's presumably
-    the floor number. "
+++ Component 'schablonerad s2 markering s2' '<q>S2</q> markering'
+    "Det är bara en schablonerad markering som läser <q>S2</q>; det är förmodligen
+    våningsnumret. "
 ;
 
-++ elevLockSlot: Fixture 'narrow vertical door locking
-    safety mechanism/lock/interlock'
-    'locking mechanism'
-    "It looks like a safety interlock, to prevent anyone from opening the
-    door into the empty shaft when the elevator car isn't stopped at
-    this floor.  The only exposed parts are a locking bolt and a narrow
-    vertical slot about four inches deep and a foot long; presumably
-    the elevator car has a corresponding part that slides into the slot
-    when the car is stopped at this door. "
+++ elevLockSlot: Fixture 'smal vertikal dörr låsning
+    säkerhetsmekanism+en/lås:et+mekanism+en/spärr+en'
+    'låsmekanism'
+    "Det ser ut som en säkerhetsspärr för att förhindra att någon öppnar
+    dörren in i det tomma schaktet när hisskorgen inte har stannat på
+    denna våning. De enda exponerade delarna är en låsbult och en smal
+    vertikal springa ungefär tio centimeter djup och trettio centimeter lång; förmodligen
+    har hisskorgen en motsvarande del som glider in i springan
+    när korgen har stannat vid denna dörr. "
 
     dobjFor(Open)
     {
         verify()
         {
             if (location.isOpen)
-                illogicalNow('The bolt is already unlocked. ');
+                illogicalNow('Bulten är redan upplåst. ');
         }
-        action() { reportFailure('You fiddle with the bolt a bit, but
-            you can\'t get it free, and your fingers don\'t fit into
-            the slot. '); }
+        action() { reportFailure('Du pillar lite med bulten, men
+            du kan inte få den fri, och dina fingrar passar inte in i
+            springan. '); }
     }
     dobjFor(Unlock) asDobjFor(Open)
 
-    lookInDesc = "The slot is too narrow to make out any detail of
-        its inner workings. "
+    lookInDesc = "Springan är för smal för att urskilja några detaljer av
+        dess inre funktion. "
 
     iobjFor(PutIn)
     {
@@ -3544,12 +3534,12 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
 
             case contract:
             case xojoResume:
-                "You try sliding the paper into the slot.  It easily
-                fits, but it's too flimsy to trip the locking mechanism. ";
+                "Du försöker glida in papperet i springan. Det passar
+                lätt, men det är för tunt för att utlösa låsmekanismen. ";
                 exit;
 
             default:
-                "{The dobj/he} do{es}n't fit in the slot. ";
+                "{The dobj/he} passar inte i springan. ";
                 exit;
             }
         }
@@ -3559,19 +3549,19 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
              *   check() will ensure we only make it here if we chose the
              *   right object 
              */
-            "You slide the plate into the slot. ";
+            "Du glider in plattan i springan. ";
             if (location.isLocked)
             {
-                "You move it up and down a bit, and you feel it catch
-                on something.  You give it a little tug; with a
-                click, the door unlatches and pops just a little
-                ajar.  You remove the plate from the slot. ";
+                "Du rör den upp och ner lite, och du känner att den fastnar
+                på något. Du drar lite i den; med ett
+                klick låses dörren upp och öppnas lite på glänt.
+                Du tar bort plattan från springan. ";
                 
                 location.isLocked = nil;
             }
             else
-                "This doesn't have any obvious effect, so you remove
-                the plate. ";
+                "Detta har ingen uppenbar effekt, så du tar bort
+                plattan. ";
         }
     }
 
@@ -3582,7 +3572,7 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
     noteMultiPutIn(dobjs)
     {
         /* don't allow it */
-        "You can only put one thing at a time in the slot. ";
+        "Du kan bara sätta in en sak i taget i springan. ";
         exit;
     }
 
@@ -3590,9 +3580,9 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
     iobjFor(PushTravelThrough) remapTo(PutIn, DirectObject, self)
     iobjFor(PushTravelEnter) remapTo(PutIn, DirectObject, self)
 ;
-+++ Component 'locking mechanism vertical slot' 'slot'
-    "It's about four inches deep and a foot long, and only a few
-    millimeters wide. "
++++ Component 'låsmekanism vertikal+springa+n' 'springa'
+    "Den är ungefär tio centimeter djup och trettio centimeter lång, och bara några få
+    millimeter bred. "
 
     /* map PUT IN, LOOK IN, etc to our location */
     iobjFor(PutIn) remapTo(PutIn, DirectObject, location)
@@ -3600,9 +3590,10 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
     iobjFor(PushTravelThrough) remapTo(PutIn, DirectObject, location)
     iobjFor(PushTravelEnter) remapTo(PutIn, DirectObject, location)
 ;
-+++ Component 'locking mechanism bolt' 'locking bolt'
-    "It's recessed into the mechanism enough that you can't really
-    see how it works. "
+
++++ Component 'låsmekanism^s+bult+en' 'låsbult'
+    "Den är infälld i mekanismen tillräckligt mycket för att du inte riktigt
+    kan se hur den fungerar. "
     dobjFor(Open) remapTo(Open, location)
     dobjFor(Unlock) asDobjFor(Open)
     dobjFor(Pull) asDobjFor(Open)
@@ -3615,12 +3606,12 @@ atopPlantElevator: Room 'Elevator Shaft' 'the elevator shaft'
 /*
  *   The hallway on level s2 - west end 
  */
-s2HallWest: Room 'West End of Hallway' 'the west end of the hallway'
-    'hallway'
-    "This is the west end of a dimly-lit corridor.  The hall ends here
-    with an elevator door to the west, and continues to the east. "
+s2HallWest: Room 'Västra änden av korridoren' 'den västra änden av korridoren'
+    'korridor'
+    "Detta är den västra änden av en svagt upplyst korridor. Korridoren slutar här
+    med en hissdörr i väster och fortsätter österut. "
 
-    vocabWords = 'hall/hallway'
+    vocabWords = 'hall/korridor'
 
     west = doorS2outer
     east = s2HallEast
@@ -3629,11 +3620,11 @@ s2HallWest: Room 'West End of Hallway' 'the west end of the hallway'
 ;
 
 + doorS2outer: Door ->doorS2inner
-    'elevator lift door/elevator/lift' 'elevator door'
-    "It's an old-style elevator door that opens by swinging out
-    rather than sliding sideways.  A round, black call button is
-    next to the door, and above the button is a small neon lamp
-    (currently <<isOnCall ? 'lit' : 'unlit'>>). "
+    'hiss+dörr+en/hiss+en/lift+en' 'hissdörr'
+    "Det är en gammalmodig hissdörr som öppnas genom att svänga ut
+    snarare än att glida åt sidan. En rund, svart anropsknapp finns
+    bredvid dörren, och ovanför knappen finns en liten neonlampa
+    (för närvarande <<isOnCall ? 'tänd' : 'släckt'>>). "
 
     isOnCall = nil
 
@@ -3641,24 +3632,24 @@ s2HallWest: Room 'West End of Hallway' 'the west end of the hallway'
     {
         check()
         {
-            "The door is locked and won't budge. ";
+            "Dörren är låst och rör sig inte. ";
             exit;
         }
     }
     dobjFor(Unlock)
     {
         verify() { }
-        action() { "It's locked from the other side; there's no obvious
-            way to unlock it from this side. "; }
+        action() { "Den är låst från andra sidan; det finns inget uppenbart
+            sätt att låsa upp den från den här sidan. "; }
     }
 
     afterTravel(traveler, connector)
     {
         if (connector == doorS2inner)
         {
-            "<.p>You hold the door open for Xojo, then let it swing
-            shut after he comes through.  You hear the door latch as
-            it closes. ";
+            "<.p>Du håller dörren öppen för Xojo och låter den sedan svänga
+            igen efter att han kommit igenom. Du hör dörren låsas när
+            den stängs. ";
             xojo.moveIntoForTravel(location);
             makeOpen(nil);
 
@@ -3667,20 +3658,20 @@ s2HallWest: Room 'West End of Hallway' 'the west end of the hallway'
 
             /* have xojo start escorting us again */
             xojo.setCurState(xojoS2West);
-            "<.p><q>Your plan of escape was conceived and executed
-            with great excellence,</q> Xojo says. <q>The main
-            canyon bridge is unfortunately not accessible from this
-            sub-basement level, but I know of an alternative crossing.
-            This way, please.</q>  He points down the hall. ";
+            "<.p><q>Din flyktplan var uttänkt och utförd
+            med stor excellens,</q> säger Xojo. <q>Huvudkanjons
+            bro är tyvärr inte tillgänglig från denna
+            subbottenplan, men jag känner till en alternativ övergång.
+            Den här vägen, tack.</q> Han pekar ner i korridoren. ";
         }
     }
 
-    scoreMarker: Achievement { +2 "escaping the elevator shaft" }
+    scoreMarker: Achievement { +2 "fly från hisschaktet" }
 ;
 
-++ Button, Fixture 'round black elevator lift call button' 'call button'
-    "It's a big black button sticking out from the wall about
-    a centimeter. "
+++ Button, Fixture 'rund svart hiss anropsknapp' 'anropsknapp'
+    "Det är en stor svart knapp som sticker ut från väggen ungefär
+    en centimeter. "
 
     dobjFor(Push)
     {
@@ -3688,65 +3679,65 @@ s2HallWest: Room 'West End of Hallway' 'the west end of the hallway'
         {
             if (!location.isOnCall)
             {
-                "The lamp above the button lights dimly. ";
+                "Lampan ovanför knappen tänds svagt. ";
                 location.isOnCall = true;
             }
             else
-                "<q>Click.</q> ";
+                "<q>Klick.</q> ";
         }
     }
 ;
-++ Fixture 'small neon lamp' 'neon lamp'
-    "It's currently <<location.isOnCall ? 'lit' : 'unlit'>>. "
+++ Fixture 'liten neonlampa' 'neonlampa'
+    "Den är för närvarande <<location.isOnCall ? 'tänd' : 'släckt'>>. "
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   S2 hallway - east side 
  */
-s2HallEast: Room 'Middle of Hallway' 'the middle of the hallway' 'hallway'
-    "This long, dimly-lit corridor extends to the east and west.
-    A low, narrow door leads north. "
+s2HallEast: Room 'Mitten av korridoren' 'mitten av korridoren' 'korridor'
+    "Denna långa, svagt upplysta korridor sträcker sig österut och västerut.
+    En låg, smal dörr leder norrut. "
 
-    vocabWords = 'hall/hallway'
+    vocabWords = 'hall/korridor'
 
     west = s2HallWest
     east: FakeConnector, StopEventList {
-        ['Xojo gently but firmly takes your arm and stops you.
-        <q>Respectfully, we must not go that way,</q> he says.  He
-        looks around almost conspiratorially and lowers his voice.
-        <q>That is the domain of Junior Assistant Staff Functionaries,
-        of Peon Grade and lower.  They are relegated to toil here in
-        these nether regions, and in their misery they are desperate
-        for any contact with even such lowly superiors as myself.
-        Were we to venture thus, we could perhaps not escape the
-        obsequious attentions of sub-peons for many hours.  Better
-        to go this way instead.</q>  He indicates the door to the
-        north. ',
+        ['Xojo tar försiktigt men bestämt tag i din arm och stoppar dig.
+        <q>Med respekt, vi får inte gå åt det hållet,</q> säger han. Han
+        ser sig omkring nästan konspiratoriskt och sänker rösten.
+        <q>Det är domänen för Junior Assisterande Personalfunktionärer,
+        av Peon-grad och lägre. De är förvisade att slita här i
+        dessa nedre regioner, och i sin misär är de desperata
+        efter kontakt med även sådana lågt stående överordnade som jag själv.
+        Om vi skulle våga oss dit, skulle vi kanske inte kunna undkomma
+        de underdåniga uppmärksamheterna från sub-peoner på många timmar. Bättre
+        att gå den här vägen istället.</q> Han pekar på dörren mot
+        norr. ',
 
-        'Xojo stops you. <q>Sub-peon staffers that way lie,</q> he
-        says. <q>Better to go this way.</q> He indicates the door. ']
+        'Xojo stoppar dig. <q>Sub-peon-personal den vägen ligger,</q>
+        säger han. <q>Bättre att gå den här vägen.</q> Han pekar på dörren. ']
     }
     north = s2HallEastDoor
 
     roomParts = static (inherited() - [defaultEastWall, defaultWestWall])
 ;
 
-+ s2HallEastDoor: Door ->s2StorageDoor 'low narrow door' 'door'
-    "It's a low, narrow door leading north. "
++ s2HallEastDoor: Door ->s2StorageDoor 'låg smal dörr' 'dörr'
+    "Det är en låg, smal dörr som leder norrut. "
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   S2 Storage room 
  */
-s2Storage: Room 'Storage Room' 'the storage room'
-    "This dark, musty room is packed with boxes, crates, and random
-    junk, jammed into every available space and stacked precariously
-    from the floor to the low ceiling.  A narrow path seems to wind
-    through the junk to the north.  A door leads south. "
+s2Storage: Room 'Förrådsrum' 'förrådsrummet'
+    "Detta mörka, unkna rum är fyllt med lådor, packlårar och slumpmässigt
+    skräp, intryckt i varje tillgängligt utrymme och staplade prekaärt
+    från golv till det låga taket. En smal stig verkar slingra sig
+    genom skräpet norrut. En dörr leder söderut. "
 
-    vocabWords = 'storage room'
+    vocabWords = 'förrådsrum'
 
     south = s2StorageDoor
     north = storagePath
@@ -3754,30 +3745,30 @@ s2Storage: Room 'Storage Room' 'the storage room'
     roomParts = [defaultFloor, defaultCeiling, defaultSouthWall]
 ;
 
-+ s2StorageDoor: Door 'low narrow door' 'door'
-    "It's a low, narrow door leading south. "
++ s2StorageDoor: Door 'låg smal dörr' 'dörr'
+    "Det är en låg, smal dörr som leder söderut. "
 ;
 
 + Decoration
-    'random stack/stacks/box/boxes/crate/crates/junk/pile/piles/clutter/stuff'
-    'junk'
-    "It's just a lot of random junk. "
+    'slumpmässig hög/högar/låda/lådor/packlår/packlårar/skräp/hög/högar/bråte/saker'
+    'skräp'
+    "Det är bara en massa slumpmässigt skräp. "
     isMassNoun = true
 ;
 
-+ storagePath: TravelWithMessage, ThroughPassage 'narrow path' 'path'
-    "It looks like enough of a path through the junk that you
-    could get through. "
++ storagePath: TravelWithMessage, ThroughPassage 'smal stig' 'stig'
+    "Det ser ut som tillräckligt med en stig genom skräpet för att
+    du ska kunna ta dig igenom. "
 
     travelDesc()
     {
-        "You carefully pick your way through the piles of junk";
+        "Du tar dig försiktigt fram genom högarna av skräp";
         if (!traversedBefore)
         {
             traversedBefore = true;
             myDust.makePresent();
-            ", but the place is so cramped that you can't avoid getting
-            covered with dust and cobwebs";
+            ", men platsen är så trång att du inte kan undvika att bli
+            täckt med damm och spindelväv";
         }
         ". ";
     }
@@ -3789,18 +3780,18 @@ s2Storage: Room 'Storage Room' 'the storage room'
 /*
  *   North end of storage room
  */
-s2Utility: Room 'Utility Area' 'the utility area'
-    "This is the north end of a dark, musty storage room.  Junk is
-    piled almost from floor to ceiling to the south, except for a
-    narrow path that winds through the clutter.  This end of the
-    room is mostly cleared of junk, probably to leave room to
-    access the pipes, conduits, and other utility equipment arrayed
-    near the north wall.  A round opening in the north wall leads
-    outside; it looks like it was designed mostly for the pipes
-    and conduits, but there's enough space left over for a person
-    to fit through. "
+s2Utility: Room 'Nyttoområde' 'nyttoområdet'
+    "Detta är den norra änden av ett mörkt, unknat förrådsrum. Skräp är
+    staplat nästan från golv till tak i söder, förutom en
+    smal stig som slingrar sig genom röran. Denna ände av
+    rummet är mestadels rensat från skräp, förmodligen för att lämna plats för
+    åtkomst till rör, ledningar och annan nyttoutrustning uppställd
+    nära den norra väggen. En rund öppning i den norra väggen leder
+    utomhus; det ser ut som om den främst var designad för rören
+    och ledningarna, men det finns tillräckligt med utrymme kvar för en person
+    att ta sig igenom. "
 
-    vocabWords = 'utility area/room'
+    vocabWords = 'nyttoområde/rum'
 
     south = utilityPath
     north = utilityOpening
@@ -3808,69 +3799,69 @@ s2Utility: Room 'Utility Area' 'the utility area'
     roomParts = [defaultFloor, defaultCeiling]
 ;
 
-+ Fixture 'north n wall*walls' 'north wall'
-    "A round opening leads outside. "
++ Fixture 'nord n vägg*väggar' 'norra väggen'
+    "En rund öppning leder utomhus. "
 ;
 
-++ utilityOpening: ThroughPassage 'round opening' 'round opening'
-    "It's about a meter in diameter.  A number of pipes and conduits
-    run through it, but there's enough space left over for a person
-    to fit through. "
+++ utilityOpening: ThroughPassage 'rund öppning' 'rund öppning'
+    "Den är ungefär en meter i diameter. Ett antal rör och ledningar
+    går igenom den, men det finns tillräckligt med utrymme kvar för en person
+    att ta sig igenom. "
 ;
 
-+ Fixture 'utility pipe/pipes/conduits/equipment' 'utility equipment'
-    "A complex network of pipes and conduits fills most of the north
-    end of the room, some connecting to pieces of equipment installed
-    here, some going out through the round opening to the north,
-    some running out through the floor or ceiling. "
++ Fixture 'nytta rör/rör/ledningar/utrustning' 'nyttoutrustning'
+    "Ett komplext nätverk av rör och ledningar fyller större delen av den norra
+    änden av rummet, vissa ansluter till utrustning installerad
+    här, vissa går ut genom den runda öppningen i norr,
+    vissa löper ut genom golvet eller taket. "
     isMassNoun = true
 ;
 
 + Decoration
-    'random stack/stacks/pile/piles/box/boxes/crate/crates/junk/clutter/stuff'
-    'junk'
-    "It's just a lot of random junk. "
+    'slumpmässig hög/högar/låda/lådor/packlår/packlårar/skräp/bråte/saker'
+    'skräp'
+    "Det är bara en massa slumpmässigt skräp. "
     isMassNoun = true
 ;
 
 + utilityPath: TravelWithMessage, ThroughPassage ->storagePath
-    'narrow path' 'path'
-    "It's enough of a path that you could make it through the junk. "
+    'smal stig' 'stig'
+    "Det är tillräckligt med en stig för att du skulle kunna ta dig igenom skräpet. "
 
-    travelDesc = "You carefully pick your way through the piles of junk. "
+    travelDesc = "Du tar dig försiktigt fram genom högarna av skräp. "
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   platform outside storage room 
  */
-s2Platform: OutdoorRoom 'Utility Platform' 'the utility platform'
-    "This rickety walkway is little more than a steel grating
-    bolted to the outside of the power plant building, suspended
-    over a six-hundred foot drop into the canyon below.  The plant
-    wall continues for another twenty feet below, where it reaches
-    the top of the sheer cliff wall of the canyon.  The canyon
-    wall drops almost vertically to the river below.
+s2Platform: OutdoorRoom 'Nyttoplattform' 'nyttoplattformen'
+    "Denna rangliga gångbana är inte mycket mer än ett stålgaller
+    fastbultat på utsidan av kraftverksbyggnaden, upphängd
+    över ett hundraåttio meter djupt fall ner i ravinen nedanför. Anläggningens
+    vägg fortsätter ytterligare sex meter nedåt, där den når
+    toppen av ravinens lodräta klippvägg. Ravinens
+    vägg faller nästan vertikalt ner till floden nedanför.
 
-    <.p>A crude rope bridge over the canyon ends here.  This end
-    of the bridge is tied to the steel grating of the platform,
-    and the bridge extends out over the canyon to the north.
+    <.p>En primitiv repbro över ravinen slutar här. Denna ände
+    av bron är bunden till plattformens stålgaller,
+    och bron sträcker sig ut över ravinen norrut.
 
-    <.p>Numerous pipes and conduits run up and down the wall of
-    the building.  Many go in through the round opening in the
-    wall to the south, but there's just enough space left over
-    for a person to fit through the opening.
+    <.p>Talrika rör och ledningar löper upp och ner längs byggnaden vägg.
+    Många går in genom den runda öppningen i
+    väggen söderut, men det finns precis tillräckligt med utrymme kvar
+    för en person att ta sig igenom öppningen.
 
-    <.p>A short distance east, the underside of the main bridge
-    across the canyon is visible. "
+    <.p>En kort sträcka österut är undersidan av huvudbron
+    över ravinen synlig. "
 
     north: TravelMessage { -> ropeBridge1
-        "You take a deep breath and carefully follow Xojo's lead,
-        holding the main support ropes for balance and hunting
-        around for footing on each step. " }
+        "Du tar ett djupt andetag och följer försiktigt Xojos ledning,
+        håller i huvudstödrepen för balans och letar
+        efter fotfäste vid varje steg. " }
 
     south = platformOpening
-    down: NoTravelMessage { "No way; it's much too big a drop. "; }
+    down: NoTravelMessage { "Ingen chans; det är alldeles för stort fall. "; }
 
     roomParts = [s2PlatformFloor, defaultSky]
 
@@ -3878,19 +3869,19 @@ s2Platform: OutdoorRoom 'Utility Platform' 'the utility platform'
     {
         if (gActionIn(Jump, JumpOffI))
         {
-            "It's much too big a drop. ";
+            "Det är alldeles för stort fall. ";
             exit;
         }
     }
 ;
 
-+ platformBridge: Enterable 'crude rope bridge/ropes' 'rope bridge'
-    "It really is a <i>rope</i> bridge---not a bridge made of
-    wooden planks supported by ropes, like you've seen before,
-    but a bridge literally made entirely of rope.  The walkway
-    is formed by ropes arranged in a criss-crossed pattern to
-    create a sort of sling hanging from the main supporting ropes,
-    which could be used as handrails.  It looks very makeshift. "
++ platformBridge: Enterable 'primitiv+a rep+bro+n' 'repbro'
+    "Det är verkligen en <i>rep</i>bro---inte en bro gjord av
+    träplankor som stöds av rep, som du har sett förut,
+    utan en bro bokstavligen gjord helt av rep. Gångbanan
+    är formad av rep arrangerade i ett korslagt mönster för att
+    skapa en sorts hängmatta hängande från huvudstödrepen,
+    som kan användas som handräcken. Den ser mycket provisorisk ut. "
 
     connector = (location.north)
 
@@ -3900,57 +3891,57 @@ s2Platform: OutdoorRoom 'Utility Platform' 'the utility platform'
     dobjFor(Push)
     {
         verify() { }
-        action() { "The bridge sways, a bit more than you'd expect. "; }
+        action() { "Bron gungar, lite mer än du skulle förvänta dig. "; }
     }
     dobjFor(Pull) asDobjFor(Push)
     dobjFor(Move) asDobjFor(Push)
 ;
 
-+ Distant, Decoration 'main underside/bridge/girders' 'main bridge'
-    "All you can see from here is the steel girders supporting the
-    roadway over the canyon. "
++ Distant, Decoration 'huvud undersida/bro/balkar' 'huvudbro'
+    "Allt du kan se härifrån är stålbalkarna som stöder
+    vägbanan över ravinen. "
 ;
 
-+ RopeBridgeCanyon 'sheer vertical cliff canyon river/wall/walls' 'canyon'
-    "The canyon walls drop away almost vertically.  Judging distances
-    on this scale by eye is almost impossible, but you've been told
-    that the canyon is about six hundred feet deep. "
++ RopeBridgeCanyon 'brant vertikal klippa ravin flod/vägg/väggar' 'ravin'
+    "Ravinens väggar faller nästan vertikalt. Att bedöma avstånd
+    i denna skala med blotta ögat är nästan omöjligt, men du har blivit tillsagd
+    att ravinen är ungefär hundraåttio meter djup. "
 ;
 
-+ s2PlatformFloor: Floor 'steel metal platform/floor/grate/grating/walkway'
-    'steel grating'
-    "It's a simple steel grating, bolted to the side of the power
-    plant building. "
++ s2PlatformFloor: Floor 'stål metall plattform/golv/galler/gångbana'
+    'stålgaller'
+    "Det är ett enkelt stålgaller, fastbultat på sidan av kraftverks-
+    byggnaden. "
 
     dobjFor(JumpOff)
     {
         verify() { }
-        action() { "It's much too big a drop. "; }
+        action() { "Det är alldeles för stort fall. "; }
     }
     dobjFor(JumpOver) asDobjFor(JumpOff)
 ;
 
-+ Fixture 'utility pipe/pipes/conduits' 'pipes'
-    "There are no markings you can read, so it's hard
-    to tell what the specific purpose of any given pipe or
-    conduit is. "
++ Fixture 'nytta rör/rör/ledningar' 'rör'
+    "Det finns inga markeringar du kan läsa, så det är svårt
+    att säga vad det specifika syftet med något givet rör eller
+    ledning är. "
     isPlural = true
 ;
 
-+ Fixture 'concrete government power plant 6 outside wall/building/side'
-    'power plant'
-    "The power plant wall towers several stories above, and ends
-    not far below, at the top of the cliff wall.  A round opening
-    leads into the building. "
++ Fixture 'betong regering kraftverk 6 utsida vägg/byggnad/sida'
+    'kraftverk'
+    "Kraftverkets vägg reser sig flera våningar ovanför och slutar
+    inte långt nedanför, vid toppen av klippväggen. En rund öppning
+    leder in i byggnaden. "
 
     dobjFor(Enter) remapTo(TravelVia, platformOpening)
     dobjFor(GoThrough) remapTo(TravelVia, platformOpening)
 ;
 
 ++ platformOpening: ThroughPassage ->utilityOpening
-    'round opening' 'round opening'
-    "It's about a meter in diameter.  Pipes and conduits run through
-    it, but there's space enough for a person to fit through. "
+    'rund öppning' 'rund öppning'
+    "Den är ungefär en meter i diameter. Rör och ledningar går genom
+    den, men det finns tillräckligt med utrymme för en person att ta sig igenom. "
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -3962,91 +3953,91 @@ class RopeBridgeRoom: Floorless, OutdoorRoom
     {
         if (gActionIs(Drop))
         {
-            "There's no place to put anything down here; it
-            would probably fall through the gaps in the ropes. ";
+            "Det finns ingen plats att lägga ner något här; det
+            skulle förmodligen falla genom gliporna i repen. ";
             exit;
         }
         if (gActionIs(ThrowAt) && !gIobj.ofKind(RopeBridgeCanyon))
         {
-            "Better not; {it dobj/he} would probably fall into the canyon. ";
+            "Bättre att inte göra det; {it dobj/he} skulle förmodligen falla ner i ravinen. ";
             exit;
         }
         if (gActionIn(Jump, JumpOffI))
         {
-            "No way; it's a very long way down. ";
+            "Ingen chans; det är en väldigt lång väg ner. ";
             exit;
         }
         if (gActionIs(Wait))
         {
-            "You'd rather not spend any more time here than necessary. ";
+            "Du vill helst inte spendera mer tid här än nödvändigt. ";
         }
     }
 ;
 
 class RopeBridge: Fixture
-    'rope rope/ropes/bridge/walkway/lattice' 'rope bridge'
-    "The whole bridge is swaying considerably.  You don't want to
-    spend any more time on this thing than you have to. "
+    'rep+bro+n/gångbana/galler' 'repbro'
+    "Hela bron gungar avsevärt. Du vill inte
+    spendera mer tid på den här saken än du måste. "
 
     dobjFor(JumpOff)
     {
         verify() { }
-        action() { "No way; it's a very long way down. "; }
+        action() { "Ingen chans; det är en väldigt lång väg ner. "; }
     }
     dobjFor(JumpOver) asDobjFor(JumpOff)
     dobjFor(SitOn)
     {
         verify() { }
-        check() { "It's not a very good place to sit. "; exit; }
+        check() { "Det är ingen bra plats att sitta på. "; exit; }
     }
     dobjFor(LieOn)
     {
         verify() { }
-        check() { "It's not a very good place to lie down. "; exit;  }
+        check() { "Det är ingen bra plats att ligga ner på. "; exit;  }
     }
     dobjFor(StandOn)
     {
         verify() { }
-        check() { "You already are. "; exit; }
+        check() { "Du gör redan det. "; exit; }
     }
     iobjFor(PutOn) remapTo(Drop, DirectObject)
 
     dobjFor(Cross)
     {
         verify() { }
-        action() { "(If you want to continue across, just say which way.) "; }
+        action() { "(Om du vill fortsätta över, säg bara åt vilket håll.) "; }
     }
 
     dobjFor(Push)
     {
         verify() { }
-        action() { "The bridge sways alarmingly. "; }
+        action() { "Bron gungar oroväckande. "; }
     }
     dobjFor(Pull) asDobjFor(Push)
     dobjFor(Move) asDobjFor(Push)
 ;
 
 class RopeBridgeCanyon: Distant
-    'sheer vertical cliff canyon river/canyon/(wall)/(walls)/cliff/cliffs'
-    'canyon'
-    "You're sure you're missing a great view, but right now you're
-    too fixated on not falling to pay any attention. "
+    'brant vertikal klippa ravin flod/ravin/(vägg)/(väggar)/klippa/klippor'
+    'ravin'
+    "Du är säker på att du missar en fantastisk utsikt, men just nu är du
+    för fixerad vid att inte falla för att lägga märke till något. "
 
     iobjFor(ThrowAt)
     {
         verify() { }
         check()
         {
-            "Better not; they have very harsh penalties for littering
-            around here. ";
+            "Bättre att inte göra det; de har väldigt hårda straff för nedskräpning
+            här omkring. ";
             exit;
         }
     }
 ;
 
 class RopeBridgeMainBridge: Distant
-    'main bridge/underside/girders' 'main bridge'
-    "The main bridge is visible overhead and some distance east. "
+    'huvudbro/undersida/balkar' 'huvudbro'
+    "Huvudbron är synlig ovanför och en bit österut. "
 
     dobjFor(Examine)
     {
@@ -4064,22 +4055,22 @@ class RopeBridgeMainBridge: Distant
 /*
  *   The bridge - part 1 
  */
-ropeBridge1: RopeBridgeRoom 'South End of Rope Bridge'
-    'the south end of the rope bridge' 'rope bridge'
-    "Standing on this bridge is a lot more difficult than it looked
-    from the platform.  The whole thing wants to fold up under
-    your weight, and the lattice of ropes making up the walkway shifts
-    with every step. "
+ropeBridge1: RopeBridgeRoom 'Södra änden av repbron'
+    'södra änden av repbron' 'repbro'
+    "Att stå på den här bron är mycket svårare än det såg ut
+    från plattformen. Hela saken vill vika ihop sig under
+    din vikt, och nätverket av rep som utgör gångbanan förskjuts
+    med varje steg. "
 
     north = ropeBridge2
     south = s2Platform
 
     atmosphereList: StopEventList {
     [
-        'A sharp vibration shudders through the bridge, as though
-        someone struck one of the ropes with a hammer. ',
-        'A little gust of wind sets the bridge swaying alarmingly. ',
-        'The ropes creak and groan disconcertingly. ',
+        'En skarp vibration skakar genom bron, som om
+        någon slog ett av repen med en hammare. ',
+        'En liten vindpust får bron att gunga oroväckande. ',
+        'Repen knakar och stönar oroväckande. ',
         nil
     ] }
 ;
@@ -4088,27 +4079,28 @@ ropeBridge1: RopeBridgeRoom 'South End of Rope Bridge'
 + RopeBridgeCanyon;
 + RopeBridgeMainBridge;
 
+
 /* ------------------------------------------------------------------------ */
 /*
  *   The bridge - part 2
  */
-ropeBridge2: RopeBridgeRoom 'Middle of Rope Bridge'
-    'the middle of the rope bridge' 'rope bridge'
-    "This is just about halfway across the bridge.  From here, the
-    ends of the bridge are so far away they're not readily visible,
-    making it almost feel like the bridge is floating in mid-air
-    over the canyon. "
+ropeBridge2: RopeBridgeRoom 'Mitten av repbron'
+    'mitten av repbron' 'repbro'
+    "Detta är ungefär halvvägs över bron. Härifrån är
+    brons ändar så långt borta att de knappt är synliga,
+    vilket nästan får det att kännas som om bron svävar i luften
+    över kanjonen. "
 
     south = ropeBridge1
     north = ropeBridge3
 
     atmosphereList: StopEventList {
     [
-        'The whole bridge abruptly falls about three feet, then stops
-        with a jerk.  Xojo looks back and laughs nervously. ',
-        'The wind kicks up a little.  The bridge sways and twists. ',
-        'A loud snapping noise comes from behind you somewhere. ',
-        'The ropes creak and groan. ',
+        'Hela bron faller plötsligt ungefär en meter, och stannar sedan
+        med ett ryck. Xojo tittar bakåt och skrattar nervöst. ',
+        'Vinden ökar lite. Bron gungar och vrider sig. ',
+        'Ett högt knäppande ljud kommer någonstans bakom dig. ',
+        'Repen knakar och stönar. ',
         nil
     ] }
 ;
@@ -4121,44 +4113,43 @@ ropeBridge2: RopeBridgeRoom 'Middle of Rope Bridge'
 /*
  *   The bridge - part 3 - the fall 
  */
-ropeBridge3: RopeBridgeRoom 'Hanging on a Rope Bridge'
-    'the dangling rope bridge' 'rope bridge'
-    "What was once a rope bridge is now hanging vertically alongside
-    the north cliff of the canyon.  Fortunately, the construction of the
-    bridge seems somewhat usable as a ladder.  It looks like it's only
-    about fifty feet to the top of the cliff above; the rest of the
-    bridge continues for some distance below. "
+ropeBridge3: RopeBridgeRoom 'Hängande på en repbro'
+    'den hängande repbron' 'repbro'
+    "Det som en gång var en repbro hänger nu vertikalt längs
+    kanjonens norra klippvägg. Lyckligtvis verkar brons konstruktion
+    vara användbar som en stege. Det ser ut att bara vara
+    cirka femton meter till klippans topp ovanför; resten av
+    bron fortsätter en bit nedåt. "
 
     enteringRoom(traveler)
     {
         if (traveler == me)
         {
             /* uh-oh... */
-            "You think you're starting to get the hang of this, and you move
-            forward with a little more confidence.  The north end of the
-            bridge finally comes into sight---not much further now.
-            <.p>The bridge shudders with a sharp shock and twists to
-            the left.  You stop and hold on tight.  The vibration fades,
-            but the walkway is still at an odd angle, so you try to shift
-            your weight to right yourself.  Another shudder, and the
-            bridge twists even more, then drops about six feet and jerks
-            to a stop.  Your heart pounds and you hang on as tightly as
-            you can.
-            <.p>Xojo looks back. <q>Perhaps we should---</q>
-            <.p>The bridge gives way, and you're in free-fall.  You hang
-            on to the rope out of reflex, but it's just falling with you.
-            Maybe not, though: the rope jerks tight and starts pulling
-            you toward the north face of the cliff.  Suddenly you're
-            falling sideways rather than down, the north cliff approaching
-            fast.  You brace yourself for impact just before you slam
-            into the cliff wall.
-            <.p>After a couple of bounces, you more or less come to a stop.
-            You take a look at yourself, and it doesn't look like you're
-            bleeding.  Maybe you're so drenched with adrenaline that you
-            don't realize how badly you're hurt yet, but you don't seem to
-            have any serious injuries; you're undoubtedly a little bruised,
-            but no major body parts seem broken or missing.  It looks like
-            you lost one of your shoes, though. ";
+            "Du tror att du börjar få grepp om det här, och du rör dig
+            framåt med lite mer självsäkerhet. Brons norra ände
+            kommer äntligen inom synhåll - inte mycket längre nu.
+            <.p>Bron skakar med en skarp stöt och vrider sig åt
+            vänster. Du stannar och håller dig fast. Vibrationen avtar,
+            men gångbanan är fortfarande i en konstig vinkel, så du försöker
+            flytta din vikt för att räta upp dig. En annan skakning, och
+            bron vrider sig ännu mer, faller sedan ungefär två meter och rycker
+            till ett stopp. Ditt hjärta slår hårt och du håller dig fast så hårt du kan.
+            <.p>Xojo tittar bakåt. <q>Kanske vi borde---</q>
+            <.p>Bron ger vika, och du faller fritt. Du håller
+            fast i repet av reflex, men det faller bara med dig.
+            Kanske inte ändå: repet rycker till och börjar dra
+            dig mot kanjonens norra vägg. Plötsligt faller du i sidled
+            snarare än nedåt, den norra klippväggen närmar sig
+            snabbt. Du förbereder dig för stöten precis innan du slår
+            in i klippväggen.
+            <.p>Efter ett par studsningar kommer du mer eller mindre till ett stopp.
+            Du tittar på dig själv, och det verkar inte som om du blöder.
+            Kanske är du så dränkt i adrenalin att du inte inser
+            hur allvarligt skadad du är än, men du verkar inte ha
+            några allvarliga skador; du är utan tvekan lite blåslagen,
+            men inga större kroppsdelar verkar brutna eller saknas. Det ser dock ut som
+            att du tappade en av dina skor. ";
 
             /* lose the shoe */
             myShoes.moveInto(nil);
@@ -4167,24 +4158,24 @@ ropeBridge3: RopeBridgeRoom 'Hanging on a Rope Bridge'
     }
 
     up: TravelMessage { -> canyonNorth
-         "It's a bit of work, but the rope lattice of the former walkway
-         actually makes a pretty good ladder.  You make it to the top
-         of the cliff in almost no time, and Xojo helps you up over
-         the edge. " }
+         "Det är lite jobbigt, men repnätet från den tidigare gångbanan
+         fungerar faktiskt ganska bra som en stege. Du tar dig upp till toppen
+         av klippan på nolltid, och Xojo hjälper dig upp över
+         kanten. " }
 
-    down: FakeConnector { "You do a little quick arithmetic: the
-         canyon is about a hundred meters across, as you recall, and
-         two hundred deep.  If the whole bridge is still intact, that
-         means the former south end would still be about a hundred
-         meters above the floor of the canyon.  Up seems like a much
-         better option. " }
+    down: FakeConnector { "Du gör lite snabb huvudräkning: kanjonen
+         är ungefär hundra meter bred, vad du minns, och
+         tvåhundra djup. Om hela bron fortfarande är intakt, betyder det
+         att den tidigare södra änden fortfarande skulle vara ungefär hundra
+         meter ovanför kanjonens botten. Uppåt verkar vara ett mycket
+         bättre alternativ. " }
 
     roomBeforeAction()
     {
         inherited();
         if (gActionIs(Stand) || gActionIs(StandOn))
         {
-            "Standing isn't really an option right now. ";
+            "Att stå är inte riktigt ett alternativ just nu. ";
             exit;
         }
     }
@@ -4192,117 +4183,115 @@ ropeBridge3: RopeBridgeRoom 'Hanging on a Rope Bridge'
 
 + RopeBridgeMainBridge;
 
-+ Distant 'river/canyon' 'canyon'
-    "You'd rather not look down too much just now. "
++ Distant 'river/canyon' 'kanjon'
+    "Du föredrar att inte titta ner för mycket just nu. "
     tooDistantMsg(obj)
-        { return 'You\'d rather not look down too much just now. '; }
+        { return 'Du föredrar att inte titta ner för mycket just nu. '; }
 ;
 
-+ Fixture 'north n canyon rock wall/cliff/walls/cliffs/rock' 'canyon wall'
-    "It's an almost vertical wall of rock. "
++ Fixture 'north n canyon rock wall/cliff/walls/cliffs/rock' 'kanjonvägg'
+    "Det är en nästan vertikal klippvägg. "
 ;
 
 + RopeBridge
-    desc = "The collapsed bridge is hanging vertically from above. "
+    desc = "Den kollapsade bron hänger vertikalt från ovan. "
         
     dobjFor(Climb) remapTo(Up)
     dobjFor(ClimbUp) asDobjFor(Climb)
     dobjFor(ClimbDown) remapTo(Down)
-    dobjFor(Cross) { action() { "That's out of the question at this
-        point; climbing seems more likely. "; } }
+    dobjFor(Cross) { action() { "Det är uteslutet vid det här
+        tillfället; att klättra verkar mer troligt. "; } }
 ;
 
 /* ------------------------------------------------------------------------ */
 /*
  *   North edge of canyon 
  */
-canyonNorth: OutdoorRoom 'Edge of Canyon' 'the edge of the canyon'
-    "This is a rough area strewn with rocks and overgrown
-    with vegetation.  To the south, the sheer cliff wall of
-    the canyon drops away almost vertically.  A little path
-    leading northeast has been cut through the overgrowth.
-    <.p>The end of the rope bridge is anchored to a pair of
-    sturdy metal stakes driven into the rock.  The bridge
-    itself hangs limply over the edge of the canyon. "
+canyonNorth: OutdoorRoom 'Kanten av kanjonen' 'kanten av kanjonen'
+    "Detta är ett ojämnt område fullt av stenar och övervuxet
+    med vegetation. Söderut faller kanjonens branta klippvägg
+    nästan vertikalt. En liten stig som leder nordost har huggits
+    genom den täta växtligheten.
+    <.p>Änden av repbron är förankrad vid ett par
+    stadiga metallpålar som drivits ner i klippan. Själva
+    bron hänger slappt över kanten av kanjonen. "
 
     northeast = canyonPath
-    down: NoTravelMessage { "Nothing could persuade you to climb back
-        down onto the bridge. "; }
+    down: NoTravelMessage { "Inget skulle kunna övertala dig att klättra tillbaka
+        ner på bron. "; }
 
     roomBeforeAction()
     {
         if (gActionIn(Jump, JumpOffI))
         {
-            "You'd rather keep your distance from the canyon. ";
+            "Du föredrar att hålla dig på avstånd från kanjonen. ";
             exit;
         }
     }
 ;
 
 + canyonPath: TravelWithMessage, PathPassage ->courtyardPath
-    'little path' 'path'
-    "The path leads northeast, through the overgrowth. "
+    'liten stig' 'stig'
+    "Stigen leder nordost, genom den täta växtligheten. "
 
-    travelDesc = "You follow the path through the dense foliage. "
+    travelDesc = "Du följer stigen genom den täta växtligheten. "
 ;
 
-+ Decoration 'rock/rocks' 'rocks'
-    "Rocks of all sizes litter the area. "
++ Decoration 'sten+en*stenar+na' 'stenar'
+    "Stenar i alla storlekar ligger utspridda över området. "
     isPlural = true
 ;
 + Decoration 'dense lush tropical
     plant/plants/vegetation/overgrowth/jungle/foliage/overgrowth'
     'vegetation'
-    "The dense, lush vegetation grows almost up to the edge of the
-    cliff.  The only way through is the path leading northeast. "
+    "Den täta, frodiga vegetationen växer nästan ända fram till
+    klippkanten. Det enda sättet att ta sig igenom är stigen som leder nordost. "
     isMassNoun = true
 ;
 
-+ cnRopeBridge: StairwayDown 'rope bridge' 'rope bridge'
-    "The bridge hangs over the side of the canyon, disappearing
-    into the distance below. "
++ cnRopeBridge: StairwayDown 'repbro' 'repbro'
+    "Bron hänger över kanten av kanjonen och försvinner
+    ner i fjärran. "
 
     dobjFor(TravelVia)
     {
         check()
         {
-            "Nothing could persuade you to set foot on that thing again. ";
+            "Inget skulle kunna övertala dig att sätta foten på den där igen. ";
             exit;
         }
     }
     dobjFor(Pull)
     {
         verify() { }
-        action() { "The bridge is much too heavy to move. "; }
+        action() { "Bron är alldeles för tung för att flytta. "; }
     }
 
-    dobjFor(Cross) { verify() { illogical('It\'s more of a ladder
-        than a bridge at this point, so it\'s not something you
-        can cross any more. '); } }
+    dobjFor(Cross) { verify() { illogical('Den är mer som en stege
+        än en bro vid det här laget, så det är inte något du
+        kan korsa längre. '); } }
 
     dobjFor(Board) asDobjFor(TravelVia)
     dobjFor(Enter) asDobjFor(TravelVia)
 ;
 
-+ Fixture 'sturdy metal stake/stakes/pair' 'metal stake'
-    "The stakes are driven deep into the rock to make a sturdy anchor. "
++ Fixture 'sturdy metal stake/stakes/pair' 'metallpåle'
+    "Pålarna är djupt nedslagna i klippan för att skapa ett stabilt ankare. "
 
     dobjFor(Pull)
     {
         verify() { }
-        action() { "The stakes are solidly embedded in the rock. "; }
+        action() { "Pålarna sitter ordentligt fast i klippan. "; }
     }
 ;
 
-+ Distant 'sheer cliff river/canyon/wall/cliff/walls/cliffs/edge' 'canyon'
-    "The view of the canyon isn't bad from here, but you don't want
-    to get too close to the edge. "
++ Distant 'sheer cliff river/canyon/wall/cliff/walls/cliffs/edge' 'kanjon'
+    "Utsikten över kanjonen är inte dålig härifrån, men du vill inte
+    komma för nära kanten. "
 
     dobjFor(JumpOff) remapTo(Jump)
     dobjFor(JumpOver) remapTo(Jump)
 ;
-
-
 /* ------------------------------------------------------------------------ */
 /*
  *   Plant courtyard 
@@ -4358,21 +4347,22 @@ plantCourtyard: OutdoorRoom 'Innergård' 'innergården'
 ;
 
 + Decoration
-    'fem svarta mitachron helikoptrar/helikopter' 'helikoptrar'
+    'fem svarta mitachron helikopter+n*helikoptrar+na' 'helikoptrar'
     "De är alla identiska: varje är helt svart, förutom den gula
-    Mitachron-logotypen på stjärten. "
+    Mitachron-logotypen på stjärtbommen. "
 
     isPlural = true
     notImportantMsg = 'Du vill inte komma för nära helikoptrarna;
                       Mitachron-folket kanske inte uppskattar att en
                       Omegatron-anställd nosar omkring. '
 ;
-++ Decoration 'helikopter rotor/rotorer/rotorblad' 'rotorer'
+++ Decoration 'helikopter+rotor/rotorer/rotorblad' 'rotorer'
     "Rotorerna snurrar fortfarande långsamt, som om piloterna höll
     helikoptrarna redo för en plötslig avfärd. "
 ;
-++ Decoration 'helikopter gul mitachron stjärt/stjärtar' 'helikopterstjärtar'
-    "Stjärten på varje helikopter är målad med Mitachron-logotypen. "
+
+++ Decoration 'gul+a mitachron+logo+prydda helikopter+stjärt+bomm+en/enstron+axel+n*stjärt+bommar+na fenstron+axlar+na' 'stjärtbommar'
+    "Stjärtbommarna på varje helikopter är målad med Mitachron-logotypen. "
     isPlural = true
 ;
 
@@ -4424,22 +4414,22 @@ plantCourtyard: OutdoorRoom 'Innergård' 'innergården'
 /*
  *   The administration building lobby 
  */
-adminLobby: Room 'Lobby' 'the lobby'
-    "On past visits to the administration center, this large, open lobby
-    was quite austere and utilitarian, but it's been transformed: it's
-    festive, colorful, almost carnival-like.  The room is crowded with
-    people talking and dancing.  Balloons and confetti fill the air, a
-    live band plays from a stage, tables spread with food line the walls,
-    waiters weave through the crowd with big trays of drinks.
-    <.p>A set of doors leads outside to the west. "
+adminLobby: Room 'Lobby' 'lobbyn'
+    "Vid tidigare besök på administrationscentret var denna stora, öppna lobby
+    ganska spartansk och funktionell, men den har förvandlats: den är
+    festlig, färgglad, nästan karnevalsliknande. Rummet är fullt av
+    människor som pratar och dansar. Ballonger och konfetti fyller luften,
+    ett liveband spelar från en scen, bord fyllda med mat kantar väggarna,
+    servitörer slingrar sig genom folkmassan med stora brickor med drycker.
+    <.p>En uppsättning dörrar leder ut västerut."
 
     vocabWords = 'lobby'
 
     west = (gRevealed('talked-to-magnxi') ? noWest : adminDoorInt)
     out asExit(west)
 
-    noWest: FakeConnector { "You try to make your way to the doors, but
-        you can't get through the crowd. "; }
+    noWest: FakeConnector { "Du försöker ta dig till dörrarna, men
+        du kan inte komma igenom folkmassan. "; }
 
     /* 
      *   reaching this room is a time-based plot point, so set a marker
@@ -4455,29 +4445,29 @@ adminLobby: Room 'Lobby' 'the lobby'
     plotMarker: ClockEvent { eventTime = [1, 12, 8] }
     
     atmosphereList: ShuffledEventList {
-        ['<q>Excuse me!</q> a waiter shouts.  You make enough room
-         for him to get past, and he moves away through the crowd. ',
+        ['<q>Ursäkta!</q> ropar en servitör. Du gör tillräckligt med plats
+         för att han ska kunna passera, och han rör sig bort genom folkmassan.',
 
-         'The band finishes a song to a round of applause, then they
-         start another. ',
+         'Bandet avslutar en låt till en runda applåder, sedan börjar de
+         en ny.',
 
-         'A group of laughing people pushes past you. ',
+         'En grupp skrattande människor tränger sig förbi dig.',
 
-         'The band plays a slightly quieter passage briefly, then
-         the tempo picks up and they\'re even louder than before. ',
+         'Bandet spelar en något lugnare passage kort, sedan ökar tempot
+         och de är ännu högre än tidigare.',
 
-         'The tempo of the music slows down a little, and things get
-          a little less noisy. ',
+         'Tempot i musiken saktar ner lite, och det blir lite mindre
+          bullrigt.',
 
-         'The music changes to a slower dance song. ',
+         'Musiken ändras till en långsammare danslåt.',
 
-         'The ad hoc dance area seems to expand to where you\'re standing,
-         forcing you to move out of the way a little. '
-        ] }
+         'Det improviserade dansområdet verkar expandera till där du står,
+         vilket tvingar dig att flytta dig lite.']
+    }
 ;
 
-+ adminDoorInt: Door 'door/doors/set' 'doors'
-    "The doors lead outside to the west. "
++ adminDoorInt: Door 'dörr/dörrar/uppsättning' 'dörrar'
+    "Dörrarna leder ut västerut."
     isPlural = true
 
     dobjFor(TravelVia)
@@ -4486,8 +4476,8 @@ adminLobby: Room 'Lobby' 'the lobby'
         {
             if (gRevealed('talked-to-magnxi'))
             {
-                "You try to leave, but there are too many people
-                blocking the way through the doors. ";
+                "Du försöker lämna, men det är för många människor
+                som blockerar vägen genom dörrarna. ";
                 exit;
             }
         }
@@ -4495,22 +4485,22 @@ adminLobby: Room 'Lobby' 'the lobby'
 ;
 
 + Decoration
-    'partying plant mitachron worker/workers/employees/crowd*people' 'crowd'
-    "It looks like they're mostly plant employees, but many Mitachron
-    people are here as well. "
-
+    'festande anläggning mitachron arbetarn+a/publik+en/anställda/folk+massa+n*folk' 'folkmassa'
+    "Det ser ut som om de mestadels är anläggningsanställda, men många
+    Mitachron-personer är också här."
+    isPlural = true
     /* use normal Thing Examine verification rules */
     dobjFor(Examine) { verify() { inherited Thing(); } }
 ;
 
-+ Decoration 'big waiters/waitresses/tray/trays' 'waiters'
-    "The waiters are moving through the crowd carrying drinks. "
++ Decoration 'bricka+n*servitörer+na servitriser+na brickor+na' 'servitörer'
+    "Servitörerna rör sig genom folkmassan bärande på drycker."
     isPlural = true
 ;
 
-+ Decoration 'drink/drinks/cocktail/cocktails/glass/glasses' 'drinks'
-    "The waiters are moving fast enough that you can't see exactly
-    what drinks they have, but it looks like a wide range of cocktails. "
++ Decoration 'dryck/drycker/cocktail/cocktails/glas' 'drycker'
+    "Servitörerna rör sig så snabbt att du inte kan se exakt vilka
+    drycker de har, men det ser ut att vara ett brett utbud av cocktails."
     isPlural = true
 
     dobjFor(Take)
@@ -4521,22 +4511,22 @@ adminLobby: Room 'Lobby' 'the lobby'
     dobjFor(Drink) asDobjFor(Take)
 
     drinkScript: StopEventList { [
-        'You\'re not much of a drinker normally, but right now you
-        could really use something to calm your nerves.  You grab a
-        glass from a passing waiter\'s tray and down it in one gulp.
-        Practically the instant you\'re done, a waiter going the other
-        direction collects your glass. ',
+        'Du är normalt inte mycket för att dricka, men just nu skulle
+        du verkligen behöva något för att lugna nerverna. Du tar ett
+        glas från en passerande servitörs bricka och sveper det i en
+        klunk. Praktiskt taget i samma ögonblick som du är klar samlar
+        en servitör som går åt andra hållet in ditt glas.',
 
-        'You grab another drink from a passing waiter and swallow it,
-        a little less frantically this time.  A waiter collects the
-        glass when you\'re done. ',
+        'Du tar ytterligare en drink från en passerande servitör och
+        sväljer den, lite mindre frenetiskt den här gången. En servitör
+        samlar in glaset när du är klar.',
 
-        'Better not overdo it; you still need to maintain a
-        businesslike demeanor. ']
+        'Bättre att inte överdriva; du behöver fortfarande upprätthålla
+        en affärsmässig hållning.']
     }
 
-    notImportantMsg = 'The drinks aren\'t especially interesting
-        apart from their alcohol content. '
+    notImportantMsg = 'Dryckerna är inte särskilt intressanta
+        bortsett från deras alkoholinnehåll.'
 
     dobjFor(GiveTo)
     {
@@ -4544,32 +4534,32 @@ adminLobby: Room 'Lobby' 'the lobby'
         verify() { }
         check()
         {
-            "No need; {the iobj/he} can help {itself} if
-            {it's} so inclined. ";
+            "Ingen anledning; {the iobj/han} kan hjälpa sig själv om
+            {it's} så benägen. ";
             exit;
         }
     }
 ;
 
-+ Decoration 'balloons/confetti/decorations' 'decorations'
-    "The decorations make the normally spartan lobby look festive. "
++ Decoration 'ballonger/konfetti/dekorationer' 'dekorationer'
+    "Dekorationerna får den normalt spartanska lobbyn att se festlig ut."
     isPlural = true
 ;
 
-+ Decoration 'food/table/tables' 'tables of food'
-    "Tables piled with food line the walls. "
-    notImportantMsg = 'You think you\'ll hold off on joining the party
-                       until you\'ve had a chance to talk to the Colonel. '
++ Decoration 'mat+bord+et' 'bord med mat'
+    "Bord fyllda med mat kantar väggarna."
+    notImportantMsg = 'Du tror att du väntar med att ansluta dig till festen
+                       tills du har haft en chans att prata med Översten.'
     isPlural = true
 ;
 
-+ Decoration 'live band/stage' 'band'
-    "They're playing big-band music.  They seem pretty good. "
++ Decoration 'liveband+et/scen+en' 'band'
+    "De spelar storbandsmusik. De verkar ganska bra."
     dobjFor(ListenTo) { verify() { logicalRank(50, 'x decoration'); } }
 ;
 
-++ SimpleNoise 'big band big-band music/song' 'music'
-    "The live band is playing big-band-style music. "
+++ SimpleNoise 'storband+et storband^s+musik/låt+en' 'musik'
+    "Livebandet spelar storbandsmusik."
 ;
 
 /* 
@@ -4577,41 +4567,42 @@ adminLobby: Room 'Lobby' 'the lobby'
  *   case the player assumes he hasn't actually left yet 
  */
 + adminUnFrosst: PresentLater, Unthing
-    'slight pale junior (mitachron) frosst belker/executive/man*men'
+    'smala bleka junior (mitachron) frosst belker/chef/man*män'
     'Frosst Belker'
 
     isProperName = true
     isHim = true
 
-    notHereMsg = 'You don\'t see Frosst Belker here; he left after
-        talking to the Colonel. '
+    notHereMsg = 'Du ser inte Frosst Belker här; han gick efter
+        att ha pratat med Översten.'
 
     dobjFor(Follow)
     {
         verify() { }
-        action() { "It's so crowded that you lost track of
-            Frosst Belker as soon as he walked away. "; }
+        action() { "Det är så trångt att du tappade bort
+            Frosst Belker så fort han gick iväg. "; }
     }
 ;
+
 
 /* ------------------------------------------------------------------------ */
 /*
  *   The colonel 
  */
-magnxi: Person 'colonel grand high administrator magnxi/woman*women'
-    'Colonel Magnxi'
-    "Her official title is Grand High Administrator Magnxi, but she
-    insists on everyone using her military title, and she always wears
-    a dress uniform that looks like something out of the Napoleonic
-    era.  You've never seen her wear this hat before, though; it pushes
-    the bizarreness of her outfit to a whole new level. "
+magnxi: Person 'överste höga administratör magnxi/kvinna+n*kvinnor'
+    'Överste Magnxi'
+    "Hennes officiella titel är Höga Administratör Magnxi, men hon
+    insisterar på att alla använder hennes militära titel, och hon bär
+    alltid en uniformsklänning som ser ut som något från Napoleontiden.
+    Du har dock aldrig sett henne bära den här hatten förut; den driver
+    upp bisarrheten i hennes outfit till en helt ny nivå."
     isProperName = true
     isHer = true
 
     /* we know about the colonel from the start */
     isKnown = true
 
-    scoreMarker: Achievement { +1 "getting Colonel Magnxi's attention" }
+    scoreMarker: Achievement { +1 "att få Överste Magnxis uppmärksamhet" }
 
     beforeAction()
     {
@@ -4621,18 +4612,18 @@ magnxi: Person 'colonel grand high administrator magnxi/woman*women'
         /* special handling if throwing something at the colonel */
         if (gActionIs(ThrowAt) && (gIobj == self || gIobj.isIn(self)))
         {
-            "The Colonel might find that annoying, which is the last
-            thing you'd want right now. ";
+            "Översten kanske skulle uppleva det irriterande, vilket är det
+            sista du vill just nu. ";
             exit;
         }
     }
 ;
 
 + InitiallyWorn
-    'dress uniform/sash/sashes/ribbons/medal/medals/epaulets/outfit'
+    'uniformsklänning uniform/skärp/band/medalj/medaljer/epåletter/outfit'
     'uniform'
-    "It's like a 19th century museum piece: sashes, ribbons, medals,
-    epaulets, the whole works. "
+    "Det är som ett museiföremål från 1800-talet: skärp, band, medaljer,
+    epåletter, hela paketet."
 
     /* 
      *   The English library tries hard to guess whether to use 'a' or
@@ -4640,25 +4631,24 @@ magnxi: Person 'colonel grand high administrator magnxi/woman*women'
      *   them right every time, and this is one that it gets wrong.  So, we
      *   need to override the aName to make it 'a uniform'.  
      */
-    aName = 'a uniform'
+    aName = 'en uniform'
 
     isListedInInventory = nil
 ;
 
-+ InitiallyWorn 'military hat/insignia/brim' 'hat'
-     "It's positively huge; it's proportioned like a novelty chef hat,
-    ludicrously tall and ballooning outwards toward the top, but it's
-    dark blue, made of stiff material, and adorned with military
-    insignia.  It's about two sizes too large for the Colonel's
-    head, and as a result it sits far too low on her head, almost covering
-    her eyes. "
++ InitiallyWorn 'militär hatt/insignier/brätte' 'hatt'
+     "Den är enormt stor; den är proportionerad som en novelty-kockhatt,
+    löjligt hög och utvidgande uppåt, men den är mörkblå, gjord av styvt
+    material och prydd med militära insignier. Den är ungefär två storlekar
+    för stor för Överstens huvud, och som ett resultat sitter den alldeles
+    för lågt på hennes huvud, nästan täckande hennes ögon."
 
     isListedInInventory = nil
 ;
 
-+ Decoration 'small group/people/companions' 'small group of people'
-    "The place is so crowded that you can't see who she's with. "
-    theDisambigName = 'Colonel Magnxi\'s companions'
++ Decoration 'liten grupp/människor/följeslagare' 'liten grupp människor'
+    "Platsen är så trång att du inte kan se vilka hon är med."
+    theDisambigName = 'Överste Magnxis följeslagare'
 ;
 
 + InConversationState
@@ -4678,8 +4668,8 @@ magnxi: Person 'colonel grand high administrator magnxi/woman*women'
 
 ++ ConversationReadyState
     isInitState = true
-    stateDesc = "She's chatting with a small group of people. "
-    specialDesc = "Colonel Magnxi is here, chatting with a group of people. "
+    stateDesc = "Hon pratar med en liten grupp människor."
+    specialDesc = "Överste Magnxi är här och pratar med en grupp människor."
 
     tries = 0
     enterConversation(actor, entry)
@@ -4687,57 +4677,56 @@ magnxi: Person 'colonel grand high administrator magnxi/woman*women'
         switch (++tries)
         {
         case 1:
-            "<q>Colonel Magnxi!</q> you shout, trying to be heard over
-            the music, but the brass section picks just this moment to
-            get really loud.  The Colonel doesn't seem to hear you. ";
+            "<q>Överste Magnxi!</q> ropar du och försöker höras över
+            musiken, men brasssektionen väljer just detta ögonblick att
+            bli riktigt högljudd. Översten verkar inte höra dig.";
             break;
 
         case 2:
-            "You push your way through the crowd and wave your arms,
-            shouting a little louder.  <q>Colonel! Colonel Magnxi!</q>
-            She looks your way like she actually heard you this time,
-            but a waiter cuts in front of you.  The waiter moves off,
-            but Colonel Magnxi is talking to someone else again now. ";
+            "Du tränger dig genom folkmassan och viftar med armarna,
+            ropande lite högre. <q>Överste! Överste Magnxi!</q>
+            Hon tittar åt ditt håll som om hon faktiskt hörde dig den här
+            gången, men en servitör skär av framför dig. Servitören går
+            iväg, men Överste Magnxi pratar med någon annan igen nu.";
             break;
-
         case 3:
-            "You shout at the top of your lungs.  <q>Colonel Magnxi!</q>
-            Just as you do, the music stops---your shout echoes
-            through the suddenly quiet room.  Everyone turns and looks
-            at you.
-            <.p>The Colonel stares at you along with everyone else
-            for a moment, then smiles.  <q>Oh, how lovely to see you
-            again,</q> the Colonel says in her perfect English accent.
-            She squints and wobbles a little, like she's had a bit to
-            drink. <q>Mister, um, Mister Muddling, isn't it?  Well, do
-            join us.  We were all just celebrating our new partnership
-            with the Mitachron Corporation.  Isn't this a lovely party
-            Mitachron are throwing for us?</q>
-            <.p>New partnership?  <q>But, but...</q> you stutter, not
-            believing what you're hearing.
-            <.p>The band starts a new song, a bit less deafening
-            than the last one.  <q>And did you see my brilliant
-            new hat?</q> she asks, running her fingers around the
-            oversized brim.  <q>It's a gift from Mr.\ Belker here.
-            Really, Frosst, it's too much.</q>
-            <.p>Oh, no.  You didn't see him here until just now.  The
-            slight, pale man standing next to Magnxi is Frosst Belker,
-            a junior executive at Mitachron.  You've crossed paths with
-            him before, always on occasions just like this.
-            <.p><q>Ah, Mr.\ Mittling,</q> Belker says with that damned
-            smirk of his.  He speaks with a faint accent you've never
-            been able to place, his vowels a bit elongated and nasal,
-            his consonants a little too crisply enunciated.
-            <q>Again we see there is no customer you can
-            court which I cannot take away.</q>  He finishes his champagne
-            and hands the glass to a passing waiter. <q>Colonel, a pleasure
-            doing business, as always.  I must be on my way, but do enjoy
-            the party.</q>  He and the Colonel embrace like diplomats,
-            and then he turns to go, but he stops for a moment and
-            looks your way.  <q>You too, of course, Mr.\ Mittling,</q>
-            he says with another smirk, then chuckles and walks off,
-            disappearing into the crowd.
-            <.p>The colonel goes back to mingling.
+            "Du skriker av full hals. <q>Överste Magnxi!</q>
+            Precis när du gör det stannar musiken - ditt skrik ekar
+            genom det plötsligt tysta rummet. Alla vänder sig om och 
+            tittar på dig.
+            <.p>Översten stirrar på dig tillsammans med alla andra
+            ett ögonblick, sedan ler hon. <q>Åh, så trevligt att se dig
+            igen,</q> säger Översten med sin perfekta engelska accent.
+            Hon kisar och vinglar lite, som om hon har druckit en del.
+            <q>Herr, öh, Herr Muddling, inte sant? Nå, kom och anslut dig
+            till oss. Vi firade just vårt nya partnerskap med Mitachron
+            Corporation. Är det inte en underbar fest som Mitachron
+            anordnar för oss?</q>
+            <.p>Nytt partnerskap? <q>Men, men...</q> stammar du, utan
+            att tro på vad du hör.
+            <.p>Bandet börjar en ny låt, lite mindre öronbedövande
+            än den förra. <q>Och såg du min briljanta nya hatt?</q>
+            frågar hon och låter fingrarna glida längs det överdimensionerade
+            brättet. <q>Det är en gåva från herr Belker här. Verkligen,
+            Frosst, det är för mycket.</q>
+            <.p>Åh nej. Du såg honom inte här förrän just nu. Den
+            smala, bleka mannen som står bredvid Magnxi är Frosst Belker,
+            en junior chef på Mitachron. Du har stött på honom förut,
+            alltid vid tillfällen precis som detta.
+            <.p><q>Ah, herr Mittling,</q> säger Belker med det där
+            förbannade leendet. Han talar med en svag accent som du
+            aldrig har kunnat placera, hans vokaler lite utdragna och nasala,
+            hans konsonanter lite för tydligt uttalade.
+            <q>Återigen ser vi att det inte finns någon kund du kan
+            uppvakta som jag inte kan ta ifrån dig.</q> Han avslutar sin champagne
+            och räcker glaset till en passerande servitör. <q>Överste, ett nöje
+            att göra affärer, som alltid. Jag måste ge mig av, men njut av
+            festen.</q> Han och Översten omfamnar varandra som diplomater,
+            och sedan vänder han sig för att gå, men han stannar ett ögonblick och
+            tittar åt ditt håll. <q>Du också, naturligtvis, herr Mittling,</q>
+            säger han med ett annat leende, skrattar sedan och går iväg,
+            försvinnande in i folkmassan.
+            <.p>Översten återgår till att mingla.
             <.reveal talked-to-magnxi> ";
 
             /* award some points for getting her attention */
@@ -4754,8 +4743,8 @@ magnxi: Person 'colonel grand high administrator magnxi/woman*women'
 
         case 4:
         default:
-            "You try to get the Colonel's attention again, but she's
-            too busy talking to someone else. ";
+            "Du försöker att få överstens uppmärksamhet igen, men hon är
+            för upptagen med att prata med någon annan. ";
             break;
         }
 
@@ -4766,6 +4755,63 @@ magnxi: Person 'colonel grand high administrator magnxi/woman*women'
         exit;
     }
 ;
+
+adminEmail: Readable 'papper^s+utskrift+en/papper^s+bit+en/utskrift+en/email/e-mail'
+    'utskrift'
+
+    "Det är en utskrift från en gammal radskrivare, tryckt på
+    kontinuerligt vikpapper med alternerande ränder av vitt och
+    blekgrönt. Det är ett e-postmeddelande från din chef; han måste vara
+    tillbaka från Maui. Det är i hans karakteristiska stil med enbart gemener;
+    han gör det för att imponera på folk att han är för viktig för att
+    slösa sin värdefulla tid på att trycka på Shift-tangenten. Hans stavning och
+    interpunktion är på liknande sätt effektiviserade.
+
+    <.p><.blockquote>
+    <tt>doug- hoppas du är klar med demon nu.....när du kommer tillbaka
+    behöver jag att du åker ner till la för att rekrytera en cal tech-student som heter
+    brian stamer.\ rudyb såg en artikel om honom någonstans han är helt
+    het på att anställa honom.\ känner du honom....i alla fall vill rudyb att du
+    åker eftersom du gick på cal tech.
+
+    <.p>tack carl
+
+    <.p>förresten- jag är borta från kontoret nästa månad....viktig konferens
+    på fiji.\ jag börjar bli utbränd av allt detta resande så jag tänker
+    ta lite ledigt när jag kommer tillbaka.\ om du behöver något bara maila.
+
+    <.p>förresten igen- o-travel fick ett jättebra!!!\ pris på din returresa.\
+    de hittade en nedgradering till economy-minus, den har ett par
+    extra mellanlandningar, jag är säker på att du inte har något emot det.\ sparar stora $$$ i budgeten,
+    fiji pressade den lite, rudyb är helt sån där du överskrider budgeten
+    för mycket igen så vi måste alla hjälpas åt att skära ner mer på kostnaderna.
+
+    <.p>ha så kul i la!!!!!!!!!!!!!
+    </tt>
+    <./blockquote>
+
+    <.p>Toppen. Du är inte ens tillbaka från den här eländiga resan än och
+    du har redan en till inbokad. Nåja. Lika bra att
+    ordna med oxkärran tillbaka till flygplatsen, eller vad det nu är som
+    den nya, lägre budgeten tillåter... "
+
+    dobjFor(Examine)
+    {
+        action()
+        {
+            /* show the message */
+            inherited();
+
+            /* run the campus initialization */
+            campusInit();
+
+            /* end the turn here */
+            exit;
+        }
+    }
+;
+
+/*
 
 adminEmail: Readable 'piece/paper/print-out/printout/email/e-mail'
     'print-out'
@@ -4806,19 +4852,4 @@ adminEmail: Readable 'piece/paper/print-out/printout/email/e-mail'
     arrange for the ox cart back to the airport, or whatever it is the
     new, lower budget will allow... "
 
-    dobjFor(Examine)
-    {
-        action()
-        {
-            /* show the message */
-            inherited();
-
-            /* run the campus initialization */
-            campusInit();
-
-            /* end the turn here */
-            exit;
-        }
-    }
-;
-
+*/

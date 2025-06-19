@@ -1912,6 +1912,8 @@ modify Thing
     //verbToLeave = (tSel('leave' + verbEndingS, 'left'))
     //verbToLeave = (tSel('går härifrån' , 'gick därifrån'))
     verbToLeave = (tSel('lämnar' , 'lämnade'))
+    verbToLeave2 = (tSel('avlägnsnar' , 'avlägnsnade'))
+    verbToLeave3 = (tSel('beger' , 'begav'))
 
 
     //verbToSee = (tSel('ser' + verbEndingS, 'såg'))
@@ -6351,7 +6353,9 @@ grammar compoundNounPhrase(simple): simpleNounPhrase->np_
 
 grammar compoundNounPhrase(of):
     simpleNounPhrase->np1_ 'av'->of_ compoundNounPhrase->np2_
+    | simpleNounPhrase->np1_ 'från'->of_ compoundNounPhrase->np2_
     | simpleNounPhrase->np1_ 'av'->of_ 'de'->the_ compoundNounPhrase->np2_
+    | simpleNounPhrase->np1_ 'från'->of_ 'de'->the_ compoundNounPhrase->np2_
     : NounPhraseWithVocab
     getVocabMatchList(resolver, results, extraFlags)
     {
@@ -6411,7 +6415,9 @@ grammar compoundPluralPhrase(simple): simplePluralPhrase->np_
  */
 grammar compoundPluralPhrase(of):
     simplePluralPhrase->np1_ 'av'->of_ compoundNounPhrase->np2_
+    | simplePluralPhrase->np1_ 'från'->of_ compoundNounPhrase->np2_
     | simplePluralPhrase->np1_ 'av'->of_ 'de'->the_ compoundNounPhrase->np2_
+    | simplePluralPhrase->np1_ 'från'->of_ 'de'->the_ compoundNounPhrase->np2_
     : NounPhraseWithVocab
     getVocabMatchList(resolver, results, extraFlags)
     {
@@ -9697,7 +9703,9 @@ VerbRule(ListenImplicit)
 ;
 
 VerbRule(PutIn)
-    ('lägg' | 'placera' | 'sätt' | 'stoppa'  ) dobjList
+    ('lägg' | 'placera' | 'sätt' | 'stoppa') ('in'|'i') dobjList ('i'|'inuti') singleIobj
+    | ('lägg' | 'placera' | 'sätt' | 'stoppa'  ) dobjList singleIobj
+    | ('lägg' | 'placera' | 'sätt' | 'stoppa'  ) dobjList
         ('i' | 'in' | 'in' 'i' | 'in' 'till' | 'insidan' | 'insidan' 'av') singleIobj
     : PutInAction
     verbPhrase = 'sätta/sätter (vad) (in i vad)'
@@ -9744,8 +9752,8 @@ VerbRule(Kiss)
 ;
 
 VerbRule(AskFor)
-    ('fråga' | 'f') singleDobj 'efter' singleTopic
-    | ('fråga' | 'f') 'efter' singleTopic 'av' singleDobj
+    ('fråga' |'be'|'f') singleDobj 'efter' singleTopic
+    | ('fråga'|'be'|'f') 'efter' singleTopic 'av' singleDobj
     : AskForAction
     verbPhrase = 'fråga/frågar (vem) (efter vad)'
     omitIobjInDobjQuery = true
@@ -9754,7 +9762,7 @@ VerbRule(AskFor)
 ;
 
 VerbRule(AskWhomFor)
-    ('fråga' | 'f') 'efter' singleTopic
+    ('fråga'|'be'|'f') 'efter' singleTopic
     : AskForAction
     verbPhrase = 'fråga/frågar (vem) (efter vad)'
     omitIobjInDobjQuery = true
@@ -9767,7 +9775,7 @@ VerbRule(AskWhomFor)
 ;
 
 VerbRule(AskAbout)
-    ('fråga' | 'f') singleDobj 'om' singleTopic
+    ('fråga'|'be'|'f') singleDobj 'om' singleTopic
     : AskAboutAction
     verbPhrase = 'fråga/frågar (vem) (om vad)'
     omitIobjInDobjQuery = true
@@ -9788,7 +9796,7 @@ VerbRule(AskAboutImplicit)
 ;
 
 VerbRule(AskAboutWhat)
-    [badness 500] 'fråga' singleDobj
+    [badness 500] 'fråga'|'be' singleDobj
     : AskAboutAction
     verbPhrase = 'fråga/frågar (vem) (om vad)'
     askDobjResponseProd = singleNoun
@@ -10231,7 +10239,7 @@ VerbRule(Version)
 ;
 
 VerbRule(Credits)
-    ('omnämnande'|'omnämnanden')
+    ('omnämnande'|'omnämnanden'|'credits'|'tillägnan'|'tillägningar'|'tillägnad')
     : CreditsAction
     verbPhrase = 'visa/visar omnämnanden'
 ;
@@ -10433,19 +10441,19 @@ VerbRule(JumpOver)
 
 VerbRule(Push)
     ///('tryck' |'knuffa' | 'pressa') dobjList
-    ('flytta' |'knuffa' | 'pressa' | 'tryck') dobjList
+    ('flytta' |'knuffa' | 'pressa' | 'tryck') 'på' dobjList
     : PushAction
     verbPhrase = 'trycka/trycker (vad)'
 ;
 
 VerbRule(Pull)
-    'dra' dobjList
+    'dra' ('i'|) dobjList
     : PullAction
     verbPhrase = 'dra/drar (vad)'
 ;
 
 VerbRule(Move)
-    'flytta'|'knuffa' dobjList
+    ('flytta'|'knuffa') dobjList
     : MoveAction
     verbPhrase = 'flytta/flyttar (vad)'
 ;
@@ -10624,9 +10632,9 @@ VerbRule(ConsultWhatAbout)
         dobjMatch.responseProd = inSingleNoun;
     }
 ;
-
+// TODO: Sammanblandas ofta med TurnOn men saknar SwitchOn / SwitchOff
 VerbRule(Switch)
-    ('tryck'|'slå') 'på' dobjList
+    'tryck' 'på' dobjList
     : SwitchAction
     verbPhrase = 'trycka/trycker på (vad)'
 ;
@@ -10810,7 +10818,7 @@ VerbRule(AttachTo)
       ('koppla'|'sätt') ('ihop'|'fast'|'fast'|'samman')
       | ('sammansätt') 
     )
-    dobjList 'med' singleIobj
+    dobjList ('med'|'till') singleIobj
     : AttachToAction
     askIobjResponseProd = toSingleNoun
     verbPhrase = 'sätt fast/sätter fast (vad) (med vad)'
@@ -10819,7 +10827,7 @@ VerbRule(AttachTo)
 VerbRule(AttachToWhat)
     [badness 500] ('koppla') dobjList
     : AttachToAction
-    verbPhrase = 'koppla/kopplar ihop (vad) (med vad)'
+    verbPhrase = 'koppla/kopplar samman (vad) (med vad)'
     construct()
     {
         /* set up the empty indirect object phrase */
@@ -10989,9 +10997,12 @@ VerbRule(Sleep)
 
 VerbRule(Fasten)
     'fäst' | ('koppla' 'fast') dobjList
+    //('fäst' | 'säkra') ('fast'|) dobjList
     : FastenAction
     verbPhrase = 'fästa/fäster (vad)'
 ;
+
+
 
 VerbRule(FastenTo)
     ('fäst' | 'koppla') dobjList ('till'|'i') singleIobj
@@ -11002,12 +11013,14 @@ VerbRule(FastenTo)
 
 VerbRule(Unfasten)
     'koppla' ('loss'|'lös') | 'avfäst' dobjList
+//    (('koppla'|'ta') ('loss'|'lös') | 'avfäst' | 'osäkra') dobjList
     : UnfastenAction
     verbPhrase = 'koppla/kopplar lös (vad)'
 ;
 
 VerbRule(UnfastenFrom)
     'koppla' ('loss'|'lös') | 'avfäst'  dobjList 'från' singleIobj
+//    (('koppla'|'ta') ('loss'|'lös') | 'avfäst' | 'osäkra')  dobjList 'från' singleIobj
     : UnfastenFromAction
     verbPhrase = 'koppla/kopplar lös (vad) (från vad)'
     askIobjResponseProd = fromSingleNoun
@@ -11081,7 +11094,7 @@ VerbRule(UnscrewWith)
 
 VerbRule(PushTravelDir)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
-    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
+    ('knuffa' | 'tryck' | 'putta' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
     : PushTravelDirAction
     verbPhrase = ('trycka/trycker (vad) ' + dirMatch.dir.name)
 ;
@@ -11096,7 +11109,7 @@ VerbRule(PushTravelThrough)
 
 VerbRule(PushTravelEnter)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('knuffa' | 'tryck' | 'putta' | 'dra' | 'drag' | 'flytta') singleDobj
     ('in' ('till'|'i') ) singleIobj
     : PushTravelEnterAction
     verbPhrase = 'trycka/trycker (vad) (in i vad)'
@@ -11104,7 +11117,7 @@ VerbRule(PushTravelEnter)
 
 VerbRule(PushTravelGetOutOf)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('knuffa' | 'tryck' | 'putta' | 'dra' | 'drag' | 'flytta') singleDobj
     'ut' ('of' | ) singleIobj
     : PushTravelGetOutOfAction
     verbPhrase = 'trycka/trycker (vad) (ut ur vad)'
@@ -11113,7 +11126,7 @@ VerbRule(PushTravelGetOutOf)
 
 VerbRule(PushTravelClimbUp)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('knuffa' | 'tryck' | 'putta' | 'dra' | 'drag' | 'flytta') singleDobj
     'up' singleIobj
     : PushTravelClimbUpAction
     verbPhrase = 'trycka/trycker (vad) (up vad)'
@@ -11122,7 +11135,7 @@ VerbRule(PushTravelClimbUp)
 
 VerbRule(PushTravelClimbDown)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
-    ('knuffa' | 'tryck' | 'dra' | 'drag' | 'flytta') singleDobj
+    ('knuffa' | 'tryck' | 'putta' | 'dra' | 'drag' | 'flytta') singleDobj
     'ner' singleIobj
     : PushTravelClimbDownAction
     verbPhrase = 'trycka/trycker (vad) (ner vad)'
@@ -11574,9 +11587,8 @@ DefineLiteralAction(Ord)
         local target = gLiteral.toLower();
         local str = new Vector();
         local o = cmdDict.findWord(target);
-        if(o && o.length>0) {
-            str.append('Hittade objektet: [<<o[1]>>], \ntheName: "<<o[1].theName>>" \naName: "<<o[1].aName>>"\b');
-            str.append('Följande ord finns definierade:\b');
+        local wordFound = o && o.length>0;
+        if(wordFound) {
             cmdDict.forEachWord(function(obj, word, wordPart) {
                 if(o[1] == obj) {
                     local grammarFunction = 'unknown';
@@ -11586,11 +11598,14 @@ DefineLiteralAction(Ord)
                     str.append('<<word>> (<<grammarFunction>>) \n');
                 }
             });
-        } else {
-            str.append('Fann inget objekt som kan kallas så\n');
         }
         str.sort();
-        mainReport(toString(str.join('')));
+
+        local explain = wordFound 
+            ? 'Hittade objektet: [<<o[1]>>], \ntheName: "<<o[1].theName>>" \naName: "<<o[1].aName>>"\b
+                Följande ord finns definierade:\b'
+            :'Fann inget objekt som kan kallas så\n';
+        mainReport(toString(explain + str.join('')));
     }
     afterAction() { }
     turnSequence() { }
@@ -11601,7 +11616,6 @@ VerbRule(Ord)
     :OrdAction 
     verbPhrase = 'ord/orda (vad)'
 ; 
-
 
 
 

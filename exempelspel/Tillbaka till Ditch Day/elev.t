@@ -99,7 +99,7 @@ class Elevator: object
      */
     announceStart(dir)
     {
-        "The elevator starts moving. ";
+        "Hissen börjar röra sig. ";
     }
 
     /* 
@@ -114,9 +114,9 @@ class Elevator: object
     {
         /* if we were moving, we're moving no longer */
         if (moving)
-            "The elevator stops, and the doors slide open. ";
+            "Hissen stannar, och dörrarna skjuts isär. ";
         else
-            "The elevator doors slide open. ";
+            "Hissens dörrar skjuts isär. ";
     }
 
     /* 
@@ -270,7 +270,7 @@ class Elevator: object
                 door.makeOpen(nil);
 
                 /* mention it */
-                "The elevator doors slide shut. ";
+                "Hissdörrarna skjuts ihop tätt. ";
             }
 
             /* 
@@ -582,7 +582,7 @@ class Elevator: object
         if (lst.indexWhich({x: x.isLit}) != nil)
         {
             /* mention it */
-            "All of the buttons go dark. ";
+            "Alla knappar blir mörka. ";
 
             /* turn them all off */
             lst.forEach({x: x.isLit = nil});
@@ -636,9 +636,9 @@ class ElevatorDoor: Door
 
         /* if we have just one, say which kind; otherwise, say we have both */
         if (btns.length() == 1)
-            "Next to the doors is <<btns[1].aDesc>>. ";
+            "Bredvid dörrarna finns <<btns[1].aDesc>>. ";
         else if (btns.length() == 2)
-            "Next to the doors are <q>up</q> and <q>down</q> buttons. ";
+            "Bredvid dörrarna finns både en <q>upp</q> och <q>ner</q>-knapp. ";
     }
 
     /* start out closed by default */
@@ -652,10 +652,10 @@ class ElevatorDoor: Door
               && (masterObject == self || masterObject.otherSide == self))
 
     /* we can't manually open or close the doors */
-    dobjFor(Open) { action() { "The elevator doors are automatic;
-        you can't open them manually. "; } }
-    dobjFor(Close) { action() { "The elevator doors open and close
-        automatically. "; } }
+    dobjFor(Open) { action() { "Hissdörrarna är automatiska;
+        du kan inte öppna dem manuellt."; } }
+    dobjFor(Close) { action() { "Hissdörrarna öppnas och stängs 
+        automatiskt."; } }
 
     /* 
      *   since we can't open the doors manually, don't make opening the
@@ -664,7 +664,7 @@ class ElevatorDoor: Door
     getDoorOpenPreCond() { return nil; }
 
     /* if we can't travel, it's because the doors are closed */
-    cannotTravel() { "The elevator doors are closed. "; }
+    cannotTravel() { "Hissdörrarna är stängda. "; }
 
     /* 
      *   Customize the message for remote opening and closing.  This is
@@ -684,7 +684,7 @@ class ElevatorDoor: Door
     /* announce that the doors are opening automatically */
     announceRemoteOpen(stat, dir)
     {
-        "The elevator doors slide <<stat ? 'open' : 'shut'>>. ";
+        "Hissens dörrar skjuts <<stat ? 'isär' : 'ihop'>>. ";
     }
 
     /* the floor number on which this door is located */
@@ -704,9 +704,10 @@ class ElevatorDoor: Door
  *   these buttons by looking in the door's location.  
  */
 class ElevatorCallButton: Button, Fixture
-    '(elevator) (lift) button*buttons' 'elevator button'
-    "It's <<isLit ? 'lit' : 'unlit'>>. "
+    '(hissen) (liften) hiss+knapp+en*hiss+knappar+na' 'hissknappen'
+    "Den är <<isLit ? '' : 'o'>>tänd. "
 
+    dobjFor(Switch) asDobjFor(Push)
     dobjFor(Push)
     {
         action()
@@ -728,12 +729,12 @@ class ElevatorCallButton: Button, Fixture
                 door.otherSide.getElevator.extendDoorTimer();
 
                 /* nothing really happens */
-                "The button lights up momentarily and then goes out. ";
+                "Knappen lyser upp tillfälligt och slocknar sedan. ";
             }
             else if (!isLit)
             {
                 /* light it up */
-                "You tap the button, and it lights up. ";
+                "Du trycker på knappen, som lyser upp. ";
 
                 /* notify our elevator(s) */
                 setFloorCall(true);
@@ -744,8 +745,8 @@ class ElevatorCallButton: Button, Fixture
                  *   we're already lit, and no elevator is here, so this
                  *   has no effect at all
                  */
-                "You tap the button again, but it's already lit, so
-                this has no obvious effect. ";
+                "Du trycker på knappen igen, men den är redan tänd, så
+                detta har ingen uppenbar konsekvens. ";
             }
 
         }
@@ -785,15 +786,15 @@ class ElevatorCallButton: Button, Fixture
 ;
 
 /* an "up" call button */
-class ElevatorUpButton: ElevatorCallButton '"up" -' '<q>up</q> button'
-    "It depicts an arrow pointing up. "
+class ElevatorUpButton: ElevatorCallButton '"upp" -' '<q>upp</q>-knapp'
+    "Den visar en pil som pekar uppåt. "
     aDesc = "an <q>up</q> button"
     buttonDir = 1
 ;
 
 /* a "down" call button */
-class ElevatorDownButton: ElevatorCallButton '"down" -' '<q>down</q> button'
-    "It depicts an arrow pointing down. "
+class ElevatorDownButton: ElevatorCallButton '"ner" -' '<q>ned</q>-knapp'
+    "Den visar en pil som pekar nedåt. "
     buttonDir = -1
 ;
 
@@ -856,9 +857,9 @@ class ElevatorInnerDoor: ElevatorDoor
 /*
  *   An elevator button.  This is for floor buttons with in the elevator. 
  */
-class ElevatorButton: Button, Fixture 'elevator lift button*buttons'
+class ElevatorButton: Button, Fixture 'hiss+knapp+en/lift+knapp+en*hiss+knappar+na'
     /* button name - by default, this is just 'button' and the floor name */
-    name = ('elevator button ' + floorName)
+    name = ('hissknapp ' + floorName)
     theName = (name)
     aName = (name)
 
@@ -913,7 +914,7 @@ class ElevatorButton: Button, Fixture 'elevator lift button*buttons'
             if (isLit)
             {
                 /* we're already lit, so just say so */
-                "You tap on the button again, but it's already lit. ";
+                "Du trycker på knappen en gång till, men den är redan tänd. ";
 
                 /* 
                  *   Let the elevator know a button is lit.  Do this even
@@ -933,8 +934,8 @@ class ElevatorButton: Button, Fixture 'elevator lift button*buttons'
                 getElevator.extendDoorTimer();
 
                 /* the visible effects are minimal, though */
-                "The button lights momentarily as you tap on it,
-                and then goes out. ";
+                "Knappen tänds tillfälligt när du trycker på den,
+                och slocknar sedan. ";
             }
             else
             {
@@ -942,7 +943,7 @@ class ElevatorButton: Button, Fixture 'elevator lift button*buttons'
                 isLit = true;
 
                 /* mention it */
-                "The button lights as you touch it. ";
+                "Knappen tänds när du trycker på den. ";
 
                 /* tell the elevator about the change */
                 getElevator.noteButtonLit();
@@ -964,7 +965,7 @@ class ElevatorButton: Button, Fixture 'elevator lift button*buttons'
  *   contents.  
  */
 class ElevatorButtonGroup: CollectiveGroup, Fixture
-    'elevator lift button*buttons' 'elevator buttons'
+    'hiss+knapp+en/lift+knapp+en*hissknapparna' 'hissknappar'
 
     /* list the list buttons */
     listLit()
@@ -983,9 +984,9 @@ class ElevatorButtonGroup: CollectiveGroup, Fixture
     litLister: Lister {
         showListEmpty(pov, parent) { }
         showListPrefixWide(cnt, pov, parent)
-            { "Button<<cnt == 1 ? '' : 's'>> "; }
+            { "Knapp<<cnt == 1 ? '' : 'ar'>> "; }
         showListSuffixWide(cnt, pov, parent)
-            { " <<cnt == 1 ? 'is' : 'are'>> lit. "; }
+            { " är tänd<<cnt == 1 ? '' : 'a'>>. "; }
 
         isListed(obj) { return true; }
         showListItem(obj, options, pov, info) { say(obj.floorNum); }
@@ -1001,6 +1002,6 @@ class ElevatorButtonGroup: CollectiveGroup, Fixture
     dobjFor(Push)
     {
         verify() { }
-        action() { "You'll have to say which button you mean. "; }
+        action() { "Du behöver säga vilken knapp du menar. "; }
     }
 ;
