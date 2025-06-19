@@ -1785,7 +1785,7 @@ playerMessages: libMessages
         }
 
         if(match) {
-            if(match.definitiveForm == txt) {
+            if(match.definiteForm == txt) {
                 "{Du/han} {ser} inte <<txt>> {här}. "; 
             } else {
                 pronoun = match.isPlural ? 'inga' : match.isNeuter ? 'inget' : 'ingen';                
