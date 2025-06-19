@@ -5279,7 +5279,7 @@ cmdTokenizer: Tokenizer
                 /*
                  *   it's a hyphenated number, all right - put the three
                  *   tokens back together without any intervening spaces,
-                 *   so ['twenty', '-', 'one'] turns into 'twenty-one'
+                 *   so ['tjugo', '-', 'ett'] turns into 'tjugo-ett'
                  */
                 str += getTokOrig(toks[i+1]) + getTokOrig(toks[i+2]);
 
@@ -5318,9 +5318,9 @@ cmdTokenizer: Tokenizer
 
     /* some pre-compiled regular expressions */
     patSpelledTens = static new RexPattern(
-        '<nocase>twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety')
+        '<nocase>tjugo|trettio|fyrtio|femtio|sextio|sjuttio|åttio|nittio')
     patSpelledUnits = static new RexPattern(
-        '<nocase>one|two|three|four|five|six|seven|eight|nine')
+        '<nocase>ett|två|tre|fyra|fem|sex|sju|åtta|nio')
     patPunct = static new RexPattern('[.,;:?!)]')
 ;
 
@@ -8598,8 +8598,8 @@ modify Action
      *   handlingen som ett faktiskt utförande, så vi returnerar en
      *   aktiv presensform ("öppnar lådan"). 
      * 
-     *   OBS: Detta skiljer sig från den engelska versionen, där participformen används 
-     *   istället för den aktiva formen. Anledningen till detta är att svenska meningar 
+     *   OBS: Detta skiljer sig från den engelska versionen, där participformen (t ex: "öppnandet") 
+     *   används istället för den aktiva formen. Anledningen till detta är att svenska meningar 
      *   inte låter välformulerade när man använder particip på detta sätt som engelska
      *   meningar gör.
      */

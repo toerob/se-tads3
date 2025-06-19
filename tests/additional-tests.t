@@ -164,5 +164,10 @@ TestUnit 'spellIntOrdinalExt' run {
 TestUnit 'LiteralTAction.getOtherMessageObjectPronoun' run {
   local a = LiteralTAction.createActionInstance();
   local x = a.getOtherMessageObjectPronoun(DirectObject);
-  assertThat(x).isEqualTo('det'); // TODO: Håll koll på denna, oklart om det håller.
+  assertThat(x).isEqualTo('det');
+};
+
+
+TestUnit 'cmdTokenizer.buildOrigText' run {
+  assertThat(cmdTokenizer.buildOrigText(cmdTokenizer.tokenize('tjugo -  ett'))).isEqualTo('tjugo-ett');
 };
