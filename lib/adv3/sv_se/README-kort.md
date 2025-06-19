@@ -9,7 +9,7 @@ För att lösa detta introduceras "plusnotationen" i vocabWords. Genom att ange 
 Designprinciper:
 
 1. Behåller det gamla sättet att skriva: 'adj adj adj noun/noun/noun*plural plural'
-2. Tillåter en plusnotation per objekt för att skapa flera varianter av sammansatta ord.
+2. Tillåter en plusnotation per objekt för att skapa flera varianter av sammansatta ord. T ex är följande tillåtet: 'ad+j a+d+j adj no+u+n/no+un/nou+n*plural plur+al'
 
 Exempel:
 

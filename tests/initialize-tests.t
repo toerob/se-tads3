@@ -451,6 +451,78 @@ TestUnit 'initialize vatten isMassNoun=true' run {
     
 };
 
+TestUnit 'createCompoundWordVariations substantiv' run {
+    local dummy = new Thing();
+    local forms = createCompoundWordVariations(dummy, 'virke+t', &noun);
+    assertThat(forms.definiteForm).isEqualTo('virket');
+    assertThat(forms.standardForm).isEqualTo('virke');
+    assertThat(cmdDict.findWord('virke', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('virket', &noun)[1]).isEqualTo(dummy);
+    cleanUp(dummy);
+};
+
+TestUnit 'createCompoundWordVariations, hantera "n"-ändelse' run {
+    local dummy = new Thing();
+    local forms = createCompoundWordVariations(dummy, 'cykel:n+lås+et', &noun);
+    //tadsSay(getGrammarInfoFromCmdDict(dummy));
+    assertThat(forms.standardForm).isEqualTo('cykellås');
+    assertThat(forms.definiteForm).isEqualTo('cykellåset');
+    assertThat(cmdDict.findWord('cykel', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('cykellås', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('cykellåset', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('cykellåset', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('cykeln', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('lås', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('låset', &noun)[1]).isEqualTo(dummy);
+    cleanUp(dummy);
+};
+
+TestUnit 'createCompoundWordVariations, tar bort mer än tre upprepande boktstäver' run {
+    local dummy = new Thing();
+    local forms = createCompoundWordVariations(dummy, 'kastrull:en+lock+et', &noun);
+    //tadsSay(getGrammarInfoFromCmdDict(dummy));
+    assertThat(forms.definiteForm).isEqualTo('kastrullocket');
+    assertThat(forms.standardForm).isEqualTo('kastrullock');
+    assertThat(cmdDict.findWord('kastrull', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('kastrullen', &noun)[1]).isEqualTo(dummy);
+    cleanUp(dummy);
+};
+
+
+TestUnit 'createCompoundWordVariations, ta inte bort mer än tre upprepande bokstäver' run {
+    local dummy = new Thing();
+    // OBS: sätts i ett spel på själva objektet enligt följande. metoden anropas med detta värde som parameter
+    // dummy.enableShortenRepeatingCharacters = nil 
+    local forms = createCompoundWordVariations(dummy, 'www-sida+n', &noun, nil); // Sätts direkt till nil här
+    //tadsSay(getGrammarInfoFromCmdDict(dummy));
+    assertThat(forms.standardForm).isEqualTo('www-sida');
+    assertThat(forms.definiteForm).isEqualTo('www-sidan');
+    assertThat(cmdDict.findWord('www-sida', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('www-sidan', &noun)[1]).isEqualTo(dummy);
+    cleanUp(dummy);
+};
+
+
+
+TestUnit 'shortenRepeatingCharacters, testa att förkortningar görs så vi aldrig har mer än tre repeterande bokstäver i följd' run {
+    assertThat(shortenRepeatingCharacters('bussstation')).isEqualTo('busstation');
+    assertThat(shortenRepeatingCharacters('glassskopa')).isEqualTo('glasskopa');
+};
+
+
+
+function cleanUp(obj) {
+    local a = new LookupTable();
+    cmdDict.forEachWord(function(o, word, wordPart) {
+        if(obj == o) {
+          a[word] = wordPart;
+        }
+    });
+    a.forEachAssoc(function(word, wordPart) {
+        //tadsSay('\nTar bort association mellan <<word>> (<<wordPart>>) och <<obj>>\n');
+        cmdDict.removeWord(obj, word, wordPart);
+    });
+}
 
 /**
  * Returnerar en sträng med grammatiska delar av ett objekt:

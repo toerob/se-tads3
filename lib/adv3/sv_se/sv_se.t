@@ -492,7 +492,13 @@ modify VocabObject
     // t ex: 'vit+a sten+en' blir ajektiv: vit, vita och substantiv sten, stenen
     combineVocabWords = true 
 
+    // Om true, kortas 3 eller fler i följd upprepande tecken ner till 2, 
+    // från alla ord som skapas med combineVocabWords
+    enableShortenRepeatingCharacters = true 
+
     plusNotationPat = static new RexPattern('.+(<plus>.+)+')
+
+    tripleLetterPat = static new RexPattern('.*?((<Alpha>)%2{2,}).*')
 
     initializeVocabWith(str)
     {
@@ -595,7 +601,7 @@ modify VocabObject
                     if(combineVocabWords) {
                         matchCombineVocabWordsNotation = rexMatch(plusNotationPat, cur);
                         if(matchCombineVocabWordsNotation) {
-                            local forms = createCompoundWordVariations(self, cur, sectPart);
+                            local forms = createCompoundWordVariations(self, cur, sectPart, enableShortenRepeatingCharacters);
 
                             // Tilldela pluralName det första plural-ordet vi hittar i vocabWords
                             // Detta då det oftare är jobbigare att böja till pluralName med pluralNameFrom()
@@ -8618,8 +8624,7 @@ modify Action
     getInfPhrase()
     {
         /* return the verb phrase in infinitive form */
-        local x = getVerbPhrase(true, nil);
-        return x;
+        return getVerbPhrase(true, nil);
     }
 
     /*
@@ -8694,7 +8699,6 @@ modify Action
      *   phrases.  'ctx' can be nil if the verb phrase is being used in
      *   isolation.
      */
-     //
     getVerbPhrase(inf, ctx)
     {
         /*
@@ -11260,9 +11264,7 @@ class WordPart: object {
 // direkt efter kolonet, t ex: "sten:en+häll:en^s+altare+t"
 // eller "tranbär:en^s+juice+n"
 // för att få automatgenererade ord: "tranbär, tranbären, juice, juicen, tranbär, tranbärjuice, tranbärsjuicen
-
-
-function createCompoundWordVariations(obj, cur, sectPart) {
+function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeatingCharacters = true) {
     
     // wordParts är en behållare för objekt av typen WordPart, 
     // som i sin tur håller koll på ord, foge-s samt ändelse,
@@ -11274,8 +11276,6 @@ function createCompoundWordVariations(obj, cur, sectPart) {
     // wordVariations är en vector som får hålla alla sammansatta
     // varianter innan de förs över till cmdDict på slutet.
     local wordVariations = new Vector(); 
-
-    // -------------
 
     // Inleder med att dela upp alla ordets sammansatta komponenter 
     // som är avskiljda med '+'-tecken
@@ -11330,17 +11330,15 @@ function createCompoundWordVariations(obj, cur, sectPart) {
         } 
 
         // Annars, kontrollera om det finns ett undantag till genus, 
-        // dett mönster inleds av användarenb med kolon och en eventuellt 
+        // dett mönster inleds av användaren med kolon och en eventuellt 
         // bifogad annan ändelse. Om ingen ändelse anges, kommer kolon 
         // betyda motsatsen till den slutliga ändelsen för ordet.
         local genderMod = rexGroup(2);
         local genderModContent = genderMod ? rexGroup(2)[3] : nil;
 
         local jointS = rexGroup(3) != nil; // Plocka ut true/false för foge-S
-
         local partEnding = ending;  // Utgå från att komponenten får samma ändelse som ändelsen för helhetsordet
  
-
         if(genderMod) {
             if(genderModContent) {
                 // Om kolon + eventuell ny ändelse har påträffas behöver det hanteras
@@ -11382,12 +11380,10 @@ function createCompoundWordVariations(obj, cur, sectPart) {
                 // form, t ex: äpplen+a
                 // Utarbeta detta vid behov.
             } else if(isEndingNeuter) {
-                // NEUTRUM
-                partEnding = endsWithVocal? 't' : 'et';
+                partEnding = endsWithVocal? 't' : 'et';   // NEUTRUM
             } else {
-                // UTRUM
                 if(endsWithVocal) {
-                    partEnding = 'n';                    // t ex: fura, pinne,
+                    partEnding = 'n';                     // UTRUM, t ex: fura, pinne får "n" som ändelse.
                 } else {
                     // Omöjligt att egentligen veta, men en god gissning är att om ordet slutar på el,er,or eller al
                     partEnding = rexMatch('.*(el|er|or|al)$', word) ? 'n' : 'en';
@@ -11427,7 +11423,8 @@ function createCompoundWordVariations(obj, cur, sectPart) {
         //tadsSay('compoundWord: <<compoundWord>>\n');
     }
 
-    // Använd det längst sammansatta ordet för att skapa upp namn utan ändelse och med:
+    // Använd det längst sammansatta ordet för att skapa upp namn utan ändelse och med,
+    // detta blir standardform respektive bestämd form för just detta specifika ord i mängden.
     local wordWithoutEnding = longestCompoundWord; 
     local wordWithEnding = longestCompoundWord + ending;
 
@@ -11471,6 +11468,12 @@ function createCompoundWordVariations(obj, cur, sectPart) {
         }
     }
 
+    if(enableShortenRepeatingCharacters) {
+        wordVariations = wordVariations.mapAll(shortenRepeatingCharacters);
+        wordWithoutEnding = shortenRepeatingCharacters(wordWithoutEnding);
+        wordWithEnding = shortenRepeatingCharacters(wordWithEnding);
+    }
+
     // Ta bort dubbletter, kanske onödigt då cmdDict redan är ett table, så när dessa 
     // adderas dit kommer bara dubbletter skrivas över ändå.
     wordVariations = wordVariations.getUnique();
@@ -11490,6 +11493,27 @@ function createCompoundWordVariations(obj, cur, sectPart) {
         definiteForm = wordWithEnding
     };
 }
+
+// Rensa bort alla eventuella trippelbokstäver som uppstått på grund 
+// av ordsammansättningarna:
+function shortenRepeatingCharacters(word) {
+    local match = rexMatch(VocabObject.tripleLetterPat, word);
+    if(match) {
+        local groupOfRepeats = rexGroup(1);
+        if(groupOfRepeats.length > 2) {
+            //tadsSay('<<groupOfRepeats>>\n');
+            local startPos = groupOfRepeats[1];
+            local similarCount = groupOfRepeats[2];
+            local lengthToRemove = similarCount - 2;
+            local pruned =  word.splice(startPos, lengthToRemove, '');
+            //tadsSay('Rensar bort trippelbokstäver: <<w>> -> <<pruned>> (startpos: <<startPos>>, similarCount: <<similarCount>>, remove: <<lengthToRemove>> )\n');
+            return pruned;
+        }
+    }
+    return word;
+}
+
+
 
 
 #ifdef __DEBUG
