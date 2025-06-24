@@ -2485,7 +2485,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
     plKey = 'logo-wear'
 ;
 ++ logoCap: PresentLater, Wearable
-    'svart jätte gigantisk novelty mitachron logotyp basebollkeps/hatt'
+    'svart jätte gigantisk novelty mitachron logotyp baseboll+keps+en/hatt'
     'basebollkeps'
     "Den är löjligt stor---den är som en av de där tio-gallons
     Texas-hattarna, men i form av en basebollkeps. Den är svart, med

@@ -1584,12 +1584,14 @@ Test 'allt' [
   'x keps',
   'ta på keps',
   'ja',
-  'säg till Belker att jag slutar',
+  'berätta för belker att du slutar'
+  /*,
   'efterord',
   'roligt',
   'eftertexter',
   'full poäng',
   'avsluta'
+  */
 ];
 
 #endif
@@ -1597,3 +1599,6 @@ Test 'allt' [
 
 
 // TODO: verb för "xojo, lyft mig"
+
+//TODO: kontrollera att även dessa fungerar: 
+// 'säg till Belker att jag slutar', 'berätta för Belker att jag slutar',

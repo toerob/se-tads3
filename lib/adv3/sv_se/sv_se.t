@@ -2941,6 +2941,7 @@ modify SpecialTopic
      *   is something like "say I don't know" or "tell him you'll look into
      *   it".
      */
+     // TODO: fixa...
     weakPat = static new RexPattern('<nocase><space>*(i|l|look)<space>*$')
 ;
 
@@ -5351,6 +5352,7 @@ grammar firstCommandPhrase(withActor):
 
 grammar firstCommandPhrase(askTellActorTo):
     ('fråga' | 'berätta' | 'f') singleNounOnly->actor_
+    //('fråga' | 'berätta' | 'f'| 'säg') singleNounOnly->actor_
     ('om'|'till'|'för') commandPhrase->cmd_
     : FirstCommandProdWithActor
 
@@ -5392,6 +5394,7 @@ grammar firstCommandPhrase(askTellActorTo):
 grammar actorBadCommandPhrase(main):
     singleNounOnly->actor_ ',' miscWordList
     | ('fråga' | 'berätta' | 'f' | 'b') singleNounOnly->actor_ ('om'|'till'|'för')  miscWordList
+    //| ('fråga' | 'berätta' | 'säg' | 'f' | 'b') singleNounOnly->actor_ ('om'|'till'|'för')  miscWordList
     : FirstCommandProdWithActor
 
     /* to resolve nouns, we merely resolve the actor */
@@ -9811,7 +9814,7 @@ VerbRule(AskAboutWhat)
 
 
 VerbRule(TellAbout)
-    ('berätta' | 'b') singleDobj 'om' singleTopic
+    ('berätta' | 'säg' | 'b') ('för'|) singleDobj 'om' singleTopic
     : TellAboutAction
     verbPhrase = 'berätta/berättar för (vem) (om vad)'
     askDobjResponseProd = singleNoun

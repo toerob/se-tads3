@@ -480,10 +480,10 @@ finishOptionAfterword: FinishOption
         return true;
     }
 
-    desc = "läs <<aHrefAlt('efterord', 'EFTERORD', 'EFTER<b>O</b>RD',
+    desc = "läs <<aHrefAlt('efterord', 'EFTERORD', '<b>E</b>FTERORD',
                                 'Visa Efterord')>>"
     responseKeyword = 'efterord'
-    responseChar = 'o'
+    responseChar = 'e'
     
 ;
 
