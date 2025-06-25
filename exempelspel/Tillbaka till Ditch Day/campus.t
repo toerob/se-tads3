@@ -1017,7 +1017,7 @@ CampusMapEntry 'public relations' 'PR-avdelningen' 'nordost';
 CampusMapEntry 'media relations' 'Medierelationer' 'nordost';
 CampusMapEntry 'visitors center' 'Besökscentret' 'nordost';
 CampusMapEntry 'robinson lab/laboratory' 'Robinson Laboratorium' 'sydväst';
-CampusMapEntry 'sherman fairchild (library)'
+CampusMapEntry 'sherman fairchild (library) (bibliotek+et)'
     'Sherman Fairchild-biblioteket' 'söder';
 CampusMapEntry 'sloan lab/laboratory' 'Sloan Laboratorium' 'sydväst';
 CampusMapEntry 'south mudd lab/laboratory'
@@ -1196,7 +1196,7 @@ sanPasqual: Street, CampusOutdoorRoom 'San Pasqual St.' 'San Pasqual'
     dobjFor(ClimbUp) asDobjFor(GoThrough)
 ;
 
-+ spWalkway: PathPassage 'campus/gångväg/stig' 'gångväg'
++ spWalkway: PathPassage 'campus/gångväg+en/stig+en' 'gångväg'
     "Den asfalterade gångvägen leder djupare in på campus västerut. "
 
     /* we can't go this way until we've finished at the career center */
@@ -1281,11 +1281,11 @@ holliston: Street, CampusOutdoorRoom
     ingången lyder <q>Studentservicecenter.</q> Du kan gå in
     åt öster. "
 ;
-++ Readable, Decoration '(student) (service) (center) (byggnad) skylt'
+++ Readable, Decoration '(student) (service) (center) (byggnad) skylt+en*skyltar+na'
     'skylt'
     "Den lyder helt enkelt: <q>Studentservicecenter.</q> "
 ;
-++ Decoration '(student) (service) (byggnad) liten små sidohängda fönster'
+++ Decoration '(student) (service) (byggnad) små sidohängda fönster*fönstren+a'
     'fönster'
     "De är små sidohängda fönster, placerade med jämna mellanrum. "
     isPlural = true
@@ -1312,7 +1312,7 @@ cssLobby: Room 'Studentservice Lobby' 'Studentservice lobbyn' 'lobby'
     out asExit(west)
 ;
 
-+ EntryPortal ->holliston 'dörröppning' 'dörröppning'
++ EntryPortal ->holliston 'dörröppning+en' 'dörröppning'
     "Dörröppningen leder ut till gatan. "
 ;
 
@@ -1335,7 +1335,7 @@ cssLobby: Room 'Studentservice Lobby' 'Studentservice lobbyn' 'lobby'
 ;
 
 + Fixture, Chair
-    'färgglad färgstark färgad soffa/säte*möbel'
+    'färgglad+a färgstark+a färgad+e soffa+n/säte+t/möbel+n*möbler+na'
     'soffa'
     "Det är en fullstor soffa klädd i tyg med slumpmässiga
     fläckar av starka färger. "
@@ -1344,11 +1344,11 @@ cssLobby: Room 'Studentservice Lobby' 'Studentservice lobbyn' 'lobby'
     bulkCapacity = 40
 ;
 
-+ Decoration 'stor grön lummig krukväxt/krukväxter/träd' 'krukväxter'
++ Decoration 'stor+a grön+a lummig+a kruk+växt+en/träd+et/träd+en*krukväxter+na träden+a' 'krukväxter'
     "De är stora, gröna, lummiga träd i lerkrukor. "
     isPlural = true
 ;
-+ Decoration 'lerkruka/lerkrukor' 'lerkrukor'
++ Decoration 'lerkruka+n*lerkrukor+na' 'lerkrukor'
     "Det finns inget anmärkningsvärt med dem; de är bara där
     för att hålla träden. "
     isPlural = true
@@ -1389,7 +1389,7 @@ sanPasqualWalkway: CampusOutdoorRoom 'San Pasqual Gångväg'
 ;
 
 + EntryPortal ->(location.northwest)
-    'jorgensen fönsterlös betong exteriör/lab/laboratorium/ingång'
+    'jorgensen fönsterlös+a betong+en exteriör+en/labb+et/laboratorium+et/ingång+en'
     'Jorgensens Lab'
     "Jorgensen är huvudbyggnaden för datavetenskap. Den har alltid
     sett vagt ut som en bunker för dig, förmodligen på grund av dess nästan
@@ -1398,7 +1398,7 @@ sanPasqualWalkway: CampusOutdoorRoom 'San Pasqual Gångväg'
 ;
 
 + EntryPortal ->(location.north)
-    'b&g physical plant kontor/byggnad/dörr/dörröppning'
+    'b&g physical plant plants kontor+et/byggnad+en/dörr+en/dörr+öppning+en'
     'Physical Plants kontor'
     "Physical Plant, även känt som Buildings and Grounds, även känt som B&amp;G, är
     avdelningen som underhåller campusinfrastrukturen. Denna
@@ -1407,7 +1407,7 @@ sanPasqualWalkway: CampusOutdoorRoom 'San Pasqual Gångväg'
     isPlural = true
 ;
 
-+ Immovable 'baksida page house/hörn' 'Page House'
++ Immovable 'baksida+n page house studenthus+et/hörn+et' 'Page House'
     "Page är ett av studenthusen. Endast det bakre hörnet är
     synligt här; det finns ingen ingång på denna sida. "
     isProperName = true
@@ -1424,23 +1424,23 @@ sanPasqualWalkway: CampusOutdoorRoom 'San Pasqual Gångväg'
     canTravelerPass(trav) { return trav != cherryPicker; }
     explainTravelBarrier(trav)
     {
-        "Bättre att inte köra skyliftaren utanför campus; den
+        "Bättre att inte köra skyliften utanför campus; den
         kan säkert inte vara laglig på gatan. ";
     }
 ;
 
 + spwSouthWalk: PathPassage ->quadNorthWalk
-    'smalare korsande söder s gångväg/stig' 'korsande gångväg'
+    'smalare korsande söder södra s gångväg+en/stig+en' 'korsande gångväg'
     "Den korsande gångvägen leder söderut. "
 ;
 
 + spwWestWalk: PathPassage ->blEastWalk
-    'väst v san pasqual gångväg' 'västra gångvägen'
+    'väst+ra v san pasqual gångväg+en' 'västra gångvägen'
     "Gångvägen sträcker sig västerut och öppnar sig mot San Pasqual-gatan i
     öster. "
 ;
 
-+ Decoration 'välskött gräsig stor gräsmatta/gräs' 'gräsmattor'
++ Decoration 'välskött+a gräsig+a stor+a gräsmatta+n/gräs+et' 'gräsmattor'
     "Gräsmattorna är täckta med friskt grönt gräs. "
     isPlural = true
 ;
@@ -1479,11 +1479,11 @@ ppOffice: Room 'Physical Plant Kontor' 'Physical Plant Kontoret'
     north = ppoHall
 ;
 
-+ EntryPortal ->(location.out) 'sydväst sv dörr/dörröppning' 'dörröppning'
++ EntryPortal ->(location.out) 'sydväst+ra sv dörr+en/dörröppning+en' 'dörröppning'
     "Dörröppningen leder utomhus åt sydväst. "
 ;
 
-+ Surface, Fixture 'service disk' 'servicedisk'
++ Surface, Fixture 'service+disk+en' 'servicedisk'
     "Disken löper tvärs över mitten av rummet och delar det
     ungefär i två halvor: södra sidan för kunder, norra
     sidan för anställda. "
@@ -1552,7 +1552,7 @@ ppOffice: Room 'Physical Plant Kontor' 'Physical Plant Kontoret'
     disambigName = 'physical plant memo'
 ;
 
-+ ppoHall: OutOfReach, ThroughPassage 'hall/korridor' 'korridor'
++ ppoHall: OutOfReach, ThroughPassage 'hall+en/korridor+en' 'korridor'
     "Korridoren leder norrut, längre in i byggnaden. "
 
     cannotReachFromOutsideMsg(dest) { return 'Du kan inte nå
@@ -1575,7 +1575,7 @@ ppOffice: Room 'Physical Plant Kontor' 'Physical Plant Kontoret'
  *   A class for the job cards on the physical plant counter, which all
  *   list together. 
  */
-class JobCard: Readable 'färgat färgade index+erade jobb+et uppdrag+et index+kort+et*kort+en' 'indexkort'
+class JobCard: Readable 'färgat färg+ade jobbkort+et uppdragskort+et index:+kort+et*korten+a' 'indexkort'
     "Det är ett <<cardColor>> fem-gånger-sju indexkort, förtryckt
     med ett formulär som har fyllts i med skrivmaskin:
     <font face='tads-sans'>
@@ -1642,15 +1642,15 @@ jorgensen: Room 'Jorgensen Lobby' 'lobbyn i Jorgensen' 'lobby'
         du ser inget av intresse. "; }
 ;
 
-+ ExitPortal ->(location.south) 'byggnad byggnadens utgång' 'utgång'
++ ExitPortal ->(location.south) 'byggnad byggnadens utgång+en' 'utgång'
     "Utgången är söderut. "
 ;
 
-+ Enterable ->(location.north) 'korridor/hall/gång' 'korridor'
++ Enterable ->(location.north) 'korridor+en/hall+en/gång+en' 'korridor'
     "Korridoren leder norrut. "
 ;
 
-+ Decoration 'inramat svartvitt foto/foton/bild/bilder'
++ Decoration 'inramat inramad+e svartvitt svartvit+a foto+t/bild+en*bilder+na foton+a'
     'inramade foton'
     "Fotona är mestadels svartvita och visar historisk
     datorutrustning. De äldsta är analoga datorer;
@@ -1665,7 +1665,7 @@ jorgensen: Room 'Jorgensen Lobby' 'lobbyn i Jorgensen' 'lobby'
     isPlural = true
 ;
 
-+ Decoration 'öst väst ö v klassrum' 'klassrum'
++ Decoration 'öst+ra väst+ra ö v klassrum+met' 'klassrum'
     "Klassrum ligger i öster och väster. "
 ;
 
@@ -1711,10 +1711,10 @@ jorgensenHall: Room 'Korridor' 'korridoren'
 ;
 
 + jhNetworkOfficeDoor: LockableWithKey, Door
-    'väst v campus nätverk kontor dörr+en*dörrar+na' 'Campus Nätverkskontorsdörr'
+    'väst+ra v campus nätverk kontor+et dörr+en*dörrar+na' 'Campus Nätverkskontorsdörr'
     "Dörren är märkt <q>Campus Nätverkskontor.</q> "
 ;
-++ jhSign: CustomImmovable, Readable 'handskriven skylt' 'handskriven skylt'
+++ jhSign: CustomImmovable, Readable 'handskriven hand+skrivn+a skylt+en' 'handskriven skylt'
     "Skylten lyder <q>Stängt - Tillbaka kl 13:00.</q> "
 
     /* 
@@ -1773,7 +1773,7 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
     "Dörren leder ut österut. "
 ;
 
-+ Heavy, Surface 'skrivbord' 'skrivbord'
++ Heavy, Surface 'skrivbord+et/bord+et' 'skrivbord'
     "Skrivbordet är vänt mot dörren och delar informellt rummet. Flera
     terminaler och arbetsstationer tävlar om utrymme på ytan. "
 
@@ -1791,7 +1791,7 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
         skrivbordet är bokhyllorna. "; } }
 ;
 
-++ Heavy 'terminal/terminaler/arbetsstation/arbetsstationer' 'arbetsstationer'
+++ Heavy 'terminal+en/arbetsstation+en*arbetsstationer+na terminaler+na' 'arbetsstationer'
     "De är vända åt andra hållet, så du kan inte se exakt vilken
     typ de är härifrån. "
 
@@ -1807,11 +1807,11 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
     }
 ;
 
-+ Heavy 'rullande kontorsstol' 'kontorsstol'
++ Heavy 'rullande kontor^s:et+stol+en' 'kontorsstol'
     "Det är en enkel rullande kontorsstol. "
 ;
 
-++ dave: IntroPerson 'kraftig medelålders dave/david/man+nen*män+nen' 'man'
+++ dave: IntroPerson 'kraftig+a medelålders dave/david/man+nen*män+nen' 'man'
     "Han är en kraftig, medelålders man, klädd i en lätt skrynklig
     vit skjorta utan slips. "
 
@@ -1834,7 +1834,7 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
     }
 ;
 
-+++ InitiallyWorn 'skrynklig vit skjorta' 'vit skjorta'
++++ InitiallyWorn 'skrynklig+a vit+a skjorta+n' 'vit skjorta'
     "Den är lite skrynklig, men annars presentabel. "
     isListedInInventory = nil
 ;
@@ -2142,7 +2142,7 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
 
 
 ++++ SpecialTopic 'säga att du är en privatdetektiv'
-    ['säg','att','du','jag','är','en','privat','detektiv','privatdetektiv']
+    ['säg','att','du','jag','är','en','privatdeckare','privat','detektiv','privatdetektiv']
     "<q>Jag gör en informell undersökning,</q> säger du och försöker
     låta konspiratorisk.
     <.p>Han betraktar dig misstänksamt. <q>Vilken typ av undersökning?</q>
@@ -2156,20 +2156,20 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
 ;
 
 ++ Fixture
-    'golvtilltak bokhylla/bokhyllor/hylla/hyllor' 'bokhyllor'
+    'golvtilltak bokhylla+n/hylla+n*hyllor+na bokhyllor+na' 'bokhyllor'
     "Bokhyllorna täcker väggarna bakom skrivbordet. De är
     fyllda med utskrifter, pärmar, mappar och lösa papper. "
     isPlural = true
 ;
 +++ Thing
-    'lös utskrift/utskrifter/pärm/pärmar/mapp/mappar/papper'
+    'lös+a utskrift+en/pärm+en/mapp+en/pappret*utskrifter pärmar+na mappar+na papper pappren+a'
     'papper'
     "Du kan inte se mycket härifrån förutom etiketterna på några
     av pärmarna: <q>Kopplingsschema 1996,</q> <q>Budget 2000-1,</q>
     <q>Routerkonfiguration för södra campus.</q> "
     isPlural = true
 ;
-++++ Component 'pärmetikett/etiketter' 'pärmetiketter'
+++++ Component 'pärmetikett+en/etiketter+na' 'pärmetiketter'
     desc = (location.desc)
     isPlural = true
 ;
@@ -2189,7 +2189,7 @@ class TreeDecoration: Fixture
 
 /* an orange - fruit for the orange trees */
 class OrangeDecoration: CustomImmovable, Food
-    'apelsin/apelsiner/frukt' 'apelsiner'
+    'apelsin+en/frukt+en*apelsiner+na' 'apelsiner'
     "Dessa träd ger en ganska liten typ av apelsin. "
     isPlural = true
     cannotTakeMsg = 'Du provade en apelsin från ett av dessa träd för flera år sedan,
@@ -2219,12 +2219,12 @@ beckmanLawn: CampusOutdoorRoom 'Gräsmatta nära Beckman'
 
 + CampusMapEntry 'beckman auditorium' 'Beckman Auditorium' 'norr';
 
-+ Decoration 'vidsträckt gräsmatta/gräs' 'gräsmatta'
++ Decoration 'vidsträckt+a gräsmatta+n/gräs+et' 'gräsmatta'
     "Gräset är välskött. "
 ;
 
 + blDoors: AlwaysLockedDoor
-    '(beckman) (auditorium) reslig dubbeldörr/ingång'
+    '(beckman) (auditorium) reslig+a dubbeldörr+en/ingång+en* dubbeldörrar+na'
     'ingång till auditoriet'
     "Den imponerande uppsättningen dörrar är minst sex meter höga. "
 
@@ -2241,17 +2241,17 @@ beckmanLawn: CampusOutdoorRoom 'Gräsmatta nära Beckman'
     isProperName = true
 ;
 ++ Distant, Component
-    '(beckman) (auditorium) svagt sluttande koniskt tak/kon'
+    '(beckman) (auditorium) svagt sluttande konisk+aa taket/kon+en'
     'taket på auditoriet'
     "Taket är en svagt sluttande kon. "
 ;
 
-+ blEastWalk: PathPassage 'öst ö gångväg' 'östra gångvägen'
++ blEastWalk: PathPassage 'öst+ra ö gångväg+en' 'östra gångvägen'
     "Gångvägen leder österut förbi eken. "
 ;
 
 + blOak: TreeDecoration
-    'högt fullt lummigt ekträd/skugga/gren/grenar' 'ekträd'
+    'högt hög+a fullt fulla lummigt lummiga ekträd+et/skugga+n/gren+en/grenar+na' 'ekträd'
     "Eken är hög och full. <<gunther.isIn(location)
       ? "En trädgårdsmästare står i en skylift parkerad under
         trädet och trimmar grenar. " : "">> "
@@ -2264,7 +2264,7 @@ beckmanLawn: CampusOutdoorRoom 'Gräsmatta nära Beckman'
 ;
 
 + cherryPicker: Heavy, Vehicle
-    '(personlig) liten elektrisk skylift+en/vagn+en/lift+en/plockare+n'
+    '(personlig+a) lilla liten elektrisk+a skylift+en/lift+en/plockare+n'
     'skylift'
     "Det är en liten elektrisk vagn med en passagerarkorg i
     änden av en bom, som <<cherryPickerBasket.isRaised
@@ -2403,7 +2403,7 @@ beckmanLawn: CampusOutdoorRoom 'Gräsmatta nära Beckman'
     }
 ;
 
-++ cherryPickerBoom: Component '(skylift) (vagn) bomm+en' 'bomm'
+++ cherryPickerBoom: Component '(skylift) (vagn+en) (korg+en) skylift^s+bomm+en' 'bomm'
     "Bommen höjer och sänker passagerarkorgen. "
     disambigName = 'skyliftens bom'
 
@@ -2431,7 +2431,7 @@ beckmanLawn: CampusOutdoorRoom 'Gräsmatta nära Beckman'
     isCherryPickerReachable = true
 ;
 ++ cherryPickerBasket: OutOfReach, Component, Booth
-    '(skylift) (vagn) metall+en passagerar+korg+en/inhägnad+en'
+    '(skylift) (vagn+en) metall+en passagerarkorg+en/korg+en/inhägnad+en'
     'korgen på skyliften'
     "Det är en liten metallinhägnad, ungefär midjehög, precis stor nog
     för en person att stå i. <<isRaised
@@ -2519,7 +2519,7 @@ beckmanLawn: CampusOutdoorRoom 'Gräsmatta nära Beckman'
 ;
 
 +++ gunther: IntroPerson
-    'vilt vitt fluffig+t gunther der
+    'vilt vitt vit+a fluffig+a gunther der
     trädgårdsmästare+n/hår+et/mustasch+en/gunther/gartner/g\u00e4rtner/gaertner/man*män'
     'trädgårdsmästare'
     "Trädgårdsmästaren är en kort man med yvigt vitt hår och en
@@ -2569,7 +2569,7 @@ beckmanLawn: CampusOutdoorRoom 'Gräsmatta nära Beckman'
     }
 ;
 
-++++ Thing '(träd) sekatör/trimmer/blad/par' 'trädsekatör'
+++++ Thing '(träd) sekatör+en/trimmer+n/par+et*blad+en' 'trädsekatör'
     "De är som mycket stora saxar, med sextio centimeter långa blad. "
     isPlural = true
     isListedInInventory = nil
@@ -2606,7 +2606,7 @@ class GuntherTrimmingState: ActorState
 ;
 
 ++++ DefaultCommandTopic
-    "<q>Kan du inte se att jag är upptagen här?</q> frågar han irriterat. "
+    "<q>Kan du inte se att jag är upptagen?</q> frågar han irriterat. "
 ;
 
 ++++ HelloTopic
@@ -2812,10 +2812,10 @@ class GuntherJobCardTopic: GiveShowTopic
     isPlural = true
     disambigName = 'skyliftens kontroller'
 ;
-+++ NestedRoomFloor 'golv/(korg)' 'korgens golv'
++++ NestedRoomFloor 'golv+et/(korgens)' 'korgens golv'
     "En pedal finns på golvet. "
 ;
-++++ Component 'gaspedal' 'pedal'
+++++ Component 'gas+pedal+en' 'pedal'
     "Den ser ut som en gaspedal. "
 
     dobjFor(Push)
@@ -2837,7 +2837,7 @@ class GuntherJobCardTopic: GiveShowTopic
         }
     }
 ;
-+++ Component 'miniatyr ratt' 'ratt'
++++ Component 'miniatyr+ratt+en' 'ratt'
     "Den är som ratten på en bil, fast i miniatyr. "
     dobjFor(Turn)
     {
@@ -2854,7 +2854,7 @@ class GuntherJobCardTopic: GiveShowTopic
         }
     }
 ;
-+++ cherryPickerLever: Component '(skylift) (vagn) spak' 'spak'
++++ cherryPickerLever: Component '(skylift) (vagn) skylift+spak+en/spak+en' 'spak'
     "Spaken är märkt med en ikon som visar korgen röra sig
     upp och ner. "
     disambigName = 'skyliftens spak'
@@ -3007,29 +3007,29 @@ quad: CampusOutdoorRoom
     in asExit(northwest)
 ;
 
-+ CampusMapEntry '(campus) (caltech) bokhandel' 'bokhandeln' 'sydost';
-+ CampusMapEntry 'winnett center' 'Winnett Center' 'sydost';
-+ CampusMapEntry 'kvadraten' 'Kvadraten' 'sydost';
-+ CampusMapEntry 'olivgången' 'Olivgången' 'sydost'
++ CampusMapEntry '(campus) (caltech) bokhandel+n' 'bokhandeln' 'sydost';
++ CampusMapEntry 'winnett center centret' 'Winnett Center' 'sydost';
++ CampusMapEntry 'kvadrat+en' 'Kvadraten' 'sydost';
++ CampusMapEntry 'olivgång+en' 'Olivgången' 'sydost'
     altLocations = [westOliveWalk, oliveWalk]
 ;
 
 + Enterable ->(location.northwest)
-    '(campus) (caltech) (bok) bokhandel/affär' 'bokhandeln'
+    '(campus) (caltech) (bok) bokhandel+n/affär+en' 'bokhandeln'
     "Bokhandeln har fått en ny fasad sedan du var här
     senast, i samma medelhavsstil som många av de andra
     närliggande byggnaderna. Ingången är mot nordväst. "
 ;
 
-+ Decoration 'gräsmatta/gräs' 'gräs'
++ Decoration 'gräsmatta+n/gräs+et' 'gräs'
     "Det är ganska vanligt gräs. "
 ;
 
-+ quadNorthWalk: PathPassage 'stenlagd norra n gångväg/stig' 'norra gångvägen'
++ quadNorthWalk: PathPassage 'stenlagd+a norra n gångväg+en/stig+en' 'norra gångvägen'
     "Det är en stenlagd gångväg som leder norrut. "
 ;
 + quadSouthWalk: PathPassage -> orwNorthWalk
-    '(tegel) orange södra s trappa/trappor/steg/gång/gångväg/stig'
+    '(tegel) orange södra s trappa+n/gång+en/gångväg+en/stig+en *trappor+na steg+en'
     'Orangegången'
     "Orangegången ligger ner några trappsteg söderut. "
 
@@ -3041,21 +3041,21 @@ quad: CampusOutdoorRoom
         { "Det finns inget sätt att få ner skyliften för trapporna. "; }
 ;
 + quadEastWalk: PathPassage ->olwWestWalk
-    '(tegel) östra ö olivgång/gångväg/stig' 'östra gångvägen'
+    '(tegel) östra ö olivgång+en/gångväg+en/stig+en' 'östra gångvägen'
     "Den tegellagda gångvägen leder österut. "
 ;
 + quadWestWalk: PathPassage
-    '(tegel) västra v olivgång/gångväg/stig' 'västra gångvägen'
+    '(tegel) västra v olivgång+en/gångväg+en/stig+en' 'västra gångvägen'
     "Den tegellagda gångvägen leder västerut. "
 ;
 
-+ Decoration 'röd tegel/tegelsten/tegelstenar' 'tegelstenar'
++ Decoration 'röd+a tegelsten+en*tegel+sten+ar+na' 'tegelstenar'
     "Stigen är belagd med ganska vanliga röda tegelstenar. "
     isPlural = true
 ;
 
 + Distant 'gamla äldre nya nyare södra norra grundutbildning student
-    hus/bostäder/komplex' 'studentbostäder'
+    *hus+en bostäder+na komplex+en' 'studentbostäder'
     "Studentbostäderna ligger en kort bit österut, längs
     Olivgången. De nyare husen ligger på norra sidan, och de äldre
     husen på södra sidan. "
@@ -3063,7 +3063,7 @@ quad: CampusOutdoorRoom
 ;
 
 + CustomImmovable
-    'gul "varning" plast påle/pålar/tejp' '<q>Varning</q>stejp'
+    'gul "varnings" plast+tejp+en/påle+n/tejp+en*pålar+na' '<q>Varning</q>stejp'
     "Gul plasttejp, med ordet <q>Varning</q> skrivet var
     annan meter, är uppspänd runt några pålar som omger
     brunnen. "
@@ -3088,7 +3088,7 @@ quad: CampusOutdoorRoom
     }
 ;
 ++ quadAnalyzer: Thing
-    'elektronisk netbisco 9099 nätverksanalysator/pryl/utrustning'
+    'elektronisk+a netbisco 9099 nätverksanalysator+n/pryl+en/utrustning+en'
     name = (described ? 'nätverksanalysator' : 'elektronisk utrustning')
     aName = (described ? 'en nätverksanalysator' : 'en elektronisk pryl')
     desc = "Den ser ut lite som den typ av överdimensionerad telefon
@@ -3114,7 +3114,7 @@ quad: CampusOutdoorRoom
         }
     }
 ;
-++ Thing 'stor telefon nätverk trä rulle/rullar/kabel' 'kabelrullar'
+++ Thing 'stor+a telefon+en nätverk+et trä+spole+n/kabel+n/rulle+n*rullar+na' 'kabelrullar'
     "De är träspolar med en diameter på två fot, lindade med kabel,
     som ser ut att vara någon form av telefon- eller nätverkskabel. "
 
@@ -3124,7 +3124,7 @@ quad: CampusOutdoorRoom
     isListed = nil
 ;
 ++ quadManhole: ThroughPassage
-    'stor rektangulär brunn brunn/hål/schakt/öppning' 'brunn'
+    'stor+a rektangulär+a brunn brunn+en/hål+et/schakt+et/öppning+en' 'brunn'
     "Det är en rektangulär öppning i marken, stor nog att rymma
     ett par personer samtidigt, med ett par metalldörrar. Ett schakt
     går ner från öppningen, och du är ganska säker på att det leder ner till
@@ -3473,8 +3473,8 @@ oliveWalk: CampusOutdoorRoom
         stackar i de andra husen, bör du förmodligen försöka hålla
         fokus på Stamers stack. " }
 
-    /* tillhandahåll några speciella beskrivningar för skyliftaren när den är här */
-    descCherryPickerArrival = "Du styr skyliftaren till en plats
+    /* tillhandahåll några speciella beskrivningar för skyliften när den är här */
+    descCherryPickerArrival = "Du styr skyliften till en plats
         bredvid kanonen, vid sidan av huvudstigen, och parkerar. "
     inCherryPickerSpecialDesc = "Du står i korgen på en
         skyliftare, som är parkerad bredvid kanonen. "
@@ -3482,38 +3482,38 @@ oliveWalk: CampusOutdoorRoom
         kanonen. "
 ;
 
-+ CampusMapEntry 'södra s studentbostäder' 'de Södra Husen' 'sydost';
-+ CampusMapEntry 'norra n studentbostäder' 'de Norra Husen' 'sydost';
-+ CampusMapEntry 'fleming hus/hovse' 'Fleming House' 'sydost';
-+ CampusMapEntry 'page hus' 'Page House' 'sydost';
-+ CampusMapEntry 'lloyd hus' 'Lloyd House' 'sydost';
-+ CampusMapEntry 'ruddock hus' 'Ruddock House' 'sydost';
-+ CampusMapEntry 'ricketts hus/hovse' 'Ricketts House' 'sydost';
++ CampusMapEntry 'södra s studentbostäder+na' 'de Södra Husen' 'sydost';
++ CampusMapEntry 'norra n studentbostäder+na' 'de Norra Husen' 'sydost';
++ CampusMapEntry 'fleming house/hovse hus+et' 'Fleming House' 'sydost';
++ CampusMapEntry 'page house/hovse hus+et' 'Page House' 'sydost';
++ CampusMapEntry 'lloyd house/hovse hus+et' 'Lloyd House' 'sydost';
++ CampusMapEntry 'ruddock house/hovse hus+et' 'Ruddock House' 'sydost';
++ CampusMapEntry 'ricketts house/hovse huse+et' 'Ricketts House' 'sydost';
 
 + owTrees: TreeDecoration
-    '(lång) oliv rad/rader/träd/träden/grenar' 'olivträden'
+    '(lång+a) rad+en oliv+träd+en+a träd*rader+na träden+a grenar+na' 'olivträden'
     "Träden är planterade i prydliga rader, en på varje sida av gångvägen,
     med deras långa, tunna grenar som bildar ett valv över stigen. "
     isPlural = true
 ;
 
-+ Decoration 'röd stig/tegel/tegelstenar' 'tegelstenar'
++ Decoration 'röd+a stig+en/tegel*tegelstenar+na' 'tegelstenar'
     "Stigen är belagd med ganska vanliga röda tegelstenar. Den fortsätter
     österut och västerut. "
     isPlural = true
 ;
 
-+ olwWestWalk: PathPassage '(tegel) västra v gångväg/stig' 'västra gångvägen'
++ olwWestWalk: PathPassage '(tegel) västra v gångväg+en/stig+en' 'västra gångvägen'
     "Gångvägen fortsätter västerut. "
 ;
 
 + olwEastWalk: PathPassage ->alWestWalk
-    '(tegel) östra ö gångväg/stig' 'östra gångvägen'
+    '(tegel) (teglet) östra ö gångväg+en/stig+en' 'östra gångvägen'
     "Gångvägen fortsätter österut. "
 ;
 
 + Fixture, Chair, ComplexContainer
-    'antik+a (fleming) (hus) kanon+en' 'kanonen'
+    'antik+a (fleming) (house) (hus+et) kanon+en' 'kanonen'
     "Det är Fleming House-kanonen, ett verkligt stycke artilleri från 1800-talet.
     Pipan är minst tolv fot lång, och den vilar på
     ett par stora vagnhjul; lavetten är målad i den officiella
@@ -3649,13 +3649,13 @@ oliveWalk: CampusOutdoorRoom
     tryMakingTravelReady(conn) { return tryImplicitAction(GetOffOf, self); }
     notTravelReadyMsg = 'Du måste kliva av kanonen först. '
 ;
-++ Component '(kanon) stor+a röd+a kanon+vagn^s+hjul+en'
+++ Component '(kanon+en) stor+a röd+a kanon+vagn^s+hjul+en'
     'kanonhjul'
     "De har runt fem fot i diameter, och de ser ut precis som 
     vagnshjul. "
     isPlural = true
 ;
-++ Component '(kanon) motvikt+en/kärra+n' 'kärra'
+++ Component '(kanon+en) motvikt+en/kärra+n' 'kärra'
     "Det är mestadels en enda stor motvikt för kärran.
     Den är målad i standard Fleming klarröd. "
 ;
@@ -3678,7 +3678,7 @@ oliveWalk: CampusOutdoorRoom
 
 + EntryPortal ->(location.north)
     'nya nyare norra n grundutbildning student främre hus page lloyd ruddock
-    hus/husen/komplex/studenthem/studenthemmen/ingångar'
+    hus+en/komplex+et/studenthem+met*studenthemmen+a ingångar+na'
     'Norra Husen'
     "Norra Husen-komplexet byggdes på 1960-talet; det är en grupp av
     tre studenthem&mdash;Page, Lloyd och Ruddock&mdash;mer eller mindre
@@ -3690,8 +3690,8 @@ oliveWalk: CampusOutdoorRoom
 
 + EntryPortal ->(location.south)
     'gamla äldre södra s grundutbildning student hus lertegel
-    stuck främre fleming ricketts båge/bågar/tak/
-    hus/husen/hovses/komplex/studenthem/studenthemmen/vägg/väggar/ingångar'
+    stuck främre fleming ricketts båge+n/bågar+na/tak+et/
+    hus+et/husen/houses/komplex+et/studenthem+met/vägg+en*väggar+na ingångar+na studenthemmen+a'
     'Södra Husen'
     "Södra Husen byggdes på 1930-talet och designades i
     medelhavsstil: bågar, lertegeltak, stuckväggar,
@@ -3701,7 +3701,7 @@ oliveWalk: CampusOutdoorRoom
     isPlural = true
 ;
 
-+ Distant 'blacker dabney hus/husen/hovse/hovses' 'Blacker och Dabney'
++ Distant 'blacker dabney hus+et/house*houses husen+a' 'Blacker och Dabney'
     "Blacker och Dabney är inte synliga härifrån; de ligger på södra sidan
     av byggnadsgruppen. "
     isPlural = true
@@ -3727,14 +3727,14 @@ athLawn: CampusOutdoorRoom 'Athenaeum-gräsmattan' 'Ath-gräsmattan' 'gräsmatta
 + CampusMapEntry 'athenaeum/ath' 'Athenaeum' 'sydost';
 
 + Distant, Enterable -> (location.east)
-    'ståtlig medelhavsstil matsal fakultet
-    ath/athenaeum/struktur/byggnad/rum/klubb'
+    'ståtlig+a medelhavsstil matsal+en fakultet+et
+    ath/athenaeum/struktur+en/byggnad+en/rum+met/klubb+en'
     'Athenaeum'
     "Ath är en vidsträckt stuck-och-rött-tegeltak-struktur, som
     får den att likna många av SoCals filmstjärnemansioner. Den
     öppna matsalen blickar ut över gräsmattan. "
 ;
-++ Decoration 'vit röd tak tegel stuck/pelare/pelare/tegel/takpannor/tak'
+++ Decoration 'vit+a röd+a tak+et tegel+tak+struktur arketektonisk+a detalj+er/tak+et/stuck/pelare+n/tegel*takpannor+na pelarna'
     'arkitektoniska detaljer'
     "Ath har den medelhavsstil som är allestädes närvarande här
     på campus. "
@@ -3743,11 +3743,11 @@ athLawn: CampusOutdoorRoom 'Athenaeum-gräsmattan' 'Ath-gräsmattan' 'gräsmatta
 ;
 
 + alWestWalk: PathPassage
-    '(tegel) västra v olivgång/gångväg/stig' 'västra gångvägen'
+    '(tegel) västra v olivgång+en/gångväg+en/stig+en' 'västra gångvägen'
     "Gångvägen fortsätter västerut. "
 ;
 
-+ Decoration 'gräs/gräsmatta' 'gräsmatta'
++ Decoration 'gräs+et/gräsmatta+n' 'gräsmatta'
     "Gräsmattan ser välskött ut. "
 ;
 
@@ -3768,25 +3768,25 @@ athDiningRoom: Room 'Athenaeum Matsal' 'Ath-matsalen'
     out asExit(west)
 ;
 
-+ Distant, Enterable -> (location.west) 'gräsmatta/gräs' 'gräsmatta'
++ Distant, Enterable -> (location.west) 'gräsmatta+n/gräs+et' 'gräsmatta'
     "Gräsmattan är utanför, västerut. "
 ;
 
 + adrDoor: AlwaysLockedDoor
-    'bred hög trä dubbel dörr/dörrar' 'dubbeldörrar'
+    'bred+a hög+a trä dubbel+dörr+en*dubble+dörrar+na' 'dubbeldörrar'
     "Dörrarna är breda och höga. De leder in i byggnaden
     österut. "
 
     isPlural = true
 ;
 
-+ Decoration 'matbord/stolar/bord/stol' 'bord'
++ Decoration 'matbord+et/bord+et/stol+en*stolar+na matborden+a borden+a' 'bord'
     "Borden är för närvarande tomma, eftersom matsalen inte
     serverar någon måltid just nu. "
     isPlural = true
 ;
 
-+ Decoration 'enorm rund pelare/pelare' 'pelare'
++ Decoration 'enorm+a rund+a pelare+n*pelarna' 'pelare'
     "Pelarna håller upp taket och ger rummet en
     formell atmosfär. "
     isPlural = true
@@ -3800,7 +3800,7 @@ athDiningRoom: Room 'Athenaeum Matsal' 'Ath-matsalen'
  *   peka rummets riktningsanslutningar till den.  
  */
 class CalBlvd: PathPassage
-    'california boulevard/blvd/blvd./gata/väg'
+    'california boulevard gata+n/blvd/blvd./väg+en'
     'California Boulevard'
     "California Boulevard är en livlig fyrafilig gata som utgör
     campusets södra gräns. "
@@ -3816,7 +3816,7 @@ class CalBlvd: PathPassage
     dobjFor(Cross) remapTo(TravelVia, self)
 ;
 class CalBlvdTraffic: Distant
-    'trafik/bil/bilar/auto/automobil' 'trafik'
+    'trafik+en*bil+ar+na' 'trafik'
     "Trafiken är ganska tät, men flyter stadigt. "
 ;
 class CalBlvdNoise: SimpleNoise
@@ -3834,7 +3834,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
     gräns. En oasfalterad stig genom apelsinträden
     leder västerut. Österut leder en passage in i Dabney Hovse. "
 
-    vocabWords = 'apelsin gång/gångväg'
+    vocabWords = 'apelsin gång+en/gångväg+en'
 
     north = orwNorthWalk
     up asExit(north)
@@ -3846,8 +3846,8 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
     atmosphereList = (owMovers.isIn(self) ? moversAtmosphereList : nil)
 ;
 
-+ CampusMapEntry 'apelsingång' 'Apelsingången' 'sydost';
-+ CampusMapEntry 'dabney hus/hovse' 'Dabney House' 'sydost'
++ CampusMapEntry 'apelsin+gång+en' 'Apelsingången' 'sydost';
++ CampusMapEntry 'dabney hus/house' 'Dabney House' 'sydost'
     altLocations = [dabneyCourtyard]
 
     /* detta är det viktigaste "dabney" och "hus" vi kan söka efter */
@@ -3855,7 +3855,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
 ;
 
 + Decoration
-    'metall (stig) belysning (ljus) klar
+    'metall+en (stig) belysning+en (ljus+et) klar+a
     armatur+en/ljus+et/stolpe+n*lampor+na armaturer+na stolpar+na höljen+a'
     'stiglampor'
     "Stiglamporna är enkla metallstolpar med glödlampor
@@ -3881,7 +3881,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
     dobjFor(Climb) asDobjFor(Enter)
 ;
 
-+ TreeDecoration 'stort tätt apelsinträd/apelsinträd/lövverk' 'apelsinträd'
++ TreeDecoration 'stort stora tätt täta apelsinträd+et*apelsinträd+en lövverk+en' 'apelsinträd'
     "De är stora träd med tätt lövverk och massor av apelsiner. "
     isPlural = true
 
@@ -3890,7 +3890,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
 ++ OrangeDecoration;
 
 + EntryPortal ->(location.east)
-    'falska dekorativa bokstäver/passage/stenarbete' 'passage'
+    'falska dekorativa passage+n/stenarbete+t*bokstäver+na' 'passage'
     "Det är en generöst tilltagen passage som leder österut. Passagen
     är inramad av dekorativt falskt stenarbete, och orden <q>DABNEY HOVSE</q>
     är inskrivna ovanför den. (Bokstäverna är utformade för att se ut som
@@ -3899,7 +3899,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
 ;
 
 + Enterable ->(location.east)
-    'stor stuck dabney byggnad/hus/hovse/ord' 'Dabney House'
+    'stor+a stuck dabney byggnad+en/hus+et/house/ord+en' 'Dabney House'
     "Det är en stor stuckbyggnad designad för att likna klassisk
     medelhavs-arkitektur. Orden <q>DABNEY HOVSE</q> är
     inskrivna ovanför passagen österut. "
@@ -3908,17 +3908,17 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
 ;
 
 + orwWestPath: PathPassage ->syncEastPath
-    'västra v oasfalterad jordstig' 'oasfalterad stig'
+    'västra v oasfalterad+e jordstig+en' 'oasfalterad stig'
     "Den oasfalterade stigen leder västerut genom apelsinträden. "
 ;
 
 + owMovers: MitaMovers
-    "En till synes ändlös ström av flyttare kommer upp från California
+    "En till synes ändlös ström av flyttarbetare kommer upp från California
     Boulevard och går in i Dabney, bärande lådor och packlårar. Andra
     återvänder från Dabney tomhänta, förmodligen på väg att hämta
     nästa last. "
 
-    "Mitachron-flyttare arbetar sig upp från California Boulevard
+    "Mitachron-flyttarbetare arbetar sig upp från California Boulevard
     och in i Dabney, bärande laster av lådor och packlårar. "
 ;
 
@@ -3947,14 +3947,14 @@ syncLot: CampusOutdoorRoom 'Sync-parkeringen' 'Sync-parkeringen' 'parkeringsplat
     south = syncCalBlvd
 ;
 
-+ CampusMapEntry 'synkrotron sync synch lab/laboratorium'
++ CampusMapEntry 'synkrotron sync synch lab labb+et/laboratorium+et'
     'Synkrotronlaboratoriet' 'sydost';
 
-+ syncEastPath: PathPassage 'östra ö oasfalterad jordstig' 'jordstig'
++ syncEastPath: PathPassage 'östra ö oasfalterad+e jordstig+en' 'jordstig'
     "Stigen leder österut genom en rad apelsinträd. "
 ;
 
-+ TreeDecoration 'stort tätt apelsinträd/apelsinträd/lövverk' 'apelsinträd'
++ TreeDecoration 'stort tätt stora täta apelsinträd+et/apelsinträd+et/lövverk+et' 'apelsinträd'
     "De är stora träd med tätt lövverk och massor av apelsiner. "
     isPlural = true
 
@@ -3962,7 +3962,7 @@ syncLot: CampusOutdoorRoom 'Sync-parkeringen' 'Sync-parkeringen' 'parkeringsplat
 ;
 ++ OrangeDecoration;
 
-+ Decoration 'äldre parkerad bil/bilar/auto/bilar/automobiler' 'bilar'
++ Decoration 'äldre parkera+e bil+en*bilar+na automobiler' 'bilar'
     "Fem bilar är inträngda på parkeringen idag. De är mestadels äldre
     modeller, och de ser ut som om de inte har flyttats på ett tag. "
     isPlural = true
@@ -3976,7 +3976,7 @@ syncLot: CampusOutdoorRoom 'Sync-parkeringen' 'Sync-parkeringen' 'parkeringsplat
 ;
 
 + Immovable
-    'tvåvånings grå sync synkrotron lab laboratorium byggnad/massa/vägg'
+    'tvåvånings grå sync lab synkrotron labb+et laboratorium byggnad+en/massa+n/vägg+en'
     'Sync-labbet'
     "Det enda kännetecknet på den tvåvånings gråa byggnaden är en matt
     metalldörr. Sync-labbet har fått sitt namn eftersom det inhyste en
@@ -3986,7 +3986,7 @@ syncLot: CampusOutdoorRoom 'Sync-parkeringen' 'Sync-parkeringen' 'parkeringsplat
     dobjFor(Enter) remapTo(Enter, syncDoor)
 ;
 + Immovable
-    'trevånings firestone lab laboratorium bak byggnad/vägg/sida/baksida'
+    'trevånings firestone lab laboratorium bakre byggnad+en/vägg+en/sida+n/baksida+n'
     'baksidan av Firestone'
     "Denna sida av Firestone är bara en intetsägande trevåningsvägg. "
 
@@ -4036,8 +4036,8 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
           && gActor.hasSeen(climbingFirestone)
           ? wowFirestoneLattice : inherited)
 
-    /* tillhandahåll speciella beskrivningar för skyliftaren när den är här */
-    descCherryPickerArrival = "Du styr skyliftaren till en plats
+    /* tillhandahåll speciella beskrivningar för skyliften när den är här */
+    descCherryPickerArrival = "Du styr skyliften till en plats
         utanför stigen, precis intill väggen på Firestone, och parkerar. "
     inCherryPickerSpecialDesc = "Du står i korgen på en
         skyliftare, som är parkerad intill Firestone.
@@ -4050,11 +4050,11 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
         är nu inom räckhåll. "
 ;
 
-+ CampusMapEntry 'firestone lab/laboratorium' 'Firestone-laboratoriet' 'söder';
-+ CampusMapEntry 'guggenheim lab/laboratorium' 'Guggenheim-laboratoriet' 'söder';
-+ CampusMapEntry 'thomas lab/laboratorium' 'Thomas-laboratoriet' 'söder';
++ CampusMapEntry 'firestone labb+et/laboratorium' 'Firestone-laboratoriet' 'söder';
++ CampusMapEntry 'guggenheim labb+et/laboratorium' 'Guggenheim-laboratoriet' 'söder';
++ CampusMapEntry 'thomas labb+et/laboratorium' 'Thomas-laboratoriet' 'söder';
 
-+ Decoration 'röd stig/tegel/tegelstenar' 'tegelstenar'
++ Decoration 'röd+a stig+en/tegel*tegelstenar+na' 'tegelstenar'
     "Stigen är belagd med ganska vanliga röda tegelstenar. Den fortsätter
     österut och västerut. "
     isPlural = true
@@ -4077,31 +4077,31 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
         rutinerna gäller inte alltid på Ditch Day. '
 ;
 
-+ wowWestWalk: PathPassage '(tegel) västra v stig/gångväg' 'västra gångvägen'
++ wowWestWalk: PathPassage '(tegel) västra v stig+en/gångväg+en' 'västra gångvägen'
     "Gångvägen leder västerut. "
 ;
 
 + wowEastWalk: PathPassage ->quadWestWalk
-    '(tegel) östra ö stig/gångväg' 'östra gångvägen'
+    '(tegel) östra ö stig+en/gångväg+en' 'östra gångvägen'
     "Gångvägen leder österut. "
 ;
 
 + wowSouthWalk: PathPassage ->ldcNorthWalk
-    'södra s gång/gångväg' 'södra gångvägen'
+    'södra s gång+en/gångväg+en' 'södra gångvägen'
     "Gångvägen leder söderut, under bron på andra våningen. "
 ;
 
-+ TreeDecoration 'olivträd/olivträd/grenar' 'olivträd'
++ TreeDecoration 'olivträd+en/grenar+na' 'olivträd'
     "Olivträden här är planterade slumpmässigt runt gräsmattan. "
     isPlural = true
 ;
 
-+ Decoration 'bred gräs/gräsmatta' 'gräsmatta'
++ Decoration 'bred+a gräs+et/gräsmatta+n' 'gräsmatta'
     "Den breda gräsmattan är här och där prickad med olivträd. "
 ;
 
 + Enterable ->(location.southeast)
-    'firestone flygvetenskap lab/laboratorium/vägg/byggnad*byggnader*väggar'
+    'firestone flygvetenskap labb+et/laboratorium+et/vägg+en/byggnad+en*byggnader+na*väggar+na'
     'Firestone-labbet'
     "Firestone är flygvetenskapslabbet. Byggnaden är
     tre våningar hög och har en fasad med en serie spjälliknande
@@ -4113,8 +4113,8 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
     dobjFor(ClimbUp) remapTo(Climb, wowFirestoneLattice)
 ;
 ++ wowFirestoneLattice: OutOfReach, TravelWithMessage, StairwayUp ->cfDown
-    '(firestone) asterisk spjälverk
-    x:en/plustecken/former/galler/galler/serie/spjälverk/spjälverk/kolonner'
+    '(firestone) asterisk spjälverk+et/x:en/gallret/serie+n/spjälverk+et
+    *spjälverk+en kolonner+na galler+na plustecken+a former+na'
     'spjälverk'
     "Gallren täcker inte hela byggnadens fasad utan
     är utplacerade i kolonner, där varje kolumn börjar på andra våningen och
@@ -4130,7 +4130,7 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
     canObjReachContents(obj)
     {
         /* 
-         *   'obj' måste vara i skyliftaren, och korgen måste vara
+         *   'obj' måste vara i skyliften, och korgen måste vara
          *   upphöjd; annars kan vi inte nå byggnaden 
          */
         return obj.isIn(cherryPickerBasket) && cherryPickerBasket.isRaised;
@@ -4141,8 +4141,8 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
         andra våningen. Du kan inte nå det från marken. '; }
 
     /* 
-     *   detta objekt är nåbart från den upphöjda skyliftaren, och ENDAST
-     *   från den upphöjda skyliftaren 
+     *   detta objekt är nåbart från den upphöjda skyliften, och ENDAST
+     *   från den upphöjda skyliften 
      */
     isRaisedCherryPickerReachable = true
 
@@ -4165,7 +4165,7 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
          *   är viktig, men vi behöver eller vill inte ha ett
          *   förhandsvillkor för det. Vi behöver inte förhandsvillkoret eftersom
          *   det faktum att spjälverket är utom räckhåll är tillräckligt för att förhindra
-         *   klättring på spjälverket tills vi är i den upphöjda skyliftaren.
+         *   klättring på spjälverket tills vi är i den upphöjda skyliften.
          *   Vi vill inte ha förhandsvillkoret eftersom vi vill låta
          *   spelaren lista ut vad som ska göras - vi vill inte göra
          *   detta automatiskt. 
@@ -4200,7 +4200,7 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
 ;
 
 + Enterable ->(location.southwest)
-    'guggenheim aeronautik lab/laboratorium/vägg/byggnad*byggnader*väggar'
+    'guggenheim aeronautik labb+et/laboratorium+et/vägg+en/byggnad+en*byggnader+na väggar+na'
     'Guggenheim-labbet'
     "Guggenheim är ett aeronautiklabb. Det är en trevånings
     byggnad med stora fönster inramade i smidesjärn. Härifrån
@@ -4210,20 +4210,20 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
     isProperName = true
 ;
 
-++ wowWindTunnel: Distant 'vindtunnel struktur' 'vindtunnel'
+++ wowWindTunnel: Distant 'vindtunnel+struktur+en' 'vindtunnel'
     "Du kan knappt se den långa, låga strukturen på taket
     av Guggenheim. Du kan inte urskilja några detaljer härifrån. "
 ;
 
-++ Distant 'smidesjärn ram/ramar/fönster/fönster/(guggenheim)'
+++ Distant 'smidesjärn+et ram+en/ramar+na/fönster*fönstren (guggenheim)'
     'fönstren på Guggenheim'
     "Fönstren är stora, med många rutor i smidesjärnsramar. "
     owner = (location)
 ;
 
 + Enterable ->(location.north)
-    'beige rektangulär thomas civil mekanisk teknik
-    lab/laboratorium/vidd/vägg/byggnad*byggnader*labb'
+    'beige rektangulär+a thomas civil+a mekanisk+a teknik vid+a
+    labb+et/laboratorium+et/vägg/byggnad+en*byggnader+na*'
     'Thomas-labbet'
     "Thomas är byggnaden för civil- och maskinteknik. Det är
     en stor byggnad med vad du alltid har tyckt är ett ganska
@@ -4250,7 +4250,7 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
     owner = (location)
 ;
 
-+ Distant 'andra våningens våning bro' 'bron på andra våningen'
++ Distant 'andra våningens våning+en bro+n' 'bron på andra våningen'
     "Bron är dekorerad med samma spjälverksfront
     som Firestone. Den förbinder Firestone och Guggenheim på deras
     andra våningar. En gångväg leder söderut under bron. "
@@ -4298,7 +4298,7 @@ climbingFirestone: Floorless, CampusOutdoorRoom
 
 + Fixture
     'främre norra spjälverk firestone
-    galler/byggnad/lab/laboratorium/vägg/firestone'
+    vägg+en/galler/byggnad+en/labb+et/laboratorium+et/firestone'
     'väggen på Firestone'
     "Det asteriskformade mönstret på gallret är relativt lätt
     att hålla sig fast i. Spjälverket fortsätter upp till taket, men
@@ -4348,17 +4348,17 @@ climbingFirestone: Floorless, CampusOutdoorRoom
         till marken. "; }
 ;
 
-+ Distant 'oliv mark/gång/gångväg/gräsmatta' 'mark'
++ Distant 'oliv mark+en/gång+en/gångväg+en/gräsmatta' 'mark'
     "Marken är ungefär två våningar nedanför. "
 ;
 
-+ Distant 'thomas lab/byggnad' 'Thomas-labbet'
++ Distant 'thomas labb+et/byggnad+en' 'Thomas-labbet'
     "Thomas ligger över gräsmattan, på avstånd norrut. "
     isProperName = true
 ;
 /* a local proxy for the cherry picker */
 + cfCherryPicker: PresentLater, Distant
-    'skylift' 'skyliften'
+    'skylift+en' 'skyliften'
     desc()
     {
         "Skyliften är direkt nedanför. ";
@@ -4378,7 +4378,7 @@ climbingFirestone: Floorless, CampusOutdoorRoom
     dobjFor(StandOn) asDobjFor(Enter)
 ;
 ++ Distant
-    '(skylift) skylift+korg+en' 'korgen på skyliften'
+    '(skylift) skylift^s+korg+en' 'korgen på skyliften'
     desc()
     {
         if (cherryPickerBasket.isRaised)
@@ -4435,7 +4435,7 @@ firestoneRoof: RoofRoom 'Firestones tak' 'taket på Firestone' 'tak'
     så det borde vara möjligt att klättra ner den vägen. I det sydöstra
     hörnet leder en stege ner längs den södra väggen. "
 
-    vocabWords = 'firestone lab/laboratorium/byggnad/(tak)'
+    vocabWords = 'firestone labb+et/laboratorium+et/byggnad+en/(tak+et)'
 
     north = frGrill
     west = guggenheimRoof
@@ -4456,45 +4456,45 @@ firestoneRoof: RoofRoom 'Firestones tak' 'taket på Firestone' 'tak'
     dobjFor(ClimbDown) remapTo(TravelVia, frGrill)
 ;
 
-+ Floor 'platt tjär tjärbelagt tak/golv' 'tak'
++ Floor 'platt+a tjär+belagd+a tjär+belagt tak+et/golv+et' 'tak'
     "Det är ett platt, tjärbelagt tak. "
     dobjFor(JumpOff) remapTo(Jump)
 ;
 
-+ Decoration 'knähög kant/(tak)' 'takkant'
++ Decoration 'knähög+a kant+en/(taket)' 'takkant'
     "Kanten är ungefär 60 centimeter hög och löper runt takets omkrets.
     Den är förmodligen mer avsedd att blockera vattenavrinning
     än att skydda klättrare. "
     dobjFor(JumpOff) remapTo(Jump)
 ;
 
-+ Decoration 'ventil/ventiler/rör/rör/installationer' 'installationer'
++ Decoration 'ventil+en/rör+et*ventiler+na rör+en installationer+na' 'installationer'
     "Utskjutningarna skulle göra det farligt att gå omkring här uppe
     på natten, men de är lätta att undvika i dagsljus. "
     isPlural = true
 ;
 
 + Distant, Decoration
-    'guggenheim (tak)/(lab)/(laboratorium)/(byggnad)' 'Guggenheim'
+    'guggenheim (tak+et)/(labb+et)/(laboratorium+et)/(byggnad+en)' 'Guggenheim'
     "Guggenheim är nästa byggnad västerut, men taken är förbundna
     via bron. "
 ;
 
-+ Enterable ->(location.west) '(tak) bro' 'bro'
++ Enterable ->(location.west) '(tak+et) bro+n' 'bro'
     "Härifrån är bron helt enkelt en något smalare del av
     taket som leder västerut. "
 ;
 
-+ Distant, Decoration 'mark' 'mark/gångväg'
++ Distant, Decoration 'mark+en' 'mark/gångväg'
     "Marken är tre våningar nedanför. "
 ;
-+ Distant, Decoration 'skylift korg+en' 'skylift'
++ Distant, Decoration 'skylift^s+korg+en' 'skylift'
     "Skyliften är för nära väggen och för långt
     nedanför för att få en bra titt härifrån. "
 ;
 
 + frGrill: TravelWithMessage, StairwayDown
-    'norra n fram spjälverk galler/vägg/sida/(byggnad)/(firestone)'
+    'norra n fram spjälverk+et galler/gallret/vägg+en/sida+n/(byggnad+en)/(firestone)'
     'spjälliknande galler'
     "Byggnaden är täckt med ett spjälliknande galler, vars
     asteriskformade öppningar ger bra grepp för klättring. "
@@ -4505,9 +4505,11 @@ firestoneRoof: RoofRoom 'Firestones tak' 'taket på Firestone' 'tak'
 
     /* hands must be empty to climb down the building */
     connectorTravelPreCond = (inherited() + handsEmpty)
+    isNeuter = true
+    definiteFrom = 'gallret'
 ;
 
-+ frLadder: StairwayDown 'metall stege' 'stege'
++ frLadder: StairwayDown 'metall+stege+n' 'stege'
     "Metallstegen är permanent fäst vid takets sydvästra
     hörn. Den leder över takkanten, ner
     längs byggnadens södra sida. "
@@ -4537,28 +4539,28 @@ guggenheimRoof: RoofRoom
         väg ner härifrån. " }
 ;
 
-+ Floor 'platt tjär tjärbelagt tak/golv' 'tak'
++ Floor 'platt+a tjär+belagd+a tjärbelagt tak+et/golv+et' 'tak'
     "Det är ett platt, tjärbelagt tak. "
     dobjFor(JumpOff) remapTo(Jump)
 ;
 
-+ Distant, Decoration 'mark' 'mark/gångväg'
++ Distant, Decoration 'mark+en' 'mark/gångväg'
     "Marken är tre våningar nedanför. "
 ;
 
 + Distant, Decoration
-    'firestone (tak)/(lab)/(laboratorium)/(byggnad)' 'Firestone'
+    'firestone (tak+et)/(labb+et)/(laboratorium+et)/(byggnad+en)' 'Firestone'
     "Firestone är nästa byggnad österut, men taken är förbundna
     via bron. "
 ;
 
-+ Enterable ->(location.east) '(tak) bro' 'bro'
++ Enterable ->(location.east) '(tak+et) bro+n' 'bro'
     "Härifrån är bron helt enkelt en något smalare del av
     taket som leder österut. "
 ;
 
 + Enterable ->(location.south)
-    'lång låg stål (guggenheim) vind konstruktion/tunnel/vägg'
+    'lång+a låg+a stål (guggenheim) vind konstruktion+en/tunnel+n/vägg+en'
     'vindtunnel'
     "Konstruktionen sträcker sig över hela Guggenheims öst-västliga utsträckning, men
     den är låg och smal. Ett komplext nätverk av rör och ledningar
@@ -4615,7 +4617,7 @@ guggenheimRoof: RoofRoom
     /* have we been opened before? */
     openedBefore = nil
 ;
-
+// ... fixa resten av vocabWords
 /* ------------------------------------------------------------------------ */
 /*
  *   Wind tunnel interior 
@@ -4639,7 +4641,7 @@ windTunnel: Room 'Vindtunnellabb' 'vindtunnellabbet'
 ;
 
 + wtPassage: TravelWithMessage, Door
-    'liten låg passage/dörr' 'låg dörr'
+    'liten lilla låg+a passage+n/dörr+en' 'låg dörr'
     "Det är en liten dörr, bara ungefär en meter hög, som leder
     ut ur konstruktionen norrut. "
 
@@ -4648,15 +4650,15 @@ windTunnel: Room 'Vindtunnellabb' 'vindtunnellabbet'
 ;
 
 + wtStairs: StairwayDown ->wtsStairs
-    'svart smidesjärn spiral smal trappa/trappuppgång/trappor/schakt'
+    'svart+a smidesjärn spiral+formad+e smal+a spiral+trappa+n/trappa+n/trappuppgång+en/schakt+et*trappor+na'
     'spiraltrappa'
     "Den smala spiraltrappan leder ner i ett schakt. "
     isPlural = true
 ;
 
 + Decoration
-    'tung industriell mätning bildbehandling
-    del/delar/utrustning/maskineri/rörledningar/kompressorer/pumpar/apparatur'
+    'tung+a industriell+a mätning bildbehandling
+    utrustning+en/del+en/delar+na/maskineri+et/rörledningar+na/kompressorer+na/pumpar+na/apparatur+en'
     'utrustning'
     "Mycket av utrustningen, särskilt det industriliknande
     maskineriet, verkar vara rörledningar för vindtunneln, förmodligen
@@ -4676,7 +4678,7 @@ windTunnel: Room 'Vindtunnellabb' 'vindtunnellabbet'
 ;
 
 + ComplexContainer, Fixture
-    'ljusblå metall vind cement tunnel/cylinder/blandare'
+    'ljusblå+a metall vind cement tunnel+n/cylinder+n/blandare+n'
     'metallcylinder'
     "Cylindern verkar vara huvuddelen av vindtunneln.
     Den ligger på sidan; den är ungefär tre meter lång och två meter
@@ -4698,12 +4700,12 @@ windTunnel: Room 'Vindtunnellabb' 'vindtunnellabbet'
     }
 ;
 
-++ ContainerDoor 'rund stål metall lucka' 'lucka'
+++ ContainerDoor 'rund+a stål metall lucka+n' 'lucka'
     "Det är en rund metallucka, ungefär 60 centimeter i diameter. "
 ;
 
 ++ squirrel: TurboPowerAnimal
-    'turbo power ekorre actionfigur/ekorre' 'ekorre-actionfigur'
+    'turbo power ekorr^s+actionfigur+en/ekorre+n/ekorre-actionfigur+en' 'ekorre-actionfigur'
     "Den är hälften robot, hälften mjukdjursleksak, och liknar vagt en
     ekorre. <q>Turbo Power Ekorre!</q> står emblazerat på
     framsidan. "
@@ -4742,12 +4744,12 @@ windTunnelShaft: Room 'Botten av trappan' 'botten av trappan'
 ;
 
 + wtsStairs: StairwayUp
-    'svart smidesjärn spiral smal trappa/trappuppgång'
+    'svart+a smidesjärn+et spiral+en smal+a trappa+n/trappuppgång+en'
     'spiraltrappa'
     "Den smala svarta trappan stiger upp genom schaktet. "
 ;
 
-+ wtsDoor: AlwaysLockedDoor 'gammal mörk trä trädörr' 'trädörr'
++ wtsDoor: AlwaysLockedDoor 'gammal gamla mörk+a trä+dörr+en' 'trädörr'
     "Dörren är gjord av ett mörkt trä och ser gammal och sliten ut. "
 ;
 
@@ -4772,14 +4774,14 @@ thomasLobby: Room 'Thomas entréhall' 'Thomas entréhall' 'entréhall'
 ;
 
 + Decoration
-    'blank mörk trä lackerad
-    lack/finish/trä/panel/paneler/panelering'
+    'blank+a mörk+a lackerad+e träd+et 
+    trä+et/lack+en/finish+en/trä+et/panel+en/panelering+en*paneler+na'
     'mörkt trä'
     "Trots den blanka lackerade ytan är träet så mörkt, och
     det finns så mycket av det, att det ger rummet ett dystert utseende. "
 ;
 
-+ tlSouthDoor: Door ->wowThomasDoor 'bred dubbel+dörr+en*dörrar+na' 'dubbeldörr'
++ tlSouthDoor: Door ->wowThomasDoor 'bred+a dubbel+dörr+en*dörrar+na' 'dubbeldörr'
     "Den breda dubbeldörren leder söderut, utomhus. "
 ;
 
@@ -4818,7 +4820,7 @@ thomasWest: Room 'Klassrum' 'klassrummet'
     "Dörren leder ut österut. "
 ;
 
-+ Fixture, Chair 'trä rad/rader/stol/stolar/säte/säten' 'trästolar'
++ Fixture, Chair 'trä+rad+en/stol+en*stolar+na rader+na säte+n säten+a trä+rader+na' 'trästolar'
     "Stolarna är alla fastmonterade, ordnade i ungefär
     ett dussin rader. "
     isPlural = true
@@ -4836,6 +4838,7 @@ thomasWest: Room 'Klassrum' 'klassrummet'
     'klotter på svarta tavlan'
     "Det finns inget du kan tyda; det mesta av skriften har
     redan suddats ut. "
+    isNeuter = true
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -4849,13 +4852,13 @@ thomasEast: Room 'Robotlabb' 'robotlabbet'
     Allt är i ungefär rätt skala för en chihuahua, men med tanke på
     skylten utanför måste det vara för småskaliga robotar. "
 
-    vocabWords = 'robot labb/laboratorium'
+    vocabWords = 'robot labb+et/laboratorium+et'
 
     west = teWestDoor
     out asExit(west)
 ;
 
-+ teWestDoor: Door 'västra v dörr/dörröppning' 'västra dörr'
++ teWestDoor: Door 'västra v dörr+en/dörröppning+en' 'västra dörr'
     "Dörren leder ut västerut. "
 ;
 
@@ -4880,12 +4883,12 @@ class ObstacleItem: CustomImmovable
     iobjFor(PutOn) asIobjFor(PutIn)
 ;
 
-+ ObstacleItem 'hinderbana' 'hinderbana'
++ ObstacleItem 'hinderbana+n' 'hinderbana'
     "Hinderbanan fyller större delen av rummet. Allt är
     i miniatyr, ungefär i rätt skala för chihuahuas. "
 
 ;
-+ ObstacleItem 'små orange trafikkoner' 'trafikkoner'
++ ObstacleItem 'små orange trafikkoner+na' 'trafikkoner'
     "Konerna är miniatyrversioner av vad du skulle se på motorvägen,
     ungefär 30 centimeter höga. "
     isPlural = true
@@ -4897,7 +4900,7 @@ class ObstacleItem: CustomImmovable
     isPlural = true
 ;
 + ObstacleItem
-    'plåt halv halvcylinder/halvcylindrar/cylinder/cylindrar/tunnlar'
+    'plåt+bitar+na halv halvcylinder+n/cylinder+n*cylindra+na tunnlar+na halvcylindrar+na'
     'tunnlar'
     "Det finns ett par tunnlar gjorda av plåtbitar
     böjda till halvcylindrar. "
@@ -4908,7 +4911,7 @@ class ObstacleItem: CustomImmovable
 property blockToyCar;
 
 + toyCar: Thing, Traveler
-    'radiostyrda rc miniatyr skalmodell leksaksbil+en/bil+en/leksak+en*leksaker+na' 'leksaksbil'
+    'radiostyrda rc miniatyr+en skalmodell+en leksaksbil+en/bil+en/leksak+en*leksaker+na' 'leksaksbil'
 
     desc()
     {
@@ -5227,7 +5230,7 @@ property blockToyCar;
     disambigName = 'leksaksbilens antenn'
 ;
 
-+ toyCarControl: Thing 'liten lilla rf fjärr+kontroll+en/låda+n' 'fjärrkontroll'
++ toyCarControl: Thing 'liten lilla rf fjärr+kontroll+en' 'fjärrkontroll'
     "Det är en liten låda med en antenn och en joystick. "
 
     isListed = (toyCar.isListed || location != toyCar.location)
@@ -5245,11 +5248,11 @@ property blockToyCar;
         return lst;
     }
 ;
-++ Component 'tråd (fjärr) (kontroll) antenn' 'antenn'
+++ Component 'tråd (fjärr) (kontroll) antenn+en' 'antenn'
     "Det är en bit tråd som sticker ut från fjärrkontrollådan. "
     disambigName = 'fjärrkontrollens antenn'
 ;
-++ Component '(fjärr) (kontroll) joystick' 'fjärrkontrollens joystick'
+++ Component '(fjärr) (kontroll) joystick+en/kontrollspak+en/fjärr+kontroll+en' 'fjärrkontrollens joystick'
     "Det är en kort kontrollspak som du kan flytta i alla
     kompassriktningar. "
 
@@ -5301,17 +5304,17 @@ ldCourtyard: CampusOutdoorRoom 'Lauritsen-Downs Innergård'
                                      defaultEastWall, defaultWestWall])
 ;
 
-+ CampusMapEntry 'downs lab/laboratorium' 'Downs Laboratorium' 'sydväst';
-+ CampusMapEntry 'lauritsen lab/laboratorium' 'Lauritsen Laboratorium' 'söder';
-+ CampusMapEntry 'lauritsen-downs lab/laboratorium/innergård'
++ CampusMapEntry 'downs lab/labb+et/laboratorium+et' 'Downs Laboratorium' 'sydväst';
++ CampusMapEntry 'lauritsen lab/labb+et/laboratorium+et' 'Lauritsen Laboratorium' 'söder';
++ CampusMapEntry 'lauritsen-downs lab/labb+et/laboratorium+et/innergård+en'
     'Lauritsen-Downs innergård' 'söder';
 
-+ ldcNorthWalk: PathPassage 'norra n gångväg' 'norra gångvägen'
++ ldcNorthWalk: PathPassage 'norra n gångväg+en' 'norra gångvägen'
     "Gångvägen leder norrut under bron på andra våningen. "
 ;
 
 + ldEmergencyDoor: Door
-    '"nödutgång" nödutgång dörr' 'nödutgångsdörr'
+    '"nödutgång+en" nödutgång+en dörr+en nödutgång^s+dörr+en' 'nödutgångsdörr'
     "Dörren är märkt <q>Nödutgång.</q> Den ser ut som en envägs
     dörr som leder ut; det finns inget uppenbart sätt att öppna den från denna sida. "
 
@@ -5329,8 +5332,8 @@ ldCourtyard: CampusOutdoorRoom 'Lauritsen-Downs Innergård'
 ;
 
 + Enterable ->(location.south)
-    'beige stor lauritsen downs lauritsen-downs
-    glas/fönster/stucko/lab/laboratorium/byggnad'
+    'beige stor+a lauritsen downs lauritsen-downs
+    glas+et/fönster/fönstret/stucko/lab/labb+et/laboratorium+et/byggnad+en'
     'Lauritsen-Downs'
     "Lauritsen och Downs är nominellt separata byggnader, men
     de är sammanfogade till en enda L-formad struktur. Den kombinerade
@@ -5342,21 +5345,21 @@ ldCourtyard: CampusOutdoorRoom 'Lauritsen-Downs Innergård'
     isProperName = true
 ;
 
-+ Fixture 'tom baksida guggenheim lab/laboratorium/vägg/sida' 'Guggenheim'
++ Fixture 'tom+ma baksida+n guggenheim lab/labb+et/laboratorium+et/vägg+en/sida+n' 'Guggenheim'
     "Baksidan av Guggenheim vetter mot innergården. Bortsett från
     nödutgångsdörren är det bara en tom vägg. "
 
     isProperName = true
 ;
 
-+ Fixture 'tom baksida firestone lab/laboratorium/vägg/sida' 'Firestone'
++ Fixture 'tom+na baksida+n firestone lab/labb+et/laboratorium+et/vägg+en/sida+n' 'Firestone'
     "Baksidan av Firestone vetter mot innergården; det är bara en tom
     vägg på denna sida. "
 
     isProperName = true
 ;
 
-+ Distant 'andra-vånings våning bro' 'andra-våningsbro'
++ Distant 'andra-vånings våning bro+n' 'andra-våningsbro'
     "Bron förbinder Firestone och Guggenheim på andra våningen.
     En gångväg leder norrut under bron. "
 ;
@@ -5366,7 +5369,7 @@ ldCourtyard: CampusOutdoorRoom 'Lauritsen-Downs Innergård'
  *   Ernst, elektrikern.  
  */
 + ernst: IntroPerson
-    'lång rund rödlätt lockigt hår/elektriker/ernst/man*män'
+    'lång+a rund+a rödlätt+a lockigt lockig+a hår+et/elektriker+n/ernst/man*män'
     'lång, rund man'
     "Han är en lång, rund, rödlätt man med lockigt hår, klädd i jeans-
     hängselbyxor med en broderad namnskylt som lyder <q>Ernst.</q> Du
@@ -5411,17 +5414,17 @@ ldCourtyard: CampusOutdoorRoom 'Lauritsen-Downs Innergård'
         gunther.setCurState(guntherFightingState);
     }
 ;
-++ InitiallyWorn 'jeans hängselbyxor' 'jeans hängselbyxor'
+++ InitiallyWorn 'jeans hängselbyxor+na' 'jeans hängselbyxor'
     "En broderad namnskylt på hängselbyxorna lyder <q>Ernst.</q> "
     isPlural = true
     isListedInInventory = nil
 ;
-+++ Component, Readable 'broderad namnskylt' 'namnskylt'
++++ Component, Readable 'broderad+e namnskylt+en' 'namnskylt'
     "Den lyder <q>Ernst</q> i broderade kursiva bokstäver. "
 ;
 ++ Thing
-    'verktyg (elektrikers) (kabel) verktyg
-    voltmetrar/kabelpresstänger/avbitare/bälte/verktygsbälte/verktyg'
+    'verktyg+et (elektrikers) (kabel) verktyg+et
+    avbitare+n/bälte+t/verktygsbälte+t/verktyg*voltmetrar kabelpresstänger'
     'elektrikers verktyg'
     "Verktygen ser ut som sådant en elektriker skulle bära:
     voltmetrar, kabelpresstänger, avbitare, den sortens saker. "
@@ -5617,7 +5620,7 @@ class ErnstJobCardTopic: GiveShowTopic
         }
     }
 
-    scoreMarker: Achievement { +5 "ta kontroll över skyliftaren" }
+    scoreMarker: Achievement { +5 "ta kontroll över skyliften" }
 ;
 +++ DefaultAnyTopic
     "Han verkar vara upptagen för tillfället. "
@@ -5676,7 +5679,7 @@ rockGarden: CampusOutdoorRoom 'Stenträdgård' 'stenträdgården'
     up asExit(west)
 ;
 
-+ Decoration 'gångväg/stig' 'gångväg'
++ Decoration 'gångväg+en/stig+en' 'gångväg'
     "Gångvägen leder uppför backen mot väster och till Olive Walk
     i öster. "
 ;
@@ -5685,20 +5688,20 @@ rockGarden: CampusOutdoorRoom 'Stenträdgård' 'stenträdgården'
     "Olive Walk ligger österut. "
 ;
 
-+ rgWestWalk: PathPassage ->mpEastWalk 'stig/gångväg' 'stig'
++ rgWestWalk: PathPassage ->mpEastWalk 'stig+en/gångväg+en' 'stig'
     "Stigen slingrar sig uppför sluttningen västerut. "
 
     canTravelerPass(trav) { return trav != cherryPicker; }
-    explainTravelBarrier(trav) { "Skyliftaren kommer inte att passa på
+    explainTravelBarrier(trav) { "skyliften kommer inte att passa på
         den smala stigen. "; }
 ;
 
-+ Decoration 'kulle/sluttning' 'sluttning'
++ Decoration 'kulle+n/sluttning+en' 'sluttning'
     "Stigen slingrar sig uppför de cirka tre meterna av sluttningen
     västerut. "
 ;
 
-+ Decoration 'stenträdgård/sten/stenar/klippa/klippor/stenblock' 'stenar'
++ Decoration 'stenträdgård+en/sten+en/klippa+n*stenblock+en stenar+na klippor+na' 'stenar'
     "Stenarna varierar i storlek från basebollstora till stenblock. De är
     arrangerade utan något särskilt mönster bland en slingrande serie
     av dammar och frodig vegetation. "
@@ -5708,7 +5711,7 @@ rockGarden: CampusOutdoorRoom 'Stenträdgård' 'stenträdgården'
 
 
 + Pond, Decoration
-    'små miniatyr terrasserade vatten/serie/pool/damm/dammar/pooler/vattenfall'
+    'små miniatyr terrasserade vatten/serie+n/pool+en/vattenfall+et/damm+en*dammar+na pooler+na'
     'dammar'
     "Små pooler är terrasserade i sluttningen, där de högre sakta
     rinner över i miniatyrvattenfall ner i de lägre.
@@ -5731,18 +5734,18 @@ rockGarden: CampusOutdoorRoom 'Stenträdgård' 'stenträdgården'
     }
 ;
 
-++ Decoration 'näckros/näckrosor' 'näckrosor'
+++ Decoration 'näckros+en/näckrosor+na' 'näckrosor'
     "Näckrosorna guppar på vattnets krusiga yta. "
     isPlural = true
 ;
 
-+ Decoration 'frodig tät vegetation/växt/växter/grönska' 'vegetation'
++ Decoration 'frodig+a tät+a vegetation+en/växt+en/grönska+n*växter+na' 'vegetation'
     "Växter är arrangerade runt dammarna och stenarna och bildar en
     grön bakgrund till stenträdgården. "
     isMassNoun = true
 ;
 
-+ Distant 'svart niovånings millikan bibliotek/monolit' 'Millikan-biblioteket'
++ Distant 'svart+a niovånings millikan bibliotek+et/monolit+en' 'Millikan-biblioteket'
     "Härifrån kan du se den övre halvan eller så av den niovånings
     svarta monoliten. "
 ;
@@ -5769,7 +5772,7 @@ millikanPond: CampusOutdoorRoom 'Millikan-dammen' 'Millikan-dammen'
     south = bridgeEntry
 ;
 
-+ CampusMapEntry 'öst ö bridge lab/laboratorium/bridge'
++ CampusMapEntry 'öst+ra ö bridge lab labb+et/laboratorium+et/bridge'
     'Bridge Laboratorium' 'sydväst'
 
     /* 
@@ -5785,7 +5788,7 @@ millikanPond: CampusOutdoorRoom 'Millikan-dammen' 'Millikan-dammen'
     mapMatchStrength = 200
 ;
 
-+ mpEastWalk: PathPassage 'stig/kulle/sluttning' 'stig'
++ mpEastWalk: PathPassage 'stig+en/kulle+n/sluttning+en' 'stig'
     "Stigen leder ner för en kulle österut. "
 ;
 
@@ -5798,7 +5801,7 @@ millikanPond: CampusOutdoorRoom 'Millikan-dammen' 'Millikan-dammen'
 ;
 
 + EntryPortal ->(location.south)
-    'norman bridge lab/laboratorium/arkad/ingång' 'Bridge Lab'
+    'norman bridge lab/labb+et/laboratorium+et/arkad+en/ingång+en' 'Bridge Lab'
     "Norman Bridge Laboratory of Physics är där de undervisar
     i fysik 1, som praktiskt taget varje förstaårsstudent måste ta. Ingången
     är söderut, genom en välvd gång. "
@@ -5807,11 +5810,11 @@ millikanPond: CampusOutdoorRoom 'Millikan-dammen' 'Millikan-dammen'
 ;
 
 + EntryPortal ->(location.south)
-    'välvd (bridge) gång/arkad' 'välvd gång'
+    'välvd+a (bridge) gång+en/arkad+en' 'välvd gång'
     "Arkaden löper längs hela denna sida av Bridge. "
 ;
 
-+ Pond, Fixture '(millikan) bred rektangulär grund damm/pool/vatten' 'damm'
++ Pond, Fixture '(millikan) bred+a rektangulär+a grund+a damm+en/pool+en/vatten/vattnet' 'damm'
     "Dammen är ganska grund, högst en meter djup.
     En fontän i mitten skjuter vatten upp i luften. "
 
@@ -5826,7 +5829,7 @@ millikanPond: CampusOutdoorRoom 'Millikan-dammen' 'Millikan-dammen'
 
 + Distant
     'slingrande böjd abstrakt (vatten)
-    skulptur/fontän/form/former/stråle/strålar/(vatten)'
+    skulptur+en/fontän+en/form+en/stråle+n/(vatten)*former+na strålar+na (vatten)'
     'fontän'
     "Fontänen är en skulptur av slingrande, böjda former. Flera
     vattenstrålar skjuter upp ur fontänen och bågar iväg i

@@ -90,7 +90,7 @@ ccOffice: Room 'Karriärcenter' 'karriärcentret' 'kontor'
     turnsInRoom = 0
 ;
 
-+ ccDoorN: Door -> cssDoorS 'norr n dörr*dörrar' 'norra dörren'
++ ccDoorN: Door -> cssDoorS 'norr+a n dörr+en*dörrar+na' 'norra dörren'
     "Den leder norrut, tillbaka till lobbyn. "
 
     /* once we're here, don't leave until we finish our appointment */
@@ -103,13 +103,13 @@ ccOffice: Room 'Karriärcenter' 'karriärcentret' 'kontor'
 ;
 
 + Fixture, Chair
-    'stor större soffa/soffan*soffor*möbler' 'stora soffan'
+    'stor+a större stor+a soffa+n/*soffor+na*möbler+na' 'stora soffan'
     "Den skulle lätt kunna rymma tre eller fyra personer. "
     disambigName = 'större soffan'
 ;
 
 + Fixture, Chair
-    'liten mindre soffa/soffan*soffor*möbler' 'lilla soffan'
+    'lite+n mindre lilla soffa+n/soffor+na*möbler+na' 'lilla soffan'
     "Den är tillräckligt stor för två eller tre personer. "
     disambigName = 'mindre soffan'
 
@@ -127,11 +127,11 @@ ccOffice: Room 'Karriärcenter' 'karriärcentret' 'kontor'
     }
 ;
 
-+ Fixture, Surface 'fyrkantigt glas soffbord/topp*möbler' 'soffbordet'
++ Fixture, Surface 'fyrkant+igt fyrkantig+a glas+et soffbord+et/glas+skiv:a+/glasbord+et/topp+en*möbler+na' 'soffbordet'
     "Soffbordet har en glasskiva som är ungefär en och en halv meter på varje sida. "
 ;
 
-+ Fixture, RestrictedContainer 'förkromad förkromat metall+litteratur+ställ+et'
++ Fixture, RestrictedContainer 'förkromad+e förkromat metall:en+isk+a litteratur+ställ+et'
     'litteraturställ'
     "Det är ett förkromat metallställ designat för att visa upp tidskrifter eller liknande
     föremål, för närvarande används det för en samling glansiga broschyrer
@@ -164,9 +164,9 @@ ccOffice: Room 'Karriärcenter' 'karriärcentret' 'kontor'
     }
 ;
 
-class RecruitingBrochure: Readable 'glansig rekryteringsbroschyr*broschyrer';
+class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyrer';
 
-++ RecruitingBrochure 'mortera -' 'Mortera-broschyr'
+++ RecruitingBrochure 'mortera+broschyr+en' 'Mortera-broschyr'
     "Broschyren visar bilder på överraskande många konsumentprodukter
     som Mortera tillverkar: <i>Manly</i> Cigaretter, <i>Fru Pillskrufts
     Gammaldags</i> serie av bearbetade kött- och ostprodukter,
@@ -182,12 +182,12 @@ class RecruitingBrochure: Readable 'glansig rekryteringsbroschyr*broschyrer';
     J.R.R. Tobak. "
 ;
 
-++ RecruitingBrochure 'toxicola -' 'ToxiCola-broschyr'
+++ RecruitingBrochure 'toxicola+broschyr+en' 'ToxiCola-broschyr'
     "Det är ungefär vad man kan förvänta sig från dryckesbjässen. De verkar
     mest intresserade av kemi-doktorer. "
 ;
 
-++ RecruitingBrochure 'locktheon -' 'Locktheon-broschyr'
+++ RecruitingBrochure 'locktheon+broschyr+en' 'Locktheon-broschyr'
     "Denna broschyr är rikt utsmyckad med spännande, actionfyllda
     militära foton: ett stridsflygplan som förbereds för start från
     däcket på ett hangarfartyg, en stridsvagn som rullar förbi en brinnande byggnad,
@@ -245,7 +245,7 @@ class RecruitingBrochure: Readable 'glansig rekryteringsbroschyr*broschyrer';
 ;
 
 ++ variousBrochures: Decoration
-    'diverse andra annan glansig rekrytering andra/broschyr*broschyrer'
+    'diverse andra annan glansig+a rekrytering^s+broschyr+en*rekryteringsbroschyrer+na'
     'andra broschyrer'
     "De har alla det där släta, glansiga utseendet av en årsredovisning.
     Ingen av dem ser särskilt intressant ut; bara en massa
@@ -273,14 +273,14 @@ class RecruitingBrochure: Readable 'glansig rekryteringsbroschyr*broschyrer';
     isListedInContents = true
 ;
 + Decoration
-    'vit plast träfaner skrivbord/skrivborden/topp/toppar*möbler' 'skrivborden'
+    'vit+a plast+iga träfaner skrivbord+et/topp+en*toppar+na möbler+na skrivborden+a' 'skrivborden'
     "Skrivborden är ganska vanlig kontorsmöbel, träfaner
     med vita plasttoppar. De är grupperade tillsammans på ena sidan
     av rummet. Varje skrivbord är parat med en stol. "
     isPlural = true
 ;
 
-+ Decoration 'skrivbordsstol+en/kontor^s+stol+en*skrivbordsstolar+na*möbler+na' 'skrivbordsstolar'
++ Decoration 'skrivbord:et^s+stol+en/kontor:et^s+stol+en*skrivbordsstolar+na*möbler+na' 'skrivbordsstolar'
     "De är bara vanliga kontorsskrivbordsstolar. "
     isPlural = true
 ;
@@ -290,7 +290,7 @@ class RecruitingBrochure: Readable 'glansig rekryteringsbroschyr*broschyrer';
     isPlural = true
 ;
 
-+ ccDinsdale: IntroPerson 'fru+n dinsdale/kvinna*kvinnor'
++ ccDinsdale: IntroPerson 'fru+n dinsdale/kvinna+n*kvinnor'
     name = 'kvinna'
     properName = 'Fru Dinsdale'
     npcDesc = "Hon är en kort, kraftig kvinna i sena fyrtioårsåldern,
@@ -299,14 +299,14 @@ class RecruitingBrochure: Readable 'glansig rekryteringsbroschyr*broschyrer';
         hår är ordnat i en stram knut. "
     isHer = true
 ;
-++ Component 'mörkt grånat stramt hår/knut' 'mörka hår'
+++ Component 'mörk+a gråna+de grå+tt grå+a stram+a stramt hår+et/knut+en' 'mörka hår'
     "Det är ordnat i en stram knut. "
 ;
-++ InitiallyWorn 'vit polotröja' 'polotröja'
+++ InitiallyWorn 'vit+a polo+tröja+n' 'polotröja'
     "Det är en enkel vit polotröja. "
     isListedInInventory = nil
 ;
-++ InitiallyWorn 'mörka svarta marinblå byxor' 'mörka byxor'
+++ InitiallyWorn 'mörk+a svart+a marinblå+a *byxor+na' 'mörka byxor'
     "Byxorna är en av de där mörka färgerna som är svåra att skilja åt
     från varandra---marinblå, svart, något sådant. "
     isListedInInventory = nil
@@ -487,7 +487,7 @@ class RecruitingBrochure: Readable 'glansig rekryteringsbroschyr*broschyrer';
 ;
 
 class AcceptStackYes: SpecialTopic
-    'acceptera utmaningen' ['ja','jag','acceptera', 'accepterar','utmaningen', 'den']
+    'acceptera utmaningen' ['ja','jag','acceptera', 'accepterar','godta', 'godtar', 'utmaningen','erbjudandet','den', 'tacka', 'ja', 'till']
     topicResponse()
     {
         "Du har inte direkt något val, givet Rubys personliga intresse 
@@ -538,7 +538,7 @@ class AcceptStackYes: SpecialTopic
 
 class AcceptStackNo: SpecialTopic, StopEventList
     'avböj utmaningen'
-    ['nej','jag','avböjer','utmaningen', 'den']
+    ['nej','jag','avböjer','utmaningen', 'den', 'tacka', 'nej']
     eventList = [&firstResponse, &secondResponse, &thirdResponse]
 
     firstResponse()

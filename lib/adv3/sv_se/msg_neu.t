@@ -1145,7 +1145,7 @@ libMessages: MessageHelper
                    ['q'],
                    ['p', '[vänster]', '[bksp]', '[esc]'],
                    ['u', '[upp]'],
-                   ['d', '[ner]'],
+                   ['n', '[ner]'],
                    ['RADBRYT', '\n', '[höger]', ' ']
                   ]
 

@@ -75,8 +75,12 @@ versionInfo: GameID
     {
         // TODO: placering
         // "Tillbaka till Ditch Day"
-        "<i>Tillbaka till Ditch Day</i> skrevs ursprungligen av Michael J.\ Roberts och denna portning 
-         av mig Tomas Öberg har publicerades med hans vänliga godkännande. <br><br>
+        "<i>Tillbaka till Ditch Day</i> skrevs ursprungligen av Michael J.\ Roberts och denna 
+         översättning av mig Tomas Öberg har publicerades med hans vänliga godkännande.
+         Översättningen är till stor del genomförd med hjälp av Tabnine/Claude och ChatGpt. 
+         Därefter har jag själv sett över textöversättningarna efteråt för att se till att 
+         formuleringar och uttryckssätt låter svenska. 
+        <br><br>
          Här nedan följer originaltexten från Michael J.\ Roberts själv: <br><br>
 
         <i>Return to Ditch day</i> skrevs och programmerades av

@@ -50,7 +50,7 @@ dabneyBreezeway: Room 'Pelargång' 'pelargången'
     atmosphereList = (dbwMovers.isIn(self) ? moversAtmosphereList : nil)
 ;
 
-+ bwSmoke: PresentLater, Vaporous 'tjock svart rök/moln' 'rök'
++ bwSmoke: PresentLater, Vaporous 'tjock+a svart+a rök+en/moln+et' 'rök'
     "Röken väller ut ur korridoren i tjocka svarta moln. "
     specialDesc = "Tjock svart rök väller ut ur korridoren. "
     isMassNoun = true
@@ -71,30 +71,30 @@ dabneyBreezeway: Room 'Pelargång' 'pelargången'
     desc = "Röken har den skarpa lukten av brinnande elektronik. "
 ;
 
-+ Decoration 'text/siffror' 'text'
++ Decoration 'text+en*siffror+na' 'text'
     "Texten <q>1-9</q> är målad på väggen längs korridoren,
     vilket indikerar att rum 1 till 9 ligger åt det hållet. "
 ;
 
-+ Enterable ->(location.east) 'innergård' 'innergård'
++ Enterable ->(location.east) 'innergård+en' 'innergård'
     "Innergården ligger österut. "
 ;
 
 + EntryPortal ->(location.north)
-    'svagt upplyst svag norr n 1 gränd ett/korridor' 'korridor'
+    'svagt upplyst+a svag+a norr+a n 1 gränd+en korridor+en/ett' 'korridor'
     "Korridoren leder norrut. "
 ;
 
-+ Enterable ->(location.west) 'orange walk/gångväg' 'Orange Walk'
++ Enterable ->(location.west) 'orange walk/gångväg+en' 'Orange Walk'
     "Orange Walk ligger utanför västerut. "
 ;
 
-+ Enterable ->(location.east) 'innergård' 'innergård'
++ Enterable ->(location.east) 'innergård+en' 'innergård'
     "Innergården ligger österut. "
 ;
 
 + dbwMovers: MitaMovers
-    "Flyttare fortsätter att komma in från Orange Walk, bärande på sina
+    "Flyttarbetare fortsätter att komma in från Orange Walk, bärande på sina
     lådor in i korridoren. Andra kommer ut från gränden tomhänta
     och går ut. "
 
@@ -121,18 +121,18 @@ MultiInstance
     }
 ;
 
-+ Immovable 'vita uniformer/overaller' 'uniformer'
++ Immovable 'vit+a *uniformer+na/overaller+na' 'uniformer'
     "Flyttarna bär vita overaller med stora Mitachron-logotyper
     på ryggen. "
     isPlural = true
 ;
 
-++ Component 'mitachron logotyp/logotyper' 'Mitachron-logotyp'
+++ Component 'mitachron+s logotyp+en*logotyper+na' 'Mitachron-logotyp'
     "Det är den vanliga Mitachron gula <q>M</q>:et mot en kontur
     av en glob. "
 ;
 
-+ Immovable 'kartong trä trälåda/lådor/låda/lådor' 'lådor'
++ Immovable 'kartong trä låda+n/trälåda+n*lådor+na' 'lådor'
     "Flyttarna bär kartonger och trälådor
     i varierande storlekar, vissa tillräckligt stora eller uppenbart tunga
     för att kräva två eller tre personer att bära. "
@@ -147,7 +147,7 @@ MultiInstance
  *   make the PresentLater objects. 
  */
 class MitaMovers: PresentLater, Person
-    'mitachron flyttarbetare+n/man+nen/kvinna+n*män+nen kvinnor+na' 'flyttarbetare'
+    'mitachron+s flyttarbetare+n/man+nen/kvinna+n*män+nen kvinnor+na' 'flyttarbetare'
     isPlural = true
     isHim = true
     isHer = true
@@ -162,7 +162,7 @@ class MitaMovers: PresentLater, Person
 
 /* atmosphere messages for the movers */
 moversAtmosphereList: ShuffledEventList
-    ['En av flyttarna stöter in i dig med en låda. Du börjar
+    ['En av flyttarbetarna stöter in i dig med en låda. Du börjar
     be om ursäkt, men han har redan trängt sig förbi. ',
      'Två flyttarbetare som bär en särskilt stor låda arbetar sig
      förbi dig. ',
@@ -277,12 +277,12 @@ alleyWestWall: AlleyWall, defaultWestWall;
  */
 class AlleyRoom: Room
     roomParts = [defaultFloor, defaultCeiling]
-    vocabWords = 'gränd/gränden/korridor/korridoren'
+    vocabWords = 'gränd+en/korridor+en'
     name = 'korridor'
 ;
 
 /* base class for graffiti on the alley walls */
-class Graffiti: Decoration 'graffiti/graffito' 'graffiti'
+class Graffiti: Decoration 'graffiti+t/graffito+t' 'graffiti'
     dobjFor(Read) asDobjFor(Examine)
 ;
 Graffiti template "desc";
@@ -329,11 +329,11 @@ alley1S: AlleyRoom 'Gränd Ett Syd' 'södra änden av Gränd Ett'
     "Det är en trädörr märkt med <q>2.</q> "
 ;
 
-+ EntryPortal ->(location.south) 'syd s dörröppning' 'dörröppning'
++ EntryPortal ->(location.south) 'syd södra s dörröppning+en' 'dörröppning'
     "Dörröppningen leder ut ur korridoren söderut. "
 ;
 
-++ Decoration 'huvud vänster höger fotokopia/råtta/bilder/foton/bildtext'
+++ Decoration 'huvudsakliga vänster vänstra höger högra fotokopia+n/råtta+n/bildtext+en*bilder+na foton+a råttor+na'
     'fotokopia'
     "Det är en fotokopia av en sida från en lärobok. Den har två bilder
     av råttor, sida vid sida. I den vänstra bilden, med bildtexten <q>Råtta
@@ -355,8 +355,8 @@ alley1S: AlleyRoom 'Gränd Ett Syd' 'södra änden av Gränd Ett'
 ;
 
 + Graffiti
-    'ny nyare gammal äldre abstrakt fantasy
-    konst/konstverk/del/delar/psykedeliska/väggmålning/väggmålningar/klotter/klottrade'
+    'ny+a nyare gammal äldre abstrakt+a fantasy psykedeliska klottrade 
+    konst+en/konstverk+et/del+en/väggmålning+en/klotter/klotter/klottret*delar+na väggmålningar+na'
     'graffiti'
     "När Institutet renoverade South Houses för några
     år sedan övertalade studenterna bostadskontoret att bevara
@@ -367,11 +367,11 @@ alley1S: AlleyRoom 'Gränd Ett Syd' 'södra änden av Gränd Ett'
 ;
 
 + a1sMovers: MitaMovers
-    "Flyttare fortsätter att strömma in söderifrån, bärande sina
+    "Flyttarbetare fortsätter att strömma in söderifrån, bärande sina
     laster till den norra änden av gränden, andra återvänder tomhänta
     och går tillbaka ut. "
 
-    "En stadig ström av Mitachron-flyttare tränger sig förbi
+    "En stadig ström av Mitachron-flyttarbetare tränger sig förbi
     dig med skrymmande laster av lådor och packlårar, på väg till den norra
     änden av gränden. "
 ;
@@ -385,7 +385,7 @@ alley2N: AlleyRoom 'Gränd Två' 'Gränd Två'
     trapphus. Dörren till rum 6 är österut. Trapporna
     norrut leder ner, och korridoren fortsätter söderut. "
 
-    vocabWords = '2 gränd två'
+    vocabWords = '2 två andra gränd+en'
 
     roomParts = static (inherited + [alleyWestWall, alleyEastWall])
 
@@ -396,7 +396,7 @@ alley2N: AlleyRoom 'Gränd Två' 'Gränd Två'
 ;
 
 + alley2Stairs: StairwayDown ->alley1Stairs
-    'bred trappa/trappuppgång/trappor/trapphus' 'trappa'
+    'bred+a trappa+n/trappuppgång+en/trappor+na/trapphus+et' 'trappa'
     "Trapporna leder nedåt. "
 ;
 
@@ -405,8 +405,7 @@ alley2N: AlleyRoom 'Gränd Två' 'Gränd Två'
 ;
 
 + Graffiti
-    'stor fantasy landskap
-    väggmålning/torn/torn/spira/spiror/berg/berg'
+    'stor+a fantasy landskap:et^s+vägg+målning+en/torn+et/spira/berg+et*torn+en spiror+na berg+en'
     'graffiti'
     "En stor fantasy-landskapsmålning täcker en vägg: torn, spiror,
     berg i fjärran. "
@@ -438,7 +437,7 @@ alley2S: AlleyRoom 'Gränd Två Syd' 'södra änden av Gränd Två'
     "Det är en trädörr märkt med <q>9.</q> "
 ;
 
-+ Graffiti 'omfattande sammanflätad ranka/rankor/mönster' 'graffiti'
++ Graffiti 'omfattande sammanflätad+e ranka+n/mönster/mönstret*mönstren+a rankor+na' 'graffiti'
     "Denna ände av korridoren är dekorerad med ett omfattande mönster av
     sammanflätade rankor. "
 ;
@@ -477,7 +476,7 @@ dabneyCourtyard: DabneyOutdoorRoom 'Innergård' 'innergården'
             elaborerat. ";
     }
 
-    vocabWords = '(dabney) innergård'
+    vocabWords = '(dabney) innergård+en'
     
     up = dcStairsUp
     west = dabneyBreezeway
@@ -489,50 +488,52 @@ dabneyCourtyard: DabneyOutdoorRoom 'Innergård' 'innergården'
     roomParts = static (inherited - defaultGround)
 ;
 
-+ EntryPortal ->(location.west) 'passage' 'passage'
++ EntryPortal ->(location.west) 'passage+n' 'passage'
     "Passagen leder västerut. "
 ;
 + dcDoors: Door ->dlDoors
-    'sällskapsrum dörr/dörrar/sällskapsrum' 'dörrar till sällskapsrummet'
+    'sällskapsrum+met dörr+en/sällskapsrum+met*dörrar+na' 'dörrar till sällskapsrummet'
     "Dörrar leder in i sällskapsrummet österut. "
     isPlural = true
     initiallyOpen = true
 ;
 + EntryPortal ->(location.southwest)
-    'sydväst sv gränd 3 ingång/dörröppning/skylt'
+    'sydväst+ra sv gränd+en 3 gränd-3-ingång+en ingång+en/dörröppning+en/skylt+en'
     'gränd 3 ingång'
     "Ingången till gränd 3 är i sydväst. Dörröppningen är
     märkt med skylten <q>10-16, 18-22.</q> "
+    definiteFrom = 'gränd-3-ingången'
 ;
 + EntryPortal ->(location.southeast)
-    'sydost so gränd 5 ingång/dörröppning/skylt'
+    'sydost sydöst+ra so gränd+en 5 gränd-5-ingång+en ingång+en/dörröppning+en/skylt+en'
     'gränd 5 ingång'
     "Ingången till gränd 5 är i sydost. Dörröppningen är
     märkt med skylten <q>23-31, 33-37.</q> "
+    definiteFrom = 'gränd-5-ingången'
 ;
-+ Enterable ->(location.south) 'liten alkov' 'alkov'
++ Enterable ->(location.south) 'liten lilla alkov+en' 'alkov'
     "En liten alkov finns i söder. "
 ;
-+ dcStairsUp: StairwayUp 'lång betong trappa trappor upp' 'trappa upp'
++ dcStairsUp: StairwayUp 'lång+a upp+åtgående upp+ledande betong^s+trappa+n*trappor' 'trappa upp'
     "Trappan leder uppåt. Det ser ut som två normala våningshöjder
     värt av trappor. "
 ;
 
-+ Floor '(innergård) mörk röd tegel golv/tegelstenar' 'rött tegelgolv'
++ Floor '(innergård+en) mörk+a röd+a teglet tegel+golv+et*tegel+stenar+na' 'rött tegelgolv'
     "Innergårdens golv är belagt med mörka röda tegelstenar. "
 ;
-+ Fixture '(innergård) öst väst nord syd ö v n s stucko vägg/väggar'
++ Fixture '(innergård) öst+ra väst+ra nord+liga norr+a syd ö v n s stucko vägg+en*väggar+na'
     'innergårdsväggar'
     "Väggarna är kantade med fönster som vetter ut mot innergården
     från studentrum. "
     isPlural = true
 ;
-++ Distant 'spröjsat fönster/fönster' 'fönster'
+++ Distant 'spröjsat spröjsad+e fönster+et/fönster/fönstret*fönstren' 'fönster'
     "Väggarna är kantade med fönster som vetter mot innergården. "
     isPlural = true
     tooDistantMsg = 'Fönstren är alla för högt upp för att nå. '
 ;
-+ Fixture 'täckt arkad pelare/pelare/överhäng/valv/valvbågar/område' 'arkad'
++ Fixture 'täckt+a arkad+en/pelare+n/pelare+n/överhäng+et/valv+et/område+t*valvbågar+na' 'arkad'
     "Överhänget ger ett täckt område utanför sällskapsrummet. "
 
     dobjFor(StandOn)
@@ -543,13 +544,13 @@ dabneyCourtyard: DabneyOutdoorRoom 'Innergård' 'innergården'
     dobjFor(LookUnder) { action() { "Dörrar leder in i sällskapsrummet
         österut. "; } }
 ;
-+ Distant 'rundade svagt sluttande terrakotta platta/plattor/tak/tak' 'tak'
++ Distant 'rundad+e svag+a svagt sluttande tak+et/platta+n*plattor+na/terrakotta:n+plattor+na' 'tak'
     "Taket är täckt med rundade terrakottaplattor, som ser
     ut som blomkrukor som har delats på mitten längs höjden. "
 ;
 
-+ Fixture 'papier-mache paper-mache papier-m\u00E2ch\u00E9 skalmodell modell
-    berg/stenblock/klippa/klippor/byggnad/topp' 'berg'
++ Fixture 'papier-mache paper-mache papier-m\u00E2ch\u00E9 skalmodell+en modell+en
+    berg+et/stenblock+et/klippa+n/byggnad+en/topp+en*klippor+na' 'berg'
     "Det är en effektiv modell: klipporna nära botten reser sig nästan
     vertikalt, vilket ökar känslan av att toppen tornar upp sig
     på en stor höjd, även om den bara reser sig ungefär lika högt som
@@ -568,8 +569,8 @@ dabneyCourtyard: DabneyOutdoorRoom 'Innergård' 'innergården'
     lookInDesc = "Du kan inte se in i berget, och du hittar
         inget gömt bland stenblocken. "
 ;
-+ CustomImmovable 'stor stor metall strålning varning
-    (symboler)/varningar/behållare/fat/fat/cylindrar'
++ CustomImmovable 'stor+a metall strålning+s varning^s+symbol+en
+    (symboler) metall+behållare+n/varningar/fat+et*cylindrar+na varningssymboler+na' 
     'behållare'
     "Rostiga metallcylindrar, tre fot långa, är slumpmässigt placerade bland
     stenblocken runt bergets bas. De är märkta med
@@ -618,23 +619,23 @@ dabneyLounge: Room 'Sällskapsrum' 'sällskapsrummet'
     north = dlPassage
     out asExit(west)
 ;
-
-+ dlDoors: Door ->dcDoors 'innergård dörr/dörrar/innergård'
+// TODO: testa 'till'
++ dlDoors: Door ->dcDoors 'till innergård+en dörr+en/dörrar+na'
     'dörrar till innergården'
     "Dörrarna leder ut till innergården västerut. "
 ;
 
 + dlPassage: ThroughPassage ->ddPassage
-    'bred välvd matsal nord n passage' 'bred passage'
+    'bred+a välvd+a matsal+en nord+liga n passage+n' 'bred passage'
     "Det är en välvd passage som leder norrut in i matsalen. "
 ;
 
-+ Chair, Heavy 'stor stadig läder soffa/soffor/soffa/soffor' 'soffa'
++ Chair, Heavy 'stor+a stadig+a lädret läder:et+soffa+n*soffor+na' 'soffa'
     "Sofforna matchar inte varandra, men de är alla stora, stadiga,
     klädda i välanvänt läder. "
 ;
 
-+ Fixture, Booth 'överdimensionerad sten eld/eldstad' 'eldstad'
++ Fixture, Booth 'överdimensionerad+e gaseldad+e sten+eld+stad+en' 'eldstad'
     "Den överdimensionerade steneldstaden är på rummets östra sida.
     Den konverterades för länge sedan till att bränna gas istället för ved, så den
     innehåller bara simulerade vedträn. Den är för närvarande avstängd. "
@@ -648,7 +649,7 @@ dabneyLounge: Room 'Sällskapsrum' 'sällskapsrummet'
             här inne. "; }
     }
 ;
-++ EntryPortal ->(location.up) 'skorsten/sot' 'skorsten'
+++ EntryPortal ->(location.up) 'skorsten+en/sot+en/sot+et' 'skorsten'
     "Det är bara ett mörkt schakt en fot i diameter. "
 
     dobjFor(Climb) asDobjFor(Enter)
@@ -658,7 +659,7 @@ dabneyLounge: Room 'Sällskapsrum' 'sällskapsrummet'
     lookInDesc = "Det finns inget annat än sot där uppe. "
 ;
 
-++ Heavy 'svarta simulerade betong vedträn' 'simulerade vedträn'
+++ Heavy 'svart+a simulerad+e betong ved:en+trä+n' 'simulerade vedträn'
     "Vedträna är gjorda av betong eller något liknande, formade
     för att likna de riktiga. De är svarta efter lång exponering för
     en gaslåga. "
@@ -668,7 +669,7 @@ dabneyLounge: Room 'Sällskapsrum' 'sällskapsrummet'
 
 + CustomImmovable
     'skrot gammal säng bil auto
-    skräp/hög/högar/saker/filtar/ram/ramar/del/delar/trä'
+    skräp+et/hög+en/ram+en/del+en/skrot:et+trä*högar+na delar+na filtar+na saker+na ramar+na'
     'skräp'
     "Gamla filtar, sängramar, bildelar, skrotträ; det mesta
     är inte ens omedelbart identifierbart. "
@@ -692,7 +693,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
     sidor av varje bord. En bred passage leder söderut, till sällskapsrummet,
     och ett par svängdörrar österut leder till köket. "
 
-    vocabWords = '(dabney) (hovse) (hus) matsal'
+    vocabWords = '(dabney) (hovse) (hus+et) matsal+en'
 
     south = ddPassage
     out asExit(south)
@@ -896,11 +897,11 @@ dabneyDining: Room 'Matsal' 'matsalen'
 ;
 
 + ddPassage: ThroughPassage
-    'bred välvd sällskapsrum syd s passage' 'bred passage'
+    'bred+a välvd+a sällskapsrum+met syd+liga s passage+n' 'bred passage'
     "Den välvda passagen leder söderut, ut till sällskapsrummet. "
 ;
 
-+ ddKitchenDoors: Door 'svängande kök par/dörr/dörrar' 'svängdörrar'
++ ddKitchenDoors: Door 'svängande svängd+a sväng+dörr+en/svängdörrar+na' 'svängdörrar'
     "Dörrarna leder in i köket, österut. "
     isPlural = true
 
@@ -980,7 +981,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
 ;
 
 + Fixture, Surface
-    'mörk lång trä trä matbord/bord/rad/rader' 'bord'
+    'mörk+a lång+a trä matbord+et/bord+et/rad+en*rader+na' 'bord'
     "Borden är gjorda av ett mörkt, lackerat trä. De har sett
     mycket användning. "
 
@@ -989,7 +990,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
 
 /* our lunch - present only during the lunch hour */
 ++ myLunch: PresentLater, Thing
-    'fet bricka/mat/puck/puckar/lunch' 'matbricka'
+    'fet+a mat:en+bricka+n/puck+en/lunch+en*puckar matvaror+na' 'matbricka'
     "Din bricka har ett urval av de feta, odefinierbara matvarorna
     som här kallas <q>puckar,</q> på grund av deras likhet i utseende
     och smak med den eponyma hockeytillbehöret. "
@@ -1032,7 +1033,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
 ;
 /* aaron's lunch, erin's lunch, etc */
 ++ PresentLater, Decoration
-    'någon annans aarons erins lunch/mat/puck/puckar/bricka' 'mat'
+    'någon annans aarons erins lunch+en/bricka+n/mat+en/pucken*puckar+na' 'mat'
     "Ingen annans mat ser mer aptitlig ut än din. "
 
     disambigName = 'någon annans mat'
@@ -1041,7 +1042,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
 ;
 
 + ddChair: CustomImmovable, MultiChair
-    'enkel mörk trä trä (matsal) stol/stolar' 'stol'
+    'enkel enkla mörk+a trä (matsal) stol+en*stolar+na' 'stol'
     "Stolarna är av obeklätt trä. Det finns tillräckligt med stolar för att
     sätta cirka sjuttio personer. "
     
@@ -1067,7 +1068,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
  *   chair makes that work not terribly well.  Instead, we'll just create
  *   the general impression that various people are sitting in the chairs.
  */
-+ PresentLater, Person 'ätande annan student*studenter' 'studenter'
++ PresentLater, Person 'ätande annan student+en*studenter+na' 'studenter'
     "Studenterna äter och pratar. "
 
     specialDesc = "Rummet är ungefär halvfullt med studenter som sitter
@@ -1078,7 +1079,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
 
     plKey = 'lunch'
 ;
-++ SimpleNoise 'konversationer' 'konversationer'
+++ SimpleNoise '*konversationer+na' 'konversationer'
     "Det är ett konstant sorl av samtal och klirr av
     bestick. "
     isPlural = true
@@ -1096,22 +1097,22 @@ dabneyCourtyardAlcove: Room 'Flipperspelsrum' 'flipperspelsrummet'
     istället för ett flipperspel finns Positron, ett klassiskt videospel.
     <.p>Innergården är utanför, norrut. "
 
-    vocabWords = 'flipperspel alkov/rum'
+    vocabWords = 'flipperspelsrum+met/alkov+en'
 
     north = dabneyCourtyard
     out asExit(north)
 ;
 
-+ Enterable ->(location.out) 'innergård' 'innergård'
++ Enterable ->(location.out) 'innergård+en' 'innergård'
     "Innergården är utanför, norrut. "
 ;
 
-+ posKey: PresentLater, Key 'liten mässing (positron) nyckel' 'liten mässingsnyckel'
++ posKey: PresentLater, Key 'liten lilla mässing+s (positron) nyckel+n' 'liten mässingsnyckel'
     "Det är en liten mässingsnyckel; det är den som Scott gav dig till
     Positron-spelet. "
 ;
 + posGame: Heavy, ComplexContainer
-    'positron klassiska svart+a video+spel+et/maskin+en/skåp+et/bokstäver+na'
+    'positron klassisk+a svart+a video+spel+et/positron-spel+et/maskin+en/skåp+et/bokstäver+na'
     'Positron-spel'
     "Du kommer ihåg Positron: det är ett av de klassiska 80-tals videospelen,
     från generationen direkt efter vektorgrafik-maskinerna.
@@ -1300,7 +1301,7 @@ class PosElectricalPart: TestGearAttachable
 
 
 ++ posButtons: PosElectricalPart, Component
-    '(positron) (video) (spel) stora plastknappar/konsol'
+    '(positron) (video) (spel) stor+a plastknappar+na/konsol+en'
     'videospelskonsol'
     "Konsolen består av flera stora plastknappar som styr
     rymdskeppet. "
@@ -1334,12 +1335,12 @@ class PosElectricalPart: TestGearAttachable
 
 ;
 ++ RestrictedContainer, Component
-    '(positron) (video) (spel) mynt kvarts springa' 'myntspringa'
-    "Det är en springa för kvartar. Under springan finns en myntreturknapp. "
+    '(positron) (video) (spel) mynt kvarts dollar:s+kvartar mynt:et+springa+n' 'myntspringa'
+    "Det är en springa för dollarkvartar. Under springan finns en myntreturknapp. "
     cannotPutInMsg(obj) { return 'Springan accepterar endast kvartar. '; }
 ;
 ++ RestrictedContainer, Component
-    '(positron) (video) (spel) liten myntretur/fördjupning' 'myntretur'
+    '(positron) (video) (spel) liten lilla myntretur+en/fördjupning+en' 'myntretur'
     "Det är en liten fördjupning där mynt returneras när de avvisas
     av myntspringan. "
     cannotPutInMsg(obj) { return 'Fördjupningen är för liten för att rymma
@@ -1351,7 +1352,7 @@ class PosElectricalPart: TestGearAttachable
     }
 ;
 ++ posDisplay: PosElectricalPart, Component, Surface
-    '(positron) (video) (spel) display/skärm' 'videospelsdisplay'
+    '(positron) (video) (spel) display+en/skärm+en' 'videospelsdisplay'
     desc()
     {
         if (location.isWorking)
@@ -1425,7 +1426,7 @@ class PosElectricalPart: TestGearAttachable
     }
 ;
 +++ posCircuits: TestGearAttachable, CustomImmovable
-    'video krets huvudlogik stort stora krets:en+kort+et/video+förstärkare+n/kort+et/krets+system+et*kretsar+na'
+    'krets+en huvudlogik+en stort stor+a krets:en+kort+et/video:+förstärkare+n/kort+et/kretssystem+et*kretsar+na'
     'kretskort'
     "Dessa gamla spel byggdes på primitiva chips enligt dagens
     standarder, så istället för några få stora integrerade kretsar har dessa
@@ -1584,7 +1585,7 @@ class PosElectricalPart: TestGearAttachable
     traceLevel = 0
 ;
 ++++ randomComponents: GenericObject, CustomImmovable
-    'små småskaliga diskreta 1A80 cpu+n/kristall+en/chip+pen/
+    'små+skalig+a diskret+a 1A80 cpu+n/kristall+en/chip+pen/
     *chips kristaller+na komponenter+na transistorer+na motstånd+ena kondensatorer+na'
     'chips'
     "Korten har många diskreta komponenter---transistorer,
@@ -1645,7 +1646,7 @@ class PosElectricalPart: TestGearAttachable
     notifyInsert(obj, newCont) { turnOffGameFirst(); }
 ;
 +++++ badXtal: Thing
-    'svarta svartnad  gamla gammal dålig+a trasig+a lilla liten metall 9,8304mhz 9,8304 mhz kristall+en/(låda)'
+    'svart+a svartnad+e  gamla gammal dålig+a trasig+a lilla liten metall 9,8304mhz 9,8304 mhz kristall+en/(låda)'
     'gammal 9,8304 MHz-kristall'
     "Det är en liten metallåda, formad som en sardinburk men krympt
     till storleken av ett mynt. <q>9,8304MHZ</q> är stämplat på den
@@ -1827,7 +1828,7 @@ alley3main: AlleyRoom 'Gränd Tre Ingång' 'ingången till Gränd Tre'
     och bredvid den leder en trappa uppåt. Dörren till rum 13 är
     söderut. "
 
-    vocabWords = '3 gränd tre ingång/korridor/hall'
+    vocabWords = '3+e gränd+en tre+dje ingång+en/korridor+en/hall+en'
 
     north = dabneyCourtyard
     out asExit(north)
@@ -1840,22 +1841,22 @@ alley3main: AlleyRoom 'Gränd Tre Ingång' 'ingången till Gränd Tre'
     roomParts = static (inherited + [alleySouthWall, alleyNorthWall])
 ;
 
-+ ExitPortal ->(location.out) 'innergård/utgång' 'innergård'
++ ExitPortal ->(location.out) 'innergård+en/utgång+en' 'innergård'
     "Innergården ligger norrut. "
 
     dobjFor(Enter) asDobjFor(TravelVia)
 ;
 
-+ room13door: AlleyDoor '13 -' 'dörr till rum 13'
++ room13door: AlleyDoor '13 13e -' 'dörr till rum 13'
     "Trädörren är märkt med <q>13.</q> "
 ;
 
-+ Graffiti 'små abstrakta mönster' 'klotter'
++ Graffiti 'små+a abstrakt+a mönstret*mönster' 'klotter'
     "Det finns ett par små abstrakta mönster som tydligen sparats
     vid den senaste ommålningen, och inte mycket annat. "
 ;
 
-+ a3StairsUp: StairwayUp 'trappa/trappor/trappuppgång' 'trappuppgång'
++ a3StairsUp: StairwayUp 'trappa+n/trappuppgång+en*trappor+na' 'trappuppgång'
     "Trapporna leder upp till Gränd Fyra. "
 ;
 
@@ -1870,7 +1871,7 @@ alley3E: AlleyRoom 'Gränd Tre Öst' 'östra änden av Gränd Tre'
     Dörren till rum 10 är på andra sidan hallen på norra sidan, och rum
     11 är i slutet av hallen. "
 
-    vocabWords = '3 gränd tre'
+    vocabWords = '3+e tre+dje gränd+en'
 
     west = alley3main
     north = room10door
@@ -1904,7 +1905,7 @@ alley3E: AlleyRoom 'Gränd Tre Öst' 'östra änden av Gränd Tre'
     "Dörren är märkt med <q>12.</q> "
 ;
 ++ chickenNotebook: CustomImmovable, Readable
-    'grå anteckningsbok/snöre' 'anteckningsbok'
+    'grå+a anteckningsbok+en/snöre+t' 'anteckningsbok'
     "Anteckningsboken hänger i ett snöre. Eleganta kalligrafiska
     bokstäver pryder omslaget: <q><i>Laboratorieanteckningar och
     Filosofiskt Manifest av Dr. Klaus W.D. von Geflügel,
@@ -1958,8 +1959,8 @@ alley3E: AlleyRoom 'Gränd Tre Öst' 'östra änden av Gränd Tre'
 ;
 
 + chickenator: Immovable, EntryPortal -> insideChickenator
-    'färgad stor dekorerad kartong smal
-    låda/bås/chickenator/ljus/ljusen/öppning'
+    'färgad+e stor+a dekorerad+e kartong smal+a
+    låda+n/bås+et/chickenator+n/ljus+et/öppning+en*ljusen+a'
     'kartongbox'
     "Lådan måste ursprungligen ha innehållit ett kylskåp eller en stor
     möbel: den är över två meter hög och nästan lika bred
@@ -1974,7 +1975,7 @@ alley3E: AlleyRoom 'Gränd Tre Öst' 'östra änden av Gränd Tre'
 ;
 
 + superChickens: DisambigDeferrer, Person
-    'jättekyckling dräkt/dräkter/kostymer/kycklingar/super-kycklingar'
+    'jättekycklingar+na dräkter+na kycklingar+na super-kycklingar+na kostymer+na'
     'jättekycklingar'
     "De är egentligen människor som bär kycklingdräkter, men kostymerna är
     ganska bra. "
@@ -2079,7 +2080,7 @@ class ChickenActorState: ActorState
 
 /* the owner of the positron game */
 + scott: DisambigDeferrer, PresentLater, Person
-    'färgglad röd jättekyckling dräkt/scott' 'Scott'
+    'färgglad+a röd+a jättekyckling+en dräkt+en/scott' 'Scott'
     "Han bär en särskilt färgglad kycklingdräkt, mestadels röd. "
 
     /* 
@@ -2131,7 +2132,7 @@ class ChickenActorState: ActorState
 ;
 ++ ConvNode 'repair-positron';
 +++ SpecialTopic 'fråga vad som är fel med den'
-    ['fråga','scott','honom','vad','som','är','fel','med','den',
+    ['fråga','scott','honom','vad','som','är','trasigt','fel','med','den',
      'positron','maskinen']
     "<q>Vet du vad som är fel med den?</q> frågar du.
     <.p>Han kliar sig på huvudet med vingen. <q>Inte egentligen. Jag har
@@ -2142,7 +2143,7 @@ class ChickenActorState: ActorState
     isActive = (talkCount == 0)
 ;
 +++ SpecialTopic 'erbjud dig att reparera den'
-    ['erbjud','dig','att','reparera','den','positron','maskinen']
+    ['erbjud','mig','dig','att','laga','reparera','den','positron','maskinen']
     topicResponse()
     {
         "<q>Jag kan lite om elektronik,</q> säger du. <q>Jag skulle
@@ -2224,15 +2225,15 @@ class ChickenActorState: ActorState
     scoreMarker: Achievement { +5 "få Positronnyckeln" }
 ;
 +++ SpecialTopic 'lova att inte ha sönder den'
-    ['lova','att','inte','ha','sönder','den','positron','maskinen']
+    ['lova','att','inte','förstöra','ha','sönder','den','positron','maskinen']
     "<q>Jag lovar att jag inte kommer att göra det värre,</q> säger du. <q>Jag ska bara
     ta en titt för att se om jag kan lista ut vad som är fel, och om jag
     inte är säker på att jag kan fixa det, kommer jag inte att försöka.</q><<location.commonReply>> "
 ;
 +++ SpecialTopic 'säg att du betalar för reparationer om du har sönder den'
-    ['säg','att','du','kommer','du','ska','jag','kommer','jag','ska','erbjuda','att',
+    ['lova','säg','att','du','kommer','du','ska','jag','kommer','jag','ska','erbjuda','att',
      'betala','för','reparationer',
-     'om','du','jag','har','sönder','den','positron','maskinen']
+     'om','du','jag','har','sönder','förstör','den','positron','maskinen']
     "<q>Om jag gör det värre, kommer jag att betala för att få den reparerad,</q> erbjuder du.
     <<location.commonReply>> "
 ;
@@ -2267,16 +2268,16 @@ insideChickenator: Room 'Chickenator' 'Chickenatorn' 'Chickenator'
     west asExit(out)
 ;
 
-+ Decoration 'julgrans färgad lampa/lampor' 'färgade lampor'
++ Decoration 'julgrans färgad+e lampa+n/lampor+na' 'färgade lampor'
     "De är förmodligen julgransljus. "
 ;
 
 + ExitPortal
-    'smal 3 gränd öppning/utgång/tre/gränd/hall/korridor' 'öppning'
+    'smal+a 3 3e gränd+en öppning+en/utgång+en/tre+dje/gränd+en/hall+en/korridor+en' 'öppning'
     "Öppningen leder tillbaka ut till gränden. "
 ;
 
-+ Fixture, Surface 'rock krok/krokar' 'rockkrokar'
++ Fixture, Surface 'rock+krok+en*rock:ar+krokar+na' 'rockkrokar'
     "Flera rockkrokar är placerade längs väggen nära taket. "
     isPlural = true
 
@@ -2326,7 +2327,7 @@ class HookContentsLister: object
 ;
 
 ++ chickenSuit: Wearable
-    'vit kyckling fjäderfäformig dräkt/fjädrar/matrixerare' 'kycklingdräkt'
+    'vit+a fjäderfä+formig+a kyckling+dräkt+en/matrixerare+n*fjädrar+na' 'kycklingdräkt'
     "Det är en heltäckande kycklingdräkt, stor nog för dig att ta på dig.
     Fjädrarna är mestadels vita. "
 
@@ -2448,7 +2449,7 @@ class HookContentsLister: object
     }
 ;
 
-+ Fixture, Readable 'instruktion skylt/instruktioner' 'instruktionsskylt'
++ Fixture, Readable 'instruktion:en^s+skylt+en*instruktioner+na' 'instruktionsskylt'
     "<font face=tads-sans><b>Chickenator Mark III Bruksanvisning</b>
     <br><br><b>Kycklingsomvandling:</b> Välj fjäderfäformig matrixerare från hyllan.
     Ta på. Dra i omkopplaren. Kycklingsomvandlingsprocessen är automatisk.
@@ -2459,8 +2460,8 @@ class HookContentsLister: object
 ;
 
 + SpringLever, Fixture
-    'enorm elektrisk knivomkopplare gångjärnsförsedd bar metall
-    (par)/spak/handtag/blad/bladen'
+    'enorm+a elektrisk+a gångjärnsförsedd+a gångjärnsförsett (par) bar+a metall+iska
+     knivomkopplare+n/spak+en/handtag+et/metallblad+en'
     'knivomkopplare'
     "Det är den standardmässiga Galen Vetenskapsman-typen av elektrisk omkopplare: ett gångjärnsförsett
     par av bara metallblad med ett fotlångt handtag. Den är i nedfällt
@@ -2500,7 +2501,7 @@ alley3W: AlleyRoom 'Gränd Tre Väst' 'västra änden av Gränd Tre'
     österut. Dörren till rum 14 är på södra sidan, 15
     i västra änden, och 16 på norra sidan av korridoren. "
 
-    vocabWords = '3 gränd tre'
+    vocabWords = '3 3e gränd+en tre+dje'
 
     east = alley3main
     north = room16door
@@ -2508,19 +2509,19 @@ alley3W: AlleyRoom 'Gränd Tre Väst' 'västra änden av Gränd Tre'
     south = room14door
 ;
 
-+ room14door: AlleyDoor '14 -' 'dörr till rum 14'
++ room14door: AlleyDoor '14+e -' 'dörr till rum 14'
     "Dörren är märkt med <q>14.</q> "
 ;
 
-+ room15door: AlleyDoor '15 -' 'dörr till rum 15'
++ room15door: AlleyDoor '15+e -' 'dörr till rum 15'
     "Trädörren är märkt med <q>15.</q> "
 ;
 
-+ room16door: AlleyDoor '16 -' 'dörr till rum 16'
++ room16door: AlleyDoor '16+e -' 'dörr till rum 16'
     "Dörren är märkt med <q>16.</q> "
 ;
 
-+ Graffiti 'udda kommentarer' 'klotter'
++ Graffiti 'udda *kommentarer+na' 'klotter'
     "Det finns inte mycket här; bara ett par udda kommentarer
     klottrade på väggen med små bokstäver: <q>Han är en rolig Gud! Han
     är Solguden! Ra! Ra! Ra!</q> Och: <q>Subtilitet är en krycka.</q> "
@@ -2537,7 +2538,7 @@ alley4main: AlleyRoom 'Gränd Fyra' 'Gränd Fyra'
     österut respektive västerut, och norrut leder en trappa
     nedåt. Ett stort runt bord och några stolar är uppställda här. "
 
-    vocabWords = '4 gränd fyra'
+    vocabWords = '4+e fjärde fyra gränd+en'
 
     down = a4StairsDown
     north asExit(down)
@@ -2548,27 +2549,27 @@ alley4main: AlleyRoom 'Gränd Fyra' 'Gränd Fyra'
                                      alleyEastWall, alleyWestWall])
 ;
 
-+ Graffiti 'slingrande lövrik gecko/geckos/väggmålning/ranka/rankor' 'klotter'
++ Graffiti 'slingrande lövrik+a gecko/geckos/väggmålning+en/ranka+n*rankor+na' 'klotter'
     "En väggmålning av slingrande, lövrika rankor täcker en vägg. Bland
     rankorna finns ett antal väl gömda geckos. "
 ;
 
 + a4StairsDown: StairwayDown -> a3StairsUp
-    'trappa/trappor/trappuppgång' 'trappuppgång'
+    'trappa+n/trappuppgång+en*trappor+na' 'trappuppgång'
     "Trapporna leder ner till Gränd Tre. "
 ;
 
 + EntryPortal ->(location.west)
-    'väst v (4) (fyra) smal hall/korridor/flygel/(gränd)' 'västra flygeln'
+    'väst+ra v (4) (fyra) smal+a hall+en/korridor+en/flygel+n/(gränd+en)' 'västra flygeln'
     "Den smala korridoren leder västerut. "
 ;
 + EntryPortal ->(location.east)
-    'öst ö (4) (fyra) smal hall/korridor/flygel/(gränd)' 'östra flygeln'
+    'öst+ra ö (4) (fyra) smal+a hall+en/korridor+en/flygel+n/(gränd+en)' 'östra flygeln'
     "Den smala korridoren leder österut. "
 ;
 
 + a4mChair: CustomImmovable, MultiChair
-    'upptagen tom enkel ek köksstol/stolar' 'ekstol'
+    'upptagen upptagna tom+ma enkel enkla ek+stol+en/köksstol+en*stolar+na köksstolar+na' 'ekstol'
     "Det finns flera av de enkla köksstolarna i ek. De flesta
     av dem är upptagna; några få är tomma. "
 
@@ -2579,7 +2580,7 @@ alley4main: AlleyRoom 'Gränd Fyra' 'Gränd Fyra'
 ;
 
 + a4Table: Heavy, Surface
-    'stort kök runt ek trä träbord' 'runt bord'
+    'stort stora köks runt runda ek trä+bord+et' 'runt bord'
     "Det är den typ av bord man skulle hitta i ett kök. Det är runt
     och ser ut att vara gjort av ek. "
 
@@ -2617,7 +2618,7 @@ class TurboPowerAnimal: Thing
 ;
 
 ++ a4Materials: A4TableImmovable
-    'hög/papper/material' 'hög med papper'
+    'hög hög+en/papper:et^s+hög+en/material+et*material+ena papper+ena' 'hög med papper'
     "Bordet är fullt med papper. En stor ritning över
     campus ligger i mitten av bordet, och runt omkring den
     finns kuvert och indexkort. Kuverten och korten verkar
@@ -2633,7 +2634,7 @@ class TurboPowerAnimal: Thing
 ;
 
 ++ a4Envelopes: A4TableImmovable, Readable
-    'index kuvert/kuvert/kort/handstil'
+    'index+kort+en/kuvert+en/handstil+en'
     'kuvert och kort'
     "Några av kuverten har öppnats, andra är förseglade.
     De flesta indexkorten är täckta med handskrift. "
@@ -2654,8 +2655,7 @@ class TurboPowerAnimal: Thing
 ;
 
 ++ A4TableImmovable
-    'stor campus ritning
-    karta/kontur/konturer/(byggnad)/(byggnader)/(campus)'
+    'stor+a campus ritning+en/karta+n/kontur+en/(byggnad+en)/(campus)*konturer+na (byggnader+na)'
     'ritning'
     "Kartan visar konturerna av campusbyggnaderna, tryckt
     i ljusblått bläck på ett affischstort papper. Det ser
@@ -2671,8 +2671,8 @@ class TurboPowerAnimal: Thing
     }
 ;
 +++ a4Map: Fixture
-    'karta annan markering/markeringar/linje/linjer/pil/
-    pilar/krumelur/krumelurer/cirkel/cirklar/anteckning/anteckningar'
+    'karta annan kartanteckning+en/markering+en/linje+n/pil+en/krumelur+en/cirkel+n/anteckning+en
+    *markeringar+na anteckningar+na kartanteckningar+na linjer+na pilar+na krumelurer+na cirklar+na'
     'kartanteckningar'
     "Det är inte uppenbart vad markeringarna betyder. Några av byggnaderna
     är inringade, andra är överkryssade; på andra ställen är linjer eller
@@ -2681,7 +2681,7 @@ class TurboPowerAnimal: Thing
     isPlural = true
 ;
 +++ A4TableImmovable
-    'karta liten plast markör/markörer/pjäs/pjäser' 'kartmarkörer'
+    'karta liten lilla plast+iga pjäs+en/markör+en*kartmarkörer+na markörer+na pjäser+na' 'kartmarkörer'
     "Markörerna är mestadels små plastpjäser, förmodligen från ett brädspel.
     De är placerade runt kartan för att markera vissa platser,
     även om det inte är uppenbart vad de indikerar. "
@@ -2689,7 +2689,7 @@ class TurboPowerAnimal: Thing
     isPlural = true
 ;
 
-+ Person 'student/studenter' 'studenter'
++ Person 'student+en*studenter+na' 'studenter'
     "Några sitter vid bordet, andra står nära det.
     De arbetar alla med materialet som är utspritt på bordet. "
 
@@ -2800,7 +2800,7 @@ alley4W: AlleyRoom 'Gränd Fyra Väst' 'västra änden av Gränd Fyra'
     Dörren till rum 20 är söderut, 21 norrut och
     22 västerut. "
 
-    vocabWords = '4 gränd fyra'
+    vocabWords = '4+e gränd+en fyra fjärde'
 
     south = room20door
     north = room21door
@@ -2811,21 +2811,21 @@ alley4W: AlleyRoom 'Gränd Fyra Väst' 'västra änden av Gränd Fyra'
                                      alleyWestWall])
 ;
 
-+ room20door: AlleyDoor '20 -' 'dörr till rum 20'
++ room20door: AlleyDoor '20+e -' 'dörr till rum 20'
     "Dörren är märkt med <q>20.</q> "
 ;
 
-+ room21door: AlleyDoor '21 -' 'dörr till rum 21'
++ room21door: AlleyDoor '21+e -' 'dörr till rum 21'
     "Numret 21 är målat på dörren. "
 ;
 
-+ room22door: StackDoor '22 -' 'dörr till rum 22'
++ room22door: StackDoor '22+e -' 'dörr till rum 22'
     "Trädörren är numrerad <q>22.</q> "
 ;
 
 ++ Fixture
-    'färgglad illustrerad turbo power
-    skylt/teckning/teckningar/djur/djuren/illustration/illustrationer'
+    'färgglad+a illustrerad+a turbo power
+    skylt+en/teckning+en/djur+en/illustration+en*teckningar+na djuren+a illustrationer+na'
     'illustrerad skylt'
     "Den stora skylten är illustrerad med färgglada teckningar av
     karaktärer från Turbo Power Animals, den populära japanska
@@ -2880,7 +2880,7 @@ alley4W: AlleyRoom 'Gränd Fyra Väst' 'västra änden av Gränd Fyra'
 ;
 
 + Graffiti
-    'lovecraftiansk droppande skräck/monster/tentakler/ögon/öga/tänder/ektoplasma'
+    'lovecraftiansk+a droppande klotter/klottret/skräck+en/monster/monstret/öga+t/ektoplasma*tentakler+na ögon ögonen+a tänder+na' 
     'klotter'
     "En teckning av ett ganska Lovecraftianskt monster dominerar en vägg:
     tentakler, dussintals ögon, tänder droppande av ektoplasma. "
@@ -2897,7 +2897,7 @@ alley4E: AlleyRoom 'Gränd Fyra Öst' 'östra änden av Gränd Fyra'
     dörr som ser ut som en vanlig rumsdörr in till
     husets bibliotek. "
 
-    vocabWords = '4 gränd fyra'
+    vocabWords = '4+e gränd+en fyra fjärde'
 
     north = room19door
     south = room18door
@@ -2908,20 +2908,20 @@ alley4E: AlleyRoom 'Gränd Fyra Öst' 'östra änden av Gränd Fyra'
                                      alleyEastWall])
 ;
 
-+ room18door: AlleyDoor '18 -' 'dörr till rum 18'
++ room18door: AlleyDoor '18+e -' 'dörr till rum 18'
     "Dörren är märkt med <q>18.</q> "
 ;
 
-+ room19door: AlleyDoor '19 -' 'dörr till rum 19'
++ room19door: AlleyDoor '19+e -' 'dörr till rum 19'
     "Numret 19 är målat på dörren. "
 ;
 
-+ Graffiti 'lång invecklad matte liten pytteliten berättelse/bokstäver' 'klotter'
++ Graffiti 'lång+t invecklad+e matte+skämt+et liten lilla pytteliten pyttelilla berättelse+n/bokstäver+na' 'klotter'
     "En lång, invecklad berättelse är skriven på väggen med pyttesmå bokstäver.
     Det är något slags utdraget matteskämt. "
 ;
 
-+ a4LibDoor: Door 'biblioteksdörr' 'biblioteksdörr'
++ a4LibDoor: Door 'biblioteksdörr+en' 'biblioteksdörr'
     "Den ser ut som dörren till vilket studentrum som helst i huset, men
     <q>Bibliotek</q> är målat på dörren istället för ett rumsnummer. "
 
@@ -2941,7 +2941,7 @@ dabneyLib: Room 'Bibliotek' 'husets bibliotek' 'husets bibliotek'
     innergården. Rummet har två dörrar som leder ut, en mot
     sydöst och en mot sydväst. "
 
-    vocabWords = 'dabney hus bibliotek'
+    vocabWords = 'dabney hus+et bibliotek+et'
 
     southeast = libA6Door
     southwest = libA4Door
@@ -2964,7 +2964,7 @@ dabneyLib: Room 'Bibliotek' 'husets bibliotek' 'husets bibliotek'
     }
 ;
 
-+ Graffiti 'klotter/teckning/teckningar/citat/citaten/kommentar' 'klotter'
++ Graffiti 'klotter/klottret/teckning+en/citat+et/kommentar+en*teckningar+na citaten' 'klotter'
     "Det finns massor av små teckningar och citat på väggarna.
     Din favorit är en liten kommentar nära den nordöstra
     dörren: <q>Biblioteket: Där <b>VAD SOM HELST</b> kan hända.
@@ -2972,19 +2972,19 @@ dabneyLib: Room 'Bibliotek' 'husets bibliotek' 'husets bibliotek'
 ;
 
 + libA4Door: Door ->a4LibDoor
-    'gränd fyra 4 sv sydväst dörr*dörrar' 'sydvästra dörren'
+    'gränd+en fyra fjärde 4+e sv sydväst+ra dörr+en*dörrar+na' 'sydvästra dörren'
     "Dörren leder ut mot sydväst. "
 ;
 
 + libA6Door: Door ->a6LibDoor
-    'gränd sex 6 sö sydöst dörr*dörrar' 'sydöstra dörren'
+    'gränd+en sex+te 6+e sö sydöst+ra dörr+en*dörrar+na' 'sydöstra dörren'
     "Dörren leder ut mot sydöst. "
 ;
 
 + libBookPiles: CustomImmovable
-    'bibliotek sliten välanvänd gammal science fiction sf sci-fi pocketbok
-    serie instruktion pocketböcker/bok/hög/högar/lärobok/manual/
-    bok/böcker*böcker*läroböcker*manualer'
+    'bibliotek+et sliten slitna välanvänd+a gammal gamla science fiction sf sci-fi pocketbok+en
+    serie+n bok+en/lärobok+en/manual+en/
+    bok+en*böcker+na läroböcker+na manualer+na pocketböcker+na instruktioner+na'
     'högar av böcker'
     "De flesta böckerna verkar vara välanvända science fiction-pocketböcker, men
     det finns också gamla läroböcker, serietidningar, telefonkataloger, instruktions-
@@ -3026,14 +3026,14 @@ class LibUnderBooks: object
     }
 ;
 
-+ LibUnderBooks, Fixture 'inbyggda hyllor/hylla' 'hyllor'
++ LibUnderBooks, Fixture 'inbyggd+a hylla+n*hyllor+na' 'hyllor'
     "De inbyggda hyllorna kantar väggarna. Böcker är staplade på
     hyllorna horisontellt, vertikalt, diagonalt och på alla sätt
     däremellan. "
     isPlural = true
 ;
 
-+ LibUnderBooks, Fixture, Chair 'soffa/soffor/divan/divaner' 'soffor'
++ LibUnderBooks, Fixture, Chair 'soffa+n/divan+en*soffor+na divaner+na' 'soffor'
     "Till och med sofforna är begravda under högar av böcker, vilket inte lämnar
     någon plats där du enkelt kan sätta dig ner. "
     isPlural = true
@@ -3051,12 +3051,12 @@ class LibUnderBooks: object
     dobjFor(StandOn) asDobjFor(SitOn)
 ;
 
-+ LibUnderBooks, Fixture 'stort bord' 'stort bord'
++ LibUnderBooks, Fixture 'stort stor+a bord+et' 'stort bord'
     "Själva bordet är inte särskilt synligt; allt du kan se är
     böckerna som är staplade ovanpå. "
 ;
 
-+ Openable, Fixture 'stort fönster med gångjärn' 'fönster med gångjärn'
++ Openable, Fixture 'stort stor+a fönster fönstret med gångjärn+et' 'fönster med gångjärn'
     "Fönstret har utsikt över innergården och modellberget. "
 
     dobjFor(LookThrough) remapTo(Examine, libCourtyard)
@@ -3074,8 +3074,8 @@ class LibUnderBooks: object
 ;
 
 + libCourtyard: Distant
-    'dabney hus hovse papier-mache papier-mâché
-    papier-mâché innergård/berg/topp' 'innergård'
+    'dabney hus+et hovse papier-mache papier-mâché
+    papier-mâché innergård+en/berg+et/topp+en' 'innergård'
     "Fönstret har utsikt över innergården från en våning upp. 
     Modellberget i innergården reser sig lite högre än
     denna nivå. "
@@ -3092,7 +3092,7 @@ alley5main: AlleyRoom 'Gränd Fem Entré' 'entrén till Gränd Fem'
     norrut. En korridor leder västerut, och en annan svänger
     runt ett hörn och leder sydöst. "
 
-    vocabWords = '5 gränd fem entré/ingång/korridor/hall'
+    vocabWords = '5 gränd+en fem+te entré+n/ingång+en/korridor+en/hall+en'
 
     north = dabneyCourtyard
     out asExit(north)
@@ -3107,11 +3107,11 @@ alley5main: AlleyRoom 'Gränd Fem Entré' 'entrén till Gränd Fem'
                         + [alleyNorthWall, alleySouthWall, alleyEastWall])
 ;
 
-+ ExitPortal ->(location.out) 'innergård/utgång' 'innergård'
++ ExitPortal ->(location.out) 'innergård+en/utgång+en' 'innergård'
     "Innergården ligger norrut. "
 ;
 
-+ Graffiti 'matte matematisk formel' 'klotter'
++ Graffiti 'matte matematisk+a formel+n' 'klotter'
     "Det är en matematisk formel: e upphöjt till pi i är lika med minus ett.
     Det förhållandet mellan dessa tre speciella tal är alltid
     häpnadsväckande när man först lär sig det; tydligen var någon
@@ -3119,7 +3119,7 @@ alley5main: AlleyRoom 'Gränd Fem Entré' 'entrén till Gränd Fem'
 ;
 
 + a5StairsUp: StairwayUp ->a6StairsDown
-    'trappor/trappa/trappuppgång' 'trappuppgång'
+    'trappa+n/trappuppgång+en*trappor+na' 'trappuppgång'
     "Trapporna leder upp till Gränd Sex. "
 ;
 
@@ -3133,7 +3133,7 @@ alley5N: AlleyRoom 'Gränd Fem Nord' 'norra änden av Gränd Fem'
     emot den på västra sidan är dörren till rum 26. Korridoren
     fortsätter söderut och svänger runt ett hörn mot nordväst. "
 
-    vocabWords = '5 gränd fem korridor/hall'
+    vocabWords = '5 gränd+en fem+te korridor+en/hall+en'
 
     northwest = alley5main
     south = alley5S
@@ -3144,15 +3144,15 @@ alley5N: AlleyRoom 'Gränd Fem Nord' 'norra änden av Gränd Fem'
                         + [alleyEastWall, alleyWestWall, alleySouthWall])
 ;
 
-+ room25door: AlleyDoor '25 -' 'dörr till rum 25'
++ room25door: AlleyDoor '25+e -' 'dörr till rum 25'
     "Numret 25 är målat på dörren. "
 ;
 
-+ room26door: AlleyDoor '26 -' 'dörr till rum 26'
++ room26door: AlleyDoor '26+e -' 'dörr till rum 26'
     "Trädörren har numret 26 målat på sig. "
 ;
 
-+ Graffiti 'dikt' 'klotter'
++ Graffiti 'bit dikt+en' 'klotter'
     "Det är en liten bit av en dikt:
     \b\tDet spelar ingen roll hur trång porten är,
     \n\thur tung av straff rullen är
@@ -3162,7 +3162,7 @@ alley5N: AlleyRoom 'Gränd Fem Nord' 'norra änden av Gränd Fem'
 ;
 
 /* we can hear the music from down the hall */
-+ Noise 'hög honolulu 10-4 tema låt/musik' 'hög musik'
++ Noise 'hög+a honolulu 10-4 tema+t låt+en/musik+en' 'hög musik'
     aName = 'en låt'
     
     /* LISTEN TO ALLEY */
@@ -3186,7 +3186,7 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
     är dörren till rum 24. Korridoren slutar här och sträcker sig
     norrut. "
 
-    vocabWords = '5 gränd fem korridor/hall'
+    vocabWords = '5 gränd+en fem+te korridor+en/hall+en'
 
     north = alley5N
     east = room23door
@@ -3196,17 +3196,17 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
                         + [alleyEastWall, alleyWestWall, alleyNorthWall])
 ;
 
-+ room23door: AlleyDoor '23 -' 'dörr till rum 23'
++ room23door: AlleyDoor '23+e -' 'dörr till rum 23'
     "Numret 23 är målat på dörren. "
 ;
 
-+ room24door: StackDoor '24 -' 'dörr till rum 24'
++ room24door: StackDoor '24+e -' 'dörr till rum 24'
     "Trädörren har numret 24 målat på sig. "
 ;
 
 ++ CustomImmovable, Readable
-    'stor honolulu 10-4 reklam rick palm hula
-    affisch/burl/träd/träden/hav/dansare/dansarna'
+    'stor+a honolulu 10-4 reklam+en rick palm hula
+    affisch+en/burl/träd+et/hav+et/dansare+n*dansare dansarna träden+a'
     '<i>Honolulu 10-4</i> affisch'
     "Det är en reklamaffisch för TV-serien <i>Honolulu 10-4</i>.
     Den visar stjärnan Rick Burl i en actionpose, med pistolen redo,
@@ -3217,7 +3217,7 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
     cannotTakeMsg = 'Den är inte din; du bör lämna den där den är. '
 ;
 
-++ CustomImmovable, Readable 'blå pappersskylt' 'blå skylt'
+++ CustomImmovable, Readable 'blå+a pappersskylt+en' 'blå skylt'
     "Skylten är handtextad på blått papper:
     <.p><.blockquote>
     Jacobs Honolulu 10-4 Surfin' Marbles Stack
@@ -3235,7 +3235,7 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
     cannotTakeMsg = 'Du bör lämna den där den är. '
 ;
 
-+ Person 'student/studenter/grupp' 'grupp av studenter'
++ Person 'student+en/grupp+en*studenter+na' 'grupp av studenter'
     "Studenterna är samlade runt ett träkulspel.
     En av dem spelar spelet och försöker styra flera
     kulor genom labyrinten på spelplanen genom att vrida på handtag som
@@ -3246,7 +3246,7 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
         och tittar på när en av dem spelar. "
 ;
 ++ InitiallyWorn
-    'hörsel öronpropp/öronproppar/hörlur/hörlurar/skydd' 'öronproppar'
+    'hörsel+n öronpropp+en/hörlur+en/skydd+et*öronproppar+na hörlurar+na' 'öronproppar'
     "De flesta av studenterna bär någon form av hörselskydd.
     Några har öronproppar, andra bär hörlurar. "
 
@@ -3267,8 +3267,8 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
 ;
 
 + CustomImmovable
-    'trä (honolulu) (10-4) träkulspel kul-labyrint labyrint
-    surfin surfin\' kulor surfing spel/låda'
+    'trä (honolulu) (10-4) träkulspel+et kul-labyrint+en labyrint+en
+    surfin surfin\' surfing kulspel+et/spel+et/låda+n*kulor+na'
     'kulspel'
 
     "Det är en trälåda ungefär två fot i kvadrat och sex tum hög.
@@ -3328,7 +3328,7 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
         Du låter någon annan ta en tur. ']
     }
 ;
-++ Component 'sliten (spelplan) (honolulu) (10-4)
+++ Component 'sliten slitna (spelplan+en) (honolulu) (10-4)
     illustration/karaktär/karaktärer/spelplan'
     'spelplanillustration'
     "Spelplanen är illustrerad med karaktärer från
@@ -3336,7 +3336,7 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
     sliten efter att kulor har rullat över den. "
 ;
 ++ Component
-    'stål kula/kulor/lager/kullager'
+    'stål:et+kula+n/lager/lagret/kullager*/kulor+na stålkulor+na'
     'kulor'
     "Kulorna ser ut att vara gjorda av stål; de är förmodligen
     bara kullager. "
@@ -3350,12 +3350,12 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
     dobjFor(Turn) remapTo(Play, location)
 ;
 
-+ xyzzyGraffiti: Graffiti 'konstig slingrig handstil' 'klotter'
++ xyzzyGraffiti: Graffiti 'konstig+a slingrig+a handstil+en' 'klotter'
     "Ordet <q>xyzzy</q> är skrivet på väggen med konstig, slingrig
     handstil. "
 ;
 
-+ Noise 'honolulu 10-4 tema låt/musik' '<i>Honolulu 10-4</i> tema'
++ Noise 'honolulu 10-4 tema låt+en/musik+en' '<i>Honolulu 10-4</i> tema'
     aName = 'en temalåt'
 
     /* LISTEN TO ALLEY shows this; just show our normal emanation */
@@ -3445,20 +3445,20 @@ alley5M: AlleyRoom 'Mitten av Gränd Fem' 'mitten av Gränd Fem'
     north = room31door
     south = room27door
 
-    vocabWords = '5 gränd fem/hall/korridor'
+    vocabWords = '5+e gränd+en fem+te mitten hall+en/korridor+en'
     
     roomParts = static (inherited + [alleyNorthWall, alleySouthWall])
 ;
 
-+ room27door: AlleyDoor '27 -' 'dörr till rum 27'
++ room27door: AlleyDoor '27+e -' 'dörr till rum 27'
     "Numret 27 är målat på dörren. "
 ;
 
-+ room31door: AlleyDoor '31 -' 'dörr till rum 31'
++ room31door: AlleyDoor '31+e -' 'dörr till rum 31'
     "Trädörren har numret 31 målat på sig. "
 ;
 
-+ Graffiti 'kinesiskt tecken/tecken/kalligrafi' 'klotter'
++ Graffiti 'kinesiskt kinesisk+a tecken/tecknet/kalligrafi+n/tecknen+a/klottret' 'klotter'
     "Det finns en passage av vad som ser ut som kinesisk kalligrafi. "
 ;
 
@@ -3477,25 +3477,25 @@ alley5W: AlleyRoom 'Gränd Fem Väst' 'västra änden av Gränd Fem'
     west = room29door
     north = room30door
 
-    vocabWords = '5 gränd fem/hall/korridor'
+    vocabWords = '5+e gränd+en fem+te/hall+en/korridor+en'
     
     roomParts = static (inherited +
                         [alleyNorthWall, alleySouthWall, alleyWestWall])
 ;
 
-+ room28door: AlleyDoor '28 -' 'dörr till rum 28'
++ room28door: AlleyDoor '28+e -' 'dörr till rum 28'
     "Numret 28 är målat på dörren. "
 ;
 
-+ room29door: AlleyDoor '29 -' 'dörr till rum 29'
++ room29door: AlleyDoor '29+e -' 'dörr till rum 29'
     "Trädörren har numret 29 målat på sig. "
 ;
 
-+ room30door: AlleyDoor '30 -' 'dörr till rum 30'
++ room30door: AlleyDoor '30+e -' 'dörr till rum 30'
     "Det är en trädörr märkt med numret 30. "
 ;
 
-+ Graffiti 'tecknad serie figur/figurer/pojke/tiger' 'klotter'
++ Graffiti 'tecknad+e serie+n figur+en/pojke+n/tiger+n*figurer+na' 'klotter'
     "En mycket fin återgivning av några seriefigurer
     är ritad här. Det är en pojke och hans gosedjurstiger, från en
     serie från tidigare år. "
@@ -3510,7 +3510,7 @@ alley6main: AlleyRoom 'Mitten av Gränd Sex' 'mitten av Gränd Sex'
     "Detta är mitten av Gränd Sex. En trappa söderut
     leder nedåt. Korridoren fortsätter österut och västerut. "
 
-    vocabWords = '6 gränd sex hall/korridor'
+    vocabWords = '6+e gränd+en sex sjätte hall+en/korridor+en'
 
     down = a6StairsDown
     south asExit(down)
@@ -3520,11 +3520,11 @@ alley6main: AlleyRoom 'Mitten av Gränd Sex' 'mitten av Gränd Sex'
     roomParts = static (inherited + [alleyNorthWall, alleySouthWall])
 ;
 
-+ a6StairsDown: StairwayDown 'trappor/trappa/trappuppgång' 'trappuppgång'
++ a6StairsDown: StairwayDown 'trappa+n/trappuppgång+en*trappor+na' 'trappuppgång'
     "Trapporna leder ner till Gränd Fem. "
 ;
 
-+ Graffiti 'escher-liknande teckning/orm' 'klotter'
++ Graffiti 'escher-liknande teckning+en/orm+en' 'klotter'
     "En Escher-liknande teckning av en orm som äter sin egen svans
     finns på väggen. "
 ;    
@@ -3539,7 +3539,7 @@ alley6W: AlleyRoom 'Gränd Sex Väst' 'västra änden av Gränd Sex'
     33 är mot sydväst, och rum 34 är mot sydöst.
     Korridoren fortsätter österut. "
 
-    vocabWords = '6 gränd sex hall/korridor'
+    vocabWords = '6+e gränd+en sex sjätte hall+en/korridor+en'
 
     northwest = a6LibDoor
     southwest = room33door
@@ -3549,22 +3549,22 @@ alley6W: AlleyRoom 'Gränd Sex Väst' 'västra änden av Gränd Sex'
     roomParts = static (inherited + [alleyNorthWall, alleySouthWall])
 ;
 
-+ a6LibDoor: Door 'biblioteksdörr' 'biblioteksdörr'
++ a6LibDoor: Door 'biblioteksdörr+en' 'biblioteksdörr'
     "Den ser ut som dörren till vilket studentrum som helst i huset, men
     <q>Bibliotek</q> är målat på dörren istället för ett rumsnummer. "
 
     isOpen = true
 ;
 
-+ room33door: AlleyDoor '33 -' 'dörr till rum 33'
++ room33door: AlleyDoor '33+e -' 'dörr till rum 33'
     "Det är en trädörr märkt med <q>33.</q> "
 ;
 
-+ room34door: AlleyDoor '34 -' 'dörr till rum 34'
++ room34door: AlleyDoor '34+e -' 'dörr till rum 34'
     "Det är en trädörr märkt med <q>34.</q> "
 ;
 
-+ Graffiti 'grov sprayad ko/kontur' 'klotter'
++ Graffiti 'grov+t grova sprayad+e ko+n/kontur+en' 'klotter'
     "En ganska grov kontur av en ko är ritad på väggen
     med sprayfärg. "
 ;
@@ -3578,7 +3578,7 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
     dörren till rum 35 österut och fortsätter västerut. En annan,
     smalare korridor leder söderut. "
 
-    vocabWords = '6 gränd sex'
+    vocabWords = '6+e gränd+en sex sjätte'
 
     south = alley6S
     west = alley6main
@@ -3588,7 +3588,7 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
                         + [alleyEastWall, alleySouthWall, alleyNorthWall])
 ;
 
-+ Vaporous 'litet svart diffust bananfluga/bananflugor/drosophila/moln'
++ Vaporous 'litet lilla svart+a diffust diffus+a moln+et/bananfluga+n/drosophila*molnen bananflugor+na'
     'moln av bananflugor'
     "<i>Drosophila melanogaster</i>, antar du: genetikerns
     favorit. Flugorna driver lojt omkring i korridoren i ett
@@ -3600,7 +3600,7 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
         gränden. "
 ;
 
-+ CustomImmovable 'hög/frukt/banan/persika/apelsin' 'frukthög'
++ CustomImmovable 'hög+en frukt:er+hög+en/banan+en/persika+n/apelsin+en' 'frukthög'
     "Flera frukter är staplade på golvet: en banan, en
     apelsin, en persika och flera andra. De har alla delvis
     skalats och kryper av bananflugor. "
@@ -3624,7 +3624,7 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
         action() { "Du kan inte mena allvar. "; }
     }
 ;
-++ Decoration 'liten svart bananfluga/bananflugor/drosophila' 'bananflugor'
+++ Decoration 'liten lilla svart+a bananfluga+n/drosophila*flugor+na bananflugor+na' 'bananflugor'
     "De äter glatt frukten, mikrogram för mikrogram. "
 
     disambigName = 'flugor på frukten'
@@ -3634,13 +3634,13 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
     isPlural = true
 ;
 
-+ room35door: StackDoor '35 -' 'dörr till rum 35'
++ room35door: StackDoor '35+e -' 'dörr till rum 35'
     "Det är en dörr målad med nummer 35. "
 ;
 
 ++ CustomImmovable
-    '(bananfluga) bioventics modell 77 insekt liten elektronisk
-    densitometer/instrument/enhet/tråd/trådar'
+    '(bananfluga) bioventics modell+en 77 insekts liten elektronisk 
+    flugdensitometer/densitometer/instrument+et/enhet+en/tråd+en/trådar+na'
 
     name = (described ? 'flugdensitometer' : 'liten elektronisk enhet')
 
@@ -3656,11 +3656,11 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
                + ' /m^3')
 ;
 +++ Component, Readable
-    '(flug) densitometer numerisk display' 'flugdensitometer display'
+    '(flug) densitometer flugdensitometer numerisk+a display+en' 'flugdensitometer display'
     "Displayen visar för närvarande <q><tt><<location.dispVal>></tt>.</q> "
 ;
 
-++ Fixture 'hård vit plaströr' 'plaströr'
+++ Fixture 'hård+a vit+a plaströr+et' 'plaströr'
     "Röret är ungefär en tum i diameter och är gjort av hård
     vit plast. Det går genom hålet i dörren där,
     förmodligen, dörrhandtaget brukade sitta. Bananflugor driver lojt
@@ -3678,8 +3678,8 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
 ;
 
 ++ CustomImmovable
-    'orange bruten sammanflätad internationell biologisk fara
-    ring/ringar/skylt/symbol'
+    'orange bruten brutna sammanflätad internationell biologisk fara 
+    ring+en/ringar+na/skylt+en/symbol+en'
     'orange skylt'
     "Skylten är handtextad med svart penna, över en bakgrunds-
     grafik som visar de tre brutna, sammanflätade ringarna av den
@@ -3705,15 +3705,16 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
 ;
 
 + EntryPortal ->(location.south)
-    'annan söder s smal smalare hall/korridor' 'smal korridor'
+    'annan söder s smal+a smalare hall+en/korridor+en' 'smal korridor'
     "Den smala korridoren ansluter till den huvudsakliga öst/väst-korridoren i en
     T-korsning här. Den leder söderut. "
 ;
 
-+ Graffiti 'ljusgul lövgrön målad blomma/blommor/stjälk/stjälkar'
++ Graffiti 'ljusgul+a lövgrön+a målad+e stjälk+en blomma+n*blommor+na/stjälkar+na'
     'klotter'
     "Väggen är målad nära golvet med naturtrogna
     ljusgula blommor på lövgröna stjälkar. "
+    isMassNoun = true
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -3727,7 +3728,7 @@ alley6S: AlleyRoom 'Gränd Sex Syd' 'södra änden av Gränd Sex'
     rum 37. Gränden fortsätter norrut och slutar här i en
     spröjsad glasdörr, som leder ut söderut. "
 
-    vocabWords = '6 gränd sex hall/korridor'
+    vocabWords = '6+e gränd+en sex sjätte hall+en/korridor+en'
 
     north = alley6E
     east = room37door
@@ -3738,17 +3739,17 @@ alley6S: AlleyRoom 'Gränd Sex Syd' 'södra änden av Gränd Sex'
                         + [alleySouthWall, alleyEastWall, alleyWestWall])
 ;
 
-+ room36door: AlleyDoor '36 -' 'dörr till rum 36'
++ room36door: AlleyDoor '36+e -' 'dörr till rum 36'
     "Det är en trädörr numrerad 36. "
 ;
 
-+ room37door: AlleyDoor '37 -' 'dörr till rum 37'
++ room37door: AlleyDoor '37+e -' 'dörr till rum 37'
     "Det är en dörr målad med nummer 37. "
 ;
 
 class SleepingPorchDoor: Door
-    'smidesjärn smidesjärns spröjsad glas spröjsad-glas
-    en-fot-kvadrat fot-kvadrat dörr/ram/ruta/rutor/glas'
+    'smidesjärn smidesjärns spröjsad+e glas+et spröjsad-glas 
+    en-fot-kvadrat+s fot-kvadrat+s glasdörr+en/ram+en/ruta+n/rutor+na/glas+et'
 
     'spröjsad glasdörr'
 
@@ -3764,7 +3765,7 @@ class SleepingPorchDoor: Door
     whereDesc = "Den leder ut söderut. "
 ;
 
-+ Graffiti 'målning/vampyr/fönster' 'klotter'
++ Graffiti 'målning+en/vampyr+en/fönster/fönstret/klotter/klottret' 'klotter'
     desc = "Väggen här har en målning av vad som verkar vara
         en vampyr som flyr genom ett fönster. "
 ;
@@ -3782,7 +3783,7 @@ sleepingPorch: DabneyOutdoorRoom 'Sovveranda' 'sovverandan'
 
     north = spDoor
 
-    vocabWords = 'bred sov veranda/terrass'
+    vocabWords = 'bred+a sov+veranda+n/terrass+en'
 
     dobjFor(JumpOff)
     {
@@ -3802,7 +3803,7 @@ sleepingPorch: DabneyOutdoorRoom 'Sovveranda' 'sovverandan'
 ;
 
 /* add California Blvd and its consituent parts */
-+ Distant 'california boulevard/blvd/blvd./gata/väg'
++ Distant 'california boulevard gata+n/blvd/blvd./väg+en'
     'California Boulevard'
     "California Boulevard är en livlig fyrafilig gata som utgör
     campusområdets södra gräns. "
@@ -3822,7 +3823,7 @@ alley7main: AlleyRoom 'Gränd Sju' 'Gränd Sju'
     Nedre Sju är några trappsteg ner österut. En lång, brant
     trappa leder ner till innergården. "
 
-    vocabWords = '7 gränd sju'
+    vocabWords = '7+e gränd+en sju+nde'
 
     down = a7CourtyardStairs
     out asExit(down)
@@ -3834,25 +3835,25 @@ alley7main: AlleyRoom 'Gränd Sju' 'Gränd Sju'
 ;
 
 + a7CourtyardStairs: StairwayDown -> dcStairsUp
-    'lång brant betong innergård trappa/trappor' 'innergårdstrappa'
+    'lång+a brant+a betong innergård+en trappa+n*trappor+na' 'innergårdstrappa'
     "Det är ungefär två normala våningar med trappor som leder ner till
     innergården. "
 ;
 
 + EntryPortal ->(location.north)
-    'lång smal kloster 7 övre sju/cell/celler/(rad)/hall/korridor'
+    'lång+a smal+a kloster klostret 7+e övre sju+nde/cell+en/(rad+en)/hall+en/korridor+en*celler+na'
     'Övre Sju'
     "Den långa, smala korridoren sträcker sig norrut. "
     isProperName = true
 ;
 
 + a7lowerStairs: StairwayDown -> l7Stairs
-    'nedre sju 7 steg/trappsteg/trappa/trappor' 'Nedre Sju'
+    'nedre sju+nde 7+e steg+en/trappsteg+en/trappa+n*trappor+na' 'Nedre Sju'
     "Nedre Sju är några trappsteg ner österut. "
     isProperName = true
 ;
 
-+ Graffiti 'gigantisk svart "välkommen till gränd 7" "välkommen" skylt' 'klotter'
++ Graffiti 'gigantisk+a svart+a "välkommen till gränd 7" "välkommen" skylt+en  välkomstskylt+en' 'klotter'
     "Det finns många bitar av klotter här, inklusive en gigantisk
     svart <q>Välkommen till Gränd 7</q> skylt. "
 ;    
@@ -3879,14 +3880,14 @@ lower7W: AlleyRoom 'Nedre Sju Väst' 'västra änden av Nedre Sju'
     east: NoTravelMessage { "Korridoren fortsätter visserligen österut, men det
         finns ingen möjlighet att ta sig förbi skrotet och alla verktyg. " }
 
-    vocabWords = '7 gränd nedre sju/korridor'
+    vocabWords = '7 gränd+en nedre sju+nde korridor+en'
 
     roomParts = static (inherited + [alleyNorthWall, alleySouthWall])
 ;
 
 + Graffiti
-    'psykedelisk ljus neon svartvit
-    virvel/virvlar/spiral/spiraler/färg/färger/landskap/schackbräde/väggmålning'
+    'psykedelisk+a ljus+a neon+iska svartvit+a
+    virvel+n/färg+en/landskap+et/schackbräde+n/spiral+en/väggmålning+en*färger+na virvlar+na spiraler+na'
     'klotter'
     "En omfattande väggmålning börjar med ett svartvitt schackbräde
     i ena änden som förvandlas till ett psykedeliskt landskap av
@@ -3894,18 +3895,18 @@ lower7W: AlleyRoom 'Nedre Sju Väst' 'västra änden av Nedre Sju'
 ;
 
 + l7Stairs: StairwayUp
-    'övre sju 7 steg/trappsteg/trappa/trappor' 'trappa'
+    'övre sju+nde 7+e steg+en/trappsteg+en/trappa+n*trappor+na' 'trappa'
     "Trappan leder upp till Övre Sju, västerut. "
 ;
 
-+ room49door: AlleyDoor '49 -' 'dörr till rum 49'
++ room49door: AlleyDoor '49+e -' 'dörr till rum 49'
     "Det är en trädörr märkt med <q>49.</q> "
 ;
 
 + CustomImmovable
-    'konstruktion tung el cirkulär murverk enorm luftdriven luft
-    verktyg/verktyg/utrustning/tryckluftsborr/tryckluftsborrar/såg/borr/borrar/
-    kompressor/kompressorer'
+    'konstruktion+en tung+a el+ektriska cirkulär+a murverk+s enorm+a luftdriven luftdrivna luft
+    verktyg+et/verktyg+en/utrustning+en/tryckluftsborr+en/såg+en/borr+en/
+    kompressor+n*borrar+na kompressorer+na tryckluftsborrar+na'
     'elverktyg'
     "Det finns en hel del seriösa konstruktionsverktyg staplade längs
     väggen: ett par tryckluftsborrar, en cirkulär murverkssåg,
@@ -3920,7 +3921,7 @@ lower7W: AlleyRoom 'Nedre Sju Väst' 'västra änden av Nedre Sju'
         tar den med dig. '
 ;
 
-++ Noise '(tryckluftsborr) (tryckluftsborring) konstruktionsljud'
+++ Noise '(tryckluftsborr) (tryckluftsborring) konstruktionsljud+et'
     'konstruktionsljud'
     /* LISTEN TO TOOLS */
     sourceDesc = "Tryckluftsborren gör mycket oljud när den
@@ -3940,7 +3941,7 @@ lower7W: AlleyRoom 'Nedre Sju Väst' 'västra änden av Nedre Sju'
     displaySchedule = [2]
 ;
 
-+ Person 'dammig grupp/student/studenter' 'grupp studenter'
++ Person 'dammig+a grupp+en/student+grupp+en*studenter+na' 'grupp studenter'
     "Studenterna är dammiga från rivningsarbetet, precis som allt
     annat här omkring. De arbetar tillsammans med att borra sönder
     betongblocket med tryckluftsborren. "
@@ -3954,11 +3955,11 @@ lower7W: AlleyRoom 'Nedre Sju Väst' 'västra änden av Nedre Sju'
     upptagna med tryckluftsborren. "
 ;
 
-+ Fixture 'rum 50 dörr dörrram/ram' 'rum 50 dörrram'
++ Fixture 'rum+met 50+e dörr+en dörrram+en/ram+en' 'rum 50 dörrram'
     "Dörramen är helt fylld med ett block av betong. "
 ;
 
-++ Heavy 'betong block/betong' 'betongblock'
+++ Heavy 'betong+s betong:en^s+block+et' 'betongblock'
     "Betongblocket fyller helt dörramen till rum 50,
     och sticker ut ett par fot i korridoren. Ungefär halva
     framsidan är ojämnt gropig till ett djup av några tum,
@@ -3977,7 +3978,7 @@ lower7W: AlleyRoom 'Nedre Sju Väst' 'västra änden av Nedre Sju'
         <.p><<desc>> "
 ;
 
-+++ Decoration 'vridet armeringsjärn/armering' 'vridet armeringsjärn'
++++ Decoration 'vridet vridna exponerade armeringsjärn+et/armering+en' 'vridet armeringsjärn'
     "Armeringsjärnet är exponerat på några ställen där betongen har
     huggits bort. "
 
@@ -3994,7 +3995,7 @@ lower7W: AlleyRoom 'Nedre Sju Väst' 'västra änden av Nedre Sju'
 ;
 
 + CustomImmovable
-    'trasig betong rivning skrot/hög/högar/armeringsjärn/bit/bitar/damm'
+    'trasig+a betong+s rivning+s skrot+et/hög+en/armeringsjärn+et/bit+en/damm+et*högar+na bitar+na'
     'skrot'
     "Med tanke på hur mycket skrot som är uppstaplat i korridoren, är det
     förvånande att blocket inte redan är borta. Skrotet är
@@ -4025,7 +4026,7 @@ upper7S: AlleyRoom 'Övre Sju Syd' 'södra änden av Övre Sju'
     till fler tätt packade rum norrut och öppnar sig till ett större
     område söderut. "
 
-    vocabWords = '7 övre gränd sju'
+    vocabWords = '7+e övre sju+nde gränd+en'
 
     south = alley7main
     north = upper7N
@@ -4039,26 +4040,26 @@ upper7S: AlleyRoom 'Övre Sju Syd' 'södra änden av Övre Sju'
     roomParts = static (inherited + [alleyEastWall, alleyWestWall])
 ;
 
-+ room43door: AlleyDoor '43 -' 'dörr till rum 43'
++ room43door: AlleyDoor '43+e -' 'dörr till rum 43'
     "Det är en trädörr märkt med <q>43.</q> "
 ;
-+ room44door: AlleyDoor '44 -' 'dörr till rum 44'
++ room44door: AlleyDoor '44+e -' 'dörr till rum 44'
     "Det är en trädörr märkt med <q>44.</q> "
 ;
-+ room45door: AlleyDoor '45 -' 'dörr till rum 45'
++ room45door: AlleyDoor '45+e -' 'dörr till rum 45'
     "Det är en trädörr märkt med <q>45.</q> "
 ;
-+ room46door: AlleyDoor '46 -' 'dörr till rum 46'
++ room46door: AlleyDoor '46+e -' 'dörr till rum 46'
     "Det är en trädörr märkt med <q>46.</q> "
 ;
-+ room47door: AlleyDoor '47 -' 'dörr till rum 47'
++ room47door: AlleyDoor '47+e -' 'dörr till rum 47'
     "Det är en trädörr märkt med <q>47.</q> "
 ;
-+ room48door: AlleyDoor '48 -' 'dörr till rum 48'
++ room48door: AlleyDoor '48+e -' 'dörr till rum 48'
     "Det är en trädörr märkt med <q>48.</q> "
 ;
 
-+ Graffiti '- klotter' 'klotter'
++ Graffiti '- klotter klottret' 'klotter'
     "<font face='tads-sans'><b>Du vet att du är en nörd när
     du börjar drömma i <tab id=lang><s>&nbsp;FORTRAN&nbsp;</s>
     \n<tab to=lang><s>&nbsp;Pascal&nbsp;</s>
@@ -4087,7 +4088,7 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
     <.p>En antik persondator står på golvet utanför
     dörren till rum 42. En blå pappersskylt är fäst på dörren. "
     
-    vocabWords = '7 övre gränd sju'
+    vocabWords = '7+e övre sju+nde gränd+en'
 
     south = upper7S
     northeast = room38door
@@ -4100,10 +4101,10 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
                         + [alleyEastWall, alleyWestWall, alleyNorthWall])
 ;
 
-+ room38door: AlleyDoor '38 -' 'dörr till rum 38'
++ room38door: AlleyDoor '38+e -' 'dörr till rum 38'
     "Det är en trädörr märkt med <q>38.</q> "
 ;
-+ room39door: AlleyDoor '39 -' 'dörr till rum 39'
++ room39door: AlleyDoor '39+e -' 'dörr till rum 39'
     "Det är en trädörr märkt med <q>39.</q> "
 
     dobjFor(Knock)
@@ -4121,18 +4122,18 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
         }
     }
 ;
-+ room40door: AlleyDoor '40 -' 'dörr till rum 40'
++ room40door: AlleyDoor '40+e -' 'dörr till rum 40'
     "Det är en trädörr märkt med <q>40.</q> "
 ;
-+ room41door: AlleyDoor '41 -' 'dörr till rum 41'
++ room41door: AlleyDoor '41+e -' 'dörr till rum 41'
     "Det är en trädörr märkt med <q>41.</q> "
 ;
-+ room42door: StackDoor '42 -' 'dörr till rum 42'
++ room42door: StackDoor '42+e -' 'dörr till rum 42'
     "En blå pappersskylt är fäst på dörren, och en gammal persondator
     står på golvet framför den. Dörren är
     märkt med <q>42.</q> "
 ;
-++ CustomImmovable, Readable 'blå pappers skylt' 'skylt'
+++ CustomImmovable, Readable 'blå+a papper:et^s+skylt+en' 'skylt'
     "<font face='tads-sans'>Välkommen till Pauls Ditch Day Stack!
     Min stack består av
     bara ett pussel, som finns i Commandant 64 nedan. Allt du behöver
@@ -4153,8 +4154,8 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
     cannotTakeMsg = 'Du bör lämna skylten där den är. '
 ;
 + commandant64: Keypad, CustomImmovable, Readable
-    'vit plast antik gammal personlig 64 display
-    dator/commandant/maskin/tangentbord/display/monitor/skärm/pc'
+    'vit+a plast+iga antik+a gammal gamla personlig+a 64 display+en
+    dator+n/commandant+en/maskin+en/tangentbord+et/display+en/monitor+n/skärm+en/pc+n'
     'gammal dator'
     "Datorn är en Commandant 64, en av de maskinerna från
     den första eller andra generationen av persondatorer. Den ser ut som
@@ -4545,7 +4546,7 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
     }
 ;
 
-+ Graffiti 'Polly Nomial berättelse' 'klotter'
++ Graffiti 'Polly Nomial berättelse+n' 'klotter'
     "<q>...När Polly kom hem den kvällen märkte hennes mamma
     att hon inte längre var styckvis kontinuerlig –
     någon hade klippt av henne i flera intervall.

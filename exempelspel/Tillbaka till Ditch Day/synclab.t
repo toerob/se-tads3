@@ -32,17 +32,17 @@ syncLabRoof: RoofRoom
 ;
 
 + Floor
-    'platt ojämn asfalt tak/golv/yta/lagning/lagningar/reparation/reparationer'
+    'platt+a ojämn+a asfalt+iga tak+et/golv+et/yta+n/lagning+en/reparation+en/lagningar+na/reparationer+na'
     'tak'
     "Det är en ojämn asfaltyta. Taket slutar i norr vid Firestones bakvägg. "
     dobjFor(JumpOff) remapTo(Jump)
 ;
 
-+ Distant, Decoration 'mark+en' 'mark/gångväg'
++ Distant, Decoration 'mark+en/gång+väg+en' 'mark/gångväg'
     "Marken är två våningar nedanför. "
 ;
 
-+ Fixture 'bak blank betong firestone vägg+en/lab/laboratorium/byggnad'
++ Fixture 'bak+re blank+a betong firestone vägg+en/lab/labb+et/laboratorium+et/byggnad+en'
     'Firestones bakvägg'
     "Firestone är bara en blank betongvägg på denna sida. En stege
     är fäst vid väggen och leder upp längs byggnadens sida. "
@@ -108,7 +108,7 @@ syncLabRoof: RoofRoom
     dobjFor(Board) remapTo(TravelVia, slrLadderDown)
     dobjFor(GoThrough) remapTo(TravelVia, slrLadderDown)
 ;
-+++ Fixture 'schakt schakt+et/mörker/(vägg+en)' 'schakt'
++++ Fixture 'schaktets mörkret+s schakt+et/mörker/(vägg+en)' 'schakt'
     "En smidessjärnsstege går ner i schaktet och försvinner
     i mörkret nedanför. "
 
@@ -121,7 +121,7 @@ syncLabRoof: RoofRoom
 ;
 
 ++++ slrLadderDown: TravelWithMessage, StairwayDown
-    'järn smidessjärn stege' 'smidessjärnsstege'
+    'järn smide^s+järn^s+stege' 'smidesjärnsstege'
     "Stegen är fäst vid schaktets vägg. Den går ner i schaktet
     in i mörkret. "
 
@@ -162,8 +162,8 @@ class SyncCatwalkRoom: Room
 
 
 catwalkFloor: Floor
-    'galler smal metall  gångväg
-    matt grå plåt stål metall upphöjda gångbro+n/golv+et/mönster/x\'n'
+    'smal+a matt+a grå+a galler gallret plåt stål metall upphöjd+a 
+    gångbro+n/gångväg+en/golv+et/mönster/mönstret/x\'n'
     'gångbro'
     "Gångbrons golv är av matt grå metall, förmodligen stål.
     Det är präglat med ett rutmönster av upphöjda X, antagligen för
@@ -174,14 +174,15 @@ catwalkFloor: Floor
 ;
 
 catwalkSpace: Distant, RoomPart
-    'välvt inre mörker/utrymme/(byggnad)' 'mörker'
+    'välvt välvd+a inre mörker/mörkret/utrymme+t/(byggnad+en)' 'mörker'
     "Byggnadens interiör verkar vara ett stort, öppet utrymme
     som sträcker sig nedåt och österut, men belysningen är otillräcklig för
     att se något bortom gångbron. "
+    isNeuter = true
 ;
 
 syncLights: Distant, RoomPart
-    'svag gul ljus lampa+n ljus+armatur+en*ljus+armaturer+na lampor+na' 'ljusarmaturer'
+    'svag+a gul+a lampa+n ljus:et+armatur+en*ljus+armaturer+na lampor+na' 'ljusarmaturer'
     "Armaturerna kastar ett svagt gult ljus, knappt tillräckligt för
     det stora utrymmet. "
     isPlural = true
@@ -209,14 +210,14 @@ syncCatwalkSouthWest: SyncCatwalkRoom
     north = syncCatwalkNorth
 ;
 
-+ Fixture 'väst v betong vägg*väggar' 'västra väggen'
++ Fixture 'väst+ra v betong+s vägg+en*väggar+na' 'västra väggen'
     "Väggen verkar vara gjord av betong. Den sträcker sig uppåt och
     nedåt in i mörkret. En stege som leder uppåt är fäst vid
     väggen här. "
 ;
 
 + scswLadderUp: StairwayUp ->slrLadderDown
-    'smidessjärn järn stege' 'smidessjärnsstege'
+    'smide^s+järn+stege+en' 'smidessjärnsstege'
     "Stegen går uppför väggen<< slrDoor.isOpen
       ? " till en liten öppning ovanför" : "" >>. "
     
@@ -253,13 +254,13 @@ syncCatwalkSouthWest: SyncCatwalkRoom
 + Fixture, BasicContainer
     isOpen = (slrDoor.isOpen)
 ;
-++ Distant 'liten öppning' 'liten öppning'
+++ Distant 'liten lilla öppning+en' 'liten öppning'
     "En flik av himlen är synlig genom öppningen. "
 
     dobjFor(LookIn) remapTo(Examine, scswSky)
     dobjFor(LookThrough) remapTo(Examine, scswSky)
-;
-++ scswSky: Distant 'flik/himmel' 'himmel'
+; 
+++ scswSky: Distant 'synlig+a flik+en/himmel/himlen' 'himmel'
     "Endast en liten flik av himlen är synlig härifrån. "
 ;
 
@@ -278,7 +279,7 @@ syncCatwalkNorth: SyncCatwalkRoom
     east = syncCatwalkGapWest
 ;
 
-+ Fixture 'väst v betong vägg*väggar' 'västra väggen'
++ Fixture 'väst v betong+vägg+en*väggar+na' 'västra väggen'
     "Väggen verkar vara gjord av betong. Den sträcker sig uppåt och
     nedåt in i mörkret. "
 ;
@@ -303,7 +304,7 @@ MultiFaceted
 
 /* the catwalk sections and the gap */
 syncCatwalkGapFloor: catwalkFloor
-    'annan (öst) (väst) (ö) (v) sektion/gap/fortsättning' 'gångbro'
+    'annan (öst+ra) (väst+ra) (ö) (v) gångbro+n/sektion+en/gap+et/fortsättning+en' 'gångbro'
     "Gångbron avbryts av ett gap, som ser ut att vara ungefär
     tre meter brett, österut. "
 
@@ -321,7 +322,7 @@ syncCatwalkGapFloor: catwalkFloor
 metalCrateTop: MultiFaceted
     instanceObject: Enterable {
         -> syncOnCrate
-        'särskilt stor enorm polerad aluminium metall låda/topp/bro'
+        'särskilt stor+a enorm+a polerad+e aluminium metall+låda+n/topp+en/bro+n'
         'metallåda'
         "Lådans topp är ungefär i nivå med gångbron,
         vilket skapar en bro över gapet. "
@@ -379,7 +380,7 @@ syncCatwalkGapWest: SyncCatwalkRoom
 ;
 // TODO: du kan inte ändra den
 
-++ CustomImmovable 'handskriven skylt+en' 'handskriven skylt'
+++ CustomImmovable 'handskriven handskrivna skylt+en' 'handskriven skylt'
     "<q>Ur funktion---Fastnat.</q> "
     cannotTakeMsg = 'Att ta bort skylten kan skapa en säkerhetsrisk;
         bättre att låta den vara. '
@@ -402,7 +403,7 @@ syncOnCrate: SyncCatwalkRoom
     roomParts = static (inherited - catwalkFloor)
 ;
 
-+ Floor 'stor enorm polerad aluminium metall låda/topp/bro'
++ Floor 'stor+a enorm+a polerad+e aluminium gångbrons topp+en metall+låda+n'
     'toppen av lådan'
     "Lådans topp är av polerad aluminium. Lådan är kilad
     mellan ändarna av gångbron, och toppen är ungefär i nivå
@@ -415,7 +416,7 @@ syncOnCrate: SyncCatwalkRoom
     }
 ;
 
-+ Distant '(öst) (väst) (ö) (v) gångbro/gångväg/sektion' 'gångbro'
++ Distant '(öst+ra) (väst+liga) (ö) (v) sektion+en gångbro+n/gångväg+en' 'gångbro'
     "Sektioner av gångbron ligger österut och västerut. "
 ;
 
@@ -468,11 +469,11 @@ syncCatwalkEast: SyncCatwalkRoom
     south asExit(down)
 ;
 
-+ Fixture 'öst ö betong vägg*väggar' 'östra väggen'
++ Fixture 'öst+ra ö betong+vägg+en*betongväggar+na' 'östra väggen'
     "Väggen verkar vara gjord av betong. "
 ;
 
-+ sceDoor: Keypad, Lockable, Door 'trist grå+a "kontor" kontor^s+dörr+en' 'grå dörr'
++ sceDoor: Keypad, Lockable, Door 'trist+a grå+a "kontor" kontor^s+dörr+en' 'grå dörr'
     "<q>Kontor</q> är målat med bleknade bokstäver på den trista
     grå dörren. Ett numeriskt knappsatslås sitter där dörrhandtaget
     normalt skulle vara. "
@@ -541,7 +542,7 @@ syncCatwalkEast: SyncCatwalkRoom
     dobjFor(TypeLiteralOn) remapTo(EnterOn, sceKeypad, gLiteral)
 ;
 ++ sceKeypad: Keypad, Fixture
-    'elektronisk knappsats (dörr) lås låsande lås/mekanism/knappsats'
+    'elektronisk+a (dörrens) knappsats:en^s+lås+et/mekanism+en'
     'knappsatslås'
     "Det är en elektronisk knappsats. Det finns ingen display; bara knappar
     märkta 0 till 9. "
@@ -589,7 +590,7 @@ syncCatwalkEast: SyncCatwalkRoom
     dobjFor(TypeLiteralOn) asDobjFor(EnterOn)
 ;
 +++ Button, Component
-    '(lås) (knappsats) numrerade 0 1 2 3 4 5 6 7 8 9 knapp*knappar'
+    '(låsets) (knappsats) numrerade 0 1 2 3 4 5 6 7 8 9 knapp+en*knappar+na'
     'låsknappsatsknapp'
     "Knappsatsen har knappar märkta 0 till 9. "
 
@@ -598,7 +599,7 @@ syncCatwalkEast: SyncCatwalkRoom
 ;
 
 
-+ Enterable ->(location.north) 'trä träaktig liten struktur/hus/kontor'
++ Enterable ->(location.north) 'trä+ig träaktig liten lilla struktur+en/hus+et/kontor+et'
     'trästruktur'
     "Strukturen är gjord av trä och ser ut som ett litet hus.
     En dörr märkt <q>Kontor</q> leder in. "
@@ -640,8 +641,8 @@ syncLabOffice: Room
 ;
 
 + Fixture
-    'television statisk liten video monitor+n//rad/skärm/skärmar/
-    bild/bilder/tv/tv\'s/tvs/television*monitorer+na televisioner+na'
+    'television statisk+a liten lilla rad+en video monitor+n/skärm+en/
+    bild+en/tv/tvs/television*bilder+na monitorer+na skärmar+na'
     'rad av monitorer'
     "De ser ut som övervakningsmonitorer man skulle se i
     en närbutik: små skärmar som visar statiska bilder
@@ -661,19 +662,19 @@ syncLabOffice: Room
     dobjFor(Examine) { verify() { inherited(); } }
 ;
 
-+ Heavy, Chair 'aeleron kontors (skrivbords) stol' 'kontorsstol'
++ Heavy, Chair 'aeleron kontors (skrivbords) stol+en' 'kontorsstol'
     "Det är en av de där fancy Aeleron-stolarna, den typ som alla
     VP:s har på Omegatron. "
 ;
 
-+ Heavy, Surface 'u-format skrivbord' 'skrivbord'
++ Heavy, Surface 'u-formade u-format skrivbord+et' 'skrivbord'
     "Skrivbordet är format som ett U, så att det omsluter sin
     användare. En dator är placerad något till sidan
     om mitten. "
 ;
 
 ++ Keypad, CustomImmovable
-    'mitamail e-post epost dator/terminal' 'dator'
+    'mitamail+en e-post epost dator+n/terminal+en' 'dator'
     "Det är faktiskt inte en dator; det är egentligen en av de där
     hemska MitaMail e-postterminalerna. Ingen påstår sig gilla
     dem, men Mitachron har på något sätt sålt miljoner av dem;
@@ -874,7 +875,7 @@ syncLabOffice: Room
 ;
 
 +++ mitaMailDisplay: Component, Readable
-    'mitamail e-post epost dator terminal bärnstensfärgad text display/skärm'
+    'mitamail+en e-post epost datorns terminal+ens bärnstensfärgad+e text+en display+en/datordisplay+en/skärm+en'
     'datordisplay'
     "Displayen visar för närvarande ett meddelande i bärnstensfärgad text:
     <.p><<location.showMessage>> "
@@ -887,7 +888,7 @@ syncLabOffice: Room
  *   they'll just refer to the overall keyboard object. 
  */
 +++ Component
-    'mitamail e-post epost dator terminal tangentbord/tangent/tangenter' 'tangentbord'
+    'mitamail+en e-post epost datorns terminal+ens tangentbord+et/tangent+er*tangenter+na' 'tangentbord'
     "Tangentbordet har en rad funktionstangenter ovanför de vanliga
     tangenterna. Du har använt dessa precis tillräckligt för att veta att du trycker
     på F7-tangenten för att gå till nästa meddelande, och F13 för att gå till
@@ -902,7 +903,7 @@ class MitaMailFKey: Button, Component
 ;
 ++++ MitaMailFKey
     'f1 f2 f3 f4 f5 f6 f8 f9 f10 f11 f12 f14 f15 f16 f17
-    funktion (tangent)/(tangenter)/rad'
+    (funktion^s+tangent+en)*(funktion^s+tangenter+na) rader+na'
     'rad av funktionstangenter'
 
     dobjFor(Push) { action() { "Du trycker på tangenten, och displayen
@@ -916,7 +917,7 @@ class MitaMailFKey: Button, Component
     dobjFor(Push) { action() { location.location.prevMessage(); } }
 ;
 
-+ Fixture, Consultable 'hylla/hyllor/bokhylla/bokhyllor' 'hyllor'
++ Fixture, Consultable 'hylla+n/bokhylla+n*bokhyllor+na hyllor+na' 'hyllor'
     "Hyllorna är fulla av svarta pärmar, uppradade i prydliga rader. "
     isPlural = true
 
@@ -938,7 +939,7 @@ class MitaMailFKey: Button, Component
 ;
 
 /* likewise, include an unbook in case we TAKE it before finding it */
-++ LibUnbook '37 effektivitetsstudie'
+++ LibUnbook '37 effektivitetsstudie+n'
     notHereMsg = 'Du ser inte den ligga framme, men den kan vara
         begravd bland de andra pärmarna; du kanske kan
         hitta den om du letar efter den. '
@@ -948,7 +949,7 @@ class MitaMailFKey: Button, Component
     "Du skannar hyllorna, men du hittar inte det du letar efter. "
 ;
 ++ efficiencyStudy37: PresentLater, Readable, Consultable
-    '37 effektivitet svart studie/pärm' 'Effektivitetsstudie #37'
+    '37 svart+a effektivitet^s+studie/pärm+en' 'Effektivitetsstudie #37'
     "Den svarta pärmen är märkt <q>Effektivitetsstudie #37</q> på
     ryggen. "
 
@@ -966,7 +967,7 @@ class MitaMailFKey: Button, Component
     /* OPEN BINDER is equivalent to READ */
     dobjFor(Open) asDobjFor(Read)
 ;
-+++ es37Overview: Component, Readable 'översikt avsnitt' 'Översiktsavsnitt'
++++ es37Overview: Component, Readable 'översikt:en^s+avsnitt+et' 'Översiktsavsnitt'
     "Du bläddrar till Översiktsavsnittet. Som du förväntade dig är detta inte
     en <q>effektivitetsstudie</q> alls, utan information om något
     som kallas Projekt Galvani-2. Det finns inget specifikt om vad
@@ -981,7 +982,7 @@ class MitaMailFKey: Button, Component
     <q>försöksperson</q>), vilket eliminerar behovet av huvudbonaden.
     <.reveal galvani-2-overview> "
 ;
-+++ es37Budget: Component, Readable 'budget avsnitt' 'Budgetavsnitt'
++++ es37Budget: Component, Readable 'budget+avsnitt+et' 'Budgetavsnitt'
     "Du läser över budgetavsnittet med förvåning. Detta enskilda
     projekt har en finansiering som är mer än fem gånger större än hela
     din avdelnings årliga budget. Det konstiga är att du
@@ -989,7 +990,7 @@ class MitaMailFKey: Button, Component
     detta projekt; de verkar finansiera detta som en ren forsknings-
     insats. "
 ;
-+++ es37Test: Component, Readable 'fältutplaceringstest avsnitt'
++++ es37Test: Component, Readable 'fältutplacering:en^s+test+et/avsnitt+et'
     'Fältutplaceringstestsektion'
     "Detta avsnitt beskriver ett fälttest av Galvani-2. Utplaceringen
     var vid en nylig rättegång. Du kommer ihåg det---en
@@ -1013,7 +1014,7 @@ class MitaMailFKey: Button, Component
     under påverkan av Galvani-fältet och dömde fördelaktigt
     som ett resultat.</q> "
 ;
-+++ es37Challenges: Component, Readable 'utmaningar avsnitt'
++++ es37Challenges: Component, Readable 'utmaning:en^s+avsnittet'
     'Utmaningsavsnitt'
     "Detta avsnitt är kort och skissartat. Det listar flera frågor
     som måste vara bekanta för dem som arbetar med projektet, men betyder
@@ -1023,7 +1024,7 @@ class MitaMailFKey: Button, Component
     ett pågående problem med <q>dekoherenseffekter</q> hindrar
     projektet från att nå sina fulla mål. "
 ;
-+++ es37Futures: Component, Readable 'framtidsplaner avsnitt'
++++ es37Futures: Component, Readable 'framtidsplaner:+avsnitt+et/framtidsplanering:en^s+avsnitt+et'
     'Framtidsplaneravsnitt'
     "<q>De första planerade produktionsutplaceringarna av Galvani-2-
     enheterna är fortfarande mestadels i regeringsbyggnader. Men vi
@@ -1069,7 +1070,7 @@ class ES37Topic: ConsultTopic
 
 /* a generic object for the binders */
 ++ GenericObject, CustomImmovable
-    'identisk svart pärm/pärmar' 'svarta pärmar'
+    'identisk+a svart+a pärm+en/pärmar+na' 'svarta pärmar'
     "Pärmarna är uppradade i prydliga rader och fyller helt
     hyllorna. De är alla identiska, förutom att många är märkta.
     Du kanske kan hitta en specifik om du visste vad du
@@ -1095,7 +1096,7 @@ class ES37Topic: ConsultTopic
  */
 class SyncLabRoom: Room
     /* all of these locations can be called "sync lab" */
-    vocabWords = 'sync synkrotron synchrotron lab/laboratorium'
+    vocabWords = 'sync synkrotron synchrotron lab labb+et/laboratorium+et'
     name = 'Synkrotronlaboratoriet'
     /* 
      *   these locations use a special set of room parts, as walls are not
@@ -1134,14 +1135,14 @@ class SyncLabRoom: Room
 ;
 
 syncFloor: Floor
-    '(sync) (synkrotron) (lab) (laboratorium) grovt betong golv/platta'
+    '(sync) (synkrotron) (lab) (labb+ets) (laboratorium+ets) grovt grtova betong+golv+et/betong+platta+n'
     'golv'
     "Golvet är en platta av grov betong. "
 ;
 
 syncCrates: CustomImmovable, RoomPart
-    'trä kartong
-    låda/lådor/kista/kistor/stapel/staplar/behållare/behållare'
+    'kartong
+    trä+låda+n/kista+n/stapel+n/behållare+n*behållar+na lådor+na trälådor+na kistor+na staplar+na'
     'trälådor'
     "Det finns en blandning av trälådor och kartonger i varierande
     storlekar, mestadels stora. Några är märkta med några slumpmässiga bokstäver
@@ -1204,7 +1205,7 @@ syncLab1: SyncLabRoom
     fritt, vilket ger tillgång till en metalltrappa som leder upp
     mot norr. En väg är också öppen mot nordost. "
 
-    vocabWords = 'hörn/gångväg'
+    vocabWords = 'hörn+et/gångväg+en'
 
     northeast = syncLab2
     up = sl1Stairs
@@ -1216,17 +1217,17 @@ syncLab1: SyncLabRoom
     northwest = (west)
 ;
 
-+ Fixture 'väst v vägg*väggar' 'västra väggen'
++ Fixture 'väst+ra v vägg+en*väggar+na' 'västra väggen'
     "Området längs den västra väggen är mestadels fritt, vilket ger
     tillgång till en metalltrappa som leder upp mot norr. "
 ;
 
-+ EntryPortal ->(location.northeast) 'väg' 'väg'
++ EntryPortal ->(location.northeast) 'väg+en' 'väg'
     "Vägen leder nordost genom staplarna av lådor. "
 ;
 
 + sl1Stairs: StairwayUp ->scswStairDown
-    'metall trappa+n/trappuppgång+en*trappor+na' 'metalltrappa'
+    'metall+trappa+n/trappuppgång+en*trappor+na' 'metalltrappa'
     "Trappan leder upp längs den västra väggen och försvinner in i
     skuggan. "
 ;
@@ -1239,7 +1240,7 @@ syncLab1: SyncLabRoom
 metalCrate: MultiFaceted
     locationList = [syncLab2, syncLab4]
     instanceObject: Heavy, TravelPushable, Underside {
-        'särskilt stor enorm polerad aluminium metall låda' 'metallåda'
+        'särskilt stor+a enorm+a polerad+e aluminium metall+låda+n' 'metallåda'
 
         desc()
         {
@@ -1460,7 +1461,7 @@ metalCrate: MultiFaceted
 ;
 
 + metalCrateWheels: Component, Hidden
-    'hjulställ/hjulställen/hjul/hjulen/(uppsättning)' 'hjulställ'
+    '(uppsättning+en) hjulställ+et/hjul+et*hjulställen+a hjulen+a' 'hjulställ'
     "Det är för mörkt under lådan för att se mycket detaljer, men det
     ser ut som om det finns ett hjul i varje hörn, förmodligen för att
     göra det möjligt att flytta lådan genom att putta den. "
@@ -1505,11 +1506,11 @@ syncLab2: SyncLabRoom
     east: noTravelCrates { }
 ;
 
-+ EntryPortal ->(location.southwest) 'smal passage' 'smal passage'
++ EntryPortal ->(location.southwest) 'smal+a passage+n' 'smal passage'
     "Passagen leder sydväst mellan staplar av lådor. "
 ;
 
-+ EntryPortal ->(location.southeast) 'liten öppning' 'liten öppning'
++ EntryPortal ->(location.southeast) 'liten lilla öppning+en' 'liten öppning'
     "Det finns precis tillräckligt med utrymme mellan lådorna för att gå sydost. "
 ;
 
@@ -1534,7 +1535,7 @@ syncLab3: SyncLabRoom
     southwest = syncLab4
 ;
 
-+ Distant 'metall gångbro/undersida/gap/ände/ändar' 'metallgångbro'
++ Distant 'metall:en+gångbro+n/undersida+n/gap+et/ände+n*ändar+na' 'metallgångbro'
     "Gångbron löper öster och väster. Den avbryts av ett
     gap på ungefär tre meter<< metalCrate.isIn(syncLab3)
       ? ", som fylls av en enorm metallåda fastkilad
@@ -1542,12 +1543,12 @@ syncLab3: SyncLabRoom
       >>. "
 ;
 
-+ EntryPortal ->(location.east) 'öst ö passage' 'östra passagen'
++ EntryPortal ->(location.east) 'öst+ra ö passage+n' 'östra passagen'
     "Passagen leder österut, mellan staplar av lådor. "
 ;
 
 + EntryPortal ->(location.southwest)
-    'smal sydväst sv öppning' 'smal öppning'
+    'smal+a sydväst+ra sv öppning+en' 'smal öppning'
     "Öppningen ser precis tillräckligt stor ut för att ta sig igenom. Den leder
     sydväst genom staplarna av lådor. "
 ;
@@ -1584,7 +1585,7 @@ syncLab4: SyncLabRoom
     utrymmet, vilket lämnar lite plats att röra sig på. En smal öppning
     genom lådorna leder nordost. "
 
-    vocabWords = 'trång mörk vrå'
+    vocabWords = 'trång+a mörk+a vrå+n'
 
     northeast = syncLab3
     south: NoTravelMessage { "Trappan och lådorna som är packade
@@ -1616,7 +1617,7 @@ syncLab4: SyncLabRoom
 ;
 
 + EntryPortal ->(location.northeast)
-    'smal nordost no passage/öppning' 'smal öppning'
+    'smal+a nordost nordöstra no nö passage+n/öppning+en' 'smal öppning'
     "Passagen leder nordost. Den ser knappt passerbar ut. "
 ;
 
@@ -1652,7 +1653,7 @@ syncLab5: SyncLabRoom
     trappa, som går från gångbron ovanför ner till
     golvet. "
 
-    vocabWords = 'sync synkrotron lab/laboratorium/tunnel'
+    vocabWords = 'sync synkrotron lab labb+et/laboratorium+et/tunnel+n'
 
     roomParts = (inherited - syncLights)
 
@@ -1663,22 +1664,22 @@ syncLab5: SyncLabRoom
     southeast = (east)
 ;
 
-+ Fixture 'öst ö betong vägg*väggar' 'betongvägg'
++ Fixture 'öst+ra ö betong+en vägg+en*väggar+na' 'betongvägg'
     "Väggen är gjord av betong. "
 ;
 
-+ EntryPortal ->(location.west) 'väst v öppning' 'öppning'
++ EntryPortal ->(location.west) 'väst+ra v öppning+en' 'öppning'
     "Öppningen leder genom lådorna västerut. " 
 ;
 
-+ Distant 'metall gångbro/gångväg' 'metallgångbro'
++ Distant 'metall+gångbro+n/gångväg+en' 'metallgångbro'
     "Gångbron utgör ett lågt tak över tunneln. Vid den
     södra änden slutar tunneln i undersidan av en trappa
     som leder ner från gångbron till golvet. "
 ;
 
 + sl5Stairs: SyncStairUnderside
-    'metall trappa/trappor/undersida' 'metalltrappa'
+    'metall:en+trappa+n/undersida*metalltrappor+na' 'metalltrappa'
     "Trappan sluttar ner från gångbron till golvet.
     Endast undersidan är synlig härifrån. "
 ;
@@ -1739,26 +1740,26 @@ syncLab6N: SyncLabRoom
 ;
 
 + sl6nStairs: StairwayUp ->sceStairs
-    'metall trappa/trappor/(fot)' 'trappa'
+    '(fot) metall trappa+n*trappor+na' 'trappa'
     "Metalltrappan leder uppåt mot norr. "
 ;
 
 + sl6Door: Lockable, Door ->syncDoor
-    'matt metalldörr' 'matt metalldörr'
+    'matt+a metalldörr+en' 'matt metalldörr'
     "Dörren är gjord av en matt metall. "
 ;
 
-+ Fixture 'betong öst ö vägg*väggar' 'östra väggen'
++ Fixture 'betong öst+ra ö vägg+en*väggar+na' 'östra väggen'
     "Väggen är gjord av betong. Skylten <q>Kontor,</q> med
     en pil som pekar uppåt, är målad vid trappan. "
 ;
-++ Decoration 'målad "kontor" skylt/pil' '<q>Kontor</q>-skylt'
+++ Decoration 'målad+e "kontor" kontor^s+skylt+en/pil+en' '<q>Kontor</q>-skylt'
     "Skylten lyder <q>Kontor,</q> med en pil som pekar
     upp för trappan. "
 ;
 
 class SyncLab6Crate: CustomImmovable
-    'stor trä trälåda' 'stor trälåda'
+    'stor+a trä:d+låda+n' 'stor trälåda'
     "Lådan har inga uppenbara märkningar. Den är lite
     högre än du och nästan för bred för passagen, så
     det är omöjligt att se runt den. "
@@ -1888,12 +1889,12 @@ syncLab6S: SyncLabRoom
     northeast = (noEast)
 ;
 
-+ EntryPortal ->(location.west) 'väst v öppning' 'öppning'
++ EntryPortal ->(location.west) 'väst+ra v öppning+en' 'öppning'
     "Öppningen är precis stor nog för att låta dig smita igenom
     västerut. "
 ;
 
-+ sl6sStairs: PresentLater, Distant 'metall trappa/trappor' 'trappa'
++ sl6sStairs: PresentLater, Distant 'metall trappa+n*trappor+na' 'trappa'
     "Du kan precis se trappan på andra sidan
     lådan. "
 ;

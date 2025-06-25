@@ -95,8 +95,8 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
 ;
 
 + Graffiti
-    'psykedelisk slumpmässig vibration
-    konst/klotter/kladd/partikel/(låda)/stillbilder/film/kvadrater/prick/linjer'
+    'psykedelisk+a slumpmässig+a vibration
+    konst+en/klotter/klottret/kladd+et/partikel+n/(låda+n)/film+en/prick+en*linjer+na stillbilder+na kvadrater+na'
     'graffiti'
     "Det är den typiska blandningen av psykedelisk konst och slumpmässigt klotter.
     En rolig bit här är märkt <q>Stillbilder från filmen <q>Partikel
@@ -105,7 +105,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
     Det är ett kvantmekanikskämt. "
 ;
 
-+ alley1Stairs: StairwayUp 'trappa/trappuppgång/trappor' 'trappuppgång'
++ alley1Stairs: StairwayUp 'trappa+n/trappuppgång+en*trappor+na' 'trappuppgång'
     "Trapporna leder uppåt. "
 
     /* a traveler can only pass when the crowd blocks aren't in effect */
@@ -117,7 +117,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
     "Det är en trädörr märkt <q>3.</q> "
 ;
 
-+ room4Door: Door 'rum 4 rum/dörr*dörrar' 'dörr till rum 4'
++ room4Door: Door 'rum 4+e rum+met/dörr+en*dörrar+na' 'dörr till rum 4'
     "Det är en trädörr märkt <q>4.</q> "
 
     dobjFor(LookUnder) { action() { "En bunt kablar som kommer från
@@ -173,7 +173,7 @@ class StackFixture: CustomFixture
         runt på de här sakerna. '
 ;
 
-+ PermanentAttachment, StackFixture 'bunt/kabel/kablar' 'bunt med kablar'
++ PermanentAttachment, StackFixture 'bunt+en/kabel+n*kablar+na' 'bunt med kablar'
     "Bunten med kablar är fäst vid baksidan av den svarta lådan och
     löper under dörren. "
 
@@ -181,7 +181,7 @@ class StackFixture: CustomFixture
 ;
 
 /* the stack as a generic object */
-+ Decoration 'brian brians stamers ditch day stack'
++ Decoration 'brian brians stamers ditch day stack+en'
     'Ditch Day-stack'
     "<<room4Sign.described
       ? "Brians stack består av den svarta lådan på bordet. Skylten
@@ -201,7 +201,7 @@ class StackFixture: CustomFixture
 ;
 
 ++ blackBox: TestGearAttachable, CustomFixture
-    'svart+a plåt+låda+n/låd-kontakt+en/låd+kontakt+en' 'svart låda'
+    'svart+a plåt+låda+n/låd-kontakt+en' 'svart låda'
     "Lådan ser lite improviserad ut; den kan ha varit en mikrovågsugn
     vid något tillfälle, men om det fanns en dörr har den ersatts av
     plåt, och hela saken har målats svart.
@@ -739,22 +739,21 @@ class StackFixture: CustomFixture
 ;
 
 +++ PluggableComponent
-    '(svart) (låda) ovanlig liten t-formad elektrisk anslutning
-    stift/kontakt/stift/stift/hål/hål'
+    '(svart+a) (låda) ovanlig+a lilla liten t-formad+e elektrisk+a anslutning+en/
+    stift+et/kontakt+en*stift+en/hål+en'
     'elektrisk anslutning'
     "Anslutningen är inte av standardtyp, eller åtminstone inte en du är
     bekant med. Den har en kombination av stift och hål, ungefär ett
     dussin av varje, och ett litet T-format stift. "
-
-    disambigName = 'svart lådanslutning'
+    disambigName = 'svarta lådanslutningen'
 ;
 
-++ Unthing 'tidigare mikrovågsugn' 'tidigare mikrovågsugn'
+++ Unthing 'tidigare mikrovågsugn+en' 'tidigare mikrovågsugn'
     notHereMsg = 'Det finns ingen mikrovågsugn här&mdash;bara den där svarta
         lådan som kanske var en mikrovågsugn i ett tidigare liv. '
 ;
 
-++ room4Sign: CustomImmovable, Readable 'ark/papper/skylt' 'skylt'
+++ room4Sign: CustomImmovable, Readable 'ark+et/papper+et/pappret/skylt+en' 'skylt'
     "Det är en lasertryckt uppsättning instruktioner för stacken:
     <.p><.blockquote>
     <font face=tads-sans><b>Brians Svarta Låda av Mysterium</b>
@@ -823,7 +822,7 @@ class AaronErinConvList: object
  */
 + aaron: IntroPerson
     'lång tunn ung mager krulligt rött hår rödhårig
-    kille/pojke/man/student/aaron*studenter män'
+    kille+n/pojke+n/man+nen/student+en/aaron*studenter+na män+nen'
     'lång, tunn student'
     "Han är lång och så tunn att han ser nästan undernärd ut. Hans hår är
     rött och krulligt, som om han just fått en stor statisk elektrisk stöt. "
@@ -1123,7 +1122,7 @@ class AaronErinConvList: object
  *   Erin
  */
 + erin: IntroPerson
-    'kort ung ungdomlig blond blondin student/kvinna/erin*studenter kvinnor'
+    'kort+a ung+a ungdomlig+a blond+a blondin+en student+en/kvinna+n/erin*studenter+na kvinnor+na'
     'kort blond kvinna'
     "Hon är kort och ser väldigt ung ut, även för en högskolestudent. "
     properName = 'Erin'
@@ -1235,7 +1234,7 @@ class AaronErinConvList: object
     }
 ;
 
-++ Fixture, Container 'ficka' 'ficka'
+++ Fixture, Container 'ficka+n' 'ficka'
     contentsListed = nil
     dobjFor(Examine)
     {
@@ -1249,7 +1248,7 @@ class AaronErinConvList: object
     dobjFor(LookIn) asDobjFor(Examine)
 ;
 
-+++ labKey: DitchKey 'metall "lab" laboratorium nyckel*nycklar' 'labb-nyckel'
++++ labKey: DitchKey '"lab" laboratorium+et metall:en+nyckel+n/labb:et+nyckel+n*nycklar+na' 'labb-nyckel'
     "<q>Lab</q> är handskrivet på den. "
 
     /* make this pre-known so we can ask about it */
@@ -1819,7 +1818,7 @@ class AaronErinConvList: object
 ;
 
 + equipInAssembly: PresentLater, Immovable
-    'omonterad elektronik mitachron utrustning/högar'
+    'omonterad+e elektronik elektronisk+a mitachron+utrustning+en/mitachron-+utrustning+en/högar+na'
     'Mitachron-utrustning'
     "Med all aktivitet som pågår kan du inte komma tillräckligt nära
     för att få en bra titt på något. Det ser just nu bara ut som en massa
@@ -1846,9 +1845,9 @@ class AaronErinConvList: object
  *   replaced with the Mitavac.  
  */
 + mitaTestPro: PresentLater, Heavy
-    'överdimensionerad klarguld ultramodern enorm
-    mitatest ultimat pro industriell dubbel platina
-    super 3000 stordator (typ)/maskin/megatestare/text/dator'
+    'överdimensionerad+e klarguld+iga ultramodern+a enorm+a
+    mitatest ultimat+a pro industriell+a dubbel dubbla platina 
+    super 3000 stordator+n megatestare+n/(typ+en)/maskin+en/text+en/dator+n'
     'MegaTestare 3000'
     "Överdimensionerad text, i ultramodern klarguld typsnitt,
     tillkännager stolt maskinens namn: MitaTest Ultimat Pro
@@ -1874,20 +1873,20 @@ class AaronErinConvList: object
         sysselsatta med att manövrera den. "
 ;
 ++ Component
-    '(megatestare) (3000) skärm/skärmar'
+    '(megatestare+ns) (3000) skärm+en/skärmar+na'
     'MegaTestare-skärmar'
     "MegaTestaren har många skärmar, men du vet inte hur man
     ska tolka den visade informationen. "
     isPlural = true
 ;
 ++ Component
-    '(megatestare) (3000) kontroller' 'MegaTestare-kontroller'
+    '(megatestare) (3000) kontroller+n/MegaTestare-kontroller+n' 'MegaTestare-kontroller'
     "MegaTestaren är lika fullproppad med kontroller som cockpiten på
     ett passagerarflygplan, och de är lika obegripliga för dig. "
     isPlural = true
 ;
 
-+ mitaTestOps: PresentLater, Person 'mitachron tekniker' 'tekniker'
++ mitaTestOps: PresentLater, Person 'mitachron:+tekniker+n' 'tekniker'
     "De bär alla långa vita labbrockar. De är flitigt sysselsatta med att manövrera
     MegaTestare 3000, medan Belker övervakar noga. Den
     intensiva övervakningen gör dem uppenbarligen nervösa. "
@@ -1901,7 +1900,7 @@ class AaronErinConvList: object
     specialDesc = ""
 ;
 ++ mitaTestOpsCoats: InitiallyWorn
-    'teknikernas knälånga långa vita labbrock/labbrockar' 'labbrockar'
+    'teknikernas knälånga lång+a vit0a labbrock+en*labbrockar+na' 'labbrockar'
     "Teknikerna bär knälånga vita labbrockar. "
     isPlural = true
     isListedInInventory = nil
@@ -1921,7 +1920,7 @@ class AaronErinConvList: object
  *   of the game from the one we used in the introduction, since at an
  *   implementation level there's not much in common.  
  */
-+ xojo2: PresentLater, Person 'provanställd 119297 xojo/(anställd)' 'Xojo'
++ xojo2: PresentLater, Person 'provanställd+a 119297 xojo/(anställd+a)' 'Xojo'
     "Xojo är en asiatisk kille i tjugoårsåldern, något längre än
     du och mycket smal. Han bär en knälång vit labbrock. "
 
@@ -1937,7 +1936,7 @@ class AaronErinConvList: object
 ;
 
 ++ DisambigDeferrer, InitiallyWorn
-    'knälång lång vit labbrock' 'labbrock'
+    'knälång+a lång+a vit+a labbrock+en' 'labbrock'
     "Xojo bär en knälång vit labbrock. "
 
     isListedInInventory = nil
@@ -2121,8 +2120,8 @@ class AaronErinConvList: object
  *   puzzle.  
  */
 + mitavac: PresentLater, Heavy
-    'toppmodell stordator mitavac grå 3000
-    dator/superdator/enhet/enheter/namnskylt'
+    'toppmodell+s stordator mitavac grå+a 3000
+    dator+n/superdator+n/enhet+en/namnskylt+en*enheter+na'
     'Mitavac 3000'
     "Det är en serie gråa kylskåpsstora enheter, uppradade
     sida vid sida längs en vägg. Namnskylten identifierar den som
@@ -2137,18 +2136,18 @@ class AaronErinConvList: object
 ;
 ++ Component
     '(mitavac) (stordator) (dator) (3000) blinkande
-    kontroll/kontroller/vred/vredar/knapp/knappar/panel/lampa/lampor'
+    Mitavac-kontroller+n/kontroll+en/vred+et/knapp+en/panel+en/lampa+n*lampor+na knappar+na kontroller+na'
     'Mitavac-kontroller'
     "Datorn har en panel med vred och knappar och blinkande
     lampor. Du skulle inte ha en aning om hur man använder någon av dem, även
     om teknikerna skulle låta dig komma i närheten av dem. "
 ;
-++ SimpleNoise 'lågt pulserande brummande/ljud/oljud' 'pulserande ljud'
+++ SimpleNoise 'lågt pulserande brummande ljud+et/oljud+et' 'pulserande ljud'
     "Mitavac avger ett lågt pulserande brummande. "
 ;
 
 + mitavacTechs: PresentLater, Person
-    'mitachron tekniker' 'tekniker'
+    'mitachron:+tekniker+n' 'tekniker'
 
     /* 
      *   note that we use no description here; we get it entirely from the
@@ -2163,7 +2162,7 @@ class AaronErinConvList: object
     plKey = 'mitavac'
 ;
 ++ InitiallyWorn
-    'teknikernas knälånga långa vita labbrock/labbrockar' 'labbrockar'
+    'teknikernas knälånga långa vita labbrock+en*labbrockar+na' 'labbrockar'
     "Teknikerna bär knälånga vita labbrockar. "
     isPlural = true
     isListedInInventory = nil
@@ -2205,7 +2204,7 @@ class AaronErinConvList: object
  *   The crowd of students that shows up after we solve the stack 
  */
 + alley1Crowd: PresentLater, Actor
-    'folkmassa/student/studenter' 'folkmassa'
+    'student+en/folkmassa+n*studenter+na' 'folkmassa'
     "Ett par dussin studenter, tillsammans med Mitachron-teknikerna,
     rör sig omkring i gränden, går in och ut ur rum 4. "
 ;
@@ -2214,7 +2213,7 @@ class AaronErinConvList: object
     hörd. "
 ;
 ++ SimpleNoise
-    'folkmassans ljud/prat/sorl/samtal' 'folkmassans ljud'
+    'folkmassans ljud+et/prat+et/sorl+et/samtal+et' 'folkmassans ljud'
     "Gränden är fylld av ett kontinuerligt sorl av samtal från
     folkmassan. "
 ;
@@ -2384,7 +2383,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
     Bokhyllor täcker väggen ovanför skrivbordet. En dörr leder ut
     till gränden. "
 
-    vocabWords = '4 rum fyra'
+    vocabWords = '4+e fjärde fyra rum+met'
 
     east = r4Door
     out asExit(east)
@@ -2436,7 +2435,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
 
 ;
 
-+ r4Door: Door ->room4Door '(rum) (4) rum/dörr*dörrar' 'dörr'
++ r4Door: Door ->room4Door '(rum) (4) dörr+en/trädörr+en/rumsdörr+en*dörrar+na' 'dörr'
     "Det är en trädörr som leder ut till gränden. "
 
     /* don't allow leaving once we enter */
@@ -2446,7 +2445,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
 ;
 
 + r4Crowd: PresentLater, Person
-    'mitachron folkmassa/student/studenter/tekniker/tekniker' 'folkmassa'
+    'mitachron folkmassa+n/student+en/tekniker*studenter+na tekniker+na' 'folkmassa'
     "Folkmassan är en blandning av studenter och Mitachron-tekniker.
     Det finns bara plats för några få personer åt gången här inne, så
     de rör sig in och ut ur rummet. "
@@ -2456,7 +2455,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
         kommer och går, hjälper sig själva till snacksen. "
 ;
 ++ SimpleNoise
-    'folkmassans ljud/prat/sorl/samtal' 'folkmassans ljud'
+    'folkmassans ljud+et/prat+et/sorl+et/samtal+et' 'folkmassans ljud'
     "Gränden är fylld av ett kontinuerligt sorl av samtal från
     folkmassan. "
 ;
@@ -2465,16 +2464,16 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
     upptagna med att prata. "
 ;
 
-+ r4Desk: Heavy, Surface 'trä träskrivbord' 'skrivbord'
++ r4Desk: Heavy, Surface 'trä+iga träskrivbord+et' 'skrivbord'
     "Det är ett litet träskrivbord. "
 ;
 
-++ PresentLater, Wearable 'svart mitachron logotyp t-shirt' 'svart T-shirt'
+++ PresentLater, Wearable 'svart+a mitachron logotyp t-shirt+en' 'svart T-shirt'
     "Det är en svart T-shirt med Mitachron-logotypen. "
     plKey = 'logo-wear'
 ;
 ++ PresentLater, Readable
-    'arbeta på mitachron glansig broschyr' 'Mitachron-broschyr'
+    'arbeta på mitachron glansig+a broschyr+en/mitachron-broschyr+en' 'Mitachron-broschyr'
     "Det är en glansig broschyr med titeln <q>Arbeta på Mitachron.</q> "
 
     readDesc = "Du bläddrar igenom broschyren och hittar massor av
@@ -2485,7 +2484,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
     plKey = 'logo-wear'
 ;
 ++ logoCap: PresentLater, Wearable
-    'svart jätte gigantisk novelty mitachron logotyp baseboll+keps+en/hatt'
+    'svart+a jätte gigantisk+a novelty mitachron logotyp+en baseboll+keps+en/hatt+en'
     'basebollkeps'
     "Den är löjligt stor---den är som en av de där tio-gallons
     Texas-hattarna, men i form av en basebollkeps. Den är svart, med
@@ -2520,9 +2519,8 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
 ;
 
 ++ CustomImmovable, Food
-    'snacks fest muta/mat/maträtter/bricka/choklad/choklader/godis/godisar/
-    kaka/kakor/kex/kexen/druva/druvor/jordgubbe/jordgubbar/
-    frukt/frukter/ost/snacks/snacksen/godbit/godbitar'
+    'fest+liga muta+n/mat+en/bricka+n/choklad+en/godis+et/kaka+n/kex+et/druva+n/jordgubbe+n/
+    frukt+en/ost+en/godbit+en/godbitar+na snacks+en frukter+na jordgubbar+na druvor+na kex+en kakor+na maträtter+na choklader+na godisar+na'
     'festbricka'
     "Mutan är en väsentlig del av varje Ditch Day-stack; när
     underklassarna har löst huvuddelen av stacken, är mutan
@@ -2551,26 +2549,26 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
     }
 ;
 
-+ Bed, Heavy 'enkel+säng+en' 'säng'
++ Bed, Heavy 'enkel:+säng+en' 'säng'
     "Det är en enkel enkelsäng med vita lakan. "
 
     dobjFor(LookUnder) { action() { "Du har ingen anledning att snoka runt
         i någon annans rum. Även om det fanns, säg, en dollarsedel där,
         skulle den inte vara din att ta. "; } }
 ;
-++ Decoration 'enkla vita (säng) lakan/sängkläder' 'sängkläder'
+++ Decoration 'enkla vita (säng) lakan+et*sängkläder+na' 'sängkläder'
     "De är bara enkla vita lakan, med den där institutionella looken. "
     isPlural = true
 ;
 
-+ Chair, CustomImmovable 'rak trä trästol' 'stol'
++ Chair, CustomImmovable 'rak+a trä:+stol+en' 'stol'
     "Det är en rak trästol. "
 
     cannotTakeMsg = 'Stolen är lite för skrymmande för att bära omkring. '
 ;
 
 + Surface, Fixture
-    'obehandlad spånskiva bok bokhylla/bokhyllor/hylla/hyllor/skiva'
+    'obehandlad+e spånskiva bokhylla+n/hylla+n/skiva+na*bokhyllor+na hyllor+na'
     'bokhyllor'
     "Hyllorna är gjorda av obehandlad spånskiva. De
     måste vara robusta, med tanke på den tunga lasten av böcker de bär. "
@@ -2578,7 +2576,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
 ++ Decoration
     'referens fysik matematik kemi astronomi biologi teknik
     ekonomi seriös litteratur science fiction
-    lärobok/bok/text*läroböcker*texter*böcker'
+    lärobok+en/bok+en/text+en läroböcker+na texter+na böcker+na'
     'böcker'
     "Det ser ut som den vanliga samlingen böcker en Techer samlar på sig
     under en studentkarriär: läroböcker i fysik, matematik, kemi,
@@ -2977,7 +2975,7 @@ stamer: Person
         scoreMarker.awardPointsOnce();
 
         /* offer finishing options */
-        finishGameMsg('DU HAR ÖVERLEVT DAY',
+        finishGameMsg('DU HAR LYCKATS', 
                       [finishOptionUndo, finishOptionFullScore,
                        finishOptionAfterword, finishOptionAmusing,
                        finishOptionCredits, finishOptionCopyright]);

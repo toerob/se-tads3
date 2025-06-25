@@ -704,7 +704,7 @@ class ElevatorDoor: Door
  *   these buttons by looking in the door's location.  
  */
 class ElevatorCallButton: Button, Fixture
-    '(hissen) (liften) hiss+knapp+en*hiss+knappar+na' 'hissknappen'
+    '(hissens) (liftens) hiss+knapp+en*hiss+knappar+na' 'hissknappen'
     "Den är <<isLit ? '' : 'o'>>tänd. "
 
     dobjFor(Switch) asDobjFor(Push)
@@ -793,7 +793,7 @@ class ElevatorUpButton: ElevatorCallButton '"upp" -' '<q>upp</q>-knapp'
 ;
 
 /* a "down" call button */
-class ElevatorDownButton: ElevatorCallButton '"ner" -' '<q>ned</q>-knapp'
+class ElevatorDownButton: ElevatorCallButton '"ner" "ned" "nedåt" -' '<q>ned</q>-knapp'
     "Den visar en pil som pekar nedåt. "
     buttonDir = -1
 ;

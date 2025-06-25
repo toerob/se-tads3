@@ -195,7 +195,7 @@ me: BagOfHolding, Actor
  */
 property knownFollowDest;
 
-+ myHands: CustomImmovable 'vänster höger hand/händer' 'din hand'
++ myHands: CustomImmovable 'vänster vänstra höger högra hand+en/händer+na' 'din hand'
     "Du kan den som din egen ficka. "
     //"You know it like the back of your hand."
     isQualifiedName = true
@@ -245,7 +245,7 @@ property knownFollowDest;
     dobjFor(Close) asDobjFor(Take)
 ;
 
-+ AlwaysWorn 'armbandsur/klocka/ur' 'armbandsur'
++ AlwaysWorn 'armband:et^s+ur+et/klocka+n/ur+et' 'armbandsur'
     "Det är inget fancy; bara en billig analog modell. Den visar för närvarande 
     <<clockManager.checkTimeFmt('24 h:mm')>>. "
     // NOTE that in the original it is AM/PM: <<clockManager.checkTimeFmt('[am][pm]h:mm a')>>. "
@@ -259,11 +259,12 @@ property knownFollowDest;
 ;
 
 + myDust: PresentLater, Component
-    'spindel lager/damm/spindelnät/spindelnäten/nät/näten'
+    'spindelnät:et^s+täckt+a lager dammtäckt+a dammlager/dammlagret/spindelnät+et/nät+et*näten+a spindelnäten+a'
     'lager av damm'
     "Du är täckt av ett lager damm och spindelnät. "
 
     introOnly = true
+    isNeuter = true
 
     dobjFor(Clean)
     {
@@ -276,7 +277,7 @@ property knownFollowDest;
 ;
 
 + khakis: AlwaysWorn
-    'par/khakis/byxor/byxa/slacks/chinos' 'par khakis'
+    'par byxa+n*khakis:+byxor+na slacks chinos byxor+na' 'par khakis'
     "Det är ett par khakis<<isTorn
     ? " med en enorm reva längs vänstra benet."
     : ". En del av din vardagliga klädsel.">> "
@@ -287,16 +288,16 @@ property knownFollowDest;
         khakiRip.makePresentIf(isTorn);
     }
     isTorn = nil
-
+    isPlural = true
     /* PUT X IN PANTS -> PUT X IN POCKET; likewise LOOK IN */
     iobjFor(PutIn) remapTo(PutIn, DirectObject, myPocket)
     dobjFor(LookIn) remapTo(LookIn, myPocket)
 ;
-++ khakiRip: PresentLater, Component 'enorm reva/repa/hål' 'reva'
+++ khakiRip: PresentLater, Component 'enorm+a reva+n/repa+n/hål+et' 'reva'
     "Det är pinsamt men inte livshotande. "
 ;
 ++ myPocket: BagOfHolding, Component, RestrictedContainer
-    '(byxor) ficka/fickor' 'ficka'
+    '(byxor+nas) ficka+n*fickor+na' 'ficka'
     "En av sakerna du gillar med det här märket av khakis är att 
     de har trevliga, djupa fickor. "
 
@@ -320,22 +321,22 @@ property knownFollowDest;
     }
 ;
 
-+ AlwaysWorn 'beige sport långärmad knäppt skjorta'
++ AlwaysWorn 'beige sport+iga långärmad+e knäppt+a skjorta+n'
     'beige skjorta'
     "Det är en knäppt långärmad sportskjorta i en ganska neutral beige färg. 
     Det är typiskt vad du brukar ha på dig på kontoret de flesta dagar. "
 ;
 
-+ myShoes: AlwaysWorn 'brun läder vänster höger sko/skor/par'
++ myShoes: AlwaysWorn 'brun+a vänster höger par *läder:+skor+na'
     'par bruna läderskor'
     "Dina skor är av brunt läder, i en stil som är vardaglig men inte för vardaglig.
     De är gjorda av ett av de där märkena som balanserar mellan gymnastikskor och riktiga skor. "
 ;
-+ myLeftShoe: PresentLater, AlwaysWorn 'brun läder vänster sko'
++ myLeftShoe: PresentLater, AlwaysWorn 'brun+a vänster läder+sko+n'
     'vänster sko'
     "Det är en brun lädersko för vänster fot. "
 ;
-++ Decoration 'skor' 'skor'
+++ Decoration 'läder+sko+n' 'sko'
     "Sko, singular. Du verkar bara ha en vänstersko nu. "
     isPlural = true
     notImportantMsg = 'Du verkar inte ha <q>skor</q> längre,
@@ -343,7 +344,7 @@ property knownFollowDest;
 ;
 
 /* ge oss några myggbett från början */
-+ mosquitoBites: Decoration 'myggbett/bett' 'myggbett'
++ mosquitoBites: Decoration 'myggbett+en/bett+en' 'myggbett'
     "Du har varit en riktig myggmagnet här; för myggorna måste du
     vara exotisk utländsk mat. "
     isPlural = true
@@ -362,7 +363,7 @@ property knownFollowDest;
     introOnly = true
 ;
 
-+ contract: Readable 'kontrakt' 'kontrakt'
++ contract: Readable 'kontrakt+et/avtal+et' 'kontrakt'
     "Detta är ett kontrakt för att tillhandahålla ett kompletterande styrsystem,
     samt tillhörande konsult- och underhållstjänster, till Statligt
     Kraftverk #6. Det är hela anledningen till att du är här, och om du

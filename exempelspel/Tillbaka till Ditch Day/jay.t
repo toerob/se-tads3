@@ -51,7 +51,7 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
     }
 ;
 
-+ InitiallyWorn 'ljus färgglad aloha hawaiisk skjorta' 'hawaiiskjorta'
++ InitiallyWorn 'ljus+a färgglad+a aloha hawaiisk skjorta+n' 'hawaiiskjorta'
     "Den färgglada skjortan är prydd med ett blommönster. "
     isListedInInventory = nil
 ;

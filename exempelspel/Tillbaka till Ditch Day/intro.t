@@ -314,7 +314,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 ;
 
 ++ xojoResume: PresentLater, Readable
-    'cirriculum resume/r\u00E9sum\u00E9/cv/c.v./vitae/papper/pappret'
+    'cirriculum meritförteckning+en/resume+n/r\u00E9sum\u00E9/cv/c.v./vitae/papper+et/pappret'
     'r\u00E9sum\u00E9'
     "Formatet är lite ovanligt, förmodligen på grund av lokala
     konventioner, men du har inga större problem att hitta den viktiga
@@ -1766,7 +1766,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
  *   to them. 
  */
 + mosquitoes: Decoration
-    'mygga/myggor/fluga/flugor/insekt/insekter' 'myggor'
+    'mygga+n/fluga+n/flugor+na/insekt+er*mygg+en insekter+na myggor+na' 'myggor'
     "De är oupphörliga. "
     isPlural = true
     notImportantMsg = 'Myggorna är extremt irriterande, men de är oviktiga. '
@@ -2111,7 +2111,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
     okayForPocket = true
 ;
 + TestableCircuit, Decoration
-    'bunt/buntar/kabel/kablar/ledning/ledningar/sladd/sladdar' 'kablar'
+    'bunt+en/kabel+n/ledning+en/sladd+en*sladdar+na kablar+na ledningar+na buntar+na' 'kablar'
     "Kablarna och ledningarna kopplar SCU-1100DX till kraftverkets
     system. Du har spenderat de senaste sex veckorna med att lista ut var
     allting ska sitta genom en del försök och misstag, så
@@ -2562,7 +2562,7 @@ MultiInstance
 + Distant 'vegetation/växter' 'vegetation'
     "Det finns gott om det, eftersom detta är en djungel. "
 ;
-+ Distant 'xtuyong flod djup kanjon/ravin' 'kanjon'
++ Distant 'xtuyong flod djup+a kanjon+en/ravin+en' 'kanjon'
     "Tvåhundra meter djup och hundra meter bred, urholkad
     under årtusenden av det stadiga vattenflödet från regnskogens
     högland i väster. En bro spänner över kanjonen. "
@@ -2978,7 +2978,7 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
     dobjFor(Board) asDobjFor(StandOn)
 ;
 
-+ plantElevatorGate: Door 'vikbar metall hiss lift dörr/grind' 'grind'
++ plantElevatorGate: Door 'vikbar+a hiss lift metall+grind+en/dörr+en' 'grind'
     "Istället för en dörr finns det bara denna vikbara metallgrind för att
     separera passagerare från schaktväggen medan hissen är
     i rörelse. "
@@ -2987,10 +2987,10 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
     {
         action()
         {
-            "Du försöker, men den rör sig inte. Förmodligen låser grinden
+            "Du försöker, men den rubbas inte. Förmodligen låser sig grinden
             automatiskt medan hissen är i
-            rörelse<< location.isDescending ? "" : " (eller fastnad
-            mellan våningar)" >>. ";
+            rörelse<< location.isDescending ? "" : " (eller har fastnat 
+            mellan våningarna)" >>. ";
         }
     }
 
@@ -3013,9 +3013,9 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
         verify() { }
         action()
         {
-            "Du försöker försiktigt klättra på grinden som du skulle göra
+            "Du försöker försiktigt klättra på grinden så som du skulle göra
             på ett stängsel, men den är för vinglig; du skulle säkert
-            få dina fingrar ordentligt klämda, så du riskerar det inte. ";
+            få dina fingrar klämda ordentligt, så det riskerar du inte. ";
 
             xojo.observeClimb(self);
         }
@@ -3027,7 +3027,7 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
  *   the ceiling and its contents are out of reach (until Xojo gives us a
  *   boost) 
  */
-+ OutOfReach, NestedRoom, Fixture 'tak' 'tak'
++ OutOfReach, NestedRoom, Fixture 'tak+et' 'tak'
     "Matt, bar metall som väggarna; den enda detaljen är en infälld
     servicepanel. "
 
@@ -3037,12 +3037,12 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
     cannotReachFromOutsideMsg(dest)
     {
         gMessageParams(dest);
-        return '{The dest/he} {is} för högt upp för att nå härifrån. ';
+        return '{Den dest/han} {är} för högt upp för att nå härifrån. ';
     }
     cannotReachFromInsideMsg(dest)
     {
         gMessageParams(dest);
-        return 'Du kan inte nå {that dest/him} härifrån uppe. ';
+        return 'Du kan inte nå {det dest/honom} här uppifrån. ';
     }
 
     /* the only way we can be inside here is to be in xojoBoost */
@@ -3055,7 +3055,7 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
     getDropDestination(objToDrop, path) { return location; }
 ;
 
-++ Fixture 'naken glödlampa' 'glödlampa'
+++ Fixture 'naken nakna glöd+lampa+n' 'glödlampa'
     "Den ger den matta belysningen här inne. "
 
     cannotTakeMsg = 'Du har ingen önskan att eliminera den enda
@@ -3143,7 +3143,7 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
 
 
 ++ powerElevPanel: Door
-    'infälld metall tak service+panel+en/tak+metall+lucka+n' 'servicepanel'
+    'infälld+a metall (takets) service+panel+en/metall+lucka+n' 'servicepanel'
     desc()
     {
         if (isOpen)
@@ -3219,6 +3219,7 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
     dobjFor(Remove) remapTo(Open, self)
     dobjFor(Move) remapTo(Open, self)
     dobjFor(PushTravel) remapTo(Open, self)
+    dobjFor(Break) remapTo(Open, self)
 
     dobjFor(Close) { action() { "Det finns ingen anledning att göra det. "; }}
 
@@ -3326,12 +3327,12 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
     roomFloor = apeFloor
 ;
 
-+ Fixture 'schakt betong vägg/väggar' 'schaktväggar'
++ Fixture 'betong+schakt+vägg+en/vägg+en/väggar+na' 'schaktväggar'
     "Schaktväggarna är av bar betong. Skenor "
     isPlural = true
 ;
 
-+ Fixture 'hiss skena/skenor' 'skenor'
++ Fixture 'hiss+skena+n*skenor+na' 'skenor'
     "Skenorna vägleder förmodligen hisskorgen när den färdas upp
     och ner i schaktet. "
     isPlural = true
@@ -3345,22 +3346,22 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
     dobjFor(ClimbUp) asDobjFor(Climb)
 ;
 
-+ apeFloor: Floor 'hiss hiss tak/korg/golv' 'hisstak'
++ apeFloor: Floor 'hissens liftens tak+et/korg+en/golv+et' 'hisstak'
     "Det är inte en särskilt lätt plats att stå på grund av de många
     mekaniska utsprången. "
 ;
 
-+ Fixture 'mekanisk kabel bultar/anslutningar/utsprång' 'utsprång'
-    "De är bara en massa bultar och kabelanslutningar och liknande. "
++ Fixture 'mekanisk+a utsprång+et/*bultar+na kabelanslutningar+na kablar+na' 'utsprång'
+    "Det är bara en massa bultar och kabelanslutningar och liknande. "
     isPlural = true
 ;
 
-+ Fixture 'hiss schakt/topp' 'schakt'
++ Fixture 'hiss schakt+et/topp+en' 'schakt'
     "Schaktet måste vara ungefär sju eller åtta våningar högt, men det finns inte
      tillräckligt med ljus för att du verkligen kan avgöra det genom att titta på det. "
 ;
 
-+ elevatorCable: Fixture 'huvud hiss kabel/kablar' 'kabel'
++ elevatorCable: Fixture 'kabel+n/huvud+hiss+kabel+en*kablar+na' 'kabel'
     "Den hänger bara slappt, vilket stämmer överens med hur
     hissen kraschade i botten av schaktet. "
 
@@ -3875,7 +3876,7 @@ s2Platform: OutdoorRoom 'Nyttoplattform' 'nyttoplattformen'
     }
 ;
 
-+ platformBridge: Enterable 'primitiv+a rep+bro+n' 'repbro'
++ platformBridge: Enterable 'primitiv+a hängmatte+liknande hängmatta+n korslagda mönstret rep+bro+n/häng+bro+n*handräcken+a mönstren+a' 'repbro'
     "Det är verkligen en <i>rep</i>bro---inte en bro gjord av
     träplankor som stöds av rep, som du har sett förut,
     utan en bro bokstavligen gjord helt av rep. Gångbanan
@@ -4018,7 +4019,7 @@ class RopeBridge: Fixture
 ;
 
 class RopeBridgeCanyon: Distant
-    'brant vertikal klippa ravin flod/ravin/(vägg)/(väggar)/klippa/klippor'
+    'brant+a vertikal+a ravin+en/flod+en/(vägg+en)/klippa+n*(väggar+na) klippor+na'
     'ravin'
     "Du är säker på att du missar en fantastisk utsikt, men just nu är du
     för fixerad vid att inte falla för att lägga märke till något. "
@@ -4589,7 +4590,7 @@ adminLobby: Room 'Lobby' 'lobbyn'
 /*
  *   The colonel 
  */
-magnxi: Person 'överste höga administratör magnxi/kvinna+n*kvinnor'
+magnxi: Person 'överste höga administratör+en magnxi/kvinna+n*kvinnor+na'
     'Överste Magnxi'
     "Hennes officiella titel är Höga Administratör Magnxi, men hon
     insisterar på att alla använder hennes militära titel, och hon bär
@@ -4620,7 +4621,7 @@ magnxi: Person 'överste höga administratör magnxi/kvinna+n*kvinnor'
 ;
 
 + InitiallyWorn
-    'uniformsklänning uniform/skärp/band/medalj/medaljer/epåletter/outfit'
+    'uniformsklänning uniform+en/skärp+et/band+et/medalj+en/outfit+en*medaljer+na/epåletter+na'
     'uniform'
     "Det är som ett museiföremål från 1800-talet: skärp, band, medaljer,
     epåletter, hela paketet."
@@ -4636,7 +4637,7 @@ magnxi: Person 'överste höga administratör magnxi/kvinna+n*kvinnor'
     isListedInInventory = nil
 ;
 
-+ InitiallyWorn 'militär hatt/insignier/brätte' 'hatt'
++ InitiallyWorn 'hatt+en/militär+hatt+/insignier+er/brätte+t' 'hatt'
      "Den är enormt stor; den är proportionerad som en novelty-kockhatt,
     löjligt hög och utvidgande uppåt, men den är mörkblå, gjord av styvt
     material och prydd med militära insignier. Den är ungefär två storlekar
@@ -4646,7 +4647,7 @@ magnxi: Person 'överste höga administratör magnxi/kvinna+n*kvinnor'
     isListedInInventory = nil
 ;
 
-+ Decoration 'liten grupp/människor/följeslagare' 'liten grupp människor'
++ Decoration 'liten grupp/människor/följeslagare*människor+na följeslagar+na' 'liten grupp människor'
     "Platsen är så trång att du inte kan se vilka hon är med."
     theDisambigName = 'Överste Magnxis följeslagare'
 ;

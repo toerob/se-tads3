@@ -18,7 +18,7 @@
  *   slightly to add vocabulary and a description.  
  */
 class LibElevatorDoor: ElevatorDoor
-    'skinande metall glidande hiss dörr/dörrar/hiss' 'hiss'
+    'skinande metall+iska glidande hissens hiss+dörr+en/hissdörrar+na' 'hiss'
     "Hissens skjutdörrar är gjorda av skinande metall. <<buttonDesc>> "
 
     isPlural = true
@@ -61,13 +61,13 @@ class LibElevatorDoor: ElevatorDoor
 
 /* library up/down buttons */
 class LibElevatorUpButton: ElevatorUpButton
-    'platt plast -' '<q>upp</q> knapp'
+    'platt+a plast+iga -' '<q>upp</q> knapp'
     "Det är en platt plastknapp formad som en pil som pekar uppåt.
     <<isLit ? "Den lyser." : "">> "
 ;
 
 class LibElevatorDownButton: ElevatorDownButton
-    'platt plast -' '<q>ner</q> knapp'
+    'platt+a plast+iga -' '<q>ner</q> knapp'
     "Det är en platt plastknapp formad som en pil som pekar nedåt.
     <<isLit ? "Den lyser." : "">> "
 ;
@@ -83,7 +83,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
     finns en hiss, med en våningsförteckning på väggen bredvid den.
     Utgången är åt öster. "
 
-    vocabWords = 'bibliotek millikan entré'
+    vocabWords = 'bibliotek+et millikan+s entré+n'
 
     east = millikanPond
     out asExit(east)
@@ -169,17 +169,17 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
     floorNum = 1
 ;
 
-+ Fixture 'bred receptionsdisk' 'bred disk'
++ Fixture 'bred+a reception^s+disk+en' 'bred disk'
     "Det är en bred disk som skapar en arbetsyta för receptionisten.
     En skylt på disken lyder <q>Vänligen visa ID.</q> "
 ;
 
-++ Readable, Immovable 'skylt' 'skylt'
+++ Readable, Immovable 'skylt+en' 'skylt'
     "<q>Vänligen visa ID.</q> "
 ;
 
 + millikanReceptionist: Person
-    'doktorand/receptionist/bibliotekarie/man*män' 'receptionist'
+    'receptionist+en/doktorand+en/bibliotekarie+n/man+nen*män+nen' 'receptionist'
     "Receptionisten ser ut att vara en doktorand---i mitten av
     tjugoårsåldern, flanellskjorta, ungefär fyra dagar sedan han rakade sig.
     Han studerar intensivt en tung-utseende lärobok. "
@@ -203,7 +203,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
     }
 ;
 
-++ InitiallyWorn 'flanellskjorta' 'flanellskjorta'
+++ InitiallyWorn 'flanell:en+skjorta+n' 'flanellskjorta'
     "Den ser välanvänd ut. "
     isListedInInventory = nil
 ;
@@ -214,7 +214,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
 ;
 
 ++ receptBook: Readable
-    'tung-utseende utseende text lärobok/bok' 'tung lärobok'
+    'tung+a utseende+t text+en lärobok+en/bok+en' 'tung lärobok'
     "Det ser ut som att det kan vara en lärobok i allmän relativitetsteori. "
 ;
 
@@ -304,12 +304,12 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
     isActive = gRevealed('need-ee-text')
 ;
 
-++ AskTopic '<nocase>(id|identification)$'
+++ AskTopic '<nocase>(id|identifikation)$'
     "<q>Vilken typ av ID behöver du se?</q> frågar du.
     <.p><q>Vilket Caltech-ID som helst går bra,</q> säger han. "
 ;
 
-++ AskTellTopic, SuggestedTopic 'checking out( book| books|a book)?'
+++ AskTellTopic, SuggestedTopic 'checka ut ( bok| böcker|en bok)?'
     topicResponse()
     {
         "<q>Var lånar jag böcker?</q> frågar du.
@@ -499,13 +499,13 @@ millikanElevator: Elevator, Room 'Hiss' 'hissen'
     }
 ;
 
-+ Fixture 'digital hiss lift display' 'hissdisplay'
++ Fixture 'digital+a hiss+ens lift+ens display+en' 'hissdisplay'
     "Det är en digital display som visar aktuellt våningsnummer.
     Den visar <<location.getFloorName()>>. "
 ;
 
 + meDoors: ElevatorInnerDoor
-    'blank metall hiss lift dörr/dörrar' 'hissdörrar'
+    'blank+a metall+iska hiss+ens lift+ens dörr+en*dörrar+na' 'hissdörrar'
     "Hissdörrarna är gjorda av blank metall. "
     isPlural = true
     
@@ -514,7 +514,7 @@ millikanElevator: Elevator, Room 'Hiss' 'hissen'
 ;
 
 class LibElevatorButton: ElevatorButton
-    'platt plast knapp*knappar'
+    'platt+a plast+iga knapp+en*knappar+na'
     desc = "Det är en platt plastknapp numrerad <<floorName>>.
         <<isLit ? "Den lyser för närvarande. " : "">> "
 
@@ -522,7 +522,7 @@ class LibElevatorButton: ElevatorButton
 ;
 
 + libElevatorButtonGroup: ElevatorButtonGroup
-    'platt plast knapp/knappar/rad*knappar' 'knappar'
+    'platt+a plast+iga knapp+en/rad+en*knappar+na' 'knappar'
     "Knapparna är ordnade i en rad, numrerade från 1 till 9. <<listLit>> "
 ;
 
@@ -545,7 +545,7 @@ class LibRoom: Room
     subjectMatter = ''
 
     vocabWords = perInstance(
-        spellIntOrdinal(floorNum) + ' millikan/bibliotek/våning')
+        spellIntOrdinal(floorNum) + ' millikan/bibliotek+et/våning+en')
     name = (spellIntOrdinal(floorNum) + ' våningen')
 
     desc = "Detta är <<spellIntOrdinal(floorNum)>> våningen i
@@ -662,7 +662,7 @@ class LibShelves: LibBookColl, Consultable, Fixture, Surface
  *   objects.  
  */
 class LibShelfBooks: Consultable, Fixture, Readable
-    'text bok/lärobok/tidskrift*böcker*texter*läroböcker*tidskrifter' 'böcker'
+    'text+en bok+en/lärobok+en/tidskrift+en*böcker+na texter+na läroböcker+na tidskrifter+na' 'böcker'
 
     isPlural = true
 
@@ -908,7 +908,7 @@ millikan2: LibRoom
  */
 
 + LibShelves;
-++ LibShelfBooks 'kemi tidskrifter/magasin';
+++ LibShelfBooks 'kemi tidskrifter+na/magasin+en';
 
 /* 
  *   A generic item, to match searches for S&P without a specific issue.
@@ -936,7 +936,7 @@ class SAndPEntry: LibBookTopic @sAndP3Topic
 
 /* an object for the whole collection of Science & Progress */
 ++ sAndPs: LibShelfColl
-    'vetenskap & framsteg v&f vetenskap&framsteg tidskrifter/samling'
+    'vetenskap & framsteg v&f vetenskap&framsteg samling+en*tidskrifter+na'
     'samling av <i>Vetenskap &amp; Framsteg</i>'
     "Samlingen av tidskriften sträcker sig årtionden tillbaka."
 ;
@@ -944,7 +944,7 @@ class SAndPEntry: LibBookTopic @sAndP3Topic
 
 /* an Unbook for the P&S, in case we try to take it before finding it */
 ++ LibUnbook
-    'vetenskap & framsteg vetenskap&framsteg v&f nummer utgåva
+    'vetenskap & framsteg vetenskap&framsteg v&f nummer numret utgåva+n
     xlvi-3/tidskrift+en'
 ;
 
@@ -953,8 +953,8 @@ class SAndPEntry: LibBookTopic @sAndP3Topic
  *   into existence when we look it up successfully 
  */
 ++ sAndP: PresentLater, LibBook
-    'vetenskap & framsteg vetenskap&framsteg v&f tidskrift nummer utgåva
-    xlvi-3/tidskrift'
+    'vetenskap & framsteg vetenskap&framsteg v&f tidskrift+en nummer numret utgåva+n
+    xlvi-3/tidskrift+en'
     '<i>Vetenskap &amp; Framsteg</i> nummer XLVI-3'
     "<i>V&amp;F</i> är en av dina favoriter, åtminstone när du kan hitta
     tid att läsa den."
@@ -1065,7 +1065,7 @@ millikan3: LibRoom
 + LibElevatorUpButton;
 + LibElevatorDownButton;
 + LibShelves;
-++ LibShelfBooks 'elektroteknik ee -'; // TODO: ändra akronymen EE till ET  men se över detta överallt i så fall.
+++ LibShelfBooks 'elektroteknikiska elektroteknik+en ee et-'; // TODO: lägg till akronymen ET  men se över detta överallt i så fall.
 
 /* 
  *   A topic for "ee textbooks" in general - score this higher than default
@@ -1076,7 +1076,7 @@ millikan3: LibRoom
  *   too, but they also match special terms describing them only.)  
  */
 ++ ConsultTopic +110 @eeTextTopic
-    "Det finns i princip inget annat än EE-läroböcker här. Det skulle 
+    "Det finns i princip inget annat än Elektroteknikläroböcker här. Det skulle 
     ta hela dagen att titta på ens en liten bråkdel av dem, och de flesta 
     är så specialiserade att man sannolikt inte lär sig särskilt mycket 
     genom att bara bläddra. Å andra sidan, om du har en specifik bok 
@@ -1092,14 +1092,14 @@ millikan3: LibRoom
             //"<.p>You don't have any ideas for EE texts to look at.
             //Maybe you could ask someone for a recommendation. ";
 
-            "<.p>Du har inga idéer om vilka EE texter du behöver titta i.
+            "<.p>Du har inga idéer om vilka Elektroktekniktexter du behöver titta i.
             Det kanske finns någon att fråga om efter en rekommendation. ";
 
     }
 ;
 
 /* an Unbook for the Morgen text */
-++ morgenUnbook: LibUnbook 'yves morgen elektronik föreläsningar bok/lärobok'
+++ morgenUnbook: LibUnbook 'yves morgen elektronisk elektronik föreläsningar elektronik+bok+en/lärobok+en'
     'Morgens lärobok'
 ;
 
@@ -1110,7 +1110,7 @@ millikan3: LibRoom
 
 /* the Morgen text itself */
 ++ morgenBook: PresentLater, LibBook
-    'yves morgen elektronik föreläsning+ar 
+    'yves morgen elektronik elektroteknik+en föreläsning+ar 
     text+bok+en/lärobok+en*böcker+na*texter+na*läroböcker+na'
     '<i>Elektronikföreläsningar</i> lärobok'
     "Det är en tjock lärobok av Yves Morgen, med titeln
@@ -1134,13 +1134,10 @@ millikan3: LibRoom
             Du är glad att upptäcka att begreppen och matematiken
             är mindre avlägsna i ditt minne än du trodde.
             <.p>Du fortsätter läsa, skummar igenom vissa delar men
-            saktar ner för att smälta andra. 
-
-            <.p>You keep reading, skimming over some parts but slowing
-            down to digest others.  Så småningom börjar dina ögon bli 
-            lite glasartade, och du inser att du har 
+            saktar ner för att smälta andra. Så småningom börjar dina ögon 
+            bli lite glasartade, och du inser att du har 
             <<me.posture.pastTense>> här och läst ett bra tag.
-            a while. Du bestämmer dig för att du har 
+            Du bestämmer dig för att du har 
             absorberat ungefär så mycket teori som du kan för tillfället; 
             vad du egentligen behöver nu är något lite mer praktiskt. 
             Du lägger märke till en hänvisning i bokens framsida till 
@@ -1200,7 +1197,7 @@ millikan3: LibRoom
     myBook = townsendBook
 ;
 ++ townsendBook: PresentLater, LibBook, Consultable
-    'e.j. townsend lab laboratorium stor mjukpärm+en manual+en/bok+en*böcker+na*manualer+na'
+    'e.j. townsend lab labb+et laboratorium+et stor+a mjukpärm+en manual+en/bok+en*böcker+na*manualer+na'
     'labb+manual+en'
     "Det är en stor bok med mjuk pärm. Den här typen av bok innehåller
     labbövningar som demonstrerar olika elektronikprinciper."
@@ -1374,7 +1371,7 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
 
 /* an object for the whole collection of Quantum Review Letters */
 ++ qrls: LibShelfColl
-    'quantum review letters/samling/tidskrift/qrl'
+    'quantum review letters/samling+en/tidskrift+en/qrl'
     'samling av <i>Quantum Review Letters</i>'
     "Flera hyllor är fyllda med nummer av denna tidskrift."
 ;
@@ -1382,15 +1379,15 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
 +++ Qrl739aEntry;
 
 /* an Unbook for QRL 70:11c, for when we're not here */
-++ LibUnbook 'quantum review letters tidskrift qrl nummer 70:11c/qrl';
+++ LibUnbook 'quantum review letters tidskrift+en qrl nummer numret 70:11c/qrl';
 
 /* 
  *   the tangible game object for our special issue - this pops into
  *   existence when we successfully look it up 
  */
 ++ qrl7011c: PresentLater, LibBook
-    'quantum review letters tidskrift qrl nummer
-    70:11c/brev/tidskrift/nummer/qrl*tidskrifter*nummer*qlrs'
+    'quantum review letters tidskrift+en qrl nummer numret
+    70:11c/brev+et/tidskrift+en/nummer/qrl*tidskrifter+na numren+a qlrs'
     '<i>Quantum Review Letters</i> nummer 70:11c'
     "Som de flesta vetenskapliga tidskrifter ser den mer ut som en pocketbok
     än en tidskrift; bara vanlig text på vanligt vitt papper, fylld med
@@ -1444,11 +1441,11 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
 
 
 /* an Unbook for issue 73:9a, for when we're not here */
-++ LibUnbook 'quantum review letters qrl tidskrift nummer 73:9a/qrl';
+++ LibUnbook 'quantum review letters qrl tidskrift+en nummer numret 73:9a/qrl';
 
 /* the actual QRL 73:9a */
 ++ qrl739a: PresentLater, LibBook
-    'quantum review letters qrl tidskrift nummer
+    'quantum review letters qrl tidskrift+en nummer numret
     73:9a/brev+et/tidskrift+en/nummer+et/qrl*tidskrifter+na*nummer*qrls'
     '<i>Quantum Review Letters</i> nummer 73:9a'
     "Som de flesta vetenskapliga tidskrifter ser den mer ut som en pocketbok
@@ -1526,7 +1523,7 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
     'lärobok textbok av
     blomner bloemner bl\u00F6mner blomners bloemners bl\u00F6mners
     introduktion till kvantfysik
-    bok/text/lärobok*böcker*texter*läroböcker'
+    bok+en/text+en/lärobok*böcker+na texter+na läroböcker+na'
     '<i>Introduktion till kvantfysik</i> lärobok'
     "Dieter Bl&ouml;mner: <i>Introduktion till kvantfysik.</i> Detta
     är en av texterna de använde i Fy 2 när du var här; skräcken
@@ -1578,7 +1575,7 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
 
 /* an Unbook for the DRD tables */
 ++ drdUnbook: LibUnbook
-    'drd matte matematik matematiska funktioner/tabell/tabeller/handbok/bok'
+    'drd matte matematik matematisk+a funktion+en/tabell+en/handbok+en/bok+en*funktioner+na böcker+na tabeller+na'
     'DRD Handbok'
 ;
 
@@ -1589,7 +1586,7 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
 
 /* the DRD Tables book itself */
 ++ drdBook: PresentLater, LibBook, Consultable
-    'drd matte matematik matematiska funktioner/tabell/tabeller/handbok/bok'
+    'drd matte matematik matematisk+a funktion+en/tabell+en/handbok+en/bok+en*funktioner+na böcker+na tabeller+na'
     'DRD Handbok'
     "<i>DRD Handbok över matematiska funktioner</i> var en ständig
     följeslagare under dina tredje och fjärde år. Den är full av tabeller med

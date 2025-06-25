@@ -18,14 +18,6 @@
 
 #ifdef __DEBUG
 
-evaluatePreParser: StringPreParser 
-    doParsing(str, which) {
-        if(str.toLower.startsWith('eval ') && !str.endsWith('"')) {
-            str = str.splice(6, 0, '"') + '"';
-        }
-        return str;
-    }
-;
 
 // TODO: this is not used yet
 DebugCtl: object
@@ -152,6 +144,16 @@ actionTab: PreinitObject
             if(dataType(value) == TypeObject && value.ofKind(Action))
                 ctab[value] = key;
         });
+    }
+;
+
+
+evaluatePreParser: StringPreParser 
+    doParsing(str, which) {
+        if(str.toLower.startsWith('eval ') && !str.endsWith('"')) {
+            str = str.splice(6, 0, '"') + '"';
+        }
+        return str;
     }
 ;
 
@@ -329,11 +331,21 @@ VerbRule(Evaluate)
     'eval' singleLiteral  // literalPhrase->literalMatch
     : EvaluateAction
     verbPhrase = 'evaluera/evaluering (what)'
+    //missingQ = 'which sequence do you want to test'
 ;
 
 
 
 #endif // __DEBUG
+
+
+
+
+
+
+
+
+
 
 
 

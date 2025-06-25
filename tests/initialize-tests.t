@@ -209,6 +209,104 @@ TestUnit 'initialize neutrum substantiv med +notation och foge-S' run {
     assertThat(obj.definiteForm).isEqualTo('pappersflygplanet'); 
 };
 
+// TODO: 
+// extra:
+// 'kartong^s+låda+n/kartong:erna^s+lådor+na' 'kartonger'
+/*
+lådorna (substantiv)
+låda (substantiv)
+lådan (substantiv)
+kartong (substantiv)
+kartongen (substantiv)
+kartongerna (substantiv)
+kartongslådor (substantiv)
+kartongslådan (substantiv)
+kartongslådorna (substantiv)
+kartongslåda (substantiv)
+lådor (substantiv)
+
+++ dei: Fixture 'schablon:en+målad+e *bokstäver+na "dei" dei' 'schablonmålade bokstäver' isPlural = true;
+
+theName: “bokstäverna”
+aName: “några schablonmålade bokstäver”
+
+Följande ord finns definierade:
+
+bokstäver (plural)
+bokstäverna (plural)
+dei (plural)
+dei (unknown)
+målad (adjektiv)
+målade (adjektiv)
+schablon (adjektiv)
+schablonen (adjektiv)
+schablonmålad (adjektiv)
+schablonmålade (adjektiv)
+
+
++ Distant 'rundad+e svag+a svagt sluttande tak+et/platta+n*plattor+na/terrakotta:n+plattor+na' 'tak'
+platta (substantiv)
+plattan (substantiv)
+plattor (plural)
+plattor (substantiv)
+plattorna (plural)
+plattorna (substantiv)
+rundad (adjektiv)
+rundade (adjektiv)
+sluttande (adjektiv)
+svag (adjektiv)
+svaga (adjektiv)
+svagt (adjektiv)
+tak (substantiv)
+taket (substantiv)
+terrakotta (substantiv)
+terrakottan (substantiv)
+terrakottaplattor (substantiv)
+terrakottaplattorna (substantiv)
+
+
++ khakis: AlwaysWorn 'par byxa+n*khakis:+byxor+na slacks chinos byxor+na' 'par khakis'
+byxan (substantiv)
+byxor (plural)
+par (adjektiv)
+khakisbyxor (plural)
+khakisbyxorna (plural)
+khakis (plural)
+slacks (plural)
+chinos (plural)
+byxorna (plural)
+byxa (substantiv)
+
+FIXME:
++++ Component '(råtta) (docka) (handdocka) hand råttans öppning handrått:an^s+dock:an^s+öppning+en' 'handråttsdocksöppning'
+theName: “handråttsdocksöppningen”
+aName: “en handråttsdocksöppning”
+
+Följande ord finns definierade:
+
+dock (substantiv)
+docka (adjektiv)
+dockan (substantiv)
+hand (adjektiv)
+handdocka (adjektiv)
+handrått (substantiv)
+handråttan (substantiv)
+handråttsdock (substantiv)
+handråttsdocksöppning (substantiv)
+handråttsdocksöppningen (substantiv)
+råtta (adjektiv)
+råttans (adjektiv)
+öppning (adjektiv)
+öppning (substantiv)
+öppningen (substantiv)
+
+*/
+
+
+
+// TODO: se om literalAdjective går att laga till så det fungerar med combineVocabWords
+// TODO: tester med "-" och "(xyzzy)"
+
 // Böja substantiv med foge-S
 TestUnit 'initialize utrum substantiv med +notation och foge-S' run {
     local obj = new Thing();

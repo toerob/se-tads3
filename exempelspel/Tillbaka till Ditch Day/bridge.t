@@ -32,11 +32,11 @@ bridgeEntry: Room 'Brolabbets entré' 'Brons entré' 'hall'
     roomParts = (inherited() - defaultEastWall)
 ;
 
-+ ExitPortal 'dörröppning' 'dörröppning'
++ ExitPortal 'dörr+öppning+en' 'dörröppning'
     "Dörröppningen leder utomhus norrut. "
 ;
 
-+ Decoration 'öst ö vägg*väggar' 'östra väggen'
++ Decoration 'öst+ra ö vägg+en*väggar+na' 'östra väggen'
     "Ett utställningsskåp är inbyggt i väggen. "
 ;
 
@@ -64,7 +64,7 @@ bridgeEntry: Room 'Brolabbets entré' 'Brons entré' 'hall'
 
 +++ Readable
     'robert a. millikans labb laboratorium kursiv
-    sida/bok/anteckningsbok/tabeller/beräkningar/data/handstil' 'labbanteckningsbok'
+    sida+n/bok+en/anteckning^s+bok+en/handstil+en*tabeller+na beräkningar+na data' 'labbanteckningsbok'
     "Anteckningsboken är öppen på en sida som visar en serie
     tabeller och beräkningar i precis kursiv handstil.
     Bildtexten lyder:
@@ -76,7 +76,7 @@ bridgeEntry: Room 'Brolabbets entré' 'Brons entré' 'hall'
     isListed = nil
 ;
 
-+++ Thing 'liten världens minsta förstorande motor/maskin/(glas)'
++++ Thing 'liten lilla världens minsta förstorande motor+n/maskin+en/(glas+et)'
     'liten motor'
     "Ett förstoringsglas placerat framför den lilla anordningen
     gör att den kan identifieras som en elektrisk motor. Bildtexten lyder:
@@ -89,7 +89,7 @@ bridgeEntry: Room 'Brolabbets entré' 'Brons entré' 'hall'
     isListed = nil
 ;
 
-+++ Thing 'diverse experimentella bitar/utrustning' 'experimentell utrustning'
++++ Thing 'diverse experimentella utrustning+en*bitar+na utrustningar+na' 'experimentell utrustning'
     "Utrustningen är allt handbyggt material från det tidiga 1900-
     talet. "
     isMassNoun = true
@@ -98,12 +98,12 @@ bridgeEntry: Room 'Brolabbets entré' 'Brons entré' 'hall'
 ;
 
 + beStairsUp: StairwayUp ->b201Stairs
-    'trappa trappor trappuppgång upp' 'trappor upp' "Trapporna leder uppåt. "
+    'upp trappuppgång+en/trappa+n*trappor+na' 'trappor upp' "Trapporna leder uppåt. "
     isPlural = true
 ;
 
 + beStairsDown: StairwayDown ->bbeStairs
-    'trappa trappor trappuppgång ner' 'trappor ner' "Trapporna leder nedåt. "
+    'ner trappuppgång+en/trappa+n*trappor+na' 'trappor ner' "Trapporna leder nedåt. "
     isPlural = true
 ;
 
@@ -124,7 +124,7 @@ bridge201: Room 'Föreläsningssal' '201 Bridge' 'föreläsningssal'
     south asExit(down)
 ;
 
-+ b201Stairs: StairwayDown 'trappa trappor trappuppgång ner' 'trappor ner'
++ b201Stairs: StairwayDown 'ner trapp+nedgång+en/trappa+n*trappor+na' 'trappor ner'
     "Trapporna leder nedåt. "
     isPlural = true
 ;
@@ -135,7 +135,7 @@ bridge201: Room 'Föreläsningssal' '201 Bridge' 'föreläsningssal'
     en överdimensionerad talarstol för föreläsaren. "
 ;
 
-+ Fixture 'brant sluttande spartanska trä säte/säten/rad/rader' 'säten'
++ Fixture 'brant+a sluttande spartansk+a obonad+e trä+säte+t/rad+en*trästolar+na rader+na säten+a' 'säten'
     "Sätena är obonade trästolar. De är inte designade för komfort,
     kanske en mindre återspegling av den övergripande Phys 1 <i>gestalten</i>. "
     isPlural = true
@@ -153,7 +153,7 @@ bridge201: Room 'Föreläsningssal' '201 Bridge' 'föreläsningssal'
 ;
 
 + Fixture, Readable
-    'elaborerade skjutbara svarta tavlor/tavla/tavlor/panel/(vägg)/(uppsättning)'
+    'elaborerad+e skjutbar+a svart+a tavla+n/panel+en/(vägg+en)/(uppsättning+en)*tavlor+na'
     'svarta tavlor'
     "Väggen bakom labbänken är upphängd med en elaborerad uppsättning
     svarta tavlor som glider upp och ner på rullar, som dubbelhängda
@@ -184,7 +184,7 @@ bridge201: Room 'Föreläsningssal' '201 Bridge' 'föreläsningssal'
     dobjFor(Pull) asDobjFor(Move)
 ;
 ++ Decoration
-    'diverse differentialekvationer/integraler/formler'
+    'diverse *differential:er+ekvationer+na integraler+na formler+na'
     'formler'
     "Det är svårt att säga vad formlerna relaterar till utan att känna till
     föreläsningens sammanhang. "
@@ -222,23 +222,23 @@ bridgeBasementEast: Room 'Källarhall' 'källarhallen' 'korridor'
     desc = "Luften här är märkbart fuktig och unken. "
 ;
 
-+ Decoration 'lågt välvt tak' 'tak'
++ Decoration 'lågt låg+a välv+da välvt tak+et' 'tak'
     "Taket är lätt välvt, och det är så lågt att du
     måste hålla huvudet lite nedböjt för att undvika att stöta i det. "
 ;
 
-+ bbeStairs: StairwayUp 'trappa trappor trappuppgång upp' 'trappor'
++ bbeStairs: StairwayUp 'trappa+n upp+åt trapp+uppgång+en*trappor+na' 'trappor'
     "Trapporna leder uppåt. "
     isPlural = true
 ;
 
-+ door021: AlwaysLockedDoor 'syd s 021 o21 21 dörr*dörrar' 'dörr 021'
++ door021: AlwaysLockedDoor 'södra syd s 021 o21 21 dörr+en*dörrar+na' 'dörr 021'
     "Det är en bred, låg dörr, märkt med rumsnummer 021. "
     theName = 'dörr 021'
 ;
 
 + door022: LockableWithKey, Door ->blDoor
-    'nord n 022 o22 22 dörr*dörrar' 'dörr 022'
+    'nord+liga norra n 022 o22 22 dörr+en*dörrar+na' 'dörr 022'
     "Det är en bred, låg dörr, märkt med rumsnummer 022. "
     theName = 'dörr 022'
 
@@ -260,7 +260,7 @@ basementLab: Room 'Labb 022' 'labbet' 'labb'
     uppställda runt bänken och längs väggarna. En uppsättning hyllor
     på bakre väggen är lastade med ännu mer utrustning. "
 
-    vocabWords = '022 labb/laboratorium'
+    vocabWords = '022 labb+et/laboratorium+et'
 
     south = blDoor
     out asExit(south)
@@ -297,9 +297,9 @@ basementLab: Room 'Labb 022' 'labbet' 'labb'
     roomParts = static (inherited - defaultNorthWall - defaultCeiling)
 ;
 
-+ Fixture 'lågt tak' 'tak' "Taket är obehagligt lågt. "
++ Fixture 'lågt låga tak+et' 'tak' "Taket är obehagligt lågt. "
 ;
-+ Decoration 'betong yta/ytor' 'betongytor'
++ Decoration 'betong^s+yta+n/betong^s+ytor+na' 'betongytor'
     "Allt är gjort av betong, vilket får labbet att kännas mycket som
     ett parkeringsgarage. "
     isPlural = true
@@ -309,7 +309,7 @@ basementLab: Room 'Labb 022' 'labbet' 'labb'
     "Dörren leder ut söderut. "
 ;
 
-+ Fixture, Surface 'stor+a stål labb laboratorium+bänk+en/bord+et' 'labbänk'
++ Fixture, Surface 'stor+a stål+et labb laboratorium+bänk+en/bord+et' 'labbänk'
     "Bänken är tre meter på varje sida, så den tar upp större delen av
     rummet. Det finns mycket utrustning på den, som alla ser ut att vara
     noggrant uppställda för ett experiment. Huvuddelen av
@@ -1030,7 +1030,7 @@ basementLab: Room 'Labb 022' 'labbet' 'labb'
     }
 ;
 class CalcButton: Button, Component
-    'räknare tangent/knapp+en*tangenter*knappar'
+    'räknare+n tangent+en/knapp+en*tangenter*knappar'
 
     name = perInstance('räknarens <q>' + calcStr + '</q> knapp')
     desc = "Knappen är märkt <q><<calcStr>></q>. "
@@ -1134,13 +1134,13 @@ class ExperimentPart: CustomImmovable
     cannotTakeMsg = 'Du ville inte störa experimentet. '
 ;
 
-++ ExperimentPart 'tjock svart elektrisk kablage/kablar/(kabel)/ledningar/ledning'
-    'elektriskt kablage'
+++ ExperimentPart 'tjock+a svart+a elektroniskt elektrisk+a kablage+t/ledning+en*(kablar+na) ledningar+na'
+    'elektroniskt kablage'
     "Kablarna är enorma; de måste kunna bära mycket ström. "
 ;
 
 ++ quantumButton: ExperimentPart
-    'stor jätte grön svamp elektrisk anslutning knapp/(låda)'
+    'jätte+stor+a grön+a elektrisk+a svamp+knapp+en/anslutning^s+knapp+en/(låda+n)'
     'grön svampknapp'
     "Det är en fem centimeter i diameter grön svampknapp, som de stora
     nödstoppsknapparna på industriell utrustning. Den är en del av
@@ -1253,8 +1253,8 @@ class ExperimentPart: CustomImmovable
 class QuantumItem: object;
 
 ++ ExperimentPart
-    'fin metall däckstorlek stor experiment/(ring)/spole/spolar/(tråd)/
-    rör/rör/ramar/elektromagneter/magneter/maskin/maskineri'
+    'fin:a+trådad+e metall+en däckstorlek+en däck+stora experiment+et/(ring+en)/spole+n/spolar+na/(tråd+en)/
+    rör+et/maskin+en/maskineri+et*rör+en ramar+na elektromagneter+na magneter+na'
     'ring av elektromagneter'
     "Experimentets fokus verkar vara en ring av ungefär ett dussin
     stora enheter som förmodligen är elektromagneter---däckstora spolar av
@@ -1282,7 +1282,7 @@ class QuantumItem: object;
 ;
 
 +++ quantumPlatform: ExperimentPart, Surface
-    'tjock+a rund+a klar+a glas+aktiga middag plattform+en/platta+n/tallrik+en/pelare+n' 'glasplattform'
+    'tjock+a tallrik:en^s+stor+a rund+a klar+a glas+aktiga glas+plattform+en/platta+n/pelare+n' 'glasplattform'
     "Plattformen verkar vara av klart glas. Den är ungefär lika stor och
     formad som en tallrik, och den är upphöjd några centimeter över
     bänkens yta av en tjock glaspelare. "
@@ -1301,7 +1301,7 @@ class QuantumItem: object;
     contentsListed = nil
 ;
 
-++++ QuantumItem, Thing, Container 'klar plast tärnings-o-matic/kupol'
+++++ QuantumItem, Thing, Container 'klar+a plast+iga tärning+en tärnings+-o-matic/plast+kupol+en'
     name = (described ? 'tärnings-o-matic' : 'klar plastkupol')
     desc = "Det är en kupol av klar plast med <q>Tärnings-O-Matic</q>
         svagt ingraverat på toppen. Inuti finns två sexsidiga
@@ -1375,7 +1375,7 @@ class QuantumItem: object;
      */
     examineListContents() { }
 ;
-+++++ Thing 'vita sexsidiga par/tärningar' 'tärningar'
++++++ Thing 'vit+a sexsidig+a par+et*tärningar+na' 'tärningar'
     "De är vita sexsidiga tärningar som du skulle hitta förpackade
     i vilket brädspel som helst. De visar för närvarande <<location.die1>>
     och <<location.die2>>. "
@@ -1528,10 +1528,8 @@ class QuantumItem: object;
 ;
 
 ++ Decoration
-    'improviserad signal elektronisk vakuum kraft steg extra
-    bit/bitar/utrustning/generatorer/oscilloskop/mätare/mätare/
-    instrument/pump/laser/lasrar/motor/motorer/nätaggregat/nätaggregat/
-    mikroskop/del/delar/panel/paneler/innanmäte/innanmäten/enhet/enheter'
+    'improviserad+e signal+genererande elektronisk+a vakuum+pump+en klämd+a extra utrustning+en/bit+en/oscilloskop+et/mätare+n/instrument+et/pump+en/laser+n/steg+motor+n/nätaggregat+et/mikroskop+et/del+en/panel+en/innanmäte+t/enhet+en/
+    *enheter+na innanmäten+a bitar+na generatorer+na mätarna paneler+na delar+na instrument+en nätaggregat+en stegmotorer+na motorer+na lasrar+na'
     'utrustning'
     "Det mesta av utrustningen runt labbet är elektronisk---signal
     generatorer, oscilloskop, olika mätare och instrument, nätaggregat.
@@ -1553,11 +1551,11 @@ class QuantumItem: object;
     isNominallyIn(obj) { return inherited(obj) || obj == blShelves; }
 ;
 
-+ Fixture 'bakre norra n vägg*väggar' 'norra väggen'
++ Fixture 'bakre norr+a n vägg+en*väggar+na' 'norra väggen'
     "En uppsättning metallhyllor är fästa på den norra väggen. "
 ;
 
-++ blShelves: Fixture, Surface 'metall hylla/hyllor' 'hyllor'
+++ blShelves: Fixture, Surface 'metall+hylla+n*metall:en+hyllor+na' 'hyllor'
     "Metallhyllorna är fästa på den norra väggen och sträcker sig
     hela vägen upp till det låga taket. Precis som alla andra horisontella
     ytor i labbet är hyllorna packade med utrustning. "
@@ -1756,7 +1754,7 @@ class TestGearAttachable: NearbyAttachable
 ;
 
 +++ oscilloscope: LabShelfItem, TestGear, OnOffControl
-    'portabelt portabla solid-state oscilloskop+et/skop+et' 'oscilloskop'
+    'portabelt portabla solid-state oscillo+skop+et/skop+et' 'oscilloskop'
     "Detta är en relativt liten solid-state modell, lätt att bära med sig.
     På ovansidan finns en displayskärm och kontrollerna, och en prob
     är ansluten med en koaxialkabel. <<screenDesc>> "
@@ -1848,7 +1846,7 @@ class TestGearAttachable: NearbyAttachable
     }
 ;
 ++++ Component
-    '(oscilloskop) (skop) kontroll/kontroller'
+    '(oscilloskopets) (skopets) oscilloskopskontroll+en/kontroll+en/kontroller+na'
     'oscilloskopkontroller'
     "Kontrollerna låter dig slå på och stänga av oscilloskopet, och göra
     olika justeringar av displayen, såsom tids- och spänningsskalor
@@ -1865,7 +1863,7 @@ class TestGearAttachable: NearbyAttachable
     dobjFor(Move) asDobjFor(Push)
 ;
 ++++ Component
-    '(oscilloskop) (skop) display skärm/display' 'oscilloskopdisplay'
+    '(oscilloskop+ets) (skop+ets) oscilloskop^s+skärm+en/oscilloskop^s+display+en' 'oscilloskopsdisplay'
     desc()
     {
         if (location.isOn)
@@ -1877,8 +1875,8 @@ class TestGearAttachable: NearbyAttachable
     isOn = nil
 ;
 ++++ ComponentDeferrer, TestGearProbe
-    '(oscilloskop) (skop) lång metall koaxial isolerad vass spetsig nål
-    grepp/prob/kabel/stift/(spets)'
+    '(oscilloskop+ets) (skop) lång+a metall+en koaxial+en isolerad+e vass+a spetsig+a ände+n
+    oscilloskop:et^s+prob+en/grepp+et/prob+en/kabel+n/metall+stift+et/(spets+en)'
     'oscilloskopprob'
     "Proben består av ett isolerat grepp med en två tum lång metallstift
     som sticker ut. Stiftet har en vass, spetsig ände för att möjliggöra exakt
@@ -1954,7 +1952,7 @@ class TestGearAttachable: NearbyAttachable
     dobjFor(TypeOn) asDobjFor(TypeLiteralOn)
 ;
 ++++ signalGenKnob: NumberedDial, Component
-    '(signal) (generator) amplitud ratt/vred' 'amplitudratt'
+    '(signal+ens) (generator+ns) amplitud+ratt+en/amplitud+vred+et' 'amplitudratt'
     "Det är en ratt numrerad från 0 till 9. Den justerar spänningsnivån
     på signalen som genereras, inom det intervall som valts av de
     aktuella vågformsparametrarna. Den är för närvarande inställd på <<curSetting>>. "
@@ -1965,7 +1963,7 @@ class TestGearAttachable: NearbyAttachable
     /* handle ENTER ON as TURN TO */
     dobjFor(EnterOn) asDobjFor(TurnTo)
 ;
-++++ Component '(signal) (generator) knapp+uppsättning+en*knappar+na'
+++++ Component '(signal+ens) (signal+generator+ns) knapp+uppsättning+en*knappar+na'
     'signalgeneratorns knappar'
     "Knapparna låter dig välja formen på vågformen som
     genereras och justera dess parametrar. "
@@ -1987,14 +1985,14 @@ class TestGearAttachable: NearbyAttachable
     }
 ;
 ++++ TestGearProbe
-    '(signal) (generator) kontakt/ledning/ledningar'
+    '(signal+ens) (signal+generator+s) kontakt+en/ledning+en*ledningar+na'
     'signalgeneratorns kontakt'
     "Kontakten är en enkel uppsättning ledningar anslutna till
     signalgeneratorn. "
 ;
 
 +++ spy9: PresentLater, PermanentAttachment, Immovable
-    'liten lilla vit+a plast spy-9 kamera+n/boll+en'
+    'liten lilla vit+a plast+iga spy-9 kamera+n/boll+en'
     name = (described ? 'SPY-9-kamera' : 'liten vit boll')
     shortName = (described ? 'kamera' : 'vit plastboll')
     desc = "Det är en liten vit boll, ungefär i storlek med en golfboll
@@ -2035,11 +2033,11 @@ class TestGearAttachable: NearbyAttachable
     /* pulling on the camera is just like pulling on the wire */
     dobjFor(Pull) remapTo(Pull, spy9Wire)
 ;
-++++ Component 'klar liten lilla (kamera) (spy-9) fläck+en/lins+en/(kamera+n)' 'spy-9-lins'
+++++ Component 'klar+a liten lilla (kamera+ns) (spy-9) kamera+lins+en/fläck+en/(kamera+lins+ens)' 'spy-9-lins'
     "Det är kamerans lilla lins. "
 ;
 ++++ spy9Wire: PermanentAttachment, Immovable
-    '(spy-9) (kamera) blå+a nätverks+kabel+en/sladd+en/isolering+en' 'nätverkskabel'
+    '(spy-9) (kamera+ns) blå+a nätverk:et^s+kabel+n/sladd+en/isolering+en' 'nätverkskabel'
     "Den ser ut som en ganska standard blå nätverkskabel. Den verkar vara
     fast ansluten till <<location.shortName>>, och i andra änden
     går den in i en väggplatta. Märkligt nog går den direkt genom
@@ -2160,12 +2158,12 @@ bridgeBasementWest: Room 'Källarhall Väst'
     desc = "Luften här är fuktig och unken. "
 ;
 
-+ door023: AlwaysLockedDoor 'syd s 023 dörr*dörrar' 'dörr 023'
++ door023: AlwaysLockedDoor 'syd s 023 dörr+en*dörrar+na' 'dörr 023'
     "Den är märkt med rumsnummer 023. "
     theName = 'dörr 023'
 ;
 
-+ door024: AlwaysLockedDoor 'nord n 024 dörr*dörrar' 'dörr 024'
++ door024: AlwaysLockedDoor 'nord n 024 dörr+en*dörrar+na' 'dörr 024'
     "Dörren är märkt med rumsnummer 024. "
     theName = 'dörr 024'
 ;
@@ -2196,10 +2194,10 @@ bridgeSubHall: Room 'Undre källarhall' 'den undre källarhallen' 'korridor'
     roomParts = [defaultFloor]
 ;
 
-+ Fixture 'lågt tak' 'tak' "Taket är så lågt att du inte kan
++ Fixture 'lågt låga tak+et' 'tak' "Taket är så lågt att du inte kan
     stå rak. "
 ;
-+ Fixture 'nord syd öst väst n s ö v betong vägg/väggar' 'vägg'
++ Fixture 'nord syd öst väst n s ö v betong vägg+en/väggar+na' 'vägg'
     "Väggarna här är omålad betong. "
 ;
 
@@ -2269,7 +2267,7 @@ bridgeWiringCloset: Room 'Kopplingsskåp' 'kopplingsskåpet'
     roomParts = static [defaultFloor]
 ;
 
-+ bwirDoor: Door 'syd s dörr+en' 'dörr' "Dörren leder ut söderut. "
++ bwirDoor: Door 'syd södra s dörr+en' 'dörr' "Dörren leder ut söderut. "
 ;
 
 + bsubWiring: Immovable, Consultable
@@ -2322,7 +2320,7 @@ bridgeWiringCloset: Room 'Kopplingsskåp' 'kopplingsskåpet'
 ;
 
 + bwirBlueWire: PresentLater, Immovable
-    'blå+a spänd+a sträckt+a nätverk:et^s+kabel+n/kabel+n/sladd+en/isolering+en'
+    'blå+a spänd+a sträckt+a nätverk:et^s+kabel+n/sladd+en/isolering+en'
     'blå kabel'
     "Det är en blå nätverkskabel, spänd så att den står
     för sig själv framför massan av kablar.
@@ -2398,11 +2396,11 @@ bridgeWiringCloset: Room 'Kopplingsskåp' 'kopplingsskåpet'
 ;
 
 + bwirWalls: Fixture
-    'nord syd öst väst n s ö v vägg/väggar/tak' 'tak'
+    'nord+liga syd+liga öst+ra väst+ra n s ö v vägg+en/väggar+na/tak+et' 'tak'
     "En mängd kablar är dragna in i rummet genom öppningar i
     väggarna och taket. "
 ;
-++ bwirOpenings: Fixture 'små öppningar' 'öppningar'
+++ bwirOpenings: Fixture 'små proppfull+a *öppningar+na' 'öppningar'
     "Öppningarna leder in i ledningar som löper genom väggarna,
     och ger en kabelväg från labb på andra våningar
     till detta kopplingsskåp. Alla öppningar är proppfulla med kablar. "
@@ -2436,7 +2434,7 @@ bridgeStorage: Room 'Förrådsrum' 'förrådsrummet'
       : " av rummet"
       >>. En dörr leder ut västerut. "
 
-    vocabWords = 'förråds rum'
+    vocabWords = 'förråd^s+rum+met'
 
     west = bstorWestDoor
     out asExit(west)
@@ -2446,7 +2444,7 @@ bridgeStorage: Room 'Förrådsrum' 'förrådsrummet'
 ;
 
 + bstorNorthDoor: PresentLater, Door
-    'nord n dörr+en' 'norra dörren' "Dörren leder norrut. "
+    'nord+liga n dörr+en' 'norra dörren' "Dörren leder norrut. "
     /* find the door */
     makeFound()
     {
@@ -2477,7 +2475,7 @@ bridgeStorage: Room 'Förrådsrum' 'förrådsrummet'
 ;
 
 + bstorWood: CustomImmovable
-    'stor+a skräp+et hög+en/bit+en/trä+et/plywood+en/virket+t/skiva+n*skivor+na träbitar+na' 'skräpvirke'
+    'stor+a skräp+et hög+a hög+en/bit+en/trä+et/plywood+en/virke+t/skiva+n*skivor+na träbitar+na' 'skräpvirke'
     desc()
     {
         "Virket ser ut som diverse rester från byggprojekt,
@@ -2560,7 +2558,7 @@ bridgeStorage: Room 'Förrådsrum' 'förrådsrummet'
 ;
 
 + Decoration
-    'kartong låda/lådor' 'kartonger'
+    'kartong^s+låda+n/kartong:erna^s+lådor+na' 'kartonger'
     "De ser ut som om de har varit här ganska länge. De är alla
     förseglade, och det finns ingen indikation på vad som finns inuti. "
     
@@ -2638,7 +2636,8 @@ MultiLoc, SimpleOdor
 MultiInstance
     initialLocationClass = SteamTunnelRoom
     instanceObject: Fixture {
-        'ånga två-tums stor enorm pvc rör/ledningar/ledningssystem/rörledningar'
+        'ångig+a två-tum:miga^s+stor+a enorm+a pvc 
+        ång:an+rör+et/ledningssystem+et*ångrören+a rörledningar+na ledningar+na ledningssystemen+a'
         'ångrör'
         "Talrika rör och ledningar löper längs väggarna, från
         vanliga två-tums PVC-rör som du skulle hitta i ett hus,
@@ -2662,8 +2661,8 @@ MultiInstance
 MultiInstance
     initialLocationClass = SteamTunnelRoom
     instanceObject: Decoration {
-        'bar lågenergi ljus skyddande tråd
-        glödlampa/lampa/lampor/bur/burar'
+        'bar+a ljus+avgivande skyddande trådbur:en^s+höljig+a
+        glöd+lampa+n/bur+en*lampor+na burar+na'
         'glödlampa'
         "Lamporna avger ett svagt gult ljus inifrån sina
         skyddande trådburar. "
@@ -2703,11 +2702,11 @@ steamTunnel1: SteamTunnelRoom 'Ångtunnel vid Dörren'
     roomParts = static (inherited - defaultEastWall - defaultWestWall)
 ;
 
-+ st1Door: Door ->bstorNorthDoor 'syd s dörr+en' 'södra dörren'
++ st1Door: Door ->bstorNorthDoor 'syd södra s dörr+en' 'södra dörren'
     "Dörren leder ut ur tunneln söderut. "
 ;
 
-+ st1Wire: PresentLater, Unthing 'blå nätverks kabel/ledning' 'blå kabel'
++ st1Wire: PresentLater, Unthing 'blå+a nätverks+kabel+n/ledning+en' 'blå kabel'
     "Du ser inte kabeln här, men om du har din orientering rätt,
     skulle du inte förvänta dig det---kopplingsskåpet borde vara precis väster om
     här. "
@@ -2744,7 +2743,7 @@ steamTunnel5: SteamTunnelRoom 'Smal Tunnel' 'den smala tunneln'
     roomParts = [defaultFloor, defaultCeiling, defaultNorthWall]
 ;
 
-+ Fixture 'syd s vägg*väggar' 'södra väggen'
++ Fixture 'syd södra s vägg+en*väggar+na' 'södra väggen'
     desc()
     {
         if (st5Hole.isIn(self))
@@ -2757,7 +2756,7 @@ steamTunnel5: SteamTunnelRoom 'Smal Tunnel' 'den smala tunneln'
 ;
 
 ++ st5Hole: PresentLater, Fixture
-    'litet pyttelitet hål/prick/(ljus)' 'lilla hålet'
+    'litet pyttelitet lilla pyttelilla hål+et/ljus:et+prick+en/(ljus+et)' 'lilla hålet'
     "Hålet är nästan helt dolt bakom ett av de stora
     ångrören. En blå kabel kommer in genom hålet, och
     slingrar sig sedan längs baksidan av ett av de stora rören, och löper ner
@@ -2770,7 +2769,7 @@ steamTunnel5: SteamTunnelRoom 'Smal Tunnel' 'den smala tunneln'
         av ljus. "; } }
 ;
 
-+ st5Wire: PresentLater, Immovable 'blå nätverks kabel/ledning' 'blå kabel'
++ st5Wire: PresentLater, Immovable 'blå+a nätverk^s+kabel+n/ledning+en' 'blå kabel'
     "Kabeln kommer in genom det lilla hålet i den södra väggen,
     slingrar sig sedan längs baksidan av ett av de stora ångrören,
     och sträcker sig ner i tunneln västerut. "
@@ -2816,7 +2815,7 @@ steamTunnel6: SteamTunnelRoom 'T-Korsning' 'T-korsningen'
     north = steamTunnel13
 ;
 
-+ st6Wire: PresentLater, Immovable 'blå nätverks kabel/ledning' 'blå kabel'
++ st6Wire: PresentLater, Immovable 'blå+a nätverk^s+kabel+n/ledning+en' 'blå kabel'
     "Kabeln är dold bakom ångrören. <<wireDesc>> "
     wireDesc = "Du följer dess väg och upptäcker att den följer ett stort
         ångrör som går ner i tunneln österut, löper upp längs ett annat
@@ -2842,7 +2841,7 @@ steamTunnel13: SteamTunnelRoom 'Unken Tunnel' 'den unkna tunneln'
     roomParts = static (inherited - [defaultNorthWall, defaultSouthWall])
 ;
 
-+ SimpleOdor 'unken lukt/luft' 'unken lukt'
++ SimpleOdor 'unken unkna lukt+en/luft+en' 'unken lukt'
     "En lätt unken lukt finns i luften. "
 ;
 
@@ -2862,12 +2861,12 @@ steamTunnel14: SteamTunnelRoom
     roomParts = static (inherited - defaultSouthWall)
 ;
 
-+ EntryPortal ->(location.east) 'öst ö smal sidopassage' 'sidopassage'
++ EntryPortal ->(location.east) 'öst+ra ö smal+a sidopassage+n' 'sidopassage'
     "En brant trappa går ner i passagen. "
 ;
 
 + st14Stairs: StairwayDown ->st15Stairs
-    'brant trappa/trappor/trappuppgång' 'brant trappa'
+    'brant+a trappa+n/trapp:en+nedgång+en*trappor+na' 'brant trappa'
     "Trappan leder ner i den östra passagen. "
 ;
     
@@ -2902,20 +2901,20 @@ steamTunnel15: SteamTunnelRoom
     "Trappan leder upp västerut. "
 ;
 
-+ Fixture 'nord n vägg*väggar' 'norra väggen'
++ Fixture 'nord+liga n vägg+en*väggar+na' 'norra väggen'
     "En servicetunnel, känd som nord-syd krypgången, är uthuggen
     i den norra väggen. "
 ;
 
 + EntryPortal ->(location.north)
-    'smal nord-syd service kryp/krypgång/tunnel'
+    'smal+a nord-syd+liga service krypgång+en/gång+en/tunnel+n'
     'nord-syd krypgång'
     "Två stora asbestinklädda rör löper genom tunneln,
     och lämnar knappt tillräckligt med utrymme för en person att ta sig igenom genom att
     slingra sig längs toppen av rören. "
 ;
 
-+ Fixture 'gigantiska asbestinklädda rör/ledningar' 'asbestinklädda rör'
++ Fixture 'gigantisk+a asbest:en+inklädda rör+et*rören+a ledningar+na' 'asbestinklädda rör'
     "Rören är ungefär en meter i diameter. De löper genom
     servicetunneln som grenar av sig norrut. "
 ;
@@ -2937,7 +2936,7 @@ steamTunnel16: SteamTunnelRoom
                                      defaultSouthWall])
 ;
 
-+ Fixture 'syd s vägg*väggar' 'södra väggen'
++ Fixture 'syd södra s vägg+en*väggar+na' 'södra väggen'
     "Bokstäverna <i>DEI</i> är målade med schablon bredvid en
     elektrisk kopplingsdosa. "
 
@@ -2945,7 +2944,7 @@ steamTunnel16: SteamTunnelRoom
     dobjFor(Read) remapTo(Read, dei)
 ;
 
-++ dei: Fixture 'schablonmålade målade bokstäver "dei" dei' 'schablonmålade bokstäver'
+++ dei: Fixture 'schablon:en+målad+e *bokstäver+na "dei" dei' 'schablonmålade bokstäver'
     "<q>DEI</q> är ett Techer-internskämt som är så internt att ingen
     ens vet exakt vad det betyder. Det antas allmänt stå för
     <q>Dabney äter det,</q> vilket i sin tur antas syfta på
@@ -2960,7 +2959,7 @@ steamTunnel16: SteamTunnelRoom
     
     isPlural = true
 ;
-+ Fixture 'säkrings elektrisk kopplings (dei) ("dei") säkring^s+dosa+n/säkring^s+skåp+et'
++ Fixture 'säkrings elektrisk (dei) ("dei") koppling^s+dosa+n/säkring^s+dosa+n/säkring:en^s+skåp+et'
     'elektrisk dosa'
     "Det är någon form av elektrisk kopplingsdosa. "
 
@@ -3016,7 +3015,7 @@ steamTunnel7: SteamTunnelRoom 'Mörk Tunnel' 'den mörka tunneln'
     roomParts = [defaultFloor, defaultCeiling, defaultEastWall]
 ;
 
-+ st7Wire: PresentLater, Immovable 'blå nätverks kabel/ledning' 'blå kabel'
++ st7Wire: PresentLater, Immovable 'blå+a nätverk^s+kabel+n/ledning+en' 'blå kabel'
     "Kabeln är dold bakom ett av de stora rören. <<descWire>> "
     descWire = "Den följer röret norrut<<revealCrawl>> "
     revealCrawl()
@@ -3039,7 +3038,7 @@ steamTunnel7: SteamTunnelRoom 'Mörk Tunnel' 'den mörka tunneln'
     plKey = 'stWire'
 ;
 
-+ Fixture 'väst v vägg*väggar' 'västra väggen'
++ Fixture 'väst+ra v vägg+en*väggar+na' 'västra väggen'
     desc()
     {
         if (st7Crawl.isIn(self))
@@ -3050,7 +3049,7 @@ steamTunnel7: SteamTunnelRoom 'Mörk Tunnel' 'den mörka tunneln'
 ;
 
 ++ st7Crawl: PresentLater, TravelWithMessage, ThroughPassage ->st8Crawl
-    'mörk öppning/kryputrymme' 'öppning'
+    'mörk+a öppning+en/kryp+utrymme+t' 'öppning'
     "Öppningen är väl dold i skuggorna under ångrören.
     Den måste ha varit avsedd att rymma ett par av de stora
     rören, men det ser ut som om den är tom just nu förutom den blå
@@ -3079,7 +3078,7 @@ steamTunnel12: SteamTunnelRoom 'Tunnel vid Dörr+en' 'tunneln nära dörren'
     roomParts = static (inherited - defaultNorthWall)
 ;
 
-+ st12Door: AlwaysLockedDoor 'bred metall ångverk dörr+en' 'metalldörr'
++ st12Door: AlwaysLockedDoor 'bred ångverk metall+dörr+en' 'metalldörr'
     "Det är en bred metalldörr märkt <q>Ångverk.</q> "
 ;
 
@@ -3183,21 +3182,21 @@ steamTunnel10: SteamTunnelRoom 'Botten av Schaktet' 'botten av schaktet'
 ;
 
 + st10Stairs: StairwayDown ->st11Stairs
-    'kort betongsteg/betongsteg/trappa/trappor/trappuppgång' 'betongtrappor'
+    'kort+a betong+steg+en/trapp+uppgång+en/trappa+n*trappor+na' 'betongtrappor'
     "Trappuppgången leder några steg ner österut. "
 ;
 
-+ Vaporous 'pelare/solljus/ljus' 'pelare av solljus'
++ Vaporous 'pelare+n/sol+ljus+et' 'pelare av solljus'
     "Solljuset strömmar in i tunneln från öppningen i
     toppen av schaktet ovanför. "
 ;
 
-+ Fixture 'tunneltak' 'tak'
++ Fixture 'tunneltak+et' 'tak'
     "Ett schakt ovanför tunneln leder upp till ytan. "
 ;
 
 + workOrders: Readable, Consultable
-    'arbetsorder överfylld treringad tjock brun pärm/blankett/blanketter'
+    'arbetsorder+fyllda överfylld+a treringad+e tjock+a brun+a pärm+en/blankett+en*papper pappren blanketter+na'
     'treringad pärm'
     "Det är en brun treringad pärm, svällande av papper. "
 
@@ -3442,7 +3441,7 @@ class JobOrderTopic: ConsultTopic
     scoreMarker: Achievement { +10 "hitta information om Sync Lab-kontoret" }
 ;
 
-+ st10Ladder: StairwayUp 'järnstege/stegpinne/stegpinnar' 'stege'
++ st10Ladder: StairwayUp 'järnstege+n/stegpinne+n*stegpinnar+na' 'stege'
     "Stegen består av en serie järnpinnar inbäddade i
     väggen. Den går upp längs väggen in i tunneln. "
 
@@ -3470,7 +3469,7 @@ class JobOrderTopic: ConsultTopic
 ;
 
 + st10Spools: CustomImmovable
-    'stor telefon nätverk trä rulle/rullar/kabel/(hög)/(högar)'
+    'stor+a nätverk trä+spole kabel+vinda+n/rulle+n/kabel+n/(hög+a)*telefonkabelvindor+na rullar+na (högar+na)'
     'kabelvindor'
     "De är två fot i diameter träspolar lindade med kabel,
     som ser ut att vara någon form av telefon- eller nätverkskabel. "
@@ -3484,7 +3483,7 @@ class JobOrderTopic: ConsultTopic
         hellre inte slösa en massa kraft på att flytta runt dem. '
 ;
 
-+ OutOfReach, Fixture 'schakt/topp/öppning' 'schakt'
++ OutOfReach, Fixture 'schakt+et/topp+en/öppning+en' 'schakt'
     "Det är ett rektangulärt schakt som stiger från tunnelns tak
     till ytan ovanför. Schaktet är öppet i
     toppen. En stege inbyggd i väggen går upp i schaktet. "
@@ -3509,7 +3508,7 @@ class JobOrderTopic: ConsultTopic
  *   of the workers above.  
  */
 ++ st10QuadWorkers: PresentLater, Actor
-    'stora tunga bråkiga arbetare/man/män/skägg' 'arbetare'
+    'stor+a tung+a bråkig+a arbetare+n/man+nen*män+nen skägg+en' 'arbetare'
     "Du kan inte se dem härifrån; det enda du ser genom
     schaktet är solljus. "
 
@@ -3639,8 +3638,8 @@ class JobOrderTopic: ConsultTopic
 ;
 
 + plisnik: IntroPerson
-    'nervös skakig blek mager gänglig
-    arbetare/man/skägg/plisnik*män'
+    'nervös+a skakig+a blek+a mager magra gänglig+a
+    arbetare+n/man+nen/skägg+et/plisnik*män+nen arbetarna'
     'arbetare'
     "Han är en blek, mager, nervös man med ett gängligt skägg.
     Han bär samma sorts gröna overall och skyddshjälm som
@@ -3671,7 +3670,7 @@ class JobOrderTopic: ConsultTopic
         /* if they're trying to get my binder or spools, don't let them */
         if (gActionIs(Take) && gDobj is in(st10Spools, workOrders))
         {
-            "<q>Hej,</q> ropar {the plisnik/han} och ställer sig i din
+            "<q>Hej,</q> ropar {den plisnik/han} och ställer sig i din
             väg, <q>det där är mina grejer!</q> ";
             exit;
         }
@@ -3760,7 +3759,7 @@ class JobOrderTopic: ConsultTopic
         inte det var särskilt roligt första gången heller,</q> säger han. ']
     }
 ;
-++ InitiallyWorn 'ljusgrön hård overall/skyddshjälm/uniform/hjälm'
+++ InitiallyWorn 'ljusgrön+a hård+a overall+en/skyddshjälm+en/uniform+en/hjälm+en'
     'uniform'
     "Hans ljusgröna overall och matchande skyddshjälm är märkta
     med <q>Network Installer Company</q> i kantiga vita bokstäver.
@@ -3950,7 +3949,7 @@ class JobOrderTopic: ConsultTopic
 ;
 
 + netAnalyzer: Keypad, PresentLater, PlugAttachable, NearbyAttachable, Thing
-    'netbisco 9099 nätverksanalysator' 'nätverksanalysator'
+    'netbisco 9099 nätverks nätverksanalysator+n/analysator+n' 'nätverksanalysator'
     "Netbisco 9099 nätverksanalysatorn ser ut lite som en
     överdimensionerad telefon som man skulle hitta på en receptionists
     skrivbord på ett stort kontor. Den har en sextonställig hexadecimal
@@ -4090,7 +4089,7 @@ class JobOrderTopic: ConsultTopic
     }
 ;
 ++ PluggableComponent
-    '(netbisco) (9099) (nätverk) (analysator) kort speciell sladd/kontakt'
+    '(netbisco) (9099) (analysator) (nätverksanalysatorns) kort+a speciell+a kontakt+en/sladd+en'
     'nätverksanalysatorns kontakt'
     "Kontakten har en speciell design som passar diagnostikporten på
     vissa typer av kompatibla routrar. "
@@ -4104,14 +4103,13 @@ class JobOrderTopic: ConsultTopic
     iobjFor(UseOn) remapTo(UseOn, DirectObject, location)
 ;
 ++ Component, Readable
-    '(netbisco) (9099) (nätverk) (analysator) liten display
-    punktmatris lcd skärm'
+    '(netbisco) (9099) (analysatorns) (nätverksanalysatorns) punktmatris liten lilla display+en/lcd+:n/skärm+en'
     'nätverksanalysatorns display'
 
     desc() { location.readDisplay(); }
 ;
 ++ netAnKeypad: Keypad, Component
-    '(netbisco) (9099) (nätverk) (analysator) sextonställig hexadecimal knappsats'
+    '(netbisco) (9099) (analysatorns) (nätverksanalysatorns) sextonställig+a hexadecimal+a knappsats+en'
     'nätverksanalysatorns knappsats'
     "Knappsatsen har siffrorna 0-9 och A-F, för att mata in hexadecimala tal. "
 
@@ -4230,8 +4228,8 @@ class JobOrderTopic: ConsultTopic
     scoreMarker: Achievement { +5 "spåra kamerans datapaket" }
 ;
 ++ Button, Component
-    '(netbisco) (9099) (nätverk) (analysator) (knappsats)
-    0 1 2 3 4 5 6 7 8 9 "a" "b" "c" "d" "e" "f" knapp*knappar'
+    '(netbisco) (9099) (analysatorns)  (nätverksanalysatorns) (knappsats+iga)
+    0 1 2 3 4 5 6 7 8 9 "a" "b" "c" "d" "e" "f" knappsats+knapp+en*knappar+na'
     'nätverksanalysatorns knappsatsknapp'
 
     dobjFor(Push)
@@ -4247,7 +4245,7 @@ class JobOrderTopic: ConsultTopic
  *   actually anywhere until then 
  */
 netAnInstructions: PresentLater, Readable
-    'smutsigt slitet n:te generationens fotokopia/ark/papper'
+    'smutsig+a slitna smutsigt slitet n:te generation+s generationen+s papper:et^s+ark+et/fotokopia+n/ark+et/papper+et/pappret'
     'smutsigt pappersark'
     "Pappersarket är smutsigt och lite slitet, som om det
     har hanterats mycket. Det ser ut som en n:te generationens fotokopia.
@@ -4305,11 +4303,11 @@ steamTunnel11: SteamTunnelRoom 'Ath Tunnel' 'tunneln nära Ath'
 ;
 
 + st11Stairs: StairwayUp
-    'kort betong steg/trappsteg/trappa/trappor' 'kort trappa'
+    'kort+a trapp+steg+en/betong+trappa+n*trappor+na' 'kort trappa'
     "Trappan leder upp några steg västerut. "
 ;
 
-+ st11Door: AlwaysLockedDoor 'ath athenaeum öst ö dörr+en' 'Ath-dörren'
++ st11Door: AlwaysLockedDoor 'ath athenaeum öst+ra ö dörr+en/ath-dörr+en' 'Ath-dörren'
     "Dörren är omärkt, men du minns att den leder
     in i Ath-källaren. "
 ;
@@ -4469,7 +4467,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     }
 ;
 
-+ st8Workers: PresentLater, Person 'större mindre arbetare*män' 'arbetarna'
++ st8Workers: PresentLater, Person 'större mindre arbetare+n*män+nen' 'arbetarna'
     "De två männen bär ljusgröna overaller märkta
     <q>Network Installer Company</q> i vita bokstäver. Den större
     av de två är byggd som en fotbollsspelare. De står
@@ -4742,7 +4740,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     }
 ;
 
-++ InitiallyWorn 'ljusgröna hårda overaller/uniformer' 'overaller'
+++ InitiallyWorn 'ljusgrön+a hård+a *overaller+na/uniformer+na' 'overaller'
     "Arbetarna bär ljusgröna overaller och matchande skyddshjälmar,
     märkta <q>Network Installer Company</q> i kantiga vita bokstäver.
     <.reveal NIC> "
@@ -4758,13 +4756,13 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
 ;
 
 +++ SpecialTopic 'säg att du har gått vilse'
-    ['säg','att','jag','är','du','är','vilse']
+    ['säg','att','jag','är','du','är','har','gått','vilse']
     "<q>Jag har på något sätt gått vilse,</q> säger du.
     <.p>Den större killen kisar mot dig. <q>Vilse?</q> säger han. <q>Tja,
     låt mig hjälpa dig att hitta vägen.</q><<st8Workers.escortLater>> "
 ;
 +++ SpecialTopic 'förklara om kameran'
-    ['förklara','om','kameran']
+    ['förklara','om','kamera','kameran']
     "<q>Så, jag hittade den här, öh...</q> Det slår dig plötsligt att
     det kanske inte är en så bra idé att berätta för vem som helst om
     kameran, åtminstone inte förrän du har en bättre uppfattning om vad som pågår.
@@ -4775,7 +4773,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     <<st8Workers.escortLater>> "
 ;
 +++ SpecialTopic 'påstå att du är en arbetsledare'
-    ['påstå','att','jag','är','en','arbetsledare']
+    ['påstå','säg','ljug','om','att','jag','är','en','arbetsledare']
     "<q>Huvudkontoret skickade ner mig för att, öh, kontrollera er produktivitet.
     Jag vill se era tidkort just nu, tack.</q>
     <.p>De två tittar på varandra. <q>Jag ser inte din uniform,</q>
@@ -4789,7 +4787,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     <<st8Workers.escortLater>> "
 ;
 
-+ st8Wire: Immovable 'blå nätverkskabel/tråd' 'blå tråd'
++ st8Wire: Immovable 'blå+a nätverkskabel+n/tråd+en' 'blå tråd'
     "Tråden är delvis dold bakom ett stort ångrör. <<wireDesc>> "
     wireDesc = "Tråden kommer in från kryputrymmet, följer sedan ett
         av de stora rören norrut längs östra väggen, vänder för att följa
@@ -4801,24 +4799,24 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     isNominallyIn(obj) { return obj == st8Hole || inherited(obj); }
 ;
 
-+ Fixture 'västra v vägg*väggar' 'västra väggen'
++ Fixture 'väst+ra v vägg+en*väggar+na' 'västra väggen'
     "Den blå tråden är trädd genom ett litet hål i väggen, några
     tum från dörren. "
 ;
 
-++ st8Hole: Fixture 'litet hål' 'litet hål'
+++ st8Hole: Fixture 'litet lilla hål+et' 'litet hål'
     "Hålet är ett par tum från dörren. Den blå
     tråden är trädd genom hålet. "
 
     lookInDesc = "Den blå tråden är trädd genom hålet. "
 ;
 
-+ Fixture 'östra ö vägg*väggar' 'östra väggen'
++ Fixture 'östra ö vägg+en*väggar+na' 'östra väggen'
     "Lågt på väggen finns en öppning till ett trångt kryputrymme. "
 ;
 
 ++ st8Crawl: TravelWithMessage, ThroughPassage
-    'trång låg öppning/kryputrymme/krypgång/tunnel' 'kryputrymme'
+    'trång+a låg+a öppning+en/kryputrymme+t/krypgång+en/tunnel+n' 'kryputrymme'
     "Öppningen ser precis stor nog ut för att krypa in i. "
 
     travelDesc = "Du kryper in med huvudet först i passagen och drar
@@ -4887,7 +4885,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     }
 ;
 
-+ st8Nook: OutOfReach, Fixture, Platform 'skuggig mörk nisch/skuggor' 'nisch'
++ st8Nook: OutOfReach, Fixture, Platform 'skuggig+a mörk+a nisch+en/skugga+n*skuggor+na' 'nisch'
     "Nischen är ett par fot djup---tillräckligt för att stå i, men den
     leder ingenstans. Den är nästan helt i skugga. "
 
@@ -4933,7 +4931,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     }
 ;
 
-+ st8Door: Keypad, Lockable, Door '"förråd"  väst+ra v förråd:et^s+dörr+en' 'dörr'
++ st8Door: Keypad, Lockable, Door '"förråd" väst+ra v förråd:et^s+dörr+en' 'dörr'
     "Dörren är märkt <q>Förråd,</q> och den har ett av de där
     mekaniska kodlåsen. "
 
@@ -5117,8 +5115,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
 ;
 
 ++ st8DoorLock: Keypad, Fixture
-    'mekanisk-knappsats knappsats (dörr) lås låsning (nyckel)
-    nyckel-sats/sats/lås/mekanism/knappsats'
+    '(mekanisk+a) knappsats:en+lås+et/lås+et/låsning+en/(dörrens) nyckel+sats+en/mekanism+en/knappsats+en'
     'knappsatslås'
     "Det är en typ av lås du har sett förut i kontor och andra
     offentliga byggnader. Knappsatsen har tryckknappar märkta 0 till 9,
@@ -5174,8 +5171,8 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     dobjFor(TypeLiteralOn) asDobjFor(EnterOn)
 ;
 +++ Button, Component
-    '(lås) (knappsats) numrerade metall 0 1 2 3 4 5 6 7 8 9 "återställ"
-    tryck-knapp/knapp*knappar*tryck-knappar'
+    '(lås+et) (knappsats+en) numrerade metall 0 1 2 3 4 5 6 7 8 9 "återställ"
+    tryckknapp+sats+en*knappar+na*tryckknappar+na'
     'låsknappsatsknapp'
     "Numrerade knappar märkta 0 till 9 är ordnade i två kolumner, och
     längst ner finns en större knapp märkt <q>Återställ.</q> "
@@ -5185,7 +5182,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
 ;
 
 +++ Button, Component
-    '"återställ" metall tryck-knapp/knapp*knappar*tryck-knappar'
+    '"återställ" metall tryck+knapp+en*knappar+na*tryckknappar+na'
     '<q>Återställ</q>-knapp'
     "Det är en metallknapp märkt <q>Återställ.</q> "
 
@@ -5253,18 +5250,18 @@ networkRoom: Room 'Nätverksrum' 'nätverksrummet'
     }
 ;
 
-+ Fixture 'öst ö vägg*väggar' 'östra väggen'
++ Fixture 'öst+ra ö vägg+en*väggar+na' 'östra väggen'
     "En blå tråd är trädd genom ett litet hål i väggen bredvid
     dörren. "
 ;
-++ nrHole: Fixture 'litet pyttelitet hål' 'litet hål'
+++ nrHole: Fixture 'litet lilla pyttelitet hål+et' 'litet hål'
     "Hålet är precis bredvid dörren. En blå nätverkskabel kommer
     in genom hålet. "
     lookInDesc = "En blå nätverkstråd är trädd genom hålet. "
 ;
 
 + PlugAttachable, PermanentAttachment, Immovable
-    'ensam blå nätverkstråd/kabel' 'blå nätverkskabel'
+    'ensam+ma blå+a nätverkskabel+n/kabel+n/nätverkstråd+en' 'blå nätverkskabel'
     "Den blå tråden är trädd genom ett litet hål i väggen,
     bredvid dörren. Den ansluter till en av de stora buntarna av
     kablar---men det är den enda blå tråden, så det är lätt att följa den till
@@ -5284,7 +5281,7 @@ networkRoom: Room 'Nätverksrum' 'nätverksrummet'
     isNominallyIn(obj) { return obj == nrHole || inherited(obj); }
 ;
 
-+ nrConduits: Fixture 'ledningar' 'ledningar'
++ nrConduits: Fixture 'ledningar+na' 'ledningar'
     "Stora buntar av nätverkskabel matar genom ledningarna, som
     förmodligen leder ut till närliggande byggnader. "
     isPlural = true
@@ -5293,7 +5290,7 @@ networkRoom: Room 'Nätverksrum' 'nätverksrummet'
 ;
 
 + PlugAttachable, PermanentAttachment, Immovable
-    'stor jättelik vit gul orange nätverkstråd/trådar/kabel/kablar/buntar'
+    'stor+a jättelik+a vit+a gul+a orange nätverkstråd+en/kabel+n*nätverkstrådar+na trådar+na kablar+na buntar+na'
     'kabelbuntar'
     "Hundratals vita, gula och orange kablar är anslutna till
     routern. Kablarna är samlade i jättelika buntar, som matar in i
@@ -5311,7 +5308,7 @@ networkRoom: Room 'Nätverksrum' 'nätverksrummet'
 ;
 
 + nrRouter: PlugAttachable, NearbyAttachable, Heavy
-    'golvstående nätverksrouterlåda' 'nätverksrouter'
+    'golvstående nätverk:et^s+router:n+låda+n' 'nätverksrouter'
     "Det är en stor utrustning, i storlek med en hög bokhylla.
     Hundratals nätverkstrådar är anslutna till uttag utspridda över
     framsidan av lådan. På ena sidan finns ett flerstifts diagnostikuttag. "
@@ -5327,7 +5324,7 @@ networkRoom: Room 'Nätverksrum' 'nätverksrummet'
  *   that we don't otherwise enumerate with its own object.
  */
 ++ nrRouterSockets: PermanentAttachment, Component
-    'nätverksuttag/uttag' 'nätverksuttag'
+    'nätverksuttag+et/uttag+et' 'nätverksuttag'
     "Routern har hundratals uttag; trådar är anslutna till de flesta
     av dem. "
 
@@ -5341,7 +5338,7 @@ networkRoom: Room 'Nätverksrum' 'nätverksrummet'
 ;
 
 ++ PluggableComponent
-    'diagnostiskt flerstifts uttag/port/socket' 'diagnostikuttag'
+    'diagnostiskt diagnostisk+a flerstifts flerstiftig+a uttag+et/port+en/socket+en' 'diagnostikuttag'
     "Det är ett uttag för en speciell typ av kontakt, förmodligen för
     en nätverksanalysator.<.reveal need-net-analyzer> "
 

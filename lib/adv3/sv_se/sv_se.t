@@ -6353,7 +6353,7 @@ grammar compoundNounPhrase(simple): simpleNounPhrase->np_
         return np_.getAdjustedTokens();
     }
 ;
-
+// 'till'?
 grammar compoundNounPhrase(of):
     simpleNounPhrase->np1_ 'av'->of_ compoundNounPhrase->np2_
     | simpleNounPhrase->np1_ 'från'->of_ compoundNounPhrase->np2_
@@ -9588,6 +9588,7 @@ modify TopicTAction
 
 VerbRule(Take)
     (('ta'|'tag') ('ner'|) | ('ta'|'tag'|'plocka'|'hämta') ('upp'|)) dobjList
+    | 'införskaffa' dobjList
     : TakeAction
     verbPhrase = 'ta/tar (vad)'
 ;
@@ -9613,14 +9614,15 @@ VerbRule(Drop)
 ;
 
 VerbRule(Examine)
-    ('undersök' | 'inspektera' | 'x'
+    ('undersök' | 'inspektera' | 'x' | 'granska' | 'analysera' | 'betrakta' | 'utforska' | 'observera' 
      | 'titta' 'på' | 'se' 'på' | 'titta' ) dobjList
+     | ('ta' 'en' 'närmare' 'titt' 'på' ) dobjList
     : ExamineAction
     verbPhrase = 'undersöka/undersöker (vad)'
 ;
 
 VerbRule(Read)
-    'läs' dobjList
+    ('läs'|'tolka'|'tyd'|'studera') dobjList
     : ReadAction
     verbPhrase = 'läsa/läser (vad)'
 ;
@@ -9668,7 +9670,7 @@ VerbRule(Taste)
 ;
 
 VerbRule(Smell)
-    ('lukta' | 'vädra' | 'lukta' 'på') dobjList
+    ('lukta' | 'vädra' | 'lukta' | 'dofta') ('på'|) dobjList
     : SmellAction
     verbPhrase = 'lukta/luktar (vad)'
 
@@ -9708,8 +9710,8 @@ VerbRule(ListenImplicit)
 VerbRule(PutIn)
     ('lägg' | 'placera' | 'sätt' | 'stoppa') ('in'|'i') dobjList ('i'|'inuti') singleIobj
     | ('lägg' | 'placera' | 'sätt' | 'stoppa'  ) dobjList singleIobj
-    | ('lägg' | 'placera' | 'sätt' | 'stoppa'  ) dobjList
-        ('i' | 'in' | 'in' 'i' | 'in' 'till' | 'insidan' | 'insidan' 'av') singleIobj
+    | ('lägg' | 'placera' | 'sätt' | 'stoppa' | 'infoga') dobjList
+    ('i' | 'in' | 'in' 'i' | 'in' 'till' | 'insidan' | 'insidan' 'av') singleIobj
     : PutInAction
     verbPhrase = 'sätta/sätter (vad) (in i vad)'
     askIobjResponseProd = inSingleNoun
@@ -9779,6 +9781,10 @@ VerbRule(AskWhomFor)
 
 VerbRule(AskAbout)
     ('fråga'|'be'|'f') singleDobj 'om' singleTopic
+    | ('fråga' 'ut'|'utfråga') singleDobj 'om' singleTopic
+    | ('diskutera'|'utforska') singleTopic 'med' singleDobj
+    | 'konsultera' singleDobj 'angående' singleTopic
+    | 'be'  singleDobj ('förklara'| ('berätta' 'om')) singleTopic
     : AskAboutAction
     verbPhrase = 'fråga/frågar (vem) (om vad)'
     omitIobjInDobjQuery = true
@@ -9814,7 +9820,7 @@ VerbRule(AskAboutWhat)
 
 
 VerbRule(TellAbout)
-    ('berätta' | 'säg' | 'b') ('för'|) singleDobj 'om' singleTopic
+    ('berätta' | 'informera' | 'säg' | 'b') ('för'|) singleDobj 'om' singleTopic
     : TellAboutAction
     verbPhrase = 'berätta/berättar för (vem) (om vad)'
     askDobjResponseProd = singleNoun
@@ -9861,7 +9867,8 @@ VerbRule(TellVague)
 ;
 
 VerbRule(TalkTo)
-    'prata' ('till'|'med') singleDobj
+    ('prata'|'konversera') ('till'|'med') singleDobj
+    | 'inled' 'konversation' 'med' singleDobj
     : TalkToAction
     verbPhrase = 'prata/pratar (med vem)'
     askDobjResponseProd = singleNoun
@@ -9902,7 +9909,7 @@ VerbRule(Goodbye)
 ;
 
 VerbRule(Yes)
-    'ja' | 'bekräfta' | 'säg' 'ja'
+    'ja' | 'bekräfta' | 'instäm' | ('säg' 'ja')
     : YesAction
     verbPhrase = 'säga/säger ja'
 ;
@@ -10072,7 +10079,7 @@ VerbRule(Wait)
 ;
 
 VerbRule(Look)
-    ('t' | 'se' | 'titta') ('omkring'|'runt'|) 
+    ('t' | 'se' | 'titta' | 'betrakta') ('omkring'|'runt'|) 
     : LookAction
     verbPhrase = 'titta/tittar runt'
 ;
@@ -10084,7 +10091,7 @@ VerbRule(Quit)
 ;
 
 VerbRule(Again)
-    'igen' | 'g'
+    'igen' | 'fortsätt' | 'upprepa' | 'g'
     : AgainAction
     verbPhrase = 'repetera/repeterar det sista kommandot'
 ;
@@ -10328,7 +10335,7 @@ VerbRule(VagueTravel) 'gå' | 'vandra' : VagueTravelAction
 ;
 
 VerbRule(Travel)
-    'gå' singleDir | singleDir
+    ('gå'|'fortsätt'|'förflytta'|('bege' ('mig'|'dig'))) singleDir ('igen'|) | singleDir
     : TravelAction
     verbPhrase = ('gå/går ' + dirMatch.dir.name)
 ;
@@ -10383,7 +10390,7 @@ VerbRule(GoThrough)
 ;
 
 VerbRule(Enter)
-    (('gå'|'kliv') 'in' ('i'|) 
+    (('gå'|'kliv'|'stig') 'in' ('i'|) 
     | 'in' 'till'
     | ('vandra' | 'gå') ('till' 
     | 'in' ('i'|)
@@ -10450,7 +10457,7 @@ VerbRule(Push)
 ;
 
 VerbRule(Pull)
-    'dra' ('i'|) dobjList
+    ('dra'|'ryck') ('i'|) dobjList
     : PullAction
     verbPhrase = 'dra/drar (vad)'
 ;
@@ -10606,12 +10613,14 @@ VerbRule(Consult)
 VerbRule(ConsultAbout)
     'konsultera' singleDobj ('på' | 'om') singleTopic
     | 'sök' singleDobj 'efter' singleTopic
-    | (('titta' | 'se' | 't' | 'slå') ('upp' | 'efter')
+    //| (('titta' | 'se' | 't' | 'slå') ('upp' | 'efter')
+    | (('slå') ('upp' | 'efter')
        | 'hitta'
        | 'sök' 'efter'
        | 'läs' 'om')
          singleTopic 'i' singleDobj
-    | ('titta' | 'l') singleTopic 'upp' 'i' singleDobj
+
+    //| ('titta' | 'l') singleTopic 'upp' 'i' singleDobj
     : ConsultAboutAction
     verbPhrase = 'konsultera/konsulterar (vad) (om vad)'
     omitIobjInDobjQuery = true
@@ -10619,12 +10628,15 @@ VerbRule(ConsultAbout)
 ;
 
 VerbRule(ConsultWhatAbout)
-    (('titta' | 'se' | 't' | 'slå') ('upp' | 'efter')
+    //(('titta' | 'se' | 't' | 'slå') ('upp' | 'efter')
+    (('slå') ('upp' | 'efter')
      | 'hitta'
+     | 'konsultera'
      | 'sök' 'efter'
-     | 'läs' 'om')
-    singleTopic
-    | ('titta' | 't') singleTopic 'upp'
+     | 'läs' 'om') singleTopic
+
+    //| ('titta' | 't') singleTopic 'upp'
+
     : ConsultAboutAction
     verbPhrase = 'slå/slår upp (vad) (i vad)'
     whichMessageTopic = DirectObject
@@ -10700,7 +10712,7 @@ VerbRule(Extinguish)
 ;
 
 VerbRule(Break)
-    ('förstör' | 'ha' 'sönder') dobjList
+    ('förstör' | 'ha' 'sönder'|'demontera') dobjList
     : BreakAction
     verbPhrase = 'förstöra/förstör (vad)'
 ;
@@ -10726,7 +10738,7 @@ VerbRule(CutWith)
 ;
 
 VerbRule(Eat)
-    ('ät' | 'konsumera') dobjList
+    ('ät' | 'konsumera' | 'förtär' ) dobjList
     : EatAction
     verbPhrase = 'äta/äter (vad)'
 ;
@@ -10765,7 +10777,7 @@ VerbRule(Climb)
 ;
 
 VerbRule(ClimbUp)
-    ('kliv' | 'gå' | 'vandra') 'upp' singleDobj
+    ('kliv' | 'gå' | 'vandra') ('upp'|'uppåt') ('på'|) singleDobj
     : ClimbUpAction
     verbPhrase = 'kliva/kliver upp (på vad)'
     askDobjResponseProd = singleNoun
@@ -10859,7 +10871,7 @@ VerbRule(Open)
 ;
 
 VerbRule(Close)
-    ('stäng' | ('slå'|'stäng') 'igen') dobjList
+    ('stäng' |'försegla'| ('slå'|'stäng') 'igen') dobjList
     : CloseAction
     verbPhrase = 'stänga/stänger (vad)'
 ;
@@ -11615,12 +11627,48 @@ DefineLiteralAction(Ord)
 ;
 
 VerbRule(Ord)
-    'ord' singleLiteral
-    :OrdAction 
-    verbPhrase = 'ord/orda (vad)'
+    ('ord'|'ordgranska') singleLiteral
+    :OrdAction  
+    verbPhrase = 'ordgranska/ordgranskar (vad)'
 ; 
 
 
+DefineLiteralAction(ObjOrd)
+    execAction() { 
+
+        tadsSay('Visar ord definierade i cmdDict för objekt: <<gLiteral>>\n');
+        local res = Compiler.compile('displayGrammarInfo(<<gLiteral>>)')();
+        mainReport(toString(res));
+    }
+;
+
+VerbRule(ObjOrd)
+    ('obj'|'objektgranska') singleLiteral
+    :ObjOrdAction 
+    verbPhrase = 'objektgranska/objektgranskar (vad)'
+; 
+
+
+function displayGrammarInfo(o) {
+    local str = new StringBuffer();
+    str.append('\n');
+    cmdDict.forEachWord(function(obj, word, wordPart) {
+        try {
+            if(obj == o) {
+                local grammarFunction = 'okänd';
+                if(wordPart == &noun) grammarFunction = 'substantiv';
+                else if(wordPart == &literalAdjective) grammarFunction = 'literalAdjective';
+                else if(wordPart == &plural) grammarFunction = 'plural';
+                else if(wordPart == &adjective) grammarFunction = 'adjektiv';
+                str.append('<<word>> (<<grammarFunction>>) \n');
+            }
+        } catch(Exception e) {
+            tadsSay('Felaktig jämförelse: <<e>>\n');
+        }
+    });
+    str.append('\b');
+    return toString(str);
+}
 
 function displayWordPartOnly(wordPart) {
     if(wordPart == &noun) {
@@ -11631,6 +11679,9 @@ function displayWordPartOnly(wordPart) {
     }
     if(wordPart == &adjective) {
         tadsSay(' &noun ');
+    }
+    if(wordPart == &literalAdjective) {
+        tadsSay(' &literalAdjective ');
     }
 }
 
@@ -11643,6 +11694,9 @@ function displayWordPart(wordPart, cur, obj) {
     }
     if(wordPart == &adjective) {
         tadsSay('\ <<cur>> (adjektiv)');
+    }
+    if(wordPart == &literalAdjective) {
+        tadsSay('\ <<cur>> (literalAdjective)');
     }
     tadsSay('\t\t\t\t\t\t -> \ [<<obj.name>>]\n');
 }

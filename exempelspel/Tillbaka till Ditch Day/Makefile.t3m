@@ -35,7 +35,7 @@
 # Extra during translation. Remove later
 -source ../../lib/dynfunc
 
--source ../../debug
+-source ../../eval
 -source tests2/tests2
 
 

@@ -664,7 +664,7 @@ class BookstoreReceipt: Readable
     isPaidFor = nil
 ;
 
-++ Buyable, Thing 'plysch mjuk marsvin leksak djur*leksaker*djur'
+++ Buyable, Thing 'plysch+iga mjuk+a marsvin marsvin^s+leksak+en/marsvin+et/djur+et*leksaker+na*djur+en'
     'marsvin av plysch'
     "Det är ett sött mjukismarsvin, nästan i naturlig storlek. "
 
@@ -674,7 +674,7 @@ class BookstoreReceipt: Readable
 ;
 
 ++ ratPuppet: Buyable, HandWearable
-    'svart+a tjock+a plysch+iga mjuk+a rått+aktig+a leksak+en
+    'svart+a tjock+a plysch+iga mjuk+a råttaktig+a leksak+en
     handdocka+n/docka+n/leksak+en/djur+et/råtta+n/päls+en*leksaker+na*djur+en'
     'plyschråttleksak'
     "Det är en söt mjukisråtta, lite större än i naturlig storlek,
@@ -775,6 +775,6 @@ class BookstoreReceipt: Readable
         }
     }
 ;
-+++ Component '(råtta) (docka) (handdocka) hand öppning' 'råttdocka öppning'
++++ Component '(råtta) (docka) (handdocka) hand råttans öppning handrått:an^s+dock:an^s+öppning+en' 'handråttsdocksöppning'
     iobjFor(PutIn) remapTo(PutIn, DirectObject, location)
 ;

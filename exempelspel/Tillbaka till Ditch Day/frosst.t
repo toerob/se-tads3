@@ -14,7 +14,7 @@
 /*
  *   Frosst Belker 
  */
-frosst: Person 'frosst belker/man*män' 'Belker'
+frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
     "Han är en spenslig man av medellängd med ganska blek hy.
     Du har svårt att gissa hur gammal han är; han ser ut att
     kunna vara allt från tjugofem till fyrtiofem år gammal. Han är klädd
@@ -41,19 +41,19 @@ frosst: Person 'frosst belker/man*män' 'Belker'
     specialDescOrder = 220
 ;
 
-+ InitiallyWorn 'vit dubbelknäppt kavaj/rock'
++ InitiallyWorn 'vit+a dubbelknäppt+a kavaj+en/rock+en'
     'vit dubbelknäppt kavaj'
     "Det är en oklanderligt skräddarsydd dubbelknäppt vit kavaj. "
     isListedInInventory = nil
 ;
 
-+ InitiallyWorn 'vita byxor' 'vita byxor'
++ InitiallyWorn 'vit+a byxor+na' 'vita byxor'
     "Det är ett par välskräddade vita kostymbyxor. "
     isPlural = true
     isListedInInventory = nil
 ;
 
-+ frosstCellPhone: PresentLater, Thing 'mobiltelefon' 'mobiltelefon'
++ frosstCellPhone: PresentLater, Thing 'mobil+telefon+en' 'mobiltelefon'
     "Den är så liten att den måste vara en ny modell, men du
     kan inte riktigt få en bra titt på den medan han använder den. "
 
@@ -65,7 +65,7 @@ frosst: Person 'frosst belker/man*män' 'Belker'
 ;
 
 + PresentLater, Container
-    'mitachron logotyp stor svart plastpåse' 'plastpåse'
+    'mitachron^s+logotyp+en stor+a svart+a plast+påse+n' 'plastpåse'
     "Det är en stor plastpåse med Mitachrons logotyp på sidan. "
 
     plKey = 'logo-wear'

@@ -23,14 +23,42 @@
  *   entirely straightforward to guess, so allow USE in these cases. 
  */
 DefineTAction(Use);
-VerbRule(Use) 'använd' singleDobj : UseAction
+VerbRule(Use) ('använd'|'applicera') singleDobj : UseAction
     verbPhrase = 'använda/använder (vad)'
 ;
 
 /* similarly, a generic USE ON */
 DefineTIAction(UseOn);
-VerbRule(UseOn) 'använd' singleDobj ('med'|'på') singleIobj : UseOnAction
+VerbRule(UseOn) ('använd'|'applicera') singleDobj ('med'|'på') singleIobj : UseOnAction
     verbPhrase = 'använda/använder (vad) (på vad)'
+;
+
+DefineTAction(UseAsLadder);
+VerbRule(UseAsLadder) 'använd' singleDobj 'som' 'stege': ClimbAction
+    verbPhrase = 'använda/använder (vad) som stege'
+;
+
+DefineTAction(ClimbDir);
+VerbRule(ClimbDir) 'klättra' singleDir
+    : TravelAction
+    verbPhrase = ('klättra/klättrar ' + dirMatch.dir.name)
+;
+
+VerbRule(OpenSynonyms)
+    ('forcera'|'frigör') dobjList
+    : OpenAction
+    verbPhrase = 'öppna/öppnar (vad)'
+;
+
+// Gör om exempelvis "se upp mot/på X" till "se på X"
+lookDirPreParser: StringPreParser 
+    doParsing(str, which) {
+        local match = rexMatch('(se|titta) (upp|ned|ner|)(åt)? (mot|på) (.*)', str);
+        if(match) {
+            return rexGroup(1)[3] + ' på ' + rexGroup(5)[3];
+        }
+        return str;
+    }
 ;
 
 /* 
@@ -436,7 +464,7 @@ modify Thing
  *   add some default vocabulary to Person 
  */
 modify Person
-    vocabWords = 'person*personer folk'
+    vocabWords = 'person+en/människa+n*personer+na människor+na folk+et'
 ;
 
 /* ------------------------------------------------------------------------ */
