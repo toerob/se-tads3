@@ -3082,7 +3082,7 @@ quad: CampusOutdoorRoom
     cannotReachFromOutsideMsg(dest)
     {
         gMessageParams(dest);
-        return '{The dest/he} {is} på andra sidan av den gula tejpen,
+        return '{Den dest/han} {är} på andra sidan av den gula tejpen,
             som arbetarna utan tvekan satte dit för att förhindra just den här
             sortens inblandning från förbipasserande. ';
     }
@@ -3180,7 +3180,7 @@ quad: CampusOutdoorRoom
         firstTime()
         {
             "<q>Hej!</q> ropar en av arbetarna och fångar
-            {the projectile/him} precis innan {it/he} faller ner i
+            {den projectile/honom} precis innan {det/han} faller ner i
             brunnen. <q>Det är en kille där nere som jobbar!</q> ";
 
             if (projectile_ == ratPuppet)
@@ -3189,15 +3189,15 @@ quad: CampusOutdoorRoom
                 schaktet. <q>Hej, Plisnik! Kolla vad jag har här!</q>
                 Det hörs några arga rop från schaktet.<.p>";
 
-            "Arbetaren kastar tillbaka {the projectile/him} till dig.
+            "Arbetaren kastar tillbaka {ref projectile/honom} till dig.
             <q>Jag ska låtsas att det var en olycka,</q> säger han
             hotfullt till dig. ";
         }
 
         secondTime()
         {
-            "En av arbetarna grabbar tag i {the projectile/him} i
-            luften innan {it/he} faller ner i schaktet. ";
+            "En av arbetarna grabbar tag i {ref projectile/honom} i
+            luften innan {den/han} faller ner i schaktet. ";
 
 
             if (projectile_ == ratPuppet)
@@ -3208,7 +3208,7 @@ quad: CampusOutdoorRoom
                 <q>Hörru, kan du sluta kasta skräp på oss? Det är
                 farligt!</q> ";
             else
-                "<q>Hej!</q> skriker han och kastar tillbaka {it/him} till dig.
+                "<q>Hej!</q> skriker han och kastar tillbaka {den/honom} till dig.
                 <q>Sluta kasta skräp på oss! Det är
                 farligt!</q> ";
         }
@@ -4965,7 +4965,7 @@ property blockToyCar;
         {
             if (gDobj != ratPuppet)
             {
-                "Det finns inget sätt att balansera {the dobj/honom} på leksaksbilen. ";
+                "Det finns inget sätt att balansera {ref dobj/honom} på leksaksbilen. ";
                 exit;
             }
         }
@@ -5730,7 +5730,7 @@ rockGarden: CampusOutdoorRoom 'Stenträdgård' 'stenträdgården'
     iobjFor(PutIn)
     {
         verify() { }
-        action() { "Bättre att låta bli; du skulle göra {it dobj/honom} helt blöt. "; }
+        action() { "Bättre att låta bli; du skulle göra {det dobj/subj} helt blöt. "; }
     }
 ;
 
@@ -5823,7 +5823,7 @@ millikanPond: CampusOutdoorRoom 'Millikan-dammen' 'Millikan-dammen'
     iobjFor(PutIn)
     {
         verify() { }
-        action() { "Bättre att låta bli; du skulle göra {it dobj/honom} helt blöt. "; }
+        action() { "Bättre att låta bli; du skulle göra {det dobj/subj} helt blöt. "; }
     }
 ;
 

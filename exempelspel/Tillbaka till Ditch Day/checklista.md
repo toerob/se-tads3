@@ -44,7 +44,7 @@
 
 # TEMPLATE {the } {a }
 
-[] campus
+[X?] campus
 [] bridge
 [] intro
 [] dabney
