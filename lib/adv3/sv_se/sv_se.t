@@ -3291,9 +3291,9 @@ DefineLangDir(north, 'norr'  | 'n' | 'nord' | 'norrut', 'tillbaka från');
 DefineLangDir(south, 'söder' | 's' | 'syd'  | 'söderut', 'tillbaka från');
 DefineLangDir(east,  'öster' | 'ö' | 'öst'  | 'österut', 'tillbaka från');
 DefineLangDir(west,  'väst'  | 'v' | 'väst' | 'västerut', 'tillbaka från');
-DefineLangDir(northeast, 'nordöst'|'nordösterut' | 'nö', 'tillbaka från');
+DefineLangDir(northeast, 'nordöst'| 'nordost'|'nordösterut' | 'nö', 'tillbaka från');
 DefineLangDir(northwest, 'nordväst'|'nordvästerut' | 'nv', 'tillbaka från');
-DefineLangDir(southeast,  'sydöst'|'sydösterut'| 'sö', 'tillbaka från');
+DefineLangDir(southeast,  'sydöst'|'sydost'|'sydösterut'| 'sö', 'tillbaka från');
 DefineLangDir(southwest,  'sydväst'|'sydvästerut'| 'sv', 'tillbaka från');
 DefineLangDir(up, 'upp'|'uppåt'|'u', 'tillbaka');
 DefineLangDir(down, 'ner'|'nedåt'|'n', 'tillbaka');
@@ -5916,7 +5916,7 @@ grammar completeNounPhraseWithoutAll(me): 'mig' | 'mig själv' : MeProd;
  *   including b as a separate list.  
  */
 grammar completeNounPhraseWithAll(main):
-    'allt'|'alla'|'allting'
+    ('allt'|'alla'|'allting')
     : EverythingProd
 ;
 
@@ -6133,8 +6133,8 @@ grammar qualifiedPluralNounPhrase(anyNum):
 
 /* plural phrase qualified with a number and "all" */
 grammar qualifiedPluralNounPhrase(allNum):
-    ('allt'|'alla') numberPhrase->quant_ indetPluralNounPhrase->np_
-    | ('allt'|'alla') numberPhrase->quant_ ('av'|'från') explicitDetPluralNounPhrase->np_
+    ('allt'|'alla'|'allting') numberPhrase->quant_ indetPluralNounPhrase->np_
+    | ('allt'|'alla'|'allting') numberPhrase->quant_ ('av'|'från') explicitDetPluralNounPhrase->np_
     : ExactQuantifiedPluralProd
 ;
 
@@ -6147,8 +6147,8 @@ grammar qualifiedPluralNounPhrase(both):
 
 /* plural phrase qualified with "all" */
 grammar qualifiedPluralNounPhrase(all):
-    ('allt'|'alla') detPluralNounPhrase->np_
-    | ('allt'|'alla') 'av' explicitDetPluralNounPhrase->np_
+    ('allt'|'alla'|'allting') detPluralNounPhrase->np_
+    | ('allt'|'alla'|'allting') 'av' explicitDetPluralNounPhrase->np_
     : AllPluralProd
 ;
 
@@ -7603,7 +7603,7 @@ grammar mainDisambigPhrase(main):
  *   as an ordinal in our own list.  
  */
 grammar disambigPhrase(all):
-    'allt' | 'allting' | 'alla' 'dem' : DisambigProd
+    'allt' | 'allting' | ('alla' 'dem') : DisambigProd
     resolveNouns(resolver, results)
     {
         /* they want everything we proposed - return the whole list */
@@ -9587,7 +9587,7 @@ modify TopicTAction
  */
 
 VerbRule(Take)
-    (('ta'|'tag') ('ner'|) | ('ta'|'tag'|'plocka'|'hämta') ('upp'|)) dobjList
+    (('ta'|'tag') ('ner'|'ned'|) | ('ta'|'tag'|'plocka'|'hämta') ('upp'|)) dobjList
     | 'införskaffa' dobjList
     : TakeAction
     verbPhrase = 'ta/tar (vad)'
@@ -9608,7 +9608,8 @@ VerbRule(Remove)
 ;
 
 VerbRule(Drop)
-    ('släpp' | ('sätt' | 'ställ' |'släpp') ('ner'|'ned') ) dobjList
+    ('släpp' | 'sätt' | 'ställ') ('ner'|'ned'|)  dobjList
+    | 'lämna' dobjList
     : DropAction
     verbPhrase = 'släppa/släpper (vad)'
 ;
@@ -9792,7 +9793,7 @@ VerbRule(AskAbout)
 ;
 
 VerbRule(AskAboutImplicit)
-    'f' singleTopic
+    ('ställ'|) ('f'|'fråga') ('om'|) singleTopic
     : AskAboutAction
     verbPhrase = 'fråga/frågar (vem) (om vad)'
     omitIobjInDobjQuery = true
@@ -10335,7 +10336,9 @@ VerbRule(VagueTravel) 'gå' | 'vandra' : VagueTravelAction
 ;
 
 VerbRule(Travel)
-    ('gå'|'fortsätt'|'förflytta'|('bege' ('mig'|'dig'))) singleDir ('igen'|) | singleDir
+    ('gå'|'fortsätt'|'vandra') ('vidare'|) singleDir ('igen'|) 
+    | ('bege'|'förflytta') ('mig'|'dig') singleDir ('igen'|) 
+    | singleDir
     : TravelAction
     verbPhrase = ('gå/går ' + dirMatch.dir.name)
 ;
@@ -10777,14 +10780,14 @@ VerbRule(Climb)
 ;
 
 VerbRule(ClimbUp)
-    ('kliv' | 'gå' | 'vandra') ('upp'|'uppåt') ('på'|) singleDobj
+    ('kliv'|'klättra'|'gå'|'vandra') ('upp'|'uppåt') ('på'|) singleDobj
     : ClimbUpAction
     verbPhrase = 'kliva/kliver upp (på vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ClimbUpWhat)
-    [badness 200] ('kliv' | 'gå' | 'vandra') 'upp'
+    [badness 200] ('klättra'|'kliv' | 'gå' | 'vandra') 'upp'
     : ClimbUpAction
     verbPhrase = 'kliva/kliver upp (på vad)'
     askDobjResponseProd = singleNoun
@@ -10796,14 +10799,14 @@ VerbRule(ClimbUpWhat)
 ;
 
 VerbRule(ClimbDown)
-    ('climb' | 'gå' | 'vandra') 'ner' ('från'|) singleDobj
+    ('klättra' | 'gå' | 'vandra') 'ner' ('från'|) singleDobj
     : ClimbDownAction
     verbPhrase = 'kliva/kliver ner (på vad)'
     askDobjResponseProd = singleNoun
 ;
 
 VerbRule(ClimbDownWhat)
-    [badness 200] ('climb' | 'gå' | 'vandra') 'ner'
+    [badness 200] ('klättra'|'gå'|'vandra') ('ner'|'ned'|'neråt'|'nedåt')
     : ClimbDownAction
     verbPhrase = 'kliva/kliver ner (på vad)'
     askDobjResponseProd = singleNoun
@@ -10907,7 +10910,7 @@ VerbRule(UnlockWith)
 ;
 
 VerbRule(SitOn)
-    'sitt' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
+    'sitt' ('på' | 'i' | ('ner'|'ned') ('på'|'i'))
         singleDobj
     : SitOnAction
     verbPhrase = 'sitta/sitter (på vad)'
@@ -10919,12 +10922,12 @@ VerbRule(SitOn)
 ;
 
 VerbRule(Sit)
-    'sitt' ( | 'ner') : SitAction
+    'sitt' ( | ('ner'|'ned')) : SitAction
     verbPhrase = 'sitta/sitter ner'
 ;
 
 VerbRule(LieOn)
-    'ligg' ('på' | 'i' | 'ner' 'på' | 'ner' 'i')
+    'ligg' ('på' | 'i' | ('ner'|'ned') ('på' | 'i'))
         singleDobj
     : LieOnAction
     verbPhrase = 'ligga/ligger (på vad)'
@@ -10936,13 +10939,13 @@ VerbRule(LieOn)
 ;
 
 VerbRule(Lie)
-    'ligg' ( | 'ner') : LieAction
+    'ligg' ( | ('ner'|'ned')) : LieAction
     verbPhrase = 'ligga/ligger ner'
 ;
 
 VerbRule(StandOn)
     ('stå' ('på' | 'in' | ('upp' 'på') | 'på' 'till' | 'into' | 'in' 'till')
-     | 'climb' ('på' | ('upp' 'på') | 'på' 'till'))
+     | 'klättra' ('på' | ('upp' 'på') | 'på' 'till'))
     singleDobj
     : StandOnAction
     verbPhrase = 'stå/står (på vad)'
@@ -10972,7 +10975,7 @@ VerbRule(GetOutOf)
 ;
 
 VerbRule(GetOffOf)
-    'kliv' ('av'| 'ner') ('från'|) singleDobj
+    'kliv' ('av'| ('ner'|'ned')) ('från'|) singleDobj
     : GetOffOfAction
     verbPhrase = 'kliva/kliver av (från vad)'
     askDobjResponseProd = singleNoun
@@ -10985,7 +10988,7 @@ VerbRule(GetOffOf)
 VerbRule(GetOut)
     'kliv' 'ut'
     | 'kliv' 'av'
-    | 'kliv' 'ner'
+    | 'kliv' ('ner'|'ned')
     | 'gå' 'i' 'land'
     | 'kliv' 'ut'
     : GetOutAction
@@ -11109,7 +11112,7 @@ VerbRule(UnscrewWith)
 
 VerbRule(PushTravelDir)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
-    ('knuffa' | 'tryck' | 'putta' | 'dra' | 'drag' | 'flytta') singleDobj singleDir
+    ('knuffa' | 'tryck' | 'putta' | 'pressa' | 'dra' | 'drag' | 'flytta' | 'skjut') singleDobj ('åt'|'mot'|'till'|) singleDir
     : PushTravelDirAction
     verbPhrase = ('trycka/trycker (vad) ' + dirMatch.dir.name)
 ;
@@ -11151,7 +11154,7 @@ VerbRule(PushTravelClimbUp)
 VerbRule(PushTravelClimbDown)
     //('tryck' | 'dra' | 'drag' | 'flytta') singleDobj
     ('knuffa' | 'tryck' | 'putta' | 'dra' | 'drag' | 'flytta') singleDobj
-    'ner' singleIobj
+    ('ner'|'ned') singleIobj
     : PushTravelClimbDownAction
     verbPhrase = 'trycka/trycker (vad) (ner vad)'
 ;
@@ -11226,6 +11229,7 @@ DefineTIAction(WearPerson)
 
 VerbRule(Wear)
     ('ta'|'ikläd'|'klä'|'klär'|'kläd') ('på') dobjList
+    | 'sätt' 'på' ('mig'|'dig') dobjList
     : WearAction
     //verbPhrase = 'klä/klär på (vad)'
     verbPhrase = 'ta/tar på (vad)'

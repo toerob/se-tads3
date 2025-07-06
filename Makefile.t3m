@@ -63,19 +63,11 @@
 #-source tests/present-tense
 #-source tests/past-tense
 #-source tests/satsdelar
--source tests/initialize-tests
-#-source tests/additional-tests
+#-source tests/initialize-tests
+-source tests/additional-tests
 
 #-source exempelspel/exempel
 #-source exempelspel/cookbook
-
-####################
-# Ruiner exempelspel
-####################
-#-source exempelspel/ruiner/ncDebugActions
-#-source exempelspel/ruiner/cquotes
-#-source exempelspel/ruiner/ruiner
-
 
 -res
 GameInfo.txt

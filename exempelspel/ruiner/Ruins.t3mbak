@@ -1,0 +1,224 @@
+# TADS 3 makefile
+#
+# Warning: this file was mechanically generated.  You may edit this file
+# manually, but your changes might be modified or discarded when
+# you load this file into a TADS development tool.  The TADS tools
+# generally retain the comment at the start of the  file and the
+# comment marked "##sources" below, but other comments might be
+# discarded, the formatting might be changed, and some option
+# settings might be modified.
+
+-pre
+-D LANGUAGE=en_us
+-D MESSAGESTYLE=neu
+-Fy obj
+-Fo obj
+-w1
+
+##sources
+-lib system
+-lib adv3/adv3
+  -x footnote
+  -x hintsys
+  -x menusys
+-source ncDebugActions
+-source cquotes
+-source Ruins
+
+-res
+GameInfo.txt
+
+# The following is machine-generated - DO NOT EDIT
+[Config:devsys]
+*75 src win pos:C:\Program Files\TADS 3\Contrib\contaction\lib\en_us\ca_en_us.t:R:22,29,525,332
+src win pos:curator.t:R:-4,346,580,816
+build:ext resfile cnt:I:0
+src win pos:solomon.t:R:-4,90,580,560
+build:defaults set:I:1
+watch win:vis:I:1
+watch win:pos:R:597,245,850,436
+src win pos:sarah.t:R:-4,2,580,472
+*52 src win pos:c:\program files\tads 3\lib\adv3\adv3.tl:R:22,29,525,332
+build:c ops:I:0
+log win vis::I:1
+log win pos::R:363,445,850,611
+*58 src win pos:C:\Program Files\TADS 3\Contrib\multifaceted.t:R:-36,2,580,472
+*54 src win pos:c:\program files\tads 3\lib\adv3\objects.t:R:-4,354,580,824
+*54 src win pos:c:\program files\tads 3\lib\adv3\precond.t:R:-35,12,549,482
+*80 src win pos:C:\Documents and Settings\Eric Eve\My Documents\TADS\Banana\Banana.t:R:22,93,520,384
+*73 src win pos:C:\Program Files\TADS 3\Contrib\underbehind\lib\underbehind.t:R:44,58,547,361
+build:include_files-sys:S:0:system
+build:include_files-sys:S:1:system
+build:include_files-sys:S:2:system
+build:include_files-sys:S:3:system
+build:include_files-sys:S:4:system
+build:include_files-sys:S:5:system
+build:include_files-sys:S:6:system
+build:include_files-sys:S:7:system
+build:include_files-sys:S:8:system
+build:include_files-sys:S:9:system
+build:include_files-sys:S:10:system
+build:include_files-sys:S:11:system
+build:include_files-sys:S:12:system
+build:include_files-sys:S:13:system
+build:include_files-sys:S:14:lib
+build:include_files-sys:S:15:system
+build:include_files-sys:S:16:lib
+project win:dock id:I:7
+*54 src win pos:c:\program files\tads 3\lib\adv3\actions.t:R:-76,0,508,470
+*61 src win pos:c:\program files\tads 3\lib\adv3\en_us\instruct.t:R:-25,11,604,446
+*82 src win pos:C:\Documents and Settings\Eric Eve\My Documents\TADS\Banana\westSide.t:R:44,58,547,361
+src win pos:eastSide.t:R:-4,26,580,496
+*84 src win pos:C:\Documents and Settings\Eric Eve\My Documents\TADS\Banana\extensions.t:R:0,0,866,408
+*54 src win pos:c:\program files\tads 3\lib\adv3\numbers.t:R:44,58,607,366
+*59 src win pos:c:\program files\tads 3\lib\adv3\en_us\en_us.tl:R:22,29,573,325
+build:installer options:S:0:name=Ruins
+build:installer options:S:1:savext=Ruins
+src win pos:Banana.t:R:-4,26,580,496
+search:start at top:I:0
+*70 src win pos:C:\Program Files\TADS 3\Contrib\outcapture\lib\oc_output.t:R:88,116,591,419
+*52 src win pos:c:\program files\tads 3\lib\adv3\modid.t:R:22,29,585,337
+src win pos:westSide.t:R:-4,314,580,784
+src win pos:Hecate.t:R:-36,34,580,504
+*54 src win pos:c:\program files\tads 3\lib\adv3\hintsys.t:R:44,58,577,343
+src win pos:Mountain.t:R:-4,2,612,472
+breakpoints:cond-mode:S:0:true
+breakpoints:cond-mode:S:1:true
+breakpoints:cond-mode:S:2:true
+breakpoints:cond-mode:S:3:true
+breakpoints:cond-mode:S:4:true
+breakpoints:cond-mode:S:5:true
+src win pos:extensions.t:R:-4,26,580,496
+*52 src win pos:c:\program files\tads 3\lib\adv3\actor.t:R:-124,24,460,494
+*52 src win pos:c:\program files\tads 3\lib\adv3\thing.t:R:-149,45,467,515
+*52 src win pos:c:\program files\tads 3\lib\adv3\score.t:R:14,79,577,387
+*52 src win pos:c:\program files\tads 3\lib\adv3\sense.t:R:34,26,592,322
+src win pos:Forest_Road.t:R:-100,98,516,568
+src win pos:Castle.t:R:-4,2,612,472
+*52 src win pos:c:\program files\tads 3\lib\adv3\hints.t:R:23,33,622,386
+*52 src win pos:c:\program files\tads 3\lib\adv3\menus.t:R:25,26,643,411
+*61 src win pos:C:\Program Files\TADS 3\samples\TestBug\testbug.t:R:-4,-30,612,440
+*76 src win pos:C:\Program Files\TADS 3\Contrib\underbehind\lib\en_us\ub_en_us.t:R:66,87,569,390
+*52 src win pos:c:\program files\tads 3\lib\adv3\exits.t:R:3,69,566,377
+search:wrap:I:1
+*86 src win pos:C:\Documents and Settings\Barbara Eve\My Documents\ECSE\TADS\Ruins\Ruins.t:R:22,29,500,320
+*88 src win pos:C:\Documents and Settings\Eric Eve\My Documents\TADS\Banana\ncDebugActions.t:R:88,116,566,407
+*57 src win pos:C:\Program Files\TADS 3\samples\Heidi\Heidi.t:R:-33,71,535,379
+docking config::S:0:CB
+docking config::S:1:W0,270,175,2,249,302,399,D,locals win
+docking config::S:2:W0,170,175,66,87,834,595,D,log win
+docking config::S:3:CR
+docking config::S:4:W3,262,170,815,-10,976,169,D,stack win
+docking config::S:5:W3,262,170,304,249,604,399,D,watch win
+docking config::S:6:CL
+docking config::S:7:CL
+docking config::S:8:W7,170,270,-182,17,-9,436,D,project win
+search:text:S:0:tryOops
+*47 src win pos:c:\program files\tads 3\lib\_main.t:R:0,0,498,291
+src win pos:Forest.t:R:-4,2,612,472
+*64 src win pos:C:\Program Files\TADS 3\samples\Forest\Forest_Road.t:R:28,2,704,477
+locals win:vis:I:1
+locals win:pos:R:-153,445,337,611
+main win max::I:1
+*59 src win pos:C:\Program Files\TADS 3\samples\Forest\Castle.t:R:-4,220,664,367
+*55 src win pos:c:\program files\tads 3\lib\adv3\disambig.t:R:66,87,532,378
+*94 src win pos:C:\Documents and Settings\Barbara Eve\My Documents\ECSE\TADS\Banana\northObjects.t:R:-4,-30,612,440
+search:exact case:I:0
+*49 src win pos:c:\program files\tads 3\lib\system.tl:R:44,58,547,361
+main win pos::R:-4,-4,1028,712
+build:ignore case:I:0
+src win pos:tardis.t:R:-4,570,612,1040
+src win pos:forest.h:R:88,116,651,424
+build:exe:S:0:Ruins.exe
+*50 src win pos:c:\program files\tads 3\lib\adv3\pov.t:R:-21,84,542,392
+src win list::S:0:C:\Documents and Settings\Eric Eve\My Documents\TADS\Ruins\Ruins.t
+src win list::S:1:C:\Program Files\TADS 3\Contrib\cquotes.t
+*59 src win pos:C:\Program Files\TADS 3\samples\Forest\Forest.t:R:-4,-30,672,445
+build:use charmap:I:0
+hist win vis::I:0
+*64 src win pos:C:\Program Files\TADS 3\samples\Forest\ForestHints.t:R:-4,-30,612,440
+editor:cmdline:S:0:-f"%f"  -l  "TADS 3"
+*57 src win pos:C:\Program Files\TADS 3\Contrib\dbg_reflect.t:R:44,76,544,379
+*51 src win pos:c:\program files\tads 3\lib\adv3\adv3.h:R:17,4,625,351
+*60 src win pos:c:\program files\tads 3\lib\adv3\en_us\msg_neu.t:R:-100,44,569,519
+build:include_files:S:0:tads.h
+build:include_files:S:1:t3.h
+build:include_files:S:2:lookup.h
+build:include_files:S:3:systype.h
+build:include_files:S:4:vector.h
+build:include_files:S:5:charset.h
+build:include_files:S:6:bytearr.h
+build:include_files:S:7:tadsgen.h
+build:include_files:S:8:tadsio.h
+build:include_files:S:9:reflect.h
+build:include_files:S:10:file.h
+build:include_files:S:11:dict.h
+build:include_files:S:12:tok.h
+build:include_files:S:13:gramprod.h
+build:include_files:S:14:adv3.h
+build:include_files:S:15:strcomp.h
+build:include_files:S:16:en_us.h
+src win pos:lake.t:R:-130,406,90,553
+*69 src win pos:C:\Program Files\TADS 3\Contrib\outcapture\lib\oc_modid.t:R:66,87,569,390
+src win pos:Town.t:R:-68,66,548,536
+*52 src win pos:c:\program files\tads 3\include\lookup.h:R:-22,109,536,405
+src win pos:Magadan.t:R:-332,226,284,701
+*55 src win pos:c:\program files\tads 3\lib\adv3\resolver.t:R:-70,130,486,438
+build:debug_image_file:S:0:debug\Ruins.t3
+*71 src win pos:C:\Program Files\TADS 3\Contrib\outcapture\lib\outcapture.t:R:44,58,547,361
+search dlg:old searches:S:0:tryOops
+search dlg:old searches:S:1:tryOopsMain
+search dlg:old searches:S:2:askUnknownWord
+search dlg:old searches:S:3:dobjFor(Burn)
+search dlg:old searches:S:4:LightSource
+search dlg:old searches:S:5:Candle
+search dlg:old searches:S:6:FireSource
+search dlg:old searches:S:7:ABOUTBOX
+search dlg:old searches:S:8:GuidedTourState
+search dlg:old searches:S:9:redcandle
+*60 src win pos:C:\Program Files\TADS 3\Contrib\ncDebugActions.t:R:-26,20,558,490
+*50 src win pos:c:\program files\tads 3\include\dict.h:R:0,0,558,296
+*94 src win pos:C:\Program Files\TADS 3\samples\TestBug\..\..\Contrib\contaction\lib\cont_action.t:R:22,29,525,332
+editor:program:S:0:C:\Program Files\Imaginate\Imaginate.exe
+*53 src win pos:c:\program files\tads 3\lib\adv3\action.t:R:-53,18,531,488
+*48 src win pos:c:\program files\tads 3\include\t3.h:R:66,87,624,383
+src win pos:southSide.t:R:-4,410,580,880
+*50 src win pos:c:\program files\tads 3\include\tads.h:R:44,58,602,354
+*45 src win pos:c:\program files\tads 3\lib\tok.t:R:0,0,498,291
+*58 src win pos:c:\program files\tads 3\lib\adv3\en_us\en_us.h:R:88,116,646,412
+src win pos:General.t:R:-4,2,612,472
+*57 src win pos:C:\Program Files\TADS 3\samples\Forest\Town.t:R:28,2,704,477
+*78 src win pos:C:\Documents and Settings\Eric Eve\My Documents\TADS\Ruins\Ruins.t:R:44,58,522,349
+*53 src win pos:c:\program files\tads 3\lib\adv3\parser.t:R:7,58,565,354
+*53 src win pos:c:\program files\tads 3\lib\adv3\travel.t:R:-125,42,491,512
+startup:action:I:1
+*58 src win pos:c:\program files\tads 3\lib\adv3\en_us\en_us.t:R:152,169,495,375
+*88 src win pos:C:\Documents and Settings\Barbara Eve\My Documents\ECSE\TADS\Banana\Banana.t:R:44,82,542,373
+*53 src win pos:c:\program files\tads 3\lib\adv3\lister.t:R:-57,148,501,444
+build:rlsgam:S:0:Ruins.t3
+*53 src win pos:c:\program files\tads 3\lib\adv3\verify.t:R:22,29,585,337
+*53 src win pos:c:\program files\tads 3\lib\adv3\events.t:R:-37,67,560,464
+*53 src win pos:c:\program files\tads 3\lib\adv3\extras.t:R:-4,2,580,472
+main win mdi max::I:1
+*53 src win pos:c:\program files\tads 3\lib\adv3\report.t:R:14,96,577,404
+*53 src win pos:c:\program files\tads 3\lib\adv3\status.t:R:21,29,584,337
+*51 src win pos:c:\program files\tads 3\lib\adv3\exec.t:R:-43,59,573,529
+*53 src win pos:c:\program files\tads 3\lib\dbg_reflect.t:R:66,87,549,390
+*51 src win pos:c:\program files\tads 3\lib\adv3\misc.t:R:-74,65,510,535
+src win pos:townsfolk.t:R:-132,130,484,605
+*53 src win pos:c:\program files\tads 3\lib\adv3\output.t:R:-33,10,583,480
+search:dir:I:1
+*77 src win pos:C:\Program Files\TADS 3\Contrib\contaction\lib\en_us\cont_en_us.t:R:44,58,547,361
+build:installer prog:S:0:Ruins_Setup.exe
+project win:vis:I:1
+project win:pos:R:-170,17,-9,436
+src win pos:Caves.t:R:440,179,660,326
+stack win pos::R:585,17,838,436
+stack win vis::I:1
+*60 src win pos:C:\Program Files\TADS 3\samples\Forest\Crispin.t:R:-4,2,612,472
+src win title::S:0:C:\Documents and Settings\Eric Eve\My Documents\TADS\Ruins\Ruins.t
+src win title::S:1:C:\Program Files\TADS 3\Contrib\cquotes.t
+src win pos:northObjects.t:R:-4,-30,580,440
+src win pos:Julia.t:R:-100,98,516,568
+*53 src win pos:c:\program files\tads 3\include\tadsgen.h:R:110,145,668,441
+
