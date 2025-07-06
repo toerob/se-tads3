@@ -2905,7 +2905,7 @@ playerActionMessages: MessageHelper
         '{Du/han} {ser} inget sätt att använda {det iobj/honom} så som en spade. '
 
     /* taking something already being held */
-    alreadyHoldingMsg = '{Du/han} {håller|höll} redan {ref dobj/honom}. '
+    alreadyHoldingMsg = '{Du/han} {har} redan {ref dobj/honom}. '
 
     /* actor taking self ("take me") */
     takingSelfMsg = '{Du/han} {kan} inte plocka upp {dig_själv}. '

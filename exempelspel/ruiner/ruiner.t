@@ -245,13 +245,13 @@ class Treasure: Thing 'skatt+en*skatter+na'
 
 
 forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
-"Eller så kallar i alla fall dina anteckningar denna låga branta sluttning av kalksten, men nu har regnskogen tagit tillbaka det. Mörka olivträd tränger in från alla sidor, luften ångar av dimma från ett nyligt varmt regn, myggor hänger i luften. <q>Anläggning 10</q> är  ett sönderfallet murverk som en gång i tiden kan ha varit en begravningspyramid. Få saker har överlevt förutom de stenhuggna trappstegen som leder ner i mörkret nedanför. "
+  "Det är åtminstone vad dina anteckningar kallar denna låga kalkstensås, men nu har regnskogen återtagit den. Mörka olivträd tränger in från alla håll, luften är mättad av dimman efter ett nyligen passerat regn, knotten svävar stilla i regnets eftervärme. Struktur 10 är ett sönderfallet murverk, som kanske en gång utgjorde en gravpyramid. Litet finns kvar, annat än de stenhuggna trappstegen som leder ner i mörkret nedanför."
     in asExit(down)
     down = steps
     up: NoTravelMessage {
-        "Träden är taggiga och du skulle skära upp dina händer fullständigt om du försökte klättra i dem. "
+        "Träden är taggbeväxta och du skulle skära upp dina händer fullständigt om du försökte klättra i dem. "
     }
-    cannotGoThatWayMsg = 'Regnskogen är tät, och du har inte huggit dig igenom den i flera dagar för att överge din upptäckt nu. Vad du behöver göra är att hitta ett par riktigt bra fynd att ta med tillbaka till civilisationen innan du kan rättfärdiga att ge upp expeditionen. '
+    cannotGoThatWayMsg = 'Regnskogen är tät, och du har inte huggit dig igenom den i flera dagar för att överge din upptäckt nu. Du behöver hitta ett par riktigt bra fynd att ta med tillbaka till civilisationen, innan du kan rättfärdiga att ge upp expeditionen. '
     roomBeforeAction()
     {
         if(gActionIs(Photograph)) {
@@ -269,15 +269,12 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
 + Unimportant 'mörk+a olivträd+en/limesten+en/träd+en/regnskog+en/skog+en/knott+en'
 ;
 
-// TODO: kontrollera att det blir rätt adjektiv och inte bara substantiv:
-// TODO: >ta svamp "Du hade redan de fläckiga svampar." 
-//          borde bli: >ta svamp "Du hade redan de fläckiga svamparna."
-// Ska du hade redan ha bestämd form istället? 
-
+// TODO: Man bör inte behöva ange både definiteForm och theName
 + mushroom: Food 'fläckig+a svamp+en/padd+svamp+en*svampar+na paddsvampar+na' 'fläckiga svampar'
     "Svampen är täckt med fläckar, och du är inte alls säker på att det inte är en paddsvamp.",
+    definiteForm = 'de fläckiga svamparna'
     theName = 'de fläckiga svamparna'
-    isQualifiedName = 'de fläckiga svamparna'
+    isQualifiedName = true 
     isPlural=true
     initSpecialDesc = 'På en lång stjälk i den genomdränkta jorden växer en fläckig svamp.'
 

@@ -1290,15 +1290,13 @@ modify Thing
     definiteForm = nil
 
     theNameFrom(str) { 
-
         if(isQualifiedName) {
             return str;
         }
-        //tadsSay('theNameFrom <<definiteForm>>');
-            
         if(definiteForm) {
             return definiteForm;
         }
+        //tadsSay('theNameFrom <<definiteForm>>');
         return (isPlural ? 'de ' : (isNeuter? 'det ' : 'den ')) + str; 
     }
 
@@ -1752,8 +1750,9 @@ modify Thing
          *   if it's marked as having plural usage, just use the ordinary
          *   name, since it's already plural
          */
-        if (isPlural || isMassNoun)
+        if (isPlural || isMassNoun) {
             return str;
+        }
         
         /* check for a 'phrase of phrase' format */
         if (rexMatch(patOfPhrase, str) != nil)
@@ -4007,9 +4006,25 @@ langMessageBuilder: MessageBuilder
 
         // - Explicit referensform, ange '/ref' för tydlighetens skull
         // "{Den/ref} åt mat" -> "Bob åt mat" (om bob: Actor 'Bob').
-        ['den/ref',   &theName,  nil,    nil, true],
-        ['det/ref',   &theName,  nil,    nil, true],
-        ['de/ref',    &theName,  nil,    nil, true],
+        ['han/ref', &theName,  nil, nil, true],
+        ['hon/ref', &theName,  nil, nil, true],
+        ['den/ref', &theName,  nil, nil, true],
+        ['det/ref', &theName,  nil, nil, true],
+        ['de/ref',  &theName,  nil, nil, true],
+
+        // TODO: Bör snarare vara följande, 
+        // så passar det även bättre ihop med objektsformerna
+        // Men det är ett större jobb att byta ut överallt: ag '/ref'
+
+        /*
+        ['ref/han', &theName,  nil, nil, true],
+        ['ref/hon', &theName,  nil, nil, true],
+        ['ref/den', &theName,  nil, nil, true],
+        ['ref/det', &theName,  nil, nil, true],
+        ['ref/de',  &theName,  nil, nil, true],
+        */
+
+
 
         // TODO: Dessa två borde hellre vara han/ref, hon/ref.
         ['du/han',    &theName, 'actor', nil, true],

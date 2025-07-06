@@ -125,13 +125,13 @@ standingInDoorway: ListGroupPrefixSuffix
  */
 powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
     "Detta är det trånga kontrollrummet i Statligt Kraftverk #6.
-    Redan innan du kom var detta rum så proppfullt med utrustning
+    Redan innan du kom hit var detta rum så proppfullt med utrustning
     att det knappt gick att vända sig om. Nu när du har lagt till den
-    kylskåpsstora SCU-1100DX:en är det ungefär lika mycket fritt utrymme
-    som i det <q>budgetekonomiklass</q>-flygplanssäte du var inklämd i under
-    femton timmar på flygresan hit. Den enda utgången är västerut. "
+    kylskåpsstora SCU-1100DX:en, är det ungefär lika mycket fritt utrymme
+    kvar som i det <q>budgetekonomiklass</q>-sätet du var inklämd i under
+    den femton timmar långa flygresan hit. Den enda utgången är västerut. "
 
-    vocabWords = 'kontrollrum'
+    vocabWords = 'kontrollrum+met'
 
     /* going west takes us to the power control hallway */
     west = powerControlDoorway
@@ -2451,7 +2451,7 @@ class PowerPlantHallRoom: PowerPlantRoom
         det är bättre att ta hissen istället. " }
 
     name = 'korridor'
-    vocabWords = 'hall/korridor'
+    vocabWords = 'hall+en/korridor+en'
 
     /* 
      *   these rooms don't have normal north and south walls (we provide
@@ -2742,7 +2742,7 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
     <<isDescending ? "Den nakna betongen i schaktväggen glider förbi
     bortom grinden." : "Bortom grinden är schaktväggens nakna betong." >> "
 
-    vocabWords = 'hiss/lift'
+    vocabWords = 'hiss+en/lift+en'
 
     east = plantElevatorGate
     out asExit(east)
@@ -3612,7 +3612,7 @@ s2HallWest: Room 'Västra änden av korridoren' 'den västra änden av korridore
     "Detta är den västra änden av en svagt upplyst korridor. Korridoren slutar här
     med en hissdörr i väster och fortsätter österut. "
 
-    vocabWords = 'hall/korridor'
+    vocabWords = 'hall+en/korridor+en'
 
     west = doorS2outer
     east = s2HallEast
@@ -3700,7 +3700,7 @@ s2HallEast: Room 'Mitten av korridoren' 'mitten av korridoren' 'korridor'
     "Denna långa, svagt upplysta korridor sträcker sig österut och västerut.
     En låg, smal dörr leder norrut. "
 
-    vocabWords = 'hall/korridor'
+    vocabWords = 'hall+en/korridor+en'
 
     west = s2HallWest
     east: FakeConnector, StopEventList {
@@ -3738,7 +3738,7 @@ s2Storage: Room 'Förrådsrum' 'förrådsrummet'
     från golv till det låga taket. En smal stig verkar slingra sig
     genom skräpet norrut. En dörr leder söderut. "
 
-    vocabWords = 'förrådsrum'
+    vocabWords = 'förrådsrum+met/förråd+et'
 
     south = s2StorageDoor
     north = storagePath
@@ -3792,7 +3792,7 @@ s2Utility: Room 'Nyttoområde' 'nyttoområdet'
     och ledningarna, men det finns tillräckligt med utrymme kvar för en person
     att ta sig igenom. "
 
-    vocabWords = 'nyttoområde/rum'
+    vocabWords = 'nyttoområde+t/rum+met'
 
     south = utilityPath
     north = utilityOpening
@@ -4308,7 +4308,7 @@ plantCourtyard: OutdoorRoom 'Innergård' 'innergården'
     bär svarta Mitachron-logotyp polotröjor rusar omkring, många bär på
     lådor eller packlårar."
 
-    vocabWords = 'innergård'
+    vocabWords = 'innergård+en'
 
     in = adminDoorExt
     east asExit(in)
@@ -4424,7 +4424,7 @@ adminLobby: Room 'Lobby' 'lobbyn'
     servitörer slingrar sig genom folkmassan med stora brickor med drycker.
     <.p>En uppsättning dörrar leder ut västerut."
 
-    vocabWords = 'lobby'
+    vocabWords = 'lobby+n'
 
     west = (gRevealed('talked-to-magnxi') ? noWest : adminDoorInt)
     out asExit(west)
@@ -4454,8 +4454,8 @@ adminLobby: Room 'Lobby' 'lobbyn'
 
          'En grupp skrattande människor tränger sig förbi dig.',
 
-         'Bandet spelar en något lugnare passage kort, sedan ökar tempot
-         och de är ännu högre än tidigare.',
+         'Bandet spelar en något lugnare passage en kort stund, sedan ökar tempot
+         och volymen blir ännu högre än tidigare.',
 
          'Tempot i musiken saktar ner lite, och det blir lite mindre
           bullrigt.',
