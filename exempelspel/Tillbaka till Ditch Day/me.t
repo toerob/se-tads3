@@ -223,7 +223,7 @@ property knownFollowDest;
         {
             /* only hand-wearables can be put on one's hands */
             if (gDobj != nil && !gDobj.ofKind(HandWearable))
-                illogical('{You/he} kan inte ta på dig {the dobj/him} på dina händer. ');
+                illogical('{Du/han} kan inte ta på dig {ref dobj/honom} på dina händer. ');
         }
         action()
         {
@@ -307,7 +307,7 @@ property knownFollowDest;
 
     /* we're restricted to pocketable items */
     canPutIn(obj) { return obj.okayForPocket; }
-    cannotPutInMsg(obj) { return '{The dobj/he} skulle inte passa särskilt 
+    cannotPutInMsg(obj) { return '{Ref dobj/han} skulle inte passa särskilt 
         bra i din ficka. '; }
 
     /* we have a high affinity for best-for-pocket items */

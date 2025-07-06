@@ -7603,7 +7603,7 @@ grammar mainDisambigPhrase(main):
  *   as an ordinal in our own list.  
  */
 grammar disambigPhrase(all):
-    'allt' | 'allting' | ('alla' 'dem') : DisambigProd
+    'allt' | 'allting' | 'alla' 'dem' : DisambigProd
     resolveNouns(resolver, results)
     {
         /* they want everything we proposed - return the whole list */
@@ -9793,7 +9793,7 @@ VerbRule(AskAbout)
 ;
 
 VerbRule(AskAboutImplicit)
-    ('ställ'|) ('f'|'fråga') ('om'|) singleTopic
+    'f' singleTopic
     : AskAboutAction
     verbPhrase = 'fråga/frågar (vem) (om vad)'
     omitIobjInDobjQuery = true
@@ -10086,7 +10086,7 @@ VerbRule(Look)
 ;
 
 VerbRule(Quit)
-    'avsluta' | 'av' | 'a' 
+    'avsluta' | 'av' | 'a' | 'q'
     : QuitAction
     verbPhrase = 'avsluta/avslutar'
 ;
@@ -10944,8 +10944,8 @@ VerbRule(Lie)
 ;
 
 VerbRule(StandOn)
-    ('stå' ('på' | 'in' | ('upp' 'på') | 'på' 'till' | 'into' | 'in' 'till')
-     | 'klättra' ('på' | ('upp' 'på') | 'på' 'till'))
+    ('stå' ('på' | 'in' | ('upp' 'på') | 'på' 'till' | 'into' | 'in' 'till'))
+    | ('klättra' 'upp' 'på')
     singleDobj
     : StandOnAction
     verbPhrase = 'stå/står (på vad)'

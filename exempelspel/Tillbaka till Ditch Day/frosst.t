@@ -180,7 +180,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
         i grändens bredd. Du måste ducka och låta dem bära den
         över ditt huvud. ',
         'En av flyttarbetarna tappar en låda på golvet med en krasch.
-        Belker tittar över. Flyttarbetaren plockar upp lådan och fortsätter. ',
+        Belker tittar dit. Flyttarbetaren plockar upp lådan och fortsätter. ',
         'En flyttarbetare går förbi bärande på en rund låda. ',
         'Du måste stå åt sidan när ett par flyttarbetare som bär
         stora lådor försöker ta sig förbi dig. ',

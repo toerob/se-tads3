@@ -170,8 +170,8 @@ VerbRule(ConsultMapAbout)
     //| 'look' singleTopic 'up' 'on' singleDobj
     //| 'find' singleTopic 'on' singleDobj
     
-    'slå' 'upp' singleTopic 'i' singleDobj
-    | ('se'|'hitta') singleTopic 'i' singleDobj
+    'slå' 'upp' singleTopic ('i'|'på') singleDobj
+    | ('se'|'hitta'|'leta'|'sök') ('upp'|) singleTopic ('i'|'på') singleDobj
     : ConsultAboutAction
     verbPhrase = 'slå/slår upp (vad) (i vad)'
     whichMessageTopic = DirectObject

@@ -641,7 +641,7 @@ class XojoErrandState: ActorState
                 fortfarande möjligt att du kommer behöva det till något. ";
             else
                 "Bättre att låta bli; vem vet vad den giftiga vätskan skulle
-                göra med {that dobj/him}. ";
+                göra med {det dobj/honom} där. ";
             exit;
         }
     }
@@ -2250,7 +2250,7 @@ class TestableCircuit: object
         verify() { }
         check()
         {
-            "Bäst att låta bli; det skulle antagligen förstöra {the iobj/him}. ";
+            "Bäst att låta bli; det skulle antagligen förstöra {ref iobj/honom}. ";
             exit;
         }
     }
@@ -3427,7 +3427,7 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
                 replaceAction(Close, self);
             else
                 reportFailure('Det är inte en bra plats att lägga
-                    {that/him dobj}. ');
+                    {det/honom dobj} där. ');
         }
     }
     iobjFor(PutIn)
@@ -3540,7 +3540,7 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
                 exit;
 
             default:
-                "{The dobj/he} passar inte i springan. ";
+                "{Ref dobj/han} passar inte i springan. ";
                 exit;
             }
         }
@@ -3960,7 +3960,7 @@ class RopeBridgeRoom: Floorless, OutdoorRoom
         }
         if (gActionIs(ThrowAt) && !gIobj.ofKind(RopeBridgeCanyon))
         {
-            "Bättre att inte göra det; {it dobj/he} skulle förmodligen falla ner i ravinen. ";
+            "Bättre att inte göra det; {det dobj/han} skulle förmodligen falla ner i ravinen. ";
             exit;
         }
         if (gActionIn(Jump, JumpOffI))
@@ -4535,7 +4535,7 @@ adminLobby: Room 'Lobby' 'lobbyn'
         verify() { }
         check()
         {
-            "Ingen anledning; {the iobj/han} kan hjälpa sig själv om
+            "Ingen anledning; {ref iobj/han} kan hjälpa sig själv om
             {it's} så benägen. ";
             exit;
         }

@@ -1230,7 +1230,7 @@ class ExperimentPart: CustomImmovable
         if (isOn
             && gActionIs(Examine)
             && (gDobj.isIn(quantumPlatform) || gDobj == quantumPlatform))
-            "<.p>Luften runt omkring {the dobj/him} skimrar
+            "<.p>Luften runt omkring {ref dobj/honom} skimrar
             märkligt. ";
     }
 
@@ -2019,7 +2019,7 @@ class TestGearAttachable: NearbyAttachable
 
     /* we can't be moved because of the cable tethering us to the wall */
     cannotTakeMsg = 'Du kan inte få loss {ref dobj/honom} från kabeln. '
-    cannotMoveMsg = 'Kabeln låter dig inte flytta {the dobj/honom} mer
+    cannotMoveMsg = 'Kabeln låter dig inte flytta {ref dobj/honom} mer
         än några centimeter. '
     cannotPutMsg = (cannotTakeMsg)
 
@@ -3691,7 +3691,7 @@ class JobOrderTopic: ConsultTopic
     /* the toy car+rat combo will call this when it comes into our presence */
     eekARat()
     {
-        "<.p>Du hör flickaktiga skrik från närheten, sedan kommer {a plisnik/han}
+        "<.p>Du hör flickaktiga skrik från närheten, sedan kommer {en plisnik/han}
         springande genom tunneln i panik. Han kraschar nästan
         in i dig, men stannar och griper tag i dina armar.
         <q>Råtta!</q> skriker han åt dig. <q>Enorm, ful, elak!
@@ -3708,7 +3708,7 @@ class JobOrderTopic: ConsultTopic
     /* receive notification that the toy car is leaving under its own power */
     ratLeaving()
     {
-        "<.p>{The plisnik/Han} tittar på när råttan lämnar. <q>Din sällskapsråtta
+        "<.p>{Ref plisnik/Han} tittar på när råttan lämnar. <q>Din sällskapsråtta
         stack just!</q> säger han och låter lite frenetisk. <q>Du borde
         gå och fånga den innan den kommer undan.</q> ";
     }
@@ -3716,18 +3716,18 @@ class JobOrderTopic: ConsultTopic
     /* receive notification that the rat is moving around locally */
     ratMoving() { ratMovingScript.doScript(); }
     ratMovingScript: StopEventList { [
-        '<.p>{The plisnik/Han} ryggar tillbaka lite, noga med
+        '<.p>{Ref plisnik/Han} ryggar tillbaka lite, noga med
         att hålla avstånd från råttan. <q>Du borde inte låta din
         sällskapsråtta vandra omkring här nere utan koppel,</q> säger
         han. <q>Det är tur att jag såg dig komma in bärande på den.
         Jag vet inte vad jag skulle ha gjort om det var en <i>vild</i>
         råtta.</q> ',
 
-        '<.p>{The plisnik/Han} tittar nervöst på när råttleksaken
+        '<.p>{Ref plisnik/Han} tittar nervöst på när råttleksaken
         rör sig omkring. <q>Jag önskar att du tog bort den där saken härifrån,</q>
         säger han. <q>Även om det är ett husdjur, litar jag fortfarande inte på råttor.</q> ',
 
-        '<.p>{The plisnik/Han} tittar nervöst på råttleksaken. <q>Jag önskar
+        '<.p>{Ref plisnik/Han} tittar nervöst på råttleksaken. <q>Jag önskar
         att du tog bort den där råttan härifrån,</q> säger han. ']
     }
 
@@ -3747,14 +3747,14 @@ class JobOrderTopic: ConsultTopic
     }
 
     ratScript: StopEventList { [
-        'Råttdockan träffar {the plisnik/honom} och faller till
+        'Råttdockan träffar {ref plisnik/honom} och faller till
         golvet. Han ser vad det är och ryggar tillbaka i skräck,
         men bara för ett ögonblick; hans uttryck blir misstänksamt,
         och han går närmare för att titta. <q>Det är inte särskilt
         snällt,</q> säger han, <q>att kasta en falsk råtta på någon. Råttor
         är inget att skämta om.</q> ',
 
-        'Råttdockan träffar {the plisnik/honom} och faller till
+        'Råttdockan träffar {ref plisnik/honom} och faller till
         golvet. Han blir överraskad, men bara för ett ögonblick. <q>Jag tyckte
         inte det var särskilt roligt första gången heller,</q> säger han. ']
     }
@@ -3913,7 +3913,7 @@ class JobOrderTopic: ConsultTopic
  *   again.  In addition, differentiate its use when worn and not worn. 
  */
 ++ GiveShowTopic @ratPuppet
-    "{The plisnik/he} rycker tillbaka när han ser leksaksråttan, men tar sedan
+    "{Ref plisnik/han} rycker tillbaka när han ser leksaksråttan, men tar sedan
     en närmare titt och slappnar av lite. <q>Det där är inte särskilt snällt,</q>
     säger han, <q>att försöka skrämma mig med en leksaksråtta. Jag trodde nästan
     den var äkta tills jag såg att den inte rörde sig.</q>
@@ -3921,7 +3921,7 @@ class JobOrderTopic: ConsultTopic
     <.convstay> "
 ;
 +++ AltTopic
-    "{The plisnik/he} tittar på råttan. <q>Det är inte särskilt snällt
+    "{Ref plisnik/han} tittar på råttan. <q>Det är inte särskilt snällt
     att försöka skrämma mig med den där leksaksråttan,</q> säger han. <q>Det är tur
     att den inte rör sig, annars skulle jag ha trott att den var äkta.</q>
     <.convstay> "
@@ -3930,7 +3930,7 @@ class JobOrderTopic: ConsultTopic
 ;
 +++ AltTopic
     "Du håller upp råttan och rör lite på fingrarna för att få
-    dess nos att rycka som en riktig råtta. {The plisnik/he} ryser och
+    dess nos att rycka som en riktig råtta. {Ref plisnik/han} ryser och
     hoppar bakåt, men tar sedan en närmare titt och slappnar av lite.
     <q>Det där är inte särskilt snällt,</q> säger han. <q>Jag trodde nästan
     att det var en riktig råtta, tills jag såg din hand i den.</q>
@@ -3941,7 +3941,7 @@ class JobOrderTopic: ConsultTopic
 ;
 +++ AltTopic
     "Du rör på fingrarna för att få råttans nos att rycka.
-    <q>Det där är inte särskilt snällt,</q> säger {the plisnik/he}. <q>Jag trodde nästan
+    <q>Det där är inte särskilt snällt,</q> säger {Ref plisnik/han}. <q>Jag trodde nästan
     den var äkta tills jag såg din hand i den.</q>
     <.convstay> "
     
@@ -5331,7 +5331,7 @@ networkRoom: Room 'Nätverksrum' 'nätverksrummet'
     isPlural = true
 
     dobjFor(LookIn) asDobjFor(Examine)
-    iobjFor(PutIn) { verify() { illogical('{That dobj/he} ser inte
+    iobjFor(PutIn) { verify() { illogical('{Det dobj/han} där ser inte
         ut att passa i något av nätverksuttagen. '); } }
     iobjFor(PlugInto) asIobjFor(PutIn)
     iobjFor(AttachTo) asIobjFor(PutIn)

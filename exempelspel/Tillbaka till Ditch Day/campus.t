@@ -1032,7 +1032,7 @@ CampusMapEntry 'wilson parking structure'
     'Wilson parkeringshus' 'väst';
 CampusMapEntry 'winnett center' 'Winnett Center' 'söder';
 CampusMapEntry 'red door cafe' 'Red Door Café' 'söder';
-CampusMapEntry 'young health center' 'Young Hälsocenter'
+CampusMapEntry 'young health center unga hälsocenter/hälsocentret' 'Unga Hälsocentret'
     "Det ligger på södra sidan av California Blvd. ";
 
 /* ------------------------------------------------------------------------ */
@@ -5783,7 +5783,7 @@ millikanPond: CampusOutdoorRoom 'Millikan-dammen' 'Millikan-dammen'
     mapMatchStrength = 200
 ;
 
-+ CampusMapEntry 'millikan+bibliotek+et' 'Millikan-biblioteket' 'sydväst'
++ CampusMapEntry 'millikan bibliotek+et/millikan-bibliotek+et' 'Millikan-biblioteket' 'sydväst'
     /* elevate the match strength in case we look up just "library" */
     mapMatchStrength = 200
 ;

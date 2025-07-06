@@ -54,8 +54,8 @@ syncLabRoof: RoofRoom
 + Platform, Fixture
     'utstickande rektangulär+a omålad+e plåt+anordning+en/låda+n'
     'rektangulär anordning'
-    "Det är en rektangulär låda ungefär fem fot på varje sida och två fot
-    hög. På toppen finns en metalldörr (som är <<slrDoor.openDesc>>). "
+    "Det är en rektangulär låda på ungefär en och en halv meter varje sida och drygt 
+    en halv meter hög. På toppen finns en metalldörr (som är <<slrDoor.openDesc>>). "
 
     dobjFor(Open) remapTo(Open, slrDoor)
     dobjFor(Close) remapTo(Close, slrDoor)
@@ -79,7 +79,7 @@ syncLabRoof: RoofRoom
     cannotPutInMsg(obj)
     {
         gMessageParams(obj);
-        return 'Bättre att låta bli; {it obj/han} kunde gå sönder i fallet. ';
+        return 'Bättre att låta bli; {det obj/han} kunde gå sönder i fallet. ';
     }
 
     /* 
@@ -100,8 +100,8 @@ syncLabRoof: RoofRoom
     lookInLister = (descContentsLister)
     openingLister: openableOpeningLister {
         showListEmpty(pov, parent)
-            { "Att öppna dörren avslöjar en smidessjärnsstege som
-                leder ner i ett schakt. "; } // TODO: Fixa svenskan
+            { "När du öppnar dörren uppenbarar sig en smidessjärnsstege som
+                leder ner i ett schakt. "; } 
     }
 
     dobjFor(Enter) remapTo(TravelVia, slrLadderDown)
@@ -1469,7 +1469,7 @@ metalCrate: MultiFaceted
     /* use the special description only in contents, not in the room */
     useSpecialDescInRoom(room) { return nil; }
     specialDesc = "Det är svårt att se i skuggorna under lådan,
-        men det ser ut som om lådan står på ett set hjulställ. "
+        men det ser ut som om lådan har en uppsättning av hjul under sig. "
 
     /* 
      *   when we're discovered, discover the wheels in all facets; do this

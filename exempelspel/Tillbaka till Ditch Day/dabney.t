@@ -1881,7 +1881,7 @@ alley3E: AlleyRoom 'Gränd Tre Öst' 'östra änden av Gränd Tre'
     atmosphereList: ShuffledEventList { [
         'Ett par av kycklingarna ger sig av nerför hallen, förmodligen
         på väg ut på ett uppdrag. ',
-        'Kycklingarna myllrar omkring och flaxa med vingarna. ',
+        'Kycklingarna myllrar omkring och flaxar med vingarna. ',
         'Ett par kycklingar anländer från hallen. ',
         'Kycklingarna flaxa upphetsat med vingarna. ']
         
@@ -2001,7 +2001,7 @@ class ChickenActorState: ActorState
         if (chickenSuit.isWornBy(otherActor))
             inherited(otherActor, topic, convType);
         else
-            "<q>Kluck! Kluck! Kluck!</q> Kycklingarna flaxa med vingarna
+            "<q>Kluck! Kluck! Kluck!</q> Kycklingarna flaxar med vingarna
             i upprördhet och pekar på anteckningsboken på dörren. ";
     }
 ;
@@ -2065,7 +2065,7 @@ class ChickenActorState: ActorState
     ['En kyckling anländer precis när du börjar prata, vilket orsakar
     en mindre uppståndelse i flocken. ',
      'Kycklingarna bara kacklar. ',
-     'Kycklingarna bara flaxa med vingarna. ',
+     'Kycklingarna bara flaxar med vingarna. ',
      '<q>Super-kyckling armén är mycket upptagen!</q> säger en av
      kycklingarna. ']
 ;
@@ -2295,7 +2295,7 @@ insideChickenator: Room 'Chickenator' 'Chickenatorn' 'Chickenator'
     iobjFor(HangOn) remapTo(PutOn, DirectObject, self)
 
     /* customize some default messages */
-    alreadyPutOnMsg = '{The dobj/he} hänger redan på en krok. '
+    alreadyPutOnMsg = '{Ref dobj/han} hänger redan på en krok. '
 
     /* 
      *   customize the way we describe our contents, so that we describe
@@ -3017,11 +3017,11 @@ dabneyLib: Room 'Bibliotek' 'husets bibliotek' 'husets bibliotek'
 /* a class for one of our items buried under books */
 class LibUnderBooks: object
     dobjFor(Search) remapTo(Search, libBookPiles)
-    lookInDesc = "{The dobj/he} {is} begravd under högar av böcker. "
+    lookInDesc = "{Ref dobj/han} {är} begravd under högar av böcker. "
     iobjFor(PutOn)
     {
         verify() { }
-        action() { "Det finns för många böcker staplade på {the iobj/him};
+        action() { "Det finns för många böcker staplade på {ref iobj/honom};
             allt du lägger till skulle förmodligen försvinna i högarna. "; }
     }
 ;
