@@ -95,6 +95,25 @@
 # TEKNISKA TERMER
 
 # BESKRIVNINGAR GENTEMOT ORGINALETS
+[] campus
+[] bridge
+[437] intro - Xojos brytningar?
+[] dabney
+[] stack
+[] synclab
+[] library
+[] hints
+[] elev
+[] bookstore
+[] career
+[] frosst
+[] jay
+[] main
+[] mods
+[] about
+[] me
+[] pathfind
+[] subtime (Låt gå att ha kvar AM/PM?)
 
 # TEST
 
