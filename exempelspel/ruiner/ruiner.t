@@ -41,7 +41,7 @@ versionInfo: GameID
     {
       "<i>Ruiner</i> (orig. Ruins) skrevs ursprungligen av Graham Nelson till
        <i>Inform Designer's Manual</i>. Denna översättning på den tidigare 
-       portningen har publicerats med hans vänliga godkännande.\b
+       portningen av Eric Eve har publicerats med bådas vänliga godkännande.\b
        ncDebugActions av Nikos Chantziaras (och ändrad lite av Eric Eve).\n
        cQuotes av Stephen Granade.\n
       TADS 3 språket och biblioteket adv3 skrevs av Michael J. Roberts. ";
@@ -54,12 +54,12 @@ versionInfo: GameID
        Det försöker i huvudsak vara troget originalet på ett rimligt sätt, 
        med bara en eller två mindre förändringar.\b
 
-       Det huvudsakliga syftet med själva portning var att tillhandahålla
+       Det huvudsakliga syftet med själva portningen var att tillhandahålla
        ett prov av TADS 3-kod som kan jämföra sig med ett högst tillgängligt
        Inform-original, som i sig var designat att demonstrera en stor bredd av 
        programmeringsfunktionalitet. 
        
-       Det huvudsakliga syftet med översättningen av portningen är att visa 
+       Det huvudsakliga syftet med denna översättning av portningen är att visa 
        hur du enklast använder de svenskanpassningar som det svenska biblioteket 
        tillför till TADS 3.\n";
     }
@@ -79,7 +79,8 @@ gameMain: GameMainDef
     /* the initial player character is 'me' */
     initialPlayerChar = me
     showIntro() {
-        "Dagar av sökande, dagar av törstig kamp genom skogens törnesnåren, men så äntligen belönas ditt tålamod. En upptäckt!\b";
+        //"Dagar av sökande, dagar av törstig kamp genom skogens törnesnår, men så äntligen belönas ditt tålamod. En upptäckt!\b";
+        "Dagar av sökande, dagar av törstig kamp genom snåren i djungeln. Men till slut belönades ditt tålamod. En upptäckt!\b";
     }
     newGame()
     {
@@ -244,7 +245,7 @@ class Treasure: Thing 'skatt+en*skatter+na'
 
 //===============================================================
 
-forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
+forest: OutdoorRoom '<q>STORA TORGET</q>' 'det stora torget'
   "Det är åtminstone vad dina anteckningar kallar denna låga kalkstensås, men nu har regnskogen återtagit den. Mörka olivträd tränger in från alla håll, luften är mättad av dimman efter ett nyligen passerat regn, knotten svävar stilla i regnets eftervärme. Struktur 10 är ett sönderfallet murverk, som kanske en gång utgjorde en gravpyramid. Litet finns kvar, annat än de stenhuggna trappstegen som leder ner i mörkret nedanför."
 
     up: NoTravelMessage {
@@ -270,7 +271,7 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
 + Unimportant 'mörk+a olivträd+en/limesten+en/träd+en/regnskog+en/skog+en/knott+en'
 ;
 
-// TODO: Man bör inte behöva ange både definiteForm och theName
+// TODO: Man bör inte behöva ange både definiteForm och theName för att 'de fläckiga svamparna' ska fungera
 + mushroom: Food 'fläckig+a svamp+en/padd+svamp+en*svampar+na paddsvampar+na' 'fläckiga svampar'
     "Svampen är täckt med fläckar, och du är inte ens säker på att det inte är en paddsvamp.",
     definiteForm = 'de fläckiga svamparna'
@@ -284,7 +285,7 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
      action()
      {
        if(!moved)
-         "Du plockar svampen och klyver snyggt dess tunna stjälk. ";
+         "Du plockar svampen och klyver elegant dess tunna stjälk. ";
        inherited;
      }
    }
@@ -404,6 +405,14 @@ sodiumLamp: Flashlight, FueledLightSource, TravelPushable
                 failCheck('Lampan måste placeras stabilt innan den tänds.');            
             }
         }
+        action() {
+            if(!gPlayerChar.canSee(gPlayerChar.getOutermostRoom())) {
+              inherited;
+              "Du famlar i mörkret och känner lampans metall. Du tänder den.";
+              return;
+            }
+            inherited;
+        }
     }
     dobjFor(TurnOff)
     { 
@@ -470,8 +479,8 @@ map: Readable 'över Quintana Roo skiss-karta+n/skisskarta+n/skiss+en/karta+n' '
     "Denna karta markerar inte mycket mer än den bäck som förde dig hit, från Mexikos sydöstra kant och in i den djupaste regnskogen, endast avbruten av denna höjdplatå.";
 ;
 
-squareChamber: Room 'Fyrkantig Kammare' 'fyrkantiga Kammaren'
-    "En nedsänkt, dystert stenhuggen kammare, runt fem famnar tvärs över. En solljusstråle skär in från trappstegen ovan och ger kammaren ett diffust ljus. I skuggorna dock leder dörröppningar, med låga överliggare, åt öster och söder in i templets djupare mörker."
+squareChamber: Room 'Fyrkantig Kammare' 'den fyrkantiga Kammaren'
+    "En nedsänkt, dystert stenhuggen kammare, runt fem famnar bred. En solljusstråle skär in från trappstegen ovan och ger kammaren ett diffust ljus. I skuggorna dock leder dörröppningar, med låga överliggare, åt öster och söder in i templets djupare mörker."
  
     up = forest
     south = corridor
@@ -527,7 +536,7 @@ MultiLoc, Vaporous  'lågt låg+a virvlande dimma+n'
   disambigName = 'odör av tortilla'
 ;  
 
-corridor: DarkRoom 'Den krökta korridoren' 'krökta korridoren'
+corridor: DarkRoom 'Den krökta korridoren' 'den krökta korridoren'
     "En låg, fyrkantigt huggen korridor som löper från norr till söder, och tvingar dig till stå framåtböjd."
     npcDesc = "En låg, fyrkantigt huggen korridor som löper från norr till söder"
     north = squareChamber
@@ -571,9 +580,9 @@ shrine: DarkRoom 'Helgedomen' 'helgedomen'
     initSpecialDesc =  "En stor stenhäll av ett bord, eller altare, dominerar Helgedomen."
 ;
 
-++ mask: Wearable, Treasure 'jade+mosaik^s+ansikte^s+mask+en'
+++ mask: Wearable, Treasure 'mosaik jadeansikt:et^s+mask+en/jade+mosaik^s+ansikte^s+mask+en'
   "Så enastående den skulle se ut på museet."
-  initSpecialDesc = "Vilande på altaret finns en jademosiakansiktsmask."
+  initSpecialDesc = "Vilande på altaret finns en jadeansiktsmask av mosaik."
   culturalValue = 10
   dobjFor(Wear)
   {
@@ -611,7 +620,7 @@ shrine: DarkRoom 'Helgedomen' 'helgedomen'
     isPlural = true
 ;
 
-wormcast: Room 'Maskgångar' 'Maskgången' 
+wormcast: Room 'Maskgångar' 'maskgångarna' 
   "ett utgrävt nätverk av håligheter, som ett spindelnät av tomrum hängande i sten. De enda gångarna som är breda nog att krypa igenom börjar löpa norrut, söderut och uppåt."
 
    west = squareChamber
@@ -757,7 +766,7 @@ burialShaft: Room 'Gravschaktet' 'gravschaktet'
     }
 ;
 
-+ honeycomb: Treasure, Food 'gammal forntida honung^s+kaka+n'
++ honeycomb: Treasure, Food 'gammal forntida honung^s+kaka+n' 'forntida honungskaka'
     "Kanske någon form av gravoffergåva."
     initSpecialDesc = 
     "En utsökt bevarad, forntida honungskaka vilar här!"
@@ -775,9 +784,8 @@ burialShaft: Room 'Gravschaktet' 'gravschaktet'
     "Det är ovanför, förseglar kammaren. "  
 ;
 
-junction: Room 'Xibalb&aacute'
+junction: Room 'Xibalb&aacute' 'Xibalb&aacute'
     "Femtio meter under regnskog, och ljudet av vatten är överallt: dessa djupa, ugröpta kalkstengrottor sträcker sig som pål-rötter.  Ett hasande nordost, förbi en bred pelare av isbelagd sten, leder tillbaka till Helgedomen, medan ett slags kanjongolv sträcker sig uppför mot norr och nedåt mot söder, blekt vita som hajtänder i det diffusa skenet från natriumlampan ovanför."
-
    northeast =  shrine   
    north = canyonN
    up asExit(north)
@@ -795,7 +803,7 @@ junction: Room 'Xibalb&aacute'
     initSpecialDesc = "En måttligt stor stele, eller gränssten, vilar på en avsats i huvudhöjd."
 ;
 
-canyonN: Room 'Övre Änden av Dalgången' 'över änden av dalgången'
+canyonN: Room 'Övre Änden av Dalgången' 'den övre änden av dalgången'
     "Den högre, bredare norra änden av dalgången stiger endast till en ojämn vägg av vulkanisk karst."
   south = junction
   down asExit(south)
@@ -831,7 +839,7 @@ canyonN: Room 'Övre Änden av Dalgången' 'över änden av dalgången'
     }
 ;
 
-canyonS: Room 'Nedre Änden av Dalgången'  'nedre änden av dalgången'
+canyonS: Room 'Nedre Änden av Dalgången'  'den nedre änden av dalgången'
     desc()
     {
         if(hugeBall.isIn(nil)) {
