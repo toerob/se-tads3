@@ -1828,7 +1828,7 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
 +++ daveGreet: AgendaItem
     invokeItem()
     {
-        "{Den/ref dave} tittar upp när du kommer in. <q>Hej,</q> säger han. ";
+        "{Ref/den dave} tittar upp när du kommer in. <q>Hej,</q> säger han. ";
         me.noteConversation(dave);
         isDone = true;
     }

@@ -1640,7 +1640,7 @@ class TestGear: PlugAttachable, NearbyAttachable
     explainCannotAttachTo(other)
     {
         gMessageParams(self, other);
-        "{Den other/ref} verkar inte ha någon passande 
+        "{Ref other/den} verkar inte ha någon passande 
         plats att ansluta till {den self/honom}. ";
     }
 

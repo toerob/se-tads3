@@ -133,7 +133,7 @@ TestUnit '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(hund, hus, spelare2aPerspektivNi);
   [
-    '{Den dobj/ref} {är} {din/erat}.' -> ['Huset var erat.']  // itPossNoun (plural)
+    '{Ref dobj/den} {är} {din/erat}.' -> ['Huset var erat.']  // itPossNoun (plural)
 
   ].forEachAssoc(function(msg, msgPlusResult) {
     //gActor = spelare2aPerspektivNi;
@@ -302,7 +302,7 @@ TestUnit '3:e person maskulinum (han)' run {
   [
     '{Det/han bob} spr{inger|ang} snabbt.' ->['Han sprang snabbt.'],   // itNom
     'Jag {hör} {honom bob} skrika.' ->['Jag hörde honom skrika.'],   // itObj
-    '{Din/ref} sko {går} sönder.' ->['Bobs sko gick sönder.'],   // itPossAdj
+    '{Ref/din} sko {går} sönder.' ->['Bobs sko gick sönder.'],   // itPossAdj
     'Skoavtrycket {är} {din/hans}.' ->['Skoavtrycket var hans.'],   // itPossNoun
     '{Han/den} lura{r|de} {sig_själv}.' ->['Han lurade sig själv.']   // itReflexive
   ].forEachAssoc(function(msg, msgPlusResult) {

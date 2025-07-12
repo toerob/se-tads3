@@ -208,7 +208,7 @@ class Treasure: Thing 'skatt+en*skatter+na'
             if (gIobj == packingCase) {
                 addToScore(culturalValue, 'att packa ' + theName + ' i packväskan. ');
                 if(libScore.totalScore == gameMain.maxScore) {
-                    "Då du försiktigt packar undan {den dobj/ref} seglar en röd ara ner från trädtopparna, dess fjädrar tunga i det senaste regnet, ljudet av dess slagande vingar nästan öronbedövande, sten faller mot sten... 
+                    "Då du försiktigt packar undan {ref dobj/den} seglar en röd ara ner från trädtopparna, dess fjädrar tunga i det senaste regnet, ljudet av dess slagande vingar nästan öronbedövande, sten faller mot sten... 
                     När himlen klarnar stiger en halvmåne upp ovanför en fridfull djungel. Det är slutet på Mars 1938, och det är dags att åka hem.";
 
                     finishGameMsg(ftVictory, [finishOptionUndo, finishOptionFullScore]);

@@ -185,7 +185,7 @@ libMessages: MessageHelper
     obscuredThingDesc(obj, obs)
     {
         gMessageParams(obj, obs);
-        "{Du/han} {kan} inte utgöra några detaljer genom {den obs/ref}. ";
+        "{Du/han} {kan} inte utgöra några detaljer genom {ref obs/den}. ";
     }
 
     /* generic "listen" description of a Thing at a distance */
@@ -196,7 +196,7 @@ libMessages: MessageHelper
     obscuredThingSoundDesc(obj, obs)
     {
         gMessageParams(obj, obs);
-        "{Du/han} {kan} inte höra något detaljerat genom {den obs/ref}. ";
+        "{Du/han} {kan} inte höra något detaljerat genom {ref obs/den}. ";
     }
 
     /* generic "smell" description of a Thing at a distance */
@@ -207,7 +207,7 @@ libMessages: MessageHelper
     obscuredThingSmellDesc(obj, obs)
     {
         gMessageParams(obj, obs);
-        "{Du/han} {kan} inte känna så mycket lukt genom {den obs/ref}. ";
+        "{Du/han} {kan} inte känna så mycket lukt genom {ref obs/den}. ";
     }
 
     /* generic "taste" description of a Thing */
@@ -1682,23 +1682,21 @@ libMessages: MessageHelper
     matchBurnedOut(obj)
     {
         gMessageParams(obj);
-        //"{Den obj/ref} finish{es/ed} burning, and disappear{s/ed} into a cloud of ash. ";
-        "{Den obj/ref} br{inner|ann} upp, och försv{inner|ann} i ett moln av aska. ";
+        "{Ref obj/den} br{inner|ann} upp, och försv{inner|ann} i ett moln av aska. ";
     }
 
     /* daemon report for burning out a candle */
     candleBurnedOut(obj)
     {
         gMessageParams(obj);
-        //"{Den obj/ref} burn{s/ed} down too far to stay lit, and {goes} out. ";
-        "{Den obj/ref} br{inner|ann} ner för långt för att fortsätta vara tänt, och slockna{r|de}. ";
+        "{Ref obj/den} br{inner|ann} ner för långt för att fortsätta vara tänt, och slockna{r|de}. ";
     }
 
     /* daemon report for burning out a generic fueled light source */
     objBurnedOut(obj)
     {
         gMessageParams(obj);
-        "{Den obj/ref} slockna{r|de}. ";
+        "{Ref obj/den} slockna{r|de}. ";
     }
 
     /* 
@@ -2696,7 +2694,7 @@ playerActionMessages: MessageHelper
     }
 
     /* no key is needed to lock or unlock this object */
-    noKeyNeededMsg = '{Den dobj/ref} verka{r|de} inte behöva en nyckel. '
+    noKeyNeededMsg = '{Ref dobj/den} verka{r|de} inte behöva en nyckel. '
 
     /* actor must be standing before doing that */
     mustBeStandingMsg = '{Du/han} {behöver|behövde} stå upp före {det actor/han} {kan} göra det. '
@@ -2726,14 +2724,14 @@ playerActionMessages: MessageHelper
     mustBeInMsg(obj, loc)
     {
         gMessageParams(obj, loc);
-        return '{Den obj/ref} {behöver|behövde} vara {i loc} före {du/han} {kan} göra det. ';
+        return '{Ref obj/den} {behöver|behövde} vara {i loc} före {du/han} {kan} göra det. ';
     }
 
     /* actor must be holding the object before we can do that */
     mustBeCarryingMsg(obj, actor)
     {
         gMessageParams(obj, actor);
-        return '{Den actor/ref} {behöver|behövde} hålla {det obj/honom} före {det actor/han} {kan} göra det. ';
+        return '{Ref actor/den} {behöver|behövde} hålla {det obj/honom} före {det actor/han} {kan} göra det. ';
     }
 
     /* generic "that's not important" message for decorations */
@@ -2741,7 +2739,7 @@ playerActionMessages: MessageHelper
     {
         gMessageParams(obj);
         local ending = obj.isPlural? 'a' : (obj.isNeuter?'t':'');
-        return '{Den obj/ref} är oviktig<<ending>>. ';
+        return '{Ref obj/den} är oviktig<<ending>>. ';
     }
 
     /* generic "you don't see that" message for "unthings" */
@@ -2755,7 +2753,7 @@ playerActionMessages: MessageHelper
     tooDistantMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/ref} {är} för långt borta. ';
+        return '{Ref obj/den} {är} för långt borta. ';
     }
 
     /* generic "no can do" message for intangibles */
@@ -2852,13 +2850,13 @@ playerActionMessages: MessageHelper
     /* a sound appears to be coming from a source */
     noiseSourceMsg(src)
     {
-        return '{Den dobj/ref} verka{r|de} att komma från ' + src.theNameObj + '. ';
+        return '{Ref dobj/den} verka{r|de} att komma från ' + src.theNameObj + '. ';
     }
 
     /* an odor appears to be coming from a source */
     odorSourceMsg(src)
     {
-        return '{Den dobj/ref} verka{r|de} att komma från '+ src.theNameObj + '. ';
+        return '{Ref dobj/den} verka{r|de} att komma från '+ src.theNameObj + '. ';
     }
 
     /* an item is not wearable */
@@ -2923,22 +2921,22 @@ playerActionMessages: MessageHelper
     throwingSelfMsg = '{Du/han} {kan} inte kasta {dig_själv}. '
 
     /* we can't put the dobj in the iobj because it's already there */
-    alreadyPutInMsg = '{Den dobj/ref} {är} redan i {ref iobj/honom}. '
+    alreadyPutInMsg = '{Ref dobj/den} {är} redan i {ref iobj/honom}. '
 
     /* we can't put the dobj on the iobj because it's already there */
-    alreadyPutOnMsg = '{Den dobj/ref} {är} redan på {ref iobj/honom}. '
+    alreadyPutOnMsg = '{Ref dobj/den} {är} redan på {ref iobj/honom}. '
 
     /* we can't put the dobj under the iobj because it's already there */
-    alreadyPutUnderMsg = '{Den dobj/ref} {är} redan under {ref iobj/honom}. '
+    alreadyPutUnderMsg = '{Ref dobj/den} {är} redan under {ref iobj/honom}. '
 
     /* we can't put the dobj behind the iobj because it's already there */
-    alreadyPutBehindMsg = '{Den dobj/ref} {är} redan bakom {ref iobj/honom}. '
+    alreadyPutBehindMsg = '{Ref dobj/den} {är} redan bakom {ref iobj/honom}. '
 
     /*
      *   trying to move a Fixture to a new container by some means (take,
      *   drop, put in, put on, etc) 
      */
-    cannotMoveFixtureMsg = '{Den dobj/ref} {kan} inte flyttas. '
+    cannotMoveFixtureMsg = '{Ref dobj/den} {kan} inte flyttas. '
 
     /* trying to take a Fixture */
     cannotTakeFixtureMsg = '{Du/han} {kan} inte ta {det dobj/honom}. '
@@ -2948,7 +2946,7 @@ playerActionMessages: MessageHelper
 
     /* trying to take/move/put an Immovable object */
     cannotTakeImmovableMsg = '{Du/han} {kan} inte ta {det dobj/honom}. '
-    cannotMoveImmovableMsg = '{Den dobj/ref} {kan} inte flyttas. '
+    cannotMoveImmovableMsg = '{Ref dobj/den} {kan} inte flyttas. '
     cannotPutImmovableMsg = '{Du/han} {kan} inte stoppa {ref dobj/honom} någonstans. '
 
     /* trying to take/move/put a Heavy object */
@@ -2959,7 +2957,7 @@ playerActionMessages: MessageHelper
     /* trying to move a component object */
     cannotMoveComponentMsg(loc)
     {
-        return '{Den dobj/ref} {är} en del av ' + loc.theNameObj + '. ';
+        return '{Ref dobj/den} {är} en del av ' + loc.theNameObj + '. ';
     }
 
     /* trying to take a component object */
@@ -3034,26 +3032,26 @@ playerActionMessages: MessageHelper
         'Gjort. ', '{Du/han} {sätter} {ref dobj/honom} bakom {ref iobj/honom}. ')
 
     /* try to take/move/put/taste an untakeable actor */
-    cannotTakeActorMsg = '{Den dobj/ref} låter inte {ref/dig} göra det. '
-    cannotMoveActorMsg = '{Den dobj/ref} låter inte {ref/dig} göra det. '
-    cannotPutActorMsg = '{Den dobj/ref} låter inte {ref/dig} göra det. '
-    cannotTasteActorMsg = '{Den dobj/ref} låter inte {ref/dig} göra det. '
+    cannotTakeActorMsg = '{Ref dobj/den} låter inte {ref/dig} göra det. '
+    cannotMoveActorMsg = '{Ref dobj/den} låter inte {ref/dig} göra det. '
+    cannotPutActorMsg = '{Ref dobj/den} låter inte {ref/dig} göra det. '
+    cannotTasteActorMsg = '{Ref dobj/den} låter inte {ref/dig} göra det. '
 
     /* trying to take/move/put/taste a person */
     cannotTakePersonMsg =
-        '{Den dobj/ref} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        '{Ref dobj/den} skulle antagligen inte {|ha} uppskatta{|t} det. '
     cannotMovePersonMsg =
-        '{Den dobj/ref} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        '{Ref dobj/den} skulle antagligen inte {|ha} uppskatta{|t} det. '
     cannotPutPersonMsg =
-        '{Den dobj/ref} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        '{Ref dobj/den} skulle antagligen inte {|ha} uppskatta{|t} det. '
     cannotTastePersonMsg =
-        '{Den dobj/ref} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        '{Ref dobj/den} skulle antagligen inte {|ha} uppskatta{|t} det. '
 
     /* cannot move obj through obstructor */
     cannotMoveThroughMsg(obj, obs)
     {
         gMessageParams(obj, obs);
-        return '{Du/han} {kan} inte förflytta {det obj/honom} genom ' + '{den obs/ref}. ';
+        return '{Du/han} {kan} inte förflytta {det obj/honom} genom ' + '{ref obs/den}. ';
     }
 
     /* cannot move obj in our out of container cont */
@@ -3067,56 +3065,56 @@ playerActionMessages: MessageHelper
     cannotMoveThroughClosedMsg(obj, cont)
     {
         gMessageParams(cont);
-        return '{Du/han} {kan} inte göra det då {den cont/ref} {är} ' + 'stäng{d/t/da iobj}. ';
+        return '{Du/han} {kan} inte göra det då {ref cont/den} {är} ' + 'stäng{d/t/da iobj}. ';
     }
 
     /* cannot fit obj into cont through cont's opening */
     cannotFitIntoOpeningMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det då {den obj/ref} {är} för stor{a/t obj} för att sätta in i {ref cont/honom}. ';
+        return '{Du/han} {kan} inte göra det då {ref obj/den} {är} för stor{a/t obj} för att sätta in i {ref cont/honom}. ';
     }
 
     /* cannot fit obj out of cont through cont's opening */
     cannotFitOutOfOpeningMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det då {den obj/ref} {är} för stor{a/t obj} för att ta ut ur {ref cont/honom}. ';
+        return '{Du/han} {kan} inte göra det då {ref obj/den} {är} för stor{a/t obj} för att ta ut ur {ref cont/honom}. ';
     }
 
     /* actor 'obj' cannot reach in our out of container 'cont' */
     cannotTouchThroughContainerMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/ref} {kan} inte nå någonting genom ' + '{ref cont/honom}. ';
+        return '{Ref obj/den} {kan} inte nå någonting genom ' + '{ref cont/honom}. ';
     }
 
     /* actor 'obj' cannot reach through cont because cont is closed */
     cannotTouchThroughClosedMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/ref} {kan} inte göra det då {den cont/ref} {är} stäng{d/t/da cont}. ';
+        return '{Ref obj/den} {kan} inte göra det då {ref cont/den} {är} stäng{d/t/da cont}. ';
     }
 
     /* actor cannot fit hand into cont through cont's opening */
     cannotReachIntoOpeningMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/ref} {kan} inte få in {din actor} hand i ' + '{ref cont/honom}. ';
+        return '{Ref obj/den} {kan} inte få in {din actor} hand i ' + '{ref cont/honom}. ';
     }
 
     /* actor cannot fit hand into cont through cont's opening */
     cannotReachOutOfOpeningMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/ref} {kan} inte få in {dess/hennes obj} hand genom {ref cont/honom}. ';
+        return '{Ref obj/den} {kan} inte få in {dess/hennes obj} hand genom {ref cont/honom}. ';
     }
 
     /* the object is too big for the actor to hold */
     tooLargeForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/ref} {är} för stor{t/a obj} för {ref/dig} att hålla. ';
+        return '{Ref obj/den} {är} för stor{t/a obj} för {ref/dig} att hålla. ';
     }
 
     /* the actor doesn't have room to hold the object */
@@ -3129,7 +3127,7 @@ playerActionMessages: MessageHelper
     becomingTooLargeForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} {kan} inte göra det då {den obj/ref} skulle{ | ha }{bli|blivit} för stor{a/t} för {ref/dig} att hålla. ';
+        return '{Du/han} {kan} inte göra det då {ref obj/den} skulle{ | ha }{bli|blivit} för stor{a/t} för {ref/dig} att hålla. ';
     }
 
     /* the object is becoming large enough that the actor's hands are full */
@@ -3143,7 +3141,7 @@ playerActionMessages: MessageHelper
     tooHeavyForActorMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/ref} {är} för tung{t/a obj} för {dig} att plocka upp. ';
+        return '{Ref obj/den} {är} för tung{t/a obj} för {dig} att plocka upp. ';
     }
 
     /*
@@ -3153,35 +3151,35 @@ playerActionMessages: MessageHelper
     totalTooHeavyForMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/ref} {är} för tung{t/a obj}; {du/han} behöv{er|de} sätta ner någonting först. ';
+        return '{Ref obj/den} {är} för tung{t/a obj}; {du/han} behöv{er|de} sätta ner någonting först. ';
     }
 
     /* object is för stor för container */
     tooLargeForContainerMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/ref} {är} för stor för {ref cont/honom}. ';
+        return '{Ref obj/den} {är} för stor för {ref cont/honom}. ';
     }
 
     /* object is too large to fit under object */
     tooLargeForUndersideMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/ref} {är} för stor för att stoppa in under {ref cont/honom}. ';
+        return '{Ref obj/den} {är} för stor för att stoppa in under {ref cont/honom}. ';
     }
 
     /* object is too large to fit behind object */
     tooLargeForRearMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Den obj/ref} {är} för stor för att stoppa in bakom {ref cont/honom}. ';
+        return '{Ref obj/den} {är} för stor för att stoppa in bakom {ref cont/honom}. ';
     }
 
     /* container doesn't have room for object */
     containerTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{den cont/ref} {är} redan för full{t/a cont} för att få plats med {det obj/honom}. ';
+        return '{ref cont/den} {är} redan för full{t/a cont} för att få plats med {det obj/honom}. ';
     }
 
     /* surface doesn't have room for object */
@@ -3219,7 +3217,7 @@ playerActionMessages: MessageHelper
     containerBecomingTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att {den obj/ref} skulle inte längre få plats i {ref cont/honom}. ';
+        return '{Du/han} {kan} inte göra det för att {ref obj/den} skulle inte längre få plats i {ref cont/honom}. ';
     }
 
     /* trying to put an object in a non-container */
@@ -3266,13 +3264,13 @@ playerActionMessages: MessageHelper
         '{Du/han} {kan} inte stoppa {en dobj/honom} i {ref iobj/honom}. '
 
     /* the dobj doesn't fit on this keyring */
-    objNotForKeyringMsg = '{Den dobj/ref} passar inte på {ref iobj/honom}. '
+    objNotForKeyringMsg = '{Ref dobj/den} passar inte på {ref iobj/honom}. '
 
     /* the dobj isn't on the keyring */
-    keyNotOnKeyringMsg = '{Den dobj/ref} {sitter|satt} inte fast i {ref iobj/honom}. '
+    keyNotOnKeyringMsg = '{Ref dobj/den} {sitter|satt} inte fast i {ref iobj/honom}. '
 
     /* can't detach key (with no iobj specified) because it's not on a ring */
-    keyNotDetachableMsg = '{Den dobj/ref} {sitter|satt} inte fast i någonting. '
+    keyNotDetachableMsg = '{Ref dobj/den} {sitter|satt} inte fast i någonting. '
 
     /* we took a key and attached it to a keyring */
     takenAndMovedToKeyringMsg(keyring)
@@ -3299,50 +3297,50 @@ playerActionMessages: MessageHelper
     circularlyInMsg(x, y)
     {
         gMessageParams(x, y);
-        return '{Du/han} {kan} inte göra det då {den x/ref} {är} i {ref y/honom}. ';
+        return '{Du/han} {kan} inte göra det då {ref x/den} {är} i {ref y/honom}. ';
     }
 
     /* putting y in x when x is already on y */
     circularlyOnMsg(x, y)
     {
         gMessageParams(x, y);
-        return '{Du/han} {kan} inte göra det då {den x/ref} {är} på {ref y/honom}. ';
+        return '{Du/han} {kan} inte göra det då {ref x/den} {är} på {ref y/honom}. ';
     }
 
     /* putting y in x when x is already under y */
     circularlyUnderMsg(x, y)
     {
         gMessageParams(x, y);
-        return '{Du/han} {kan} inte göra det då {den x/ref} {är} under {ref y/honom}. ';
+        return '{Du/han} {kan} inte göra det då {ref x/den} {är} under {ref y/honom}. ';
     }
 
     /* putting y in x when x is already behind y */
     circularlyBehindMsg(x, y)
     {
         gMessageParams(x, y);
-        return '{Du/han} {kan} inte göra det då {den x/ref} {är} bakom {ref y/honom}. ';
+        return '{Du/han} {kan} inte göra det då {ref x/den} {är} bakom {ref y/honom}. ';
     }
 
     /* taking dobj from iobj, but dobj isn't in iobj */
-    takeFromNotInMsg = '{Den dobj/ref} {är} inte i {det iobj/honom}. '
+    takeFromNotInMsg = '{Ref dobj/den} {är} inte i {det iobj/honom}. '
 
     /* taking dobj from surface, but dobj isn't on iobj */
-    takeFromNotOnMsg = '{Den dobj/ref} {är} inte på {det iobj/honom}. '
+    takeFromNotOnMsg = '{Ref dobj/den} {är} inte på {det iobj/honom}. '
 
     /* taking dobj from under something, but dobj isn't under iobj */
-    takeFromNotUnderMsg = '{Den dobj/ref} {är} inte under {det iobj/honom}. '
+    takeFromNotUnderMsg = '{Ref dobj/den} {är} inte under {det iobj/honom}. '
 
     /* taking dobj from behind something, but dobj isn't behind iobj */
-    takeFromNotBehindMsg = '{Den dobj/ref} {är} inte bakom {det iobj/honom}. '
+    takeFromNotBehindMsg = '{Ref dobj/den} {är} inte bakom {det iobj/honom}. '
 
     /* taking dobj from an actor, but actor doesn't have iobj */
-    takeFromNotInActorMsg = '{Den iobj/ref} {har} inte {det dobj/honom}. '
+    takeFromNotInActorMsg = '{Ref iobj/den} {har} inte {det dobj/honom}. '
 
     /* actor won't let go of a possession */
     willNotLetGoMsg(holder, obj)
     {
         gMessageParams(holder, obj);
-        return '{Den holder/ref} låter inte {ref/dig} få {det obj/honom}. ';
+        return '{Ref holder/den} låter inte {ref/dig} få {det obj/honom}. ';
     }
 
     /* must say which way to go */
@@ -3365,21 +3363,21 @@ playerActionMessages: MessageHelper
     cannotGoThroughClosedDoorMsg(door)
     {
         gMessageParams(door);
-        return '{Du/han} {kan} inte göra det då {den door/ref} {är} ' + 'stängd. ';
+        return '{Du/han} {kan} inte göra det då {ref door/den} {är} ' + 'stängd. ';
     }
 
     /* cannot carry out travel while 'dest' is within 'cont' */
     invalidStagingContainerMsg(cont, dest)
     {
         gMessageParams(cont, dest);
-        return '{Du/han} {kan} inte göra det medan {den dest/ref} {är} {i cont}. ';
+        return '{Du/han} {kan} inte göra det medan {ref dest/den} {är} {i cont}. ';
     }
 
     /* cannot carry out travel while 'cont' (an actor) is holding 'dest' */
     invalidStagingContainerActorMsg(cont, dest)
     {
         gMessageParams(cont, dest);
-        return '{Du/han} {kan} inte göra det då {den cont/ref} {håller|höll} i {ref dest/honom}. ';
+        return '{Du/han} {kan} inte göra det då {ref cont/den} {håller|höll} i {ref dest/honom}. ';
     }
     
     /* can't carry out travel because 'dest' isn't a valid staging location */
@@ -3393,7 +3391,7 @@ playerActionMessages: MessageHelper
     nestedRoomTooHighMsg(obj)
     {
         gMessageParams(obj);
-        return '{Den obj/ref} {är} för hög{t/a obj} att nå {h|d}ärifrån. ';
+        return '{Ref obj/den} {är} för hög{t/a obj} att nå {h|d}ärifrån. ';
     }
 
     /* enclosing room is too high to reach by GETTING OUT OF here */
@@ -3414,7 +3412,7 @@ playerActionMessages: MessageHelper
     {
         local loc = obj.location;
         gMessageParams(obj, loc);
-        return '{Du/han} {kan} inte göra det medan {den obj/ref} {är} {i loc}. ';
+        return '{Du/han} {kan} inte göra det medan {ref obj/den} {är} {i loc}. ';
     }
 
     /* cannot go that way in a vehicle */
@@ -3458,13 +3456,13 @@ playerActionMessages: MessageHelper
         gMessageParams(obj);
         //return '<.p>After {du/han} {goes} through {det obj/honom}, {it/he} close{s/d} behind {it actor/him}. ';
         //return '<.p>{den/han obj} stäng{er|de} sig bakom {det actor/honom} efter att {du/han} {går|gick} igenom {det/obj obj}. ';
-        return '<.p>efter att {du/han actor} {går|gick} igenom {det/obj obj}, stäng{er|de} sig {den/ref obj} bakom {det actor/honom}. ';
+        return '<.p>efter att {du/han actor} {går|gick} igenom {det/obj obj}, stäng{er|de} sig {ref/den obj} bakom {det actor/honom}. ';
 
     }
 
     /* the stairway does not go up/down */
-    stairwayNotUpMsg = '{Den dobj/ref} {går|gick} bara ner {h|d}ärifrån. '
-    stairwayNotDownMsg = '{Den dobj/ref} {går|gick} bara upp {h|d}ärifrån. '
+    stairwayNotUpMsg = '{Ref dobj/den} {går|gick} bara ner {h|d}ärifrån. '
+    stairwayNotDownMsg = '{Ref dobj/den} {går|gick} bara upp {h|d}ärifrån. '
 
     /* "wait" */
     timePassesMsg = 'Tiden {går|gick}... '
@@ -3509,7 +3507,7 @@ playerActionMessages: MessageHelper
     refuseCommand(targetActor, issuingActor)
     {
         gMessageParams(targetActor, issuingActor);
-        return '{Den targetActor/ref} vägra{r|de} {din/ref issuingActor} begäran. ';
+        return '{Ref targetActor/den} vägra{r|de} {ref/din issuingActor} begäran. ';
     }
 
     /* cannot talk to an object (because it makes no sense to do so) */
@@ -3523,11 +3521,11 @@ playerActionMessages: MessageHelper
     noResponseFromMsg(other)
     {
         gMessageParams(other);
-        return '{Den other/ref} svara{r|de} inte. ';
+        return '{Ref other/den} svara{r|de} inte. ';
     }
 
     /* trying to give something to someone who already has the object */
-    giveAlreadyHasMsg = '{Den iobj/ref} {har} redan {det/obj dobj}. '
+    giveAlreadyHasMsg = '{Ref iobj/den} {har} redan {det/obj dobj}. '
 
     /* can't talk to yourself */
     cannotTalkToSelfMsg = 'Att prata med {sig_själv} {kommer|skulle} inte {|ha} åstadkomm{a|it} någonting. '
@@ -3589,7 +3587,7 @@ playerActionMessages: MessageHelper
     cannotFollowSelfMsg = '{Du/han} {kan} inte följa {dig_själv}. '
 
     /* following an object that's in the same location as the actor */
-    followAlreadyHereMsg = '{Den dobj/ref} {är} precis {här}. '
+    followAlreadyHereMsg = '{Ref dobj/den} {är} precis {här}. '
 
     /*
      *   following an object that we *think* is in our same location (in
@@ -3597,11 +3595,11 @@ playerActionMessages: MessageHelper
      *   last saw the object go), but it's too dark to see if that's
      *   really true 
      */
-    followAlreadyHereInDarkMsg = '{Den dobj/ref} {bör|borde} {vara|varit} precis 
+    followAlreadyHereInDarkMsg = '{Ref dobj/den} {bör|borde} {vara|varit} precis 
         {här}, men {du/han} {kan} inte se {det dobj/honom}. '
 
     /* trying to follow an object, but don't know where it went from here */
-    followUnknownMsg = '{Du/han} {är} inte säker på var {den dobj/ref} {har} gått {h|d}ärifrån. '
+    followUnknownMsg = '{Du/han} {är} inte säker på var {ref dobj/den} {har} gått {h|d}ärifrån. '
 
     /*
      *   we're trying to follow an actor, but we last saw the actor in the
@@ -3677,36 +3675,36 @@ playerActionMessages: MessageHelper
     cannotSetToMsg = '{Du/han} {kan} inte ställa {det dobj/honom} till någonting. '
 
     /* invalid setting for generic Settable */
-    setToInvalidMsg = '{Den dobj/ref} {har} ingen sådan inställning. '
+    setToInvalidMsg = '{Ref dobj/den} {har} ingen sådan inställning. '
 
     /* default 'set to' acknowledgment */
     okaySetToMsg(val)
-        { return 'Ok, {Den dobj/ref} {är} nu satt till ' + val + '. '; }
+        { return 'Ok, {Ref dobj/den} {är} nu satt till ' + val + '. '; }
 
     /* cannot turn object */
     cannotTurnMsg = '{Du/han} {kan} inte vrida {det dobj/honom}. '
 
     /* must specify setting to turn object to */
-    mustSpecifyTurnToMsg = '{Du/han} behöver vara tydlig med vilken inställning {den actor/ref} vill sätta {det dobj/honom} till. '
+    mustSpecifyTurnToMsg = '{Du/han} behöver vara tydlig med vilken inställning {ref actor/den} vill sätta {det dobj/honom} till. '
 
     /* cannot turn anything with object */
     cannotTurnWithMsg =
         '{Du/han} {kan} inte vrida någonting med {det iobj/honom}. '
 
     /* invalid setting for dial */
-    turnToInvalidMsg = '{Den dobj/ref} {har} ingen sådan inställning. '
+    turnToInvalidMsg = '{Ref dobj/den} {har} ingen sådan inställning. '
 
     /* default 'turn to' acknowledgment */
     okayTurnToMsg(val)
-        { return 'Ok, {Den dobj/ref} {är} nu satt till ' + val + '. '; }
+        { return 'Ok, {Ref dobj/den} {är} nu satt till ' + val + '. '; }
 
     /* switch is already on/off */
-    alreadySwitchedOnMsg = '{Den dobj/ref} {är} redan på. '
-    alreadySwitchedOffMsg = '{Den dobj/ref} {är} redan av. '
+    alreadySwitchedOnMsg = '{Ref dobj/den} {är} redan på. '
+    alreadySwitchedOffMsg = '{Ref dobj/den} {är} redan av. '
 
     /* default acknowledgment for switching on/off */
-    okayTurnOnMsg = 'Okej, {den dobj/ref} {är} nu på. '
-    okayTurnOffMsg = 'Okej, {den dobj/ref} {är} nu av. '
+    okayTurnOnMsg = 'Okej, {ref dobj/den} {är} nu på. '
+    okayTurnOffMsg = 'Okej, {ref dobj/den} {är} nu av. '
 
     /* flashlight is on but doesn't light up */
     flashlightOnButDarkMsg = '{Du/han} sl{år|og} på {ref dobj/honom}, men ingenting verka{r|de} hända. '
@@ -3721,7 +3719,7 @@ playerActionMessages: MessageHelper
     }
 
     /* match not lit */
-    matchNotLitMsg = '{Den dobj/ref} {är} inte tänd. '
+    matchNotLitMsg = '{Ref dobj/den} {är} inte tänd. '
 
     /* lighting a match */
     okayBurnMatchMsg =
@@ -3732,13 +3730,13 @@ playerActionMessages: MessageHelper
 
     /* trying to light a candle with no fuel */
     candleOutOfFuelMsg =
-        '{Den dobj/ref} {är} för nedbrunn{en/et/na dobj}; {det dobj/han} {kan} inte tändas. '
+        '{Ref dobj/den} {är} för nedbrunn{en/et/na dobj}; {det dobj/han} {kan} inte tändas. '
 
     /* lighting a candle */
     okayBurnCandleMsg = '{Du/han} tänd{er/e} {ref dobj/honom}. '
 
     /* extinguishing a candle that isn't lit */
-    candleNotLitMsg = '{Den dobj/ref} {är} inte tänd. '
+    candleNotLitMsg = '{Ref dobj/den} {är} inte tänd. '
 
     /* extinguishing a candle */
     okayExtinguishCandleMsg = 'Gjort. '
@@ -3778,7 +3776,7 @@ playerActionMessages: MessageHelper
                           med {ref iobj/honom}. '
 
     /* object is already burning */
-    alreadyBurningMsg = '{Den dobj/ref} br{inner|ann} redan. '
+    alreadyBurningMsg = '{Ref dobj/den} br{inner|ann} redan. '
 
     /* cannot extinguish */
     cannotExtinguishMsg = '{Du/han} {kan} inte släcka {det dobj/honom}. '
@@ -3802,7 +3800,7 @@ playerActionMessages: MessageHelper
 
     /* cannot attach because we're already attached to the given object */
     alreadyAttachedMsg =
-        '{Den dobj/ref} {är} redan fäst med {ref iobj/honom}. '
+        '{Ref dobj/den} {är} redan fäst med {ref iobj/honom}. '
 
     /*
      *   dobj and/or iobj can be attached to certain things, but not to
@@ -3839,7 +3837,7 @@ playerActionMessages: MessageHelper
         'Det {finns|fanns} inget uppenbart sätt att ta loss {det dobj/honom}. '
 
     /* dobj isn't attached to iobj */
-    notAttachedToMsg = '{Den dobj/ref} {sitter|satt} inte fast i {det iobj/honom}. '
+    notAttachedToMsg = '{Ref dobj/den} {sitter|satt} inte fast i {det iobj/honom}. '
 
     /* breaking object would serve no purpose */
     shouldNotBreakMsg =
@@ -3847,7 +3845,7 @@ playerActionMessages: MessageHelper
         'Att ha sönder {det dobj/honom} skulle inte {|ha} tjäna{|t} något syfte. '
 
     /* cannot cut that */
-    cutNoEffectMsg = '{Den iobj/ref} verka{r|de} inte kunna skära {ref dobj/honom}. '
+    cutNoEffectMsg = '{Ref iobj/den} verka{r|de} inte kunna skära {ref dobj/honom}. '
 
     /* can't use iobj to cut anything */
     cannotCutWithMsg = '{Du/han} {kan} inte skära någonting med {ref iobj/honom}. '
@@ -3861,16 +3859,16 @@ playerActionMessages: MessageHelper
         '{Det dobj/han} {är} inte någonting {du/han} {kan} stänga. '
 
     /* already open/closed */
-    alreadyOpenMsg = '{Den dobj/ref} {är} redan öppe<<gDobj && gDobj.isNeuter?'t':'n'>>. '
+    alreadyOpenMsg = '{Ref dobj/den} {är} redan öppe<<gDobj && gDobj.isNeuter?'t':'n'>>. '
     
-    alreadyClosedMsg = '{Den dobj/ref} {är} redan stäng<<gDobj && gDobj.isNeuter?'t':'d'>>. '
+    alreadyClosedMsg = '{Ref dobj/den} {är} redan stäng<<gDobj && gDobj.isNeuter?'t':'d'>>. '
 
     /* already locked/unlocked */
-    alreadyLockedMsg = '{Den dobj/ref} {är} redan låst. '
-    alreadyUnlockedMsg = '{Den dobj/ref} {är} redan olåst. '
+    alreadyLockedMsg = '{Ref dobj/den} {är} redan låst. '
+    alreadyUnlockedMsg = '{Ref dobj/den} {är} redan olåst. '
 
     /* cannot look in container because it's closed */
-    cannotLookInClosedMsg = '{Den dobj/ref} {är} stängd. '
+    cannotLookInClosedMsg = '{Ref dobj/den} {är} stängd. '
 
     /* object is not lockable/unlockable */
     cannotLockMsg =
@@ -3879,7 +3877,7 @@ playerActionMessages: MessageHelper
         '{Det dobj/han} {är} inte någonting {du/han} {kan} låsa upp. '
 
     /* attempting to open a locked object */
-    cannotOpenLockedMsg = '{Den dobj/ref} verka{r|de} vara låst. '
+    cannotOpenLockedMsg = '{Ref dobj/den} verka{r|de} vara låst. '
 
     /* object requires a key to unlock */
     unlockRequiresKeyMsg =
@@ -3887,9 +3885,9 @@ playerActionMessages: MessageHelper
 
     /* object is not a key */
     cannotLockWithMsg =
-        '{Den iobj/ref} {ser} inte lämplig ut att kunna låsa {ref dobj/honom} med. '
+        '{Ref iobj/den} {ser} inte lämplig ut att kunna låsa {ref dobj/honom} med. '
     cannotUnlockWithMsg =
-        '{Den iobj/ref} {ser} inte lämplig ut att kunna låsa upp {ref dobj/honom} med. '
+        '{Ref iobj/den} {ser} inte lämplig ut att kunna låsa upp {ref dobj/honom} med. '
 
     /* we don't know how to lock/unlock this */
     unknownHowToLockMsg =
@@ -3898,7 +3896,7 @@ playerActionMessages: MessageHelper
         'Det {är} inte tydligt på vilket sätt {ref dobj/honom} {ska|skulle} låsas upp. '
 
     /* the key (iobj) does not fit the lock (dobj) */
-    keyDoesNotFitLockMsg = '{Den iobj/ref} passa{r|de} inte låset. '
+    keyDoesNotFitLockMsg = '{Ref iobj/den} passa{r|de} inte låset. '
 
     /* found key on keyring */
     foundKeyOnKeyringMsg(ring, key)
@@ -3908,7 +3906,7 @@ playerActionMessages: MessageHelper
             {find[s actor]|found} that {the key/he} fit{s/ted} the lock. ';
         */
         gMessageParams(ring, key);
-        return '{Du/han} försök{er|te} varje nyckel på {ref ring/honom}, och upptäck{er|te} att {den key/ref} passa{r|de} låset. ';
+        return '{Du/han} försök{er|te} varje nyckel på {ref ring/honom}, och upptäck{er|te} att {ref key/den} passa{r|de} låset. ';
     }
 
     /* failed to find a key on keyring */
@@ -3920,8 +3918,8 @@ playerActionMessages: MessageHelper
 
 
     /* not edible/drinkable */
-    cannotEatMsg = '{Den dobj/ref} verka{r|de} inte vara ätbar{a/t}. '
-    cannotDrinkMsg = '{Den dobj/ref} verka{r|de} inte vara något {du/han} {kan} dricka. '
+    cannotEatMsg = '{Ref dobj/den} verka{r|de} inte vara ätbar{a/t}. '
+    cannotDrinkMsg = '{Ref dobj/den} verka{r|de} inte vara något {du/han} {kan} dricka. '
 
     /* cannot clean object */
     cannotCleanMsg =
@@ -4046,21 +4044,21 @@ playerActionMessages: MessageHelper
     throwHitMsg(projektilen, target)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/ref} träffa{r|de} {den target/ref} utan någon uppenbar effekt. ';
+        return '{Ref projektilen/den} träffa{r|de} {ref target/den} utan någon uppenbar effekt. ';
     }
 
     /* thrown object lands on target */
     throwFallMsg(projektilen, target)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/ref} landa{r|de} på {den target/ref}. ';
+        return '{Ref projektilen/den} landa{r|de} på {ref target/den}. ';
     }
 
     /* thrown object bounces off target and falls to destination */
     throwHitFallMsg(projektilen, target, dest)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/ref} träffa{r|de} {den target/ref}
+        return '{Ref projektilen/den} träffa{r|de} {ref target/den}
             utan någon uppenbar effekt, och {faller|föll} ner '
             + dest.putInName + '. '
             ;
@@ -4070,15 +4068,15 @@ playerActionMessages: MessageHelper
     throwShortMsg(projektilen, target)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/ref} {faller|föll} långtifrån {den target/ref}. ';
+        return '{Ref projektilen/den} {faller|föll} långtifrån {ref target/den}. ';
     }
         
     /* thrown object falls short of distant target */
     throwFallShortMsg(projektilen, target, dest)
     {
         gMessageParams(projektilen, target);
-        return '{Den projektilen/ref} {faller|föll} ' + dest.putInName
-            + ' långtifrån {den target/ref}. ';
+        return '{Ref projektilen/den} {faller|föll} ' + dest.putInName
+            + ' långtifrån {ref target/den}. ';
     }
 
     /* target catches object */
@@ -4102,7 +4100,7 @@ playerActionMessages: MessageHelper
 
     /* person uninterested in being kissed */
     cannotKissActorMsg
-        = '{Den dobj/ref} skulle antagligen inte {|ha} uppskatta{|t} det. '
+        = '{Ref dobj/den} skulle antagligen inte {|ha} uppskatta{|t} det. '
 
     /* cannot kiss yourself */
     cannotKissSelfMsg = '{Du/han} {kan} inte kyssa {dig_själv}. '
@@ -4135,7 +4133,7 @@ npcActionMessages: playerActionMessages
     /* trying to move a component object */
     cannotMoveComponentMsg(loc)
     {
-        return '{Du/han} {kan} inte göra det för att {Den dobj/ref} {är} del av ' + loc.theNameObj + '. ';
+        return '{Du/han} {kan} inte göra det för att {Ref dobj/den} {är} del av ' + loc.theNameObj + '. ';
     }
 
     /* default successful 'take' response */
@@ -4180,7 +4178,7 @@ npcActionMessages: playerActionMessages
                       + 'uppenbar effekt. '
     moveNoEffectMsg = '{Du/han} försök{er|te} att flytta {ref dobj/honom}, utan någon '
                       + 'uppenbar effekt. '
-    moveToNoEffectMsg = '{Du/han} lämna{r|de} {den dobj/ref} där {den/ref dobj} {är}. '
+    moveToNoEffectMsg = '{Du/han} lämna{r|de} {ref dobj/den} där {ref/den dobj} {är}. '
 
     whereToGoMsg =
         //'You&rsquo;ll have to say which way {du/han} should {|have} go{|ne}. '
@@ -4190,7 +4188,7 @@ npcActionMessages: playerActionMessages
     tooLargeForContainerMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att {den obj/ref} {är}
+        return '{Du/han} {kan} inte göra det för att {ref obj/den} {är}
             för stor för {ref cont/honom}. ';
     }
 
@@ -4198,7 +4196,7 @@ npcActionMessages: playerActionMessages
     tooLargeForUndersideMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att {den obj/ref}
+        return '{Du/han} {kan} inte göra det för att {ref obj/den}
             inte {|skulle} {får|få} plats under {ref cont/honom}. ';
     }
 
@@ -4206,7 +4204,7 @@ npcActionMessages: playerActionMessages
     tooLargeForRearMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att {den obj/ref}
+        return '{Du/han} {kan} inte göra det för att {ref obj/den}
             inte {|skulle} {får|få} plats bakom {ref cont/honom}. ';
     }
 
@@ -4214,7 +4212,7 @@ npcActionMessages: playerActionMessages
     containerTooFullMsg(obj, cont)
     {
         gMessageParams(obj, cont);
-        return '{Du/han} {kan} inte göra det för att {den cont/ref} {är}
+        return '{Du/han} {kan} inte göra det för att {ref cont/den} {är}
             är redan för full för att få rymma {det obj/honom}. ';
     }
 
@@ -4232,19 +4230,19 @@ npcActionMessages: playerActionMessages
 
     /* taking dobj from iobj, but dobj isn't in iobj */
     takeFromNotInMsg = '{Du/han} {kan} inte göra det för att
-        {den dobj/ref} {är} inte i {det iobj/honom}. '
+        {ref dobj/den} {är} inte i {det iobj/honom}. '
 
     /* taking dobj from surface, but dobj isn't on iobj */
     takeFromNotOnMsg = '{Du/han} {kan} inte göra det för att
-        {den dobj/ref} {är} inte på {det iobj/honom}. '
+        {ref dobj/den} {är} inte på {det iobj/honom}. '
 
     /* taking dobj under something, but dobj isn't under iobj */
     takeFromNotUnderMsg = '{Du/han} {kan} inte göra det för att
-        {den dobj/ref} {är} inte under {det iobj/honom}. '
+        {ref dobj/den} {är} inte under {det iobj/honom}. '
 
     /* taking dobj from behind something, but dobj isn't behind iobj */
     takeFromNotBehindMsg = '{Du/han} {kan} inte göra det för att
-        {den dobj/ref} {är} inte bakom {det iobj/honom}. '
+        {ref dobj/den} {är} inte bakom {det iobj/honom}. '
 
     /* cannot jump off (with no direct object) from here */
     cannotJumpOffHereMsg = 'Det {finns|fanns} ingenstans för {ref/dig} att hoppa av. '
@@ -4278,7 +4276,7 @@ npcActionMessages: playerActionMessages
     okayTurnOffMsg = '{Du/han} {slår|slog} av {ref dobj/honom}. '
 
     /* the key (iobj) does not fit the lock (dobj) */
-    keyDoesNotFitLockMsg = '{Du/han} prova{r|de} {den iobj/ref}, men {det iobj/han} passa{r|de} inte till låset. '
+    keyDoesNotFitLockMsg = '{Du/han} prova{r|de} {ref iobj/den}, men {det iobj/han} passa{r|de} inte till låset. '
 
     /* acknowledge entering "follow" mode */
     okayFollowModeMsg = '<q>Ok, jag kommer följa {ref dobj/honom}.</q> '
@@ -4445,17 +4443,17 @@ class CustomRoomLister: Lister
  */
 actorSingleInventoryLister: InventoryLister
     showListPrefixWide(itemCount, pov, parent)
-        { "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på "; }
+        { "<<buildSynthParam('Ref/den', parent)>> {bär|bar} på "; }
     showListSuffixWide(itemCount, pov, parent)
         { ". "; }
 
     showListPrefixTall(itemCount, pov, parent)
-        { "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på:"; }
+        { "<<buildSynthParam('Ref/den', parent)>> {bär|bar} på:"; }
     showListContentsPrefixTall(itemCount, pov, parent)
         { "<<buildSynthParam('En/han', parent)>>, som {bär|bar} på:"; }
 
     showListEmpty(pov, parent)
-        { "<<buildSynthParam('Den/ref', parent)>> {är} tomhänt. "; }
+        { "<<buildSynthParam('Ref/den', parent)>> {är} tomhänt. "; }
 ;
 
 /*
@@ -4568,25 +4566,25 @@ actorInventoryLister: DividedInventoryLister
     showInventoryEmpty(parent)
     {
         /* empty inventory */
-        "<<buildSynthParam('Den/ref', parent)>> {är} tomhänt. ";
+        "<<buildSynthParam('Ref/den', parent)>> {är} tomhänt. ";
     }
     showInventoryWearingOnly(parent, wearing)
     {
         local nm = gSynthMessageParam(parent);
         /* we're carrying nothing but wearing some items */
-        "<<buildParam('Den/ref', nm)>> {bär|bar} inte på någonting, och {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
+        "<<buildParam('Ref/den', nm)>> {bär|bar} inte på någonting, och {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
         /* we have only carried items to report */
-        "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på <<carrying>>. ";
+        "<<buildSynthParam('Ref/den', parent)>> {bär|bar} på <<carrying>>. ";
     }
     showInventoryShortLists(parent, carrying, wearing)
     {
         local nm = gSynthMessageParam(parent);
         
         /* short lists - combine carried and worn in a single sentence */
-        "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>,
+        "<<buildParam('Ref/den', nm)>> {bär|bar} på <<carrying>>,
         och <<buildParam('han/subj', nm)>>{subj} {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
@@ -4594,7 +4592,7 @@ actorInventoryLister: DividedInventoryLister
         local nm = gSynthMessageParam(parent);
 
         /* long lists - show carried and worn in separate sentences */
-        "<<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>.
+        "<<buildParam('Ref/den', nm)>> {bär|bar} på <<carrying>>.
         <<buildParam('Det/han', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
 
@@ -4603,11 +4601,11 @@ actorInventoryLister: DividedInventoryLister
      *   need to provide the framing messages for the tall-mode listing.  
      */
     showListPrefixTall(itemCount, pov, parent)
-        { "<<buildSynthParam('Den/ref', parent)>> {bär|bar} på:"; }
+        { "<<buildSynthParam('Ref/den', parent)>> {bär|bar} på:"; }
     showListContentsPrefixTall(itemCount, pov, parent)
         { "<<buildSynthParam('En/han', parent)>>, som {bär|bar} på:"; }
     showListEmpty(pov, parent)
-        { "<<buildSynthParam('Den/ref', parent)>> {är} tomhänt. "; }
+        { "<<buildSynthParam('Ref/den', parent)>> {är} tomhänt. "; }
 ;
 
 /*
@@ -4628,19 +4626,19 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
     {
         local nm = gSynthMessageParam(parent);
         /* we're carrying nothing but wearing some items */
-        "<.p><<buildParam('Den/ref', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
+        "<.p><<buildParam('Ref/den', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryCarryingOnly(parent, carrying)
     {
         /* we have only carried items to report */
-        "<.p><<buildSynthParam('Den/ref', parent)>> {bär|bar} på <<carrying>>. ";
+        "<.p><<buildSynthParam('Ref/den', parent)>> {bär|bar} på <<carrying>>. ";
     }
     showInventoryShortLists(parent, carrying, wearing)
     {
         local nm = gSynthMessageParam(parent);
 
         /* short lists - combine carried and worn in a single sentence */
-        "<.p><<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>,
+        "<.p><<buildParam('Ref/den', nm)>> {bär|bar} på <<carrying>>,
         och <<buildParam('han/subj', nm)>>{subj} {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
     showInventoryLongLists(parent, carrying, wearing)
@@ -4648,7 +4646,7 @@ actorHoldingDescInventoryListerLong: actorInventoryLister
         local nm = gSynthMessageParam(parent);
 
         /* long lists - show carried and worn in separate sentences */
-        "<.p><<buildParam('Den/ref', nm)>> {bär|bar} på <<carrying>>. <<buildParam('Det/han', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
+        "<.p><<buildParam('Ref/den', nm)>> {bär|bar} på <<carrying>>. <<buildParam('Det/han', nm)>> {har} på <<buildParam('sig', nm)>> <<wearing>>. ";
     }
 ;
 

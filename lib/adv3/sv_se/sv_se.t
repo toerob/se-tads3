@@ -4003,31 +4003,18 @@ langMessageBuilder: MessageBuilder
         ['du',        &theName, 'actor', nil, true],
         ['ref',       &theName, 'actor', nil, true],
 
-        // - Explicit referensform, ange '/ref' för tydlighetens skull
-        // "{Den/ref} åt mat" -> "Bob åt mat" (om bob: Actor 'Bob').
-        ['han/ref', &theName,  nil, nil, true],
-        ['hon/ref', &theName,  nil, nil, true],
-        ['den/ref', &theName,  nil, nil, true],
-        ['det/ref', &theName,  nil, nil, true],
-        ['de/ref',  &theName,  nil, nil, true],
+        // TODO: Dessa två kanske kan ersättas av ref/han, ref/hon.
+        // men de är så pass lätta att skriva med så de får bli kvar?
+        ['du/han',    &theName, 'actor', nil, true],
+        ['du/hon',    &theName, 'actor', nil, true],
 
-        // TODO: Bör snarare vara följande, 
-        // så passar det även bättre ihop med objektsformerna
-        // Men det är ett större jobb att byta ut överallt: ag '/ref'
-
-        /*
+        // Man kan se ref/han så som the/he eller the/him används i engelska versionen
         ['ref/han', &theName,  nil, nil, true],
         ['ref/hon', &theName,  nil, nil, true],
         ['ref/den', &theName,  nil, nil, true],
         ['ref/det', &theName,  nil, nil, true],
         ['ref/de',  &theName,  nil, nil, true],
-        */
 
-
-
-        // TODO: Dessa två borde hellre vara han/ref, hon/ref.
-        ['du/han',    &theName, 'actor', nil, true],
-        ['du/hon',    &theName, 'actor', nil, true],
 
         ///////////////////////////////////////////////////////////
         // NOMINATIV / SUBJEKTFORM
@@ -4065,7 +4052,6 @@ langMessageBuilder: MessageBuilder
         // OBJEKTFORM
         ///////////////////////////////////////////////////////////
         // mig, dig, den, det, honom, henne,  oss, er, dem
-
 
         // OBS: Undantag från objektform objektet är beskrivet i tredjepersonsperspektiv (theNameObj).
         // I första hand är det referenten, "ref", som ska användas, men om perspektivet 
@@ -4107,7 +4093,7 @@ langMessageBuilder: MessageBuilder
 
         // Används för possessiva med namn i tredjepersonsperspektiv 
         // eller reflexiva possesiva (mitt/ditt/mina, etc...)
-        ['din/ref',     &theNamePossAdj, 'actor', nil, nil],
+        ['ref/din',     &theNamePossAdj, 'actor', nil, nil],
 
         // Vanliga possessiva reflexiva fökjer
         ['din/erat',    &itPossNoun, 'actor', nil, nil],

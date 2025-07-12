@@ -831,7 +831,7 @@ objTurnedOff: PreCondition
 
         /* couldn't turn it off implicitly, so complain and give up */
         gMessageParams(obj);
-        "Du måste stänga av {den obj/ref} först.";
+        "Du måste stänga av {ref obj/den} först.";
         exit;
     }
 ;

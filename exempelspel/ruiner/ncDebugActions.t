@@ -154,7 +154,7 @@ modify Thing {
 		action() {
 		           if( ofKind(Hidden) ) discover;
 		             moveIntoForTravel(gActor); 
-		             "{Den dobj/ref} dyker upp i {dina} händer. ";
+		             "{Ref dobj/den} dyker upp i {dina} händer. ";
 		          }
 	}
 }
