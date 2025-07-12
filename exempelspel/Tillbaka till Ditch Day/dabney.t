@@ -528,7 +528,7 @@ dabneyCourtyard: DabneyOutdoorRoom 'Innergård' 'innergården'
     från studentrum. "
     isPlural = true
 ;
-++ Distant 'spröjsat spröjsad+e fönster+et/fönster/fönstret*fönstren' 'fönster'
+++ Distant 'spröjsat spröjsad+e fönst:er+ret*fönstren' 'fönster'
     "Väggarna är kantade med fönster som vetter mot innergården. "
     isPlural = true
     tooDistantMsg = 'Fönstren är alla för högt upp för att nå. '
@@ -3056,7 +3056,7 @@ class LibUnderBooks: object
     böckerna som är staplade ovanpå. "
 ;
 
-+ Openable, Fixture 'stort stor+a fönster fönstret med gångjärn+et' 'fönster med gångjärn'
++ Openable, Fixture 'stort stor+a gångjärn+et fönst:er+ret' 'fönster med gångjärn'
     "Fönstret har utsikt över innergården och modellberget. "
 
     dobjFor(LookThrough) remapTo(Examine, libCourtyard)

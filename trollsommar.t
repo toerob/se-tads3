@@ -8,7 +8,7 @@ karl:  Actor 'karl' 'Karl' @huset //@husetsVeranda //landsvagen
     isProperName = true
     posture = sitting
 ;
-+key: Key 'nyckel[-n]*nycklar[-na]' 'nyckel' isPlural=nil;
++key: Key 'nyckel+n*nycklar+na' 'nyckel' isPlural=nil;
 
 
 landsvagen: OutdoorRoom 'landsvägen' 'landsvägen'
@@ -17,7 +17,7 @@ landsvagen: OutdoorRoom 'landsvägen' 'landsvägen'
     west = vastraSkogen
 ;
 
-+bilen: Vehicle 'bil[-en]*bilar[-na]' 'bilen'
++bilen: Vehicle 'bil+en*bilar+na' 'bilen'
     allowedPostures = [sitting]
     canTravelVia(connector, dest) { return nil; }
     explainNoTravelVia(connector, dest) { 
@@ -37,7 +37,7 @@ stigen: Room 'Längs en snirklig stig' 'en snirklig stig'
     west = ostraSkogen
     east = vidOvergivetHus
 ;
-+pinne: Thing 'pinne[-n]' 'pinne';
++pinne: Thing 'pinne+n' 'pinne';
 
 vidOvergivetHus: OutdoorRoom 'Vid ett övergivet hus' 'vid ett övergivet hus'
     west = stigen
@@ -51,7 +51,7 @@ husetsVeranda: OutdoorRoom 'Husets veranda (västra sidan)' 'husverandan'
     in asExit(east)
     south = husetsSydsida
 ;
-+husdorrOutside: LockableWithKey, Door 'dörr[-en]*dörrar[-na]' 'dörr'
++husdorrOutside: LockableWithKey, Door 'dörr+en*dörrar+na' 'dörr'
     keyList = [key]    
     dobjFor(Attack) {
         action() {
@@ -72,7 +72,7 @@ husetsSydsida: OutdoorRoom 'Husets veranda (södra sidan)' 'husverandan'
     north = husFonsterSydsidaUtsida
     in asExit(north)
 ;
-+husFonsterSydsidaUtsida: Door -> husFonsterSydsidaInsida 'fönst[-er]*fönst[-rena]' 'fönster'
++husFonsterSydsidaUtsida: Door -> husFonsterSydsidaInsida 'fönst:er+ret*fönstren+a' 'fönster'
 ;
 
 
@@ -81,13 +81,13 @@ husetsKok: Room 'Köket' 'köket'
     south = husFonsterSydsidaInsida
     north = huset
 ;
-+diskhon: Container 'diskho[-n]' 'diskho'
++diskhon: Container 'diskho+n' 'diskho'
 ;
 
-++tallrik: Surface 'tallrik[-en]*tallrikar[-na]' 'tallrik';
-+++sked: Thing 'sked[-en]*skedar[-na]' 'sked';
+++tallrik: Surface 'tallrik+en*tallrikar+na' 'tallrik';
++++sked: Thing 'sked+en*skedar+na' 'sked';
 
-+husFonsterSydsidaInsida: Door -> husFonsterSydsidaUtsida 'fönster*fönster[-na]/fönstret*fönstren[-a]' 'fönster'
++husFonsterSydsidaInsida: Door -> husFonsterSydsidaUtsida 'fönst:er+ret*fönster+na/fönstret*fönstren+a' 'fönster'
     theName = 'fönstret'
 
 ;
@@ -99,31 +99,31 @@ huset: Room 'I husets vestibul' 'husets vestibul'
     out asExit(west)
 ;
 
-+bokhylla: Container 'bokhylla[-n]*hyllor[-na] hylla[-n]*hyllor[-na]' 'bokhylla' 
++bokhylla: Container 'bokhylla+n*hyllor+na hylla+n*hyllor+na' 'bokhylla' 
     isUter = true
     //isPlural = true
     //initSpecialDesc = "En bokhylla står här. "
 ;
 
-++bok: Thing 'bok[-en]*böcker[-na]' 'bok';
+++bok: Thing 'bok+en*böcker+na' 'bok';
 
-++trasnidadFigur: Thing 'träsnidad figur[-en]' 'träsnidad figur' 
+++trasnidadFigur: Thing 'träsnidad figur+en' 'träsnidad figur' 
 "En träsnidad figur av ett troll. "
     //theDisambigName = 'den träsnidade figuren'
     theName = 'den träsnidade figuren' // TODO: sätt 'den' vid skapande om isProperName = nil
 ;
 
-+forsaljare: Actor 'anki/försäljare[-n]' 'Anki'
++forsaljare: Actor 'anki/försäljare+n' 'Anki'
     isProperName  = true
     isHer = true
 ;
 
-++handvaska: Thing 'handväska[-n]/väska[-n]*handväskor[-na]' 'handväska'
+++handvaska: Thing 'handväska+n/väska+n*handväskor+na' 'handväska'
     ownedBy = [forsaljare]
 ;
 
 
-+husdorrInside: LockableWithKey, Door  'dörr[-en]*dörrar[-na]' 'dörr'
++husdorrInside: LockableWithKey, Door  'dörr+en*dörrar+na' 'dörr'
     masterObject = husdorrOutside
     //isLocked = true
     keyList = [key]
@@ -142,43 +142,32 @@ vardagsrum: Room 'vardagsrummet' 'vardagsrummet'
     } 
     west = huset
 ;
-+ bord: Surface, Heavy 'bord[-et]*bord[-en]' 'bord' isUter = nil;
-++ bricka: Surface 'bricka[-n]*brickor' 'bricka';
-+++ lov: Thing 'löv[-en]' 'löv' isPlural=true; //isUter=true;
-+++ matta: Surface 'matta[-n]*mattor[-na]' 'matta';
-++++ bowl: Container 'skål[-en]*skålar' 'skål';
-+++++ chips: Food 'lite/chips[-en]' 'lite chips' 
++ bord: Surface, Heavy 'bord+et*bord+en' 'bord' isUter = nil;
+++ bricka: Surface 'bricka+n*brickor' 'bricka';
++++ lov: Thing 'löv+en' 'löv' isPlural=true; //isUter=true;
++++ matta: Surface 'matta+n*mattor+na' 'matta';
+++++ bowl: Container 'skål+en*skålar' 'skål';
++++++ chips: Food 'lite/chips+en' 'lite chips' 
     theName='chipsen'
     isPlural = true
     isMassNoun=true
     isQualifiedName=true 
 ;
 
-+++++ grape: Food 'grapefrukt[-en]*grapefrukter[-na]' 'grapefrukt';
++++++ grape: Food 'grapefrukt+en*grapefrukter+na' 'grapefrukt';
 
-+soffa: Thing 'soffa[-n]*soffor[-na]' 'soffa'
++soffa: Thing 'soffa+n*soffor+na' 'soffa'
     initSpecialDesc = ""
 ;
 
-//TODO: behövs fönst[-er|-ret]c eller liknande också?
-+fonster: Openable, Fixture 'fönster*fönstren[-a] lucka[-n]' 'fönster'
++fonster: Openable, Fixture 'fönst:er+ret*fönstren+a lucka+n' 'fönster'
     theName = 'fönstret'
     isOpen = true
 ;
-/*
-+fonster: Openable, Fixture 'fonst{er,ret@d,ren@p,rena@dp} luck{a,an@d,or@p,orna@dp}' 'fönster'
-    isOpen = true
-;
-*/
-//
-
-
-//+husFonsterSydsidaInsida: Door -> husFonsterSydsidaUtsida 'fönster/fönstret*fönster' 'fönster'
-
 
 // TODO: några dörrflis,
 // Du såg några dörrflis där.
-+flis: Thing 'lite/flis[-et]/dörrflis[-et]*dörrflis[-et]' 'lite dörrflis'
++flis: Thing 'lite/flis+et/dörrflis+et*dörrflis+et' 'lite dörrflis'
     theName = 'dörrfliset'
     isUter = nil
     isPlural = true

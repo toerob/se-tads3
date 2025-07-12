@@ -11344,14 +11344,39 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
     // Skippa den sista ändelsen (som redan finns i variabeln 'ending')
     for(local i = 1; i<=parts.length-1; i++) {
         local part = parts[i];
-        // Fånga in själva ordet isolerat, samt eventuellt ett 'genus-inverter (:)' och eventuellt foge-S (^s)
+        // Fånga in själva ordet isolerat, samt optionell 'genus-inverter (:)' och optionellt foge-S (^s)
         local match = rexMatch('([^<:^>]+)(:<alpha>*)?(<caret>s)?', part);
         if(match == nil) {
             // Varna om felaktig notation använts
             tadsSay('\n<font color=red>VARNING: Notationsmismatch av "<<cur>>"\n.Använd enligt följande mall: äpple+n, äppel+kaka+n,papper+et eller papper^s+flyg+plan+et</font>\n');
             continue;
         }
-        local word = rexGroup(1)[3];
+        local word = rexGroup(1)[3];        // Plocka ut själva ordet utan ändelse
+        local jointS = rexGroup(3) != nil;  // Plocka ut true/false för foge-S
+        local genderMod = rexGroup(2);      // Plocka grammatisk genus-moddning som boolesk
+        local genderModContent = genderMod ? rexGroup(2)[3] : nil; // Plocka ut alternativ ändelse, annars nil
+
+        // Börja med att kontrollera följande villkor: 
+        // 2 delar, inget foge-S MEN en variant av ändelse efter ett kolon.
+        //
+        // Användningsfallet här är för att stödja alternativa ändelser
+        // där ändelsen inte enkelt kan läggas på efter standardformen
+        // T ex: 'fönst:er+ret' ger oss 'fönster' & 'fönstret'
+
+        // I detta fallet kommer kolon inte stå för en genusvariant som den 
+        // gör när den används ihop med foge-S utan snarare obestämd+bestämd form. 
+        // Ändelsen efter (+) kommer att bli den bestämda formen.
+        if(parts.length == 2 && !jointS && genderMod) {
+            genderModContent = genderModContent.findReplace(':', '', ReplaceAll);
+            local wordWithoutEnding = word + genderModContent;
+            local wordWithEnding = word + ending;
+            cmdDict.addWord(obj, wordWithoutEnding, sectPart);  
+            cmdDict.addWord(obj, wordWithEnding, sectPart);  
+            return object {
+                standardForm = wordWithoutEnding
+                definiteForm = wordWithEnding
+            };
+        }
 
         // Kontrollera om vi är på sista ordet i iterationen, använd bara definierade 
         // ändelsen i ending rakt av och bryt tidigt. Det finns ingen anledning att 
@@ -11362,13 +11387,9 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
         } 
 
         // Annars, kontrollera om det finns ett undantag till genus, 
-        // dett mönster inleds av användaren med kolon och en eventuellt 
+        // detta mönster inleds av användaren med kolon och en eventuellt 
         // bifogad annan ändelse. Om ingen ändelse anges, kommer kolon 
         // betyda motsatsen till den slutliga ändelsen för ordet.
-        local genderMod = rexGroup(2);
-        local genderModContent = genderMod ? rexGroup(2)[3] : nil;
-
-        local jointS = rexGroup(3) != nil; // Plocka ut true/false för foge-S
         local partEnding = ending;  // Utgå från att komponenten får samma ändelse som ändelsen för helhetsordet
  
         if(genderMod) {

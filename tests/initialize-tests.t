@@ -575,6 +575,35 @@ TestUnit 'createCompoundWordVariations, hantera "n"-ändelse' run {
     cleanUp(dummy);
 };
 
+
+TestUnit 'createCompoundWordVariations, hantera "er/ret"-ändelser' run {
+    local dummy = new Thing();
+    local forms = createCompoundWordVariations(dummy, 'fönst:er+ret', &noun);
+    //tadsSay(getGrammarInfoFromCmdDict(dummy));
+    assertThat(forms.standardForm).isEqualTo('fönster');
+    assertThat(forms.definiteForm).isEqualTo('fönstret');
+    assertThat(cmdDict.findWord('fönster', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('fönstret', &noun)[1]).isEqualTo(dummy);
+    cleanUp(dummy);
+}
+;
+
+
+TestUnit 'createCompoundWordVariations, hantera ": utan foge-S " ger en ändelsefri variant' run {
+    local dummy = new Thing();
+    local forms = createCompoundWordVariations(dummy, 'video:+förstärkare+n', &noun);
+    //tadsSay(getGrammarInfoFromCmdDict(dummy));
+    assertThat(forms.standardForm).isEqualTo('videoförstärkare');
+    assertThat(forms.definiteForm).isEqualTo('videoförstärkaren');
+    assertThat(cmdDict.findWord('video', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('förstärkaren', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('videoförstärkare', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('videoförstärkaren', &noun)[1]).isEqualTo(dummy);
+    //TODO:  räkna samman
+    cleanUp(dummy);
+}
+;
+
 TestUnit 'createCompoundWordVariations, tar bort mer än tre upprepande boktstäver' run {
     local dummy = new Thing();
     local forms = createCompoundWordVariations(dummy, 'kastrull:en+lock+et', &noun);

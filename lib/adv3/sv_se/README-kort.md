@@ -37,6 +37,14 @@ För att ändra genus under skapandet används kolon:
 ansvarskanslan: Thing 'ansvar:et^s+känsla+n';
 ```
 
+För att enkelt skapa alternativ bestämd form kan kolon användas till att ange den obestämda formen.
+OBS: detta fungerar bara när ordet består av två delar, så som i följande exempel:
+
+```tads3
+ansvarskanslan: Thing 'fönst:er+et';
+```
+
+
 ## combineVocabWords-flaggan
 
 Plusnotation fungerar när `combineVocabWords = true` (standard). Sätt till `nil` för att stänga av funktionaliteten.
@@ -52,6 +60,8 @@ För att debugga, använd flaggan "-D __DEBUG" vid kompilering och använd verbe
 | Foge-s                      | 'tranbär^s+juice+n'                                   | juice, juicen, tranbärsjuicen, tranbärsjuice, tranbären, tranbär                    |
 | Genusändring med kolon      | 'ansvar:et^s+känsla+n'                                | ansvarskänslan, ansvarskänsla, ansvaret, ansvar, känslan, känsla                    |
 | Utan genusändring           | 'ansvar^s+känsla+n'                                   | ansvarskänslan, ansvarskänsla, ansvaren, ansvar, känslan, känsla                    |
+| Alternativ bestämd form     | 'fönst:er+ret'                                        | fönster, fönstret                                                                   |
+| Kolon utan foge-S           | 'video:+förstärkare+n'                                | video, förstärkare, förstärkaren, videoförstärkare, videoförstärkaren               |
 
 Förbättringsförslag:
 1. Lägg till fler konkreta exempel på hur man kan använda plusnotationen i olika situationer.
