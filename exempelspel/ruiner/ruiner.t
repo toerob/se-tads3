@@ -79,7 +79,6 @@ gameMain: GameMainDef
     /* the initial player character is 'me' */
     initialPlayerChar = me
     showIntro() {
-        //"Dagar av sökande, dagar av törstig kamp genom skogens törnesnår, men så äntligen belönas ditt tålamod. En upptäckt!\b";
         "Dagar av sökande, dagar av törstig kamp genom snåren i djungeln. Men till slut belönades ditt tålamod. En upptäckt!\b";
     }
     newGame()
@@ -179,10 +178,9 @@ warthog: UntakeableActor 'lerig+a grymtande vårtsvin+et/svin+et' 'vårtsvin' "L
   }
 ;
 
-// TODO: den/det/de - jämför med biblioteket
-class Unimportant: Decoration '-' 'det'
+class Unimportant: Decoration '-' 
    "<<notImportantMsg>>"
-   notImportantMsg = '<<self.theName>> är inget du behöver referera till under det här spelets gång.'
+   notImportantMsg = '\^<<self.theName>> är inget du behöver referera till under spelets gång.'
 ; 
  
 
@@ -200,7 +198,6 @@ class Treasure: Thing 'skatt+en*skatter+na'
             if(!photographedInSitu) {
                 failCheck('Detta är 30-talet; inte den gamla dåliga tiden. Att ta en artefakt utan att redogöra dess kontext vore helt enkelt att plundra. ');
             }
-            inherited; // TODO: testa, inte i org
         }
     }
     dobjFor(PutIn) 
@@ -211,7 +208,7 @@ class Treasure: Thing 'skatt+en*skatter+na'
             if (gIobj == packingCase) {
                 addToScore(culturalValue, 'att packa ' + theName + ' i packväskan. ');
                 if(libScore.totalScore == gameMain.maxScore) {
-                    "Då du försiktigt packar undan {den dobj/ref} seglar en rödstjärtad ara ner från trädtopparna, dess fjädrar tunga i det senaste regnet, ljudet av dess slagande vingar nästan öronbedövande, sten faller mot sten... 
+                    "Då du försiktigt packar undan {den dobj/ref} seglar en röd ara ner från trädtopparna, dess fjädrar tunga i det senaste regnet, ljudet av dess slagande vingar nästan öronbedövande, sten faller mot sten... 
                     När himlen klarnar stiger en halvmåne upp ovanför en fridfull djungel. Det är slutet på Mars 1938, och det är dags att åka hem.";
 
                     finishGameMsg(ftVictory, [finishOptionUndo, finishOptionFullScore]);
@@ -246,7 +243,7 @@ class Treasure: Thing 'skatt+en*skatter+na'
 //===============================================================
 
 forest: OutdoorRoom '<q>STORA TORGET</q>' 'det stora torget'
-  "Det är åtminstone vad dina anteckningar kallar denna låga kalkstensås, men nu har regnskogen återtagit den. Mörka olivträd tränger in från alla håll, luften är mättad av dimman efter ett nyligen passerat regn, knotten svävar stilla i regnets eftervärme. Struktur 10 är ett sönderfallet murverk, som kanske en gång utgjorde en gravpyramid. Litet finns kvar, annat än de stenhuggna trappstegen som leder ner i mörkret nedanför."
+  "Det är åtminstone vad dina anteckningar kallar denna låga kalkstensås, men nu har regnskogen återtagit den. Mörkt olivfärgad växtlighet tränger in från alla håll, luften är mättad av dimman efter ett nyligen passerat regn, knotten svävar stilla i regnets eftervärme. Struktur 10 är ett sönderfallet murverk, som kanske en gång utgjorde en gravpyramid. Litet finns kvar, annat än de stenhuggna trappstegen som leder ner i mörkret nedanför."
 
     up: NoTravelMessage {
         "Träden är taggbeväxta och du skulle skära upp dina händer fullständigt om du försökte klättra i dem. "
@@ -263,23 +260,18 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'det stora torget'
     }
 ;
 
-+SimpleNoise 'ljud+et/macaw+en/papegoja+n/ara+n/djungel+n*papegojor+na macawer+na aror+na fladdermöss+en' 'djungeln' 
++SimpleNoise 'djungelljud+et/ljud+et/macaw+en/papegoja+n/ara+n*papegojor+na macawer+na aror+na fladdermöss+en' 'djungelljud' 
     "Vrålapor, fladdermöss, papegojor, aror."
-    isPlural = true
 ;
 
-+ Unimportant 'mörk+a olivträd+en/limesten+en/träd+en/regnskog+en/skog+en/knott+en'
++ Unimportant 'mörk+a olivfärg+ade djungel+n/träd+en/växtlighet+en/limesten+en/träd+en/regnskog+en/skog+en/knott+en' 'djungel'
 ;
 
-// TODO: Man bör inte behöva ange både definiteForm och theName för att 'de fläckiga svamparna' ska fungera
 + mushroom: Food 'fläckig+a svamp+en/padd+svamp+en*svampar+na paddsvampar+na' 'fläckiga svampar'
-    "Svampen är täckt med fläckar, och du är inte ens säker på att det inte är en paddsvamp.",
-    definiteForm = 'de fläckiga svamparna'
+    "Svampen är täckt med fläckar, och du är inte ens säker på att det inte är en paddsvamp."
     theName = 'de fläckiga svamparna'
-    isQualifiedName = true 
-    isPlural=true
+    isPlural = true
     initSpecialDesc = 'På en lång stjälk i den genomdränkta jorden växer en fläckig svamp.'
-
     dobjFor(Take) 
     {
      action()
@@ -306,7 +298,7 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'det stora torget'
         moveInto(nil);
         steps.isInInitState = nil;
         "Du gnager på ett hörn, oförmögen att förnimma den 
-        skarpa smaken, distraherad av en rödstjärtad aras flykt ovanför, som tycks explodera ur solen. Ljudet av dess slagande vingar är öronbedövande, som sten som faller mot sten.";
+        skarpa smaken, distraherad av en röd aras flykt ovanför, som tycks explodera ur solen. Ljudet av dess slagande vingar är öronbedövande, som sten som faller mot sten.";
      }
    }
 ;
@@ -381,18 +373,6 @@ sodiumLamp: Flashlight, FueledLightSource, TravelPushable
         }
         action()  { inherited Thing; }
     }
-    /*
-    // TODO: behövs denna?
-    dobjFor(PushTravelDir) { 
-        check() {
-            if (isLit) {
-              if (gPlayerChar.location.isIn(shrine) 
-                && gDobj == southwestDirection) {
-                  failCheck('Glödlampan är för ömtålig och metallhandtaget för varmt för att lyfta lampan medan den är påslagen.');
-              }
-            }
-        }
-    }*/
 
     dobjFor(Drop) { action() { inherited Thing; } }
 
@@ -488,7 +468,7 @@ squareChamber: Room 'Fyrkantig Kammare' 'den fyrkantiga Kammaren'
 ;
 
 
-+ Unimportant 'östra södra låga överliggande *dörr+öppning+ar dörrar överliggare överliggarna skuggor+na'
++ Unimportant 'östra södra låga överliggande *dörr+öppningar+na dörrar+na överliggar+na skuggor+na'
   isPlural = true
 ;
 
@@ -557,7 +537,7 @@ corridor: DarkRoom 'Den krökta korridoren' 'den krökta korridoren'
 
 
 shrine: DarkRoom 'Helgedomen' 'helgedomen' 
-  "Denna magnifika Helgedom visar tecken på att ha urholkats från redan existerande kalkstensgrottor, särskilt i den västra av de två långa takfoten i söder.",
+  "Denna magnifika Helgedom visar tecken på att ha urholkats från redan existerande kalkstensgrottor, särskilt i den västra av de två långa takfoten i söder."
     north = stoneDoorInside
     southeast = antechamber
    southwest: OneWayRoomConnector { -> junction
@@ -1386,6 +1366,14 @@ VerbRule(ClimbUpDirection)
     verbPhrase = ('klättra/klättrar ' + dirMatch.dir.name)
     askDobjResponseProd = singleNoun
 ;
+
+VerbRule(DropAsPutIn)
+    'släpp' dobjList ('i'|'inuti') singleIobj
+    : PutInAction
+    verbPhrase = 'sätta/sätter (vad) (in i vad)'
+    askIobjResponseProd = inSingleNoun
+;
+
 
 modify Thing
   dobjFor(Photograph)

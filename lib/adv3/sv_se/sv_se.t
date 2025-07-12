@@ -1647,14 +1647,13 @@ modify Thing
       */
     aNameFrom(str)
     {
-        //tadsSay('\n[konstruerar aName från [<<str>>] via aNameFrom]\n');
         /* remember the original source string */
         local inStr = str;
 
         /* if the name is already qualified, don't add an article at all */
-        if (isQualifiedName)
+        if (isQualifiedName) {
             return str;
-
+        }
         // För odelbara saker så som vatten, trä, popcorn etc, kan vi antingen skriva 
         // "lite" eller skippa artikeln helt och hållet
         if (isMassNoun) {
@@ -3211,13 +3210,13 @@ modify Floor
 ;
 
 modify defaultFloor
-    noun = 'golv' 'grund'
+    noun = 'golv' 'golvet' 'grund' 'grunden'
     name = 'golv'
     theName = 'golvet'
 ;
 
 modify defaultGround
-    noun = 'mark' 'grund'
+    noun = 'mark' 'marken' 'grund' 'grunden'
     name = 'mark'
     theName = 'marken'
 ;
@@ -3228,7 +3227,7 @@ modify defaultNorthWall adjective='n' 'norr' 'nordlig' 'norra' noun = 'vägg' 'v
 modify defaultSouthWall adjective='s' 'syd' 'sydlig' 'söder' 'södra' noun = 'vägg' 'väggen' name='sydlig vägg' theName = 'södra väggen';
 modify defaultEastWall adjective='ö' 'öster' 'östlig' 'östra' noun = 'vägg' 'väggen' name='östlig vägg'  theName = 'östra väggen';
 modify defaultWestWall adjective='v' 'väster' 'västlig' 'västra' noun = 'vägg' 'väggen' name='västlig vägg' theName = 'västra väggen';
-modify defaultSky noun='himmel' name='himmel' theName = 'himlen';
+modify defaultSky noun='himmel' 'himlen' name='himmel' theName = 'himlen';
 
 
 /* ------------------------------------------------------------------------ */

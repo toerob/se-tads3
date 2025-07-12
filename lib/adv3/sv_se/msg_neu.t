@@ -1905,7 +1905,7 @@ playerMessages: libMessages
      */
     wrongReflexive(actor, typ, pronounWord)
     {
-        "<.parser>Spelet förstår inte vad order <q><<pronounWord>></q> refererar till.<./parser> ";
+        "<.parser>Spelet förstår inte vad ordet <q><<pronounWord>></q> refererar till.<./parser> ";
     }
 
     /* no match for a possessive phrase */
