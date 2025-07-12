@@ -30,19 +30,19 @@ omegatronTopic: Topic 'mitt omegatron/företag';
 mitachronTopic: Topic 'mitachron';
 
 /* phone call */
-phoneCallTopic: Topic 'telefon+en mobil+en mobil+telefonen cell+en samtal';
+phoneCallTopic: Topic 'mobil:en+telefon+en/telefon:en+samtal+et';
 
 /* elevators in general */
 elevatorTopic: Topic 'hiss+en/elevator+n/lift+en';
 
 /* some resume-related topics */
 hiringFreezeTopic: Topic 'omegatron+s anställning^s+stopp+et';
-kowtuan: Topic 'kowtuan tekniska institut/universitet/skola';
-chipTechNo: Topic 'halvledare kemisk applikator
-    chiptechno/tillverkare/operation+er/åtgärder';
+kowtuan: Topic 'kowtuan teknisk+a institut+et/universitet+et/skola+n';
+chipTechNo: Topic 'halvledare kemisk+a applikator
+    chiptechno tillverkare+n*åtgärder+na operationer+na';
 
 /* the power plant itself */
-powerPlant6: Topic '6 regeringskraftverk';
+powerPlant6: Topic '6+e regering^skraftverk+et';
 
 /* ------------------------------------------------------------------------ */
 /*
@@ -55,7 +55,7 @@ MultiInstance
     initialLocationClass = PowerPlantRoom
 
     instanceObject: SecretFixture {
-        '6 regeringens kraftverk' 'Regeringens kraftverk #6'
+        '6+e regeringens kraftverk+et' 'Regeringens kraftverk #6'
 
         /* examine the plant by doing an ordinary "look" */
         dobjFor(Examine)
@@ -91,8 +91,7 @@ MultiInstance
 class PowerPlantRoom: Room;
 
 /* dimmigt moln av insektsmedel */
-deetCloud: Vaporous 'dimmigt kraftfullt giftigt insekts
-    spray/medel/dimma/moln/ånga/bekämpningsmedel'
+deetCloud: Vaporous 'dimmig+a kraftfull+a giftig+a insektsspray+en/spray+en/medel/medlet/dimma+n/moln/molnet/ånga+n/bekämpningsmedel/bekämpningsmedlet'
     'moln av insektsmedel'
     "Den dimmiga ångan hänger i luften genom hela rummet. "
 ;
@@ -103,7 +102,7 @@ deetCloud: Vaporous 'dimmigt kraftfullt giftigt insekts
 ;
 
 /* tanken */
-deetTank: Thing 'kraftfull resväskestor metall insekts tank/slang/medel'
+deetTank: Thing 'kraftfull+a resväskestor+a metall+iska insektsmedel medel medlet tank+en/insektstank+en/slang+en'
     'tank med insektsmedel'
     "Den är ungefär lika stor som en stor resväska och har en slang fäst vid sig. "
 ;
@@ -163,7 +162,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
  *   another location for actor travel.  
  */
 + powerControlDoorway: Fixture, ThroughPassage
-    'väst v dörr+öppning+en' 'dörröppning'
+    'väst+ra v dörr+öppning+en' 'dörröppning'
     "Det är bara en dörröppning utan dörr som leder västerut. "
 
     /*
@@ -172,7 +171,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
      */
     canTravelerPass(travler) { return scu1100dx.isOn; }
     explainTravelBarrier(traveler)
-    {
+    {    
        "Du kan helt enkelt inte lämna rummet förrän du får SCU-1100DX att fungera. ";
     }
 
@@ -186,7 +185,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 /*
  *   our first assistant
  */
-+ xojo: TourGuide, Person 'xojo/man/byråkrat*män' 'Xojo'
++ xojo: TourGuide, Person 'xojo/man+nen/byråkrat+en*män+nen' 'Xojo'
     "Han är en lågnivåbyråkrat som tilldelats att hjälpa dig med 
     SCU-1100DX-installationen. Han ser ung ut, kanske i mitten av 
     tjugoårsåldern. Han är lite längre än dig och mycket smal."
@@ -298,8 +297,8 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 
         /* om detta är första gången, lägg till något extra */
         if (boostCount++ == 0)
-            "<.p><q>Jag hoppas du ser vilken initiativrik anställd
-            jag skulle vara,</q> säger Xojo, lite ansträngd av din vikt. ";
+            "<.p><q>Jag hoppas du märker vilken initiativrik anställd
+            jag skulle vara,</q> säger Xojo, något ansträngd av din vikt. ";
 
         /* move me to the special secret "boosted by xojo" location */
         me.moveIntoForTravel(xojoBoost);
@@ -314,7 +313,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 ;
 
 ++ xojoResume: PresentLater, Readable
-    'cirriculum meritförteckning+en/resume+n/r\u00E9sum\u00E9/cv/c.v./vitae/papper+et/pappret'
+    'cirriculum meritförteckning+en/resume+n/r\u00E9sum\u00E9/cv/c.v./vitae/papper+et/pappret*meriter+na'
     'r\u00E9sum\u00E9'
     "Formatet är lite ovanligt, förmodligen på grund av lokala
     konventioner, men du har inga större problem att hitta den viktiga
@@ -335,16 +334,16 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 ;
 
 ++ AskTellTopic @magnxi
-    "<q>Har du något du kan berätta om Översten?</q> frågar du.
-    <.p><q>Jag tar dig till henne nu,</q> svarar han. "
+    "<q>Vad kan du berätta om Översten?</q> frågar du.
+    <.p><q>Jag för dig till henne nu,</q> svarar han. "
 
     /* this is active as soon as we're on our way to see the colonel */
     isActive = (scu1100dx.isOn)
 ;
 
 ++ GiveTopic @xojoResume
-    "Du erbjuder tillbaka CV:t till Xojo, men han bara viftar med
-    händerna. <q>Snälla,</q> säger han, <q>behåll det för din
+    "Du försöker ge tillbaka CV:t till Xojo, men han bara viftar med
+    händerna. <q>Snälla,</q> säger han, <q>behåll det för ditt 
     framtida övervägande.</q> "
 ;
 
@@ -356,13 +355,13 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 ;
 
 ++ AskTellTopic @xojo
-    "<q>Berätta om dig själv,</q> säger du.
+    "<q>Berätta något om dig själv,</q> säger du.
     <.p><q>Jag är här för att hjälpa dig,</q> svarar Xojo. "
 ;
 
 ++ AskTellShowTopic +90 @guanmgon
-    "<q>Berätta om Guanmgon,</q> säger du.
-    <.p>Xojo pausar ett ögonblick. <q>Han är mycket kvalificerad att
+    "<q>Berätta något om Guanmgon,</q> säger du.
+    <.p>Xojo pausar ett ögonblick. <q>Han är väldigt kvalificerad att
     hjälpa dig,</q> säger han till slut. "
 ;
 
@@ -374,7 +373,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
     ['<q>Min överordnade, Guanmgon, skulle vara bättre kvalificerad än
     jag att hjälpa dig i denna fråga,</q> säger Xojo. ',
     '<q>Jag måste överlåta sådana frågor till mina överordnade,</q> säger Xojo. ',
-    'Xojo tänker ett ögonblick. <q>Kanske borde du rådfråga min överordnade,
+    'Xojo tänker ett ögonblick. <q>Kanske du borde rådfråga min överordnade,
     Guanmgon,</q> säger han. '
     ]
 
@@ -391,7 +390,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 ;
 
 ++ GiveShowTopic @contract
-    "Det är ingen idé att göra det; Xojo är ungefär fyrtiofem
+    "Det finns ingen mening med att göra det; Xojo är ungefär fyrtiofem
     byråkratinivåer för låg för att ha något med kontrakt att göra. "
 
     isConversational = nil
@@ -405,16 +404,16 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 ;
 +++ AltTopic
     "Du skulle gärna ge Xojo en full demonstration, men du borde verkligen gå
-    och träffa Överste Magnxi direkt. "
+    och träffa Överste Magnxi på en gång. "
 
     isActive = (scu1100dx.isWorking && scu1100dx.isOn)
     isConversational = nil
 ;
 
 ++ GiveShowTopic [ct22, s901, xt772hv, tester, testerProbe, xt772lv]
-    "Du tror att han verkligen skulle vilja hjälpa till, men det har blivit tydligt att
+    "Du är säker på att han verkligen skulle vilja hjälpa till, men det har blivit tydligt att
     all bisarr byråkrati här hindrar Xojo från att faktiskt göra
-    något som skulle likna reparationsarbete. "
+    något som ens skulle likna reparationsarbete. "
 
     isConversational = nil
 ;
