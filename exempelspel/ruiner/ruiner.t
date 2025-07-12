@@ -1,23 +1,32 @@
 #charset "utf-8"
+
+/* 
+ *   Include the main header for the standard TADS 3 adventure library.
+ *   Note that this does NOT include the entire source code for the
+ *   library; this merely includes some definitions for our use here.  The
+ *   main library must be "linked" into the finished program by including
+ *   the file "adv3.tl" in the list of modules specified when compiling.
+ *   In TADS Workbench, simply include adv3.tl in the "Source Files"
+ *   section of the project.
+ *   
+ *   Also include the SE Swedish definitions, since this game is written
+ *   in Swedish.  
+ */
 #include <adv3.h>
 #include <sv_se.h> 
 
-#define __DEBUG
+#ifdef __DEBUG
 #include "../debug.h"
+#endif
 
-#define MAX_SCORE 30;
-
-Test 'spel' [
-  'ta allt', 'ät svamp', 'ner', 'läs inskriptioner', 'x solljus',  'öst', 'ta äggsäck', 'väst', 'sätt äggsäcken i solljuset', 'ta nyckel', 'söder', 'släpp lampa', 'tänd den', 'släpp allt förutom kamera', 'fotografera statyett', 'ta allt', 'lås upp dörr med nyckel', 'knuffa lampan söderut', 'släpp allt förutom kamera', 'fotografera mask', 'ta allt', 'ta på dig masken', 'fråga om xibalba', 'sv', 'upp', 'tryck klotet nedåt', 'ner', 'norr', 'tryck klot s', 's', 'släpp allt förutom kamera', 'fotografera ben', 'ta allt', 'upp', 'norr', 'släpp allt förutom kamera', 'fotografera stelen', 'ta allt', 'nö', 'knuffa lampan sö', 'kliv in i buren', 'nv', 'n', 'n', 'ö', 'n', 'upp', 'fotografera honungskaka', 'ta allt', 'upp', 'kliv ut', 'tryck lampan nv', 'tryck lampan n', 'tryck lampan n', 'tryck lampan upp', 'lägg alla skatter i lådan'
-];
-
-Test 'spel2' [
-  'plocka upp allt', 'förtär svampen', 'klättra neråt', 'tyd inskriptionerna', 'granska solljuset', 'gå österut', 'hämta äggsäcken', 'västerut', 'placera äggsäcken i solljuset', 'plocka upp nyckeln', 'vandra söderut', 'ställ ner lampan', 'tänd den', 'lämna allt utom kameran', 'ta bild av statyetten', 'ta allt', 'lås upp dörren med nyckeln', 'skjut lampan åt söder', 'lämna allt förutom kameran', 'ta bild av masken',
-  'ta allt', 'sätt på dig masken', 'fråga om Xibalba', 'gå sydväst', 'klättra upp', 'pressa klotet nedåt', 'klättra ner', 'vandra norrut', 'tryck klotet åt söder', 'gå söderut', 'lämna allt utom kameran', 'ta foto av benen', 'ta allting', 'upp', 'gå norrut', 'lämna allt utom kameran', 'ta foto av stelen', 'plocka upp allting', 'gå nordost', 'putta lampan sydösterut', 'stig in i buren', 'gå nordväst', 'gå norrut', 'fortsätt norrut', 'gå österut', 'gå norrut', 'klättra uppåt', 'fotografera honungskakan', 'ta allting', 'klättra uppåt', 'kliv ut ur buren', 'skjut lampan nordväst', 'skjut lampan norrut', 'skjut lampan norrut', 'skjut lampan uppåt', 'stoppa alla skatterna i lådan'
-  
-];
-
-
+/*
+ *   Our game credits and version information.  This object isn't required
+ *   by the system, but our GameInfo initialization above needs this for
+ *   some of its information.
+ *   
+ *   You'll have to customize some of the text below, as marked: the name
+ *   of your game, your byline, and so on.  
+ */
 versionInfo: GameID
     IFID = '10BC0B40-952C-4BF8-BA4F-F43A1E5661CA'
     name = 'RUINER'
@@ -54,57 +63,29 @@ versionInfo: GameID
        hur du enklast använder de svenskanpassningar som det svenska biblioteket 
        tillför till TADS 3.\n";
     }
-
 ;
 
-modify Room
-    roomDarkDesc = "Århundradenas mörker trycker mot dig, och du känner dig 
-    klaustrofobisk."
-    /*
-    *  Unlike Inform, TADS 3 doesn't automatically as '(as whatever)' to the
-    *  room name when the PC isn't the initial player object. We make a small
-    *  modification below to add this feature.
-    */
-    lookAroundWithinName(actor, illum)
-    {
-        /* 
-        *   if there's light, show our name; otherwise, show our
-        *   in-the-dark name 
-        */
-        if (illum > 1)
-        {
-            /* we can see, so show our interior description */
-            
-            /* 
-            * If the player character isn't me (the initial PC) add the PC's
-            * name in parenthesis to the end of the room name.
-            */
-            "\^<<roomName>> <<gPlayerChar != me ? '(som ' + gPlayerChar.name + ')' : ''>>";
-        }
-        else
-        {
-            /* we're in the dark, so show our default dark name */
-            say(roomDarkName);
-        }
-
-        /* show the actor's posture as part of the description */
-        actor.actorRoomNameStatus(self);
-    }
-;
-
+/*
+ *   The "gameMain" object lets us set the initial player character and
+ *   control the game's startup procedure.  Every game must define this
+ *   object.  For convenience, we inherit from the library's GameMainDef
+ *   class, which defines suitable defaults for most of this object's
+ *   required methods and properties.  
+ *
+ *   The properties and methods on this object correspond roughly to
+ *   the work carried out in the Inform initialise routine.
+ */
 gameMain: GameMainDef
-    //usePastTense = true
+    /* the initial player character is 'me' */
     initialPlayerChar = me
-
     showIntro() {
-        "Dagar av sökande, dagar av törstig kamp genom skogens törnesnåren, men så äntligen belönades ditt tålamod. En upptäckt!\b";
+        "Dagar av sökande, dagar av törstig kamp genom skogens törnesnåren, men så äntligen belönas ditt tålamod. En upptäckt!\b";
     }
     newGame()
     {
       titlePage();
       inherited();
     }
-
     maxScore = 30
     scoreRankTable = [
       [0, 'Turist'],
@@ -143,6 +124,12 @@ gameMain: GameMainDef
       inputManager.getKey(nil, nil);
       cls();      
     }
+    
+    /*
+     *  This code sets up an about box that will be displayed when the
+     *  player sets Help->About from the interpreter's menu.
+     */
+    
     setAboutBox()
     {
       "<ABOUTBOX><CENTER><b><<versionInfo.name>></b></CENTER>\b
@@ -153,30 +140,34 @@ gameMain: GameMainDef
 ;
 
 
-
+/*
+ *   Define the player character.  The name of this object is not
+ *   important, but it MUST match the name we use to initialize
+ *   gameMain.initialPlayerChar above.         
+ */ 
 
 
 me: Actor 'din min kropp+en' 'din kropp' @forest
   npcDesc = "Den ser rätt passiv ut. "
   isQualifiedName = true
+
   dobjFor(Photograph)
   {
     verify() { illogicalSelf('Bäst att låta bli. Du har inte rakat dig sen Mexico. '); }
   }
+
 ;
 
 warthog: UntakeableActor 'lerig+a grymtande vårtsvin+et/svin+et' 'vårtsvin' "Lerig och grymtande."
   pcDesc = "Lerig och grymtande -- och definitivt ett vårtsvin"
   actorHereDesc = "Ett vårtsvin sniffar och grymtar omkring i askan. "
   isProper = true
-
   actorAction()
   {
     #ifdef __DEBUG
       if(gActionIn(Snarf, Zarvo, Pow))
         return;
     #endif
-    
   
     if(gActionIs(Eat))
       failCheck('Du har inte knäckt knepet med att sniffa upp mat än. ');
@@ -187,32 +178,34 @@ warthog: UntakeableActor 'lerig+a grymtande vårtsvin+et/svin+et' 'vårtsvin' "L
   }
 ;
 
-
+// TODO: den/det/de - jämför med biblioteket
 class Unimportant: Decoration '-' 'det'
    "<<notImportantMsg>>"
-   notImportantMsg = '<<self.theName>> är inget du behöver referera till under gången av det här spelet.'
+   notImportantMsg = '<<self.theName>> är inget du behöver referera till under det här spelets gång.'
 ; 
  
 
-
 class Treasure: Thing 'skatt+en*skatter+na'
-    photographedInSitu = nil
     culturalValue = 5
+    photographedInSitu = nil
     
-    //dobjFor(Remove) asDobjFor(Take)
-    dobjFor(Take) {
-        check() {
+    dobjFor(Take)
+    {
+        check()
+        {
             if(isIn(packingCase)) {
                 failCheck('Det vore bäst att vänta med uppackandet av en sån obetalbar artefakt till dess att Carnegieinstitutionen kan göra det. ');
             }
             if(!photographedInSitu) {
                 failCheck('Detta är 30-talet; inte den gamla dåliga tiden. Att ta en artefakt utan att redogöra dess kontext vore helt enkelt att plundra. ');
             }
-            inherited;
+            inherited; // TODO: testa, inte i org
         }
     }
-    dobjFor(PutIn) {
-        action() {
+    dobjFor(PutIn) 
+    {
+        action()
+        {
             inherited;
             if (gIobj == packingCase) {
                 addToScore(culturalValue, 'att packa ' + theName + ' i packväskan. ');
@@ -222,12 +215,16 @@ class Treasure: Thing 'skatt+en*skatter+na'
 
                     finishGameMsg(ftVictory, [finishOptionUndo, finishOptionFullScore]);
                 }
-                "Säkert undanpacka{d/t/da dobj}.";
+                else {
+                  "Säkert undanpacka{d/t/da dobj}.";
+                }
             }
         }
     }
-    dobjFor(Photograph) {
-        check() {
+    dobjFor(Photograph) 
+    {
+        check()
+        {
             if(moved)  {
                 failCheck('Va, falsifiera den arkeologiska uppteckningen? ');
             }
@@ -236,29 +233,33 @@ class Treasure: Thing 'skatt+en*skatter+na'
             }
             inherited;
         }
-        action() {
+        action() 
+        {
             inherited;
             photographedInSitu = true;
         }
     }
+
 ;
 
+//===============================================================
 
 forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
   "Det är åtminstone vad dina anteckningar kallar denna låga kalkstensås, men nu har regnskogen återtagit den. Mörka olivträd tränger in från alla håll, luften är mättad av dimman efter ett nyligen passerat regn, knotten svävar stilla i regnets eftervärme. Struktur 10 är ett sönderfallet murverk, som kanske en gång utgjorde en gravpyramid. Litet finns kvar, annat än de stenhuggna trappstegen som leder ner i mörkret nedanför."
-    in asExit(down)
-    down = steps
+
     up: NoTravelMessage {
         "Träden är taggbeväxta och du skulle skära upp dina händer fullständigt om du försökte klättra i dem. "
     }
-    cannotGoThatWayMsg = 'Regnskogen är tät, och du har inte huggit dig igenom den i flera dagar för att överge din upptäckt nu. Du behöver hitta ett par riktigt bra fynd att ta med tillbaka till civilisationen, innan du kan rättfärdiga att ge upp expeditionen. '
+    down = steps
+    in asExit(down)
+
+    cannotGoThatWayMsg = 'Regnskogen är tät, och du har inte huggit dig igenom den i flera dagar för att överge din upptäckt nu. Du behöver hitta några riktigt bra fynd att ta med tillbaka till civilisationen, innan du kan rättfärdiga att ge upp expeditionen. '
     roomBeforeAction()
     {
         if(gActionIs(Photograph)) {
-         failCheck('I denna regnblöta skog är det bäst att låta bli. ');            
+         failCheck('I den här regnblöta skogen är det bäst att låta bli. ');            
         }
     }
-
 ;
 
 +SimpleNoise 'ljud+et/macaw+en/papegoja+n/ara+n/djungel+n*papegojor+na macawer+na aror+na fladdermöss+en' 'djungeln' 
@@ -271,30 +272,36 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
 
 // TODO: Man bör inte behöva ange både definiteForm och theName
 + mushroom: Food 'fläckig+a svamp+en/padd+svamp+en*svampar+na paddsvampar+na' 'fläckiga svampar'
-    "Svampen är täckt med fläckar, och du är inte alls säker på att det inte är en paddsvamp.",
+    "Svampen är täckt med fläckar, och du är inte ens säker på att det inte är en paddsvamp.",
     definiteForm = 'de fläckiga svamparna'
     theName = 'de fläckiga svamparna'
     isQualifiedName = true 
     isPlural=true
     initSpecialDesc = 'På en lång stjälk i den genomdränkta jorden växer en fläckig svamp.'
 
-    dobjFor(Take) {
-     action() {
+    dobjFor(Take) 
+    {
+     action()
+     {
        if(!moved)
          "Du plockar svampen och klyver snyggt dess tunna stjälk. ";
        inherited;
      }
    }
    
-   dobjFor(Drop) {
-     action() {
+   dobjFor(Drop) 
+   {
+     action()
+     {
         "Svampen faller till marken, något skadad. ";
         inherited;
      }
    }
    
-   dobjFor(Eat) {
-     action() {
+   dobjFor(Eat)
+   {
+     action()
+     {
         moveInto(nil);
         steps.isInInitState = nil;
         "Du gnager på ett hörn, oförmögen att förnimma den 
@@ -303,30 +310,24 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
    }
 ;
 
-
-
-// NEXT
-
-+ packingCase: Heavy, OpenableContainer 'packväska+n/väska+n/pack/låda+n' 
++ packingCase: Heavy, OpenableContainer 'packväska+n/väska+n/packlåda+n/pack+et/låda+n' 
     initSpecialDesc =  "Din packväska ligger här, redo att fyllas med alla viktiga kulturella fynd du kan göra, för transport tillbaka till civilisationen."
-    cannotTakeMsg = 'Väskan är för tung för att bemöda sig flytta på, så länge din expedition fortfarande är ofullständig. '
+    cannotTakeMsg = 'Väskan är för tung för att bemöda sig flytta runt på, så länge din expedition fortfarande är ofullständig. '
     initiallyOpen = true 
 ;
 
 ++ camera: Thing  'otymplig+a robust+a träinramad+e plåtaktig+a våtplåt:en^s+kamera+n/våtplåtsmodell+en/kamera+n' 
-"En otymplig, robust, envis träinramad våtplåtsmodell: som alla arkeologer har du ett kärleks-hatförhållande till din kamera."
+  "En otymplig, robust, envis träinramad våtplåtsmodell: som alla arkeologer har du ett kärleks-hatförhållande till din kamera."
 
    dobjFor(Photograph)
    {
     verify() { illogicalSelf('Du kan inte använda kameran till att fotografera sig själv. '); }
    }
-
 ;
 
-++ newspaper: Thing 'månad+s gammal gamla tidning+en/times' 'månad gammal tidning'
+++ newspaper: Readable 'månad+s gammal gamla tidning+en/times' 'månad gammal tidning'
     "<q>The Times</q> från 26 februari 1938, på en gång fuktig och skör efter en månads exponering av klimatet, vilket är ungefär så som du själv känner dig. Kanske är det dimma i London. Kanske finns där bomber också."
 ;
-
 
 + steps: StairwayDown 'sten huggen huggna stenhuggen stenhuggna trappsteg+en/steg+en/stenstege+n/trappsteg+en/stentrapp+en/tio/10/pyramid+en/begravningsplats+en/struktur+en/anläggning+en*trappsteg+en' 'stenhuggna trappsteg'
     "De spruckna och slitna trappstegen leder ner till en dunkel kammare. Dina fötter kanske  <<squareChamber.seen ? 'är de första att beträda'
@@ -334,9 +335,8 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'stora torget'
     
     initDesc = "Rasmassorna blockerar vägen efter bara några steg."
     isPlural = true
-    canTravelerPass(traveler) { 
-        return !isInInitState; 
-    }
+    isInInitState = true
+    canTravelerPass(traveler) { return !isInInitState; }
     explainTravelBarrier(traveler) { initDesc; }
     destination = squareChamber
     dobjFor(Enter) remapTo(TravelVia, self)
@@ -347,62 +347,79 @@ sodiumLamp: Flashlight, FueledLightSource, TravelPushable
     "Det är en kraftig arkeologlampa, << isLit ? (fuelLevel < 10
    ? 'som glöder med ett svagt gult sken.' : 'som lyser med ett starkt gult ljus')
    : 'för närvarande avstängd.'>>. "
-
     fuelLevel = 100
-    burnDaemon {
+
+    burnDaemon()
+    {
         inherited;
-        switch (fuelLevel) {
-            case 10:  "<.p>Natriumlampan blir svagare!"; break;
-            case  5:  "<.p>Natriumlampan kan inte hålla mycket längre."; break;
+        switch(fuelLevel)
+        {
+            case 10:  "<.p>Natriumlampan blir svagare!"; 
+            break;
+            case  5:  "<.p>Natriumlampan kommer inte räcka till så länge till"; 
+            break;
         }
     }
-    sayBurnedOut { 
-        "<.p>Natriumlampan bleknar och dör plötsligt.<.p>"; 
-    }
-    dobjFor(Take) { 
-        check() {
+    sayBurnedOut { "<.p>Natriumlampan falnar och slocknar plötsligt.<.p>"; }
+
+  /*
+   *  We need to make the sodium lamp a TravelPushable to incorporate the
+   *  handling for pushing around; normally this would disable the normal
+   *  Take and Drop handling, since the adv3 library doesn't consider TravelPushables
+   *  to be takeable. We therefore override the action methods of dobjFor(Take) and
+   *  (Drop) to inherit the Take and Drop behaviour from Thing.
+   */
+  
+    dobjFor(Take)
+    {
+        check()
+        {
             if (isLit) {
                  failCheck('Glödlampan är för ömtålig och metallhandtaget för varmt för att lyfta lampan medan den är påslagen.');
             }
         }
         action()  { inherited Thing; }
     }
+    /*
+    // TODO: behövs denna?
     dobjFor(PushTravelDir) { 
         check() {
             if (isLit) {
-              // TODO: testa denna, varför behövs den?
               if (gPlayerChar.location.isIn(shrine) 
                 && gDobj == southwestDirection) {
                   failCheck('Glödlampan är för ömtålig och metallhandtaget för varmt för att lyfta lampan medan den är påslagen.');
               }
             }
         }
-    }
+    }*/
 
     dobjFor(Drop) { action() { inherited Thing; } }
 
-    dobjFor(TurnOn) { 
-        check() {
-            if(!location.ofKind(BasicLocation) && !location.ofKind(Platform)) {
-                failCheck('Lampan måste placeras säkert innan den tänds.');            
+    dobjFor(TurnOn)
+    { 
+        check()
+        {
+            if(!location.ofKind(BasicLocation) && !location.ofKind(Platform))
+            {
+                failCheck('Lampan måste placeras stabilt innan den tänds.');            
             }
         }
     }
-    dobjFor(TurnOff) { 
-        check() {
+    dobjFor(TurnOff)
+    { 
+        check()
+        {
             if(getOutermostRoom.brightness == 0) {
                 failCheck('Bäst att låta bli -- du skulle bli helt utlämnad åt mörkret. ');
             }
         }
     }
     
-    canPushTravelVia(connector, dest) { 
-        return connector != shrine.southwest; 
+  canPushTravelVia(connector, dest) { return connector != shrine.southwest; }
+    explainNoPushTravelVia(connector, dest)
+    {  
+        "Det närmaste du kan göra är att skjuta natriumlampan fram till den yttersta kanten av Helgedomen, där grottans golv ger vika.";
     }
-    explainNoPushTravelVia(connector, dest) {  
-        "Det närmaste du kan göra är att skjuta natriumlampan till kanten av Helgedomen, där grottgolvet faller bort.";
-    }
-
     
   /*
    *   TADS 3 moves a TravelPushable into a new location *after* the actor
@@ -421,7 +438,7 @@ sodiumLamp: Flashlight, FueledLightSource, TravelPushable
     
   describeMovePushable (traveler, connector)  
   {
-    "Du trycker natriumlampan in till <<getOutermostRoom.destName>>. ";
+    "Du skjuter in natriumlampan till <<getOutermostRoom.destName>>. ";
     
     /* Once the real lamp arrives, we can get rid of the dummy light */
     dummyLight.moveInto(nil);
@@ -449,70 +466,55 @@ sodiumLamp: Flashlight, FueledLightSource, TravelPushable
 dummyLight: SecretFixture
 ;
 
-map: Readable 'skiss-karta över Quintana Roo' 'skiss-karta över Quintana Roo' @me
-    "Denna karta markerar lite mer än bäcken som förde dig hit, från Mexikos sydöstra kant och in i den djupaste regnskogen, bruten endast av denna upphöjda platå.";
+map: Readable 'över Quintana Roo skiss-karta+n/skisskarta+n/skiss+en/karta+n' 'skiss-karta över Quintana Roo' @me
+    "Denna karta markerar inte mycket mer än den bäck som förde dig hit, från Mexikos sydöstra kant och in i den djupaste regnskogen, endast avbruten av denna höjdplatå.";
 ;
 
-squareChamber:  Room 'Fyrkantig Kammare' 'fyrkantiga Kammaren'
-    "En nedsänkt, dyster stenkammare, tio meter tvärs över. En stråle solljus skär in från trappstegen ovan, vilket ger kammaren ett diffust ljus, men i skuggorna leder låga överliggande dörröppningar åt öster och söder in i templets djupare mörker."
+squareChamber: Room 'Fyrkantig Kammare' 'fyrkantiga Kammaren'
+    "En nedsänkt, dystert stenhuggen kammare, runt fem famnar tvärs över. En solljusstråle skär in från trappstegen ovan och ger kammaren ett diffust ljus. I skuggorna dock leder dörröppningar, med låga överliggare, åt öster och söder in i templets djupare mörker."
+ 
     up = forest
     south = corridor
     east = wormcast
 ;
 
-+ Unimportant 'östra södra låga överliggande dörr+öppning+ar/överliggare/skuggor'
+
++ Unimportant 'östra södra låga överliggande *dörr+öppning+ar dörrar överliggare överliggarna skuggor+na'
   isPlural = true
 ;
 
-+stoneDoorNorth: Door, LockableWithKey  'massiv+a stor+a gul+a sten+dörr+en' 'stendörr'
-    "Det är bara en stor stendörr. <<if isOpen>>Den stora gula stendörren är öppen<<else>>
-    Passagen blockeras av en massiv dörr av gul sten<<end>>. "
-    knownKeyList = [stoneKey]
-    keyList = [stoneKey]
-;
-
-+stepsBottom: StairwayUp 'sten huggen huggna stenhuggen stenhuggna trappsteg+en/steg+en/stenstege+n/trappsteg+en/stentrapp+en/tio/10/pyramid/begravning[-splats]/struktur+en*trappstegen+a' 'stenhuggna trappsteg'
-    desc {
-        "De spruckna och slitna trappstegen leder ner till en
-        dunkel kammare. Dina fötter kanske har varit de första att ha beträtt dem på femhundra år. På det översta trappsteget är glyfen Q1 inristad. ";
-    }
-    isPlural = true
-;    
-
-+inscriptions: Fixture 
++ Fixture 
         'inristad+e rörlig+a krylla+nde mängd+er inskription+er/ristning+ar/märk+en/markering+ar/symbol+er/pil+en/cirkel+n*inskriptioner+na symboler+na'
         'inristade inskriptioner'
          "Varje gång du tittar noga på ristningarna verkar de vara stilla. Men du har en obehaglig känsla när du tittar bort att de kryper, rör sig omkring. Två glyfer är framträdande: Pil och Cirkel."
-        isListed = true
+
         initSpecialDesc = "Inristade inskriptioner trängs på väggarna, golvet och taket."
         isPlural = true
 ;
 
-// TODO: Hur löser man egentligen "stråle av solljus" 
-// så adjektiv substantiv blir korrekt?
-// TODO: bygg fler tester av flera sammansatta ord åtskiljda av '/' så som detta exempel:
 + sunlight: Vaporous 'solbelyst+a ljus+a solens sol:en+ljusstråle+n/stråle/sol:en+ljus+et/luft+en/damm+korn+en/damm+et*strålar' "Dammkorn glimmar i strålen av solbelyst luft, så att den nästan verkar fast."
     dobjFor(Search) asDobjFor(Examine)
                 
     notWithIntangibleMsg = 'Det är bara en immateriell solljusstråle.' 
-    iobjFor(PutIn) {
-        verify() {
+    iobjFor(PutIn)
+    {
+        verify()
+        {
             if(gDobj && gDobj == self)
                 illogicalSelf('Du kan inte stoppa en solljusstråle i sig själv. ');
         }
-        action() {
+        action()
+        {
             if(gDobj==eggsac) {
                 eggsac.moveInto(nil);
                 stoneKey.moveInto(location);
                 "Du släpper ner äggsäcken till solljusstrålens sken. Den bubblar obscent, sväller och brister sedan i hundratals små insekter som springer åt alla håll in i mörkret. Endast stänk av slem och en märklig gul stennyckeln återstår på kammarens golv.";
-            }
-            else {
+            } else {
                 "Du håller {den dobj/honom} i skenet av ljusstrålen en liten stund. ";
             }
         }        
     }   
 ;
-
 
 MultiLoc, Vaporous  'lågt låg+a virvlande dimma+n'
   "Dimman har en arom som påminner om tortilla."
@@ -526,9 +528,8 @@ MultiLoc, Vaporous  'lågt låg+a virvlande dimma+n'
 ;  
 
 corridor: DarkRoom 'Den krökta korridoren' 'krökta korridoren'
-    pcDesc = "En låg, fyrkantigt huggen korridor som löper från norr till söder, och tvingar dig till stå framåtböjd."
+    "En låg, fyrkantigt huggen korridor som löper från norr till söder, och tvingar dig till stå framåtböjd."
     npcDesc = "En låg, fyrkantigt huggen korridor som löper från norr till söder"
-
     north = squareChamber
     south = stoneDoor
 ;
@@ -540,50 +541,55 @@ corridor: DarkRoom 'Den krökta korridoren' 'krökta korridoren'
     keyList = [stoneKey]
 ;
 
-+statuette: Treasure 'pygmé+statyett+en' 
++statuette: Treasure 'pygmé+statyett+en'
     "En hotfull, nästan karikatyrliknande statyett av en pygméande med en orm runt halsen."
     initSpecialDesc = "En dyrbar mayastatyett vilar här!"
 ;
 
 
-shrine: DarkRoom 'Helgedomen' 'helgedomen' "Denna magnifika Helgedom visar tecken på att ha urholkats från redan existerande kalkstensgrottor, särskilt i den västra av de två långa takfoten i söder.",
+shrine: DarkRoom 'Helgedomen' 'helgedomen' 
+  "Denna magnifika Helgedom visar tecken på att ha urholkats från redan existerande kalkstensgrottor, särskilt i den västra av de två långa takfoten i söder.",
     north = stoneDoorInside
     southeast = antechamber
-    southwest: OneWayRoomConnector { -> junction
-      canTravelerPass(traveler) { 
-        return !icicles.isIn(lexicalParent); 
-     }
-      explainTravelBarrier(traveler) {
-        "Takfoten smalnar av till en spricka som skulle fortsätta längre om den inte var tätt igensatt med istappar. Glyfen av halvmånen är inte helt dold av is.";
+   southwest: OneWayRoomConnector { -> junction
+      canTravelerPass(traveler) { return !icicles.isIn(lexicalParent); }
+      explainTravelBarrier(traveler)
+      {
+        "Takfoten smalnar av till en spricka som skulle slingra sig längre om den inte var tätt igensatt med istappar. Glyfen av halvmånen är inte helt dold av is.";
       }
     }
 ;
 
-+stoneDoorInside: Door -> stoneDoor 'massiv+a stor+a gul+a sten+dörr+en' 'stendörr'
++ stoneDoorInside: Door ->stoneDoor 'massiv+a stor+a gul+a sten+dörr+en' 'stendörr'
     "Det är bara en stor stendörr. "
     isInInitState = (!isOpen)
     initSpecialDesc = "Passagen norrut blockeras av en massiv dörr av gul sten. "
     specialDesc =  "Den stora gula stendörren är öppen"
 ;
 
-+stone_table: Heavy, Enterable, Surface 'stora stort sten+häll^s+altare+t/stenhäll+en/bord+et'
++ stoneTable: Heavy, Enterable, Surface 'stora stort sten+häll^s+altare+t/stenhäll+en/bord+et'
     initSpecialDesc =  "En stor stenhäll av ett bord, eller altare, dominerar Helgedomen."
 ;
 
-++mask: Wearable, Treasure 'jade+mosaik^s+ansikte^s+mask+en' "Så enastående den skulle se ut på museet."
-    initSpecialDesc = "Vilande på altaret finns en jademosiakansiktsmask."
-    culturalValue = 10
-    dobjFor(Wear) {
-        action() {
-            inherited;
-            priest.moveIntoForTravel(shrine);
-            if(gPlayerChar.isIn(shrine)) {
-                "När du tittar genom obsidianögonspringorna i mosaikmasken, uppenbarar sig en spöklik närvaro: en mumifierad kalenderpräst, som står redo att höra ditt ord.";
-            }
+++ mask: Wearable, Treasure 'jade+mosaik^s+ansikte^s+mask+en'
+  "Så enastående den skulle se ut på museet."
+  initSpecialDesc = "Vilande på altaret finns en jademosiakansiktsmask."
+  culturalValue = 10
+  dobjFor(Wear)
+  {
+    action()
+    {
+        inherited;
+        priest.moveIntoForTravel(shrine);
+          if(gPlayerChar.isIn(shrine))
+              "När du tittar genom obsidianögonspringorna i mosaikmasken, uppenbarar sig en spöklik närvaro: en mumifierad kalenderpräst, som står redo att höra ditt ord.";
         }
-    }     
-    dobjFor(Doff) {
-        action() {
+    }
+
+    dobjFor(Doff)
+    {
+        action()
+        {
             inherited;
             if(gActor.canSee(priest)) {
                 "Då du tar av masken, försvinner den mumifierade kalenderprästen från ditt synfält. ";
@@ -593,9 +599,11 @@ shrine: DarkRoom 'Helgedomen' 'helgedomen' "Denna magnifika Helgedom visar tecke
     }
 ;
 
-+ icicles: Decoration 'istappar' 'istappar' "istappar täpper för sprickan som leder sydväst. ";
++ icicles: Decoration 'istappar+na' 'istappar' "istappar täpper för sprickan som leder sydväst. "
+  isPlural=true
+;
 
-+ Decoration 'halvmåne+formad+e glyf+er';
++ Decoration 'halvmåne+formad+e glyf+en*glyfer';
 
 + paintings: Fixture 'målning+ar/herre+n/fånge+n' 'målningar' 
     "Köttet på kropparna är blodröda. Markeringarna för den Långa Räkningen daterar händelsen till 10 baktun 4 katun 0 tun 0 uinal 0 kin, den typ av årsdag då en Herre slutligen skulle halshugga en tillfångatagen rival som hade rituellt torterats under en period av några år, i den balkaniserade galenskapen i mayastadsstater."
@@ -603,9 +611,9 @@ shrine: DarkRoom 'Helgedomen' 'helgedomen' "Denna magnifika Helgedom visar tecke
     isPlural = true
 ;
 
-
 wormcast: Room 'Maskgångar' 'Maskgången' 
-    "ett utgrävt nätverk av håligheter, som ett spindelnät av tomrum hängande i sten. De enda gångarna som är breda nog att krypa igenom börjar löpa norrut, söderut och uppåt.",
+  "ett utgrävt nätverk av håligheter, som ett spindelnät av tomrum hängande i sten. De enda gångarna som är breda nog att krypa igenom börjar löpa norrut, söderut och uppåt."
+
    west = squareChamber
    northeast = burrowCrawl
    up = burrowCrawl
@@ -619,6 +627,7 @@ wormcast: Room 'Maskgångar' 'Maskgången'
         nestedAction(TravelVia, burialShaft);
      }     
    }
+
    roomAfterAction
    {
      if(gActionIs(Drop)) {
@@ -630,13 +639,16 @@ wormcast: Room 'Maskgångar' 'Maskgången'
 
 + eggsac: Thing 'glänsande vit+a ägg:et+säck+en' 'glänsande vit äggsäck'
     initSpecialDesc = "En glänsande vit äggsäck, som en klump grodrom stor som en strandboll, har fäst sig vid något i en spricka i en vägg."
-    dobjFor(Take) {
-        action() {
+    dobjFor(Take)
+    {
+        action()
+        {
             inherited();
             "Åh herregud.";
         }
     }    
-    beforeTravel(traveler, connector) {
+    beforeTravel(traveler, connector)
+    {
         if(connector == squareChamber.up && self.isIn(traveler)) {
         "I samma ögonblick naturligt ljus skiner på äggsäcken börjar den att bubbla obscent och svälla. Innan du kan kasta bort den brister den ut i hundratals små, födelsehungriga insekter...";
         finishGameMsg(ftDeath, [finishOptionUndo]);
@@ -646,20 +658,23 @@ wormcast: Room 'Maskgångar' 'Maskgången'
 
 burrowCrawl: TravelMessage
   travelDesc =
-          "Maskgången blir hal runt dig, som om din kroppsvärme smälter den härdade kådan och, och du blundar medan du tunnlar tätt genom mörkret. "
+  "Maskgången blir hal runt dig, som om din kroppsvärme smälter den härdade kådan och, och du blundar medan du tunnlar tätt genom mörkret. "
   destination = (eggsac.isIn(gPlayerChar) ? squareChamber
     : rand(squareChamber, corridor, forest));
+
 ;
 
+//=======================================================================
+
 antechamber: DarkRoom 'Förkammaren' 'förkammaren'
-    "De sydöstra takfoten i Helgedomen bildar en märklig förkammare.",
+    "De sydöstra takfoten i Helgedomen bildar en märklig förkammare."
     northwest = shrine
 ;
 
-
 + cage: Openable, Booth, Fixture 'järn+bur+en/galler/gallret/gallrad/ram+en/glyf+er' 'järnbur'
     "Glyferna lyder: Fågel Pil Vårtsvin. "
-  roomDesc() {
+  roomDesc()
+  {
     if(cageFloor.isOpen) {
         "Från burens golv skär en öppen jordgrop ner i gravkammaren.";
     } else {
@@ -685,8 +700,8 @@ antechamber: DarkRoom 'Förkammaren' 'förkammaren'
   }
 ;
 
-++ skeletons : Fixture 'vansinnig+a gamla gammal skelett+en/ben+en/döskallen/*döskall+ar'
-   'vansinniga skelett'
+++ skeletons : Fixture 'nedbrutna gamla gammal skelett+en/ben+en/döskallen/*döskall+ar'
+   'nedbrutna skelett'
    "Bara gamla benrester. "
    isListedInContents = true
    isPlural = true
@@ -715,6 +730,7 @@ antechamber: DarkRoom 'Förkammaren' 'förkammaren'
 burialShaft: Room 'Gravschaktet' 'gravschaktet' 
     "I dina eventuella fältanteckningar kommer detta att stå: 
     <q>En gravkammare med konsolvalv och ett tilltäppt jordlock som försegling ovan, och målade figurer som förmodligen föreställer de nio Nattens Herrar. Utspridda ben verkar tillhöra en äldre man och flera barnoffer, medan andra gravfynd inkluderar jaguartassar.</q> (I fältanteckningar är det viktigt att aldrig ge minsta antydan om när du är skräckslagen.)"
+
     cannotGoThatWayMsg = 'Arkitekterna bakom denna kammare var mindre än generösa med att tillhandahålla utgångar. Något vårtsvin verkar ha grävt sig in från norr dock. '
 
     north = wormcast
@@ -741,12 +757,14 @@ burialShaft: Room 'Gravschaktet' 'gravschaktet'
     }
 ;
 
-+honeycomb: Treasure, Food 'gammal forntida honung^s+kaka+n'
-            "Kanske någon form av gravoffergåva."
++ honeycomb: Treasure, Food 'gammal forntida honung^s+kaka+n'
+    "Kanske någon form av gravoffergåva."
     initSpecialDesc = 
     "En utsökt bevarad, forntida honungskaka vilar här!"
-    dobjFor(Eat) {
-        action() {
+    dobjFor(Eat)
+    {
+        action()
+        {
             inherited;
             "Kanske den dyraste måltiden i ditt liv. Honungen smakar konstigt, kanske för att den användes för att förvara inälvorna från Herren som begravdes här, men fortfarande likt honung.";
         }
@@ -771,8 +789,9 @@ junction: Room 'Xibalb&aacute'
   "Den är ungefär i huvudhöjd. "
 ;
 
-++stela: Treasure 'sten stele+n/gränsmarkör+en/gränssten+en'
+++ stela: Treasure 'sten stele+n/gränsmarkör+en/gränssten+en'
     "Ristningarna verkar varna för att gränsen till Xibalb&aacute, Skräckens Plats, är nära. Fågelglyfen är framträdande."
+    
     initSpecialDesc = "En måttligt stor stele, eller gränssten, vilar på en avsats i huvudhöjd."
 ;
 
@@ -820,7 +839,8 @@ canyonS: Room 'Nedre Änden av Dalgången'  'nedre änden av dalgången'
         } else {
             "Vid den lägre och smalare södra änden slutar dalgången tvärt vid en avgrund av svindlande svärta. Inget kan ses eller höras från nedan.";
         }
-    }  
+    }
+
     north = junction
     up asExit(south)
     south: OneWayRoomConnector -> onBall
@@ -838,7 +858,7 @@ canyonS: Room 'Nedre Änden av Dalgången'  'nedre änden av dalgången'
     }
 ;
 
-+ chasm: Container, Fixture 'skräckinjagande bottenlös+a avgrund+en/svärta/grop+en' 'skräckinjagande avgrund'
++ chasm: Container, Fixture 'skräckinjagande bottenlös+a avgrund+en/svärta+n/grop+en' 'skräckinjagande avgrund'
     beforeAction()
     {
         if(gActionIs(Jump)) {
@@ -852,13 +872,16 @@ canyonS: Room 'Nedre Änden av Dalgången'  'nedre änden av dalgången'
             finishGameMsg('DU HAR BLIVIT TILLFÅNGATAGEN', [finishOptionUndo]);
         }
     }
-    afterAction() {
+
+    afterAction()
+    {
         if(hugeBall.isIn(getOutermostRoom))
         {
             hugeBall.moveInto(nil);
             "Pimpstensklotet rullar okontrollerat nerför de sista metrarna av dalgången innan det darrar till i käftarna på en klyfta, studsar tillbaka lite och träffar dig mot sidan av pannan. Du sjunker ihop, blödande, och... pimpstenen krymper, eller så växer din hand, för plötsligt verkar du hålla i den, stirrande på Alligator, son till Sju-Ara, tvärs över bollplanen på Plazan, med hans sista motståndares huvuden spetsade på pålar, och församlingen vrålar efter ditt blod, och det finns inget annat att göra än att kasta ändå, och... men allt det här är ju nonsens, och du har en sprängande huvudvärk.";
         }
     }
+
     cannotJumpOverMsg = 'Den är alldeles för bred. '
 ;
 
@@ -878,6 +901,21 @@ onBall: Room 'Pimpstensavsatsen' 'pimpstensavsatsen'
 ;
 
 stoneKey: Key 'sten+nyckel+n' ;
+
+//=======================================================================
+
+ /*
+  *  We'll show two versions of Waldeck's dictionary, since the TADS 3
+  *  way of coding an object like this is very different from the Inform
+  *  way.
+  *
+  *  We'll start with an implementation that's close to the Inform original.
+  *  We'll call it 'booklet' to distinguish it from the second version that
+  *  we'll actually use in the game. If you compile the game for debugging
+  *  you can try PURLOIN BOOKLET and test that it works. It's more concise
+  *  than the second version, but also more complex.
+  */
+
 
 /*
 booklet: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok'
@@ -936,33 +974,22 @@ booklet: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok'
 ;
 */
 
+
+ /*
+  *  This is how Waldeck's dictionary would normally be implemented in
+  *  TADS 3, using a series of simple objects rather than one complex
+  *  object; note that the code is almost entirely declarative, without
+  *  a single switch statement, if statement, or indeed any procedural
+  *  code at all.
+  *
+  *  Note that we can't call this object 'dictionary', since dictionary
+  *  is a reserved word in TADS 3
+  */
+
 waldeck: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok' @me
    "Sammanställd från de opålitliga litografierna av den legendariske berättaren och upptäcktsresanden <q>Greve</q> Jean Frederic Maximilien Waldeck (1766??-1875), innehåller denna guide det lilla som är känt om glyferna som används i den lokala forntida dialekten."
    correct = nil
    isProperName = true
-;
-
-+ ConsultTopic 
-  /*
-   *  Match this ConsultTopic on a regular expression that matches either
-   *  a single word, or 'glyph' plus one other word, or one other word
-   *  plus 'glyph', irrespective of case.
-   */
-  '<NoCase>^<AlphaNum>+$|^glyf<Space>+<AlphaNum>+$|^<AlphaNum>+<Space>+glyf$'
-  "Den glyfen är hittills oregistrerad. "
-  
-   /*
-    * Lower the matchscore so that this ConsultTopic is not chosen before
-    * any of the ConsultTopics that match specific glyphs.
-    */
-  matchScore = 50
-  
-  /*
-   * Don't match this topic if the player typed either of the single
-   * words 'glyph' or 'glyphs'; this is easier to deal with here than
-   * by trying to complicate the regular expression.
-   */
-  isActive = gTopicText not in ('glyf', 'glyfer')
 ;
 
 + ConsultTopic @glyphQ1
@@ -1003,6 +1030,50 @@ waldeck: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok' @
 ;
 
 
+  /*
+   *  We want the unrecognized glyph message to appear if what the player
+   *  typed was either a single word, or two words one of which is 'glyph',
+   *  but not any of the recognized glyph.
+   */
+
++ ConsultTopic 
+  /*
+   *  Match this ConsultTopic on a regular expression that matches either
+   *  a single word, or 'glyph' plus one other word, or one other word
+   *  plus 'glyph', irrespective of case.
+   */
+  '<NoCase>^<AlphaNum>+$|^glyf<Space>+<AlphaNum>+$|^<AlphaNum>+<Space>+glyf$'
+  "Den glyfen är hittills oregistrerad. "
+  
+   /*
+    * Lower the matchscore so that this ConsultTopic is not chosen before
+    * any of the ConsultTopics that match specific glyphs.
+    */
+  matchScore = 50
+  
+  /*
+   * Don't match this topic if the player typed either of the single
+   * words 'glyph' or 'glyphs'; this is easier to deal with here than
+   * by trying to complicate the regular expression.
+   */
+  isActive = gTopicText not in ('glyf', 'glyfer')
+;
+
+
+  /* This contains the message that will be displayed if all else fails */
+  
++ DefaultConsultTopic
+  "Försök med <q>slå upp <namn på glyf> i boken.</q> "
+;
+
+ /*
+  * We define a special Glyph class as a type of Topic that will
+  * match 'foo', 'glyph foo' or 'foo glyph' but not just 'glyph'.
+  * To do that we need 'glyph' to be a weak token as both noun and
+  * adjective, and each time we define a Glyph we want its vocabWords
+  * treated as an adjective as well as a noun.
+  */
+
 class Glyph: Topic '(glyf) (glyf)'
   initializeVocab()
   {
@@ -1021,11 +1092,19 @@ glyphMonkey: Glyph 'apa';
 glyphBird: Glyph 'fågel';
 
 
+//======================================================================
+
+ /* 
+  * Having illustrated two ways of implementing the dictionary, we'll 
+  * stick with the TADS 3 way of implementing the priest.
+  */
+
 priest: Actor 'mumifierad kalenderlig präst+en' 
     "Han är uttorkad och hålls ihop endast av viljekraft. Även om hans första språk förmodligen är lokal maya, har du den märkliga känslan att han kommer att förstå ditt tal."
     
     actorHereDesc =  "Bakom stenhällen står en mumifierad präst och väntar, knappt vid liv i bästa fall, omöjligt ålderstigen."
-    
+
+    /* Indicate that he's male */    
     isHim = true
     
     dobjFor(Attack)
@@ -1034,7 +1113,7 @@ priest: Actor 'mumifierad kalenderlig präst+en'
         {
             moveInto(nil);
             "Prästen torkar bort till damm tills inget återstår,
-                 inte en fläkt eller ett ben. ";
+            inte en fläkt eller ett ben. ";
         }
     }
     
@@ -1084,7 +1163,6 @@ priest: Actor 'mumifierad kalenderlig präst+en'
   topicResponse()
   {
       "Prästen sträcker ut ett benigt finger sydväst mot istapparna, som försvinner som frost när han talar. <q>Xibalb&aacute, Underjorden.</q>";
-
       icicles.moveInto(nil);
   }
 ;
@@ -1135,13 +1213,60 @@ priest: Actor 'mumifierad kalenderlig präst+en'
  "<q>Det är inte dina order jag tjänar.</q> "
 ;
 
+
+
 tGlyph: Topic 'glyph/glyphs';
 tDialect: Topic 'mayan dialect';
 tRuins: Topic 'ruins';
 tWormcast: Topic 'worm cast/web/wormcast';
 tXibalba: Topic 'xibalba';
 
-// ...
+
+ /*
+  *  TADS 3 has no equivalent of a location called thedark, so the scuttling
+  *  claws will have to be coded in a very different way. We start by overrriding
+  *  Room to customise the description of a dark room; and while we're at it
+  *  we'll make another modification to room to as '(as Warthog)' to the room
+  *  name while the player is a warthog.
+  */
+
+//========================================================================
+
+modify Room
+    roomDarkDesc = "Århundradenas mörker trycker mot dig, och du känner dig klaustrofobisk."
+
+    /*
+    *  Unlike Inform, TADS 3 doesn't automatically as '(as whatever)' to the
+    *  room name when the PC isn't the initial player object. We make a small
+    *  modification below to add this feature.
+    */
+    lookAroundWithinName(actor, illum)
+    {
+        /* 
+        *   if there's light, show our name; otherwise, show our
+        *   in-the-dark name 
+        */
+        if (illum > 1)
+        {
+            /* we can see, so show our interior description */
+            
+            /* 
+            * If the player character isn't me (the initial PC) add the PC's
+            * name in parenthesis to the end of the room name.
+            */
+            "\^<<roomName>> <<gPlayerChar != me ? '(som ' + gPlayerChar.name + ')' : ''>>";
+        }
+        else
+        {
+            /* we're in the dark, so show our default dark name */
+            say(roomDarkName);
+        }
+
+        /* show the actor's posture as part of the description */
+        actor.actorRoomNameStatus(self);
+    }
+
+;
 
 
 scuttlingClaws: Decoration, EventList, InitObject
@@ -1190,11 +1315,16 @@ scuttlingClaws: Decoration, EventList, InitObject
 
   eventList = [
     'Någonstans hörs ett klapprande av små klor.',
+
     'Klapprandet kommer närmare, och din andhämtning blir tung och rosslig.',    
+
     'Skräckens svett rinner nerför din panna. Varelserna är nästan här!',
+
     'Du känner ett kittlande vid händer och fötter och sparkar till – något kitinartat far av. Bara ljudet av dem är ett hotfullt skrapande.', 
+
     new function {
         "Plötsligt känner du en liten smärta, av en hypodermisk-vass huggtand i din vad. Nästan omedelbart går dina lemmar i spasm, dina axlar och knäleder låser sig, din tunga svullnar...<.p>";
+
        finishGameMsg(ftDeath, [finishOptionUndo]);
     }     
   ]
@@ -1224,7 +1354,13 @@ scuttlingClaws: Decoration, EventList, InitObject
    
 ;  
 
-DefineTAction(Photograph);
+ /*
+  *  Define the grammar and handling for the Photograph action.
+  */
+  
+DefineTAction(Photograph)
+;
+
 VerbRule(Photograph)
     ('fotografera'|'fota') singleDobj
     |'ta' ('bild'|'foto') ('av'|'på') singleDobj
@@ -1233,6 +1369,9 @@ VerbRule(Photograph)
     missingQ = 'vad vill du fotografera'
 ;
 
+ /*
+  *  Define the grammar and handling implicitly "climbing (walking) the stairs" in swedish.
+  */
 VerbRule(ClimbUpDirection)
     'klättra' singleDir
     : TravelAction
@@ -1254,14 +1393,22 @@ modify Thing
         "Du ställer upp den elefantlika storformatskameran med våtplåt<<sodiumLamp.isIn(getOutermostRoom)?', justerar natriumlampan':''>> och gör en tålmodig exponering av {den dobj/honom}.";
     }
   }
+
 ;
+
+/*  Change some default messages. */
 
 modify npcMessages
   askUnknownWord(actor, txt) { "<q>Du talar i gåtor.</q> "; }
   wordIsUnknown(actor, txt) { askUnknownWord(actor, txt); }
-  commandNotUnderstood(actor) { askUnknownWord(actor, ''); }    
+  commandNotUnderstood(actor) { askUnknownWord(actor, ''); }
+
 ;
 
+/* 
+ *  This is a kludge to redirect the askUnknownWord message to
+ *  npcMessages when the command line begins with "priest, "
+ */
 
 modify playerMessages
    askUnknownWord(actor, txt) 
@@ -1280,3 +1427,18 @@ modify playerMessages
 modify libMessages
   showScoreRankMessage(msg) { "Detta ger dig rangen av <<msg>>. "; }
 ;
+
+/*
+ * Test: walkthrough variant #1
+ */
+Test 'spel' [
+  'ta allt', 'ät svamp', 'ner', 'läs inskriptioner', 'x solljus',  'öst', 'ta äggsäck', 'väst', 'sätt äggsäcken i solljuset', 'ta nyckel', 'söder', 'släpp lampa', 'tänd den', 'släpp allt förutom kamera', 'fotografera statyett', 'ta allt', 'lås upp dörr med nyckel', 'knuffa lampan söderut', 'släpp allt förutom kamera', 'fotografera mask', 'ta allt', 'ta på dig masken', 'fråga om xibalba', 'sv', 'upp', 'tryck klotet nedåt', 'ner', 'norr', 'tryck klot s', 's', 'släpp allt förutom kamera', 'fotografera ben', 'ta allt', 'upp', 'norr', 'släpp allt förutom kamera', 'fotografera stelen', 'ta allt', 'nö', 'knuffa lampan sö', 'kliv in i buren', 'nv', 'n', 'n', 'ö', 'n', 'upp', 'fotografera honungskaka', 'ta allt', 'upp', 'kliv ut', 'tryck lampan nv', 'tryck lampan n', 'tryck lampan n', 'tryck lampan upp', 'lägg alla skatter i lådan'
+];
+
+/*
+ * Test: walkthrough variant #2
+ */
+Test 'spel2' [
+  'plocka upp allt', 'förtär svampen', 'klättra neråt', 'tyd inskriptionerna', 'granska solljuset', 'gå österut', 'hämta äggsäcken', 'västerut', 'placera äggsäcken i solljuset', 'plocka upp nyckeln', 'vandra söderut', 'ställ ner lampan', 'tänd den', 'lämna allt utom kameran', 'ta bild av statyetten', 'ta allt', 'lås upp dörren med nyckeln', 'skjut lampan åt söder', 'lämna allt förutom kameran', 'ta bild av masken',
+  'ta allt', 'sätt på dig masken', 'fråga om Xibalba', 'gå sydväst', 'klättra upp', 'pressa klotet nedåt', 'klättra ner', 'vandra norrut', 'tryck klotet åt söder', 'gå söderut', 'lämna allt utom kameran', 'ta foto av benen', 'ta allting', 'upp', 'gå norrut', 'lämna allt utom kameran', 'ta foto av stelen', 'plocka upp allting', 'gå nordost', 'putta lampan sydösterut', 'stig in i buren', 'gå nordväst', 'gå norrut', 'fortsätt norrut', 'gå österut', 'gå norrut', 'klättra uppåt', 'fotografera honungskakan', 'ta allting', 'klättra uppåt', 'kliv ut ur buren', 'skjut lampan nordväst', 'skjut lampan norrut', 'skjut lampan norrut', 'skjut lampan uppåt', 'stoppa alla skatterna i lådan'
+];
