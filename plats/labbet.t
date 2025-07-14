@@ -16,53 +16,53 @@ labbet: Room 'Labbet'
         'Det smäller plötsligt till från ett provrör på bänken. <q>Oj!</q> skrokkar professorn. '
     ]}
 ;
-+ladbil: Vehicle, Chair 'lådbil[-en]' 'lådbil';
++ladbil: Vehicle, Chair 'lådbil+en' 'lådbil';
 
-+banken: Surface 'bänk[-en]*bänkar[-na]'  'bänk' 
++banken: Surface 'bänk+en*bänkar+na'  'bänk' 
 ;
-++peng: Thing 'peng[-en]*peng[-ar]' 'peng';
+++peng: Thing 'peng+en*pengar+na' 'peng';
 
-++maskin: Thing, Heavy 'espressomaskin[-en]/maskin[-en]' 'espresso maskin'
+++maskin: Thing, Heavy 'espressomaskin+en/maskin+en' 'espresso maskin'
     isListed = true
 ;
-+++knapp: Component, Switch 'knapp[-en]' 'knapp';
++++knapp: Component, Switch 'knapp+en' 'knapp';
 
 
 
 
-++fridge: OpenableContainer 'kyl[-en]/kylskåp[-et]*kylar[-na]' 'kyl';
+++fridge: OpenableContainer 'kyl+en/kylskåp+et*kylar+na' 'kyl';
 
-+++berries: Food 'bär[-en]' 'bär'
++++berries: Food 'bär+en' 'bär'
     isPlural = true
 ;
-+++krut: Thing 'krut[-et]' 'krut'
++++krut: Thing 'krut+et' 'krut'
     isPlural = true
 ;
 
 
-++labbnyckel: Key 'nyckel[-n]' 'nyckel';
-++sockerbit: Thing 'sockerbit[-en]' 'sockerbit';
+++labbnyckel: Key 'nyckel+n' 'nyckel';
+++sockerbit: Thing 'sockerbit+en' 'sockerbit';
 
-+labbetDoorInside: LockableWithKey, Door -> labbetDoorOutside 'labbdörr[-en]/dörr[-en]*dörrar[-na]' 'labbdörr'
++labbetDoorInside: LockableWithKey, Door -> labbetDoorOutside 'labbdörr+en/dörr+en*dörrar+na' 'labbdörr'
     keyList = [labbnyckel]
 ;
 
 
-+professornsStol: Chair 'stol[-en]*stolar' 'stol'
++professornsStol: Chair 'stol+en*stolar' 'stol'
     isUter = true
     ownedBy = [professor]
     disambigName = 'professorns stol'
     theName = 'stolen'
 ;
 
-+minStol: Chair 'stol[-en]*stolar' 'stol'
++minStol: Chair 'stol+en*stolar' 'stol'
     isUter = true
     ownedBy = [me]
     disambigName = 'din stol'
 ;
 
-++jacka: Wearable 'jacka[-n]*jackor[-na]' 'jacka'
+++jacka: Wearable 'jacka+n*jackor+na' 'jacka'
     ownedBy = [me]
 ;
-+++ficka: Container, Component 'jackficka[-n]' 'jackficka'
++++ficka: Container, Component 'jackficka+n' 'jackficka'
 ;

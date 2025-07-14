@@ -1089,7 +1089,7 @@ TestUnit 'unthingNotHereMsg' run {
   gPlayerChar = gActor;
   local msg = playerActionMessages.unthingNotHereMsg(appletObjNeutrumSingular);
   "<<msg>>";
-  assertThat(o).startsWith('Jag ser inte det där.');
+  assertThat(o).startsWith('Jag såg inte det där.');
 };
 
 // ------- Masskopiera mall

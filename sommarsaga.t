@@ -14,16 +14,16 @@ tradgarden: OutdoorRoom 'Trädgården' 'trädgården'
 	east = vedboddorrUtsida
 ;
 
-+villan: Decoration 'villa[-an]*villor[-na]' 'villan';
-+husdorrenUtsida: Door -> husdorrenInsida 'dörr[-en]*dörrar[-na]' 'dörr';
-+kallkallaredorrUtsida: Door  'dörr[-en]*dörrar[-na]' 'dörr';
-+vedboddorrUtsida: Door -> vedboddorrInsida 'dörr[-en]*dörrar[-na]' 'dörr';
++villan: Decoration 'villa+an*villor+na' 'villan';
++husdorrenUtsida: Door -> husdorrenInsida 'dörr+en*dörrar+na' 'dörr';
++kallkallaredorrUtsida: Door  'dörr+en*dörrar+na' 'dörr';
++vedboddorrUtsida: Door -> vedboddorrInsida 'dörr+en*dörrar+na' 'dörr';
 
 
 farstu: Room 'Farstun' 'farstun'
 	north = husdorrenInsida
 ;
-+husdorrenInsida: Door -> husdorrenUtsida 'dörr[-en]*dörrar[-na]' 'dörr'
++husdorrenInsida: Door -> husdorrenUtsida 'dörr+en*dörrar+na' 'dörr'
 ;
 
 kallkallare: Room 'kallkällare' 'kallkällaren'
@@ -31,9 +31,9 @@ kallkallare: Room 'kallkällare' 'kallkällaren'
 	southeast = kallkallardorrInsida
 ;
 
-+kallkallardorrInsida: Door -> kallkallaredorrUtsida 'dörr[-en]*dörrar[-na]' 'dörr';
++kallkallardorrInsida: Door -> kallkallaredorrUtsida 'dörr+en*dörrar+na' 'dörr';
 
-+lingonberries: Food 'lingon[-en]*lingon' 'lingon'
++lingonberries: Food 'lingon+en*lingon' 'lingon'
 	initSpecialDesc = "Några glasburkar lingon"
 	isPlural = true
 ;
@@ -53,15 +53,15 @@ emma: Actor 'Emma' 'Emma' @tradgarden
 vedbod: Room 'Vedboden' 'vedboden' "<<one of>>När du kliver in i vedboden ser du till din överraskning en tomte som står och travar ved. Han tittar skräckslaget på dig och springer sedan raskt ut genom dörren.<<or>>Vedboden hade ganska lite ved kvar. Den mesta hade använts upp under vintern. <<stopping>>"
 	west = vedboddorrInsida
 ;
-+vedboddorrInsida: Door 'dörr[-en]*dörrar[-na]' 'dörr';
++vedboddorrInsida: Door 'dörr+en*dörrar+na' 'dörr';
 
 // TODO: skrivs ut 'några' istället för lite.
-+ ved: Thing 'lite ved[-en]' 'lite ved'
++ ved: Thing 'lite ved+en' 'lite ved'
 	isPlural = true
 ;
 
 
-tomte: Actor 'tomte[-n]' 'tomte'
+tomte: Actor 'tomte+n' 'tomte'
 	isHe = true
 	isHer = nil
 	isProperName = nil // TODO: fungerar inte. "Tomte står där."

@@ -45,6 +45,7 @@
 -source dynfunc
 -source debug
 -source kfDebug
+-source tests2/tests2
 
 #-source hantvig/hantvig
 #-source 1700/main
@@ -64,9 +65,9 @@
 #-source tests/past-tense
 #-source tests/satsdelar
 #-source tests/initialize-tests
--source tests/additional-tests
+#-source tests/additional-tests
 
-#-source exempelspel/exempel
+-source exempelspel/exempel
 #-source exempelspel/cookbook
 
 -res

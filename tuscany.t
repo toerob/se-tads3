@@ -44,9 +44,9 @@ hallway: Room 'Hallen' 'hallen'
     up = hallwayStairsUp
     southwest asExit(up)    
 ;
-+hallwayStairsUp: StairwayUp  -> hallwayStairsDown 'trappa[n]**trappor[-na]' 'trappor' isPlural = true;
-+houseEntranceDoorInside: Door -> houseEntranceDoorOutside 'husentrén/dörr[-en]*dörrar[-na]' 'huvuddörr';
-+kitchenPassage: ThroughPassage ->hallPassage 'passage[n]' 'passage';
++hallwayStairsUp: StairwayUp  -> hallwayStairsDown 'trappa+n*trappor+na' 'trappor' isPlural = true;
++houseEntranceDoorInside: Door -> houseEntranceDoorOutside 'husentrén/dörr+en*dörrar+na' 'huvuddörr';
++kitchenPassage: ThroughPassage ->hallPassage 'passage+n' 'passage';
 
 kitchen: Room 'köket' 'köket'
     west = hallPassage
@@ -60,18 +60,18 @@ bathroom: Room 'badrummet' 'badrummet'
     east = hallway
 ;
 
-+bathtub: Container 'badkar[-et]/badkar[-et]**badkar[-en]' 'badkar';
++bathtub: Container 'badkar+et/badkar+et*badkar+en' 'badkar';
 
 livingRoom: Room 'vardagsrummet' 'vardagsrummet'
     south = hallway
     north = patioDoorInside
 ;
-+patioDoorInside: Door -> patioDoorOutside 'glasdörr[-en]/dörr[-en]**dörrar[-na]' 'glasdörr' material = glass;
++patioDoorInside: Door -> patioDoorOutside 'glasdörr+en/dörr+en*dörrar+na' 'glasdörr' material = glass;
 patio: Room 'uteplatsen' 'uteplatsen'
     "Det finns en riktig POOL här. Annars ingen möblering än. Imorgon kommer de. "    
     south = patioDoorOutside
 ;
-+patioDoorOutside: Door -> patioDoorInside 'glasdörr[-en]/dörr[-en]**dörrar[-na]' 'glasdörr' material = glass;
++patioDoorOutside: Door -> patioDoorInside 'glasdörr+en/dörr+en*dörrar+na' 'glasdörr' material = glass;
 
 
 
@@ -82,7 +82,7 @@ hallwayUpstairs: Room 'Övre hallen' 'Övre hallen'
     west = masterBedroom
     southwest asExit(down)
 ;
-+hallwayStairsDown: StairwayDown -> hallwayStairsUp 'trappor[-na]' 'trappor'  isPlural = true;
++hallwayStairsDown: StairwayDown -> hallwayStairsUp 'trappor+na' 'trappor'  isPlural = true;
 
 
 masterBedroom: Room 'Stora sovrummet' 'Stora sovrummet'
@@ -90,7 +90,7 @@ masterBedroom: Room 'Stora sovrummet' 'Stora sovrummet'
     east = hallwayUpstairs
 ;
 
-+bed: Bed, Heavy 'dubbelsäng[-en]/säng[-en]**sängar[-na]' 'dubbelsäng'
++bed: Bed, Heavy 'dubbelsäng+en/säng+en*sängar+na' 'dubbelsäng'
     theName = 'dubbelsängen'
 ;
 
@@ -109,13 +109,13 @@ driveway: OutdoorRoom 'Uppfarten' 'Uppfarten'
     }
 ;
 
-+houseEntranceDoorOutside: Door -> houseEntranceDoorInside 'huvudingång[en]/dörr[-en]**dörrar[-na]' 'huvudingången'
++houseEntranceDoorOutside: Door -> houseEntranceDoorInside 'huvudingång+en/dörr+en*dörrar+na' 'huvudingången'
     isProperName = true
 ;
 
 +me: Actor;
 
-++anteckning: Readable 'anteckning[-ar]/anteckningslapp[-en]**anteckningslappar[-na]/lapp[-en]**lappar[na]' 'anteckningslapp'
+++anteckning: Readable 'anteckning+ar/anteckningslapp+en/lapp+en*anteckningslappar+na lappar+na' 'anteckningslapp'
     theName = 'anteckningslappen'
     readDesc = "En TODO-lista:
        \n* Ta hand om baggaget 

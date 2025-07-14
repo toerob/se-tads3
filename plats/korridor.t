@@ -8,7 +8,7 @@ korridor: Room 'korridoren' 'korridoren'
     west = labbetDoorOutside
 ;
 
-+greenApple: Food 'grönt gröna äpple/äpplet' 'grönt äpple'
++greenApple: Food 'grönt gröna äpple+t' 'grönt äpple'
     "Det ser ut att vara ett gott äpple"
     theName = 'gröna äpplet'
     //disambigName = 'gröna äpplet'
@@ -20,13 +20,13 @@ korridor: Room 'korridoren' 'korridoren'
 Thing template +article? 'vocabWords' 'name' @location? "desc"?;
 
 
-+labbetDoorOutside: LockableWithKey, Door -> labbetDoorInside 'labbdörr*dörrar dörr*dörrar' 'labbdörr'
++labbetDoorOutside: LockableWithKey, Door -> labbetDoorInside 'labbdörr+en/dörr+en**dörrar+na dörrar+na' 'labbdörr'
     isUter = true
     theName = 'dörren'
     keyList = [labbnyckel]
 ;
 
-class Labbrock: Wearable 'labb rock/rocken/labbrock/labbrocken*labbrockarna' 'labbrock'
+class Labbrock: Wearable 'labb rock+en/labbrock+en*labbrockar+na' 'labbrock'
     isUter =true
     isWorn = true
 ;
@@ -39,7 +39,7 @@ class Labbrock: Wearable 'labb rock/rocken/labbrock/labbrocken*labbrockarna' 'la
 
 ++mikaelsLabbrock: Labbrock 'Mikaels' isOwnedBy = [mikael];
 
-++redApple: Food 'röda rött äpple/äpplet' 'rött äpple'
+++redApple: Food 'röd:t+a äppl:e+et' 'rött äpple'
     "Det ser ut att vara ett gott äpple"
     theName = 'röda äpplet'
     //disambigName = 'röda'

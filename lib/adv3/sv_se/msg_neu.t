@@ -2746,7 +2746,7 @@ playerActionMessages: MessageHelper
     unthingNotHereMsg(obj)
     {
         gMessageParams(obj);
-        return '{Du/han} ser inte {det obj/honom} {här}. ';
+        return '{Du/han} {ser|såg} inte {det obj/honom} {här}. ';
     }
 
     /* generic "that's too far away" message for Distant items */

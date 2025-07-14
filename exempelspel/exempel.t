@@ -4,6 +4,11 @@
 
 #define __DEBUG
 #include "../debug.h"
+#include "../tests2/tests2.h"
+
+// TODO: min/mitt
+// Johannes/Sofias
+// hans/hennes
 
 versionInfo: GameID
     IFID = '952c94dd-f92a-4970-9a00-cdcc24d038a1'
@@ -22,17 +27,60 @@ gameMain: GameMainDef
     usePastTense = true
 
     showIntro() {
+      
         "Din farfars stuga ligger i en avlägsen del av skogen. Du har just kommit hit för att städa upp efter din farfar som dog förra året. Stugan är gammal och innehar många hemligheter. Du har alltid trivts att vara här.  
         \b
         Men en sak har du alltid funderat över. Det gamla gökuret som hänger på väggen. Det har alltid stått still. Du har aldrig sett det gå. Du har alltid undrat varför. Kanske är det en hemlighet som din farfar ville att du skulle lösa?
         \b
         ";
+
+        // '(<^space>+)(<space>+<^space>+)\'s(/<^space>+)$')
+        // ORG: '(?!<^space>+\'s<space>)(<^space>+)(<space>+<^space>+)\'s$')
+        if(rexMatch(langMessageBuilder.patIdObjSEnding, 'se fiskarens spö') != nil) {
+            tadsSay('***SUCCESS***');
+       } else {
+          tadsSay('#FAIL#');
+        }
+        if(rexMatch(langMessageBuilder.patIdObjSEnding, 'se tomass\' spö') != nil) {
+            tadsSay('***SUCCESS***');
+       } else {
+          tadsSay('#FAIL#');
+        }
+
+        if(rexMatch(langMessageBuilder.patIdObjSEnding, 'se annassss spö') != nil) {
+            tadsSay('***SUCCESS***');
+       } else {
+          tadsSay('#FAIL#');
+        }
+        if(rexMatch(langMessageBuilder.patIdObjSEnding, 'se anna spö') != nil) {
+            tadsSay('***SUCCESS***');
+       } else {
+          tadsSay('#FAIL#');
+        }
+
     }
 ;
 sjon: OutdoorRoom 'Sjön' 'sjön'
-  "Du står vid sjön. Det är ljust och varmt här. Du kan se sjön glittra i solljuset utanför. Det finns en dörr som leder till stugan i väster. "
+  "Du står vid sjön på en stenig strand. Det är ljust och varmt här. Du kan se sjön glittra i solljuset utanför. En brygga går ut över sjön till norr. Det finns en dörr som leder till stugan i väster. "
   west = koket
+  north = brygga
 ;
+
+brygga: OutdoorRoom 'Brygga' 'brygga'
+  "Du står på bryggan. Vattnet är stilla. Bryggan går söderut tillbaka till stranden. "
+  south = sjon
+;
+
+// TODO: 'x fiskarens spö
+// Nu går: "x fiskaren's spö" bra...
+
++fiskare: Actor 'fiskare+n' 'fiskare';
++spo: Thing 'metspö+et/spö+et' 'metspö' owner = fiskare;
+
++Tomas: Actor 'Tomas' 'Tomas' isProperName = true;
++bok: Thing 'bok+en' 'bok' owner = Tomas;
+
++rutan: Thing 'glas ruta+n' 'ruta av glas';
 
 koket: OutdoorRoom 'Stugans kök' 'stugans kök'
   "Du står i köket. Det är ljust och varmt här. Detta är en gammal stuga med en gammal historia. Du kan se ut genom fönstret och se sjön glittra i solljuset utanför. Det finns en dörr som leder ut till stugan till öster. Det finns också en dörr som leder till sovrummet i väster.  På väggen hänger det gamla gökuret. "
@@ -93,12 +141,13 @@ sovrummet: OutdoorRoom 'Sovrummet' 'sovrummet'
 
 
 du: Actor 'du'
-  location = koket
+  location = brygga
   pcReferralPerson = SecondPerson
 ;
 
 +apple: Thing 'goda smaskiga gröna äpple+t/frukt+en*äpplen+a frukter+na';
 +tranbar: Thing 'tranbär^s+juice+paket+et' 'tranbärsjuicepaket';
+
 
 
 Test 'spelet' ['väst', 'öppna skåp', 'ta kugghjul', 'öst', 'öppna lucka', 'placera kugghjul i gökuret'];

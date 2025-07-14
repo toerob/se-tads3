@@ -1511,8 +1511,10 @@ modify Thing
              *   "Bob's items" if this is a mass noun or a proper name)
              */
             ret = owner.theNamePossAdj + ' ' + pluralName;
-            if (!isMassNoun && !isPlural)
-                ret = 'en av ' + ret;
+            if (!isMassNoun && !isPlural) {
+                
+                ret = isNeuter?'en':'ett' + ' av ' + ret;
+            }
 
             /* return the result */
             return ret;
@@ -4106,11 +4108,15 @@ langMessageBuilder: MessageBuilder
         ['vår/hennes',  &itPossNoun, nil, nil, nil],    
 
         ['min',     &itPossAdj, 'actor', nil, nil],
+        ['mitt',    &itPossAdj, 'actor', nil, nil],
         ['din',     &itPossAdj, 'actor', nil, nil],
+        ['ditt',    &itPossAdj, 'actor', nil, nil],
         ['sin',     &itPossAdj, 'actor', nil, nil],
+        ['sitt',     &itPossAdj, 'actor', nil, nil],
         ['deras',   &itPossAdj, 'actor', nil, nil],
         ['dess',    &itPossAdj, 'actor', nil, nil],
         ['vår',     &itPossAdj, 'actor', nil, nil],
+        ['vårt',     &itPossAdj, 'actor', nil, nil],
 
         ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
         ['dina', &theNamePossAdjPlural, 'actor', nil, nil],
@@ -4444,14 +4450,19 @@ langMessageBuilder: MessageBuilder
         return inherited(txt);
     }
 
+
     /* some pre-compiled search patterns we use a lot */
     patIdObjSlashIdApostS = static new RexPattern(
         '(<^space>+)(<space>+<^space>+)\'s(/<^space>+)$')
+
     patIdObjApostS = static new RexPattern(
         '(?!<^space>+\'s<space>)(<^space>+)(<space>+<^space>+)\'s$')
     patParamWithExclam = static new RexPattern('.*(!)(?:<space>.*|/.*|$)')
     patSSlashLetterEd = static new RexPattern(
         's/(<alpha>ed)$|(<alpha>ed)/s$')
+
+    patIdObjSEnding = static new RexPattern(
+        '(<^space>+)(<space>+<^space>+)s\'?(<space><^space>+)')
 
     /*
      *   Rewrite a parameter string for a language-specific syntax
@@ -4473,8 +4484,53 @@ langMessageBuilder: MessageBuilder
      *   rewrite it literally as 's/?ed' literally.
      */
     langRewriteParam(paramStr)
-    {        
-        return paramStr; // Den här är förblir oanvänd än så länge.
+    {       
+        /*
+         *   Check for an exclamation mark at the end of any word in the
+         *   parameter string, and remember the result of the test.
+         */
+        local exclam = rexMatch(patParamWithExclam, paramStr);
+        fixedTenseProp_ = exclam;
+
+        /*
+         *   Remove the exclamation mark, if any.
+         */
+        if (exclam)
+        {
+            local exclamInd = rexGroup(1)[1];
+            paramStr = paramStr.substr(1, exclamInd - 1)
+                       + paramStr.substr(exclamInd + 1);
+        }
+
+        /* look for "id obj's" and "id1 obj's/id2" */
+        if (rexMatch(patIdObjSlashIdApostS, paramStr) != nil)
+        {
+            /* rewrite with the "'s" moved to the preceding parameter name */
+            paramStr = rexGroup(1)[3] + '\'s'
+                       + rexGroup(2)[3] + rexGroup(3)[3];
+                       
+        }
+        else if (rexMatch(patIdObjApostS, paramStr) != nil)
+        {
+            /* rewrite with the "'s" moved to the preceding parameter name */
+            paramStr = rexGroup(1)[3] + '\'s' + rexGroup(2)[3];
+        }
+
+        /*
+         *   Check if this parameter matches the {s/?ed} or {?ed/s} syntax.
+         */
+        if (rexMatch(patSSlashLetterEd, paramStr))
+        {
+            /*
+             *   It does - remember the past verb ending, and rewrite the
+             *   parameter literally as 's/?ed'.
+             */
+            pastEnding_ = rexGroup(1)[3];
+            paramStr = 's/?ed';
+        }
+
+        /* return our (possibly modified) result */
+        return paramStr;
     }
 
     /*
@@ -4992,6 +5048,10 @@ parseIntTokens(toks)
 /* special "apostrophe-s" token */
 enum token tokApostropheS;
 
+/* special ending-on-s token */
+enum token tokEndingOnS;
+
+
 /* special apostrophe token for plural possessives ("the smiths' house") */
 enum token tokPluralApostrophe;
 
@@ -5072,6 +5132,17 @@ cmdTokenizer: Tokenizer
         ['apostrophe-s word',
          new RexPattern('<Alpha|-|&><AlphaNum|-|&|squote>*<squote>[sS]'),
          tokWord, &tokCvtApostropheS, nil],
+
+        /*
+         *   A word ending in s.  We parse this as two
+         *   separate tokens: one for the word and one for the
+         *   apostrophe-s. // TODO: & squote
+         */
+         
+        ['possesive ending-s word',
+         new RexPattern('<Alpha|-|&><AlphaNum|-|&|squote>*[sS]'),
+         tokWord, &tokCvtEndingOnS, &acceptEndingOnSTok],
+
 
         /*
          *   A plural word ending in an apostrophe.  We parse this as two
@@ -5163,6 +5234,57 @@ cmdTokenizer: Tokenizer
     }
 
     /*
+     *   Handle an ending on-'s' word.  We'll return this as two separate
+     *   tokens: one for the word preceding the s, and one for
+     *   the s itself, disguised as an tokApostropheS with an empty lexeme '',
+     *   this is to piggyback the already existing logic in tads3 english version
+     *   to sort out ownership of things. Internally, the parser will understand  
+     *   the equivalences of "tomas's book" in token succession. 
+     *   [tokWord tokApostropheS tokWord]
+     */
+    tokCvtEndingOnS(txt, typ, toks)
+    {
+        /*
+         *   pull out the part up to but not including the apostrophe, and
+         *   pull out the apostrophe-s part
+         */
+        // Check if the word with the "s"-ending exists out in the world:
+        local sEndingDoesExists = cmdDict.isWordDefined(txt, {result: (result & StrCompTrunc) == 0});
+        if(sEndingDoesExists) {
+            // If the word exists, we use the whole word as the main token type, as it naturally ends 
+            // with a "s" regardless of when its possessive or not
+
+            toks.append([txt, typ, txt, true]); // We add a fourth element, to keep an attribute
+
+            // We also add an apostrophe-s as a separate special invisible token 
+            // (if it is invisible it won't show up during reconstruction of the sentence later).
+            // toks.append(['', tokApostropheS, '']);
+            return;
+        } 
+
+        // If the word with "s"-ending wasn't found, try to remove the ending 's' and search again:
+        local w = txt.substr(1, txt.length() - 1);
+        local endingWithoutSDoesExists = cmdDict.isWordDefined(w, {result: (result & StrCompTrunc) == 0});
+        
+        // If it does exist, create two tokens: 
+        if(endingWithoutSDoesExists) {
+
+            // Add a normal token with the 's' removed
+            toks.append([w, typ, w]);
+
+            // Then add a FAKED apostrophe-s as a separate anonymous '' special token,
+            // this is just done so the parser will quickly understand that we are looking
+            // for a possessive part. 
+            toks.append(['', tokApostropheS, '']);
+            //tadsSay('\n(<<w>> (utan s finns). Skapar två tokens: <<typ>>, samt tokApostropheS.)\n');
+        } else {
+            // Otherwise, don't interfere, just add the whole word as the main token type 
+            // toks.append([txt, typ, txt]);
+        }
+        
+    }
+
+    /*
      *   Handle a plural apostrophe word ("the smiths' house").  We'll
      *   return this as two tokens: one for the plural word, and one for
      *   the apostrophe. 
@@ -5224,6 +5346,11 @@ cmdTokenizer: Tokenizer
             txt, {result: (result & StrCompTrunc) == 0});
     }
 
+    acceptEndingOnSTok(txt) {
+        return cmdDict.isWordDefined(txt, {result: (result & StrCompTrunc) == 0})
+            || cmdDict.isWordDefined(txt.substr(1, txt.length() - 1), {result: (result & StrCompTrunc) == 0})
+            ;
+    }
     /*
      *   Process an abbreviated token.
      *
@@ -7010,14 +7137,59 @@ grammar possessiveAdjPhrase(your): 'din' : YourAdjProd
     /* we are non-anaphoric */
     checkAnaphorAgreement(lst) { return nil; }
 ;
+grammar possessiveAdjPhrase(yourNeuter): 'ditt' : YourAdjProd
+    /* we are non-anaphoric */
+    checkAnaphorAgreement(lst) { return nil; }
+;
+grammar possessiveAdjPhrase(yourPlural): 'dina' : YourAdjProd
+    /* we are non-anaphoric */
+    checkAnaphorAgreement(lst) { return nil; }
+;
 grammar possessiveAdjPhrase(my): 'min' : MyAdjProd
+    /* we are non-anaphoric */
+    checkAnaphorAgreement(lst) { return nil; }
+;
+grammar possessiveAdjPhrase(myNeuter): 'mitt' : MyAdjProd
+    /* we are non-anaphoric */
+    checkAnaphorAgreement(lst) { return nil; }
+;
+grammar possessiveAdjPhrase(myPlural): 'mina' : MyAdjProd
     /* we are non-anaphoric */
     checkAnaphorAgreement(lst) { return nil; }
 ;
 
 grammar possessiveAdjPhrase(npApostropheS):
-    //('the' | ) nounPhrase->np_ tokApostropheS->apost_ : LayeredNounPhraseProd
-    ('den' | ) nounPhrase->np_ tokApostropheS->apost_ : LayeredNounPhraseProd
+    ('den' | ) nounPhrase->np_  tokApostropheS->apost_  
+    | ('den' | ) nounPhrase->np_ 
+    : LayeredNounPhraseProd    
+    
+    resolveNouns(resolver, results)
+    {
+        /*
+        resolver: Resolver 
+            action_ = action;      // What action
+            issuer_ = issuingActor; // Who issued the command
+            actor_ = targetActor; // Who acting
+        
+        results: CommandRanking -> BasicResolveResults -> ResolveResults
+            targetActor_ = nil
+            issuingActor_ = nil
+ 
+        results: [ResolveInfo]
+                obj_ = obj;
+                flags_ = flags;
+                np_ = np;
+        */
+        
+        /*
+        local weakPossessive = tokenList && tokenList.length == 3 && tokenList[2].length == 4 && tokenList[2][4];
+        if(weakPossessive) {
+            // tadsSay('WEAK possessive!');
+            results.append(new ResolveInfo(obj, 150));
+        }*/
+        /* let the underlying match tree object do the work */
+        return np_.resolveNouns(resolver, results);
+    }
 
     /* get the original text without the "'s" suffix */
     getOrigMainText()
@@ -7028,7 +7200,6 @@ grammar possessiveAdjPhrase(npApostropheS):
 ;
 
 grammar possessiveAdjPhrase(ppApostropheS):
-    //('the' | ) pluralPhrase->np_
     ('den' | ) pluralPhrase->np_
        (tokApostropheS->apost_ | tokPluralApostrophe->apost_)
     : LayeredNounPhraseProd
@@ -7086,20 +7257,15 @@ Vilket stol menar du, din stol, eller professorns stol?
 
 
 
-
 grammar possessiveNounPhrase(npApostropheS):
-    //('the' | )
     ('den' | )
-    (
-        nounPhrase->np_ tokApostropheS->apost_
-     | pluralPhrase->np (tokApostropheS->apost_ | tokPluralApostrophe->apost_)
-     )
+    (nounPhrase->np_ tokApostropheS->apost_
+     | pluralPhrase->np (tokApostropheS->apost_ | tokPluralApostrophe->apost_))
     : LayeredNounPhraseProd
 
     /* get the original text without the "'s" suffix */
     getOrigMainText()
     {
-        //tadsSay(np_.getOrigText() + '\n');
         /* return just the basic noun phrase part */
         return np_.getOrigText();
     }
@@ -11631,8 +11797,10 @@ DefineLiteralAction(Ord)
         if(wordFound) {
             cmdDict.forEachWord(function(obj, word, wordPart) {
                 if(o[1] == obj) {
-                    local grammarFunction = 'unknown';
+                    local grammarFunction = '<<wordPart>>'; //'unknown';
                     if(wordPart == &noun) grammarFunction = 'substantiv';
+                    else if(wordPart == &literalAdjective) grammarFunction = 'literalAdjective';
+                    else if(wordPart == &adjApostS) grammarFunction = 'adjApostS';
                     else if(wordPart == &plural) grammarFunction = 'plural';
                     else if(wordPart == &adjective) grammarFunction = 'adjektiv';
                     str.append('<<word>> (<<grammarFunction>>) \n');
@@ -11683,6 +11851,7 @@ function displayGrammarInfo(o) {
                 local grammarFunction = 'okänd';
                 if(wordPart == &noun) grammarFunction = 'substantiv';
                 else if(wordPart == &literalAdjective) grammarFunction = 'literalAdjective';
+                else if(wordPart == &adjApostS) grammarFunction = 'adjApostS';
                 else if(wordPart == &plural) grammarFunction = 'plural';
                 else if(wordPart == &adjective) grammarFunction = 'adjektiv';
                 str.append('<<word>> (<<grammarFunction>>) \n');
@@ -11708,6 +11877,10 @@ function displayWordPartOnly(wordPart) {
     if(wordPart == &literalAdjective) {
         tadsSay(' &literalAdjective ');
     }
+    if(wordPart == &adjApostS) {
+        tadsSay(' &adjApostS ');
+    }
+    
 }
 
 function displayWordPart(wordPart, cur, obj) {
@@ -11722,6 +11895,9 @@ function displayWordPart(wordPart, cur, obj) {
     }
     if(wordPart == &literalAdjective) {
         tadsSay('\ <<cur>> (literalAdjective)');
+    }
+    if(wordPart == &adjApostS) {
+        tadsSay('\ <<cur>> (adjApostS)');
     }
     tadsSay('\t\t\t\t\t\t -> \ [<<obj.name>>]\n');
 }

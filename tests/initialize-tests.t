@@ -45,7 +45,7 @@ modify Thing
 TestUnit 'initialize äpple med +notation (ett-ord)' run {
 
     local appleAvancerat = new Thing();
-    appleAvancerat.vocabWords = 'röda smakfulla äpple+t/frukt+en*äpplen+a frukter+na';
+    appleAvancerat.vocabWords = 'rö:tt+da smakfull:t+a äpple+t/frukt+en*äpplen+a frukter+na';
     appleAvancerat.name = 'äpple';
 
     // Sut
@@ -54,7 +54,9 @@ TestUnit 'initialize äpple med +notation (ett-ord)' run {
     // Assert
     //tadsSay(getGrammarInfoFromCmdDict(appleAvancerat));
     assertThat(cmdDict.findWord('röda', &adjective)[1]).isEqualTo(appleAvancerat);
+    assertThat(cmdDict.findWord('rött', &adjective)[1]).isEqualTo(appleAvancerat);
     assertThat(cmdDict.findWord('smakfulla', &adjective)[1]).isEqualTo(appleAvancerat);  
+    assertThat(cmdDict.findWord('smakfullt', &adjective)[1]).isEqualTo(appleAvancerat);  
 
     assertThat(cmdDict.findWord('äpple', &noun)[1]).isEqualTo(appleAvancerat);
     assertThat(cmdDict.findWord('äpplet', &noun)[1]).isEqualTo(appleAvancerat);  
@@ -71,7 +73,7 @@ TestUnit 'initialize äpple med +notation (ett-ord)' run {
 
     // Räkna antalet _förväntade_ förekomster som finns i cmdDict för detta objekt (oavsett grammatisk form)
     local count = getGrammarPartsFromCmdDict(appleAvancerat);
-    assertThat(count).isEqualTo(10);
+    assertThat(count).isEqualTo(12);
 
     assertThat(appleAvancerat.isNeuter).isNil(); // Härleds från den bestämda formen av äpple+t
     assertThat(appleAvancerat.isPlural).isNil(); 
@@ -81,7 +83,7 @@ TestUnit 'initialize äpple med +notation (ett-ord)' run {
 
 TestUnit 'initialize dörr med +notation (en-ord)' run {
     local obj = new Thing();
-    obj.vocabWords = 'rustik+a gamla gammelmodig+a dörr+en/port+en*dörrar+na portar+na';
+    obj.vocabWords = 'rustik+a gam:malt+la gammelmodig+a dörr+en/port+en*dörrar+na portar+na';
     obj.name = 'dörr';
 
     // Sut
@@ -93,6 +95,7 @@ TestUnit 'initialize dörr med +notation (en-ord)' run {
     assertThat(cmdDict.findWord('rustika', &adjective)[1]).isEqualTo(obj);
 
     assertThat(cmdDict.findWord('gamla', &adjective)[1]).isEqualTo(obj);  
+    assertThat(cmdDict.findWord('gammalt', &adjective)[1]).isEqualTo(obj);  
     assertThat(cmdDict.findWord('gammelmodig', &adjective)[1]).isEqualTo(obj);  
     assertThat(cmdDict.findWord('gammelmodiga', &adjective)[1]).isEqualTo(obj);  
 
@@ -110,7 +113,7 @@ TestUnit 'initialize dörr med +notation (en-ord)' run {
 
     // Räkna antalet _förväntade_ förekomster som finns i cmdDict för detta objekt (oavsett grammatisk form)
     local count = getGrammarPartsFromCmdDict(obj); 
-    assertThat(count).isEqualTo(13);
+    assertThat(count).isEqualTo(14);
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
@@ -209,42 +212,74 @@ TestUnit 'initialize neutrum substantiv med +notation och foge-S' run {
     assertThat(obj.definiteForm).isEqualTo('pappersflygplanet'); 
 };
 
-// TODO: 
-// extra:
-// 'kartong^s+låda+n/kartong:erna^s+lådor+na' 'kartonger'
+TestUnit 'initialize utrum substantiv med +notation och foge-S' run {
+    local obj = new Thing();
+    obj.vocabWords = 'kartong^s+låda+n*kartong:erna^s+lådor+na';
+
+    // Sut
+    obj.initializeVocabWith(obj.vocabWords);
+
+    // Assert
+    //tadsSay(getGrammarInfoFromCmdDict(obj));
+
+    assertThat(cmdDict.findWord('låda', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('lådan', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('kartongslådan', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('kartongslåda', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('kartongen', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('kartong', &noun)[1]).isEqualTo(obj);
+
+    assertThat(cmdDict.findWord('kartongslådorna', &plural)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('kartongslådor', &plural)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('kartongerna', &plural)[1]).isEqualTo(obj);
+
+    assertThat(cmdDict.findWord('lådor', &plural)[1]).isEqualTo(obj);
+
+    // Räkna antalet _förväntade_ förekomster som finns i cmdDict för detta objekt (oavsett grammatisk form)
+    local count = getGrammarPartsFromCmdDict(obj);
+    assertThat(count).isEqualTo(12);
+
+    assertThat(obj.isNeuter).isNil();   
+    assertThat(obj.isPlural).isNil(); 
+    assertThat(obj.name).isEqualTo('kartongslåda'); 
+    assertThat(obj.definiteForm).isEqualTo('kartongslådan'); 
+};
+
 /*
-lådorna (substantiv)
-låda (substantiv)
-lådan (substantiv)
-kartong (substantiv)
-kartongen (substantiv)
-kartongerna (substantiv)
-kartongslådor (substantiv)
-kartongslådan (substantiv)
-kartongslådorna (substantiv)
-kartongslåda (substantiv)
-lådor (substantiv)
+TestUnit 'initialize utrum substantiv med +notation och foge-S' run {
+    local obj = new Thing();
+    obj.vocabWords = 'schablon:en+målad+e*bokstäver+na "dei" dei';
 
-++ dei: Fixture 'schablon:en+målad+e *bokstäver+na "dei" dei' 'schablonmålade bokstäver' isPlural = true;
+    // Sut
+    obj.initializeVocabWith(obj.vocabWords);
 
-theName: “bokstäverna”
-aName: “några schablonmålade bokstäver”
+    // Assert
+    tadsSay(getGrammarInfoFromCmdDict(obj));
 
-Följande ord finns definierade:
+    assertThat(cmdDict.findWord('bokstäver', &plural)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('bokstäverna', &plural)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('dei', &plural)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('dei', &literalAdjective)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('målad', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('målade', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('schablon', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('schablonen', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('schablonmålad', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('schablonmålade', &noun)[1]).isEqualTo(obj);
 
-bokstäver (plural)
-bokstäverna (plural)
-dei (plural)
-dei (unknown)
-målad (adjektiv)
-målade (adjektiv)
-schablon (adjektiv)
-schablonen (adjektiv)
-schablonmålad (adjektiv)
-schablonmålade (adjektiv)
+    // Räkna antalet _förväntade_ förekomster som finns i cmdDict för detta objekt (oavsett grammatisk form)
+    local count = getGrammarPartsFromCmdDict(obj);
+    assertThat(count).isEqualTo(10);
+
+    assertThat(obj.isNeuter).isNil();   
+    assertThat(obj.isPlural).isNil(); 
+    assertThat(obj.name).isEqualTo('schablonmålad'); 
+    assertThat(obj.definiteForm).isEqualTo('schablonmålade'); 
+};*/
 
 
-+ Distant 'rundad+e svag+a svagt sluttande tak+et/platta+n*plattor+na/terrakotta:n+plattor+na' 'tak'
+/*
++ Distant 'rundad+e svag:t+a sluttande tak+et/platta+n*plattor+na/terrakotta:n+plattor+na' 'tak'
 platta (substantiv)
 plattan (substantiv)
 plattor (plural)
@@ -664,6 +699,8 @@ function getGrammarInfoFromCmdDict(o) {
             if(wordPart == &noun) grammarFunction = 'substantiv';
             else if(wordPart == &plural) grammarFunction = 'plural';
             else if(wordPart == &adjective) grammarFunction = 'adjektiv';
+            else if(wordPart == &literalAdjective) grammarFunction = 'literalAdjective';
+            else if(wordPart == &adjApostS) grammarFunction = 'adjApostS';
             str.append('<<word>> (<<grammarFunction>>) \n');
         }
     });
