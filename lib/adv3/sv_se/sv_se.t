@@ -5125,6 +5125,16 @@ cmdTokenizer: Tokenizer
          tokWord, &tokCvtAbbr, &acceptAbbrTok],
 
         /*
+         *   A word ending in s.  We parse this as two
+         *   separate tokens: one for the word and one for the
+         *   apostrophe-s. // TODO: & squote
+         */
+
+        ['possesive ending-s word',
+         new RexPattern('%b<Alpha|-|&><AlphaNum|-|&|squote>*[sS]%b'),
+         tokWord, &tokCvtEndingOnS, &acceptEndingOnSTok],
+
+        /*
          *   A word ending in an apostrophe-s.  We parse this as two
          *   separate tokens: one for the word and one for the
          *   apostrophe-s.
@@ -5134,17 +5144,6 @@ cmdTokenizer: Tokenizer
          tokWord, &tokCvtApostropheS, nil],
 
         /*
-         *   A word ending in s.  We parse this as two
-         *   separate tokens: one for the word and one for the
-         *   apostrophe-s. // TODO: & squote
-         */
-         
-        ['possesive ending-s word',
-         new RexPattern('<Alpha|-|&><AlphaNum|-|&|squote>*[sS]'),
-         tokWord, &tokCvtEndingOnS, &acceptEndingOnSTok],
-
-
-        /*
          *   A plural word ending in an apostrophe.  We parse this as two
          *   separate tokens: one for the word and one for the apostrophe. 
          */
@@ -5152,6 +5151,7 @@ cmdTokenizer: Tokenizer
          new RexPattern('<Alpha|-|&><AlphaNum|-|&|squote>*<squote>'
                         + '(?!<AlphaNum>)'),
          tokWord, &tokCvtPluralApostrophe, nil],
+
 
         /*
          *   Words - note that we convert everything to lower-case.  A word
@@ -5244,6 +5244,7 @@ cmdTokenizer: Tokenizer
      */
     tokCvtEndingOnS(txt, typ, toks)
     {
+        //tadsSay('\ntokCvtEndingOnS: [<<txt>>]\n');
         /*
          *   pull out the part up to but not including the apostrophe, and
          *   pull out the apostrophe-s part
@@ -5253,8 +5254,9 @@ cmdTokenizer: Tokenizer
         if(sEndingDoesExists) {
             // If the word exists, we use the whole word as the main token type, as it naturally ends 
             // with a "s" regardless of when its possessive or not
-
+            //tadsSay('THE TYPE IS: <<typ>>\n');
             toks.append([txt, typ, txt, true]); // We add a fourth element, to keep an attribute
+            //toks.append([txt, tokEndingOnS, txt, true]); // We add a fourth element, to keep an attribute
 
             // We also add an apostrophe-s as a separate special invisible token 
             // (if it is invisible it won't show up during reconstruction of the sentence later).
@@ -5269,6 +5271,7 @@ cmdTokenizer: Tokenizer
         // If it does exist, create two tokens: 
         if(endingWithoutSDoesExists) {
 
+            //tadsSay('THE TYPE IS: <<typ>>\n');
             // Add a normal token with the 's' removed
             toks.append([w, typ, w]);
 
@@ -5347,9 +5350,21 @@ cmdTokenizer: Tokenizer
     }
 
     acceptEndingOnSTok(txt) {
-        return cmdDict.isWordDefined(txt, {result: (result & StrCompTrunc) == 0})
-            || cmdDict.isWordDefined(txt.substr(1, txt.length() - 1), {result: (result & StrCompTrunc) == 0})
-            ;
+        if(txt.endsWith('s')) {
+            //tadsSay('\nacceptEndingOnSTok: [<<txt>>]\n');
+            if(cmdDict.isWordDefined(txt, {result: (result & StrCompTrunc) == 0})) {
+                //tadsSay('[TRÄFF PÅ <<txt>>]\n');
+                return true;
+            }        
+            local shortened = txt.substr(1, txt.length() - 1);
+            if(cmdDict.isWordDefined(shortened, {result: (result & StrCompTrunc) == 0})) {
+                //tadsSay('[TRÄFF på <<shortened>>]\n');
+                return true;
+            }
+        }
+        return nil;
+        //tadsSay('[<<txt.substr(1, txt.length() - 1)>>]');
+        //return cmdDict.isWordDefined(txt.substr(1, txt.length() - 1), {result: (result & StrCompTrunc) == 0});
     }
     /*
      *   Process an abbreviated token.
@@ -6482,8 +6497,7 @@ grammar compoundNounPhrase(simple): simpleNounPhrase->np_
 ;
 // 'till'?
 grammar compoundNounPhrase(of):
-    simpleNounPhrase->np1_ 'av'->of_ compoundNounPhrase->np2_
-    | simpleNounPhrase->np1_ 'från'->of_ compoundNounPhrase->np2_
+    simpleNounPhrase->np1_ ('av'->of_|'med'->of_|'från'->of_) compoundNounPhrase->np2_
     | simpleNounPhrase->np1_ 'av'->of_ 'de'->the_ compoundNounPhrase->np2_
     | simpleNounPhrase->np1_ 'från'->of_ 'de'->the_ compoundNounPhrase->np2_
     : NounPhraseWithVocab
@@ -7160,11 +7174,14 @@ grammar possessiveAdjPhrase(myPlural): 'mina' : MyAdjProd
 
 grammar possessiveAdjPhrase(npApostropheS):
     ('den' | ) nounPhrase->np_  tokApostropheS->apost_  
-    | ('den' | ) nounPhrase->np_ 
+    //| ('den' | ) nounPhrase->np_ 
     : LayeredNounPhraseProd    
     
     resolveNouns(resolver, results)
     {
+        //tadsSay(self);
+        //tadsSay('\n');
+
         /*
         resolver: Resolver 
             action_ = action;      // What action
@@ -7180,7 +7197,6 @@ grammar possessiveAdjPhrase(npApostropheS):
                 flags_ = flags;
                 np_ = np;
         */
-        
         /*
         local weakPossessive = tokenList && tokenList.length == 3 && tokenList[2].length == 4 && tokenList[2][4];
         if(weakPossessive) {

@@ -67,7 +67,10 @@
 #-source tests/initialize-tests
 #-source tests/additional-tests
 
--source exempelspel/exempel
+# Run 'test run'
+-source tests/parser-tests
+
+#-source exempelspel/exempel
 #-source exempelspel/cookbook
 
 -res
