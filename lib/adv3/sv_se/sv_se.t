@@ -514,6 +514,7 @@ modify VocabObject
         // och ev. tillhörande ändelser, då enbart ett ord används.
         local oneWordOnly = !(str.find(' ') || str.find('/') || str.find('*'));
 
+        local previousSectPart;
         // Iterera igenom strängen så länge den har ett innehåll
         while (str != '') {
             local len, cur;
@@ -579,6 +580,26 @@ modify VocabObject
                         weakTokens += cur;
                     }
 
+                
+                    // Kolla efter specialformat, strängcitat, ändelser 's' (för ägande)
+                    // Dessa kan inte samexistera utan utesluter varandra
+                    if (cur.startsWith('"')) {
+                        //tadsSay('\n[<<cur>>] börjar med strängcitat\n');
+
+                        // Det är ett strängcitat, så det blir ett 'literal adjective'.
+                        // ta bort citationstecknen:
+                        if (cur.endsWith('"')) {
+                            //tadsSay('\n[<<cur>>] slutar med strängcitat\n');
+                            cur = cur.substr(2, cur.length() - 2);
+
+                            // Spara nuvarande sektion för att kunna återgå återställa den
+                            previousSectPart = sectPart;                             
+                            // Ändra denna del av talet 'literal adjective'
+                            sectPart = &literalAdjective;
+                        } else {
+                            cur = cur.substr(2);
+                        }
+                    }
 
                     // Här inleds matchning av +notation för förenkla sammansättningar 
                     // av ord i svenskan (som kryllar av dem)
@@ -658,21 +679,12 @@ modify VocabObject
                         }
                     }
 
+                    if(previousSectPart) {
+                        sectPart = previousSectPart; 
+                    }
+
                     // Här fortsätter den sedvanliga matchningen av vocabWords
 
-                    // Kolla efter specialformat, strängcitat, ändelser 's' (för ägande)
-                    // Dessa kan inte samexistera utan utesluter varandra
-                    if (cur.startsWith('"')) {
-                        // Det är ett strängcitat, så det blir ett 'literal adjective'.
-                        // ta bort citationstecknen:
-                        if (cur.endsWith('"')) {
-                            cur = cur.substr(2, cur.length() - 2);
-                        } else {
-                            cur = cur.substr(2);
-                        }
-                        // Ändra denna del av talet 'literal adjective'
-                        wordPart = &literalAdjective;
-                    } 
 
                     // Lägg till ordet till våran egen lista för denna del av talet
                     if (self.(wordPart) == nil) {

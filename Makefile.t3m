@@ -64,11 +64,11 @@
 #-source tests/present-tense
 #-source tests/past-tense
 #-source tests/satsdelar
-#-source tests/initialize-tests
+-source tests/initialize-tests
 #-source tests/additional-tests
 
 # Run 'test run'
--source tests/parser-tests
+#-source tests/parser-tests
 
 #-source exempelspel/exempel
 #-source exempelspel/cookbook

@@ -672,6 +672,31 @@ TestUnit 'shortenRepeatingCharacters, testa att förkortningar görs så vi aldr
 };
 
 
+TestUnit 'compundWords med literalAdjective' run {
+    local obj = new Thing();
+    obj.vocabWords = '"0001" (grönsak+en) (frukt+en) "först:+plockad+e"  (rot+en) "röd+a" jordgubbe+n';
+
+    // Sut
+    obj.initializeVocabWith(obj.vocabWords);
+
+    // Assert
+    tadsSay(getGrammarInfoFromCmdDict(obj));
+    assertThat(cmdDict.findWord('röd', &literalAdjective)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('röda', &literalAdjective)[1]).isEqualTo(obj);
+
+    assertThat(cmdDict.findWord('jordgubbe', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('jordgubben', &noun)[1]).isEqualTo(obj);
+    
+
+    // Räkna antalet _förväntade_ förekomster som finns i cmdDict för detta objekt (oavsett grammatisk form)
+    //local count = getGrammarPartsFromCmdDict(obj);
+    //assertThat(count).isEqualTo(4);
+
+    //assertThat(obj.name).isEqualTo('jordgubbe'); 
+    //assertThat(obj.definiteForm).isEqualTo('jordgubben'); 
+};
+
+
 
 function cleanUp(obj) {
     local a = new LookupTable();
