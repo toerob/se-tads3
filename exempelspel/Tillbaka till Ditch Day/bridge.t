@@ -3708,7 +3708,7 @@ class JobOrderTopic: ConsultTopic
     /* receive notification that the toy car is leaving under its own power */
     ratLeaving()
     {
-        "<.p>{Han plisnik/ref} tittar på när råttan lämnar. <q>Din sällskapsråtta
+        "<.p>{Ref plisnik/han} tittar på när råttan lämnar. <q>Din sällskapsråtta
         stack just!</q> säger han och låter lite frenetisk. <q>Du borde
         gå och fånga den innan den kommer undan.</q> ";
     }
@@ -3716,18 +3716,18 @@ class JobOrderTopic: ConsultTopic
     /* receive notification that the rat is moving around locally */
     ratMoving() { ratMovingScript.doScript(); }
     ratMovingScript: StopEventList { [
-        '<.p>{Han plisnik/ref} ryggar tillbaka lite, noga med
+        '<.p>{Ref plisnik/han} ryggar tillbaka lite, noga med
         att hålla avstånd från råttan. <q>Du borde inte låta din
         sällskapsråtta vandra omkring här nere utan koppel,</q> säger
         han. <q>Det är tur att jag såg dig komma in bärande på den.
         Jag vet inte vad jag skulle ha gjort om det var en <i>vild</i>
         råtta.</q> ',
 
-        '<.p>{Han plisnik/ref} tittar nervöst på när råttleksaken
+        '<.p>{Ref plisnik/han} tittar nervöst på när råttleksaken
         rör sig omkring. <q>Jag önskar att du tog bort den där saken härifrån,</q>
         säger han. <q>Även om det är ett husdjur, litar jag fortfarande inte på råttor.</q> ',
 
-        '<.p>{Han plisnik/ref} tittar nervöst på råttleksaken. <q>Jag önskar
+        '<.p>{Ref plisnik/han} tittar nervöst på råttleksaken. <q>Jag önskar
         att du tog bort den där råttan härifrån,</q> säger han. ']
     }
 
@@ -3913,7 +3913,7 @@ class JobOrderTopic: ConsultTopic
  *   again.  In addition, differentiate its use when worn and not worn. 
  */
 ++ GiveShowTopic @ratPuppet
-    "{Han plisnik/ref} rycker tillbaka när han ser leksaksråttan, men tar sedan
+    "{Ref plisnik/han} rycker tillbaka när han ser leksaksråttan, men tar sedan
     en närmare titt och slappnar av lite. <q>Det där är inte särskilt snällt,</q>
     säger han, <q>att försöka skrämma mig med en leksaksråtta. Jag trodde nästan
     den var äkta tills jag såg att den inte rörde sig.</q>
@@ -3921,7 +3921,7 @@ class JobOrderTopic: ConsultTopic
     <.convstay> "
 ;
 +++ AltTopic
-    "{Han plisnik/ref} tittar på råttan. <q>Det är inte särskilt snällt
+    "{Ref plisnik/han} tittar på råttan. <q>Det är inte särskilt snällt
     att försöka skrämma mig med den där leksaksråttan,</q> säger han. <q>Det är tur
     att den inte rör sig, annars skulle jag ha trott att den var äkta.</q>
     <.convstay> "
@@ -3930,7 +3930,7 @@ class JobOrderTopic: ConsultTopic
 ;
 +++ AltTopic
     "Du håller upp råttan och rör lite på fingrarna för att få
-    dess nos att rycka som en riktig råtta. {Han plisnik/ref} ryser och
+    dess nos att rycka som en riktig råtta. {Ref plisnik/han} ryser och
     hoppar bakåt, men tar sedan en närmare titt och slappnar av lite.
     <q>Det där är inte särskilt snällt,</q> säger han. <q>Jag trodde nästan
     att det var en riktig råtta, tills jag såg din hand i den.</q>
@@ -3941,7 +3941,7 @@ class JobOrderTopic: ConsultTopic
 ;
 +++ AltTopic
     "Du rör på fingrarna för att få råttans nos att rycka.
-    <q>Det där är inte särskilt snällt,</q> säger {Han plisnik/ref}. <q>Jag trodde nästan
+    <q>Det där är inte särskilt snällt,</q> säger {Ref plisnik/han}. <q>Jag trodde nästan
     den var äkta tills jag såg din hand i den.</q>
     <.convstay> "
     
