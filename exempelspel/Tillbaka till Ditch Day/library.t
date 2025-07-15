@@ -1002,7 +1002,7 @@ class SAndPEntry: LibBookTopic @sAndP3Topic
         system, vilket orsakar att vågfunktionerna förlorar sin
         koherens---deras förmåga att superponera flera kvant-
         tillstånd samtidigt.
-        <<researchReport.checkComprehension('dekoherens')>> "
+        <<researchReport.checkComprehension('decoherence')>> "
 
     /* we're named by title, which is proper */
     isProperName = true

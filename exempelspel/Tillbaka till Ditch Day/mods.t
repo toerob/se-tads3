@@ -245,12 +245,6 @@ VerbRule(PayFor)
     verbPhrase = 'betala/betalar (vem) (för vad)'
 ;
 
-/*
-DefineTAction(Slide);
-VerbRule(Slide) 'slide' dobjList : SlideAction
-    verbPhrase = 'slide/sliding (vad)'
-;*/
-
 DefineTAction(Slide);
 VerbRule(Slide) 'skjut' dobjList : SlideAction
     verbPhrase = 'skjuta/skjuter (vad)'
@@ -342,6 +336,17 @@ VerbRule(ClimbDownI) 'klättra' 'ner' : TravelAction
     getDirection = downDirection
     verbPhrase = 'gå/går nedåt'
 ;
+
+// A swedish synonym for more widely used on technical devices, 
+// such the Netbisco 9099
+VerbRule(LiteralFeedInto)
+    ('mata'|'knappa') 'in' singleLiteral ('på'|'i') singleDobj
+    : TypeLiteralOnAction
+    verbPhrase = 'mata/matar in (vad) (på vad)'
+    askDobjResponseProd = singleNoun
+;
+
+
 
 /* ------------------------------------------------------------------------ */
 /*

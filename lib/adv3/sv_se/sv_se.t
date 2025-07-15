@@ -10727,7 +10727,7 @@ VerbRule(TypeOn)
 ;
 
 VerbRule(TypeLiteralOn)
-    'skriv' singleLiteral 'på' singleDobj
+    'skriv' ('in'|'ner'|) singleLiteral 'på' singleDobj
     : TypeLiteralOnAction
     verbPhrase = 'skriva/skriver (vad) (på vad)'
     askDobjResponseProd = singleNoun
@@ -11027,10 +11027,10 @@ VerbRule(CleanWith)
 
 VerbRule(AttachTo)
     (
-      ('koppla'|'sätt') ('ihop'|'fast'|'fast'|'samman')
+      ('koppla'|'sätt') ('ihop'|'fast'|'fast'|'samman'|'in') 
       | ('sammansätt') 
     )
-    dobjList ('med'|'till') singleIobj
+    dobjList ('med'|'till'|'i') singleIobj
     : AttachToAction
     askIobjResponseProd = toSingleNoun
     verbPhrase = 'sätt fast/sätter fast (vad) (med vad)'

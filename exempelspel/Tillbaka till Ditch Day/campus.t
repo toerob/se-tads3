@@ -3088,7 +3088,7 @@ quad: CampusOutdoorRoom
     }
 ;
 ++ quadAnalyzer: Thing
-    'elektronisk+a netbisco 9099 nätverksanalysator+n/pryl+en/utrustning+en'
+    'elektronisk+a netbisco 9099 nätverksanalysator+n/analysator+n/pryl+en/utrustning+en'
     name = (described ? 'nätverksanalysator' : 'elektronisk utrustning')
     aName = (described ? 'en nätverksanalysator' : 'en elektronisk pryl')
     desc = "Den ser ut lite som den typ av överdimensionerad telefon

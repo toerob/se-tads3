@@ -877,7 +877,11 @@ Test 'allt' [
   'n','ö','s','x kvinna','x ställ','x mortera','x toxicola','x locktheon','x Belker','ja','ja','läs anteckning','acceptera','n','v','s','v','s','s','ö','n','n','x skylt','x Aaron','x Erin','x låda','x kontakt','x bord','titta under bord','x kablar','i','x axelväska','x plånbok','öppna den','x kreditkort','x alumnkort','x körkort','lägg plånbok i ficka','s','s','v','n','x arbetare','x utrustning','v','v','v','s','x monter','x anteckningsbok','x motor','ner','n','x miniräknare','ta den','x mapp','ta den','läs den','x bänk','x experiment','tryck på grön knapp','x plattform','x hyllor','ta generator','x den','x vred','x kontakt','ta oscilloskop','x prob','x boll','ta kamera','x kabel','dra i den','x etikett',
 
   // del3
-  's','v','ner','n','x ledningar','x blå kabel','s','ö','x möbler','x lådor','x trä','flytta trä','n','v','x hål','x kabel','v','x kabel','s','x kabel','v','x kabel','x dörr','göm mig i nisch','skriv 57212 på dörr','v','x blå kabel','ö','ö','n','ö','ö','ö','ö','n','ö','presentera mig','nej','fråga Plisnik om råttor','f honom','x pärm','f pärm','f nic','f analysator','u',
+  's','v','ner','n','x ledningar','x blå kabel',
+    // TODO: fråga om netbisco 9099
+
+  
+  's','ö','x möbler','x lådor','x trä','flytta trä','n','v','x hål','x kabel','v','x kabel','s','x kabel','v','x kabel','x dörr','göm mig i nisch','skriv 57212 på dörr','v','x blå kabel','ö','ö','n','ö','ö','ö','ö','n','ö','presentera mig','nej','fråga Plisnik om råttor','f honom','x pärm','f pärm','f nic','f analysator','u',
 
   // del4
   'nv','x ställ','ta tidning','x djur','ta råtta','x expedit','köp tidning','ta den','läs den','lägg råtta på disk','ja','öppna plånbok','ge kreditkort till expedit','lägg kreditkort i plånbok','x kvitto','lägg plånbok i ficka','lägg råtta, kvitto och tidning i väska','sö','v','n','ö','x bil','x fjärrkontroll','lägg bil och fjärrkontroll i väska','v','s','ö','n','nö','läs memo','läs rosa kort','läs gult kort','läs blått kort','läs grönt kort','lägg allt från disk i väska','sv','s','s','ö','n','n',
@@ -885,9 +889,15 @@ Test 'allt' [
   // del 5
   'x dator','koppla generator till låda','slå på generator', 'ta oscilloskop','slå på oscilloskop','proba låd-kontakt med oscilloskop','ta generator och oscilloskop','s','s','ö','x berg','klättra på berg','x behållare','s','x Positron','x instruktionskort','x servicelucka','öppna den','n','u','n','läs klotter','n','x skylt','x dator','fråga Erin om stack','fråga Erin om EE','fråga Erin om qubits','fråga Erin om Jay','knacka på 39','slå upp bibliotek på karta','s','s','ner','v','v','slå upp bibliotek på karta',
   
-  'n','v','v','v','v','x receptionist','x lärobok','f lärobok','g','g','öppna plånbok','visa alumnkort för honom','lägg plånbok i ficka','läs katalog','x hiss','tryck på upp','n','tryck på 3','z','z','s','slå upp morgen','läs den','slå upp townsend','läs den','tryck på upp','n','tryck på 6','z','z','s','slå upp blomner','läs den','slå upp 70:11c','läs den','tryck på ner','n','tryck på 2','z','z','s','slå upp XLVI-3','läs den','läs rapport','tryck på upp','n','tryck på 6','z','z','s','slå upp 73:9a','läs den','tryck på ner','n','tryck på 1','z','z','s','ö',
+  'n','v','v','v','v','x receptionist','x lärobok','f lärobok','g','g','öppna plånbok','visa alumnkort för honom','lägg plånbok i ficka','läs katalog','x hiss','tryck på upp','n','tryck på 3','z','z','s','slå upp morgen','läs den','slå upp townsend','läs den','tryck på upp','n','tryck på 6','z','z','s','slå upp blomner','läs den','slå upp 70:11c','läs den'
+  
+  ,'tryck på ner','n','tryck på 2','z','z','s','slå upp XLVI-3','läs den','läs rapport','tryck på upp','n','tryck på 6','z','z','s','slå upp 73:9a','läs den','tryck på ner','n','tryck på 1','z','z','s','ö',
   // DEL 6:
-  's','ner','v','ner','ö','n','ö','ö','n','ta bil','sätt råtta på bil','släpp bil','x bil','ta fjärrkontroll','x den','x joystick','tryck joystick öster','ö','ja','be arbetare om analysator','ta bil','ta pärm','läs den','slå upp 3349-2016 i pärm','slå upp 3312-8622 i pärm','ta smutsigt papper','läs det','v','s','v','v','v','v','s','v','v','x låda','koppla in analysator i uttag','skriv 09C0A848D6 på analysator','ö','ö','n','n','n','ö','ö','x säkringsskåp','x DEI','ö','s','ö','u','s','ö','ö',
+  's','ner','v','ner','ö','n','ö','ö','n','ta bil','sätt råtta på bil','släpp bil','x bil','ta fjärrkontroll','x den','x joystick','tryck joystick öster','ö','ja', 'be arbetare om analysator', 'fråga om Netbisco 9099', 'ta bil', 
+
+  'ta pärm','läs den','slå upp 3349-2016 i pärm','slå upp 3312-8622 i pärm','ta smutsigt papper','läs det','v','s','v','v','v','v','s','v','v','x låda',
+  'koppla in analysator i uttag',
+  'mata in 09C0A848D6 i analysator','ö','ö','n','n','n','ö','ö','x säkringsskåp','x DEI','ö','s','ö','u','s','ö','ö',
 
   // del7
   'sv','ö','x kycklingar','x anteckningsbok','läs den','x kartong','gå in i den','läs skylt','lägg allt utom dräkt i väska','släpp väska','ta på dräkt','dra i spak','ut','fråga kycklingar om Scott','fråga Scott om Positron','fråga vad som är fel','erbjud att reparera den','ja','förklara om Stamers stack','betala för reparationer','in','dra i spak','ta av dräkt','häng dräkt på krok','ta väska','ut','v','n','s','lås upp dörr','öppna den','ta säck','x den','undersök den','x kretskort','proba kort med oscilloskop','slå på spel','proba kort med oscilloskop','slå upp videoförstärkare i manual','proba videoförstärkare med oscilloskop','slå upp 1a80 i manual','proba 1a80 med oscilloskop','lägg trasig kristall i väska','sök säck','sätt ny kristall i sockel','slå på spel','ta oscilloskop och gul lapp','stäng av spel','stäng dörr','lås den','n','v','n','n',
@@ -904,7 +914,7 @@ Test 'allt' [
   'höj korg','klättra på galler','u','v','x tunnel','x panel','öppna panel','s','x tunnel','öppna tunnel','ta ekorre','x den','n','ö','sö','x plåtanordning','öppna dörr','ner','n','ö','x bro','x panel','tryck på grön knapp','tryck på röd knapp','v','s','s','nö','x låda','titta under låda','n','sv','putta låda öster','putta låda norr','s','sv','n','n','ö','ö','ö','ö','x dörr','skriv 16974 på dörr','n','x dator','läs dator','x skärmar','x lab','x skrivbord','x pärmar','s','v','v','v','v','s','s','upp','upp','ner','ner','ner','upp','n','ö','ö','ö','ö','s','ö','ö','ö','ö',
 
   // Del 11 
-  'sv','u','ge ekorre till Jay','ge miniräknare till Jay','ner','n','v','v','n','v','v','v','s','ner','n','ta kupol','skriv 17281392 på miniräknare','lägg miniräknare på platta','tryck på grön knapp','skriv +++ på miniräknare','ta miniräknare','s','u','n','ö','ö','ö','s','ö','n','n',
+  'sv','u','ge ekorre till Jay','ge miniräknare till Jay','ner','n','v','v','n','v','v','v','s','ner','n','ta kupol', 'x stamers forskningsrapport', 'skriv 17281392 på miniräknare','lägg miniräknare på platta','tryck på grön knapp','skriv +++ på miniräknare','ta miniräknare','s','u','n','ö','ö','ö','s','ö','n','n',
 
   // Del 12
   'koppla generator till låda','ställ in amplitud till 3','ställ in den till 5','g','ställ in den till 0','ställ in den till 6','ställ in den till 3','ställ in den till 9','ställ in den till 2','v','titta under säng','x snacks','fråga Erin om stack','ät snacks','x bokhyllor','ja','berätta för Brian om stack','ja','berätta för Brian om kamera','berätta för Brian om Omegatron','x keps','ta på keps','ja','säg till belker att du slutar',

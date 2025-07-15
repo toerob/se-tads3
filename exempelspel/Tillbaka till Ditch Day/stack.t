@@ -2486,9 +2486,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
 ++ logoCap: PresentLater, Wearable
     'svart+a jätte gigantisk+a novelty mitachron logotyp+en baseboll+keps+en/hatt+en'
     'basebollkeps'
-    "Den är löjligt stor---den är som en av de där tio-gallons
-    Texas-hattarna, men i form av en basebollkeps. Den är svart, med
-    Mitachron-logotypen över framsidan. "
+    "Den var löjligt stor -- som en sån där överdimensionerad Texas-hatt, fast i form av en basebollkeps. Den är svart, med Mitachron-logotypen över framsidan. "
 
     dobjFor(Wear)
     {
@@ -2549,14 +2547,14 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
     }
 ;
 
-+ Bed, Heavy 'enkel:+säng+en' 'säng'
-    "Det är en enkel enkelsäng med vita lakan. "
++ Bed, Heavy 'dubbel:+säng+en' 'säng'
+    "Det är en enkel dubbelsäng med vita lakan. "
 
     dobjFor(LookUnder) { action() { "Du har ingen anledning att snoka runt
         i någon annans rum. Även om det fanns, säg, en dollarsedel där,
         skulle den inte vara din att ta. "; } }
 ;
-++ Decoration 'enkla vita (säng) lakan+et*sängkläder+na' 'sängkläder'
+++ Decoration 'enk:el+la vit+a (säng) lakan+et*sängkläder+na' 'sängkläder'
     "De är bara enkla vita lakan, med den där institutionella looken. "
     isPlural = true
 ;
@@ -2568,7 +2566,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
 ;
 
 + Surface, Fixture
-    'obehandlad+e spånskiva bokhylla+n/hylla+n/skiva+na*bokhyllor+na hyllor+na'
+    'obehandlad+e spånskiva+n bokhylla+n/hylla+n/skiva+n*bokhyllor+na hyllor+na'
     'bokhyllor'
     "Hyllorna är gjorda av obehandlad spånskiva. De
     måste vara robusta, med tanke på den tunga lasten av böcker de bär. "
@@ -2975,7 +2973,7 @@ stamer: Person
         scoreMarker.awardPointsOnce();
 
         /* offer finishing options */
-        finishGameMsg('DU HAR LYCKATS', 
+        finishGameMsg('DU HAR KLARAT SPELET', 
                       [finishOptionUndo, finishOptionFullScore,
                        finishOptionAfterword, finishOptionAmusing,
                        finishOptionCredits, finishOptionCopyright]);
@@ -3040,7 +3038,7 @@ stamer: Person
         scoreMarker.awardPointsOnce();
 
         /* offer finishing options */
-        finishGameMsg('DU HAR LYCKATS',
+        finishGameMsg('DU HAR KLARAT SPELET',
                       [finishOptionUndo, finishOptionFullScore,
                        finishOptionAfterword, finishOptionAmusing,
                        finishOptionCredits, finishOptionCopyright]);

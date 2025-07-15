@@ -4124,6 +4124,7 @@ class JobOrderTopic: ConsultTopic
 
             /* change to upper-case hex */
             str = gLiteral.toUpper();
+            tadsSay(str);
 
             /* make sure it's a hex number */
             if (rexMatch('[0-9A-F]+', str) != str.length())
