@@ -146,7 +146,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
             'En mygga surrar förbi bara centimeter från ditt öra. ',
             'Flera av dina myggbett börjar klia. ',
             'En mygga flyger långsamt förbi ditt huvud. ',
-            'Luftfuktigheten blir definitivt värre. ',
+            'Luftfuktigheten blir tydligt sämre. ',
             'Ett avlägset knarrande ljud ekar genom byggnaden. '
         ]
         eventPercent = 80
@@ -186,8 +186,8 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
  *   our first assistant
  */
 + xojo: TourGuide, Person 'xojo/man+nen/byråkrat+en*män+nen' 'Xojo'
-    "Han är en lågnivåbyråkrat som tilldelats att hjälpa dig med 
-    SCU-1100DX-installationen. Han ser ung ut, kanske i mitten av 
+    "Han är en lågnivåbyråkrat som har fått i uppdrag att hjälpa dig med 
+    installationen av SCU-1100DX. Han ser ung ut, kanske i mitten av 
     tjugoårsåldern. Han är lite längre än dig och mycket smal."
 
     isProperName = true
@@ -1206,8 +1206,8 @@ class SilentGuidedInTravelState: GuidedInTravelState
  */
 + guanmgon: Person 'guanmgon/guan/man/byråkrat*män' 'Guanmgon'
     "Han är en byråkrat på mellannivå som tilldelats att hjälpa dig med
-    installationen. Han bär en kostym som ser lite för liten ut
-    för honom. Guanmgon ser ut att vara i fyrtioårsåldern. "
+    installationen. Han har på sig en kostym som ser lite för liten ut.
+    Guanmgon ser ut att vara i fyrtioårsåldern. "
 
     isProperName = true
     isHim = true
@@ -1299,8 +1299,8 @@ class SilentGuidedInTravelState: GuidedInTravelState
 ++ guanmgonInit: ActorState, EventList
     isInitState = true
 
-    stateDesc = "Det verkar som att Guanmgon har blivit alltmer
-                 nervös medan ditt arbete här har dragit ut på tiden;
+    stateDesc = "Det verkar som att Guanmgon har blivit allt mer 
+                 nervös ju längre ditt arbete dragit ut på tiden;
                  på sistone har han nästan blivit desperat. "
     specialDesc = "Guanmgon står i dörröppningen och sträcker på
                    halsen för att se vad du gör. "
@@ -1441,7 +1441,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
 +++ YesTopic
     topicResponse()
     {
-        "<q>Visst, tack,</q> säger du.<.p> ";
+        "<q>Ja, tack,</q> säger du.<.p> ";
         xojo.beginErrand(koffeeErrand);
     }
 ;
@@ -1788,7 +1788,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
     låda/scu/1100/1100dx/scu-1100/scu-1100dx/scu1100/scu1100dx'
     'SCU-1100DX'
     "En Omegatron Supplemental Control Unit modell 1100DX. Du borde
-    känna den som din egen handflata efter att ha suttit igenom alla
+    kunna den som din egen handflata efter att ha suttit igenom alla
     de där ingenjörsmötena och designgranskningarna, men den omfattande
     kostnadsbesparingen och riggningen i tillverkningsprocessen
     har förvandlat den till något märkligt obekant.
@@ -1801,9 +1801,8 @@ class GuanmgonAgendaItem: ConvAgendaItem
     modulerna till kontrollpanelerna och annan utrustning i kraftverket.
     Den är för närvarande <<onDesc>>.
     <<isWorking ? "" :
-    "<.p>Det finns en tom plats, som är där CT-22-modulen du
-    tagit bort ska vara." >> "
-
+    "<.p>Det finns en tom plats, där CT-22-modulen du tagit bort ska sitta." >> "
+    onDesc = (isOn ? 'påslagen' : 'avstängd')
     cannotTakeMsg = 'Skämtar du? Den är stor som ett kylskåp,
                      och väger lika mycket som en bil. '
     cannotMoveMsg = 'Det finns ingen plats att flytta den någonstans. '
@@ -2012,8 +2011,8 @@ class GuanmgonAgendaItem: ConvAgendaItem
     ? "Det är diagnostikmodulen som är ansvarig för många av
     dina bekymmer här. Som tur är verkar den äntligen vara lagad: ett
     XT772-LV-chip är installerat i modulens S901-sockel. "
-    : "Den här modulen är en stor del av varför det här jobbet har tagit
-    så lång tid. CT-22:ans funktion är att diagnostisera fel och defekter
+    : "Den här modulen är en stor anledning till att jobbet tagit så lång 
+    tid. CT-22:ans funktion är att diagnostisera fel och defekter
     i de andra modulerna; naturligtvis visade det sig att den själv var defekt.
     Den fungerade precis tillräckligt bra för att skicka dig på veckors
     vilda jakter efter att fixa falska problem som den rapporterade i
