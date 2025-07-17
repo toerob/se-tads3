@@ -975,7 +975,7 @@ class XojoEscortState: GuidedTourState
 ;
 
 ++ TellTopic, SuggestedTellTopic, StopEventList @hiringFreezeTopic
-    ['<q>Jag är ledsen att säga att det är anställningsstopp på Omegatron
+    ['<q>Jag måste tyvärr säga att det är anställningsstopp på Omegatron
     just nu,</q> förklarar du. <q>Det betyder att vi inte kan anställa någon.</q>
     <.p>Xojo kan inte riktigt dölja sin besvikelse. <q>Åh. Tja,
     kanske i framtiden då.</q> Du rycker lätt på axlarna och
@@ -1795,7 +1795,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
     <<isOn ? "Lyckligtvis har du äntligen lyckats få den att fungera. "
            : "Oavsett vad är det din uppgift att få den att fungera. " >>
     <.p>
-    1100:an är i grunden en stor metallåda öppen på ena sidan, som en
+    1100:an är i grunden en stor metallåda öppen på ena sidan, som ett
     kylskåp utan dörr (och ungefär samma storlek), fylld
     med staplade elektronikmoduler. Knippen med kablar och ledningar kopplar
     modulerna till kontrollpanelerna och annan utrustning i kraftverket.
@@ -1850,8 +1850,8 @@ class GuanmgonAgendaItem: ConvAgendaItem
             att se. Sedan, fyra korta pip: lyckad
             uppstart! Du skannar noggrant modulerna och
             ser att allt fungerar. Efter sex veckor
-            har du äntligen gjort det; äntligen kan du ge
-            demon och förhoppningsvis få ett kontrakt underskrivet.
+            har du äntligen klarat det; äntligen kan du visa ett 
+            demo och förhoppningsvis få ett kontrakt underskrivet.
             <.p>
             Guanmgon ser SCU:n starta och tränger sig in i
             rummet för att kontrollera kontrollpanelerna. <q>Den
