@@ -27,7 +27,7 @@ angen: OutdoorRoom 'Ängen' 'ängen'
     east = skogsbrynetInPassage
 ;
 
-+skogsbrynetInPassage: ThroughPassage -> skogenUtPassage 'skogsbryn[-et]' 'skogsbrynet' 
++skogsbrynetInPassage: ThroughPassage -> skogenUtPassage 'skogsbryn+et' 'skogsbrynet' 
     noteTraversal(traveler) {
         if(traveler == gPlayerChar) {
             "Du kliver in i skogen. ";
@@ -41,7 +41,7 @@ skogen: OutdoorRoom 'skogen' 'skogen'
     west = skogenUtPassage
     east = gardsgard
 ;
-+skogenUtPassage: ThroughPassage -> skogsbrynetInPassage 'skogsbryn[-et]' 'skogsbrynet'
++skogenUtPassage: ThroughPassage -> skogsbrynetInPassage 'skogsbryn+et' 'skogsbrynet'
     noteTraversal(traveler) {
         if(traveler == gPlayerChar) {
             "Du kliver ut ur skogen. ";
@@ -50,7 +50,7 @@ skogen: OutdoorRoom 'skogen' 'skogen'
 ;
 
 
-jagare:  Actor 'hjortjägare[-n]/jägare[-n]' 'hjortjägare'
+jagare:  Actor 'hjortjägare+n/jägare+n' 'hjortjägare'
     theName = 'hjortjägaren'
     isProperName = nil
     isHim = true
@@ -75,14 +75,14 @@ gardsgard: OutdoorRoom 'I skogen, intill en gärdsgård' 'gärdsgårdens början
 
 
 
-+karra: Thing, Heavy, Container 'kärra[-n]*kärror[-na]' 'kärran'
++karra: Thing, Heavy, Container 'kärra+n*kärror+na' 'kärran'
     specialDesc = "En kärra stod intill gärdsgården. "
 ; 
 
 
 
 
-deer: Actor 'hjort[-en]' 'hjort'
+deer: Actor 'hjort+en' 'hjort'
     isIt =  true
     traffadAvPil = nil
     location = skogen

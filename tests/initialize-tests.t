@@ -680,7 +680,7 @@ TestUnit 'compundWords med literalAdjective' run {
     obj.initializeVocabWith(obj.vocabWords);
 
     // Assert
-    tadsSay(getGrammarInfoFromCmdDict(obj));
+    // tadsSay(getGrammarInfoFromCmdDict(obj));
     assertThat(cmdDict.findWord('röd', &literalAdjective)[1]).isEqualTo(obj);
     assertThat(cmdDict.findWord('röda', &literalAdjective)[1]).isEqualTo(obj);
 

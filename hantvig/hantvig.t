@@ -37,7 +37,7 @@ sjostranden: OutdoorRoom 'Sjöstranden'
   west = skogsstigen
 ;
 
-+hast: Actor 'häst[-en]' 'häst'
++hast: Actor 'häst+en' 'häst'
   owner = hantvig
   //isProperName = nil
 ;
@@ -47,18 +47,22 @@ skogsstigen: OutdoorRoom 'Skogsstigen'
   east = sjostranden
 ;
 
-//TODO: Oklart om detta har gjorts rätt, jämför med engelska versionen "pair of" 
-// "De svarttroll"  -> "Några svarttroll"
-+svarttroll: Actor 'några/svarttroll[-en]**svarttroll[-ena];;troll[-en]**troll[-ena]' 'några svarttroll'
-  theName = 'svartrollen'
-  coPluralName = 'några svarttroll'
-
-  isProperName = true
++svarttroll: Actor '(svart+a) *svarttrollen+a troll+en' 'svarttroll'
   isPlural = true
-  canMatchThem = true
+
+  // theName kommer användas för att skriva "Svarttrollena står där."
+  // pga att Actor används. (Till skillnad från Thing, där "Några svarttroll står där." används.)
+  //
+  // Detta är likadant i den engelska versionen, så här gör vi samma och ändrar det 
+  // genom att skriva en specialDesc istället.
+
+  specialDesc = "Några svarttroll lurar i mörkret bakom träden. "
 ;
 
-hantvig: Actor 'hantvig;;;' 'Hantvig' @sjostranden
++trees: Decoration 'träd+en' 'träd' "Träden är knotiga och mörka. " isPlural = true;
+
+
+hantvig: Actor 'hantvig' 'Hantvig' @skogsstigen //@sjostranden
   pcReferralPerson = ThirdPerson
   isProperName = true
 ;

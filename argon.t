@@ -35,7 +35,7 @@ modify OutdoorRoom
     ]}*/
 ;
 
-class Coin: Thing 'mynt[-et]*mynt[-en]' 'mynt';
+class Coin: Thing 'mynt+et*mynt+en' 'mynt';
 
 
 
@@ -47,7 +47,7 @@ stranden: OutdoorRoom 'Stranden'
         south = strandstigen
 ;
 
-+ihaligtTrad: Container, Fixture 'träd[-et]*träd[-en]' 'träd'
++ihaligtTrad: Container, Fixture 'träd+et*träd+en' 'träd'
     dobjFor(Search) {
         verify() {
             
@@ -59,12 +59,12 @@ stranden: OutdoorRoom 'Stranden'
     }
 ;
 
-+sack: BagOfHolding, Hidden 'säck[-en]' 'säck';
++sack: BagOfHolding, Hidden 'säck+en' 'säck';
 ++mynt: Coin;
 
 
 
-+sten: Thing 'sten[-en]*stenar[-na]' 'sten'
++sten: Thing 'sten+en*stenar+na' 'sten'
     "Stenen har vassa kanter och skulle kunna göra stor skada vid ett kast. "
     dobjFor(ThrowAt) {
         verify() { }
@@ -80,7 +80,7 @@ stranden: OutdoorRoom 'Stranden'
 
 
 
-+stugdorrsnyckel: Key 'nyckel[-n]' 'nyckel';
++stugdorrsnyckel: Key 'nyckel+n' 'nyckel';
 
 
 
@@ -123,7 +123,7 @@ vid_stuga: OutdoorRoom 'Vid en stuga' 'utanför stugan'
     inorth = stugdorrenOutside
     west = stugdorrenOutside
 ;
-+stugdorrenOutside: LockableWithKey, Door 'dörr[-en]*dörrar[-na]' 'dörr'
++stugdorrenOutside: LockableWithKey, Door 'dörr+en*dörrar+na' 'dörr'
     theName = 'dörren'
     keyList = [stugdorrsnyckel]
     //isLocked  = true
@@ -135,7 +135,7 @@ insida_stuga: OutdoorRoom 'I stugan'
     east = stugdorrenInside
     out = stugdorrenInside
 ;
-+stugdorrenInside: LockableWithKey, Door 'dörr[-en]*dörrar[-na]' 'dörr'
++stugdorrenInside: LockableWithKey, Door 'dörr+en*dörrar+na' 'dörr'
     masterObject = stugdorrenOutside
 
     theName = 'dörren'
@@ -145,7 +145,7 @@ insida_stuga: OutdoorRoom 'I stugan'
 
 
 
-lampa: LightSource 'svarta lykta[-n]/lampa[-n]*lampor[-na]' 'lampa' @stranden
+lampa: LightSource 'svarta lykta+n/lampa+n*lampor+na' 'lampa' @stranden
    
 ;
 

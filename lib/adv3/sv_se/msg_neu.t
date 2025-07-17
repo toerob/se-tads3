@@ -1450,6 +1450,8 @@ libMessages: MessageHelper
     sayDeparting(traveler)
     {
         // TODO: fixa så att det fungerar om travelerLocName == ''
+        // behövs det i detta fall?
+
         "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<traveler.travelerLocName>>. ";
     }
 
@@ -1460,6 +1462,8 @@ libMessages: MessageHelper
     sayArrivingLocally(traveler, dest)
     {
         // TODO: fixa så att det fungerar om travelerLocName == ''
+        // behövs det i detta fall?
+
         //"\^<<traveler.travelerName(true)>> enter<<traveler.verbEndingSEd>>
         //<<traveler.travelerLocName>>. ";
         "\^<<traveler.travelerName(true)>> <<traveler.verbToCome>> till <<traveler.travelerLocName>>. ";
@@ -1472,6 +1476,7 @@ libMessages: MessageHelper
     sayDepartingLocally(traveler, dest)
     {
         // TODO: fixa så att det fungerar om travelerLocName == ''
+        // behövs det i detta fall?
         "\^<<traveler.travelerName(true)>> <<traveler.verbToLeave>> <<traveler.travelerLocName>>. ";
     }
 
@@ -2975,15 +2980,15 @@ playerActionMessages: MessageHelper
     }
 
     /* specialized Immovable messages for TravelPushables */
-    cannotTakePushableMsg = '{Du/han} {kan} inte ta {det/obj dobj}, men
-        det kan vara möjligt att knuffa {det dobj/honom} någonstans. '
+    cannotTakePushableMsg = '{Du/han} {kan|kunde} inte ta {det/obj dobj}, men
+        det {kan|kunde} vara möjligt att knuffa {det dobj/honom} någonstans. '
 
     cannotMovePushableMsg = 'Det skulle inte {|ha} åstadkomm{a|it}
         någonting att flytta runt {ref dobj/honom} riktningslöst, men 
         det kanske {är} möjligt att flytta {det dobj/honom} i en specifik riktning. '
 
-    cannotPutPushableMsg = '{Du/han} {kan} inte stoppa {det/obj dobj} någonstans,
-        men det {kan} vara möjligt att knuffa {det dobj/honom} någonstans. '
+    cannotPutPushableMsg = '{Du/han} {kan|kunde} inte stoppa {det/obj dobj} någonstans,
+        men det {kan|kunde} vara möjligt att knuffa {det dobj/honom} någonstans. '
 
     /* can't take something while occupying it */
     cannotTakeLocationMsg = '{Du/han} {kan} inte plocka upp {det/obj dobj}
@@ -4251,13 +4256,16 @@ npcActionMessages: playerActionMessages
     shouldNotBreakMsg = '{Du/han} {vill|ville} inte förstöra {det dobj/honom}. '
 
     /* report for standing up/sitting down/lying down */
+    // TODO: kontrollera om du/han blir rätt med isPlural
     okayPostureChangeMsg(posture)
         { return '{Du/han} ' + posture.msgVerbI + '. '; }
 
     /* report for standing/sitting/lying in/on something */
     roomOkayPostureChangeMsg(posture, obj)
     {
+        // TODO: kontrollera om du/han blir rätt med isPlural
         gMessageParams(obj);
+        //return '{Du/han} ' + posture.msgVerbT + ' {på obj}. ';
         return '{Du/han} ' + posture.msgVerbT + ' {på obj}. ';
     }
 
@@ -5566,7 +5574,7 @@ class SuggestedTopicLister: Lister
         gMessageParams(askingActor, targetActor);
 
         /* show the prefix; include a paren if not in explicit mode */
-        "<<isExplicit ? '' : '('>>{Du askingActor/han} kan ";
+        "<<isExplicit ? '' : '('>>{Du askingActor/han} {kan} ";
     }
     showListSuffixWide(cnt, pov, parent)
     {

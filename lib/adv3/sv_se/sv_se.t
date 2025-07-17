@@ -1266,14 +1266,14 @@ modify Thing
      */
 
     // I ett fall där både bestämd/obestämd form ska användas får theName helt enkelt överridas 
-    //jagare:  Actor 'hjortjägare[-n]/jägare[-n]' 'hjortjägare'
+    //jagare:  Actor 'hjortjägare+n/jägare+n' 'hjortjägare'
     //    theName = 'hjortjägaren'
     //    isProperName = nil
     //    isHim = true
     //;
     // 
     // 
-    //hans:  Actor 'hans/hjortjägare[-n]/jägare[-n]' 'Hans'
+    //hans:  Actor 'hans/hjortjägare+n/jägare+n' 'Hans'
     //    isProperName = true
     //    isHim = true
     //;
@@ -1755,6 +1755,7 @@ modify Thing
      */
     pluralNameFrom(str)
     {
+        //tadsSay('pluralNameFrom(<<str>>)\n');
         local len;
         local lastChar;
         local lastPair;
@@ -4145,10 +4146,11 @@ langMessageBuilder: MessageBuilder
         /* parameters that don't imply any target object */
         ['en/han', &aName, nil, nil, true],
         ['en/hon', &aName, nil, nil, true],
-        ['en/honom', &aNameObj, nil, &itReflexive, nil],
-        ['en/henne', &aNameObj, nil, &itReflexive, nil],        
         ['ett/han', &aName, nil, nil, true],
         ['ett/hon', &aName, nil, nil, true],
+
+        ['en/honom', &aNameObj, nil, &itReflexive, nil],
+        ['en/henne', &aNameObj, nil, &itReflexive, nil],        
         ['ett/honom', &aNameObj, nil, &itReflexive, nil],
         ['ett/henne', &aNameObj, nil, &itReflexive, nil],    
 
@@ -9853,7 +9855,7 @@ VerbRule(LookBehind)
 ;
 
 VerbRule(Feel)
-    ('känn' | 'rör') ('på'|) dobjList
+    ('känn' | 'rör') ('efter'|) ('på'|) dobjList
     : FeelAction
     verbPhrase = 'röra/rör (vad)'
 ;

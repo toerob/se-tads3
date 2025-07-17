@@ -6,9 +6,7 @@ tVader: Topic vocabWords = 'vädret';
 tPolitik: Topic vocabWords = 'politik';
 tMeningenMedLivet: Topic vocabWords = 'meningen/livet';
 
-//TODO: *brevbärare[-na], brevbärare finns redan dock i brevbärare[-n]
-
-mailman:Actor 'b/brevis/brevbärare[-n]*brevbärarna' 'brevbärare' @labbet
+mailman:Actor 'b/brevis/brevbärare+n*brevbärarna' 'brevbärare' @labbet
     isHim = true
     globalParamName = 'bob'
 ;
@@ -42,7 +40,7 @@ mailman:Actor 'b/brevis/brevbärare[-n]*brevbärarna' 'brevbärare' @labbet
 
 + GiveTopic @peng 
 topicResponse() {
-    "Du ger  {the bob/him} {the dobj/he} som han accepterar med en artig nickning. ";
+    "Du ger  {ref bob/honom} {ref dobj/han} som han accepterar med en artig nickning. ";
     peng.moveInto(mailman);
 }
 ;

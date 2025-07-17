@@ -3,7 +3,7 @@
 #include <sv_se.h> 
 
 
-fiskare:  Actor 'fiskare[-n]' 'fiskare' @fiskarensboning
+fiskare:  Actor 'fiskare+n' 'fiskare' @fiskarensboning
     ""
     //isProperName = true
     isHim = true

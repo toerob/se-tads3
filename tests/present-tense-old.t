@@ -64,11 +64,11 @@ testPlayer3stPerspective: Actor 'bob' 'Bob'
   isHim = true
 ;
 
-testObjUterSingular: Thing 'dörr[-en]' 'dörr';
-testObjNeuterSingular: Thing 'skåp[-et]' 'skåp';
+testObjUterSingular: Thing 'dörr+en' 'dörr';
+testObjNeuterSingular: Thing 'skåp+et' 'skåp';
 
-testObjUterPlural: Thing 'dörr**dörr[-ar]' 'dörrar' isPlural = true isUter = true;
-testObjNeuterPlural: Thing 'skåp[-et]**skåp[-en]' 'skåpen' isPlural = true isUter = nil;
+testObjUterPlural: Thing 'dörr*dörrar+na' 'dörrar' isPlural = true isUter = true;
+testObjNeuterPlural: Thing 'skåp+et*skåp+en' 'skåpen' isPlural = true isUter = nil;
 
 
 // Test Assertions

@@ -36,7 +36,7 @@ kryptan: Room 'Kryptan'
   " "
 ;
 
-+sarkofag: Thing 'sarkofag[-en]' 'sarkofag'
++sarkofag: Thing 'sarkofag+en' 'sarkofag'
     "Den är inte skapad av ett tidsenligt material. Den är kromliknande och strömlinjeformad."
 
   isProperName = true

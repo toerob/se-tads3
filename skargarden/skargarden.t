@@ -18,13 +18,6 @@
 //++Thing, Heavy 'åra*åror+na' 'åror' "..."
 //    isPlural = true
 
-// TODO:
-/*
->ge saker 
-(till Sofia)
-(tar de saker först)
-krasch
-*/
 
 versionInfo: GameID
     IFID = '952c94dd-f92a-4970-9a00-cdcc24d038a1'
@@ -48,12 +41,12 @@ gameMain: GameMainDef
 ;
 
 
-plankGolv: Floor 'golv+et*plankor+na' 'plankor';
+plankgolv: Floor 'golv+et*plankor+na' 'plankor';
 
 
 
 grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
-    "Mats stod intill sin stuga österut, söderut var vedboden och grusvägen gick därifrån via nordväst. Ett staket var rest runtom hela tomten. Bortanför stugan (sydöst), låg en brygga anlagd över vattnet (öst). Regnet öste ner och det långa gräset gjorde hans skor fuktiga. "
+    "Mats stod intill sin stuga österut, söderut var vedboden och grusvägen gick därifrån via nordväst. Ett staket var rest runtom hela tomten. Bortanför stugan (sydöst), låg en brygga anlagd över vattnet (öst). Regnet öste ner och det långa gräset gjorde snabbt hans skor fuktiga. "
     east : TravelMessage {
         destination = bryggplatsen
         travelDesc = "Mats gick på de tjocka brädorna som bar ut över sjön och bryggan guppade i vattnet i takt med hans steg. " 
@@ -65,60 +58,53 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
     south = vedboDorrUtsida
 ;
 
-// TODO: alternativ syntax
-// +saken: Thing 'saker^n' 'saker' isPlural = true
-
-+saken: Thing 'saker+na' 'saker' isPlural = true
-    theName = 'sakerna';
-
-//++skapLuckeUtrymme: ComplexContainer,OpenableContainer 'insida+n' 'insida';
-
-+sofia: Actor 'Sofia' 'Sofia' 
+sofia: Actor 'Sofia' 'Sofia' 
     isHer = true 
     isProperName = true
 ;
-++sofiasMossa: Wearable 'sofias mössa+n' 'mössa' wornBy = sofia;
-++ sofiaChatting : InConversationState
++sofiasMossa: Wearable 'sofias mössa+n' 'mössa' wornBy = sofia;
++ sofiaChatting : InConversationState
     specialDesc = "Sofia stod alldeles framför dig "
     stateDesc = "Hon stod vänd mot dig och väntade på att du skulle tala. "
     attentionSpan = 2 
 ;
-+++ sofiaRedoAttTala : ConversationReadyState
+++ sofiaRedoAttTala : ConversationReadyState
     specialDesc = "Sofia stod där."
     stateDesc = "Sofia stod framför dig. "
     isInitState = true
 ;
 
-++++HelloTopic "<q>Hej!</q>, säger du. <q>Hej hej!</q>, svarar Sofia.";
-++++ByeTopic "<q>Hej då!</q>, säger du. \n<q>Hej då</q>, svarar Sofia.";
++++HelloTopic "<q>Hej!</q>, sade du. <q>Hej hej!</q>, svarade Sofia.";
++++ByeTopic "<q>Hej då!</q>, sade du. \n<q>Hej då</q>, svarade Sofia.";
 
-++++ ImpByeTopic "Eran konverstation tog slut";
-++++ BoredByeTopic "Sofia börjar titta på omgivningen istället för att konversera. ";
++++ ImpByeTopic "Eran konverstation tog slut";
++++ BoredByeTopic "Sofia började titta på omgivningen istället för att konversera. ";
 
-+++AskTopic, SuggestedAskTopic 'regn' 
+++AskTopic, SuggestedAskTopic 'regn' 
     "<q>Det typiska livet i skärgården...</q>"
     name = 'regnet'
 ;
-+++AskTopic, SuggestedAskTopic @sofia
+++AskTopic, SuggestedAskTopic @sofia
     "<q>Jag har inte så mycket att säga...</q>"
     name = 'henne själv'
 ;
 
 // OBS, manualen visar fel. DEt gårinte att använda GiveShowTopic + SuggestedShowTopic @
-+++ ShowTopic, SuggestedShowTopic @saken 
-    "<q>Jag har en sån där hemma</q>, svarar Sofia med ett ansträngt leende. "
+/*++ ShowTopic, SuggestedShowTopic @saken 
+    "<q>Jag har en sån där hemma</q>, svarade Sofia med ett ansträngt leende. "
     name = (matchObj.name)
-;
+;*/
 
-+++ TellTopic, SuggestedTellTopic @Mats
+++ TellTopic, SuggestedTellTopic @Mats
     "<q>Ok, berätta mer...</q>"
     name = 'dig själv'
 ;
+/*
 // TODO: ge saker till sofia, krasch vid
-+++GiveTopic, SuggestedGiveTopic @saken
+++ GiveTopic, SuggestedGiveTopic @saken
     "<q>Nej tack!</q>"
     name = (matchObj.name)
-;
+;*/
 
 
 +vedboDorrUtsida: LockableWithKey, Door 'vedbodörr+en/dörr+en*dörrar+na' 'vedbodörr'
@@ -129,7 +115,7 @@ grasmattan: OutdoorRoom 'Gräsmattan' 'gräsmattan'
 
 verandan: OutdoorRoom 'Verandan' 'verandan'
     "Verandan till stugan var i behov av ommålning. Färgen hade börjat släppa överallt på räcket. Dörröppningen till stugan var söderut och framför (norrut) låg den välbekanta och av år naggade dörrmattan han fortfarande inte bytt ut. Det knattrade frenetiskt från regnet på det plåttak som räckte ut över den. Över sjön österut låg diset tätt. Bryggan (nordöst) stod redo att gå ut på och Mats vita mindre roddbåt var förtöjd med ett rep i bryggan."
-    roomParts = static inherited - defaultGround + plankGolv
+    roomParts = static inherited - defaultGround + plankgolv
     west = grasmattan
     northeast : TravelMessage {
         destination = bryggplatsen
@@ -148,11 +134,13 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
     }
 ;
 
+
 +dorrmatta: Underside 'dörrmatta+n/matta+n' 'dörrmatta'
     // Search, Turn
     dobjFor(Search) asDobjFor(LookUnder)
     dobjFor(Turn) asDobjFor(LookUnder)
     dobjFor(Open) asDobjFor(LookUnder)
+    dobjFor(Lift) asDobjFor(LookUnder) 
     dobjFor(Take) {
         action() {
             inherited();
@@ -195,7 +183,13 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
     east = stugansKok
     south = stugansSovrum
     getExtraScopeItems(actor) { return inherited(actor) + lysknapp + stugansTaklampa; }
-
+;
++Decoration 'dörrkarm+en' 'dörrkarm'
+  dobjFor(Feel) {
+    action() {
+        "Du drar handen längs väggen kring dörrkarmen och hittar igen den välbekanta lysknappen. ";
+    }
+  }
 ;
 
 +lysknapp: Component, OnOffControl 'lysknapp+en/knapp+en/lyset/lampknapp+en/ljusknapp+en' 'lysknapp'
@@ -222,13 +216,15 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
 ;
 
 +eldstaden: Fixture, ComplexContainer 'eldstad+en' 'eldstad' 
-    subSurface: ComplexComponent, Surface 'spiselkrans+en/krans+en' 'spiselkrans' { 
+    subSurface: ComplexComponent, Surface '(eldstadens) spiselkrans+en/krans+en' 'spiselkrans' { 
         bulkCapacity = 5 
     }
     subContainer: ComplexComponent, Container 'öppna spis+en' 'öppna spisen'  { 
         bulkCapacity = 10 isQualifiedName = true 
     }
 ;
+
+
 +hylla: Fixture, Container 'hylla+n' 'hylla';
 
 ++telefon: Thing 'röd telefon+en' 'telefon'
@@ -359,7 +355,7 @@ vedbod: Room 'vedboden' 'vedboden'
 +sag: Thing 'såg+en' 'såg';
 +lie: Thing 'lie+n' 'lie';
 
-+vedtran: Thing 'ved+en/vedträ*vedträn[-a]' 'hög med vedträn' 
++vedtran: Thing 'ved+en/vedträ*vedträn+a' 'hög med vedträn' 
 ;
 /*
 Object -> logPile "vedträn"
@@ -417,6 +413,10 @@ bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
     arAnkrad = nil
     north  = bryggplatsen
 ;
+++Component, Fixture '(järn+et) årklyka+n/klyka+n*årklykor+na klykor+na' 'årklykor' 
+    isPlural = true
+    cannotTakeMsg = "Årklykorna tappas säkrast inte bort om de sitter kvar i båten. "
+;
 
 ++Component, Fixture 'ankare+t' 'ankare'
     cannotTakeMsg = "Ankaret satt fast med en kedja i båten. "
@@ -429,7 +429,7 @@ bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
     attachedObjects = [baten, bryggan] // TODO: fungerar inte 
 ;
 
-++Thing, Heavy 'åra*åror+na' 'åror' "..."
+++Thing, Heavy 'åra+n*åror+na' 'åror' "De sitter fast i varsin årklyka av järn i båten"
     isPlural = true
     isListed = true
     /*
@@ -460,7 +460,11 @@ Mats: Actor 'mats/du' 'Mats' @grasmattan
 
 stugansKok: DarkRoom 'stugans kök' 'köket'
     west = stugansVardagsrum
+    vocabWords = 'kök+et'
 ;
++koksskap: Component '*köksskåp+en/skåp+en' 'skåp' isPlural = true;
+++skapLuckeUtrymme: ComplexContainer, OpenableContainer 'insida+n' 'insida';
+
 +OpenableContainer, Fixture, LightSource 'kylskåp+et/kyl+en/skåp+et' 'kylskåp'
     isLit = nil
     makeOpen(stat) {
@@ -538,12 +542,6 @@ oljelampa: Thing 'oljelampa+n/lampa+n' 'oljelampa'
     location = nattduksbord.subSurface
 ;
 
-tandsticksask: OpenableContainer 'tändstick^s+ask+en' 'tändsticksask' 
-    location = nattduksbord.subContainer
-; 
-+tandstickor: Thing 'tändsticka+n*tändstickor+na' 'tändstickor' isPlural=true;
-
-
 
 stugansBadrum: DarkRoom 'stugans badrum'
     east = stugansSovrum
@@ -581,6 +579,14 @@ TODO: ska det saknas lampa där? Anpassa annars:
         bulkCapacity = 3
     }
 ;
+
+
+tandsticksask: OpenableContainer 'tändsticksask+en/ask+en' 'tändsticksask' 
+    location = eldstaden.subSurface
+    isListed = (moved)
+; 
++tandstickor: Thing 'tändsticka+n*tändstickor+na' 'tändstickor' isPlural=true;
+
 
 Component, Switch  'vattenkran+en/kran+en' 'vattenkran'
     location = tvattstall.subSurface
@@ -630,6 +636,13 @@ VerbRule(Lift)
     missingQ = 'vad vill du lyfta på'
 ;
 
+modify Actor
+    dobjFor(Lift) {
+        check() {
+            reportFailure('Det skulle vara grovt oförskämt att lyfta på {ref dobj/honom}. ');
+        }
+    }
+;
 
 Test 'spel' [
     'sö', 'titta under matta', 'ta nyckel', 's', 

@@ -105,7 +105,7 @@ spelare3dePerspektivDet: Actor 'träd+et' 'träd'
   isNeuter = true 
 ;
 
-spelare3dePerspektivDe: Actor 'män[-nen]' 'männen'
+spelare3dePerspektivDe: Actor 'män+nen' 'männen'
   pcReferralPerson = ThirdPerson
   isIt = true
   isPlural = true // TODO: träd+et - uter härleds inte automatiskt. Kolla upp. Det är PGA att iSuter defaultar till true numera,m ändra i Thing
@@ -118,11 +118,11 @@ hund: Actor 'hund+en' 'hund'
 ;
 katt: Actor 'katt+en' 'katt';
 
-smyckena: Actor 'smycken[-a]' 'smycken' isPlural = true;
+smyckena: Actor 'smycken+a' 'smycken' isPlural = true;
 skrin: Thing 'skrin+et' 'skrin' isNeuter = true;
 juvel: Thing 'juvel+en' 'juvel';
 
-luta: Actor 'luta[-n]' 'luta'
+luta: Actor 'luta+n' 'luta'
   owner = spelare3dePerspektivDet
   isUter = true
 ;

@@ -77,6 +77,8 @@ Test 'run' [
 
   'x min sköld',         // Du såg inget ovanligt med den.
   'släpp min sköld',     // Släppt.
-  'x min sköld'          // Du verkade inte ha någon sådan sak.
+  'x min sköld',          // Du verkade inte ha någon sådan sak.
+  
+  'q','j'
 
 ];
