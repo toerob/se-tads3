@@ -2305,7 +2305,7 @@ bridgeWiringCloset: Room 'Kopplingsskåp' 'kopplingsskåpet'
     dobjFor(Pull)
     {
         verify() { }
-        action() { "Bättre att låta bli; du vill inte riskera att
+        action() { "Bäst att låta bli; du vill inte riskera att
             oavsiktligt koppla ur något. "; }
     }
     dobjFor(Move) asDobjFor(Pull)
@@ -2385,7 +2385,7 @@ bridgeWiringCloset: Room 'Kopplingsskåp' 'kopplingsskåpet'
     dobjFor(Pull)
     {
         verify() { }
-        action() { "Bättre att låta bli; du riskerar att tappa bort den bland alla andra kablar om du släpper efter på spänningen igen. "; }
+        action() { "Bäst att låta bli; du riskerar att tappa bort den bland alla andra kablar om du släpper efter på spänningen igen. "; }
     }
 
     isNominallyIn(obj)
@@ -4985,7 +4985,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
             if (isAjar && steamTunnel8.workersPresent)
             {
                 /* the workers are inside */
-                "Du räcker din hand för att öppna dörren, men någon öppnar den från andra sidan först. Två arbetare i ljusgrönt overaller kliver ut i tunneln och stänger dörren bakom dem. ";
+                "Du sträcker ut handen för att öppna dörren, men någon öppnar den från andra sidan först. Två arbetare i ljusgrönt overaller kliver ut i tunneln och stänger dörren bakom dem. ";
 
                 /* trigger the workers */
                 st8Workers.workerEntry(nil);
@@ -4999,7 +4999,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
                 st8DoorLock.resetCombo();
 
                 /* mention what happens */
-                "Du provar dörren, men det enda som händer är ett klickande klick från låsmekanismen. ";
+                "Du provar dörren, men det enda som händer är ett klickande ljud från låsmekanismen. ";
 
                 /* terminate the action */
                 exit;
@@ -5039,8 +5039,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
             if (isOpen)
             {
                 /* mention it */
-                "Låsmekanismen klickar och surrar, och dörren svänger
-                upp. ";
+                "Låsmekanismen klickar och surrar, och dörren öppnas upp. ";
 
                 /* reset it */
                 st8DoorLock.resetCombo();
@@ -5086,7 +5085,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
              *   if we made it this far, we know the combo, so just say
              *   we're using it 
              */
-            "Du knappar in kombinationen på knappsatsen. ";
+            "Du slår in kombinationen på knappsatsen. ";
             st8DoorLock.resetCombo();
             st8DoorLock.addToCombo(internCombo);
         }
@@ -5099,7 +5098,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     {
        action()
         {
-            "Ljudet av din knackning ekar genom tunneln. ";
+            "Ljudet av din knackning ekar i tunneln. ";
 
             if (steamTunnel8.workersPresent)
             {
@@ -5191,7 +5190,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     {
         action()
         {
-            "Mekanismen inuti låset klickar flera gånger när
+            "Mekanismen inne låset klickar flera gånger när
             du trycker in knappen. ";
             location.resetCombo();
         }
@@ -5276,7 +5275,7 @@ networkRoom: Room 'Nätverksrum' 'nätverksrummet'
     <.reveal need-net-analyzer> "
 
     attachedObjects = [nrRouter, nrRouterSockets]
-    cannotDetachMsg(obj) { return 'Du är förmodligen bättre att lämna den som
+    cannotDetachMsg(obj) { return 'Det är förmodligen bäst att lämna den som
         den är, så att ingen blir misstänksam att du snokar omkring. '; }
 
     isNominallyIn(obj) { return obj == nrHole || inherited(obj); }

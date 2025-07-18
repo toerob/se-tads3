@@ -79,7 +79,7 @@ syncLabRoof: RoofRoom
     cannotPutInMsg(obj)
     {
         gMessageParams(obj);
-        return 'Bättre att låta bli; {det obj/han} kunde gå sönder i fallet. ';
+        return 'Bäst att låta bli; {det obj/han} kunde gå sönder i fallet. ';
     }
 
     /* 
@@ -518,7 +518,7 @@ syncCatwalkEast: SyncCatwalkRoom
         }
         action()
         {
-            "Du knappar in kombinationen på knappsatsen; ett mjukt
+            "Du slår in kombinationen på knappsatsen; ett mjukt
             klick hörs från mekanismen. ";
             sceKeypad.combo = internCombo;
         }

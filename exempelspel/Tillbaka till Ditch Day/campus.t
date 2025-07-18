@@ -46,7 +46,7 @@ campusInit()
     Väg 105 var en solid rad av baklyktor hela vägen från LAX till centrum,
     och 110:an var en parkeringsplats större delen av vägen upp till Pas. Du hade
     tänkt att du kanske skulle utforska campus lite innan ditt
-    möte, men det är uteslutet nu; bättre att gå
+    möte, men det är uteslutet nu; bäst att gå
     direkt till Career Center-kontoret. Apropå det, det
     verkar som om de flyttar Career Center till en ny byggnad varje
     gång du är här nere; den här gången är det i Student Services-
@@ -643,7 +643,7 @@ toteBag: BagOfHolding, Wearable, ComplexContainer 'axel+väska+n/tyg+kasse+n' 't
             if (loc == nil)
             {
                 "(Kartan visar bara platserna av byggnaderna, inte 
-                interiöra planlösningar, så du måste gå ut och orientera 
+                interiöra planlösningar, så du behöver gå ut och orientera 
                 dig om du vill hitta vägen dit.) ";
                 return;
             }
@@ -1424,8 +1424,8 @@ sanPasqualWalkway: CampusOutdoorRoom 'San Pasqual Gångväg'
     canTravelerPass(trav) { return trav != cherryPicker; }
     explainTravelBarrier(trav)
     {
-        "Bättre att inte köra skyliften utanför campus; den
-        kan säkert inte vara laglig på gatan. ";
+        "Bäst att inte köra skyliften utanför campus; den
+        är säkert inte laglig att ha på gatan. ";
     }
 ;
 
@@ -1494,7 +1494,7 @@ ppOffice: Room 'Physical Plant Kontor' 'Physical Plant Kontoret'
     dobjFor(StandOn)
     {
         verify() { }
-        action() { "Bättre att låta bli; det skulle se konstigt ut om någon
+        action() { "Bäst att låta bli; det skulle se konstigt ut om någon
             kom in. "; }
     }
     dobjFor(SitOn) asDobjFor(StandOn)
@@ -3403,7 +3403,7 @@ quad: CampusOutdoorRoom
 /* försöker lämna tillbaka analysatorn efter att vi har den */
 ++++ GiveShowTopic @netAnalyzer
     "Du tänker att det kanske inte är en bra idé att dra för mycket uppmärksamhet till
-    det faktum att du lånade deras analysator. Det vore nog bättre att bara
+    det faktum att du lånade deras analysator. Det vore nog bäst att bara
     lämna den någonstans i närheten och låta dem hitta den själva. "
 
     isConversational = nil
@@ -5730,7 +5730,7 @@ rockGarden: CampusOutdoorRoom 'Stenträdgård' 'stenträdgården'
     iobjFor(PutIn)
     {
         verify() { }
-        action() { "Bättre att låta bli; du skulle göra {det dobj/subj} helt blöt. "; }
+        action() { "Bäst att låta bli; du skulle göra {det dobj/subj} helt blöt. "; }
     }
 ;
 
@@ -5823,7 +5823,7 @@ millikanPond: CampusOutdoorRoom 'Millikan-dammen' 'Millikan-dammen'
     iobjFor(PutIn)
     {
         verify() { }
-        action() { "Bättre att låta bli; du skulle göra {det dobj/subj} helt blöt. "; }
+        action() { "Bäst att låta bli; du skulle göra {det dobj/subj} helt blöt. "; }
     }
 ;
 

@@ -254,7 +254,7 @@ property knownFollowDest;
         bara ha sönder den om du gjorde det. '); } }
     dobjFor(LookIn) asDobjFor(Open)
 
-    cannotDoffMsg = "Bättre att inte göra det; den är för lätt att tappa 
+    cannotDoffMsg = "Bäst att låta bli; den är för lätt att tappa 
         bort när du inte har den på dig. "
 ;
 

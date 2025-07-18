@@ -639,7 +639,7 @@ class XojoErrandState: ActorState
                 vätskan skulle förmodligen bara lösa upp chipet, och det är
                 fortfarande möjligt att du kommer behöva det till något. ";
             else
-                "Bättre att låta bli; vem vet vad den giftiga vätskan skulle
+                "Bäst att låta bli; vem vet vad den giftiga vätskan skulle
                 göra med {det dobj/honom} där. ";
             exit;
         }
@@ -2006,7 +2006,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
 ;
 
 + ct22: TestableCircuit, Thing
-    'ct ct-22 ct22 diagnostik^s+modul+en' 'CT-22 diagnostikmodul'
+    'ct-22 ct+22 diagnostik^s+modul+en' 'CT-22 diagnostikmodul'
     "<< xt772lv.isIn(self)
     ? "Det är diagnostikmodulen som är ansvarig för många av
     dina bekymmer här. Som tur är verkar den äntligen vara lagad: ett
@@ -2372,8 +2372,8 @@ class TestableCircuit: object
             if (scoreMarker.awardPointsOnce())
             {
                 /* mention that we've found something special */
-                reportAfter('<.p>Så klart, DynaTestaren är precis den
-                    typen av lågströmsenhet där du skulle hitta en 
+                reportAfter('<.p>Så klart, DynaTestaren är precis en 
+                    sån typ av lågströmsenhet där du skulle kunna hitta en 
                     XT772-LV! ');
 
                 /* note that we've found it */
@@ -2404,7 +2404,7 @@ class TestableCircuit: object
 
 +++ Fixture 'testare krets+testare+n' 'kretstestare'
     "Kretsarna har det vanliga Mitachron-utseendet med kaotisk design,
-    som om delarna inte riktigt passade och tvingades på plats
+    som om delarna inte riktigt passar och har tvingats på plats
     med en hammare. "
 ;
 
@@ -2444,10 +2444,10 @@ class TestableCircuit: object
 
 /* class for power hall rooms */
 class PowerPlantHallRoom: PowerPlantRoom
-    north: NoTravelMessage { "Du är fem våningar upp; det är bättre att ta
+    north: NoTravelMessage { "Du är fem våningar upp; bäst att ta
         hissen istället. " }
     south: NoTravelMessage { "Anläggningens golv är fem våningar nedanför;
-        det är bättre att ta hissen istället. " }
+        bäst att ta hissen istället. " }
 
     name = 'korridor'
     vocabWords = 'hall+en/korridor+en'
@@ -2467,9 +2467,9 @@ class PowerPlantHallRoom: PowerPlantRoom
             {
             case 1:
                 "Ett avlägset mullrande ljud hörs någonstans från djungeln.
-                Först tror du att det är åska, men det blir lite högre och du
-                inser att det är en annalkande helikopter. En granskning av
-                horisonten visar inget i luften. Plötsligt är ljudet öronbedövande,
+                Först tror du att det är åska, men när det blir lite högre 
+                inser du att det är en annalkande helikopter. Du söker av 
+                horisonten, men himlen är tom. Plötsligt är ljudet öronbedövande,
                 och en svart form sveper in i synfältet ovanifrån och rasar iväg
                 mot byggnaderna på andra sidan floden. När helikoptern flyger förbi
                 ser du den gula Mitachron-logotypen på stjärtbommen. ";
@@ -2485,7 +2485,7 @@ class PowerPlantHallRoom: PowerPlantRoom
             case 2:
                 "Ljudet av en annan annalkande helikopter hörs från djungeln,
                 och inom några ögonblick dyker den upp&mdash;tillsammans med
-                tre andra, som flyger i formation, på väg åt samma håll som
+                tre andra, flygandes i formation, på väg åt samma håll som
                 den föregående. De fyra flyger över floden och landar bredvid
                 den första. ";
 
@@ -2499,13 +2499,9 @@ class PowerPlantHallRoom: PowerPlantRoom
                 break;
 
             case 3:
-                "Ankomsten av Mitachron-folket är oroväckande; de måste verkligen
-                vilja ha den här affären för att ha skickat en så stor grupp.
-                Åtminstone måste de göra sin egen demonstration, så du ligger före
-                dem på den punkten. Ändå verkar direkta konkurrenssituationer med
-                Mitachron aldrig gå bra för Omegatron. Kanske om du kan nå Översten
-                tillräckligt snabbt, kan du få ditt kontrakt undertecknat innan
-                Mitachron-representanterna ens får ett möte med henne. ";
+                "Mitachron-folkets ankomst är oroande – de måste verkligen vilja 
+                säkra kontraktet, med tanke på hur stor grupp de skickat. 
+                Åtminstone måste de hålla sin egen demonstration, så där ligger du steget före. Men direkta konkurrenssituationer med Mitachron brukar sällan sluta väl för Omegatron. Kanske, om du lyckas nå Översten i tid, kan du få kontraktet påskrivet innan Mitachrons representanter ens får till stånd ett möte med henne";
                 break;
             }
         }
@@ -2538,7 +2534,7 @@ MultiInstance
     norra väggen. Härifrån har du en bra utsikt över den gigantiska
     industriella utrustningen som driver anläggningen. "
 ;
-+ Distant 'gigantisk industriell ångålder^s+utrustning+en
++ Distant 'gigantisk+a industriell+a ångåldersutrustning+en/utrustning+en
             /turbiner/transformatorer/pannor/rör/kablar'
    'utrustning'
     "Turbiner, transformatorer, pannor, alla sammankopplade med ett stort
@@ -2572,7 +2568,7 @@ MultiInstance
     denna sida av kanjonen med de administrativa byggnaderna på
     andra sidan. "
 ;
-+ Distant 'kontor administrativt komplex/byggnader'
++ Distant 'kontor administrativ:t+a komplex+et*kontorsbyggnader+na/byggnader+na'
     'administrativa komplexet'
     "Det är ett vidsträckt komplex av kontorsbyggnader som inhyser
     kraftverkets omfattande byråkrati. "
@@ -2584,7 +2580,7 @@ MultiInstance
 class HeliTail: Distant 'helikopter+stjärt+bomm+en/fenstron+axel+n' 'stjärtbommen'
     "Den verkar vara märkt med Mitachron-logotypen. "
    ;
-class HeliTailLogo: Distant 'gul mitachron logotyp' 'Mitachron-logotyp'
+class HeliTailLogo: Distant 'gul+a mitachron logotyp+en' 'Mitachron-logotyp'
     "Du kan knappt urskilja den härifrån, men du tror
     att du känner igen stjärtmarkeringarna som Mitachron-logotypen: ett stort gult
     <q>M</q> i ett kraftigt sans-serif-typsnitt med lutning, överlagrat på
@@ -2641,7 +2637,7 @@ powerHallEast: PowerPlantHallRoom
 ;
 
 + powerHallDoorway: Fixture, ThroughPassage -> powerControlDoorway
-    'öst ö dörr+öppning+en/skylt+en' 'dörröppning'
+    'öst+ra ö dörr+öppning+en/skylt+en' 'dörröppning'
     "Du antar att skylten säger <q>Kontrollrum,</q> även om
     det inte är på ett alfabet du kan läsa. Dörröppningen leder österut. "
 ;
@@ -3356,12 +3352,12 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
 ;
 
 + Fixture 'hiss schakt+et/topp+en' 'schakt'
-    "Schaktet måste vara ungefär sju eller åtta våningar högt, men det finns inte
-     tillräckligt med ljus för att du verkligen kan avgöra det genom att titta på det. "
+    "Schaktet måste vara runt sju eller åtta våningar högt, men det finns inte
+     tillräckligt med ljus för att du verkligen ska kunna veta genom att titta på det. "
 ;
 
 + elevatorCable: Fixture 'kabel+n/huvud+hiss+kabel+en*kablar+na' 'kabel'
-    "Den hänger bara slappt, vilket stämmer överens med hur
+    "Den hänger bara slappt, vilket stämmer med att
     hissen kraschade i botten av schaktet. "
 
     dobjFor(Climb)
@@ -3375,7 +3371,7 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
     dobjFor(Pull)
     {
         verify() { }
-        action() { "Du drar i kabeln. Detta sänder en vacker
+        action() { "Du drar i kabeln. Detta skapar en vacker
             sinusvåg som fortplantar sig uppåt kabeln. Du är säker på att du skulle kunna
             beräkna flera egenskaper hos kabeln genom att observera
             vågens fortplantningshastighet, men du har för
@@ -3407,9 +3403,9 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
     destination = plantElevator
 
     /* this travel merits some extra description */
-    travelDesc = "Du sänker dig försiktigt genom serviceluckan.
+    travelDesc = "Du sänker försiktigt ner dig själv genom serviceluckan.
                   När du är igenom släpper du taget och faller
-                  de få metrarna till hissgolvet. "
+                  de sista metrarna till hissgolvet. "
 
     dobjFor(Close)
     {
@@ -3432,15 +3428,15 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
     iobjFor(PutIn)
     {
         verify() { }
-        action() { "Bättre att inte göra det; det är ett långt fall. "; }
+        action() { "Bäst att inte göra det; det är ett långt fall. "; }
     }
 ;
 
 + doorS2inner: TravelWithMessage, Door '"s2" hiss+dörr+en' 'dörr'
-    "Precis som de andra dörrarna i detta schakt är det den typ som
-    svänger utåt snarare än den skjutbara typ som är mer typisk för moderna
-    hissar. Dörrens nedre del är ungefär sextio centimeter ovanför
-    toppen av hissen. Markeringen <q>S2</q> har målats på med
+    "Liksom de andra dörrarna i detta schakt är det en dörr som
+    svänger utåt snarare än snarare än en skjutdörr som är mer typisk 
+    för moderna hissar. Dörrens nedre del är ungefär sextio centimeter 
+    ovanför toppen av hissen. Markeringen <q>S2</q> har målats på med
     en schablon, och vid kanten av dörren finns en låsmekanism.
     <<isOpen ? "Du håller den öppen. "
              : isLocked ? '' : "Den är bara lite på glänt. " >> "
@@ -3465,8 +3461,8 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
         }
         action()
         {
-            "Du ger dörren en knuff och den svänger upp.
-            Den är fjäderbelastad, så du måste hålla den öppen. ";
+            "Du knuffar på dörren som svänger upp.
+            Den är fjäderbelastad, så du måste hålla i den för att den ska förbli öppen. ";
             makeOpen(true);
         }
     }
@@ -3488,7 +3484,7 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
         }
     }
 
-    travelDesc = "Du klättrar de få decimetrarna över den upphöjda tröskeln. "
+    travelDesc = "Du klättrar upp de få decimetrarna till den upphöjda tröskeln. "
 ;
 ++ Component 'schablonerad s2 markering s2' '<q>S2</q> markering'
     "Det är bara en schablonerad markering som läser <q>S2</q>; det är förmodligen
@@ -3716,7 +3712,7 @@ s2HallEast: Room 'Mitten av korridoren' 'mitten av korridoren' 'korridor'
         norr. ',
 
         'Xojo stoppar dig. <q>Sub-peon-personal den vägen ligger,</q>
-        säger han. <q>Bättre att gå den här vägen.</q> Han pekar på dörren. ']
+        säger han. <q>Bättre att gå den här vägen.</q> Han pekar mot dörren. ']
     }
     north = s2HallEastDoor
 
@@ -3733,7 +3729,7 @@ s2HallEast: Room 'Mitten av korridoren' 'mitten av korridoren' 'korridor'
  */
 s2Storage: Room 'Förrådsrum' 'förrådsrummet'
     "Detta mörka, unkna rum är fyllt med lådor, packlårar och slumpmässigt
-    skräp, intryckt i varje tillgängligt utrymme och staplade prekaärt
+    skräp, intryckt i varje tillgängligt utrymme och staplade otryggt 
     från golv till det låga taket. En smal stig verkar slingra sig
     genom skräpet norrut. En dörr leder söderut. "
 
@@ -3745,18 +3741,18 @@ s2Storage: Room 'Förrådsrum' 'förrådsrummet'
     roomParts = [defaultFloor, defaultCeiling, defaultSouthWall]
 ;
 
-+ s2StorageDoor: Door 'låg smal dörr' 'dörr'
++ s2StorageDoor: Door 'låg+a smal+a dörr+en' 'dörr'
     "Det är en låg, smal dörr som leder söderut. "
 ;
 
 + Decoration
-    'slumpmässig hög/högar/låda/lådor/packlår/packlårar/skräp/hög/högar/bråte/saker'
+    'slumpmässig skräp+et/hög+en/låda+n*bråte+n saker+na högar+na packlårar+na lådor+na'  
     'skräp'
     "Det är bara en massa slumpmässigt skräp. "
     isMassNoun = true
 ;
 
-+ storagePath: TravelWithMessage, ThroughPassage 'smal stig' 'stig'
++ storagePath: TravelWithMessage, ThroughPassage 'smal+a stig+en' 'stig'
     "Det ser ut som tillräckligt med en stig genom skräpet för att
     du ska kunna ta dig igenom. "
 
@@ -3781,13 +3777,13 @@ s2Storage: Room 'Förrådsrum' 'förrådsrummet'
  *   North end of storage room
  */
 s2Utility: Room 'Nyttoområde' 'nyttoområdet'
-    "Detta är den norra änden av ett mörkt, unknat förrådsrum. Skräp är
+    "Det här är den norra änden av ett mörkt, unket förrådsrum. Skräp står 
     staplat nästan från golv till tak i söder, förutom en
-    smal stig som slingrar sig genom röran. Denna ände av
+    smal stig som slingrar sig genom röran. Den här änden av
     rummet är mestadels rensat från skräp, förmodligen för att lämna plats för
     åtkomst till rör, ledningar och annan nyttoutrustning uppställd
     nära den norra väggen. En rund öppning i den norra väggen leder
-    utomhus; det ser ut som om den främst var designad för rören
+    till utsidan; det ser ut som om den främst var designad för rören
     och ledningarna, men det finns tillräckligt med utrymme kvar för en person
     att ta sig igenom. "
 
@@ -3843,7 +3839,7 @@ s2Platform: OutdoorRoom 'Nyttoplattform' 'nyttoplattformen'
     toppen av ravinens lodräta klippvägg. Ravinens
     vägg faller nästan vertikalt ner till floden nedanför.
 
-    <.p>En primitiv repbro över ravinen slutar här. Denna ände
+    <.p>En primitiv repbro över ravinen slutar här. Den här änden 
     av bron är bunden till plattformens stålgaller,
     och bron sträcker sig ut över ravinen norrut.
 
@@ -3959,7 +3955,7 @@ class RopeBridgeRoom: Floorless, OutdoorRoom
         }
         if (gActionIs(ThrowAt) && !gIobj.ofKind(RopeBridgeCanyon))
         {
-            "Bättre att inte göra det; {det dobj/han} skulle förmodligen falla ner i ravinen. ";
+            "Bäst att inte göra det; {det dobj/han} skulle förmodligen falla ner i ravinen. ";
             exit;
         }
         if (gActionIn(Jump, JumpOffI))
@@ -4028,7 +4024,7 @@ class RopeBridgeCanyon: Distant
         verify() { }
         check()
         {
-            "Bättre att inte göra det; de har väldigt hårda straff för nedskräpning
+            "Bäst att inte göra det; de har väldigt hårda straff för nedskräpning
             här omkring. ";
             exit;
         }
@@ -4521,7 +4517,7 @@ adminLobby: Room 'Lobby' 'lobbyn'
         sväljer den, lite mindre frenetiskt den här gången. En servitör
         samlar in glaset när du är klar.',
 
-        'Bättre att inte överdriva; du behöver fortfarande upprätthålla
+        'Bäst att inte överdriva; du behöver fortfarande upprätthålla
         en affärsmässig hållning.']
     }
 

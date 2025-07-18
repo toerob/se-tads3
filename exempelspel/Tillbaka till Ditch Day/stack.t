@@ -687,7 +687,7 @@ class StackFixture: CustomFixture
             också anlänt. Alla tittar tyst på dig.
             <.p>Belker ser förvirrad ut. <q>Vad betyder detta dingande
             ljud?</q> frågar han skarpt. Som för att svara
-            klickar den svarta lådan, och dörren till rum 4 svänger upp.
+            klickar den svarta lådan, och dörren till rum 4 öppnas upp.
             Folkmassan hurrar och applåderar---till och med Mitachron-
             teknikerna ler. Belker står bara där med
             hakan hängande.
@@ -1707,16 +1707,16 @@ class AaronErinConvList: object
 ;
 
 ++++ TellTopic, SuggestedTellTopic @otherJobOffersTopic
-    "<q>Faktiskt har jag fått några erbjudanden genom åren från andra
-    företag,</q> säger du. När du tänker tillbaka är det svårt att komma ihåg
-    exakt varför du aldrig tog något av dessa erbjudanden. Var och en hade
-    någon brist, det är du säker på; att stanna kvar har definitivt haft sina egna
-    problem, men bättre den djävul man känner, som man säger. Men var det
+    "<q>Jag har faktiskt fått några erbjudanden genom åren från andra
+    företag,</q> säger du. När du dock tänker tillbaka är det svårt att minnas
+    exakt varför du aldrig nappade på något av dessa erbjudanden. Var och en av dem hade
+    någon brist, det är du säker på; att stanna kvar har definitivt inneburit sina egna
+    problem, men hellre den djävul man känner, som man säger. Men var det då 
     verkligen rädsla för det okända som alltid stoppade dig? Du har
     en gnagande känsla av att det inte var det, att det var en annan sorts
-    rädsla: rädsla för att vilken framgång du än har haft på Omegatron har
-    varit en tillfällighet, och att du inte skulle kunna upprepa den
-    någon annanstans. <q>Jag antar att jag aldrig hittade en möjlighet som var bra
+    rädsla: en rädsla för att vilken framgång du än har haft på Omegatron så har 
+    det varit en tillfällighet, och att du inte skulle kunna upprepa den
+    någon annanstans. <q>Jag antar att jag aldrig såg en möjlighet som var bra
     nog för att locka bort mig.</q>
     <.reveal lunch-satisfied-1> "
 
@@ -1724,15 +1724,15 @@ class AaronErinConvList: object
 ;
 
 ++++ TellTopic, SuggestedTellTopic @startupsTopic
-    "<q>Jag har tittat på några startups genom åren,</q> säger du,
-    <q>men de verkade alltid lite riskabla.</q> Du har alltid gillat
-    tanken på att arbeta för ett mindre företag---en chans att bygga
-    något från grunden, utan all overhead från stora företag.
-    Visst, startups är riskabla. Men när du tänker på det nu måste du
+    "<q>Jag har tittat på några nystartade företag genom åren,</q> säger du,
+    <q>men de har alltid verkat lite riskabla.</q> Du har alltid gillat
+    tanken på att arbeta för ett mindre företag---en chans att bygga upp
+    något från grunden, utan all overhead från stora företag. 
+    Visst, nystarter är riskabla. Men när du tänker på det nu måste du
     undra om risken som verkligen oroade dig inte var något mer
     personligt: rädsla för att du inte skulle vara tillräckligt bra, att dina år
     på det stora företaget gjorde dig för mjuk.
-    <.reveal lunch-satisfied-1> "
+    <.reveal lunch-satisfied-1> " // TODO: snygga till resten av meningen.
 
     name = 'startup-företag'
 ;

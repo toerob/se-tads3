@@ -1025,7 +1025,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
                 Dabney är en för lugn plats för sådant,
                 och dessutom skulle dessa puckar kunna slå ut ett öga. ";
             else
-                "Bättre att inte kasta runt puckarna; de skulle kunna slå ut
+                "Bäst att inte kasta runt puckarna; de skulle kunna slå ut
                 ett öga. ";
             exit;
         }

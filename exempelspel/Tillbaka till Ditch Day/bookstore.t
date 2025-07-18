@@ -449,7 +449,7 @@ class BookstoreReceipt: Readable
         verify() { }
         check()
         {
-            "Bättre att inte lämna saker liggande här; någon
+            "Bäst att inte lämna saker liggande här; någon
             kanske misstar dem för varor. ";
             exit;
         }
