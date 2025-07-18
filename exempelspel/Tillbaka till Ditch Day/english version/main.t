@@ -1,4 +1,3 @@
-#charset "utf-8"
 /* 
  *   Copyright 2003, 2013 Michael J. Roberts
  *   
@@ -7,7 +6,7 @@
  */
 
 #include <adv3.h>
-#include <sv_se.h>
+#include <en_us.h>
 
 /* ------------------------------------------------------------------------ */
 /*
@@ -21,35 +20,34 @@ gameMain: GameMainDef
     /* show our introduction */
     showIntro()
     {
-               /* visa prologen */
-        "\bÄn en gång är det du, Doug Mittling, som fått det sketna
-        reseuppdraget. Det är nackdelen med att vara mellanchef—
-        dina ingenjörer hade fullt upp med riktigt arbete,
-        och vice vd:n var på en viktig faktainsamlingsresa till
-        Maui, själv hade du ingen ursäkt förutom en stor hög med
-        processrapporter att granska. Så här står du nu, på ett anonymt
-        kraftverk i en myggstinn djungel någonstans i Sydostasien,
-        tolv timmars bilresa från närmaste flygplats. Du har redan varit
-        här i sex veckor och försökt få den förbaskade SCU-1100DX
-        att fungera så att du kan visa upp den för kunden, men hittills 
-        är den fortfarande trasig. Det börjar bli svettigt, särskilt
-        eftersom du har hört Guanmgon prata om Mitachron flera gånger
-        nyligen. Om du förlorar det här kontraktet till dem, kommer
-        din vice vd att bli rasande. När han kommer hem från Maui,
-        förstås.\b";
+        /* show the prologue */
+        "\bOnce again, you, Doug Mittling, got stuck with the crappy
+        travel assignment. It's the downside of being a middle
+        manager---your engineers were all too busy with real work,
+        and your vice president had an important fact-finding trip to
+        Maui, but you had no excuse apart from a big pile of process
+        reports to review.  So here you are, at an anonymous power
+        plant in a mosquito-infested jungle somewhere in south Asia,
+        the nearest airport a twelve-hour drive away.  You've been
+        here six weeks already, trying to get this crappy SCU-1100DX
+        working so you can give the customer a demo, but so far it's
+        still broken.  It's starting to feel desperate, especially
+        since you've overheard Guanmgon talking about Mitachron
+        several times recently.  If you lose this contract to
+        Mitachron, your VP will be furious.  When he gets back from
+        Maui, of course.\b";
 
-        /* visa spelets titel */
-        "<b>Tillbaka till Ditch Day</b>\n
-        av Michael J.\ Roberts\n
-        Översatt av Tomas Öberg med stor hjälp av Copilot/Tabnine/ChatGpt\n
-        Version <<versionInfo.version>> (<<versionInfo.serialNum>>)\n
+        /* show the game title */
+        "<b>Return to Ditch Day</b>\n
+        by Michael J.\ Roberts\n
+        Release <<versionInfo.version>> (<<versionInfo.serialNum>>)
         \b";
     }
 
     /* show our "goodbye" message */
     showGoodbye()
     {
-        "<.p>Tack för att du spelade <i>Tillbaka till Ditch Day</i>!\b";
+        "<.p>Thanks for playing <i>Return to Ditch Day</i>!\b";
     }
     
     /* 
@@ -175,16 +173,16 @@ gameMain: GameMainDef
         </center>\b\b";
         
         /* show the title/author/version and startup options */
-        "\b<b>Tillbaka till Ditch Day</b>
-        \nVersion <<versionInfo.version>> (<<versionInfo.serialNum>>)
+        "\b<b>Return to Ditch Day</b>
+        \nRelease <<versionInfo.version>> (<<versionInfo.serialNum>>)
         \nCopyright &copy;2004, 2013 Michael J.\ Roberts
-        / Gratisprogram / Skriv <<aHref('copyright', 'COPYRIGHT')>> för detaljer\n
+        / Freeware / Type <<aHref('copyright', 'COPYRIGHT')>> for details\n
         
-        <.p>Om det här är första gången du spelar detta spel, vänligen skriv
-        <<aHref('om', 'OM')>> för viktig
-        information. För att återställa en tidigare sparad position, skriv
-        <<aHref('ladda', 'LADDA')>> 
-        <.p>För att <<aHref('', 'börja spelet')>>, tryck bara på Enter-tangenten. ";
+        <.p>If this is your first time playing this game, please type
+        <<aHref('about', 'ABOUT')>> (or just 'A') for some important
+        information.  To restore a position you saved earlier, type
+        <<aHref('restore', 'RESTORE')>> (or 'R').
+        <.p>To <<aHref('', 'begin the game')>>, just press the Enter key. ";
 
         /* keep going as long as they want to stay here */
         for (;;)
@@ -223,7 +221,7 @@ gameMain: GameMainDef
                  *   don't require it.  Then we accept spaces, and then the
                  *   string has to end.  
                  */
-                '<space>*(rq|återspela)'
+                '<space>*(rq|replay)'
                 + '<space>+([\'"])(((?!%2).)+)%2?<space>*$', cmd) != nil)
             {
                 /* get the keyword */
@@ -239,12 +237,12 @@ gameMain: GameMainDef
             }
 
             /* check which keyword we got */
-            if ('om'.startsWith(kw))
+            if ('about'.startsWith(kw))
             {
                 /* they want the ABOUT information */
                 versionInfo.showAbout();
             }
-            else if ('ladda'.startsWith(kw))
+            else if ('restore'.startsWith(kw))
             {
                 /* try restoring a game */
                 if (RestoreAction.askAndRestore())
@@ -253,22 +251,22 @@ gameMain: GameMainDef
                     return 2;
                 }
             }
-            else if ('avsluta'.startsWith(kw))
+            else if ('quit'.startsWith(kw))
             {
                 /* do they really want to quit? */
                 libMessages.confirmQuit();
                 if (yesOrNo())
                     return 3;
                 else
-                    "Okej. ";
+                    "Okay. ";
             }
-            else if ('ledtrådar'.startsWith(kw))
+            else if ('hints'.startsWith(kw))
             {
                 /* there's no point in showing hints yet; explain this */
-                "Tyvärr finns inga ledtrådar tillgängliga just nu. Ledtrådar kommer att vara
-                tillgängliga så snart du börjar spelet. ";
+                "Sorry, no hints are available right now.  Hints will be
+                available as soon as you start the game. ";
             }
-            else if ('instruktioner'.startsWith(kw))
+            else if ('instructions'.startsWith(kw))
             {
                 /* show the instructions */
                 InstructionsAction.execSystemAction();
@@ -278,14 +276,14 @@ gameMain: GameMainDef
                 /* show the copyright/license information */
                 versionInfo.showCopyright();
             }
-            else if (kw == 'rq' || 'återspela'.startsWith(kw))
+            else if (kw == 'rq' || 'replay'.startsWith(kw))
             {
                 /* if there's no argument, ask for one */
                 if (rqArg == nil)
                 {
                     /* there's no file, so ask for one */
                     local result = inputManager.getInputFile(
-                        'Skriv in kommandofil', InFileOpen, FileTypeCmd, 0);
+                        'Enter command file', InFileOpen, FileTypeCmd, 0);
                     
                     /* if we got a file, it's the file argument */
                     if (result[1] == InFileSuccess)
@@ -304,10 +302,10 @@ gameMain: GameMainDef
             }
             
             /* refresh them on what to do next */
-            "\b(Vänligen skriv <<aHref('OM', 'OM')>> för information om
-            hur man spelar, eller <<aHref('ladda', 'LADDA')>> för att återställa
-            en sparad position. För att <<aHref('', 'börja spelet')>>, tryck bara
-            på Enter-tangenten.) ";
+            "\b(Please type <<aHref('about', 'ABOUT')>> for notes on
+            how to play, or <<aHref('restore', 'RESTORE')>> to restore
+            a saved position.  To <<aHref('', 'begin the game')>>, just
+            press the Enter key.) ";
         }
     }
 ;
@@ -426,64 +424,64 @@ finishOptionCopyright: FinishOption
 finishOptionAfterword: FinishOption
     doOption()
     {
-        "<.p>Om du avslutade utan att få alla poäng, och
-        särskilt om det verkar som att det finns många fler poäng att
-        få, kanske du undrar vad du missade. Det mest
-        sannolika svaret är att du hoppade över den valfria <q>mysteriet</q>
-        sidohandlingen. Det finns ledtrådar gömda här och där som du
-        kan följa för att lista ut vad vissa tvivelaktiga karaktärer
-        i berättelsen egentligen har för sig. Du kan lösa Ditch
-        Day-stacken och vinna spelet utan att följa mysteriet alls,
-        så om mina försök att väcka din nyfikenhet misslyckades, har du
-        förmodligen inte missat mycket förutom poäng. Om du
-        undrade varför det fanns en spionkamera gömd i Stamers labb,
-        låt mig försäkra dig om att svaret kan hittas på
-        samma ställen som de saknade poängen.
+        "<.p>If you finished without getting all of the points, and
+        especially if it looks like there are a lot more points to
+        be had, you might be wondering what you missed.  The most
+        likely answer is that you skipped the optional <q>mystery</q>
+        subplot.  There are clues hidden here and there that you
+        can follow to figure out what certain unsavory characters
+        in the story are really up to.  You can solve the Ditch
+        Day stack and win the game without pursuing the mystery at
+        all, so if my attempts to pique your curiosity failed, you
+        probably didn't miss out on much except points.  If you
+        wondered why there was a spy camera hidden in Stamer's lab,
+        though, let me assure you that the answer can be found in
+        the same places as those missing points.
 
-        <.p>Dessutom kan stacken i Upper Seven (rum 42) lösas.
-        Den är irrelevant för spelet, så det finns ingen egentlig belöning
-        i spelet för att lösa den, men vissa personer kanske tycker det är ett
-        trevligt fristående pussel.
+        <.p>Also, the stack in Upper Seven (room 42) can be solved.
+        It's irrelevant to the game, so there's no real in-game reward
+        for solving it, but some people might find it to be an enjoyable
+        stand-alone puzzle.
 
-        <.p>Vissa spelare av originalet <i>Ditch Day Drifter</i>
-        frågade varifrån termen <q>stack</q> kommer.
-        För att svara måste jag ge er en kort historik om Ditch Day.
-        De första Ditch Days var enkla tillställningar där
-        sistaårsstudenterna verkligen bara skolkade för dagen. De
-        yngre studenterna blev uppenbarligen irriterade över att lämnas kvar,
-        och de uttryckte detta genom att bryta sig in i sistaårsstudenternas rum
-        och vandalisera dem. Vid någon tidpunkt började sistaårsstudenterna försöka
-        barrikadera sina rum innan de gav sig av, genom att stapla skrivbord och
-        andra tunga föremål mot sina dörrar.
+        <.p>Some players of the original <i>Ditch Day Drifter</i>
+        asked where the term <q>stack</q> comes from.
+        To answer, I have to give you a brief history of Ditch Day.
+        The first few Ditch Days were simple affairs where the
+        seniors really did just ditch classes for the day.  The
+        underclassmen were apparently annoyed at being left behind,
+        and they expressed this by breaking into the seniors' rooms and
+        trashing them.  At some point, the seniors started trying to
+        barricade their rooms before they left, by stacking desks and
+        other heavy objects against their doors.
 
-        <.p>Det är därifrån termen kommer: sistaårsstudenterna byggde bokstavligen
-        staplar av tunga föremål för att blockera tillträde till sina rum.
-        För sin del lät sig inte de yngre studenterna avskräckas; tvärtom
-        tog de staplarna som en utmaning. Om detta hade utvecklats till
-        en kapprustning hade traditionen förmodligen blivit alltför
-        repetitiv (och alltför destruktiv) för att hålla särskilt länge.
-        Lyckligtvis blev rivaliteten istället ritualiserad: staplarna
-        utvecklades från fysiska barriärer till, i grund och botten, spel.
-        Ditch Day är idag en höjdpunkt för alla på Caltech;
-        yngre studenter ser fram emot det som IF-spelare ser fram emot
-        <a href='http://www.ifcomp.org'>årliga Comp</a>, och
-        sistaårsstudenterna är mycket stolta över att skapa staplar som är originella,
-        utmanande och roliga. Jag kan förstås inte påstå att jag har skapat mer än
-        en skugga av det verkliga här.
+        <.p>That's where the term comes from: the seniors literally
+        built stacks of heavy objects to block entry to their rooms.
+        For their part, the underclassmen weren't deterred; on the
+        contrary, they took the stacks as a challenge.  If this
+        had developed into an arms race, the tradition would probably
+        have become too repetitive (and too destructive) to last very
+        long.  Happily, the rivalry instead became ritualized: stacks
+        evolved from physical barriers into, essentially, games.
+        Ditch Day today is a highlight of everyone's year at Caltech;
+        underclassmen look forward to it the way IF'ers look forward
+        to the <a href='http://www.ifcomp.org'>annual Comp</a>, and
+        seniors take great pride in creating stacks that are original,
+        challenging, and fun.  I can't claim to have created more than
+        a shadow of the real thing here, of course.
 
         <.p><tab indent=4><i>&mdash;<tab id=t1>MJR<br>
-        <tab to=t1>Palo Alto, Kalifornien<br>
+        <tab to=t1>Palo Alto, California<br>
         <tab to=t1>April, 2004
-        </i>";
+        </i>"; // $$$ update before final release
 
         /* ask for another option */
         return true;
     }
 
-    desc = "läs <<aHrefAlt('efterord', 'EFTERORD', '<b>E</b>FTERORD',
-                                'Visa Efterord')>>"
-    responseKeyword = 'efterord'
-    responseChar = 'e'
+    desc = "read the <<aHrefAlt('afterword', 'AFTERWORD', 'AFTER<b>W</b>ORD',
+                                'Show the Afterword')>>"
+    responseKeyword = 'afterword'
+    responseChar = 'w'
     
 ;
 
@@ -494,34 +492,34 @@ finishOptionAfterword: FinishOption
 modify finishOptionAmusing
     doOption()
     {
-        "\bNågra roliga saker att prova:
+        "\bA few amusing things to try:
         <.p>
         <ul>
-        \n<li>Lukta på Koffee.
-        \n<li>Fråga Xojo om hissen efter att den fastnat.
-        \n<li>Fortsätt ner i korridoren i källaren när
-        Xojo försöker leda dig in i förrådsrummet.
-        \n<li>Fråga Xojo om repbron flera gånger innan du korsar
-        den, och igen efter att den går sönder.
-        \n<li>Undersök överste Magnxis hatt.
-        \n<li>Läs broschyrerna på karriärcentret.
-        \n<li>Fråga bibliotekarien om hans bok flera gånger.
-        \n<li>Fråga studenterna i Gränd 4 om stacken.
-        \n<li>Spela kullabyrintspelet i Gränd 5 flera gånger.
-        \n<li>Ta eller ät frukten i Gränd 6.
-        \n<li>Lös Commandant 64-stacken i Upper 7.
-        \n<li>Titta in i kanonröret från den höjda skyliftaren.
-        \n<li>Visa Plisnik råttdockan.
-        \n<li>Visa Plisnik råttdockan medan du bär den.
-        \n<li>Fråga Dave (på nätverkskontoret) om Network
+        \n<li>Smell the Koffee.
+        \n<li>Ask Xojo about the elevator after it gets stuck.
+        \n<li>Continue down the hall in the sub-basement when
+        Xojo is trying to lead you into the storage room.
+        \n<li>Ask Xojo about the rope bridge several times before crossing
+        it, and again after it breaks.
+        \n<li>Examine Colonel Magnxi's hat.
+        \n<li>Read the brochures in the Career Center Office.
+        \n<li>Ask the librarian about his book several times.
+        \n<li>Ask the undergrads in Alley 4 about the stack.
+        \n<li>Play the marble-maze game in Alley 5 several times.
+        \n<li>Take or eat the fruit in Alley 6.
+        \n<li>Solve the Commandant 64 stack in Upper 7.
+        \n<li>Look in cannon barrel from the raised cherry picker.
+        \n<li>Show Plisnik the rat puppet.
+        \n<li>Show Plisnik the rat puppet while wearing it.
+        \n<li>Ask Dave (in the Network Office) about Network
         Installer Company.
-        \n<li>Prova de olika föreslagna ursäkterna när du blir påkommen utanför
-        <q>Förråds</q>-rummet i ångtunnlarna.
-        \n<li>När du är utomhus, titta på himlen på eftermiddagen.
-        \n<li>Titta på graffitin i de olika Dabney-gränderna (praktiskt taget
-        varje gränd har något att titta på).
-        \n<li>Titta under sängen i Brian Stamers rum.
-        \n<li>Bär den gigantiska novitetsbasebollkepsen.
+        \n<li>Try the various suggested excuses when caught outside
+        the <q>Supplies</q> room in the steam tunnels.
+        \n<li>When outdoors, look at the sky in the afternoon.
+        \n<li>Look at the graffiti in the various Dabney alleys (virtually
+        every alley location has something to look at).
+        \n<li>Look under the bed in Brian Stamer's room.
+        \n<li>Wear the giant novelty baseball cap.
         </ul>
         <.p>";
 

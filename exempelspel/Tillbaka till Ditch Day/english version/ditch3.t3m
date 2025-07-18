@@ -1,0 +1,51 @@
+# TADS 3 makefile
+#
+# Warning: this file was mechanically generated.  You may edit this file
+# manually, but your changes might be modified or discarded when
+# you load this file into a TADS development tool.  The TADS tools
+# generally retain the comment at the start of the file and the
+# comment marked "##sources" below, but other comments might be
+# discarded, the formatting might be changed, and some option
+# settings might be modified.
+
+# Return to Ditch Day - tads 3 makefile
+#
+
+-o ditch3.t3
+-pre
+-nodef
+-D LANGUAGE=en_us
+-D MESSAGESTYLE=neu
+-D INSTRUCTIONS_MENU
+-Fy obj
+-Fo obj
+-w1
+-we
+
+##sources
+-lib system
+-source reflect
+-lib adv3/adv3
+  -x footnote
+-source main
+-source me
+-source intro
+-source campus
+-source dabney
+-source jay
+-source stack
+-source bridge
+-source library
+-source bookstore
+-source career
+-source synclab
+-source frosst
+-source about
+-source hints
+-source mods
+-source pathfind
+-source elev
+-source subtime
+
+-res
+gameinfo.txt

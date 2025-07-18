@@ -86,6 +86,7 @@ Test 'del1' [
   'slå på SCU',
   'v',
   'v',
+  'x helikoptrar',
   'fråga Xojo om Mitachron',
   'lukta på Koffee',
   'drick det',
@@ -871,7 +872,7 @@ Test 'allt' [
   'x utskrift',
 */
 
-  'x Xojo','x Guanmgon','säg ja','x SCU','x CT-22','ta HV-chip','x testare','läs etiketter','öppna testare','ta LV-chip','sätt in det i uttaget','sätt in CT i facket','slå på SCU','v','v','fråga Xojo om Mitachron','lukta på Koffee','drick det','v','x mig','berätta för Xojo om anställningsstopp','x kontrakt','x meritförteckning','fråga Xojo om Kowtuan','fråga Xojo om ChipTechNo','fråga Xojo om Magnxi','fråga Xojo om hissen','x klocka','fråga Xojo om kraftverk','fråga Xojo om Guanmgon','öppna dörr','fråga Xojo om hissen','g','x tak','x panel','öppna panel','klättra på Xojo','öppna panel','u','x kabel','dra i den','x utsprång','öppna dörr','x mekanism','sätt meritförteckning i mekanism','x panel','ta den','sätt den i mekanism','öppna dörr','ö','fråga Xojo om hissen','ö','ö','n','n','n','x bro','x huvudbro','x kanjon','fråga Xojo om bron','g','g','g','n','n','fråga Xojo om bron','n','n','fråga Xojo om bron','u','fråga Xojo om bron','nö','in','x Magnxi','x hatt','x uniform','prata med Magnxi','g','g','x publik','x Belker','x band','x mat','x servitör','x utskrift',
+  'x Xojo','x Guanmgon','säg ja','x SCU','x CT-22','ta HV-chip','x testare','läs etiketter','öppna testare','ta LV-chip','sätt in det i uttaget','sätt in CT i facket','slå på SCU','v','v', 'x helikoptrar', 'fråga Xojo om Mitachron','lukta på Koffee','drick det','v','x mig','berätta för Xojo om anställningsstopp','x kontrakt','x meritförteckning','fråga Xojo om Kowtuan','fråga Xojo om ChipTechNo','fråga Xojo om Magnxi','fråga Xojo om hissen','x klocka','fråga Xojo om kraftverk','fråga Xojo om Guanmgon','öppna dörr','fråga Xojo om hissen','g','x tak','x panel','öppna panel','klättra på Xojo','öppna panel','u','x kabel','dra i den','x utsprång','öppna dörr','x mekanism','sätt meritförteckning i mekanism','x panel','ta den','sätt den i mekanism','öppna dörr','ö','fråga Xojo om hissen','ö','ö','n','n','n','x bro','x huvudbro','x kanjon','fråga Xojo om bron','g','g','g','n','n','fråga Xojo om bron','n','n','fråga Xojo om bron','u','fråga Xojo om bron','nö','in','x Magnxi','x hatt','x uniform','prata med Magnxi','g','g','x publik','x Belker','x band','x mat','x servitör','x utskrift',
 
   // del2
   'n','ö','s','x kvinna','x ställ','x mortera','x toxicola','x locktheon','x Belker','ja','ja','läs anteckning','acceptera','n','v','s','v','s','s','ö','n','n','x skylt','x Aaron','x Erin','x låda','x kontakt','x bord','titta under bord','x kablar','i','x axelväska','x plånbok','öppna den','x kreditkort','x alumnkort','x körkort','lägg plånbok i ficka','s','s','v','n','x arbetare','x utrustning','v','v','v','s','x monter','x anteckningsbok','x motor','ner','n','x miniräknare','ta den','x mapp','ta den','läs den','x bänk','x experiment','tryck på grön knapp','x plattform','x hyllor','ta generator','x den','x vred','x kontakt','ta oscilloskop','x prob','x boll','ta kamera','x kabel','dra i den','x etikett',

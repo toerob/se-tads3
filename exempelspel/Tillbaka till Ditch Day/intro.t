@@ -123,11 +123,11 @@ standingInDoorway: ListGroupPrefixSuffix
  *   The control room itself. 
  */
 powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
-    "Detta är det trånga kontrollrummet i Statligt Kraftverk #6.
+    "Det här är det trånga kontrollrummet i Statligt Kraftverk #6.
     Redan innan du kom hit var detta rum så proppfullt med utrustning
-    att det knappt gick att vända sig om. Nu när du har lagt till den
-    kylskåpsstora SCU-1100DX:en, är det ungefär lika mycket fritt utrymme
-    kvar som i det <q>budgetekonomiklass</q>-sätet du var inklämd i under
+    att det knappt gick att vända sig om. Nu efter du har klämt in den
+    kylskåpsstora SCU-1100 DX:en, finns det ungefär lika mycket utrymme
+    kvar som i det där <q>budgetekonomiklass</q>-sätet du var fastkilad i, under
     den femton timmar långa flygresan hit. Den enda utgången är västerut. "
 
     vocabWords = 'kontrollrum+met'
@@ -139,7 +139,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
     /* some atmospheric messages */
     atmosphereList: ShuffledEventList {
         [
-            'Du märker att en mygga landar på din arm och lyckas slå till
+            'Du märker att en mygga landar på din arm och lyckas slå ihjäl 
             den innan den hinner bita. ',
             'Du känner något på din nacke och inser för sent att
             det är en mygga som just flyger iväg. ',
@@ -693,7 +693,7 @@ class XojoEscortState: GuidedTourState
 ++ xojoHallEast: XojoEscortState
     stateLoc = powerHallEast
 
-    arrivingWithDesc = "Xojo håller ut handen för att indikera den bortre
+    arrivingWithDesc = "Xojo sträcker ut handen för att indikera den bortre
                         änden av korridoren och väntar på att du ska gå vidare. "
     stateDesc = "Han väntar på att du ska följa med honom ner för korridoren
                  västerut. "
@@ -1234,17 +1234,17 @@ class SilentGuidedInTravelState: GuidedInTravelState
         {
         case 16:
             /* start the phone call */
-            "<.p>Du hör öppningstonerna från Beethovens femma återgivna
+            "<.p>Du hör öppningstonerna från Beethovens femma återges 
             i piezoelektriska fyrkantsvågor: Guanmgons mobiltelefon ringer.
             Han drar frenetiskt fram telefonen, tappar den, fångar den i
-            luften, tappar den igen, plockar upp den, petar på knappsatsen,
+            fallet, tappar den igen, plockar upp den, petar på knappsatsen,
             och sätter den slutligen mot örat. Hans konversation är inte på
             engelska, så du har ingen aning om vad som sägs, men
-            du kan se att det inte är goda nyheter. Du skulle gissa att det är hans
-            överordnade som ringer för ännu en uppdatering. Det säger sig självt
-            att det de blev lovade inte inkluderade sex
-            långa veckor bara för att få demon att fungera, och de har inte
-            dolt sin otålighet på sistone. ";
+            du märker att det inte är goda nyheter. Du skulle gissa att det är hans
+            överordnade som ringer för ännu en uppdatering. Det är självklart 
+            att det de blev lovade inte inkluderade sex långa veckor bara för 
+            att få demot att fungera, och de har inte dolt sin otålighet på 
+            sistone. ";
 
             /* switch to my 'on the phone' state */
             setCurState(guanmgonOnPhone);
@@ -1333,7 +1333,7 @@ class SilentGuidedInTravelState: GuidedInTravelState
         guanmgon.addToAgenda(koffeeAgenda);
         
         /* just show a background message on this turn */
-        "Guanmgon tassar in i rummet och försöker hitta en väg genom röran, 
+        "Guanmgon trippar in på tå i rummet och försöker hitta en väg genom röran, 
         men han stöter till något och välter en hög med utrustning på golvet. 
         <q>Förlåt, förlåt!</q> viskar han. Han ställer hastigt tillbaka allt 
         som det var och arbetar sig tillbaka till dörröppningen. ";
@@ -2013,17 +2013,18 @@ class GuanmgonAgendaItem: ConvAgendaItem
     XT772-LV-chip är installerat i modulens S901-sockel. "
     : "Den här modulen är en stor anledning till att jobbet tagit så lång 
     tid. CT-22:ans funktion är att diagnostisera fel och defekter
-    i de andra modulerna; naturligtvis visade det sig att den själv var defekt.
-    Den fungerade precis tillräckligt bra för att skicka dig på veckors
-    vilda jakter efter att fixa falska problem som den rapporterade i
-    andra moduler. När det slog dig att ta ut den och kontrollera dess
-    egen funktion med din kretsprovare hittade du snabbt problemet:
-    tillverkningen installerade fel chip i en av nyckelkretsarna.
-    De installerade en XT772-HV, högspänningsversionen, när de borde ha
-    installerat lågspänningsversionen, XT772-LV. Skillnaderna i
+    i de andra modulerna; naturligtvis visade det sig att den själv var 
+    defekt. Den fungerade precis tillräckligt bra för att slösa 
+    veckor av din tid, på förgäves felsökning av påhittade problem 
+    den rapporterade om i andra moduler. 
+    Så snart du kom på att ta ut och kontrollera dess
+    funktion med din kretsprovare hittade du snabbt felet:
+    tillverkaren hade monterat fel chip i en av de centrala kretsarna.
+    De hade monterat en XT772-HV, en högspänningsversion, när de borde ha
+    monterat en lågspänningsversion, XT772-LV. Skillnaderna i
     spänningskänslighet skapade alla möjliga falska felmeddelanden.
     Tyvärr är CT-22 en kritisk komponent i SCU:n, så du kan inte
-    bara utelämna den. ">>
+    bara slopa den. ">>
     << xt772hv.isIn(self)
     ? "<.p>Det felaktiga XT772-HV-chipet sitter för närvarande i modulens
     S901-sockel. "
@@ -2129,14 +2130,14 @@ class GuanmgonAgendaItem: ConvAgendaItem
  *   interior container; all we have to do is set a property,
  *   subContainer, to point to the interior container object.  
  */
-+ tester: ComplexContainer 'mitachron dynatest multifunktion^s+kretstestare+n/testare+n'
-    'kretstestare'
-    "Detta är din Mitachron DynaTest multifunktionskretstestare.
++ tester: ComplexContainer 'mitachron dynatest multifunktionell+a kretsprovare+n/provare+n/multifunktion^s+kretstestare+n/testare+n'
+    'kretsprovare'
+    "Det här är din multifunktionella kretsprovare från Mitachron, DynaTest.
     Du känner dig alltid lite generad över att ett av dina viktigaste
     vardagliga ingenjörsverktyg är tillverkat av din största konkurrent, men
     Omegatron har aldrig haft någon större framgång med sina egna produkter i detta
     marknadssegment. Testaren är ungefär lika stor som ett bilbatteri; dess
-    huvudfunktioner är en prob och en liten displayskärm, plus den vanliga
+    huvudfunktioner är en provspets och en liten displayskärm, plus den vanliga
     samlingen varningsdekaler på bakstycket. Den är för närvarande
     avstängd. "
 
@@ -2190,7 +2191,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
 
 ++ testerProbe: ComponentDeferrer, Component
     '(kretstestare) elektrisk (koax) (koaxial)
-    prob/set/kontakt+en/kabel+n*kontakter+na kablar+na' 'prob'
+    provspets+en/testsond+en/probe+n/kontakt+en/kabel+n*kontakter+na kablar+na' 'prob'
     "Det är en uppsättning elektriska kontakter, anslutna till testaren via
     en koaxialkabel, som du fäster på kretsen du vill testa. "
 
@@ -2322,7 +2323,7 @@ class TestableCircuit: object
     openingLister: openableOpeningLister {
         showListPrefixWide(itemCount, pov, parent)
         {
-            "Då du öppnar blir kretsarna inuti synliga,
+            "När du öppnar blir kretsarna inuti synliga,
             det inkluderar ";
         }
     }
@@ -2371,8 +2372,8 @@ class TestableCircuit: object
             if (scoreMarker.awardPointsOnce())
             {
                 /* mention that we've found something special */
-                reportAfter('<.p>Så klart!  DynaTestaren är precis den
-                    typen av lågströmsapplikation där du skulle hitta en 
+                reportAfter('<.p>Så klart, DynaTestaren är precis den
+                    typen av lågströmsenhet där du skulle hitta en 
                     XT772-LV! ');
 
                 /* note that we've found it */
@@ -2429,7 +2430,7 @@ class TestableCircuit: object
 ;
 
 ++ Component 'varning:en^s+etikett+en klistermärke+t*varningar varning:ar^s+etiketter+na' 'varningsetiketter'
-    "Blixtar inuti gula trianglar.
+    "Blixtsymboler i gula trianglar.
     <font color=red bgcolor=yellow><b>ÖPPNA INTE!</b></font>
     Inga delar som kan underhållas av användaren!
     <b>Öppnande kan ogiltigförklara garantin!</b> De gamla  vanliga sakerna. "
@@ -2518,11 +2519,11 @@ MultiInstance
 ;
 
 + Fixture
-    'norra n midjehög midja-hög vägg' 'norra väggen'
+    'norra n midjehög+a midja-hög+a vägg+en' 'norra väggen'
     "Den är bara midjehög, vilket lämnar korridoren öppen mot djungeln. "
 ;
 + Fixture
-    'södra s midjehög midja-hög vägg' 'södra väggen'
+    'södra s midjehög+a midja-hög+a vägg+en' 'södra väggen'
     "Den är bara midjehög, vilket lämnar korridoren öppen mot anläggningens
     interiör. "
 ;
@@ -2619,8 +2620,8 @@ helicopter5: MultiLoc, Distant
  */
 powerHallEast: PowerPlantHallRoom
     'Östra änden av korridoren' 'den östra änden av korridoren'
-    "Precis som varje annan del av anläggningens struktur är denna breda
-    korridor på femte våningen helt byggd av betong. De norra
+    "Precis som varje annan del av anläggningens struktur är den här breda
+    korridoren på femte våningen helt byggd av betong. De norra
     och södra väggarna är bara midjehöga, bortsett från några glest placerade
     pelare som stödjer taket, vilket lämnar korridoren öppen
     mot djungeln i norr och mot anläggningens enorma interiör i
@@ -2932,7 +2933,7 @@ plantElevator: PowerPlantRoom 'Hiss' 'hissen'
             replaceAction(Climb, xojo);
     }
 ;
-+ Fixture 'schaktvägg' 'schaktvägg'
++ Fixture 'schaktvägg+en' 'schaktvägg'
     "Schaktväggen är av enkel betong.
     <<location.isDescending ? 'Hissens rörelse skapar
     illusionen att schaktväggen glider långsamt uppåt.' : ''>> "
@@ -3824,7 +3825,7 @@ s2Utility: Room 'Nyttoområde' 'nyttoområdet'
 ;
 
 + utilityPath: TravelWithMessage, ThroughPassage ->storagePath
-    'smal stig' 'stig'
+    'smal+a stig+en' 'stig'
     "Det är tillräckligt med en stig för att du skulle kunna ta dig igenom skräpet. "
 
     travelDesc = "Du tar dig försiktigt fram genom högarna av skräp. "
@@ -4230,7 +4231,7 @@ canyonNorth: OutdoorRoom 'Kanten av kanjonen' 'kanten av kanjonen'
 ;
 
 + canyonPath: TravelWithMessage, PathPassage ->courtyardPath
-    'liten stig' 'stig'
+    'liten lilla stig+en' 'stig'
     "Stigen leder nordost, genom den täta växtligheten. "
 
     travelDesc = "Du följer stigen genom den täta växtligheten. "
@@ -4332,15 +4333,15 @@ plantCourtyard: OutdoorRoom 'Innergård' 'innergården'
     }
 ;
 
-+ courtyardPath: PathPassage 'smal stig' 'stigen'
++ courtyardPath: PathPassage 'smal+a stig+en' 'stigen'
     "Stigen leder sydväst in i djungeln. "
 ;
 
-+ Distant 'frodig tropisk djungel/växt/växter/vegetation/växtlighet' 'djungel'
++ Distant 'frodig+a tropisk+a djungel+n/växt+en/växter+n/vegetatio+en/växtlighet+en' 'djungel'
     "Vegetationen är frodig, tropisk och mestadels obekant för dig. "
 ;
 
-+ Decoration 'lågt trä trästaket/staket' 'trästaket'
++ Decoration 'låg:t+a trä trästaket+et/staket+et' 'trästaket'
     "Staketen markerar innergårdens gränser i söder och väster.
     Djungeln ligger bortom. "
 ;
@@ -4355,7 +4356,7 @@ plantCourtyard: OutdoorRoom 'Innergård' 'innergården'
                       Mitachron-folket kanske inte uppskattar att en
                       Omegatron-anställd nosar omkring. '
 ;
-++ Decoration 'helikopter+rotor/rotorer/rotorblad' 'rotorer'
+++ Decoration 'helikopterrotor/rotor/rotorer+na/rotorblad+en' 'rotorer'
     "Rotorerna snurrar fortfarande långsamt, som om piloterna höll
     helikoptrarna redo för en plötslig avfärd. "
 ;
