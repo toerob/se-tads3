@@ -1,0 +1,1003 @@
+Transkriberingen kommer att sparas till filen.  Skriv SCRIPT AV för att avsluta
+transkriberingen.
+
+>starta om
+Vill du verkligen börja om? (J är bekräftande) > j
+
+
+Än en gång är det du, Doug Mittling, som fått det sketna reseuppdraget.  Det är
+nackdelen med att vara mellanchef— dina ingenjörer hade fullt upp med riktigt
+arbete, och vice vd:n var på en viktig faktainsamlingsresa till Maui, själv
+hade du ingen ursäkt förutom en stor hög med processrapporter att granska.  Så
+här står du nu, på ett anonymt kraftverk i en myggstinn djungel någonstans i
+Sydostasien, tolv timmars bilresa från närmaste flygplats.  Du har redan varit
+här i sex veckor och försökt få den förbaskade SCU-1100DX att fungera, så att
+du kan visa upp den för kunden, men hittills är den fortfarande trasig.  Det
+börjar bli svettigt, särskilt eftersom du har hört Guanmgon prata om Mitachron
+flera gånger nyligen.  Om du förlorar det här kontraktet till dem, kommer din
+vice vd att bli rasande.  När han kommer hem från Maui, förstås.
+
+Tillbaka till Ditch Day
+av Michael J. Roberts
+Översatt av Tomas Öberg genom Copilot/Tabnine
+Version 2-sv1 (20250718)
+
+Kontrollrum
+Det här är det trånga kontrollrummet i Statligt Kraftverk #6.  Redan innan du
+kom hit var detta rum så proppfullt med utrustning att det knappt gick att
+vända sig om.  Nu efter du har klämt in den kylskåpsstora SCU-1100DX:en, finns
+det ungefär lika mycket fritt utrymme kvar som i det där “budgetekonomiklass”-
+sätet du var fastkilad i under den femton timmar långa flygresan hit.  Den enda
+utgången är västerut.
+
+Du ser en kretstestare och en CT-22 diagnostikmodul här.
+
+Xojo och Guanmgon står i dörröppningen och tittar på medan du arbetar.
+
+>
+Ursäkta?
+
+>t del1
+Testing sequence: "del1".
+
+Du märker att en mygga landar på din arm och lyckas slå ihjäl den innan den
+hinner bita.
+
+>x Xojo
+Han är en lågnivåbyråkrat som har fått i uppdrag att hjälpa dig med
+installationen av SCU-1100DX.  Han ser ung ut, kanske i mitten av
+tjugoårsåldern.  Han är lite längre än dig och mycket smal.Han har iakttagit
+dig uppmärksamt.
+
+Guanmgon tassar in i rummet och försöker hitta en väg genom röran, men han
+stöter till något och välter en hög med utrustning på golvet.  “Förlåt,
+förlåt!” viskar han.  Han ställer hastigt tillbaka allt som det var och arbetar
+sig tillbaka till dörröppningen.
+
+Luftfuktigheten blir tydligt sämre.
+
+>x Guanmgon
+Han är en byråkrat på mellannivå som tilldelats att hjälpa dig med
+installationen.  Han har på sig en kostym som ser lite för liten ut.  Guanmgon
+ser ut att vara i fyrtioårsåldern.  Det verkar som att Guanmgon har blivit allt
+mer nervös ju längre ditt arbete dragit ut på tiden; på sistone har han nästan
+blivit desperat.
+
+“Behöver du något?” frågar Guanmgon.  “Kanske lite Koffee?”
+
+En mygga flyger långsamt förbi ditt huvud.
+
+>x SCU
+En Omegatron Supplemental Control Unit modell 1100DX.  Du borde kunna den som
+din egen handflata efter att ha suttit igenom alla de där ingenjörsmötena och
+designgranskningarna, men den omfattande kostnadsbesparingen och riggningen i
+tillverkningsprocessen har förvandlat den till något märkligt obekant.  Oavsett
+vad är det din uppgift att få den att fungera.
+
+1100:an är i grunden en stor metallåda öppen på ena sidan, som ett kylskåp utan
+dörr (och ungefär samma storlek), fylld med staplade elektronikmoduler.
+Knippen med kablar och ledningar kopplar modulerna till kontrollpanelerna och
+annan utrustning i kraftverket.  Den är för närvarande avstängd.
+
+Det finns en tom plats, där CT-22-modulen du tagit bort ska sitta.
+
+“Ja, Koffee är precis vad du behöver,” säger Guanmgon.  “Xojo!  Hämta lite
+Koffee till herr Mittling.  Skynda dig!”  Xojo rusar ut genom dörren.
+
+Ett avlägset knarrande ljud ekar genom byggnaden.
+
+>säg ja
+Guanmgon svarar inte.
+
+Du känner något på din nacke och inser för sent att det är en mygga som just
+flyger iväg.
+
+>x CT-22
+Den här modulen är en stor anledning till att jobbet tagit så lång tid.  CT-
+22:ans funktion är att diagnostisera fel och defekter i de andra modulerna;
+naturligtvis visade det sig att den själv var defekt.  Den fungerade precis
+tillräckligt bra för att slösa veckor av din tid, på förgäves felsökning av
+påhittade problem den rapporterade om i andra moduler.  Så snart du kom på att
+ta ut och kontrollera dess funktion med din kretsprovare hittade du snabbt
+problemet: tillverkningen installerade fel chip i en av de centrala kretsarna.
+De hade installerat en XT772-HV, en högspänningsversion, när de borde ha
+installerat en lågspänningsversion, XT772-LV.  Skillnaderna i
+spänningskänslighet skapade alla möjliga falska felmeddelanden.  Tyvärr är CT-
+22 en kritisk komponent i SCU:n, så du kan inte bara slopa den.
+
+Det felaktiga XT772-HV-chipet sitter för närvarande i modulens S901-sockel.
+
+Guanmgon trummar med fingrarna mot väggen.  “Ingen anledning till panik,” säger
+han till sig själv.  “Framgång är fortfarande möjlig.”
+
+Xojo kommer tillbaka med en burk Koffee och klämmer sig in i rummet
+tillräckligt länge för att räcka den till dig.
+
+>ta HV-chip
+Taget.
+
+>x testare
+Det här är din multifunktionella kretsprovare från Mitachron, DynaTest.  Du
+känner dig alltid lite generad över att ett av dina viktigaste vardagliga
+ingenjörsverktyg är tillverkat av din största konkurrent, men Omegatron har
+aldrig haft någon större framgång med sina egna produkter i detta
+marknadssegment.  Testaren är ungefär lika stor som ett bilbatteri; dess
+huvudfunktioner är en provspets och en liten displayskärm, plus den vanliga
+samlingen varningsdekaler på bakstycket.  Den är för närvarande avstängd.
+
+Flera av dina myggbett börjar klia.
+
+>läs etiketter
+Blixtsymboler i gula trianglar.  ÖPPNA INTE!  Inga delar som kan underhållas av
+användaren!  Öppnande kan ogiltigförklara garantin!  De gamla vanliga sakerna.
+
+En mygga surrar förbi bara centimeter från ditt öra.
+
+>öppna testare
+När du öppnar blir kretsarna inuti synliga, det inkluderar ett XT772-LV-chip.
+
+Så klart, DynaTestaren är precis den typen av lågströmsenhet där du skulle
+hitta en XT772-LV!
+
+“Myggorna måste vara irriterande för dig,” säger Guanmgon.  “Xojo!” ropar han.
+“Hämta kraftfullt insektsmedel!  Gå nu!”  Xojo går iväg muttrande något.
+
+Du hör öppningstonerna från Beethovens femma återges i piezoelektriska
+fyrkantsvågor: Guanmgons mobiltelefon ringer.  Han drar frenetiskt fram
+telefonen, tappar den, fångar den i fallet, tappar den igen, plockar upp den,
+petar på knappsatsen, och sätter den slutligen mot örat.  Hans konversation är
+inte på engelska, så du har ingen aning om vad som sägs, men du märker att det
+inte är goda nyheter.  Du skulle gissa att det är hans överordnade som ringer
+för ännu en uppdatering.  Det är självklart att det de blev lovade inte
+inkluderade sex långa veckor bara för att få demot att fungera, och de har inte
+dolt sin otålighet på sistone.
+
+(Din poäng has precis ökat med två poäng.)
+
+(Om du föredrar att inte få notiser om poängförändringar i framtiden, skriv,
+NOTISER AV.)
+
+>ta LV-chip
+Taget.
+
+En mygga flyger långsamt förbi ditt huvud.
+
+Guanmgon fortsätter att prata i telefonen.  Mer lyssnande än pratande,
+faktiskt; även utan att förstå språket kan du se att varje gång han börjar säga
+något blir han avbruten.
+
+>sätt in det i uttaget
+Gjort.
+
+Xojo kommer tillbaka, släpande på en resväskestor metalltank med en slang
+fastsatt.  Han vrider på en ventil på tanken och riktar slangen in i rummet.
+En dimmig spray kommer ut ur slangen och rummet fylls snabbt med ett giftigt
+moln.
+
+Myggorna fortsätter oberörda med sina bestyr.
+
+Du känner något på din nacke och inser för sent att det är en mygga som just
+flyger iväg.
+
+Guanmgon fumlar med telefonen, nästan tappar den, och lägger undan den.  Xojo
+frågar honom något, och du hör “Mitachron” ett par gånger i Guanmgons svar,
+åtföljt av tunga suckar.
+
+>sätt in CT i facket
+(tar diagnostiksmodulen först)
+Modulen glider på plats—inte helt smidigt, men vid det här laget räcker det att
+den passar överhuvudtaget.  Du ger den en bestämd knuff för att försäkra dig om
+att alla kontakter sitter ordentligt.  Nu återstår bara att slå på SCU:n och
+hoppas att det inte lurar något ytterligare problem.
+
+Du märker att en mygga landar på din arm och lyckas slå ihjäl den innan den
+hinner bita.
+
+>slå på SCU
+Du håller tummarna och slår på strömbrytaren.  SCU-1100DX klickar och surrar
+när den startar sin självtestsekvens vid uppstart.  Många sekunder passerar.
+Du håller andan.  Guanmgon och Xojo lutar sig in från dörröppningen, som om det
+fanns något att se.  Sedan, fyra korta pip: lyckad uppstart!  Du skannar
+noggrant modulerna och ser att allt fungerar.  Efter sex veckor har du äntligen
+klarat det; äntligen kan du visa ett demo och förhoppningsvis få ett kontrakt
+underskrivet.
+
+Guanmgon ser SCU:n starta och tränger sig in i rummet för att kontrollera
+kontrollpanelerna.  “Den fungerar,” säger han förvånat.  “Det här är så
+underbart!  Fruktansvärd skam är inte för oss nu!  Men vi måste agera snabbt.
+Xojo!  Eskortera herr Mittling för att träffa Översten omedelbart.  Skynda med
+maximal hast!  Dröj inte!  Snabbt, snabbt, skynda!”
+
+Xojo nickar, vänder sig sedan mot dig och pekar mot dörröppningen.
+
+En mygga surrar förbi bara centimeter från ditt öra.
+
+(Din poäng has precis ökat med tio poäng.)
+
+>v
+Du låter Xojo leda vägen.
+
+Östra änden av korridoren
+Precis som varje annan del av anläggningens struktur är den här breda
+korridoren på femte våningen helt byggd av betong.  De norra och södra väggarna
+är bara midjehöga, bortsett från några glest placerade pelare som stödjer
+taket, vilket lämnar korridoren öppen mot djungeln i norr och mot anläggningens
+enorma interiör i söder.  Korridoren slutar i en dörröppning i öster och
+fortsätter västerut.
+
+Xojo sträcker ut handen för att indikera den bortre änden av korridoren och
+väntar på att du ska gå vidare.
+
+>v
+Du låter Xojo leda vägen.
+
+Västra änden av korridoren
+Denna breda korridor har midjehöga väggar öppna mot djungeln i norr och mot
+anläggningens enorma interiör i söder; några glest placerade pelare stödjer
+taket.  Korridoren slutar vid en hissdörr i väster och fortsätter österut.
+
+Xojo sträcker ut handen och trycker på hissens anropsknapp.  Neonlampan ovanför
+knappen lyser svagt.
+
+Ett avlägset mullrande ljud hörs någonstans från djungeln.  Först tror du att
+det är åska, men det blir lite högre och du inser att det är en annalkande
+helikopter.  En granskning av horisonten visar inget i luften.  Plötsligt är
+ljudet öronbedövande, och en svart form sveper in i synfältet ovanifrån och
+rasar iväg mot byggnaderna på andra sidan floden.  När helikoptern flyger förbi
+ser du den gula Mitachron-logotypen på stjärtbommen.
+
+>x helikoptrar
+Du ser inga helikoptrar här.
+
+>fråga Xojo om Mitachron
+“Vet du något om de där helikoptrarna?” frågar du.
+
+“Jag är inte säker,” säger han, “men min överordnade, Guanmgon, antydde att en
+representant från Mitachron skulle närma sig.  Kanske representanten utför
+ankomst.”
+
+Ljudet av en annan annalkande helikopter hörs från djungeln, och inom några
+ögonblick dyker den upp—tillsammans med tre andra, som flyger i formation, på
+väg åt samma håll som den föregående.  De fyra flyger över floden och landar
+bredvid den första.
+
+>lukta på Koffee
+Den har en stark kemisk lukt, även om inget du kan placera exakt; thinner
+blandat med klor, kanske, med bara en antydan av 3-metoxi-4-hydroxibensaldehyd.
+
+Ankomsten av Mitachron-folket är oroväckande; de måste verkligen vilja ha den
+här affären för att ha skickat en så stor grupp.  Åtminstone måste de göra sin
+egen demonstration, så du ligger före dem på den punkten.  Ändå verkar direkta
+konkurrenssituationer med Mitachron aldrig gå bra för Omegatron.  Kanske om du
+kan nå Översten tillräckligt snabbt, kan du få ditt kontrakt undertecknat innan
+Mitachron-representanterna ens får ett möte med henne.
+
+>drick det
+Du vill inte att Xojo ska känna sig sårad, så du lyckas svälja lite.  Det är
+lika hemskt som vanligt.
+
+En hög summer ljuder från hissen, och neonlampan ovanför anropsknappen släcks.
+
+Xojo öppnar dörren och skjuter undan hissens vikbara metallgrind för dig, och
+väntar på att du ska gå in.
+
+>v
+Du låter Xojo leda vägen.
+
+Hiss
+Detta är en stor, robust byggd hiss, som något du skulle hitta i ett gammalt
+lager.  Det har inte gjorts något försök till dekoration; bara matta
+metallväggar, en vikbar metallgrind i öster, ett handräcke på bakväggen, en
+infälld servicepanel i taket, en naken glödlampa som lyser svagt i det övre
+hörnet av bakväggen.  Utstickande svarta knappar är märkta, nerifrån och upp,
+S2, S1, G, och 2 till 5.  Bortom grinden är schaktväggens nakna betong.
+
+Xojo låter dörren svänga igen och stänger gallret, sedan trycker han på “G”-
+knappen.  Hissen skakar till och börjar långsamt sjunka.
+
+>x mig
+Du är Doug Mittling, teknisk chef på Industry Products Group, Omegatron
+Corporation.  Det har gått ungefär ett decennium sedan college, och tidens gång
+har börjat visa sig; du är lite mjukare, lite bredare runt midjan, och lite
+blek av att spendera det mesta av din tid inomhus.
+
+Du bär på ett kontrakt, ett burk med Koffee, och ett XT772-HV chip och har på
+dig din vanliga kontorsklädsel: några par khakis, en par bruna läderskor, ett
+armbandsur, och en beige skjorta—varje dag är “casual Friday” i Silicon Valley.
+
+Du har ganska många myggbett.
+
+Xojo harklar sig.  “Jag undrade,” säger han, “om ert fina företag skulle kunna
+överväga mig för en anställning.”  Han tar fram ett papper och håller fram det
+till dig.  “Mitt CV,” säger han.  “Jag skulle mycket uppskatta ert vänliga
+övervägande.”
+
+Hissen passerar en dörr märkt “4.”
+
+(Du kan berätta för Xojo om Omegatrons anställningsstopp.)
+
+>berätta för Xojo om anställningsstopp
+“Jag måste tyvärr säga att det är anställningsstopp på Omegatron just nu,”
+förklarar du.  “Det betyder att vi inte kan anställa någon.”
+
+Xojo kan inte riktigt dölja sin besvikelse.  “Åh.  Tja, kanske i framtiden då.”
+Du rycker lätt på axlarna och nickar oengagerat.
+
+Hissen fortsätter sin långsamma nedstigning.
+
+>x kontrakt
+Detta är ett kontrakt för att tillhandahålla ett kompletterande styrsystem,
+samt tillhörande konsult- och underhållstjänster, till Statligt Kraftverk #6.
+Det är hela anledningen till att du är här, och om du åker hem utan att få det
+underskrivet kommer din VP att bli rasande.  Överste Magnxi gjorde det klart
+att hon inte kommer skriva under något förrän hon ser en fungerande demo av
+SCU:n—vilket är precis därför de skickade dig istället för en säljare.
+
+Hissen passerar en dörr märkt “3.”
+
+>x meritförteckning
+(tar meritförteckningen först)
+Formatet är lite ovanligt, förmodligen på grund av lokala konventioner, men du
+har inga större problem att hitta den viktiga informationen om Xojos
+professionella meriter: en kandidatexamen i elektroteknik från Kowtuan Tekniska
+Institut; ett år i en ingångsposition hos en halvledartillverkare som heter
+ChipTechNo; och två år här på Statligt Kraftverk #6, där han avancerat från
+Junior Teknisk Administrativ Rang 3 till Junior Administrativ Teknisk Rang 7.
+
+Hissen fortsätter sin långsamma nedstigning.  Rationellt sett vet du att de få
+minuterna av denna hissfärd inte kommer att kosta dig affären, men det hindrar
+inte den irrationella delen av din hjärna från att pumpa ut ångesthormon.
+
+>fråga Xojo om Kowtuan
+“Förlåt,” säger du, “men jag har inte hört talas om ditt universitet förut.  Är
+det en bra skola?”
+
+“Åh, ja,” säger Xojo ivrigt, nickande snabbt.  “Det är ofta känt som ‘MIT’ i
+tre-provinsregionen.  Programmet är mycket rigoröst.”
+
+Hissen passerar en dörr märkt “2.”
+
+>fråga Xojo om ChipTechNo
+“Berätta om ditt jobb på ChipTechNo,” säger du.
+
+“Det var en utmärkt läroerfarenhet,” säger han, “men befordringsmöjligheterna
+var begränsade på grund av icke-lokalt ägande.”
+
+Hissen kämpar vidare.  Kom igen, kom igen, kom igen...
+
+>fråga Xojo om Magnxi
+“Vad kan du berätta om Översten?” frågar du.
+
+“Jag för dig till henne nu,” svarar han.
+
+Hissen passerar en dörr märkt “G.”  Konstigt; du trodde att det var din våning.
+
+Xojo, som ser lite orolig ut, börjar trycka på knappar.  “Ingen anledning till
+panik,” säger han, inte särskilt övertygande, men sedan verkar han lugna ner
+sig och sluta pilla med knapparna.  “Hissprogrammeringen är ibland felaktig.
+Vi borde stanna snart, eftersom schaktet nästan är i botten.”
+
+>fråga Xojo om hissen
+“Vad är det för fel på hissen?” frågar du.
+
+“Hissen är ibland felaktig i att stanna som begärt,” svarar Xojo.  “Men ingen
+anledning till oro.  Den stannar pålitligt, med tiden.”
+
+Hissen fortsätter sin långsamma nedstigning.
+
+>x klocka
+Det är inget fancy; bara en billig analog modell.  Den visar för närvarande
+10:47.
+
+Hissen passerar en dörr märkt “S1.”
+
+>fråga Xojo om kraftverk
+“Min överordnade, Guanmgon, skulle vara bättre kvalificerad än jag att hjälpa
+dig i denna fråga,” säger Xojo.
+
+Hissen fortsätter sin långsamma nedstigning.
+
+>fråga Xojo om Guanmgon
+“Guanmgon verkar hålla dig sysselsatt,” säger du.
+
+“Ja,” säger Xojo, och ser lite frånvarande ut för ett ögonblick.  “Han är
+mycket kapabel på att tillhandahålla många små uppgifter av betydande vikt för
+honom själv.”
+
+Hissen passerar en dörr märkt “S2.”
+
+Xojo griper tag i handräcket hårt.  “Var beredd, stoppet kommer att bli
+abrupt.”  Du tar tag i handräcket och förbereder dig.
+
+Schaktväggen fortsätter att glida förbi i några ögonblick till, utan tecken på
+att sakta ner, sedan: duns!  Inte ett ryck från kabeln ovanför, utan den skarpa
+chocken av att träffa något nedanför.  Hela hissen skakar.  Utanför grinden är
+schaktväggen plötsligt stilla.
+
+“Allt är säkert nu,” säger Xojo och slappnar av.  “Nu behöver vi bara vänta
+tålmodigt på räddning.”
+
+>öppna dörr
+Du försöker, men den rubbas inte.  Förmodligen låser sig grinden automatiskt
+medan hissen är i rörelse (eller har fastnat mellan våningarna).
+
+>fråga Xojo om hissen
+“Hur kan vi ta oss ut härifrån?” frågar du.
+
+“Ja, vår anläggnings mycket effektiva avdelning för vertikal transport kommer
+snart att observera vårt missöde, för att sedan meddela kontoret för
+hissräddning.  Många gånger förr när jag har varit liknande instängd i
+hissarna, svarade avdelningen inom bara några timmar, i typiska fall.”
+
+>g
+“Är du säker på att vi inte kan hitta en väg ut härifrån?” frågar du, i hopp om
+att slippa vänta på hjälp—du har definitivt inte råd med de “flera timmar” som
+Xojo sa att det kunde ta.
+
+Xojo skakar på huvudet.  “Standardproceduren för sådana hissmissöden är att
+vänta på räddning.”
+
+>x tak
+Matt, bar metall som väggarna; den enda detaljen är en infälld servicepanel.
+
+>x panel
+Det är en infälld metallplatta i taket, ungefär sextio centimeter gånger nittio
+centimeter.  Du gissar att det är en servicelucka som ger tillgång till hissens
+tak.
+
+>öppna panel
+Den är för högt upp för att nå härifrån.
+
+>klättra på Xojo
+“Skulle du kunna försöka lyfta mig?” frågar du.
+
+“Absolut,” säger Xojo.  Xojo böjer sig ner för att låta dig klättra upp på hans
+axlar, vilket du lyckas med efter lite krångel, sedan reser han sig skakigt
+upp.  Nu når du enkelt upp till taket.
+
+“Jag hoppas du märker vilken initiativrik anställd jag skulle vara,” säger
+Xojo, något ansträngd av din vikt.
+
+>öppna panel
+Du ger plattan en knuff, och den lyfts enkelt bort.  Du skjuter den åt sidan
+och lämnar en sextio gånger nittio centimeter stor öppning i taket.
+
+>u
+Du lyfter dig själv genom öppningen, först genom att stödja dig på dina
+armbågar, sedan använder du hävstångseffekten för att lyfta resten av din
+kropp.  Precis när du nästan är igenom hör du ljudet av tyg som rivs - du inser
+att du lyckades fastna med benet av dina byxor på kanten av öppningen, vilket
+orsakar en stor reva längs halva benet.
+
+Hisschakt
+Taket på hisskorgen är inte en särskilt bra plats att stå på, trångt som det är
+med mekaniska utsprång och kabelanslutningar.  En servicelucka ger tillgång
+till hissens interiör.  Huvudkabeln hänger slappt från toppen av schaktet långt
+ovanför.
+
+Österut finns en dörr märkt “S2”, precis lite ovanför toppen av hissen.
+
+Serviceluckans lock ligger bredvid öppningen.
+
+Du sträcker ut din hand till Xojo och hjälper honom att klättra upp från
+hissen.
+
+(Din poäng has precis ökat med fem poäng.)
+
+>x kabel
+Den hänger bara slappt, vilket stämmer överens med hur hissen kraschade i
+botten av schaktet.
+
+>dra i den
+Du drar i kabeln.  Detta sänder en vacker sinusvåg som fortplantar sig uppåt
+kabeln.  Du är säker på att du skulle kunna beräkna flera egenskaper hos kabeln
+genom att observera vågens fortplantningshastighet, men du har för bråttom för
+sådana avledningar just nu.
+
+>x utsprång
+Det är bara en massa bultar och kabelanslutningar och liknande.
+
+>öppna dörr
+Dörren rör sig inte.  Du märker en låsmekanism vid kanten av dörren:
+förmodligen en säkerhetsfunktion som förhindrar att dörren öppnas när hissen
+inte har stannat på denna våning.
+
+>x mekanism
+Det ser ut som en säkerhetsspärr för att förhindra att någon öppnar dörren in i
+det tomma schaktet när hisskorgen inte har stannat på denna våning.  De enda
+exponerade delarna är en låsbult och en smal vertikal springa ungefär tio
+centimeter djup och trettio centimeter lång; förmodligen har hisskorgen en
+motsvarande del som glider in i springan när korgen har stannat vid denna dörr.
+
+>sätt meritförteckning i mekanism
+Du försöker glida in papperet i springan.  Det passar lätt, men det är för tunt
+för att utlösa låsmekanismen.
+
+>x panel
+Det är en rektangulär metallplatta, ungefär sextio gånger nittio centimeter,
+några millimeter tjock.  Den fungerar som lock för hissens servicelucka.
+
+>ta den
+Tagen.
+
+>sätt den i mekanism
+Du glider in plattan i springan.  Du rör den upp och ner lite, och du känner
+att den fastnar på något.  Du drar lite i den; med ett klick låses dörren upp
+och öppnas lite på glänt.  Du tar bort plattan från springan.
+
+>öppna dörr
+Du ger dörren en knuff och den svänger upp.  Den är fjäderbelastad, så du måste
+hålla den öppen.
+
+>ö
+Du klättrar de få decimetrarna över den upphöjda tröskeln.
+
+Västra änden av korridoren
+Detta är den västra änden av en svagt upplyst korridor.  Korridoren slutar här
+med en hissdörr i väster och fortsätter österut.
+
+Du håller dörren öppen för Xojo och låter den sedan svänga igen efter att han
+kommit igenom.  Du hör dörren låsas när den stängs.
+
+“Din flyktplan var uttänkt och utförd med stor excellens,” säger Xojo.
+“Huvudkanjons bro är tyvärr inte tillgänglig från denna subbottenplan, men jag
+känner till en alternativ övergång.  Den här vägen, tack.”  Han pekar ner i
+korridoren.
+
+(Din poäng has precis ökat med två poäng.)
+
+>fråga Xojo om hissen
+“Jag är glad att vi kunde ta oss ut ur den där hissen,” säger du.
+
+“Ja, din uttagningsplan var mycket väl uttänkt och genomförd,” säger Xojo.
+
+>ö
+Du låter Xojo leda vägen.
+
+Mitten av korridoren
+Denna långa, svagt upplysta korridor sträcker sig österut och västerut.  En
+låg, smal dörr leder norrut.
+
+Xojo öppnar dörren.  “Den här vägen, tack,” säger han och pekar på dörren.
+
+>ö
+Xojo tar försiktigt men bestämt tag i din arm och stoppar dig.  “Med respekt,
+vi får inte gå åt det hållet,” säger han.  Han ser sig omkring nästan
+konspiratoriskt och sänker rösten.  “Det är domänen för Junior Assisterande
+Personalfunktionärer, av Peon-grad och lägre.  De är förvisade att slita här i
+dessa nedre regioner, och i sin misär är de desperata efter kontakt med även
+sådana lågt stående överordnade som jag själv.  Om vi skulle våga oss dit,
+skulle vi kanske inte kunna undkomma de underdåniga uppmärksamheterna från sub-
+peoner på många timmar.  Bättre att gå den här vägen istället.”  Han pekar på
+dörren mot norr.
+
+>n
+Du låter Xojo leda vägen.
+
+Förrådsrum
+Detta mörka, unkna rum är fyllt med lådor, packlårar och slumpmässigt skräp,
+intryckt i varje tillgängligt utrymme och staplade prekaärt från golv till det
+låga taket.  En smal stig verkar slingra sig genom skräpet norrut.  En dörr
+leder söderut.
+
+“Röran är formidabel,” säger Xojo, “men vägen norrut är framkomlig.”
+
+>n
+Du låter Xojo leda vägen.  Du tar dig försiktigt fram genom högarna av skräp,
+men platsen är så trång att du inte kan undvika att bli täckt med damm och
+spindelväv.
+
+Nyttoområde
+Detta är den norra änden av ett mörkt, unknat förrådsrum.  Skräp är staplat
+nästan från golv till tak i söder, förutom en smal stig som slingrar sig genom
+röran.  Denna ände av rummet är mestadels rensat från skräp, förmodligen för
+att lämna plats för åtkomst till rör, ledningar och annan nyttoutrustning
+uppställd nära den norra väggen.  En rund öppning i den norra väggen leder
+utomhus; det ser ut som om den främst var designad för rören och ledningarna,
+men det finns tillräckligt med utrymme kvar för en person att ta sig igenom.
+
+Xojo pekar på öppningen.  “Jag ber om ursäkt, men detta är vägen att
+fortsätta,” säger han.
+
+>n
+Du låter Xojo leda vägen.
+
+Nyttoplattform
+Denna rangliga gångbana är inte mycket mer än ett stålgaller fastbultat på
+utsidan av kraftverksbyggnaden, upphängd över ett hundraåttio meter djupt fall
+ner i ravinen nedanför.  Anläggningens vägg fortsätter ytterligare sex meter
+nedåt, där den når toppen av ravinens lodräta klippvägg.  Ravinens vägg faller
+nästan vertikalt ner till floden nedanför.
+
+En primitiv repbro över ravinen slutar här.  Denna ände av bron är bunden till
+plattformens stålgaller, och bron sträcker sig ut över ravinen norrut.
+
+Talrika rör och ledningar löper upp och ner längs byggnaden vägg.  Många går in
+genom den runda öppningen i väggen söderut, men det finns precis tillräckligt
+med utrymme kvar för en person att ta sig igenom öppningen.
+
+En kort sträcka österut är undersidan av huvudbron över ravinen synlig.
+
+“Ursäkta igen,” säger Xojo och pekar på repbron.  “Den är relativt säker, i
+motsats till vad det ser ut som.”
+
+>x bro
+(repbron)
+Det är verkligen en repbro—inte en bro gjord av träplankor som stöds av rep,
+som du har sett förut, utan en bro bokstavligen gjord helt av rep.  Gångbanan
+är formad av rep arrangerade i ett korslagt mönster för att skapa en sorts
+hängmatta hängande från huvudstödrepen, som kan användas som handräcken.  Den
+ser mycket provisorisk ut.
+
+>x huvudbro
+Du ser ingen huvudbro här.
+
+>x kanjon
+Du ser ingen kanjon här.
+
+>fråga Xojo om bron
+“Är du seriös?” frågar du.  “Du vill verkligen gå över repbron?”
+
+“Jag beklagar,” säger han, “men det är den mest effektiva vägen.  Den enda
+möjligheten till ett alternativ är att invänta färdigställandet av
+reparationerna på hissen.”
+
+>g
+“Varför finns den här ens här?” frågar du skeptiskt.
+
+“Peon-gradspersonalen får normalt inte lämna källarvåningarna under arbetstid,”
+säger Xojo.  “En grupp sub-peoner byggde detta i hemlighet, för att möjliggöra
+avfärd och senare återkomst utan upptäckt av överordnade funktionärer.”
+
+>g
+“Den här bron ser inte särskilt säker ut,” säger du.
+
+“Jag har använt den personligen, under min egen Peon-gradsperiod av
+anställning,” försäkrar Xojo dig.  “Använd bara försiktighet för att göra
+överfarten relativt fri från överdriven fara.”
+
+>g
+“Är du verkligen säker på att detta är enda vägen över?” frågar du.
+
+“Jag är tyvärr tvungen att svara jakande,” säger Xojo.
+
+>n
+Du tar ett djupt andetag och följer försiktigt Xojos ledning, håller i
+huvudstödrepen för balans och letar efter fotfäste vid varje steg.
+
+Södra änden av repbron
+Att stå på den här bron är mycket svårare än det såg ut från plattformen.  Hela
+saken vill vika ihop sig under din vikt, och nätverket av rep som utgör
+gångbanan förskjuts med varje steg.
+
+Xojo väntar på att du ska komma ikapp.
+
+En skarp vibration skakar genom bron, som om någon slog ett av repen med en
+hammare.
+
+>n
+Du låter Xojo leda vägen.
+
+Mitten av repbron
+Detta är ungefär halvvägs över bron.  Härifrån är brons ändar så långt borta
+att de knappt är synliga, vilket nästan får det att kännas som om bron svävar i
+luften över kanjonen.
+
+Xojo väntar på att du ska komma ikapp.
+
+Hela bron faller plötsligt ungefär en meter, och stannar sedan med ett ryck.
+Xojo tittar bakåt och skrattar nervöst.
+
+>fråga Xojo om bron
+“Är du verkligen säker på att den här är säker?” frågar du.
+
+“Jag har korsat den flera gånger,” säger han.  “Snälla, vi borde skynda oss.”
+
+Vinden ökar lite.  Bron gungar och vrider sig.
+
+>n
+Du låter Xojo leda vägen.  Du tror att du börjar få grepp om det här, och du
+rör dig framåt med lite mer självsäkerhet.  Brons norra ände kommer äntligen
+inom synhåll - inte mycket längre nu.
+
+Bron skakar med en skarp stöt och vrider sig åt vänster.  Du stannar och håller
+dig fast.  Vibrationen avtar, men gångbanan är fortfarande i en konstig vinkel,
+så du försöker flytta din vikt för att räta upp dig.  En annan skakning, och
+bron vrider sig ännu mer, faller sedan ungefär två meter och rycker till ett
+stopp.  Ditt hjärta slår hårt och du håller dig fast så hårt du kan.
+
+Xojo tittar bakåt.  “Kanske vi borde—”
+
+Bron ger vika, och du faller fritt.  Du håller fast i repet av reflex, men det
+faller bara med dig.  Kanske inte ändå: repet rycker till och börjar dra dig
+mot kanjonens norra vägg.  Plötsligt faller du i sidled snarare än nedåt, den
+norra klippväggen närmar sig snabbt.  Du förbereder dig för stöten precis innan
+du slår in i klippväggen.
+
+Efter ett par studsningar kommer du mer eller mindre till ett stopp.  Du tittar
+på dig själv, och det verkar inte som om du blöder.  Kanske är du så dränkt i
+adrenalin att du inte inser hur allvarligt skadad du är än, men du verkar inte
+ha några allvarliga skador; du är utan tvekan lite blåslagen, men inga större
+kroppsdelar verkar brutna eller saknas.  Det ser dock ut som att du tappade en
+av dina skor.
+
+Hängande på en repbro
+Det som en gång var en repbro hänger nu vertikalt längs kanjonens norra
+klippvägg.  Lyckligtvis verkar brons konstruktion vara användbar som en stege.
+Det ser ut att bara vara cirka femton meter till klippans topp ovanför; resten
+av bron fortsätter en bit nedåt.
+
+Xojo är precis ovanför, hängande i repen.  “Jag tror vi kan klättra upp
+härifrån,” säger han.
+
+>n
+Du kan inte gå ditåt.  Uppenbara utgångar leder upp och ner.
+
+>fråga Xojo om bron
+“Du sa att den här var säker!” skriker du.
+
+“Förlåt,” säger Xojo.  “Det här har bara hänt en eller två gånger förut.  Kom,
+vi kan klättra upp härifrån.”
+
+>u
+Du låter Xojo leda vägen.  Det är lite jobbigt, men repnätet från den tidigare
+gångbanan fungerar faktiskt ganska bra som en stege.  Du tar dig upp till
+toppen av klippan på nolltid, och Xojo hjälper dig upp över kanten.
+
+Kanten av kanjonen
+Detta är ett ojämnt område fullt av stenar och övervuxet med vegetation.
+Söderut faller kanjonens branta klippvägg nästan vertikalt.  En liten stig som
+leder nordost har huggits genom den täta växtligheten.
+
+Änden av repbron är förankrad vid ett par stadiga metallpålar som drivits ner i
+klippan.  Själva bron hänger slappt över kanten av kanjonen.
+
+Xojo sätter sig på marken och hämtar andan.  “Ha, ha,” framtvingar han ett
+skratt.  “Kanske jag borde ha nämnt.  De högre ledarna finner det ibland
+användbart att delvis skära av repen som förankrar bron, som en överraskning
+för dem som korsar den.  Detta påminner Junior Peons om vikten av att förbli
+uppmärksamma.”  Han reser sig.  “Den här vägen,” säger han och pekar på stigen.
+
+>fråga Xojo om bron
+“Jag kan fortfarande inte tro att du fick mig att korsa den där repbron,” säger
+du.
+
+“Medges, faronivån var inte noll,” säger Xojo.
+
+>nö
+Du låter Xojo leda vägen.  Du följer stigen genom den täta växtligheten.
+
+Innergård
+Ett stort område av djungeln har röjts för att skapa denna innergård.  Den
+enorma administrativa huvudbyggnaden omsluter området i norr och öster, och
+låga trästaket håller djungeln på avstånd i söder och väster.  En smal stig
+leder sydväst in i djungeln.  En uppsättning dörrar i öster leder in i
+byggnaden.
+
+Flera helikoptrar—du räknar till fem—står parkerade här, med rotorbladen som
+fortfarande snurrar långsamt.  Dussintals personer som bär svarta Mitachron-
+logotyp polotröjor rusar omkring, många bär på lådor eller packlårar.
+
+Xojo pekar på dörrarna in i byggnaden.
+
+Mitachron-folket är här med full styrka, det är säkert; all denna aktivitet
+måste vara för att sätta upp en omedelbar demonstration.  Det var verkligen tur
+att du lät Xojo ta dig över den där repbron trots allt; om det hade tagit
+längre tid att komma hit, kunde de faktiskt ha lyckats stjäla denna affär från
+dig.  Som tur är verkar du ha kommit hit i tid.
+
+>in
+(öppnar de administrationsdörrar först)
+Du låter Xojo leda vägen.
+
+Lobby
+Vid tidigare besök på administrationscentret var denna stora, öppna lobby
+ganska spartansk och funktionell, men den har förvandlats: den är festlig,
+färgglad, nästan karnevalsliknande.  Rummet är fullt av människor som pratar
+och dansar.  Ballonger och konfetti fyller luften, ett liveband spelar från en
+scen, bord fyllda med mat kantar väggarna, servitörer slingrar sig genom
+folkmassan med stora brickor med drycker.
+
+En uppsättning dörrar leder ut västerut.
+
+Xojo knackar dig på axeln.  “Se, Överste Magnxi!” ropar han och pekar på
+Översten.  Du hade inte plockat ut henne ur folkmassan än, men nu ser du henne
+stå i närheten.
+
+Så detta är din chans.  Du önskar att du inte såg ut som om du just blivit
+påkörd av en buss, men det här är ingen tid att oroa sig för triviala detaljer
+som att se presentabel ut.  Dessutom ser Översten själv lite löjlig ut -
+militär- uniformen hon har på sig är rolig nog, men hon har haft på sig den
+varje gång du träffat henne.  Det är hatten hon har på sig som går över gränsen
+från excentrisk till bisarr.
+
+Tempot i musiken saktar ner lite, och det blir lite mindre bullrigt.
+
+>x Magnxi
+Hennes officiella titel är Höga Administratör Magnxi, men hon insisterar på att
+alla använder hennes militära titel, och hon bär alltid en uniformsklänning som
+ser ut som något från Napoleontiden.  Du har dock aldrig sett henne bära den
+här hatten förut; den driver upp bisarrheten i hennes outfit till en helt ny
+nivå.Hon pratar med en liten grupp människor.
+
+Musiken ändras till en långsammare danslåt.
+
+>x hatt
+Den är enormt stor; den är proportionerad som en novelty-kockhatt, löjligt hög
+och utvidgande uppåt, men den är mörkblå, gjord av styvt material och prydd med
+militära insignier.  Den är ungefär två storlekar för stor för Överstens huvud,
+och som ett resultat sitter den alldeles för lågt på hennes huvud, nästan
+täckande hennes ögon.
+
+“Ursäkta!” ropar en servitör.  Du gör tillräckligt med plats för att han ska
+kunna passera, och han rör sig bort genom folkmassan.
+
+>x uniform
+Det är som ett museiföremål från 1800-talet: skärp, band, medaljer, epåletter,
+hela paketet.
+
+Bandet spelar en något lugnare passage en kort stund, sedan ökar tempot och
+volymen blir ännu högre än tidigare.
+
+>prata med Magnxi
+“Överste Magnxi!” ropar du och försöker höras över musiken, men brasssektionen
+väljer just detta ögonblick att bli riktigt högljudd.  Översten verkar inte
+höra dig.
+
+Det improviserade dansområdet verkar expandera till där du står, vilket tvingar
+dig att flytta dig lite.
+
+>g
+Du tränger dig genom folkmassan och viftar med armarna, ropande lite högre.
+“Överste!  Överste Magnxi!”  Hon tittar åt ditt håll som om hon faktiskt hörde
+dig den här gången, men en servitör skär av framför dig.  Servitören går iväg,
+men Överste Magnxi pratar med någon annan igen nu.
+
+Bandet avslutar en låt till en runda applåder, sedan börjar de en ny.
+
+>g
+Du skriker av full hals.  “Överste Magnxi!”  Precis när du gör det stannar
+musiken - ditt skrik ekar genom det plötsligt tysta rummet.  Alla vänder sig om
+och tittar på dig.
+
+Översten stirrar på dig tillsammans med alla andra ett ögonblick, sedan ler
+hon.  “Åh, så trevligt att se dig igen,” säger Översten med sin perfekta
+engelska accent.  Hon kisar och vinglar lite, som om hon har druckit en del.
+“Herr, öh, Herr Muddling, inte sant?  Nå, kom och anslut dig till oss.  Vi
+firade just vårt nya partnerskap med Mitachron Corporation.  Är det inte en
+underbar fest som Mitachron anordnar för oss?”
+
+Nytt partnerskap?  “Men, men...” stammar du, utan att tro på vad du hör.
+
+Bandet börjar en ny låt, lite mindre öronbedövande än den förra.  “Och såg du
+min briljanta nya hatt?” frågar hon och låter fingrarna glida längs det
+överdimensionerade brättet.  “Det är en gåva från herr Belker här.  Verkligen,
+Frosst, det är för mycket.”
+
+Åh nej.  Du såg honom inte här förrän just nu.  Den smala, bleka mannen som
+står bredvid Magnxi är Frosst Belker, en junior chef på Mitachron.  Du har
+stött på honom förut, alltid vid tillfällen precis som detta.
+
+“Ah, herr Mittling,” säger Belker med det där förbannade leendet.  Han talar
+med en svag accent som du aldrig har kunnat placera, hans vokaler lite utdragna
+och nasala, hans konsonanter lite för tydligt uttalade.  “Återigen ser vi att
+det inte finns någon kund du kan uppvakta som jag inte kan ta ifrån dig.”  Han
+avslutar sin champagne och räcker glaset till en passerande servitör.
+“Överste, ett nöje att göra affärer, som alltid.  Jag måste ge mig av, men njut
+av festen.”  Han och Översten omfamnar varandra som diplomater, och sedan
+vänder han sig för att gå, men han stannar ett ögonblick och tittar åt ditt
+håll.  “Du också, naturligtvis, herr Mittling,” säger han med ett annat leende,
+skrattar sedan och går iväg, försvinnande in i folkmassan.
+
+Översten återgår till att mingla.
+
+En grupp skrattande människor tränger sig förbi dig.
+
+(Din poäng has precis ökat med ett poäng.)
+
+>x publik
+Det ser ut som om de mestadels är anläggningsanställda, men många Mitachron-
+personer är också här.
+
+Xojo knackar dig på axeln och räcker dig ett papper - en utskrift från en
+gammal radskrivare, med omväxlande gröna och vita horisontella ränder över
+sidan.  “Detta anlände i nattens sändning av elektronisk e-post,” säger han.
+“Jag uttrycker mitt medlidande för din olyckliga misslyckande,” tillägger han.
+“Jag önskar dig förbättring av lycka för dina framtida strävanden.  Nu måste
+jag återvända för att hjälpa Guanmgon att demontera din mycket underbara SCU-
+1100DX-produkt.”  Ni skakar hand och han försvinner in i folkmassan.
+
+Bandet avslutar en låt till en runda applåder, sedan börjar de en ny.
+
+>x Belker
+Du ser inte Frosst Belker här; han gick efter att ha pratat med Översten.
+
+Musiken ändras till en långsammare danslåt.
+
+>x band
+Det är som ett museiföremål från 1800-talet: skärp, band, medaljer, epåletter,
+hela paketet.
+
+Det improviserade dansområdet verkar expandera till där du står, vilket tvingar
+dig att flytta dig lite.
+
+>x mat
+Bord fyllda med mat kantar väggarna.
+
+En grupp skrattande människor tränger sig förbi dig.
+
+>x servitör
+Servitörerna rör sig genom folkmassan bärande på drycker.
+
+Tempot i musiken saktar ner lite, och det blir lite mindre bullrigt.
+
+>x utskrift
+Det är en utskrift från en gammal radskrivare, tryckt på kontinuerligt
+vikpapper med alternerande ränder av vitt och blekgrönt.  Det är ett e-
+postmeddelande från din chef; han måste vara tillbaka från Maui.  Det är i hans
+karakteristiska stil med enbart gemener; han gör det för att imponera på folk
+att han är för viktig för att slösa sin värdefulla tid på att trycka på Shift-
+tangenten.  Hans stavning och interpunktion är på liknande sätt
+effektiviserade.
+
+                                      ***
+doug- hoppas du är klar med demon nu.....när du kommer tillbaka behöver jag att
+du åker ner till la för att rekrytera en cal tech-student som heter brian
+stamer. rudyb såg en artikel om honom någonstans han är helt het på att
+anställa honom. känner du honom....i alla fall vill rudyb att du åker eftersom
+du gick på cal tech.
+
+tack carl
+
+förresten- jag är borta från kontoret nästa månad....viktig konferens på fiji.
+jag börjar bli utbränd av allt detta resande så jag tänker ta lite ledigt när
+jag kommer tillbaka. om du behöver något bara maila.
+
+förresten igen- o-travel fick ett jättebra!!! pris på din returresa.  de
+hittade en nedgradering till economy-minus, den har ett par extra
+mellanlandningar, jag är säker på att du inte har något emot det. sparar stora
+$$$ i budgeten, fiji pressade den lite, rudyb är helt sån där du överskrider
+budgeten för mycket igen så vi måste alla hjälpas åt att skära ner mer på
+kostnaderna.
+
+ha så kul i la!!!!!!!!!!!!!
+                                      ***
+
+Toppen.  Du är inte ens tillbaka från den här eländiga resan än och du har
+redan en till inbokad.  Nåja.  Lika bra att ordna med oxkärran tillbaka till
+flygplatsen, eller vad det nu är som den nya, lägre budgeten tillåter...
+
+
+
+
+
+Tre veckor senare...
+
+
+
+Flygplatsbussen släpper av dig i slutet av San Pasqual St., vid östra kanten av
+Caltech-campus, och kör iväg.
+
+Du hade glömt hur otroligt hemsk LA-trafiken kan vara.  Väg 105 var en solid
+rad av baklyktor hela vägen från LAX till centrum, och 110:an var en
+parkeringsplats större delen av vägen upp till Pas.  Du hade tänkt att du
+kanske skulle utforska campus lite innan ditt möte, men det är uteslutet nu;
+bättre att gå direkt till Career Center-kontoret.  Apropå det, det verkar som
+om de flyttar Career Center till en ny byggnad varje gång du är här nere; den
+här gången är det i Student Services- byggnaden, en kort bit upp på Holliston.
+
+San Pasqual St.
+Detta är slutet av en bred bostadsgata.  Parkerade bilar kantar båda sidor av
+gatan, som fortsätter österut, ut i Pasadena.  Gatan slutar här och blir en
+gångväg västerut, som leder djupare in på campus.  Höga buskar längs södra
+sidan av gatan döljer delvis en mur, som omger baksidan av North Houses-
+komplexet.  Holliston Ave., som slutar här i en T-korsning, fortsätter norrut.
+
+>  
+Ursäkta?
+
+>a
+Vill du verkligen avsluta? (J bekräftar) > j
+
+Tack för att du spelade Tillbaka till Ditch Day!
+

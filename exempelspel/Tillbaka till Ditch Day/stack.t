@@ -1725,13 +1725,13 @@ class AaronErinConvList: object
 
 ++++ TellTopic, SuggestedTellTopic @startupsTopic
     "<q>Jag har tittat på några nystartade företag genom åren,</q> säger du,
-    <q>men de har alltid verkat lite riskabla.</q> Du har alltid gillat
+    <q>men de har alltid verkat rätt riskabla.</q> Du har alltid gillat
     tanken på att arbeta för ett mindre företag---en chans att bygga upp
-    något från grunden, utan all overhead från stora företag. 
-    Visst, nystarter är riskabla. Men när du tänker på det nu måste du
-    undra om risken som verkligen oroade dig inte var något mer
+    något från grunden, utan storföretagets alla omkostnader. 
+    Nystarter är riskabla, så klart. Men nu när du tänker på det kan du inte
+    låta bli att undra om det som verkligen oroade dig var något mer
     personligt: rädsla för att du inte skulle vara tillräckligt bra, att dina år
-    på det stora företaget gjorde dig för mjuk.
+    på det stora företaget gjort dig för mjuk.
     <.reveal lunch-satisfied-1> " // TODO: snygga till resten av meningen.
 
     name = 'startup-företag'
@@ -1750,10 +1750,10 @@ class AaronErinConvList: object
 +++ TellTopic, SuggestedTellTopic @omegatronTopic
     "Du är inte säker på hur du ska svara på en så öppen fråga; du skulle kunna
     berätta för henne om ditt jobb, era produkter, din chef,
-    byråkratin...\ allt som kommer till tankarna verkar bara lite
-    negativt. <q>Vi är en ledande elektroniktillverkare,</q>
-    säger du, som om du läste från en broschyr. Men du kan inte verkar
-    stoppa dig själv. <q>Vi erbjuder ett diversifierat utbud av
+    byråkratin...\ men alla tankar som dyker upp verkar vara lite 
+    negativa. <q>Vi är en ledande elektroniktillverkare,</q>
+    säger du, som om du läste från en broschyr. Men du verkar inte 
+    kunna stoppa dig själv. <q>Vi erbjuder ett mångsidigt utbud av
     branschledande produkter, tillsammans med relaterade konsult- och
     supporttjänster.</q> "
 
@@ -1769,7 +1769,7 @@ class AaronErinConvList: object
 +++ AskTopic [stackTopic, ddTopic, paulStackTopic, commandant64]
     "<q>Löste ni er stack?</q> frågar du.
     <.p><q>Ja,</q> säger hon. <q>Det är ett bra pussel. Jag tänker inte
-    avslöja det för dig, ifall du vill gå tillbaka och prova det
+    avslöja det för dig, utifall att du vill gå tillbaka och prova det
     själv.</q> "
 ;
 +++ TellTopic [stackTopic, ddTopic, blackBox, stamerStackTopic]
@@ -1778,7 +1778,7 @@ class AaronErinConvList: object
 ;
 
 +++ DefaultAnyTopic
-    "Hon verkar inte kunna höra dig över ljudet från folkmassan. "
+    "Hon verkar inte kunna höra dig genom ljudet från folkmassan. "
     isConversational = nil
 ;
 
@@ -1801,13 +1801,13 @@ class AaronErinConvList: object
  */
 + a1nMovers: MitaMovers
     "Ett antal av flyttarbetarna packar upp lådor och arrangerar
-    utrustning tagen från lådorna. Andra fortsätter att anlända med
-    fler lådor, placerar dem där Belker anvisar och vänder sedan
-    om för att hämta mer. "
+    utrustning tagen från lådorna. Andra fortsätter med att bära dit
+    fler lådor, placera dem där Belker anvisar och sedan återvända
+    för att hämta mer. "
 
     "Flera Mitachron-flyttarbetare är här och packar upp sina lådor och
-    containrar. Andra fortsätter att anlända, lämnar av sin last och
-    ger sig av. "
+    containrar. Andra fortsätter med att bära dit, lämna av sin last och
+    ge sig av. "
 
     /* 
      *   list the movers early, before the other specialDesc items - we
