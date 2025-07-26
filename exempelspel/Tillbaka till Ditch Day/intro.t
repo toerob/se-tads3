@@ -2313,7 +2313,7 @@ class TestableCircuit: object
              *   since otherwise we wouldn't have any visible contents to
              *   list 
              */
-             "Baksidan av testaren är öppen, och avslöjar kretsarna inuti, det inkluderar ";
+             "Baksidan av testaren är öppen, och kretsarna inuti är synliga, de inkluderar ";
         }
     }
     descContentsLister = (contentsLister)
@@ -2324,7 +2324,7 @@ class TestableCircuit: object
         showListPrefixWide(itemCount, pov, parent)
         {
             "När du öppnar blir kretsarna inuti synliga,
-            det inkluderar ";
+            de inkluderar ";
         }
     }
 

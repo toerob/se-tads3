@@ -695,7 +695,7 @@ class StackFixture: CustomFixture
             göra anspråk på sin del av mutan. Belker banar sig väg
             fram till dig genom folkmassan. Han har återfått fattningen
             nu; han ler svagt. <q>Grattis,</q> säger han.
-            <q>Jag är vederbörligen imponerad av din uppfinningsrikedom.
+            <q>Jag är mycket imponerad av din uppfinningsrikedom.
             Jag skulle vilja att mina tekniker studerar dina metoder
             någon dag.</q> Han verkar vara på väg att säga något annat, men
             hans mobiltelefon ringer; han tar fram den ur fickan och
@@ -1544,7 +1544,7 @@ class AaronErinConvList: object
 /* BYE depends on whether we've seen the whole lunch conversation yet */
 +++ ByeTopic, StopEventList
     ['<q>Jag borde återgå till min stack,</q> säger du.
-    <.p><q>Redan?</q> frågar Erin. <q>Kom igen, stanna en stund. De
+    <.p><q>Redan?</q> frågar Erin. <q>Kom igen nu, stanna en stund. De
     har förmodligen inte ens släckt branden än.</q> ',
 
      '<q>Jag borde gå,</q> säger du.

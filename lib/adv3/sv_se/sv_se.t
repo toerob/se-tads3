@@ -2922,9 +2922,11 @@ modify specialTopicPreParser
         return str;
     }
 
-    /* pattern for string starting with "A" or "T" verbs */
+    /* pattern for string starting with "A" or "T" verbs 
+        I svenskan f - för fråga, b - för berätta
+    */
     aOrTPat = static new RexPattern(
-        '<nocase><space>*[at]<space>+(<^space>.*)$')
+        '<nocase><space>*[fb]<space>+(<^space>.*)$')
 
     /* pattern to eliminate punctuation marks from the string */
     punctPat = static new RexPattern('[.?!,;:]');
@@ -2947,15 +2949,16 @@ modify SpecialTopic
     }
 
     /*
-     *   Our "weak" strings - 'i', 'l', 'titta': these are weak because a
+     *   Our "weak" strings - 'i', 'l', 'look': these are weak because a
      *   user typing one of these strings by itself is probably actually
      *   trying to enter the command of the same name, rather than entering
      *   a special topic.  These come up in cases where the special topic
      *   is something like "say I don't know" or "tell him you'll look into
      *   it".
      */
-     // TODO: fixa...
-    weakPat = static new RexPattern('<nocase><space>*(i|l|look)<space>*$')
+     // TODO: kontrollera/fixa så att 'säg att jag inte vet', 'säg jag vet inte'  eller 
+     // 'säg att jag kollar upp det' fungerar.
+    weakPat = static new RexPattern('<nocase><space>*(i|l|titta)<space>*$')
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -3043,7 +3046,7 @@ modify PushTraveler
     travelerName(arriving)
     {
         "<<gPlayerChar.hasSeen(self) ? theName : aName>>,
-        pushing <<obj_.theNameObj>>,";
+        puttar <<obj_.theNameObj>> framför {sig}, ";
     }
 ;
 
@@ -3056,7 +3059,7 @@ modify PushTraveler
 modify PathPassage
     /* treat "take path" the same as "enter path" or "go through path" */
     dobjFor(Take) maybeRemapTo(
-        gAction.getEnteredVerbPhrase() == 'take (dobj)', TravelVia, self)
+        gAction.getEnteredVerbPhrase() == 'ta (dobj)', TravelVia, self)
 
     dobjFor(Enter)
     {
@@ -3074,7 +3077,7 @@ modify AskConnector
      *   questions for this travel connector: "Which *one* do you want to
      *   enter..."
      */
-    travelObjsPhrase = 'one'
+    travelObjsPhrase = 'en'
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -3358,7 +3361,7 @@ DefineLangDir(aft,  'akterut' | 'akt', 'tillbaka till')
     sayDeparting(trav) { gLibMessages.sayDepartingAft(trav); }
 ;
 
-DefineLangDir(fore, 'föröver' 'för' | 'fören' | 'forward' | 'f', 'tillbaka till')
+DefineLangDir(fore, 'föröver' 'för' | 'fören' | 'f', 'tillbaka till')
     sayArriving(trav) { gLibMessages.sayArrivingShipDir(trav, 'fören'); }
     sayDeparting(trav) { gLibMessages.sayDepartingFore(trav); }
 ;
@@ -4011,15 +4014,12 @@ langMessageBuilder: MessageBuilder
 
         // - Första implicita formerna för 1a, 2a och 3:e person:  "jag", "du" & "ref"
         // Exempelvis:
-        // "{Jag} drack kaffe" -> "Jag drack kaffe" (om jag: Actor 'jag' 'jag' pcReferralPerson = FirstPerson)
-        // "{Du} drack kaffe" -> "Du drack kaffe" (om du: Actor 'du' 'du' pcReferralPerson = SecondPerson)
-        // "{Ref} drack kaffe" -> "bob drack kaffe" (om bob: Actor 'bob' 'Bob' pcReferralPerson = ThirdPerson)
+        // "{Jag} drack kaffe" -> "Jag drack kaffe" (om "jag: Actor 'jag' 'jag' pcReferralPerson = FirstPerson")
+        // "{Du} drack kaffe" -> "Du drack kaffe" (om "du: Actor 'du' 'du' pcReferralPerson = SecondPerson")
+        // "{Ref} drack kaffe" -> "bob drack kaffe" (om "bob: Actor 'bob' 'Bob' pcReferralPerson = ThirdPerson")
         ['jag',       &theName, 'actor', nil, true],
         ['du',        &theName, 'actor', nil, true],
         ['ref',       &theName, 'actor', nil, true],
-
-        // TODO: Dessa två kanske kan ersättas av ref/han, ref/hon.
-        // men de är så pass lätta att skriva med så de får bli kvar?
         ['du/han',    &theName, 'actor', nil, true],
         ['du/hon',    &theName, 'actor', nil, true],
 
@@ -5140,8 +5140,8 @@ cmdTokenizer: Tokenizer
 
         /*
          *   A word ending in s.  We parse this as two
-         *   separate tokens: one for the word and one for the
-         *   apostrophe-s. // TODO: & squote
+         *   separate tokens: one for the word and one for a
+         *   "apostrophe-s". 
          */
 
         ['possesive ending-s word',
@@ -10066,6 +10066,7 @@ VerbRule(TellVague)
 VerbRule(TalkTo)
     ('prata'|'konversera') ('till'|'med') singleDobj
     | 'inled' 'konversation' 'med' singleDobj
+    | 'hälsa' ('på'|) singleDobj
     : TalkToAction
     verbPhrase = 'prata/pratar (med vem)'
     askDobjResponseProd = singleNoun
