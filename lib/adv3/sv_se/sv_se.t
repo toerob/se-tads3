@@ -500,6 +500,8 @@ modify VocabObject
 
     tripleLetterPat = static new RexPattern('.*?((<Alpha>)%2{2,}).*')
 
+    wordPartDelPat = static new RexPattern('(.*?)(<vbar|plus>)')
+
     initializeVocabWith(str)
     {
         local sectPart;
@@ -2956,9 +2958,12 @@ modify SpecialTopic
      *   is something like "say I don't know" or "tell him you'll look into
      *   it".
      */
-     // TODO: kontrollera/fixa så att 'säg att jag inte vet', 'säg jag vet inte'  eller 
-     // 'säg att jag kollar upp det' fungerar.
-    weakPat = static new RexPattern('<nocase><space>*(i|l|titta)<space>*$')
+
+     // TODO: kontrollera vilka fall weakPat behöver uttökas i just svenskan
+     // i dessa scenarios kommer inte orden att riskera ihopblandning med ett annat
+     // kommando.
+     // Eng org: weakPat = static new RexPattern('<nocase><space>*(i|l|look)<space>*$')
+     weakPat = static new RexPattern('<nocase><space>*(kolla)<space>*$')
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -6511,7 +6516,7 @@ grammar compoundNounPhrase(simple): simpleNounPhrase->np_
 ;
 // 'till'?
 grammar compoundNounPhrase(of):
-    simpleNounPhrase->np1_ ('av'->of_|'med'->of_|'från'->of_) compoundNounPhrase->np2_
+    simpleNounPhrase->np1_ ('av'->of_|'med'->of_|'från'->of_|'över'->of_) compoundNounPhrase->np2_
     | simpleNounPhrase->np1_ 'av'->of_ 'de'->the_ compoundNounPhrase->np2_
     | simpleNounPhrase->np1_ 'från'->of_ 'de'->the_ compoundNounPhrase->np2_
     : NounPhraseWithVocab
@@ -10277,7 +10282,7 @@ VerbRule(Wait)
 ;
 
 VerbRule(Look)
-    ('t' | 'se' | 'titta' | 'betrakta') ('omkring'|'runt'|) 
+    ('t' | 'se' | 'titta' | 'betrakta' | 'kolla') ('omkring'|'runt'|) 
     : LookAction
     verbPhrase = 'titta/tittar runt'
 ;
@@ -11463,10 +11468,12 @@ class WordPart: object {
     word = nil
     ending = nil
     jointS = nil
-    construct(word, ending, jointS) {
+    useIndividually = nil
+    construct(word, ending, jointS, useIndividually) {
         self.word = word;
         self.ending = ending;
         self.jointS = jointS;
+        self.useIndividually = useIndividually;
     }
 }
 
@@ -11506,10 +11513,10 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
     // varianter innan de förs över till cmdDict på slutet.
     local wordVariations = new Vector(); 
 
-    // Inleder med att dela upp alla ordets sammansatta komponenter 
-    // som är avskiljda med '+'-tecken
-    local parts = cur.split('+');
-
+    // Inleder med att dela upp alla ordets sammansatta komponenter
+    // som är avskiljda med '+', '|'-tecken, eller ingen avskiljare alls (nil)
+    local parts = splitWithDelimiterPattern(cur, VocabObject.wordPartDelPat);
+    
     // Utgå från att minst två komponenter finns i parts eftersom 
     // det reguljära uttrycket identifierat det mönstret med "abc+def" 
     // innan metodanropet in hit.
@@ -11517,7 +11524,7 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
 
     // Håll reda på sista ändelsen för ordet. Den definitiva formen går att 
     // använda för att härleda neutrum/utrum.
-    local ending = parts[parts.length]; 
+    local ending = parts[parts.length][1]; 
 
     // Beroende på vilken sektion av vocabWords vi nu befinner oss i 
     // skapas boolesker för att hålla koll på om vi är i pluralläge
@@ -11540,7 +11547,7 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
     // Skapar upp individuella WordPart(s)-objekt av alla ordets komponenter 
     // Skippa den sista ändelsen (som redan finns i variabeln 'ending')
     for(local i = 1; i<=parts.length-1; i++) {
-        local part = parts[i];
+        local part = parts[i][1];
         // Fånga in själva ordet isolerat, samt optionell 'genus-inverter (:)' och optionellt foge-S (^s)
         local match = rexMatch('([^<:^>]+)(:<alpha>*)?(<caret>s)?', part);
         if(match == nil) {
@@ -11549,6 +11556,11 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
             continue;
         }
         local word = rexGroup(1)[3];        // Plocka ut själva ordet utan ändelse
+        
+        // Kontrollera om ordet bara ska vara med i en större sammansättning och inte enskilt
+        // Om ordet slutar på | så kommer inte ett enskilt ord att skapas för komponenten. 
+        local useIndividually =  parts[i][2] != '|';
+
         local jointS = rexGroup(3) != nil;  // Plocka ut true/false för foge-S
         local genderMod = rexGroup(2);      // Plocka grammatisk genus-moddning som boolesk
         local genderModContent = genderMod ? rexGroup(2)[3] : nil; // Plocka ut alternativ ändelse, annars nil
@@ -11579,7 +11591,7 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
         // ändelsen i ending rakt av och bryt tidigt. Det finns ingen anledning att 
         // härleda där då användaren specificerat ändelsen som sista del av ordet redan.
         if(i == parts.length-1) {
-            wordParts.append(new WordPart(word,ending, nil));
+            wordParts.append(new WordPart(word, ending, nil, useIndividually));
             break;
         } 
 
@@ -11587,8 +11599,9 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
         // detta mönster inleds av användaren med kolon och en eventuellt 
         // bifogad annan ändelse. Om ingen ändelse anges, kommer kolon 
         // betyda motsatsen till den slutliga ändelsen för ordet.
+        
         local partEnding = ending;  // Utgå från att komponenten får samma ändelse som ändelsen för helhetsordet
- 
+
         if(genderMod) {
             if(genderModContent) {
                 // Om kolon + eventuell ny ändelse har påträffas behöver det hanteras
@@ -11641,18 +11654,23 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
                 }
             }
         }
-        wordParts.append(new WordPart(word,partEnding,jointS));
+        wordParts.append(new WordPart(word,partEnding,jointS, useIndividually));
     }
 
     for(local part in wordParts) {
-        wordVariations.append(part.word);
-        wordVariations.append(part.word + part.ending);
+        if(part.useIndividually) {
+            wordVariations.append(part.word);
+            wordVariations.append(part.word + part.ending);
+        } else {
+            //tadsSay('Skippar enskild ordkomponent: <<part.word>>\n');
+        }
     }
 
     local longestCompoundWord = '';
 
     // Bygg upp längre sammansatta ord, genom att addera ett i taget
-    local wordPartsList = wordParts.toList();
+    local wordPartsList = wordParts.toList(); // Skapa en lista av de ord som ska användas individuellt
+
     for(local nr = 1; nr <= wordPartsList.length; nr++) {
         local w = wordPartsList.sublist(1, nr); // Bygg upp en lista med allt längre sammansatta ord
 
@@ -11669,8 +11687,12 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
         // Håll koll det hittills längst sammansatta ordet för bestämd form 
         longestCompoundWord = max(compoundWord, longestCompoundWord); 
         
-        wordVariations.append(compoundWord);
-        //tadsSay('compoundWord: <<compoundWord>>\n');
+        // Om det sista ordet i en sammansättning ska få användas indidivuellt, lägg till det.
+        // Annars inte, t ex: i fallet | används, så som i fallet 'vatten|slang+en', här ska inte vatten
+        // ensamt läggas till, vatten+slang+en, ska dock göra det.
+        if(wordPartsList[nr].useIndividually)  {
+            wordVariations.append(compoundWord);
+        }
     }
 
     // Använd det längst sammansatta ordet för att skapa upp namn utan ändelse och med,
@@ -11686,8 +11708,13 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
                 local secondWord = wordParts[j];
                 local word = firstWord.word + (firstWord.jointS?'s':'') + secondWord.word;
                 local wordWithEnding = word + secondWord.ending;
-                wordVariations.append(word);
-                wordVariations.append(wordWithEnding);
+
+                // Lägg bara till det sammansatta ordet om det sista sammansatt ordet får 
+                // användas individuellt
+                if(secondWord.useIndividually)  {
+                    wordVariations.append(word);
+                    wordVariations.append(wordWithEnding);
+                }
             }
         }
     } else if(parts.length > 3) {        
@@ -11711,8 +11738,13 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
                     local word = firstWord.word + (firstWord.jointS?'s':'') + secondWord.word + (secondWord.jointS?'s':'') + thirdWord.word;
                     local wordWithEnding = word + thirdWord.ending;
                     //tadsSay('[<<i>>,<<j>>,<<k>>] = [<<firstWord.word>>,<<secondWord.word>>,<<thirdWord.word>>] = <<word>> <<wordWithEnding>>\n');
-                    wordVariations.append(word);
-                    wordVariations.append(wordWithEnding);
+
+                    // Lägg bara till det sammansatta ordet om det sista sammansatt ordet får 
+                    // användas individuellt
+                    if(thirdWord.useIndividually)  {
+                        wordVariations.append(word);
+                        wordVariations.append(wordWithEnding);
+                    }
                 }
             }
         }
@@ -11743,6 +11775,41 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
         definiteForm = wordWithEnding
     };
 }
+
+// works similar to the string split function
+// But returns an array of pairs where for each pair there's the word and the delimiter
+// As default, it will search for words that ends in either the '+' or '|'-delimiter
+//
+// e.g: calling splitWithDelimiterPattern('stols|ben+et') 
+// will return:  [ [stols, '|'], ['ben','+'], [et, nil] ]
+//  
+function splitWithDelimiterPattern(str, pat = VocabObject.wordPartDelPat) {
+    local pairs = new Vector();
+    local idx = 1; // Begin searching the pattern at position 1 
+
+    // Keep looping as long as the index is less than the length of the string
+    while(idx <= str.length) {
+
+      local result = rexMatch(pat, str, idx);
+      if(result == nil) {
+        // If no delimiter was found it's becasue it is the last word, 
+        // just add nil as delimiter and step out of the loop
+        pairs += [[str.substr(idx, str.length), nil]];
+        break;
+      } 
+
+      // Add a pair to the result that will be returned eventually
+      local word = rexGroup(1)[3];
+      local delimiter = rexGroup(2)[3];
+      pairs += [[word, delimiter]];
+
+      // Update the index to be +1 after where the last delimiter was found
+      idx = rexGroup(2)[1] + 1; 
+    }
+
+    return pairs;
+};
+
 
 // Rensa bort alla eventuella trippelbokstäver som uppstått på grund 
 // av ordsammansättningarna:

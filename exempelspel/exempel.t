@@ -22,11 +22,13 @@ versionInfo: GameID
 ;
 
 
+
 gameMain: GameMainDef
     initialPlayerChar = du
     usePastTense = true
 
     showIntro() {
+      
       
         "Din farfars stuga ligger i en avlägsen del av skogen. Du har just kommit hit för att städa upp efter din farfar som dog förra året. Stugan är gammal och innehar många hemligheter. Du har alltid trivts att vara här.  
         \b
@@ -75,9 +77,36 @@ brygga: OutdoorRoom 'Brygga' 'brygga'
 // Nu går: "x fiskaren's spö" bra...
 
 +fiskare: Actor 'fiskare+n' 'fiskare';
-+spo: Thing 'metspö+et/spö+et' 'metspö' owner = fiskare;
++spo: Thing 'met|spö+et' 'metspö' owner = fiskare;
+
++ Heavy 'rullande kontors|stol+en' 'kontorsstol';
+
++gitarrfodral: Thing 'gitarr|fodral+et';
+
 
 +Tomas: Actor 'Tomas' 'Tomas' isProperName = true;
+++ tomasTalking: InConversationState
+    attentionSpan = 3
+;
+++HelloTopic "hej säger du! <.convnode intro>";
+++ ConvNode 'intro'
+    npcGreetingMsg = "<.p>\^<<getActor().theName>> släpper abrupt
+        det han håller på med och vänder sig mot dig, tar ett steg bakåt.
+        <q>Vem är du?</q> frågar han. "
+;
++++SpecialTopic 'säga att du inte vet' 
+  ['säg', 'säga','att','jag', 'du','inte', 'vet']
+    topicResponse() { 
+      "du säger att du inte vet. "; // TODO: laga
+    }
+;
++++SpecialTopic 'säga att du kollar upp det' 
+  ['säg', 'säga','att','jag', 'du','ska','kolla','kollar', 'upp', 'det']
+    topicResponse() { 
+      "du säger att du ska kolla upp det. "; // TODO: laga
+    }
+;
+
 +bok: Thing 'bok+en' 'bok' owner = Tomas;
 
 +rutan: Thing 'glas ruta+n' 'ruta av glas';

@@ -158,7 +158,7 @@ me: Actor 'din min kropp+en' 'din kropp' @forest
 
 ;
 
-warthog: UntakeableActor 'lerig+a grymtande vårtsvin+et/svin+et' 'vårtsvin' "Lerig och grymtande."
+warthog: UntakeableActor 'lerig+a grymtande vårt|svin+et' 'vårtsvin' "Lerig och grymtande."
   pcDesc = "Lerig och grymtande -- och definitivt ett vårtsvin"
   actorHereDesc = "Ett vårtsvin sniffar och grymtar omkring i askan. "
   isProper = true
@@ -260,14 +260,14 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'det stora torget'
     }
 ;
 
-+SimpleNoise 'djungelljud+et/ljud+et/macaw+en/papegoja+n/ara+n*papegojor+na macawer+na aror+na fladdermöss+en' 'djungelljud' 
++SimpleNoise 'djungel|ljud+et/macaw+en/papegoja+n/ara+n*papegojor+na macawer+na aror+na fladdermöss+en' 'djungelljud' 
     "Vrålapor, fladdermöss, papegojor, aror."
 ;
 
-+ Unimportant 'mörk+a olivfärg+ade djungel+n/träd+en/växtlighet+en/limesten+en/träd+en/regnskog+en/skog+en/knott+en' 'djungel'
++ Unimportant 'mörk+a olivfärg+ade djungel+n/träd+en/växtlighet+en/limesten+en/regnskog+en/skog+en/knott+en' 'djungel'
 ;
 
-+ mushroom: Food 'fläckig+a svamp+en/padd+svamp+en*svampar+na paddsvampar+na' 'fläckiga svampar'
++ mushroom: Food 'fläckig+a padd|svamp+en*padd|svampar+na' 'fläckiga svampar'
     "Svampen är täckt med fläckar, och du är inte ens säker på att det inte är en paddsvamp."
     theName = 'de fläckiga svamparna'
     isPlural = true
@@ -303,13 +303,13 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'det stora torget'
    }
 ;
 
-+ packingCase: Heavy, OpenableContainer 'packväska+n/väska+n/packlåda+n/pack+et/låda+n' 
++ packingCase: Heavy, OpenableContainer 'pack|väska+n/pack|låda+n/pack+et' 
     initSpecialDesc =  "Din packväska ligger här, redo att fyllas med alla viktiga kulturella fynd du kan göra, för transport tillbaka till civilisationen."
     cannotTakeMsg = 'Väskan är för tung för att bemöda sig flytta runt på, så länge din expedition fortfarande är ofullständig. '
     initiallyOpen = true 
 ;
 
-++ camera: Thing  'otymplig+a robust+a träinramad+e plåtaktig+a våtplåt:en^s+kamera+n/våtplåtsmodell+en/kamera+n' 
+++ camera: Thing  'otymplig+a robust+a träinramad+e plåtaktig+a våtplåts|kamera+n/våtplåtsmodell+en/' 
   "En otymplig, robust, envis träinramad våtplåtsmodell: som alla arkeologer har du ett kärleks-hatförhållande till din kamera."
 
    dobjFor(Photograph)
@@ -322,7 +322,7 @@ forest: OutdoorRoom '<q>STORA TORGET</q>' 'det stora torget'
     "<q>The Times</q> från 26 februari 1938, på en gång fuktig och skör efter en månads exponering av klimatet, vilket är ungefär så som du själv känner dig. Kanske är det dimma i London. Kanske finns där bomber också."
 ;
 
-+ steps: StairwayDown 'sten huggen huggna stenhuggen stenhuggna trappsteg+en/steg+en/stenstege+n/trappsteg+en/stentrapp+en/tio/10/pyramid+en/begravningsplats+en/struktur+en/anläggning+en*trappsteg+en' 'stenhuggna trappsteg'
++ steps: StairwayDown 'sten huggen huggna stenhuggen stenhuggna trappsteg+en/sten|stege+n/sten|trapp+en/tio/10/pyramid+en/begravningsplats+en/struktur+en/anläggning+en*trappsteg+en' 'stenhuggna trappsteg'
     "De spruckna och slitna trappstegen leder ner till en dunkel kammare. Dina fötter kanske  <<squareChamber.seen ? 'är de första att beträda'
         : 'har varit de första att ha beträtt'>> dem på femhundra år. På det översta trappsteget är glyfen Q1 inristad. "
     
@@ -455,7 +455,7 @@ sodiumLamp: Flashlight, FueledLightSource, TravelPushable
 dummyLight: SecretFixture
 ;
 
-map: Readable 'över Quintana Roo skiss-karta+n/skisskarta+n/skiss+en/karta+n' 'skiss-karta över Quintana Roo' @me
+map: Readable 'över Quintana Roo skiss-karta+n/skiss:en+karta+n' 'skiss-karta över Quintana Roo' @me
     "Denna karta markerar inte mycket mer än den bäck som förde dig hit, från Mexikos sydöstra kant och in i den djupaste regnskogen, endast avbruten av denna höjdplatå.";
 ;
 
@@ -560,7 +560,7 @@ shrine: DarkRoom 'Helgedomen' 'helgedomen'
     initSpecialDesc =  "En stor stenhäll av ett bord, eller altare, dominerar Helgedomen."
 ;
 
-++ mask: Wearable, Treasure 'mosaik jadeansikt:et^s+mask+en/jade+mosaik^s+ansikte^s+mask+en'
+++ mask: Wearable, Treasure 'mosaik jadeansikt:et^s+mask+en/jade|mosaik^s+ansikte^s+mask+en'
   "Så enastående den skulle se ut på museet."
   initSpecialDesc = "Vilande på altaret finns en jadeansiktsmask av mosaik."
   culturalValue = 10
@@ -660,7 +660,7 @@ antechamber: DarkRoom 'Förkammaren' 'förkammaren'
     northwest = shrine
 ;
 
-+ cage: Openable, Booth, Fixture 'järn+bur+en/galler/gallret/gallrad/ram+en/glyf+er' 'järnbur'
++ cage: Openable, Booth, Fixture 'gallrad+e järn|bur+en/gall:er+et/järn|ram+en/glyf+er' 'järnbur'
     "Glyferna lyder: Fågel Pil Vårtsvin. "
   roomDesc()
   {
@@ -689,7 +689,7 @@ antechamber: DarkRoom 'Förkammaren' 'förkammaren'
   }
 ;
 
-++ skeletons : Fixture 'nedbrutna gamla gammal skelett+en/ben+en/döskallen/*döskall+ar'
+++ skeletons : Fixture 'nedbrut:en+na gam:mal+la skelett+en/ben+en/döskallen/*döskall+ar'
    'nedbrutna skelett'
    "Bara gamla benrester. "
    isListedInContents = true
@@ -711,7 +711,7 @@ antechamber: DarkRoom 'Förkammaren' 'förkammaren'
    }
 ;
 
-++ cageFloor: HiddenDoor 'öppen öppna jordgrop+en/gravkammare+n/golv+et/hål+et/kammar+en' 'mark'
+++ cageFloor: HiddenDoor 'öppen öppna+de jordgrop+en/grav|kammare+n/golv+et/hål+et' 'mark'
    "En öppen jordgrop skär ner till gravkammaren nedanför."
    destination = burialShaft
 ;
@@ -760,7 +760,7 @@ burialShaft: Room 'Gravschaktet' 'gravschaktet'
     }
 ;
 
-+ plug: Distant 'drabbad+e jordlock+et/lock+et/jordplugg+en/plugg+en'
++ plug: Distant 'drabbad+e jord|lock+et/jord|plugg+en'
     "Det är ovanför, förseglar kammaren. "  
 ;
 
@@ -777,7 +777,7 @@ junction: Room 'Xibalb&aacute' 'Xibalb&aacute'
   "Den är ungefär i huvudhöjd. "
 ;
 
-++ stela: Treasure 'sten stele+n/gränsmarkör+en/gränssten+en'
+++ stela: Treasure 'sten stele+n/gräns|markör+en/gräns|sten+en'
     "Ristningarna verkar varna för att gränsen till Xibalb&aacute, Skräckens Plats, är nära. Fågelglyfen är framträdande."
     
     initSpecialDesc = "En måttligt stor stele, eller gränssten, vilar på en avsats i huvudhöjd."
@@ -789,7 +789,7 @@ canyonN: Room 'Övre Änden av Dalgången' 'den övre änden av dalgången'
   down asExit(south)
 ;
 
-+ hugeBall: TravelPushable 'enormt pimp+sten:en^s+klot+et' 'enorm pimpstensklot' 
++ hugeBall: TravelPushable 'enormt pimp|sten:en^s+klot+et' 'enorm pimpstensklot' 
     "Hela åtta fot i diameter, men ganska lätt."
     specialDesc =  "Ett enormt pimpstensklot vilar här, åtta fot brett."
     cannotTakeMsg = 'Det är mycket sten i en åtta fot stor sfär. '
@@ -880,12 +880,12 @@ onBall: Room 'Pimpstensavsatsen' 'pimpstensavsatsen'
     up asExit(north)
 ;
 
-+carvedBone: Treasure 'ristad+e ristat skuret skurna ben+et*ben+en' 
++carvedBone: Treasure 'ristad+e ristat skur:et+na ben+et*ben+en' 
     "En hand som håller en pensel framträder ur käftarna på Itzamn@'a, skriftens uppfinnare, i hans ormform."
     initSpecialDesc = "Av alla de offergåvor som kastats ner i ravinen, är det kanske inget som någonsin kommer att återtas – inget, förutom ett ristat ben, lättare än det ser ut, som sticker fram ur en ficka av våt silt i ravinens vägg."
 ;
 
-+ Unimportant 'våt+a ficka av/silt+jord+en' 'siltjord'
++ Unimportant 'våt+a ficka silt|jord+en' 'siltjord'
 ;
 
 stoneKey: Key 'sten+nyckel+n' ;
@@ -974,7 +974,7 @@ booklet: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok'
   *  is a reserved word in TADS 3
   */
 
-waldeck: Consultable 'waldecks maya+ordbok+en/ordbok+en' 'Waldecks mayaordbok' @me
+waldeck: Consultable 'waldecks maya|ordbok+en' 'Waldecks mayaordbok' @me
    "Sammanställd från de opålitliga litografierna av den legendariske berättaren och upptäcktsresanden <q>Greve</q> Jean Frederic Maximilien Waldeck (1766??-1875), innehåller denna guide det lilla som är känt om glyferna som används i den lokala forntida dialekten."
    correct = nil
    isProperName = true
@@ -1087,7 +1087,7 @@ glyphBird: Glyph 'fågel';
   * stick with the TADS 3 way of implementing the priest.
   */
 
-priest: Actor 'mumifierad kalenderlig präst+en' 
+priest: Actor 'mumifierad+e kalenderlig+a präst+en' 
     "Han är uttorkad och hålls ihop endast av viljekraft. Även om hans första språk förmodligen är lokal maya, har du den märkliga känslan att han kommer att förstå ditt tal."
     
     actorHereDesc =  "Bakom stenhällen står en mumifierad präst och väntar, knappt vid liv i bästa fall, omöjligt ålderstigen."
@@ -1258,7 +1258,7 @@ modify Room
 
 
 scuttlingClaws: Decoration, EventList, InitObject
-  'små+a klapper klappret klapprande smattrande smatter ljud+et/klor+na/saker/monster/varelse+r/insekt+er'
+  'små klapp:er+ret klapprande smattrande smatter ljud+et/monst:er+ret*klor+na monstren+a saker+na varelser+na insekter+na'
   'ljud av små klor'
   
   daemonID = nil

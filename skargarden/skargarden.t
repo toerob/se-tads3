@@ -107,7 +107,7 @@ sofia: Actor 'Sofia' 'Sofia'
 ;*/
 
 
-+vedboDorrUtsida: LockableWithKey, Door 'vedbodörr+en/dörr+en*dörrar+na' 'vedbodörr'
++vedboDorrUtsida: LockableWithKey, Door 'vedbods|dörr+en*vedbods|dörrar+na' 'vedbodörr'
     knownKeyList = [forradsdorrsnyckel]
     keyList = [forradsdorrsnyckel]
 ;
@@ -125,7 +125,7 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
     
 ;
 
-+stugdorrUtsida: LockableWithKey, Door 'stugdörr+en/dörr+en*dörrar+na' 'stugdörr'
++stugdorrUtsida: LockableWithKey, Door 'stug|dörr+en*stug|dörrar+na' 'stugdörr'
     knownKeyList = [stugdorrsnyckel]
     keyList = [stugdorrsnyckel]
     makeOpen(stat) {
@@ -135,7 +135,7 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
 ;
 
 
-+dorrmatta: Underside 'dörrmatta+n/matta+n' 'dörrmatta'
++dorrmatta: Underside 'dörr|matta+n' 'dörrmatta'
     // Search, Turn
     dobjFor(Search) asDobjFor(LookUnder)
     dobjFor(Turn) asDobjFor(LookUnder)
@@ -171,7 +171,7 @@ verandan: OutdoorRoom 'Verandan' 'verandan'
     }
 ;
 
-stugdorrsnyckel: Hidden, Key 'stugdörrsnyckel+n/nyckel+n' 'stugdörrsnyckel'; 
+stugdorrsnyckel: Hidden, Key 'stugdörrs|nyckel+n' 'stugdörrsnyckel'; 
 
 
 
@@ -192,7 +192,7 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
   }
 ;
 
-+lysknapp: Component, OnOffControl 'lysknapp+en/knapp+en/lyset/lampknapp+en/ljusknapp+en' 'lysknapp'
++lysknapp: Component, OnOffControl 'lys|knapp+en/lyset/lamp|knapp+en/ljus|knapp+en' 'lysknapp'
   "En liten plastbit monterad i väggen som man kan vika uppåt för att tända taklampan eller neråt för att släcka den. "
   dobjFor(Light) asDobjFor(TurnOn)
   dobjFor(Extinguish) asDobjFor(TurnOff)
@@ -215,7 +215,7 @@ stugansVardagsrum: DarkRoom 'stugans vardagsrum' 'stugans vardagsrum'
     bulkCapacity = 30 // Seating capacity for three  
 ;
 
-+eldstaden: Fixture, ComplexContainer 'eldstad+en' 'eldstad' 
++eldstaden: Fixture, ComplexContainer 'eld+stad+en' 'eldstad' 
     subSurface: ComplexComponent, Surface '(eldstadens) spiselkrans+en/krans+en' 'spiselkrans' { 
         bulkCapacity = 5 
     }
@@ -386,14 +386,14 @@ Object -> logPile "vedträn"
 
 */
 
-bryggan: Floor, Attachable 'brygga+n' 'bryggan' isQualifiedName = true;
+bryggan: Floor, Attachable 'båt|brygga+n' 'bryggan' isQualifiedName = true;
 
 bryggplatsen: OutdoorRoom 'bryggan' 'bryggan'
     "Diset låg tätt och svårt för honom att se något annat av skärgårdsmiljön där ute, än anade gröna nyanser där avlägsna stränder och holmar låg. Långt bort åt norr syntes ett ljus blinka ungefär varannan sekund i en återkommande puls. "
     west = grasmattan
     southwest = verandan
     roomParts = static inherited - defaultGround + bryggan
-
+    vocabWords = 'båt|brygg+an'
     south: TravelMessage { -> baten
         "Mats klev i fjolårets båtköp. " // TODO: fungerar inte 
     }

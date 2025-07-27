@@ -65,6 +65,7 @@ modify Thing
    }
 ;
 
+
 TestUnit 'Tänt ljus neutrum' run {
   assertThat(ljus.nameLit).isEqualTo('tänt ljus');
   assertThat(ljus.aNameLit()).isEqualTo('ett tänt ljus');
@@ -170,4 +171,19 @@ TestUnit 'LiteralTAction.getOtherMessageObjectPronoun' run {
 
 TestUnit 'cmdTokenizer.buildOrigText' run {
   assertThat(cmdTokenizer.buildOrigText(cmdTokenizer.tokenize('tjugo -  ett'))).isEqualTo('tjugo-ett');
+};
+
+TestUnit 'splitWithDelimiterPattern' run {
+    local result = splitWithDelimiterPattern('met|spö+et');
+    assertThat(result[1]).isEqualTo(['met', '|']);
+    assertThat(result[2]).isEqualTo(['spö', '+']);
+    assertThat(result[3]).isEqualTo(['et', nil]);
+};
+
+TestUnit 'splitWithDelimiterPattern' run {
+    local result = splitWithDelimiterPattern('ljus+krona+n');
+    //tadsSay(result);
+    assertThat(result[1]).isEqualTo(['ljus', '+']);
+    assertThat(result[2]).isEqualTo(['krona', '+']);
+    assertThat(result[3]).isEqualTo(['n', nil]);
 };

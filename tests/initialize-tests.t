@@ -531,7 +531,40 @@ TestUnit 'initialize äpple (ett-ord) utan +notation' run {
     assertThat(leafSimple.isNeuter).isTrue(); 
     assertThat(leafSimple.isPlural).isNil(); 
     assertThat(leafSimple.theName).isEqualTo('bladet'); 
-    assertThat(leafSimple.definiteForm).isEqualTo('bladet'); 
+    assertThat(leafSimple.definiteForm).isEqualTo('bladet');   
+};
+
+TestUnit 'initialize ord utan sammansättningar av individuella delar' run {
+    // I detta exempel vill vi inte skapa upp separata ord för de individuella delarna
+    // Så då används | istället +
+    // Vi kommer alltså inte se: "gitarr, gitarren" som synonymer
+    // utan endast: "fodral, fodralet, gitarrfodral, gitarrfodralet"
+
+    local gitarrfodralet = new Thing();
+    gitarrfodralet.vocabWords = 'gitarr|fodral+et'; 
+    gitarrfodralet.name = 'gitarrfodral';
+    gitarrfodralet.initializeVocabWith(gitarrfodralet.vocabWords);
+    gitarrfodralet.isNeuter = true; // Härleds inte i testerna, men behöver inte sättas annars
+    
+    // Assert
+    tadsSay(getGrammarInfoFromCmdDict(gitarrfodralet));
+    tadsSay('aName: <<gitarrfodralet.aName>>\n');
+    tadsSay('theName: <<gitarrfodralet.theName>>\n');
+    
+    assertThat(cmdDict.findWord('gitarrfodral', &noun)[1]).isEqualTo(gitarrfodralet);  
+    assertThat(cmdDict.findWord('gitarrfodralet', &noun)[1]).isEqualTo(gitarrfodralet);  
+    assertThat(cmdDict.findWord('fodral', &noun)[1]).isEqualTo(gitarrfodralet);
+    assertThat(cmdDict.findWord('fodralet', &noun)[1]).isEqualTo(gitarrfodralet);
+
+    // Räkna antalet _förväntade_ förekomster som finns i cmdDict för detta objekt (oavsett grammatisk form)
+    local count = getGrammarPartsFromCmdDict(gitarrfodralet); 
+    assertThat(count).isEqualTo(4);
+
+    assertThat(gitarrfodralet.isNeuter).isTrue(); 
+    assertThat(gitarrfodralet.isPlural).isNil(); 
+    assertThat(gitarrfodralet.aName).isEqualTo('ett gitarrfodral'); 
+    assertThat(gitarrfodralet.theName).isEqualTo('gitarrfodralet'); 
+    assertThat(gitarrfodralet.definiteForm).isEqualTo('gitarrfodralet'); 
     
 };
 

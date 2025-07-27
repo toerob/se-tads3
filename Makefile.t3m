@@ -53,7 +53,7 @@
 #-source sarkofagen/sarkofagen
 #-source sarkofagen/reldir
 
--source skargarden/skargarden
+#-source skargarden/skargarden
 
 
 # TESTER 
@@ -70,7 +70,7 @@
 # Run 'test run'
 #-source tests/parser-tests
 
-#-source exempelspel/exempel
+-source exempelspel/exempel
 #-source exempelspel/cookbook
 
 -res

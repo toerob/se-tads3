@@ -1807,7 +1807,7 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
     }
 ;
 
-+ Heavy 'rullande kontor^s:et+stol+en' 'kontorsstol'
++ Heavy 'rullande kontors|stol+en' 'kontorsstol'
     "Det är en enkel rullande kontorsstol. "
 ;
 
