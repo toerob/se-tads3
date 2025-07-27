@@ -1,0 +1,9 @@
+*.t3
+*.t3s
+*.t3o
+.DS_Store
+GameInfo.txt
+extensions/eval.t
+tester/run-parser-tests.sh 
+tester/parser.t3m
+tester/parser-tests.t

@@ -1,0 +1,26 @@
+# TADS 3 makefile för snabbstart
+
+-nodef
+-D LANGUAGE=sv_se
+-D MESSAGESTYLE=neu
+-D __DEBUG
+-v
+-Fy obj
+-Fo obj
+
+# Copy the folder "sv_se" to the inside of the folder "lib/adv3/" next to the "en_us" folder 
+# or add a symbolic link, e.g:
+# sudo ln -s /absolute/path/to/se-tads3/lib/adv3/sv_se/ /usr/local/share/frobtads/tads3/lib/adv3/sv_se
+
+# Change these paths to where the tads3-libraries are located on your machine. 
+-FI /usr/local/share/frobtads/tads3/include
+-Fs /usr/local/share/frobtads/tads3/lib
+
+-o snabbstart.t3
+
+##sources
+-lib system.tl
+-lib adv3/adv3
+
+-source snabbstart
+

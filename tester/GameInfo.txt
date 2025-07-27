@@ -1,0 +1,13 @@
+IFID: 38da5fdf-9077-4043-bfe1-14c83c087c81
+Name: tester för svenska översättningen av adv3
+Byline: by Tomas Öberg
+HtmlByline: by <a href="mailto:yourmail@address.com">Tomas Öberg</a>
+AuthorEmail: Tomas Öberg yourmail@address.com
+Desc: enhetstester
+HtmlDesc: enhetstester
+Version: 1
+ReleaseDate: 2025-07-27
+Language: sv-SE
+LicenseType: Freeware
+CopyingRules: Nominal cost only; compilations allowed
+PresentationProfile: Default

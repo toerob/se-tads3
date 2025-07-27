@@ -1,0 +1,26 @@
+# Tests
+
+-nodef
+#-we
+-D LANGUAGE=sv_se
+-D MESSAGESTYLE=neu
+-D __DEBUG
+-Fy obj
+-Fo obj
+-v
+-D
+-d
+-FI /usr/local/share/frobtads/tads3/include
+-Fs /usr/local/share/frobtads/tads3/lib
+-o tester.t3
+
+##sources
+-lib system.tl
+-lib adv3/adv3
+  -x footnote
+  -x hintsys
+-source dynfunc
+
+# TESTER 
+-source testunit.t
+-source satsdelar

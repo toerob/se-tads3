@@ -1,0 +1,13 @@
+IFID: 10BC0B40-952C-4BF8-BA4F-F43A1E5661CA
+Name: RUINER
+Byline: av Angela M. Horns (aka Graham Nelson); portad till TADS 3 av Eric Eve; översatt till svenska av Tomas Öberg
+HtmlByline: av <a href="mailto:tomaserikoberg@gmail.com">TOMAS ÖBERG</a>
+AuthorEmail: Tomas Öberg <tomaserikoberg@gmail.com>
+Desc: En TADS-portning av Informspelet Ruins från DM4.
+HtmlDesc: En TADS-portning av Informspelet Ruins från DM4.
+Version: 1.0
+ReleaseDate: 2025-07-27
+Language: sv-SE
+LicenseType: Freeware
+CopyingRules: Nominal cost only; compilations allowed
+PresentationProfile: Default
