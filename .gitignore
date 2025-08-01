@@ -4,6 +4,7 @@
 .DS_Store
 GameInfo.txt
 extensions/eval.t
+tester/GameInfo.txt
 tester/run-parser-tests.sh 
 tester/parser.t3m
 tester/parser-tests.t

@@ -2341,10 +2341,9 @@ modify Actor
      */
     itNom
     {
-        local denDet = isNeuter?'det':'den';
         return ['jag', 'jag', 'jag', 'vi',
                'du', 'du', 'du', 'ni',
-               denDet, 'han', 'hon', 'de'][pronounSelector];
+               (isNeuter?'det':'den'), 'han', 'hon', 'de'][pronounSelector];
 
     }
 
@@ -2823,7 +2822,11 @@ modify standing
     msgVerbIPast = 'stod upp' // 'stood up'
     msgVerbTPresent = 'står' // 'stand{s}'
     msgVerbTPast = 'stod' // 'stood'
-    active = 'står'  // motsvarar participle = 'standing'
+    // active motsvarar engelskans participle (t ex = 'standing'),
+    // men vi skriver inte i participform i svenskan då det låter konstigt.
+    active() {
+        return gameMain.usePastTense ? self.msgVerbTPast : self.msgVerbTPresent;
+    }  
     //participle = 'ståendes' // används inte
 ;
 
@@ -2832,7 +2835,11 @@ modify sitting
     msgVerbIPast = 'satte {mig} ner' //'sat down'
     msgVerbTPresent = 'sitter' //'sit{s}'
     msgVerbTPast = 'satt' //'sat'
-    active = 'sitter' // motsvarar participle = 'sitting'
+    // active motsvarar engelskans participle (t ex = 'sitting'),
+    // men vi skriver inte i participform i svenskan då det låter konstigt.
+    active() {
+        return gameMain.usePastTense ? msgVerbTPast : msgVerbTPresent;
+    }  
     // participle = 'sittande' // används inte
 ;
 
@@ -2841,8 +2848,12 @@ modify lying
     msgVerbIPast = 'lade {mig} ner' // 'lay down'
     msgVerbTPresent = 'ligger' // 'lie{s}'
     msgVerbTPast = 'låg' // 'lay'
-    active = 'ligger'  // motsvarar participle = 'lying'
-    //participle = 'liggande' // används inte
+    // active motsvarar engelskans participle (t ex = 'lying'),
+    // men vi skriver inte i participform i svenskan då det låter konstigt.
+    active() {
+        return gameMain.usePastTense ? msgVerbTPast : msgVerbTPresent;
+    }  
+
 ;
 
 /* ------------------------------------------------------------------------ */

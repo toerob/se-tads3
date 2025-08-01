@@ -1334,7 +1334,8 @@ libMessages: MessageHelper
      */
     actorInRoomPosture(actor, room)
     {
-        "{Det actor/han} <<actor.posture.active>> <<room.actorInName>>. ";
+        //"\^<<actor.itIs>> <<actor.posture.participle>> <<room.actorInName>>. ";
+        "\^<<actor.itNom>> <<actor.posture.active>> <<room.actorInName>>. ";
     }
 
     /*
@@ -1345,7 +1346,8 @@ libMessages: MessageHelper
     roomActorPostureDesc(actor)
     {
         if (actor.posture != standing) {
-            "{Det actor/han} <<actor.posture.active>>. ";
+            //"\^<<actor.itIs>> <<actor.posture.participle>>. ";
+            "\^<<actor.itNom>> <<actor.posture.active>>. ";
         }
     }
 

@@ -534,7 +534,7 @@ TestUnit 'actorInRoomPosture' run {
   gActor = hobbit;
   hobbit.posture = sitting;
   libMessages.actorInRoomPosture(hobbit, baren); 
-  assertThat(o).startsWith('Han sitter i baren.');
+  assertThat(o).startsWith('\^han sitter i baren.');
 };
 
 TestUnit 'roomActorPostureDesc' run {
@@ -542,7 +542,7 @@ TestUnit 'roomActorPostureDesc' run {
   gActor = hobbit;
   hobbit.posture = sitting;
   libMessages.roomActorPostureDesc(hobbit); 
-  assertThat(o).startsWith('Han sitter.');
+  assertThat(o).startsWith('\^han sitter.');
 };
 
 TestUnit 'sayArriving' run {

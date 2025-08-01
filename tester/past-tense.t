@@ -448,71 +448,71 @@ TestUnit 'roomActorStatus actor (ingen output om stående)' run {
   assertThat(o).isEqualTo('');
 };
 
-TestUnit 'roomActorStatus actor (sitter)' run {
+TestUnit 'roomActorStatus actor (satt)' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = sitting;
   libMessages.roomActorStatus(hobbit);
-  assertThat(o).isEqualTo(' (sitter)');
+  assertThat(o).isEqualTo(' (satt)');
 };
 
-TestUnit 'roomActorStatus actor (ligger)' run {
+TestUnit 'roomActorStatus actor (låg)' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = lying;
   libMessages.roomActorStatus(hobbit);
-  assertThat(o).isEqualTo(' (ligger)');
+  assertThat(o).isEqualTo(' (låg)');
 };
 
 
-TestUnit 'roomActorHereDesc actor (ligger)' run {
+TestUnit 'roomActorHereDesc actor (stod)' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = standing;
   libMessages.roomActorHereDesc(hobbit);
-  assertThat(o).contains('\^hobbiten står där.');
+  assertThat(o).contains('\^hobbiten stod där.');
 };
 
-TestUnit 'roomActorHereDesc actor (ligger)' run {
+TestUnit 'roomActorHereDesc actor (satt)' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = sitting;
   libMessages.roomActorHereDesc(hobbit);
-  assertThat(o).startsWith('\^hobbiten sitter där.');
+  assertThat(o).startsWith('\^hobbiten satt där.');
 };
 
-TestUnit 'roomActorHereDesc actor (ligger)' run {
+TestUnit 'roomActorHereDesc actor (låg)' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = lying;
   libMessages.roomActorHereDesc(hobbit);
-  assertThat(o).startsWith('\^hobbiten ligger där.');
+  assertThat(o).startsWith('\^hobbiten låg där.');
 };
 
 
 
-TestUnit 'roomActorThereDesc actor (ligger)' run {
+TestUnit 'roomActorThereDesc actor (låg)' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = standing;
   libMessages.roomActorThereDesc(hobbit);
-  assertThat(o).contains('\^hobbiten står i närheten.'); // TODO: OK mening?
+  assertThat(o).contains('\^hobbiten stod i närheten.'); // TODO: OK mening?
 };
 
-TestUnit 'roomActorThereDesc actor (ligger)' run {
+TestUnit 'roomActorThereDesc actor (låg)' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = sitting;
   libMessages.roomActorThereDesc(hobbit);
-  assertThat(o).startsWith('\^hobbiten sitter i närheten.'); // TODO: OK mening?
+  assertThat(o).startsWith('\^hobbiten satt i närheten.'); // TODO: OK mening?
 };
 
-TestUnit 'roomActorThereDesc actor (ligger)' run {
+TestUnit 'roomActorThereDesc actor (låg)' run {
   //mainOutputStream.hideOutput = nil;
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = lying;
   libMessages.roomActorThereDesc(hobbit);
-  assertThat(o).startsWith('\^hobbiten ligger i närheten.'); // TODO: OK mening?
+  assertThat(o).startsWith('\^hobbiten låg i närheten.'); // TODO: OK mening?
 };
 
 
@@ -522,7 +522,7 @@ TestUnit 'actorInRoom' run {
   gPlayerChar = spelare2aPerspektiv;
   hobbit.posture = sitting;
   libMessages.actorInRoom(hobbit, baren); 
-  assertThat(o).startsWith('\^hobbiten sitter i baren.');
+  assertThat(o).startsWith('\^hobbiten satt i baren.');
 };
 
 // TODO: kan testas betydligt mera
@@ -531,7 +531,7 @@ TestUnit 'actorInRoomPosture' run {
   gActor = hobbit;
   hobbit.posture = sitting;
   libMessages.actorInRoomPosture(hobbit, baren); 
-  assertThat(o).startsWith('Han sitter i baren.');
+  assertThat(o).startsWith('\^han satt i baren.');
 };
 
 TestUnit 'roomActorPostureDesc' run {
@@ -539,7 +539,7 @@ TestUnit 'roomActorPostureDesc' run {
   gActor = hobbit;
   hobbit.posture = sitting;
   libMessages.roomActorPostureDesc(hobbit); 
-  assertThat(o).startsWith('Han sitter.');
+  assertThat(o).startsWith('\^han satt.');
 };
 
 TestUnit 'sayArriving' run {
@@ -787,21 +787,21 @@ TestUnit 'actorInRemoteRoom' run {
   //mainOutputStream.hideOutput = nil;
   //libGlobal.pointOfView = hobbit;
   libMessages.actorInRemoteRoom(pirat, baren, krogare);
-  assertThat(o).contains('\^piraten står i baren');
+  assertThat(o).contains('\^piraten stod i baren');
 };
 
 // TODO: testa i större sammanhang också
 TestUnit 'actorInGroupSuffix' run {
   //mainOutputStream.hideOutput = nil;
   libMessages.actorInGroupSuffix(sitting, bankraden, [sjorovare, viking]);
-  assertThat(o).startsWith(' sitter på bänkraden'); // TODO: måste testa denna i sin helhet
+  assertThat(o).startsWith(' satt på bänkraden'); // TODO: måste testa denna i sin helhet
 };
 
 // TODO: testa i större sammanhang också
 TestUnit 'actorInRemoteGroupSuffix' run {
   //mainOutputStream.hideOutput = nil;
   libMessages.actorInRemoteGroupSuffix(hobbit, sitting, bankraden, baren, [sjorovare, viking]);
-  assertThat(o).startsWith(' i baren, sitter på bänkraden'); // TODO: måste testa denna i sin helhet
+  assertThat(o).startsWith(' i baren, satt på bänkraden'); // TODO: måste testa denna i sin helhet
 };
 
 // TODO: testa i större sammanhang också, 
@@ -811,14 +811,14 @@ TestUnit 'actorInRemoteGroupSuffix' run {
 TestUnit 'actorHereGroupSuffix' run {
   //mainOutputStream.hideOutput = nil;
   libMessages.actorHereGroupSuffix(sitting, [sjorovare]);
-  assertThat(o).startsWith(' sitter där');
+  assertThat(o).startsWith(' satt där');
 };
 
 // TODO: testa i större sammanhang också
 TestUnit 'actorThereGroupSuffix' run {
   //mainOutputStream.hideOutput = nil;
   libMessages.actorThereGroupSuffix(krogare, lying, baren, [viking]);
-  assertThat(o).startsWith(' ligger i baren');
+  assertThat(o).startsWith(' låg i baren');
 };
 
 
@@ -831,7 +831,7 @@ TestUnit 'actorInRemoteNestedRoom' run {
   
   // TODO: oklart om hur detta ska se ut och det är rätt? 
   // TODO: Bygg upp ett scenario som visar detta meddelande i sin helhet
-  assertThat(o).startsWith('\^krögaren var i hallen, står i baren.'); 
+  assertThat(o).startsWith('\^krögaren var i hallen, stod i baren.'); 
   // I engelskan ska participle vara ståendes, men det känns inte rätt här. 
 };
 
