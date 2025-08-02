@@ -9840,31 +9840,31 @@ VerbRule(Read)
 ;
 
 VerbRule(LookIn)
-    ('se'|'titta') ('in'|) ('i'|) ('inuti'|) dobjList
+    ('se'|'titta') ('in'|) ('i'|'inuti') dobjList
     : LookInAction
     verbPhrase = 'titta/tittar (i vad)'
 ;
 
 VerbRule(Search)
-    'sök' ('igenom'|) dobjList
+    'sök' ('genom'|'igenom'|) dobjList
     : SearchAction
     verbPhrase = 'söka/söker igenom (vad)'
 ;
 
 VerbRule(LookThrough)
-    ('titta' | 'l') ('genom' | 'ut') dobjList
+    ('titta' | 't' | 'se') ('in'|'ut'|) ('genom') dobjList
     : LookThroughAction
     verbPhrase = 'titta/tittar (genom vad)'
 ;
 
 VerbRule(LookUnder)
-    ('titta' | 'l') 'under' dobjList
+    ('titta' | 't' | 'se') ('in'|) 'under' dobjList
     : LookUnderAction
     verbPhrase = 'titta/tittar (under vad)'
 ;
 
 VerbRule(LookBehind)
-    ('titta' | 'l') 'bakom' dobjList
+    ('titta' | 't' | 'se') ('in'|) 'bakom' dobjList
     : LookBehindAction
     verbPhrase = 'titta/tittar (bakom vad)'
 ;
@@ -10597,8 +10597,7 @@ VerbRule(Out)
 ;
 
 VerbRule(GoThrough)
-    ('vandra' | 'gå' ) ('genom')
-        singleDobj
+    ('vandra' | 'gå' ) ('in'|) ('genom'|'i') singleDobj
     : GoThroughAction
     verbPhrase = 'gå/går (genom vad)'
     askDobjResponseProd = singleNoun
