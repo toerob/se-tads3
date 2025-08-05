@@ -87,17 +87,15 @@
 [] subtime (Låt gå att ha kvar AM/PM?)
 
 # KONSEKVENT SPELSPECIFIK TERMINOLOGI
+ÖVERALLT: 
+TODO: Tillbaka till Ditchday  - Tillbaka till Stapeldagen
+TODO: Ditchday-stack  - stapelutmaning
 
-# HUMOR/ORDLEKAR
 
-# DIALOGFLYT
-
-# TEKNISKA TERMER
-
-# BESKRIVNINGAR GENTEMOT ORGINALETS
+# HUMOR/ORDLEKAR, TEKNISKA TERMER, DIALOGFLYT OCH BESKRIVNINGAR GENTEMOT ORGINALETS
 [] campus
 [] bridge
-[437] intro - Xojos brytningar?
+[604] intro - Xojos brytningar?
 [] dabney
 [] stack
 [] synclab
@@ -108,13 +106,17 @@
 [] career
 [] frosst
 [] jay
-[] main
-[] mods
-[] about
-[] me
-[] pathfind
-[] subtime (Låt gå att ha kvar AM/PM?)
+[X] main
+[X] mods
+[X] about
+[X] me
+[X] pathfind
+[X] subtime (Låt gå att ha kvar AM/PM?)
 
 # TEST
 
 # BYGG PÅ VERB/ORDFÖRSTÅELSER
+
+
+
+TODO: Flytta till eget repo, eller in i se-tads3

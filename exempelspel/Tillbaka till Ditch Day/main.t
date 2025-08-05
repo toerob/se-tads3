@@ -39,7 +39,7 @@ gameMain: GameMainDef
         förstås.\b";
 
         /* visa spelets titel */
-        "<b>Tillbaka till Ditch Day</b>\n
+        "<b>Tillbaka till Stapeldagen</b>\n
         av Michael J.\ Roberts\n
         Översatt av Tomas Öberg med stor hjälp av Copilot/Tabnine/ChatGpt\n
         Version <<versionInfo.version>> (<<versionInfo.serialNum>>)\n
@@ -426,24 +426,24 @@ finishOptionCopyright: FinishOption
 finishOptionAfterword: FinishOption
     doOption()
     {
-        "<.p>Om du avslutade utan att få alla poäng, och
+        "<.p>Om du klarade spelet utan att få alla poäng, och
         särskilt om det verkar som att det finns många fler poäng att
-        få, kanske du undrar vad du missade. Det mest
-        sannolika svaret är att du hoppade över den valfria <q>mysteriet</q>
-        sidohandlingen. Det finns ledtrådar gömda här och där som du
+        få, undrar du kanske vad du missat. Det mest
+        sannolika svaret är att du hoppade över den valfria sidohandlingen 
+        <q>mysteriet</q>. Det finns ledtrådar gömda här och där som du
         kan följa för att lista ut vad vissa tvivelaktiga karaktärer
         i berättelsen egentligen har för sig. Du kan lösa Ditch
         Day-stacken och vinna spelet utan att följa mysteriet alls,
         så om mina försök att väcka din nyfikenhet misslyckades, har du
-        förmodligen inte missat mycket förutom poäng. Om du
+        förmodligen inte missat så mycket förutom poäng. Om du
         undrade varför det fanns en spionkamera gömd i Stamers labb,
         låt mig försäkra dig om att svaret kan hittas på
         samma ställen som de saknade poängen.
 
         <.p>Dessutom kan stacken i Upper Seven (rum 42) lösas.
-        Den är irrelevant för spelet, så det finns ingen egentlig belöning
-        i spelet för att lösa den, men vissa personer kanske tycker det är ett
-        trevligt fristående pussel.
+        Den är irrelevant för spelet, så det finns egentlig ingen belöning
+        i spelet för att lösa den, men vissa personer kanske tycker det är en
+        trevlig fristående problemlösning.
 
         <.p>Vissa spelare av originalet <i>Ditch Day Drifter</i>
         frågade varifrån termen <q>stack</q> kommer.
@@ -469,7 +469,7 @@ finishOptionAfterword: FinishOption
         <a href='http://www.ifcomp.org'>årliga Comp</a>, och
         sistaårsstudenterna är mycket stolta över att skapa staplar som är originella,
         utmanande och roliga. Jag kan förstås inte påstå att jag har skapat mer än
-        en skugga av det verkliga här.
+        en blek avbild av verkligheten här.
 
         <.p><tab indent=4><i>&mdash;<tab id=t1>MJR<br>
         <tab to=t1>Palo Alto, Kalifornien<br>
@@ -501,7 +501,7 @@ modify finishOptionAmusing
         \n<li>Fråga Xojo om hissen efter att den fastnat.
         \n<li>Fortsätt ner i korridoren i källaren när
         Xojo försöker leda dig in i förrådsrummet.
-        \n<li>Fråga Xojo om repbron flera gånger innan du korsar
+        \n<li>Fråga Xojo om repbron flera gånger innan du går över 
         den, och igen efter att den går sönder.
         \n<li>Undersök överste Magnxis hatt.
         \n<li>Läs broschyrerna på karriärcentret.

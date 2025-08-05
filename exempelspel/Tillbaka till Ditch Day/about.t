@@ -28,14 +28,13 @@ versionInfo: GameID
     authorEmail = 'M.J. Roberts <mjr_@hotmail.com>'
     desc = 'Det har gått ett decennium sedan du tog examen, men nu
         ser det ut som att du måste lösa ytterligare en
-        Ditch Day-stack.
-        \\nDu spelar en Caltech-alumn vars storföretag
+        Stapelutmaning.
+        \\nDu spelar en Caltech-alumn vars arbetsgivare, ett stort företag, 
         skickar dig tillbaka till campus för att rekrytera en stjärnstudent. Men
         när du kommer dit, finner du rollerna omvända när din
-        kandidat får dig att provspela för att bli hans arbetsgivare. Vad måste
-        du göra för att vinna din nya rekryt? Du måste bara
-        lösa en liten Ditch Day-stack, såklart.
-        \\nReturn to Ditch day är ett omfattande interaktivt
+        kandidat sätter dig på prov för att få bli hans arbetsgivare. Vad måste
+        du lyckas med för att vinna din nya rekryt? Bara lösa en liten Stapelutmaning, förstås.
+        \\nTillbaka till stapeldagen är ett omfattande interaktivt
         äventyr, delvis skattjakt, delvis mysterium, delvis science
         fiction. Det skrevs som en demonstration och exempel
         på TADS 3, den senaste generationen av TADS författarverktyg
@@ -44,8 +43,8 @@ versionInfo: GameID
         miljö, en fängslande handling, en uppsättning excentriska karaktärer,
         och massor av utmanande och logiska pussel. Och spelet
         ger dig en ovanlig mängd kontroll över hur
-        historien utvecklas: du kan helt enkelt fullfölja dina "officiella" mål,
-        eller du kan också undersöka ett elaborerat dolt mysterium.'
+        historien utvecklas: du kan helt enkelt sträva efter dina "officiella" mål,
+        eller så kan du också undersöka ett invecklat dolt mysterium.'
     firstPublished = '2005'
     genre = 'Collegiate, Science Fiction, Akademiskt'
     IFID = 'TADS3-B4445266034D48C99DA08C2EC3C1B229'
@@ -89,7 +88,7 @@ versionInfo: GameID
         <br><br>
         Detta spel testades av Steve Breslin, Eric Eve, Kevin Forchione,
         Stephen Granade, Andreas Sewe, Dan Shiovitz och Brett Witty.
-        Jag kan inte tacka dessa personer nog för att ha uthärdat de
+        Jag kan inte tacka dessa personer tillräckligt för att ha uthärdat de
         tidiga versionerna och erbjudit så mycket hjälpsam feedback och så
         många fantastiska idéer för förbättringar. Spelet är enormt mycket bättre
         tack vare deras generösa insatser. Tack också till Mark Engelberg,
@@ -99,8 +98,8 @@ versionInfo: GameID
         <br><br>
         En del av graffittin i återgivningen här av Dabney House
         är baserad på eller (oftare) skamlöst kopierad från det verkliga
-        huset. På liknande sätt är några av högarna löst baserade på
-        verkliga högar från det förflutna. I alla fall är originalen
+        huset. På liknande sätt är några av stackrummen löst baserade på
+        verkliga 'stacks' från det förflutna. I alla fall är originalen
         mycket bättre än de dåliga imitationerna här.
         <br><br>
         Detta spel skrevs parallellt med det sista året eller så
@@ -108,7 +107,7 @@ versionInfo: GameID
         är det en del av den insatsen. Jag vill därför tacka alla
         som bidrog via tads3-listan---era råd, idéer och
         praktiska erfarenheter av att använda systemet i dess utdragna halvfärdiga
-        tillstånd har gjort all skillnad.
+        tillstånd har gjort hela skillnaden.
         <br><br>
         Omegatron, Mitachron, Netbisco, ToxiCola och Bioventics är
         varumärken tillhörande respektive fiktiva företag.
@@ -120,12 +119,11 @@ versionInfo: GameID
         och händelser i denna berättelse är produkter av författarens fantasi
         eller används fiktivt, och all likhet med verkligheten är helt
         slumpmässig. Inget i detta spel är menat att på något sätt reflektera
-        det verkliga Caltech eller någon associerad med det. Onödigt
-        att säga, Caltech var inte involverat i skapandet av detta verk.
-        Men nästa gång dina planer inkluderar högre utbildning, varför inte
-        överväga Caltech? Inbäddat nära San Gabriel-bergens fot
+        det verkliga Caltech eller någon associerad med det. Självfallet så var inte Caltech involverat i skapandet av detta verk.
+        Men nästa gång du planerar att söka en högre utbildning, varför inte
+        överväga Caltech? Beläget nära foten av San Gabriel-bergen
         i Pasadena erbjuder Caltech en unik studentupplevelse
-        som sägs sällan orsaka permanent skada.
+        som sällan sägs orsaka bestående skador.
         Besök <a href='http://www.caltech.edu'>www.caltech.edu</a> idag.
         <br><br>
         För information om att skriva ditt eget spel med
@@ -167,7 +165,35 @@ versionInfo: GameID
         <p>
         Om du har några frågor om denna licens, vänligen kontakta
         författaren på
-        <a href='mailto:mjr_@hotmail.com'>mjr_@hotmail.com</a>. ";
+        <a href='mailto:mjr_@hotmail.com'>mjr_@hotmail.com</a>. 
+        
+        Denna översättning är gjord med tillstånd från upphovsrättsinnehavaren. Vid tveksamhet gäller den engelska originaltexten, som följer:
+
+        Copyright &copy;2004, 2013 Michael J.\ Roberts.
+        All rights reserved.
+        <p>
+        <b>Free Software License</b><br>
+        This is a copyrighted work, which means that it's against the
+        law to copy or distribute this package without the author's
+        written permission.  The author hereby grants you
+        permission to use, copy, and redistribute this software, without
+        charge, with the following conditions: you may not alter or remove
+        any copyright notice or license notice in the work; you may not
+        collect a fee for copies of this software, except for a nominal
+        fee to cover the cost of physically making the copy; you may
+        not distribute modified or incomplete versions; and you may not
+        impose any additional license terms with respect to this work
+        on recipients of copies you make or distribute.
+
+        <p>This software has NO WARRANTY of any kind, expressed or
+        implied, including without limitation the implied warranties
+        of merchantability and fitness for a particular purpose.
+
+        <p>
+        If you have any questions about this license, please contact
+        the author at
+        <a href='mailto:mjr_@hotmail.com'>mjr_@hotmail.com</a>.
+        ";
     }
 
     /* 
@@ -185,13 +211,13 @@ versionInfo: GameID
         "<img src='.system/CoverArt.jpg?id=<<rand('z{32}')>>'><br>";
         "Välkommen till <i>Return to Ditch day</i>!
         <.p>
-        Om du är ny inom Interaktiv Fiktion kan du finna det
+        Om du är nybörjare inom Interaktiv Fiktion kan det vara 
         hjälpsamt att läsa vår IF-instruktionsmanual---skriv bara
         <<aHref('instructions', 'INSTRUKTIONER')>> vid kommandoprompten.
 
         <.p>
         Detta spel använder standardkommandon som de flesta IF-spel använder,
-        men det finns några extra värda att nämna.
+        men det finns några extrafunktioner som är värda att nämna.
         Du kan <b>PRATA MED</b> en karaktär för att hälsa på dem (detta är
         valfritt, dock: du kan alltid bara FRÅGA eller BERÄTTA FÖR dem
         om något istället). När du pratar med någon kan du
@@ -205,13 +231,13 @@ versionInfo: GameID
         <.p>Berättelsen kan ibland ge några speciella
         förslag när du pratar med någon, som detta:
 
-        \b\t(Du skulle kunna be om ursäkt för att ha sönder vasen, eller förklara
+        \b\t(Du skulle kunna be om ursäkt för att ha sönder vasen, eller berätta 
         \n\tom utomjordingarna.)
 
         <.p>Dessa är speciella alternativ som du kan använda i det ögonblick
         de föreslås. Du behöver inte oroa dig för att memorera
         dem eller försöka använda dem vid andra slumpmässiga tillfällen i berättelsen; de
-        fungerar bara på den tur de erbjuds. Om du vill använda ett
+        fungerar bara under den tur de erbjuds. Om du vill använda ett
         av förslagen, skriv bara in det; du kan vanligtvis förkorta
         till det första ordet eller två när förslaget är långt:
 
@@ -225,10 +251,10 @@ versionInfo: GameID
         som ett exempelspel för den första versionen av <font size=-1>TADS</font>,
         mitt IF-utvecklingssystem. Detta är väldigt löst en uppföljare till det
         spelet, men om du inte har spelat originalet, oroa dig inte---du
-        kan spela detta spel helt på egen hand. Det finns inget du behöver
+        kan spela det här spelet helt på egen hand. Det finns inget du behöver
         veta från det tidigare spelet för att spela detta.
         
-        <.p>Det finns inga <q>ovinningsbara</q> situationer i detta spel:
+        <.p>Det finns inga situationer <q>omöjliga att överkomma</q>  i detta spel:
         det finns inget sätt för din karaktär att dödas, och du kan inte
         av misstag låsa dig ute från att slutföra berättelsen. Om du
         någonsin fastnar ordentligt kan du skriva <<aHref('hint', 'LEDTRÅD')>>
@@ -246,8 +272,8 @@ versionInfo: GameID
 DefineSystemAction(Help)
     execSystemAction()
     {
-        "För mer information kan du skriva ett av
-        följande vid valfri kommandoprompt:
+        "För mer information kan du skriva något av 
+        följande i valfri kommandoprompt:
 
         \b<<aHref('about', 'OM')>> - för lite allmän bakgrundsinformation
         om detta spel
@@ -255,7 +281,7 @@ DefineSystemAction(Help)
         \n<<aHref('copyright', 'COPYRIGHT')>> - för att visa upphovsrätts- och
         licensinformation
 
-        \n<<aHref('credits', 'CREDITS')>> - för att visa spelets erkännanden
+        \n<<aHref('credits', 'CREDITS')>> - för att visa spelets eftertexter
         
         \n<<aHref('hints', 'LEDTRÅD')>> - för att få tillgång till de inbyggda ledtrådarna
 

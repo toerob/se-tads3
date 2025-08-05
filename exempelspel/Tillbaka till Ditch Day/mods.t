@@ -220,15 +220,18 @@ VerbRule(HangOnWhat) 'häng' dobjList : HangOnAction
  *   There's a bridge; we should be able to cross it 
  */
 DefineTAction(Cross);
-VerbRule(Cross) 'korsa' singleDobj : CrossAction
-    verbPhrase = 'korsa/korsar (vad)'
+VerbRule(Cross) 
+    'korsa' singleDobj 
+    | 'gå' 'över' singleDobj
+    : CrossAction
+    verbPhrase = 'gå/går över (vad)'
 ;
 
 /*
  *   We can buy things at the bookstore 
  */
 DefineTAction(Buy);
-VerbRule(Buy) ('köp' | 'betala' 'för') singleDobj : BuyAction
+VerbRule(Buy) ('köp' | ('betala' 'för')) singleDobj : BuyAction
     verbPhrase = 'köpa/köper (vad)'
 ;
 
@@ -428,7 +431,7 @@ modify Thing
     dobjFor(Cross)
     {
         verify() { illogical('{Den dobj/Han} är inte något
-            {du/han} kan korsa. '); }
+            {du/han} kan gå över. '); }
     }
 
     /* by default, treat 'hold' as equivalent to 'take' */
@@ -437,7 +440,7 @@ modify Thing
     dobjFor(Buy)
     {
         verify() { illogical('{Den dobj/Han} är inte något
-            {du/han} kan köpa. '); }
+            som kan köpas. '); }
     }
     dobjFor(Pay)
     {
@@ -450,7 +453,7 @@ modify Thing
     iobjFor(PayFor)
     {
         verify() { illogical('{Den dobj/Han} är inte något
-            {du/han} kan köpa. '); }
+            som kan köpas. '); }
     }
 
     /* SLIDE and ROLL are synonyms for MOVE for most purposes */
@@ -519,8 +522,8 @@ class Buyable: object
  *   administration building'.  
  */
 grammar compoundNounPhrase(doorTo):
-    ('dörr'->door_ | 'dörrar'->door_ | 'ingång'->door_ | 'utgång'->door_)
-    'till'->to_ ( | 'den'->the_)
+    ('dörr'->door_ | 'dörren'->door_ | 'dörrar'->door_ | 'dörrarna'->door_ | 'ingång'->door_  | 'ingången'->door_ | 'utgång'->door_ | 'utgången'->door_)
+    'till'->to_ ( | 'den'->the_ | 'det'->the_)
     compoundNounPhrase->np_
     : NounPhraseWithVocab
 
@@ -862,7 +865,7 @@ objTurnedOn: PreCondition
 
         /* couldn't turn it off implicitly, so complain and give up */
         gMessageParams(obj);
-        reportFailure('{Du/han} måste slå på {den obj/honom} first. ');
+        reportFailure('{Du/han} måste slå på {den obj/honom} först. ');
         exit;
     }
 ;
@@ -913,7 +916,7 @@ objsNotWorn: PreCondition
     autoDoff = true
 
     /* the failure message */
-    failureMsg = '{Du/han} måste ta av {den wornobj/honom} first. '
+    failureMsg = '{Du/han} måste ta av {den wornobj/honom} först. '
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -1020,7 +1023,7 @@ trackAndDisappear(actor, conn)
     
     /* 
      *   If the actor isn't already in the player character's top-level
-     *   location, move it there first.  This ensures that we'll be in
+     *   location, move it there först.  This ensures that we'll be in
      *   sight, which is necessary to track "follow" information. 
      */
     room = gPlayerChar.location.getOutermostRoom();

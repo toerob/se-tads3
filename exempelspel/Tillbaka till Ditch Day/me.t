@@ -23,7 +23,7 @@ me: BagOfHolding, Actor
         Group, Omegatron Corporation. Det har gått ungefär ett decennium sedan
         college, och tidens gång har börjat visa sig; du är
         lite mjukare, lite bredare runt midjan, och
-        lite blek av att spendera det mesta av din tid inomhus. ";
+        en aning blek av att spendera den större delen av din tid inomhus. ";
 
         if (myDust.isIn(self))
         {
@@ -324,13 +324,13 @@ property knownFollowDest;
 + AlwaysWorn 'beige sport+iga långärmad+e knäppt+a skjorta+n'
     'beige skjorta'
     "Det är en knäppt långärmad sportskjorta i en ganska neutral beige färg. 
-    Det är typiskt vad du brukar ha på dig på kontoret de flesta dagar. "
+    Det är din typiska klädsel på kontoret de flesta dagar. "
 ;
 
 + myShoes: AlwaysWorn 'brun+a vänster höger par *läder:+skor+na'
     'par bruna läderskor'
-    "Dina skor är av brunt läder, i en stil som är vardaglig men inte för vardaglig.
-    De är gjorda av ett av de där märkena som balanserar mellan gymnastikskor och riktiga skor. "
+    "Dina skor är av brunt läder, i en stil som är vardaglig men ändå inte för vardaglig.
+    De är tillverkade av ett av de där märkena som befinner sig på gränsen mellan sneakers och riktiga skor."
 ;
 + myLeftShoe: PresentLater, AlwaysWorn 'brun+a vänster läder+sko+n'
     'vänster sko'
@@ -366,9 +366,9 @@ property knownFollowDest;
 + contract: Readable 'kontrakt+et/avtal+et' 'kontrakt'
     "Detta är ett kontrakt för att tillhandahålla ett kompletterande styrsystem,
     samt tillhörande konsult- och underhållstjänster, till Statligt
-    Kraftverk #6. Det är hela anledningen till att du är här, och om du
+    Kraftverk #6. Det är hela anledningen till varför du är här, och om du
     åker hem utan att få det underskrivet kommer din VP att bli rasande.
-    Överste Magnxi gjorde det klart att hon inte kommer skriva under något
+    Överste Magnxi klargjorde att hon inte kommer skriva på något
     förrän hon ser en fungerande demo av SCU:n---vilket är
     precis därför de skickade dig istället för en säljare. "
 ;

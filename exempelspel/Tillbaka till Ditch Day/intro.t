@@ -435,7 +435,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
  *   specifika svar för att fråga om den på olika platser 
  */
 ++ AskTellShowTopic [platformBridge]
-    "<q>Jag vill verkligen inte korsa den där repbron,</q> säger du.
+    "<q>Jag vill verkligen inte gå över den där repbron,</q> säger du.
     <.p><q>Det är vår mest effektiva väg,</q> säger
     Xojo, <q>men kanske kunde vi vänta på reparationen av
     hissen, om du föredrar det.</q> "
@@ -443,13 +443,13 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 
 /* Repbro-svar för när vi är på plattformen */
 +++ AltTopic, StopEventList
-    ['<q>Är du seriös?</q> frågar du. <q>Du vill verkligen gå över
+    ['<q>Är du seriös?</q> frågar du. <q>Vill du verkligen gå över
     repbron?</q>
     <.p><q>Jag beklagar,</q> säger han, <q>men det är den mest effektiva vägen.
     Den enda möjligheten till ett alternativ är att invänta färdigställandet av
     reparationerna på hissen.</q> ',
-    '<q>Varför finns den här ens här?</q> frågar du skeptiskt.
-    <.p><q>Peon-gradspersonalen får normalt inte lämna
+    '<q>Varför finns den ens här?</q> frågar du skeptiskt.
+    <.p><q>Peon-gradspersonalen får normalt sett inte lämna
     källarvåningarna under arbetstid,</q> säger Xojo.
     <q>En grupp sub-peoner byggde detta i hemlighet, för att möjliggöra avfärd
     och senare återkomst utan upptäckt av överordnade funktionärer.</q> ',
@@ -457,7 +457,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
     <.p><q>Jag har använt den personligen, under min egen Peon-gradsperiod
     av anställning,</q> försäkrar Xojo dig. <q>Använd bara försiktighet för att göra
     överfarten relativt fri från överdriven fara.</q> ',
-    '<q>Är du verkligen säker på att detta är enda vägen över?</q> frågar du.
+    '<q>Är du verkligen säker på att det här är den enda vägen över?</q> frågar du.
     <.p><q>Jag är tyvärr tvungen att svara jakande,</q>
     säger Xojo. ']
 
@@ -466,8 +466,8 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 
 /* Repbro-svar för när vi börjar korsa bron */
 +++ AltTopic
-    "<q>Är du verkligen säker på att den här är säker?</q> frågar du.
-    <.p><q>Jag har korsat den flera gånger,</q> säger han. <q>Snälla,
+    "<q>Är du verkligen säker på att den är säker?</q> frågar du.
+    <.p><q>Jag har gått över den flera gånger,</q> säger han. <q>Snälla,
     vi borde skynda oss.</q> "
 
     isActive = (xojo.isIn(ropeBridge1) || xojo.isIn(ropeBridge2))
@@ -475,7 +475,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 
 /* Repbro-svar efter att bron kollapsar */
 +++ AltTopic
-    "<q>Du sa att den här var säker!</q> skriker du.
+    "<q>Du sa att den var säker!</q> skriker du.
     <.p><q>Förlåt,</q> säger Xojo. <q>Det här har bara hänt en
     eller två gånger förut. Kom, vi kan klättra upp härifrån.</q> "
 
@@ -484,7 +484,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 
 /* Repbro-svar när vi är förbi den */
 +++ AltTopic
-    "<q>Jag kan fortfarande inte tro att du fick mig att korsa den där
+    "<q>Jag kan fortfarande inte fatta att du fick mig att gå över den där
     repbron,</q> säger du.
     <.p><q>Medges, faronivån var inte noll,</q> säger Xojo. "
 
@@ -493,7 +493,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
 
 /* in-conversation state for xojo */
 ++ InConversationState
-    stateDesc = "He's waiting attentively. "
+    stateDesc = "Han väntar vaksamt. "
     specialDescListWith = [standingInDoorway]
     attentionSpan = nil
 ;
@@ -506,7 +506,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
     stateDesc = "Han har iakttagit dig uppmärksamt. "
 ;
 ++++ HelloTopic, ShuffledEventList
-    ['Du tittar på Xojo. <q>Ursäkta...</q>
+    ['Du tittar bort mot Xojo. <q>Ursäkta...</q>
     <.p><q>Hur kan jag hjälpa till?</q> ',
      'Ni får ögonkontakt. <q>Ja?</q> frågar han.<.p>',
      '<q>Xojo?</q>
