@@ -51,7 +51,7 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
     }
 ;
 
-+ InitiallyWorn 'ljus+a färgglad+a aloha hawaiisk skjorta+n' 'hawaiiskjorta'
++ InitiallyWorn 'ljus+a blommönst:er+rade färgglad+a aloha hawaii|skjorta+n' 'hawaiiskjorta'
     "Den färgglada skjortan är prydd med ett blommönster. "
     isListedInInventory = nil
 ;
@@ -63,20 +63,20 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 /* ask jay about the stack */
 ++ AskTellShowTopic
     [stackTopic, a4Materials, a4Envelopes, a4Map, turboTopic]
-    "<q>Vilken stack är det här?</q> frågar du.
-    <.p><q>Det är Turbo Power Animals-stacken,</q> säger han.
+    "<q>Vilken stapel är det här?</q> frågar du.
+    <.p><q>Det är Turbo Power Animals-stapeln,</q> säger han.
     <q>Gå och kolla skylten.</q> Han pekar ner i korridoren
     västerut. "
 ;
 +++ AltTopic, StopEventList
-    ['<q>Finns det något jag kan göra för att hjälpa till med stacken?</q> frågar du.
-    <.p>Han tittar över papperen på bordet. <q>Du vet, vi
-    har ingen som jobbar med Turbo Power Squirrel. Vi har
+    ['<q>Finns det något jag kan göra för att hjälpa till med stapeln?</q> frågar du.
+    <.p>Han tittar över papperen på bordet. <q>Alltså, vi har faktiskt
+    ingen som jobbar med Turbo Power Squirrel. Vi har
     listat ut var han är---han är i Guggenheims vindtunnel.
     Vi behöver någon som kan ta sig dit upp och hämta tillbaka honom.</q>
     <.reveal squirrel-assigned> ',
 
-     '<q>Hur går det med stacken?</q> frågar du.
+     '<q>Hur går det med stapeln?</q> frågar du.
      <.p><q>Vi behöver fortfarande någon som kan hämta Turbo Power Squirrel,
      om du är intresserad,</q> säger han. <q>Vi tror att han är uppe
      i Guggenheims vindtunnel.</q> ']
@@ -84,14 +84,14 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
     isActive = gRevealed('tpa-stack')
 ;
 +++ AltTopic
-    "<q>Hur går det med stacken?</q> frågar du.
+    "<q>Hur går det med stapeln?</q> frågar du.
     <.p>Han rycker på axlarna. <q>Det skulle gå jättebra om du kunde hämta
     tillbaka Turbo Power Squirrel åt oss.</q> "
 
     isActive = gRevealed('squirrel-assigned')
 ;
 +++ AltTopic
-    "Du är lite tveksam till att fråga om stacken igen;
+    "Du är lite tveksam till att fråga om stapeln igen;
     du är rädd att du kanske skulle få ytterligare ett uppdrag. "
 
     isConversational = nil
@@ -112,15 +112,15 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 ;
 
 ++ AskTellTopic @stamerStackTopic
-    "Du frågar Jay om han har sett Stamers stack. Han säger att han tittade på
-    den och inte var särskilt intresserad---han kallar den <q>ännu en tråkig
-    svart låda-stack.</q> "
+    "Du frågar Jay om han har sett Stamers stapel. Han säger att han tittade på
+    den och blev inte särskilt intresserad---han kallar den <q>ännu en tråkig
+    svart låda-stapel.</q> "
 ;
 
 /* once we assign the squirrel, guggenheim is a topic of interest */
 ++ AskTellTopic [guggenheimTopic, windTunnelTopic]
     "<q>Hur ska jag ta mig upp till vindtunneln?</q> frågar du.
-    <.p>Han rycker på axlarna. <q>Jag hoppades att du skulle kunna lista ut det.</q> "
+    <.p>Han rycker på axlarna. <q>Jag hoppades att du skulle kunna lista ut det sjäv.</q> "
     isActive = gRevealed('squirrel-assigned')
 ;
 +++ AltTopic
@@ -133,9 +133,9 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 ++ GiveShowTopic @squirrel
     topicResponse()
     {
-        "Du erbjuder actionfiguren av ekorren till Jay. <q>Hej! Det är
+        "Du ger Jay actionfiguren av ekorren. <q>Men hallå! Det här är ju 
         fantastiskt!</q> Han tar ekorren och håller upp den så att alla
-        kan se. <q>Turbo Power Squirrel är i säkerhet!</q> Alla hurrar.
+        kan se. <q>Turbo Power Squirrel är i säkerhet!</q> Alla jublar.
         Jay lägger figuren på bordet.
         <.reveal squirrel-returned> ";
 
@@ -162,8 +162,8 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 +++ AskTellTopic @calculator
     "Du beskriver miniräknaren för Jay och frågar om han vet
     något om den.
-    <.p><q>Låter ganska generisk,</q> säger han. <q>Kanske om jag
-    kunde ta en titt på den...</q> "
+    <.p><q>Låter ganska allmän,</q> säger han. <q>Kanske om jag
+    fick ta en titt på den...</q> "
 ;
 ++++ AltTopic
     "Du frågar Jay om det finns något annat speciellt med
@@ -171,8 +171,8 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
     isActive = gRevealed('calc-to-jay')
 ;
 ++++ AltTopic
-    "<q>Hur fungerar det program du skrev igen?</q> frågar du.
-    <.p>Jay pekar på <q>+</q>-knappen. <q>Skriv bara in numret,
+    "<q>Hur fungerar det där programmet du skrev nu igen?</q> frågar du.
+    <.p>Jay pekar på <q>+</q>-knappen. <q>Mata bara in numret,
     sedan plus-plus-plus. Gör det direkt efter att du har fått igång
     kvantmaskinerna, så borde svaret komma upp direkt.</q> "
     
@@ -205,7 +205,6 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
  */
 ++ GiveShowTopic, StopEventList @calculator
     [&response1,
-
      'Du erbjuder Jay miniräknaren, men han tar inte emot den.
      <q>Jag vill inte skryta,</q> säger han.
      <.convnode jay-programming> ']
@@ -213,12 +212,12 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
     response1()
     {
         "<q>Ta en titt på den här,</q> säger du och räcker Jay miniräknaren.
-        <.p>Han vänder på den ett par gånger, slår på den och trycker på
+        <.p>Han vänder runt på den ett par gånger, slår på den och trycker på
         knapparna en stund. Miniräknaren börjar pipa en liten
         melodi. En av de andra studenterna stönar och försöker lekfullt
         ta miniräknaren från Jay, men Jay undviker honom.
         <.p><q>Uppmuntra honom inte,</q> säger den andre killen. <q>Han
-        kan bara inte låta bli att visa upp sitt nördiga trick.</q>
+        kan bara inte hålla sig från att visa upp sitt nördiga trick.</q>
         <.p>Jay skrattar. <q>Förlåt,</q> säger han. Han stänger av
         miniräknaren och lämnar tillbaka den.
         <.reveal calc-to-jay>
@@ -231,7 +230,7 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 +++ AltTopic
     "<q>Tror du att du skulle kunna programmera en Hovarth-funktion på min
     miniräknare?</q> frågar du.
-    <.p><q>Kompis, det är ingen idé,</q> säger han. <q>Om du inte
+    <.p><q>Det är meningslöst, kompis,</q> säger han. <q>Om du inte
     har, typ, ungefär tio upphöjt till fyrtio år att vänta på
     svaret.</q> "
 
@@ -258,8 +257,8 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
         else
             "<q>Vi behöver någon som kan rädda Turbo Power Squirrel. Vi har
             listat ut att han är i Guggenheims vindtunnel, men
-            ingen har tid att gå och hämta honom. Om du kunde gå
-            och rädda honom och ta tillbaka honom hit, så hjälper jag dig
+            ingen har tid att gå och hämta honom. Om du kan gå
+            och rädda honom och få med honom tillbaka hit, så kommer jag hjälpa dig
             med att programmera din miniräknare.</q>
             <.reveal squirrel-assigned> ";
     }
@@ -279,22 +278,22 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
         else
             "<q>Tror du att du skulle kunna programmera en kvant-Hovarth-
             funktion?</q> frågar du och räcker Jay miniräknaren.
-            <.p><q>Kompis, det är en utmärkt idé,</q> säger han. ";
+            <.p><q>Det är en utmärkt idé, kompis,</q> säger han. ";
         
         "Han börjar trycka frenetiskt på knappsatsen med båda
-        tummarna, nästan för snabbt för att se. <q>Det här är perfekt,</q>
-        säger han, fortfarande i full fart med att skriva. <q>Chipset i den här modellen
-        har en instabil vippa på knappavstudsaren som vi
-        kan använda som en äkta slumpkälla.</q>
+        tummarna, nästan för snabbt för att kunna se. <q>Det här är perfekt,</q>
+        säger han, fortfarande i full fart med att skriva. <q>Chipsetet i den här modellen har ett instabilt vippläge i studsfiltret som 
+        används för knappen, och det kan vi utnyttja som en äkta 
+        slumpkälla.</q>
         <.p>Han avslutar äntligen, och ler brett åt sitt hantverk.
-        <q>Sådär,</q> säger han och lämnar tillbaka miniräknaren till dig.
-        <q>Det är det minsta jag kunde göra för mannen som räddade
+        <q>Sådär,</q> säger han och lämnar tillbaka din miniräknaren.
+        <q>Detta är det minsta jag kunde göra för mannen som räddade
         Turbo Power Squirrel.</q> Han pekar på <q>+</q>-
         knappen. <q>Allt du behöver göra är att mata in numret för
         Hovarth-funktionen, och sedan trycka på <q>plus</q> tre gånger
-        i rad, riktigt snabbt. Så skriv in numret, och tryck sedan
+        i rad, riktigt snabbt. Så mata in numret, och tryck sedan
         plus-plus-plus. Se till att kvantgrejen är igång
-        när du gör det. Resultatet borde komma upp direkt.</q> ";
+        när du gör det. Resultatet borde komma fram direkt.</q> ";
 
         /* the calculator is now programmed */
         calculator.isProgrammed = true;
@@ -311,7 +310,7 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
     "<q>Hur fungerar det program du skrev igen?</q> frågar du.
     <.p>Jay pekar på <q>+</q>-knappen. <q>Skriv bara in numret,
     sedan plus-plus-plus. Gör det direkt efter att du har fått igång
-    kvantmaskinerna, så borde svaret komma upp direkt.</q> "
+    kvantmaskinerna, så borde svaret komma fram direkt.</q> "
     
     isActive = (calculator.isProgrammed)
 ;
@@ -332,18 +331,18 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 ++ AskTellShowTopic, StopEventList [hovarthTopic, drdTopic, drdBook]
     ['<q>Har du hört talas om Hovarth-tal?</q> frågar du.
     <.p><q>Ja, absolut,</q> säger han. <q>Vi hade en fysikläxa
-    för några veckor sedan som handlade helt om Hovarth-tal.
-    Helt fruktansvärt grejer.</q>
+    för några veckor sedan som bara handlade om Hovarth-tal.
+    Riktigt plågsamt.</q>
     <.reveal hovarth-to-jay>
     <.convnode jay-programming> ',
 
-     '<q>Du sa att du känner till Hovarth-tal?</q> frågar du.
+     '<q>Du sa förut att du känner till Hovarth-tal?</q> frågar du.
      <.p><q>Ja, från en fysikkurs.</q>
      <.convnode jay-programming> ']
 ;
 +++ AltTopic
     "<q>Har du hört talas om Hovarth-tal?</q> frågar du.
-    <.p><q>Visst,</q> säger han. <q>Vet du, det är ett perfekt problem
+    <.p><q>Javisst,</q> säger han. <q>Vet du, det är ett perfekt problem
     för en kvantdator. Jag skulle kunna försöka programmera det om du ger
     mig en miniräknare.</q>
     <.reveal hovarth-to-jay>
@@ -360,8 +359,8 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 ;
 +++ AltTopic
     "Du frågar Jay om Hovarth-beräkningen, och han förklarar
-    igen hur man använder miniräknarprogrammet han skrev åt dig: bara
-    mata in numret och tryck på <q>+</q>-knappen tre gånger i rad. "
+    igen hur man använder miniräknarprogrammet han skrev åt dig: mata
+    bara in numret och tryck på <q>+</q>-knappen tre gånger i rad. "
 
     isActive = (calculator.isProgrammed)
 ;
@@ -468,14 +467,14 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 /* QRL 70:11c has some quantum computing stuff, but it's not very concrete */
 ++ GiveShowTopic @qrl7011c
     "Du räcker Jay artikeln, och han skummar igenom den snabbt.
-    <q>Kompis, det här är ganska abstrakt teoretiskt,</q>
+    <q>Det här är ganska abstrakt teoretiskt, kompis,</q>
     säger han och lämnar tillbaka tidskriften. <q>Jag har tänkt
-    läsa om kvantdatorer, men, du vet, något
+    läsa om kvantdatorer, men, alltså, något mer
     <i>konkret</i>.</q> "
 ;
 +++ AltTopic
-    "Du erbjuder Jay artikeln, men han viftar bort den. <q>Kompis, min hjärna
-    är full,</q> säger han. "
+    "Du erbjuder Jay artikeln, men han viftar bort den. <q>Min hjärna
+    är full, kompis,</q> säger han. "
     isActive = gRevealed('jay-ready-to-program')
 ;
 
@@ -488,7 +487,7 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
     topicResponse()
     {
         if (!gRevealed('739a-to-jay'))
-            "<q>Du kanske tycker det här är intressant,</q> säger du och erbjuder
+            "<q>Du kanske finner det här är intressant,</q> säger du och erbjuder
             tidskriften till Jay.
             <.p>Han tar den och skummar igenom sammanfattningen. <q>Hm,</q>
             säger han, sätter sig sedan ner och börjar läsa igenom
@@ -513,7 +512,7 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 ;
 +++ AltTopic
     "Du erbjuder Jay artikeln, men han säger att han inte behöver
-    läsa den igen. "
+    läsa om den. "
 
     isActive = gRevealed('jay-ready-to-program')
 ;
@@ -527,8 +526,8 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 
 ++ DefaultAnyTopic, ShuffledEventList
     ['<q>Jag är lite upptagen här,</q> säger han. ',
-     'Precis när du ska prata, ställer någon annan en
-     fråga till honom, så du bestämmer dig för att inte avbryta. ',
+     'Precis när du ska till att prata, ställer någon annan en
+     fråga till honom, du bestämmer dig för att inte avbryta. ',
      'Han blir distraherad av något på kartan för
      ett ögonblick och ignorerar vad du sa. ']
 
@@ -538,11 +537,11 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 /* the initial ready-for-conversation state */
 ++ jayGroundState: ConversationReadyState
     isInitState = true
-    stateDesc = "Han är upptagen med att arbeta på stacken. "
+    stateDesc = "Han är upptagen med att arbeta på stapeln. "
 ;
 +++ HelloTopic
     "<q>Hej, Jay,</q> säger du.
-    <.p>Jay lägger ner några papper och vänder sig bort från bordet
+    <.p>Jay lägger undan några papper och vänder sig bort från bordet
     för att prata. <q>Tjena,</q> säger han. "
 ;
 +++ ByeTopic
@@ -552,7 +551,7 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
 /* a state for jay, while he's busy reading the journal */
 + jayReading: HermitActorState
     stateDesc = "Han läser en artikel. "
-    noResponse = "Han verkar för fördjupad i sin läsning för att märka dig. "
+    noResponse = "Han verkar vara för djupt inne i sin läsning för att ens lägga märke till dig. "
 ;
 
 /* an agenda item for jay, for when he's finished reading */
@@ -592,7 +591,7 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
          *   present or not when we first finished 
          */
         if (finishedWhilePcOut)
-            "<.p>Jay ser dig och kommer över för att prata. <q>Här,</q> säger
+            "<.p>Jay ser dig och kommer fram för att prata. <q>Här,</q> säger
             han, <q>jag är klar med artikeln.</q> Han räcker dig
             tidskriften. ";
         else
@@ -607,22 +606,22 @@ jay: PresentLater, Person 'jay santoshnimoorthy' 'Jay' @alley4main
         hov = gRevealed('hovarth-to-jay');
         if (calc && hov)
             "</q> Han funderar på något i några ögonblick, sedan ler han.
-            <q>Hej, det skulle vara perfekt för Hovarth-tal! Kanske jag
+            <q>Du, det skulle vara perfekt för Hovarth-tal! Jag kanske
             skulle kunna programmera din miniräknare att räkna ut Hovarth-av-X, och vi
-            kunde prova det.<.reveal jay-ready-to-program-hovarth>";
+            skulle sedan kunna testa det.<.reveal jay-ready-to-program-hovarth>";
         else if (calc)
-            " Kanske jag skulle kunna programmera din miniräknare att göra någon
-            omöjlig beräkning så vi kunde prova det. Men
-            vad skulle vara en bra sak att beräkna?";
+            " Jag kanske skulle kunna programmera din miniräknare att göra någon
+            slags omöjlig beräkning så vi kunde testa det. Men
+            vad skulle vara en vettig sak att beräkna?";
         else if (hov)
-            "</q> Han funderar på något i några ögonblick. <q>Vet du,
-            Hovarth-tal skulle vara ett bra test för det här. Kanske jag skulle kunna
+            "</q> Han funderar på något i några ögonblick. <q>Du,
+            Hovarth-tal skulle vara ett bra test för det här. Jag kanske skulle kunna
             programmera en miniräknare att räkna ut Hovarth-av-X. Vi skulle behöva hitta
-            en miniräknare dock.<.reveal jay-ready-to-program-hovarth>";
+            en miniräknare först dock.<.reveal jay-ready-to-program-hovarth>";
         else
-            " Kanske jag skulle kunna programmera en miniräknare att göra någon
-            omöjlig beräkning. Vi skulle behöva hitta en miniräknare
-            dock, och vi skulle behöva något intressant att beräkna.";
+            " Jag kanske skulle kunna programmera en miniräknare att göra någon 
+            slags omöjlig beräkning. Vi skulle behöva hitta en miniräknare först
+            dock, och vi skulle behöva ha något intressant att beräkna.";
 
         /* finish up */
         "</q><.reveal jay-ready-to-program> ";

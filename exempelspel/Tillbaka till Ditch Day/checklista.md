@@ -20,7 +20,8 @@
 [X] pathfind
 [X] subtime (Låt gå att ha kvar AM/PM?)
 
-# VOCABWORDS
+# VOCABWORDS, OBS: se över igen för ord som kan nyttja | numera, samt fönst:er+ret etc...
+
 
 [X] campus (TODO: CampusMapEntry(s))
 [X] bridge
@@ -105,7 +106,7 @@ TODO: Ditchday-stack  - stapelutmaning
 [] bookstore
 [] career
 [] frosst
-[] jay
+[X] jay
 [X] main
 [X] mods
 [X] about
