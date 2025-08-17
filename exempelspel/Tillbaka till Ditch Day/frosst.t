@@ -43,7 +43,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
 
 + InitiallyWorn 'vit+a dubbelknäppt+a kavaj+en/rock+en'
     'vit dubbelknäppt kavaj'
-    "Det är en oklanderligt skräddarsydd dubbelknäppt vit kavaj. "
+    "Det är en oklanderlig skräddarsydd dubbelknäppt vit kavaj. "
     isListedInInventory = nil
 ;
 
@@ -163,7 +163,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
 
 + frosstUnpacking: HermitActorState
     stateDesc = "Han står mitt i svärmen av flyttarbetare
-        och dirigerar deras rörelser. "
+        och styr deras rörelser. "
     specialDesc = "Belker står mitt i svärmen av flyttarbetare,
         pekar och ger order. "
     noResponse = "Han uppmärksammar dig inte medan han ger
@@ -299,10 +299,9 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
             if (++pointlessDialing == 3)
                 "Du märker att Belker tittar på dig. <q>Det här vridandet
                 verkar ganska meningslöst,</q> säger han. <q>Men
-                kanske har du en anledning att manipulera denna enhet medan
-                den är inaktivt <<
-                  signalGen.isOn ? 'avstängd' : 'frånkopplad'>>.</q>
-                En av teknikerna drar till sig hans uppmärksamhet och han
+                du kanske har en anledning att manipulera denna enhet medan
+                den är passivt <<signalGen.isOn ? 'avstängd' : 'frånkopplad'>>.</q>
+                En av teknikerna påkallar sig hans uppmärksamhet och han
                 vänder sig bort. ";
         }
     }
@@ -350,7 +349,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
      kameraflash som laddas, ett vinande som stiger i tonhöjd tills det är
      för högt för att höra; sedan mullrar det som avlägsen åska.
      MegaTestern spelar en liten piezoelektrisk <q>välkommen</q>-melodi, och
-     teknikerna släpper sina poser och återvänder till kontrollerna.',
+     teknikerna släpper sin hållning och återvänder till kontrollerna.',
      
      'En tekniker går fram till den svarta lådan med vad som ser ut
      som en enkel voltmeter. Hon rör försiktigt vid
@@ -409,7 +408,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
     "<q>Xojo och jag träffades när jag arbetade med demonstrationen av
     Statligt Kraftverk 6,</q> säger du.
     <.p><q>Så trevligt,</q> säger Belker. <q>Så motvillig som jag är att
-    avbryta era minnen, måste jag påminna, öh, 119297 om den
+    avbryta era reminiscenser, måste jag påminna, öh, 119297 om den
     höga produktivitetsstandard som vi på Mitachron alltid
     måste sträva efter.</q>
     <.p><q>Jag är mycket tacksam för denna hjälpsamma påminnelseepisod,
@@ -419,7 +418,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
 ++ NoTopic
     "<q>Nej, det tror jag inte,</q> säger du, i hopp om att hjälpa Xojo undvika
     att hamna i trubbel.
-    <.p>Frosst pausar och ler svagt. <q>Kanske är du nyfiken
+    <.p>Frosst pausar och ler svagt. <q>Kanske du är nyfiken
     på våra framsteg då. Jag beklagar att jag måste insistera på en viss
     grad av sekretess på grund av vår vänskapliga rivalitet; jag är säker på att du
     förstår.</q> Han tittar på Xojo, som långsamt smyger iväg.
@@ -462,7 +461,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
             frosst.setCurState(self);
 
             /* note Frosst's approach */
-            "<.p>Frosst Belker vandrar över för att se vad du gör. ";
+            "<.p>Frosst Belker kommer fram för att se vad du gör. ";
         }
     }
 
@@ -506,14 +505,14 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
          säger han, <q>men säkert inser du omöjligheten i att lösa
          herr Stamers gåta genom uttömmande uppräkning.</q> ',
          '<q>I den här takten,</q> säger Belker, <q>kanske du hittar numret
-         du söker om, låt säga, trettio år.</q> ',
+         du söker, låt säga, om trettio år.</q> ',
          '<q>Vet du,</q> säger Belker, <q>mina ingenjörer kommer att ha
-         det korrekta numret mycket snart. Kanske jag kunde övertala dem att
+         det korrekta numret mycket snart. jag Kanske kan övertala dem att
          låta dig använda deras utrustning efteråt. Det skulle förstås
-         vara för sent för dig att vinna, men åtminstone kanske du får
+         vara för sent för dig att vinna, men åtminstone så kanske du får
          tillfredsställelsen att lösa gåtan på egen hand.</q> ',
          'Belker skrattar. <q>Herr Mittling, jag börjar undra om du
-         ens vet vilken gåta du försöker lösa. Med tanke på
+         ens vet vad för slags gåta du försöker lösa. Med tanke på
          den sena timmen tror jag det är säkert att ge dig en liten
          ledtråd: det har något att göra med en matematiker vid namn
          Hovarth.</q><.reveal frosst-hovarth-hint> ']
@@ -562,9 +561,8 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
 +++ AltTopic
     "<q>Jag vet allt om Hovarth-tal,</q> skryter du.
     <.p>Belker höjer på ögonbrynen. <q>Jaså,</q> säger han.
-    <q>Då skulle jag tro att du skulle utnyttja tjänsterna från en
-    stor superdator, som jag har gjort, snarare än att envisas med detta
-    slumpmässiga pysslande.</q> "
+    <q>Då borde du nog använda en stor superdator, som jag har gjort, 
+    hellre än att envisas med detta slumpmässiga experimenterande.</q> "
     isActive = gRevealed('frosst-hovarth-hint')
 ;
 ++ DefaultAnyTopic, ShuffledEventList
@@ -591,8 +589,8 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
 + AskTellTopic [efficiencyStudy37, galvaniTopic]
     "<q>Vad vet du om Projekt Galvani-2?</q> frågar du.
     <.p>Belker höjer lätt på ögonbrynen. <q>Projekt
-    Galvani-2?</q> frågar han. Han stryker sig om hakan. <q>Jag är rädd
-    att det inte säger mig någonting.</q> "
+    Galvani-2?</q> frågar han. Han stryker sig om hakan. <q>Jag tror 
+    tyvärr inte att det säger mig någonting.</q> "
     isActive = (efficiencyStudy37.seen)
 ;
 + GiveShowTopic @efficiencyStudy37
@@ -601,6 +599,6 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
     <q>Jag känner inte till detta,</q> säger han avfärdande.
     <q>Om jag vore du skulle jag dock vara försiktig med sådana saker.
     Du kan väcka oönskad nyfikenhet om hur du kom i
-    besittning av sådant.</q> "
+    besittning av dem.</q> "
 ;
 

@@ -89,14 +89,14 @@
 
 # KONSEKVENT SPELSPECIFIK TERMINOLOGI
 ÖVERALLT: 
-TODO: Tillbaka till Ditchday  - Tillbaka till Stapeldagen
-TODO: Ditchday-stack  - stapelutmaning
+TODO: Tillbaka till Ditchday  - Tillbaka till Stapeldagen/ditch day
+TODO: Ditchday-stack  - stapelutmaning, stapel
 
 
 # HUMOR/ORDLEKAR, TEKNISKA TERMER, DIALOGFLYT OCH BESKRIVNINGAR GENTEMOT ORGINALETS
 [] campus
 [] bridge
-[604] intro - Xojos brytningar?
+[X] intro
 [] dabney
 [] stack
 [] synclab
@@ -105,7 +105,7 @@ TODO: Ditchday-stack  - stapelutmaning
 [] elev
 [] bookstore
 [] career
-[] frosst
+[X] frosst
 [X] jay
 [X] main
 [X] mods

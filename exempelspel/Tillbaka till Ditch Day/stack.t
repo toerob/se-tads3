@@ -439,7 +439,7 @@ class StackFixture: CustomFixture
                  */
                 "Du fumlar runt med signalgeneratorn och
                 oscilloskopet en stund, provar olika frekvenser och
-                vågformer, och rör oscilloskopets prob mot de
+                vågformer, och rör oscilloskopets provspets mot de
                 olika kontakterna i tur och ordning. Oscilloskopet visar tydliga
                 svar; det finns utan tvekan mönster här,
                 men du ser dem inte. ";
@@ -507,7 +507,7 @@ class StackFixture: CustomFixture
         else
         {
             /* the signal generator isn't in use, so we don't get any data */
-            "Du rör oscilloskopets prob mot de olika kontakterna
+            "Du rör oscilloskopets provspets mot de olika kontakterna
             en i taget. Några svaga, oregelbundna mönster dyker upp; de
             kan bara vara elektriskt brus. Det kan vara användbart att prova
             en signalgenerator för att se om det finns någon respons på olika
