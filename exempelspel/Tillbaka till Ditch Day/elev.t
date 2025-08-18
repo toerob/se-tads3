@@ -114,9 +114,9 @@ class Elevator: object
     {
         /* if we were moving, we're moving no longer */
         if (moving)
-            "Hissen stannar, och dörrarna skjuts isär. ";
+            "Hissen stannar, och dörrarna skjuts upp. ";
         else
-            "Hissens dörrar skjuts isär. ";
+            "Hissens dörrar skjuts upp. ";
     }
 
     /* 
@@ -582,7 +582,7 @@ class Elevator: object
         if (lst.indexWhich({x: x.isLit}) != nil)
         {
             /* mention it */
-            "Alla knappar blir mörka. ";
+            "Alla knappar slocknar. ";
 
             /* turn them all off */
             lst.forEach({x: x.isLit = nil});
@@ -684,7 +684,7 @@ class ElevatorDoor: Door
     /* announce that the doors are opening automatically */
     announceRemoteOpen(stat, dir)
     {
-        "Hissens dörrar skjuts <<stat ? 'isär' : 'ihop'>>. ";
+        "Hissens dörrar skjuts <<stat ? 'upp' : 'ihop'>>. ";
     }
 
     /* the floor number on which this door is located */
@@ -704,7 +704,7 @@ class ElevatorDoor: Door
  *   these buttons by looking in the door's location.  
  */
 class ElevatorCallButton: Button, Fixture
-    '(hissens) (liftens) hiss+knapp+en*hiss+knappar+na' 'hissknappen'
+    '(hissens) (liftens) hiss|knapp+en*hiss|knappar+na' 'hissknappen'
     "Den är <<isLit ? '' : 'o'>>tänd. "
 
     dobjFor(Switch) asDobjFor(Push)
@@ -745,8 +745,8 @@ class ElevatorCallButton: Button, Fixture
                  *   we're already lit, and no elevator is here, so this
                  *   has no effect at all
                  */
-                "Du trycker på knappen igen, men den är redan tänd, så
-                detta har ingen uppenbar konsekvens. ";
+                "Du trycker på knappen igen, men den lyser redan, så
+                det har ingen uppenbar effekt. ";
             }
 
         }
@@ -965,7 +965,7 @@ class ElevatorButton: Button, Fixture 'hiss+knapp+en/lift+knapp+en*hiss+knappar+
  *   contents.  
  */
 class ElevatorButtonGroup: CollectiveGroup, Fixture
-    'hiss+knapp+en/lift+knapp+en*hissknapparna' 'hissknappar'
+    'hiss|knapp+en/lift|knapp+en*hiss|knappar+na liftknappar+na' 'hissknappar'
 
     /* list the list buttons */
     listLit()

@@ -102,9 +102,9 @@ TODO: Ditchday-stack  - stapelutmaning, stapel
 [] synclab
 [] library
 [] hints
-[] elev
+[X] elev
 [] bookstore
-[] career
+[X] career
 [X] frosst
 [X] jay
 [X] main

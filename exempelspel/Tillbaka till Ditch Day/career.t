@@ -17,11 +17,11 @@ ccOffice: Room 'Karriärcenter' 'karriärcentret' 'kontor'
     "Detta rum verkar vara löst uppdelat i ett kontorsområde och ett
     offentligt område. Flera skrivbord är grupperade på ena sidan av rummet
     och utgör kontorsområdet. På andra sidan är ett par soffor (en stor och
-    en liten) arrangerade i ett <q>L</q> runt ett fyrkantigt glasbord. En
-    litteraturställning står nära sofforna.
+    en liten) arrangerade i ett <q>L</q> runt ett fyrkantigt glasbord. Ett
+    litteraturställ står nära sofforna.
     <.p>En dörr mot norr leder ut till lobbyn. "
 
-    vocabWords = 'karriärcenter kontor'
+    vocabWords = 'karriärcent:er+ret kontor+et'
 
     north = ccDoorN
     out asExit(north)
@@ -43,22 +43,21 @@ ccOffice: Room 'Karriärcenter' 'karriärcentret' 'kontor'
         {
         case 3:
             "<.p>Kvinnan täcker telefonen med handen och säger
-            högt till dig, <q>Ha tålamod---jag är med dig
-            om en minut.</q> Hon återgår till sitt telefonsamtal. ";
+            högt till dig, <q>Ta det lugnt---jag kommer strax.</q> Hon återgår till sitt telefonsamtal. ";
             break;
 
         case 5:
             /* the return of Frosst Belker */
-            "<.p>Du hör någon komma genom dörren och tittar över
-            för att se en smal man i vit dubbelknäppt kavaj och
-            vita byxor komma in i rummet. Du är nära att stöna
+            "<.p>Du hör någon komma in genom dörren och tittar ditåt
+            och ser en smal man i vit dubbelknäppt kavaj och
+            vita byxor komma in i rummet. Du är nära att jämra dig 
             högt när du inser att det inte är någon annan än Frosst
-            Belker. Du hoppas bara att han inte är här för att intervjua samma
+            Belker. Man kan bara hoppas han inte är här för att intervjua samma
             student som du---det är svårt nog att slå dem i försäljning,
             det är ännu svårare att slå dem i rekrytering.
-            <.p>Belker granskar rummet. Han tittar på kvinnan i
+            <.p>Belker granskar rummet. Han tittar på kvinnan som är i
             telefon, sedan på dig, och ler sedan---inte varmt, inte som
-            om han är glad att se dig, mer som om han är road av ett privat
+            om han är glad att se dig, mer som om han vore road av ett privat
             skämt. <q>Herr Mittling,</q> säger han med sin lätta accent,
             <q>vilken trevlig överraskning. Våra respektive arbetsgivare
             har tydligen liknande smak när det gäller potentiella anställda såväl
@@ -103,13 +102,13 @@ ccOffice: Room 'Karriärcenter' 'karriärcentret' 'kontor'
 ;
 
 + Fixture, Chair
-    'stor+a större stor+a soffa+n/*soffor+na*möbler+na' 'stora soffan'
+    'större stor+a soffa+n/*soffor+na*möbler+na' 'stora soffan'
     "Den skulle lätt kunna rymma tre eller fyra personer. "
     disambigName = 'större soffan'
 ;
 
 + Fixture, Chair
-    'lite+n mindre lilla soffa+n/soffor+na*möbler+na' 'lilla soffan'
+    'mindre lilla soffa+n/soffor+na*möbler+na' 'lilla soffan'
     "Den är tillräckligt stor för två eller tre personer. "
     disambigName = 'mindre soffan'
 
@@ -122,16 +121,16 @@ ccOffice: Room 'Karriärcenter' 'karriärcentret' 'kontor'
         verify()
         {
             inherited();
-            logicalRank(90, 'pick arbitrary couch');
+            logicalRank(90, 'välj valfri soffa');
         }
     }
 ;
 
-+ Fixture, Surface 'fyrkant+igt fyrkantig+a glas+et soffbord+et/glas+skiv:a+/glasbord+et/topp+en*möbler+na' 'soffbordet'
++ Fixture, Surface 'fyrkant+igt fyrkantig+a glas+et soffbord+et/glas|skiva+n/glasbord+et*möbler+na' 'soffbordet'
     "Soffbordet har en glasskiva som är ungefär en och en halv meter på varje sida. "
 ;
 
-+ Fixture, RestrictedContainer 'förkromad+e förkromat metall:en+isk+a litteratur+ställ+et'
++ Fixture, RestrictedContainer 'förkroma:t+de metall+en litteratur:en+ställ+et'
     'litteraturställ'
     "Det är ett förkromat metallställ designat för att visa upp tidskrifter eller liknande
     föremål, för närvarande används det för en samling glansiga broschyrer
@@ -199,10 +198,10 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
     <b><i>Locktheon: Farliga Vapen för en Farlig Värld</i></b>.   
 
     Här på <b><i>Locktheon</i></b>, är en stor del av vårt arbete <q>topphemligt,</q>
-    men det finns en sak som inte är <q>topphemligt</q> dessa dagar: det är att 
-    världen är mer  farofylld än någonsin. Krig, terrorism, och international pacifism 
+    men det finns en sak som inte är <q>topphemligt</q> i dessa dagar: det är att 
+    världen är mer farofylld än någonsin. Krig, terrorism, och international pacifism 
     hotar Amerika och alla amerikaner som aldrig förut. Kontrollprotokoll för 
-    oreglerade vapen gör det möjligt att--även uppmuntrar--företag som <b><i>Locktheon</i></b> 
+    oreglerade vapen gör det möjligt att--och även uppmuntrar--företag som <b><i>Locktheon</i></b> 
     att sälja några av de mest avancerade vapensystem som någonsin har byggts 
     till vilken liten smådiktator som helst. Här vid <b><i>Locktheon</i></b>, 
     så vet vi att de mest avancerade vapensystemen som håller Amerika tryggt idag 
@@ -214,12 +213,12 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
     begränsa USA:s alarmerande handelsunderskott. <b><i>Locktheon</i></b>s
     försvarssystem är bland USA:s ledande exportvaror. Och tack vare
     <b><i>Locktheon</i></b>s branschledande lobbyverksamhet, bryter 
-    Amerikas försvarsindustri ner handelsbarriärernna som en gång i tiden
+    Amerikas försvarsindustri ner handelsbarriärerna som en gång i tiden
     höll tillbaka Amerikansk konkurrenskraft genom att begränsa vad 
     Amerikas företag kunde sälja till smådiktaturer.
     <.p><b><i>Locktheon: Håller Amerika vid arbete</i></b>.  Amerika
     har världens starkaste, mest färgstarka frimarknadsekonomi, en 
-    ekonomi som bygger på unika amerikanska värdegrunder: en ekonomi byggd p
+    ekonomi som bygger på unika amerikanska värdegrunder: en ekonomi byggd 
     på unika amerikanska dygder: robust individualism,
     risktagande och ständig innovation. Men alla dessa dygder
     skulle inte betyda något utan den största amerikanska dygden av alla:
@@ -234,7 +233,7 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
     pengar på ost som den spenderar på bara en <b><i>Locktheon Liberation
     Star T-702GKV Global Kill Vehicle</i></b>, skulle den få tillräckligt med
     ost för att sträcka sig till månen och tillbaka---<i>sextiosju gånger</i>.
-    De logistiska problemen med lagring ensamt skulle lamslå USA:s
+    De logistiska problemen med enbart lagring skulle lamslå USA:s
     ekonomi. Men tack vare den branschledande dollarkostnadsdensiteten hos
     <b><i>Locktheon</i></b>s avancerade försvarssystem är lagringsutrymme
     aldrig ett problem.
@@ -245,7 +244,7 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
 ;
 
 ++ variousBrochures: Decoration
-    'diverse andra annan glansig+a rekrytering^s+broschyr+en*rekryteringsbroschyrer+na'
+    'diverse andra annan glansig+a rekryterings|broschyr+en*rekryterings|broschyrer+na'
     'andra broschyrer'
     "De har alla det där släta, glansiga utseendet av en årsredovisning.
     Ingen av dem ser särskilt intressant ut; bara en massa
@@ -273,14 +272,14 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
     isListedInContents = true
 ;
 + Decoration
-    'vit+a plast+iga träfaner skrivbord+et/topp+en*toppar+na möbler+na skrivborden+a' 'skrivborden'
-    "Skrivborden är ganska vanlig kontorsmöbel, träfaner
+    'vit+a plast+iga träfaner+iga skrivbord+et/topp+en*toppar+na möbler+na skrivborden+a' 'skrivborden'
+    "Skrivborden är ganska vanlig typ av kontorsmöbler, träfaner
     med vita plasttoppar. De är grupperade tillsammans på ena sidan
-    av rummet. Varje skrivbord är parat med en stol. "
+    av rummet. Varje skrivbord är parat ihop med en stol. "
     isPlural = true
 ;
 
-+ Decoration 'skrivbord:et^s+stol+en/kontor:et^s+stol+en*skrivbordsstolar+na*möbler+na' 'skrivbordsstolar'
++ Decoration 'skrivbords|stol+en/kontorsstol+en*skrivbords|stolar+na*möbler+na' 'skrivbordsstolar'
     "De är bara vanliga kontorsskrivbordsstolar. "
     isPlural = true
 ;
@@ -312,7 +311,7 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
     isListedInInventory = nil
 ;
 
-++ ccFolder: PresentLater, Thing 'manila+akt^s+mapp' 'manilamapp'
+++ ccFolder: PresentLater, Thing 'manila+akt^s+mapp+en/manila-|akt+en' 'manilamapp'
     "Det är en tunn manilaaktsmapp. "
 ;
 ++ HermitActorState
@@ -363,15 +362,15 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
         <q>Skulle ni två vara...</q> Hon letar i sin mapp
         ett ögonblick, sedan fortsätter hon, <q>Belker och Mittling?</q>
         <.p><q>Ja, jag är Frosst Belker,</q> säger Belker och sträcker fram
-        handen, som hon skakar raskt.
+        sin hand, som hon skakar raskt.
         <.p><q>Jag är Fru Dinsdale,</q> säger hon, <q>men ni kan kalla
         mig <q>frun.</q></q> Hon brister plötsligt ut i skratt,
         bokstavligen slår sig på knät och kastar huvudet bakåt, och
         sedan, lika plötsligt, är hon helt affärsmässig igen. <q>Nej, seriöst,
-        <q>Fru Dinsdale</q> duger bra.</q> Hon vänder sig mot dig.
-        <q>Och du skulle vara Mittling, från Omegatron?</q> "
+        <q>Fru Dinsdale</q> duger bra.</q> Hon vänder sig till dig.
+        <q>Och du är alltså Mittling, från Omegatron?</q> "
 
-    commonFollowup = "<.p>Hon tittar igen i sin mapp,
+    commonFollowup = "<.p>Hon tittar en gång till på sin mapp,
         talar medan hon bläddrar genom innehållet. <q>Och ni båda
         kom för att träffa Herr Stamer, ser jag.</q> Hon tittar upp och skakar
         på huvudet. <q>Tja,</q> säger hon i en irriterad ton, <q>skjut inte
@@ -380,6 +379,7 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
         göra, nämligen Ditch Day. Jag antar att ingen av er har
         hört talas om det förut?</q><.convnode cc-ditch> "
 ;
+// TODO... ovan
 +++ YesTopic
     "<q>Det stämmer,</q> säger du och skakar hennes hand.
     <<location.commonFollowup>> "
@@ -391,8 +391,8 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
     <<location.commonFollowup>> "
 ;
 +++ DefaultAnyTopic
-    "<q>Hoppsan, där, kompis,</q> säger Fru Dinsdale. <q>Låt oss se till
-    att vi har alla våra P och Q korsade och prickade här.
+    "<q>Lugna dig, min vän,</q> säger Fru Dinsdale. <q>
+    Låt oss se till att vi har alla detaljer på plats här.
     Du är Mittling, eller hur? Ja eller nej?</q><.convstay> "
 ;
 
@@ -400,20 +400,20 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
     commonFollowup()
     {
         "Denna <q>Ditch Day</q> skulle vara traditionen
-        där sistaårseleverna överger campus för dagen, ja?
-        Och lämnar efter sig alla möjliga kreativa pussel och utmaningar
-        som kallas, tror jag, <q>stacks,</q> hmm? Ah, och
-        underklassarna strävar alla efter att övervinna dessa utmaningar för att få
+        där sistaårseleverna överger campus för dagen, eller hur?
+        Och lämnar efter sig alla möjliga kreativa krypton och utmaningar
+        som kallas, tror jag, <q>staplar,</q> hmm? Ah, och
+        underklassarna strävar alla efter att klara dessa utmaningar för att få
         tillgång till sistaårselevernas rum. Är jag korrekt informerad?</q>
-        <.p><q>Japp,</q> säger Fru Dinsdale, <q>det är i princip det.</q>
-        <.p><q>Så,</q> säger Belker, <q>jag antar att vi ska boka nya
+        <.p><q>Japp,</q> säger Fru Dinsdale, <q>det är i princip så.</q>
+        <.p><q>Nåväl,</q> säger Belker, <q>jag antar att vi ska boka nya
         möten med Herr Stamer?</q>
         <.p>Fru Dinsdale kommer närmare, talar nästan konspiratoriskt.
-        <q>Låt mig säga er, om jag vore ni, och han drog något sådant här
-        med mig, skulle jag spola ner den lille skitungen. Titta på det här
-        meddelandet han lämnade till er och säg mig om det inte är
-        det mest arroganta ni någonsin sett.</q> Hon räcker en lapp
-        till Belker; han läser den snabbt och ger den till dig. 
+        <q>I ärlighetens namn, om jag vore ni, och han gjorde något sådant
+        mot mig, skulle jag spola ner den lille skitungen i toaletten. 
+        Titta på det här meddelandet han lämnade till er och säg mig om 
+        det inte är det mest arroganta ni någonsin sett.</q> Hon räcker 
+        en lapp till Belker; han läser den snabbt och ger den till dig. 
         <.reveal ditch-day-explained>
         <.convnode accept-stack-pre> ";
 
@@ -445,10 +445,10 @@ class RecruitingBrochure: Readable 'glansig+a rekrytering^s+broschyr+en*broschyr
     "<font face='tads-sans'>Kära Fru Dinsdale,
     <.p>Ursäkta att jag överraskar dig med detta utan förvarning, men jag har en ovanlig
     begäran för representanterna från Mitachron och Omegatron. Jag skulle vilja be dem
-    att försöka lösa min stack. Om de gör det, kommer jag att ta ett jobb
+    att försöka lösa min stapel. Om de gör det, kommer jag att ta ett jobb
     hos det vinnande företaget, förutsatt att de vill ge ett erbjudande. Förlåt
     om det verkar arrogant av mig att vilja intervjua intervjuarna på
-    det här sättet, men de flesta rekryterare jag har träffat hittills var inte tillräckligt
+    det här viset, men de flesta rekryterare jag har träffat hittills var inte tillräckligt
     tekniska för att kunna byta en glödlampa. Som du vet vill jag arbeta någonstans
     där jag kommer att vara omgiven av smarta människor, och jag tänkte att detta skulle vara
     ett bra filter.
@@ -506,7 +506,7 @@ class AcceptStackYes: SpecialTopic
 
          <q>Nej, seriöst, 
          vi har slut på kartor.  Hursomhelst.  Jag tror Ditch Day håller på 
-         till fem i eftermiddag until five PM, så du har en hel dag att 
+         till fem i eftermiddag, så du har en hel dag att 
          göra vad du vill.</q> Hon skakar på hennes huvud, rullar ögonen, 
          ger dig och Belker en ironisk salut och återvänder till sitt skrivbord
 
@@ -553,7 +553,7 @@ class AcceptStackNo: SpecialTopic, StopEventList
     secondResponse()
     {
         "Du tvekar igen; du känner att du är i en förlora-förlora
-        situation här. Att lösa Stamers Ditch Day-stack kunde vara
+        situation här. Att lösa Stamers Ditch Day-stapel kunde vara
         kul, men det verkar knappast som rätt sätt att genomföra en
         jobbintervju. Ändå är det svårt att bara gå, med tanke på
         hur gärna Rudy vill anställa Stamer.<.convstay> ";
@@ -565,8 +565,8 @@ class AcceptStackNo: SpecialTopic, StopEventList
         intervju,</q> säger du.
 
         <.p><q>Vill du verkligen komma tillbaka och prata med den här
-        förloraren?</q> frågar Fru Dinsdale. <q>Okej, om det är
-        vad du vill. Jag ska prata med Stamer för att boka en ny tid,
+        förloraren?</q> frågar Fru Dinsdale. <q>Okej, om det är vad 
+        du vill. Jag ska prata med Stamer för att boka en ny tid,
         och jag hör av mig.</q>
 
         <.p>Du har fortfarande några timmar kvar innan ditt flyg tillbaka, så
@@ -580,7 +580,7 @@ class AcceptStackNo: SpecialTopic, StopEventList
         Center-kontoret dig på ditt kontor för att meddela att
         Brian Stamer tog ett jobb hos Mitachron.
         <<laterMsg>>
-        Det är onödigt att säga att Carl och RudyB är mycket besvikna.
+        Det är behöver knappast sägas att Carl och RudyB är mycket besvikna.
         Det är inte som att de kommer att avskeda dig, men det är onekligen
         ännu ett eländigt misslyckande, och den här gången kan du inte undvika
         känslan av att det fanns mer du kunde ha gjort. ";
@@ -626,7 +626,7 @@ class AcceptStackNo: SpecialTopic, StopEventList
 ;
 +++ AcceptStackYes;
 +++ AcceptStackNo
-    laterMsg = "Belker måste ha kunnat lösa stacken, eller kanske
+    laterMsg = "Belker måste ha kunnat lösa stapeln, eller kanske
                 han bara gav Stamer ett bra erbjudande. "
 ;
 +++ DefaultAnyTopic
