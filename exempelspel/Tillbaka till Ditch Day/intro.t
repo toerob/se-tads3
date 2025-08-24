@@ -2266,7 +2266,7 @@ class TestableCircuit: object
  *   from us to the tester's secret interior container. 
  */
 ++ testerBackCover: ComponentDeferrer, ContainerDoor
-    'krets|testarens krets|provarens baklucka+n/baksida+n' 'baklucka'
+    'krets|testarens krets|provarens baklucka+n/baksida+n/bakstycke+t' 'baklucka'
     "Den är designad att ge serviceåtkomst till enhetens interna
     komponenter, och har de typiska varningsdekalerna.
     <<testerInterior.isOpen ? "Den är för närvarande öppen." : "">> "

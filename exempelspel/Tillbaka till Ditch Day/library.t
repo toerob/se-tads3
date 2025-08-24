@@ -182,7 +182,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
     'receptionist+en/doktorand+en/bibliotekarie+n/man+nen*män+nen' 'receptionist'
     "Receptionisten ser ut att vara en doktorand---i mitten av
     tjugoårsåldern, flanellskjorta, ungefär fyra dagar sedan han rakade sig.
-    Han studerar intensivt en tung-utseende lärobok. "
+    Han studerar intensivt en, till utseendet, tung lärobok. "
 
     isHim = true
 
@@ -237,8 +237,8 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
     omedelbart att det kanske var en okänslig fråga.
     <.p><q>För att killen som <i>borde</i> vara här är en
     grundstudent,</q> säger han. ',
-     'Han verkade lite känslig för ämnet, så kanske du inte borde
-     pressa det. ']
+     'Han verkade lite känslig för ämnet, så du kanske inte borde 
+     pressa honom. ']
 ;
 
 ++ AskTellTopic @stamerTopic
@@ -249,11 +249,11 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
 
 ++ AskTellTopic @researchReport
     "Du beskriver Brian Stamers forskningsrapport för bibliotekarien,
-    men han känner inte igen den. <q>Kanske om jag kunde se den,</q>
+    men han känner inte igen den. <q>Kanske om jag fick se den,</q>
     föreslår han. "
 ;
 ++ GiveShowTopic @researchReport
-    "Du räcker rapporten till bibliotekarien, och han ger den en snabb
+    "Du räcker över rapporten till bibliotekarien, och han ger den en snabb
     överblick. <q>QM,</q> säger han. <q>Tyvärr, det är inte min grej.
     Gravitation och kvantmekanik fungerar inte så bra ihop.</q> "
 ;
@@ -286,7 +286,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
 
 ++ AskTellTopic [drdUnbook, drdBook, drdTopic]
     "<q>Jag letar efter DRD-tabellerna,</q> säger du.
-    <.p><q>Låt se,</q> säger han. <q>Jag tror de är med fysikböckerna,
+    <.p><q>Få se nu,</q> säger han. <q>Jag tror de är med fysikböckerna,
     på sexan.</q> "
 ;
 
@@ -346,7 +346,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
 ;
 +++ AltTopic
     "Du håller fram ditt kort för receptionisten, men han ger det
-    bara en snabb blick innan han vinkar dig förbi. <q>Jag kommer fortfarande ihåg
+    bara en snabb blick innan han vinkar förbi dig. <q>Jag kommer fortfarande ihåg
     dig,</q> säger han. <q>Du kan gå upp.</q> "
     
     isActive = (!millikanLobby.needID)
@@ -437,12 +437,12 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
         "<q>Ursäkta,</q> säger receptionisten. <q>Jag behöver se
         ditt ID först.</q>
         <.p>Han ser inte ut som någon som skulle försöka fysiskt
-        hindra dig, men han skulle utan tvekan ringa Säkerheten om du
+        hindra dig, men han skulle utan tvekan ringa säkerhetsvakten om du
         trängde dig förbi honom. ";
     }
 ;
 
-+ Readable, Fixture 'våning^s+förteckning+en/katalog+en' 'våningsförteckning'
++ Readable, Fixture 'vånings|förteckning+en/katalog+en' 'våningsförteckning'
     "Skylten listar ämnesområdena på varje våning:
     <.p>
     <.blockquote>
@@ -467,7 +467,7 @@ millikanElevator: Elevator, Room 'Hiss' 'hissen'
     knappar numrerade från 1 till 9, och ovanför knapparna finns en
     digital display som för närvarande visar <q><<getFloorName()>>.</q> "
 
-    vocabWords = 'hiss/lift'
+    vocabWords = 'hiss+en/lift+en'
 
     south = meDoors
     out asExit(south)
@@ -576,9 +576,9 @@ class LibRoom: Room
 ;
 
 travelIntoStacks: FakeConnector
-    "Om du skulle låta dig börja bläddra, är chansen stor att du skulle
-    bli uppslukad och spendera hela dagen här. Du bör förmodligen försöka
-    begränsa dig till endast specifika saker du behöver slå upp. "
+    "Om du skulle tillåta dig att börja bläddra, är risken stor att du skulle
+    bli helt uppslukad och spendera resten av dagen här. Du bör förmodligen försöka
+    begränsa dig till endast specifika saker som du behöver slå upp. "
 ;
 
 /* 
@@ -600,7 +600,7 @@ class LibBookColl: object
             if (!bookBelongs(gDobj))
             {
                 "Det hör inte hemma här; det skulle inte vara särskilt hänsynsfullt
-                att röra till bibliotekets organisation på det sättet. ";
+                att röra till i bibliotekets ordning på det sättet. ";
                 exit;
             }
         }
@@ -637,11 +637,11 @@ class LibShelves: LibBookColl, Consultable, Fixture, Surface
 
     /* rank this low for LOOK IN, in case there's anything better */
     dobjFor(LookIn) { verify() { logicalRank(50, 'decoration'); } }
-    lookInDesc = "Du kan inte låta dig sugas in i att bläddra;
-        du skulle troligen vara här hela dagen. Lyckligtvis är böckerna
+    lookInDesc = "Du kan inte tillåta dig att bli uppslukad i att bläddra;
+        du skulle förmodligen blir kvar här hela dagen. Lyckligtvis är böckerna
         välorganiserade, så du kan förmodligen hitta allt specifikt
-        du behöver slå upp utan alltför stor risk för
-        oändlig-tidsfördriv-problemet. "
+        du behöver slå upp utan alltför stor risk för att fastna i 
+        oändliga-tidsfördriv-problemet. "
 
     topicNotFound() { "Du tror att du har förstått organisationsschemat
         som bibliotekarierna använder här, men du kan inte hitta
@@ -680,8 +680,9 @@ class LibShelfBooks: Consultable, Fixture, Readable
     dobjFor(Move)
     {
         verify() { }
-        action() { "Du gör några små justeringar av
-            böckerna för att ställa dem lite prydligare. "; }
+        action() { 
+            "Du gör några små justeringar av böckerna för 
+            att rada upp dem lite snyggare."; }
     }
     dobjFor(Turn) asDobjFor(Move)
     dobjFor(Pull) asDobjFor(Move)
@@ -697,8 +698,8 @@ class LibShelfBooks: Consultable, Fixture, Readable
  *   VOLUME 7 IN QUANTUM REVIEW LETTERS, for example 
  */
 class LibShelfColl: DisambigDeferrer, Consultable, SecretFixture
-    cannotTakeMsg = 'Hela samlingen är för stor för att bära. '
-    cannotMoveMsg = 'Hela samlingen är för stor för att flytta. '
+    cannotTakeMsg = 'Samlingen i sin helhet är för stor för att bära. '
+    cannotMoveMsg = 'Samlingen i sin helhet är för stor för att flytta. '
     cannotPutMsg = (cannotMoveMsg)
 
     topicNotFound() { "Du ser inte det numret. "; }
@@ -709,7 +710,7 @@ class LibShelfColl: DisambigDeferrer, Consultable, SecretFixture
 
     dobjFor(Read)
     {
-        action() { "Det skulle ta veckor, kanske månader, att läsa
+        action() { "Det skulle ta veckor, kanske månader, att läsa igenom 
             hela samlingen. "; }
     }
 
@@ -820,7 +821,7 @@ class LibBookTopic: ConsultTopic
              *   it in fact succeeded) 
              */
             "Du skannar genom hyllorna och hittar vad du
-            letar efter: <<myBook.theName>>. ";
+            söker efter: <<myBook.theName>>. ";
 
             /* take it */
             nestedAction(Take, myBook);
@@ -920,7 +921,7 @@ millikan2: LibRoom
  */
 ++ ConsultTopic +110 [sAndPTopic, sAndPs]
     "Du hittar en samling av <i>Vetenskap &amp; Framsteg</i> som sträcker sig
-    flera årtionden tillbaka. De är alla ordnade i ordning, så det skulle vara
+    flera årtionden tillbaka. De är alla i ordning, så det skulle vara
     lätt att hitta ett nummer om du vet numret."
 ;
 
@@ -944,7 +945,7 @@ class SAndPEntry: LibBookTopic @sAndP3Topic
 
 /* an Unbook for the P&S, in case we try to take it before finding it */
 ++ LibUnbook
-    'vetenskap & framsteg vetenskap&framsteg v&f nummer numret utgåva+n
+    'vetenskap & framsteg vetenskap&framsteg v&f num:mer+ret utgåva+n
     xlvi-3/tidskrift+en'
 ;
 
@@ -953,7 +954,7 @@ class SAndPEntry: LibBookTopic @sAndP3Topic
  *   into existence when we look it up successfully 
  */
 ++ sAndP: PresentLater, LibBook
-    'vetenskap & framsteg vetenskap&framsteg v&f tidskrift+en nummer numret utgåva+n
+    'vetenskap & framsteg vetenskap&framsteg v&f tidskrift+en num:mer+ret utgåva+n
     xlvi-3/tidskrift+en'
     '<i>Vetenskap &amp; Framsteg</i> nummer XLVI-3'
     "<i>V&amp;F</i> är en av dina favoriter, åtminstone när du kan hitta
@@ -972,27 +973,27 @@ class SAndPEntry: LibBookTopic @sAndP3Topic
         i huvudsak är vad du lärde dig i Fysik 2. En viktig del av
         Köpenhamnsdoktrinen är idén att ett kvantsystem utvecklas på
         sitt bisarra kvantvis tills någon observerar systemet, vid
-        vilken punkt den kvantmekaniska vågfunktionen <q>kollapsar</q>
+        vilken tidpunkt den kvantmekaniska vågfunktionen <q>kollapsar</q>
         och systemet blir klassiskt deterministiskt. Problemet,
-        verkar det som, är att det inte finns någon rigorös definition av vad det betyder
-        att <q>observera</q> systemet.
+        verkar det som, är att det inte finns någon rigorös definition av 
+        vad det betyder att <q>observera</q> systemet.
         <.p><q>En idé är att en medveten observatör krävs, men de flesta
         forskare gillar inte denna eftersom den bara ersätter en
         illa definierad term med en ännu sämre definierad, och dessutom
         luktar det metafysik. Den vanliga uppfattningen är att interaktion
         med <q>bulkmateria</q> är vad som utgör en mätning. Det
         låter åtminstone som en solid, okomplicerad, vetenskaplig definition,
-        men det är fortfarande lite av en undanflykt: pratar vi om ett dussin atomer eller
-        en kvadriljon? Ingen kan säga. Och många nya experiment
-        ifrågasätter hela idén genom att visa att vissa exotiska
+        men det är fortfarande lite av en undanflykt: pratar vi om ett dussin 
+        atomer eller en kvadriljon? Ingen kan svara. Och många nya 
+        experiment ifrågasätter hela idén genom att visa att vissa exotiska
         typer av stora ensemblesystem kan uppvisa kvantbeteende under
         långa perioder, så enbart <q>bulk</q> kan inte vara nyckeln.</q>
         <.p>Artikeln påpekar att de flesta forskare är villiga att leva
         med en luddig definition i en teori som är så empiriskt framgångsrik,
-        men några fysiker finner det tillräckligt bekymmersamt för att leta efter ett bättre
-        svar på denna nyckelfråga. Artikeln undersöker några av de
-        föreslagna alternativen till Köpenhamnstolkningen, med
-        namn som Många Världar, Dolda Variabler och Transaktionell.
+        men några fysiker finner det tillräckligt bekymmersamt för att leta 
+        efter ett bättre svar på denna nyckelfråga. Artikeln undersöker 
+        några av de föreslagna alternativen till Köpenhamnstolkningen, 
+        med namn som Många Världar, Dolda Variabler och Transaktionell.
         Den talar också om några lovande nya arbeten som ramar in
         kvant/klassisk-övergången i termer av <q>dekoherens</q>
         av vågfunktionen. Denna idé är baserad på vågteori som
@@ -1099,7 +1100,7 @@ millikan3: LibRoom
 ;
 
 /* an Unbook for the Morgen text */
-++ morgenUnbook: LibUnbook 'yves morgen elektronisk elektronik föreläsningar elektronik+bok+en/lärobok+en'
+++ morgenUnbook: LibUnbook 'yves morgen elektronisk föreläsningar elektronik+bok+en/lärobok+en'
     'Morgens lärobok'
 ;
 
@@ -1174,10 +1175,10 @@ millikan3: LibRoom
     floorNum = 3
 
     /* a score marker for getting the recommendation for this book */
-    recMarker: Achievement { +2 "få en rekommendation för en EE-bok" }
+    recMarker: Achievement { +2 "få en rekommendation av en EE-bok" }
 
     /* a score marker for finding the book */
-    readMarker: Achievement { +1 "läst EE läroboken" }
+    readMarker: Achievement { +1 "läst EE-läroboken" }
 ;
 
 /* 
@@ -1227,7 +1228,7 @@ millikan3: LibRoom
 +++ ConsultTopic @videoAmpTopic
     "Du hittar en labbövning om videoförstärkare och skummar igenom den
     snabbt. Det är bra att veta att den finns här ifall du behöver
-    detaljer om den här typen av saker vid något tillfälle."
+    detaljer om den här typen av saker vid något annat tillfälle."
 ;
 ++++ AltTopic, StopEventList
     ['Du hittar en hel labbövning om videoförstärkare. Du går igenom
@@ -1343,15 +1344,16 @@ millikan6: LibRoom
  *   matches that have specific issue numbers. 
  */
 ++ ConsultTopic +110 [qrlTopic, qrls]
-    "Du hittar där de förvarar samlingen av <i>Quantum Review
-    Letters</i>---hyllor och hyllor och hyllor av dem.
+    "Du hittar var de förvarar samlingen av <i>Quantum Review
+    Letters</i>---hyllor, hyllor och åter hyllor av dem.
     De är alla prydligt organiserade, så det skulle vara lätt
     att hitta ett specifikt nummer."
 ;
 ++ ConsultTopic +109 [qrlVolumeTopic, qrls]
-    "Du hittar där de förvarar <i>Quantum Review Letters</i>-samlingen,
+    "Du hittar var de förvarar <i>Quantum Review Letters</i>-samlingen,
     och du hittar rätt volym, men det finns många enskilda nummer.
-    De är prydligt organiserade, så det skulle vara lätt att hitta ett specifikt nummer."
+    De är prydligt organiserade, så det skulle vara lätt 
+    att hitta ett specifikt nummer."
 ;
 
 /* 
@@ -1416,8 +1418,8 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
         kommer interaktioner med dess omgivning att orsaka <q>dekoherens,</q>
         vilket förstör kvanteffekterna. Ännu mer problematiskt är
         självinteraktionen som uppstår när man skalar upp en kvantdator
-        till den punkt där den kan utföra användbara beräkningar i verkliga världen:
-        datorns kvantelement börjar faktiskt interagera med
+        till den punkt där den kan utföra användbara beräkningar i verkliga 
+        världen: datorns kvantelement börjar faktiskt interagera med
         varandra tillräckligt starkt för att orsaka dekoherens.
         <.p>Huvuddelen av artikeln föreslår några sätt att kringgå
         självinteraktionsproblemet, genom att anta några av de egenskaper hos
@@ -1426,7 +1428,7 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
         felkorrigerande koder, så att en förlust av koherens i en del
         av systemet kan kompenseras av de andra delarna. Ett annat
         förslag---och detta fångar din uppmärksamhet, eftersom Stamers uppsats
-        hade detta i titeln---är att <q>spindekorrelerande</q> kan
+        hade detta i titeln---är att <q>spinn-dekorrelation</q> kan
         användas för att delvis isolera systemet internt och från dess
         omgivning. Artikeln börjar med tät matematik vid den punkten,
         så du skummar mest över resten.
@@ -1464,7 +1466,7 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
         av Icke-dekoherenta Heterogena Bulkensembler.</q>
         <.p>Artikeln talar om ett antal möjliga tillämpningar
         av dekoherenssuppression, men huvudpoängen är att det
-        skulle kunna ge en helt ny approach för att bygga kvantdatorer.
+        skulle kunna ge ett helt ny tillvägagångssätt att bygga kvantdatorer.
         <.p><q>I princip, om vi lyckas undertrycka
         dekoherens i bulkmateria, skulle vi kunna skapa en effektiv
         kvantdator som en superposition av tillstånd hos en
@@ -1474,8 +1476,8 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
         en serie unitära transformationer. I den slutliga tillståndsvektorn
         måste komponenterna som representerar felaktiga resultat ta ut varandra,
         och det korrekta resultatet måste förstärkas via konstruktiv
-        interferens... Att mappa en konventionell algoritm till vår hybrid
-        kvant-konventionella dator är förvånansvärt enkelt,
+        interferens... Att mappa en konventionell algoritm till vår hybrid av
+        kvant/konventionella dator är förvånansvärt enkelt,
         som vi kommer att visa...</q>
         <.p>Artikeln går igenom ett utförligt exempel som visar hur
         man använder tekniken för att hitta primfaktorerna av ett stort
@@ -1589,7 +1591,7 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
     'drd matte matematik matematisk+a funktion+en/tabell+en/handbok+en/bok+en*funktioner+na böcker+na tabeller+na'
     'DRD Handbok'
     "<i>DRD Handbok över matematiska funktioner</i> var en ständig
-    följeslagare under dina tredje och fjärde år. Den är full av tabeller med
+    följeslagare under ditt tredje och fjärde år. Den är full av tabeller med
     förberäknade värden för obskyra funktioner som inte ens de mest
     avancerade räknare täcker. Det är en extremt tjock bok,
     men den är indexerad för enkel referens till specifika funktioner. "
@@ -1617,10 +1619,10 @@ class Qrl739aEntry: LibBookTopic @qrl739aTopic
     reduceras analytiskt, så den måste beräknas numeriskt (t.ex. med
     Taylorserie). Tyvärr konvergerar alla kända serierepresentationer
     extremt långsamt, så funktionen är beräkningsmässigt
-    ohanterlig för stora <i>n</i>. Vid tiden för detta skrivande
+    ohanterlig för stora <i>n</i>. I skrivande stund 
     (<<getTime(GetTimeDateAndTime)[1]-1>>), har Hovarthtalen
     upp till ungefär <i>n</i> = 300 000 beräknats. Värden upp till
-    <i>n</i> = 2 000 är tabulerade nedan.
+    <i>n</i> = 2 000 är tabellerade nedan.
     <./blockquote>
     <.p>Under introduktionen ges den allmänna formeln för familjen
     av funktioner, och sedan de specifika formlerna för några

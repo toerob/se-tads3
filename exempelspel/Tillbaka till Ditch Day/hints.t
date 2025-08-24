@@ -25,7 +25,7 @@ topHintMenu: TopHintMenu
     '''Det är svårt att ge bra tips för IF-spel. Tips kan förstöra
     nöjet om de avslöjar för mycket, men samtidigt är det
     frustrerande att fastna. Vi har försökt hitta en balans här
-    genom att ge dig kontroll över hur starkt ett tips du får.
+    genom att ge dig kontroll över hur avslöjande tips du får.
     <.p>
     Tips presenteras i ett fråga-och-svar-format, med
     frågorna grupperade i berättelseområden. För att undvika att avslöja potentiella
@@ -37,22 +37,21 @@ topHintMenu: TopHintMenu
     en lista med frågor. Välj den fråga som ligger närmast det du
     försöker lista ut, och spelet kommer att börja visa dig
     tips för den frågan, ett tips i taget. Det första tipset
-    eller två kommer att vara mycket vaga och allmänna och kommer vanligtvis inte att ge
-    bort något. Varje ytterligare tips blir mer specifikt, och
+    eller två kommer att vara mycket vaga och allmänna och kommer vanligtvis inte att 
+    avslöja något. Varje påföljande tips blir mer specifikt, och
     det sista tipset för varje fråga ger vanligtvis den exakta lösningen.
-    Du kan sluta efter vilket tips som helst---tryck bara på <b>Q</b> så kommer du att
-    återvändas till berättelsen. Försök att sluta vid det första tipset som ger
+    Du kan avbryta efter vilket tips som helst---tryck bara på <b>Q</b> så kommer du att
+    återvända till berättelsen. Försök att avbryta vid det första tipset som ger
     dig några nya idéer, för att undvika att avslöja för mycket på en gång; du kan
-    alltid komma tillbaka till samma ämne senare och se fler tips om
-    du behöver det.
+    alltid återvända till samma ämne senare och se fler tips om du skulle behöva.
     <.p>
     Var medveten om att de flesta människor njuter mycket mer av IF när de löser alla
-    pussel själva, utan några tips. Jag har försökt att
-    designa pusslen i det här spelet för att vara rättvisa, så att de flesta spelare
-    kan hålla berättelsen i rörelse utan några omöjliga logiska hopp,
+    problem själva, utan några tips. Jag har försökt att
+    utforma problemen i det här spelet så att de är rättvisa, så att de flesta spelare
+    kan hålla igång berättelsen utan att behöva göra några omöjliga logiska språng,
     slumpmässiga gissningar eller telepatiska bedrifter (det vill säga att läsa
-    författarens tankar). Om du ändå fastnar fruktansvärt, finns tipsen
-    här för dig; kom bara ihåg att tips hör hemma högst upp
+    författarens tankar). Om du ändå fastnar ordentligt, så finns tipsen
+    här; kom bara ihåg att tips hör hemma högst upp
     på IF:s kostpyramid---<q>använd sparsamt.</q> '''
 
     /* make sure this is the first item in the menu */
@@ -60,32 +59,33 @@ topHintMenu: TopHintMenu
 ;
 
 + HintLongTopicItem 'Några Ord på Vägen'
-    '''Det här spelet är utformat för att vara roligt att spela, inte för att frustrera dig.
+    '''Detta spel är utformat för att vara roligt att spela, 
+    inte för att frustrera dig.
     Om du har spelat andra textäventyr, särskilt äldre
     <q>klassiska</q> spel, kanske du har fått intrycket att
-    IF-författare tar grym glädje i att förvirra spelare och slumpmässigt
-    döda huvudkaraktärer. Vissa gör det säkert, men det här är inte
-    den typen av spel.
+    IF-författare känner en grym glädje av att förvirra spelare 
+    och slumpmässigt döda huvudkaraktärer. Vissa gör säkert det, 
+    men det här är inte den typen av spel.
     <.p>
     Det finns två saker jag vill att du ska veta och ha i åtanke
     medan du spelar.
     <.p>
     För det första kan du stöta på en del ingenjörs- och fysikjargong
     under spelets gång. Låt det inte skrämma dig---tänk bara
-    på det som <q>teknobabbel,</q> på samma sätt som de alltid pratar om
+    på det som <q>teknikbabbel,</q> på samma sätt som de alltid pratar om
     att <q>nutrera sköldens harmonier</q> och liknande i <i>Star
-    Trek</i>. Du behöver ingen bakgrund i fysik för att spela - faktiskt
-    är du förmodligen bättre utan det, eftersom <q>vetenskapen</q>
+    Trek</i>. Du behöver ingen bakgrund i fysik för att spela - 
+    förmodligen klarar du dig bättre utan det, eftersom <q>vetenskapen</q>
     i berättelsen mestadels är påhittad ändå. Du kan lita på att din
-    karaktär kommer att lista ut saker och fylla i dig.
+    karaktär kommer att lista ut saker själv och fylla i dina egna luckor.
     <.p>
     För det andra behöver du inte oroa dig för att <q>förlora</q> spelet.
     Det finns inga slumpmässiga dödsfall för huvudkaraktären, och det
     borde inte finnas något sätt att göra spelet omöjligt att vinna. Du behöver inte
-    oroa dig för att en till synes oskyldig handling visar sig,
+    oroa dig för att en till synes oskyldig handling ska visa sig,
     timmar senare, ha förstört spelet. Så känn dig fri att utforska
-    och experimentera---oavsett vad du gör bör spelet alltid
-    förbli möjligt att vinna. '''
+    och experimentera---oavsett vad du än gör bör spelet alltid
+    vara möjligt att klara. '''
 
     /* keep this just after the 'hint system overview' topic */
     topicOrder = 10
@@ -101,7 +101,7 @@ topHintMenu: TopHintMenu
 ;
 
 ++ Goal 'Vad har detta med Ditch Day att göra?'
-    ['''Oroa dig inte; du kommer till den delen snart nog.''']
+    ['''Oroa dig inte; du kommer till den delen tids nog.''']
     goalState = OpenGoal
 
     /* stop showing this hint as soon as we get the ditch day lecture */
@@ -132,7 +132,7 @@ topHintMenu: TopHintMenu
 ++ Goal ->(scu1100dx.scoreMarker)
     'Vad ska jag göra?'
     ['''Du är här för att ge kunden en demonstration av SCU-1100DX.''',
-     '''Du kan inte demonstrera den förrän du får den att fungera.''',
+     '''Du kan inte visa upp den förrän du får den att fungera.''',
      'Du måste reparera SCU-1100DX.']
 
     /* make this goal open from the start of the game */
@@ -171,7 +171,7 @@ topHintMenu: TopHintMenu
  *   more goals that we need to mark as open as soon as we show this hint.
  */
 +++ hint772lv: Hint
-    hintText = 'Du behöver ersätta XT772-HV med en XT772-LV.'
+    hintText = 'Du behöver ersätta XT772-HV med ett XT772-LV.'
     referencedGoals = [goal772lv]
 ;
 
@@ -183,7 +183,7 @@ topHintMenu: TopHintMenu
  */
 ++ goal772lv: Goal ->(scu1100dx.scoreMarker)
     'Var kan jag hitta en XT772-LV?'
-    ['Har du tittat noga på allt här?',
+    ['Har du tittat noga på allting här?',
      'Har du tittat noga på din egen utrustning?',
      'Har du tittat noga på din kretsprovare?',
      'Läste du varningsetiketterna?',
@@ -248,7 +248,7 @@ topHintMenu: TopHintMenu
      'Vad sägs om servicepanelen?',
      'Kanske du kan fly genom servicepanelen.',
      'Det enda problemet är att servicepanelen är för högt upp för att nå.',
-     '''Kanske finns det något du kan stå på, eller något du
+     '''Kanske det finns något du kan stå på, eller något du
      kan klättra på.''',
      'Försök stå på ledstången, eller klättra på grinden.',
      '''Att stå på ledstången och klättra på grinden fungerar inte,
@@ -301,14 +301,14 @@ topHintMenu: TopHintMenu
     ['''Campus har ganska många platser. Om du inte är säker
     på vad du ska göra härnäst, kanske du vill spendera lite tid
     på att vandra runt och utforska. De flesta byggnaderna är inte
-    för stora inuti, men ett par---särskilt Dabney
-    House---är stora nog att du kanske vill göra en karta.''']
+    särskilt stora inuti, men ett par---särskilt Dabney
+    House---är så pass stora att du kanske vill göra en karta.''']
 
     openWhenSeen = spWalkway
 ;
 
 ++ Goal 'Vad gör jag på Caltech?'
-    ['''Du är här för att intervjua en student för ett jobb på ditt företag.''']
+    ['''Du är här för att intervjua en student inför ett jobb på ditt företag.''']
 
     openWhenSeen = sanPasqual
 ;

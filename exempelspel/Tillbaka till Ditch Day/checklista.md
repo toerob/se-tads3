@@ -100,10 +100,10 @@ TODO: Ditchday-stack  - stapelutmaning, stapel
 [] dabney
 [] stack
 [] synclab
-[] library
-[] hints
+[X] library
+[316] hints
 [X] elev
-[] bookstore
+[X] bookstore
 [X] career
 [X] frosst
 [X] jay
