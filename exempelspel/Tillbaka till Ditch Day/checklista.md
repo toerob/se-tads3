@@ -98,10 +98,10 @@ TODO: Ditchday-stack  - stapelutmaning, stapel
 [] bridge
 [X] intro
 [] dabney
-[] stack
-[] synclab
+[371/3061] stack
+[X] synclab
 [X] library
-[316] hints
+[X] hints
 [X] elev
 [X] bookstore
 [X] career
@@ -121,3 +121,5 @@ TODO: Ditchday-stack  - stapelutmaning, stapel
 
 
 TODO: Flytta till eget repo, eller in i se-tads3
+TODO: Behåll alla hovse 
+TODO: jmf mail i synclab en gång till.

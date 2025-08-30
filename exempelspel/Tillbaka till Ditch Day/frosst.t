@@ -418,7 +418,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
 ++ NoTopic
     "<q>Nej, det tror jag inte,</q> säger du, i hopp om att hjälpa Xojo undvika
     att hamna i trubbel.
-    <.p>Frosst pausar och ler svagt. <q>Kanske du är nyfiken
+    <.p>Frosst pausar och ler svagt. <q>Du kanske är nyfiken
     på våra framsteg då. Jag beklagar att jag måste insistera på en viss
     grad av sekretess på grund av vår vänskapliga rivalitet; jag är säker på att du
     förstår.</q> Han tittar på Xojo, som långsamt smyger iväg.

@@ -223,7 +223,7 @@ class ForbiddenDoor: Door
  *   these are just forbidden doors, since they're private rooms we don't
  *   want to enter uninvited.  
  */
-class AlleyDoor: ForbiddenDoor 'trä rum^s+dörr+en/trä+dörr+en*trä+dörrar+na'
+class AlleyDoor: ForbiddenDoor 'trä rums|dörr+en/trä|dörr+en*trä|dörrar+na'
     cannotEnter = "Det där är någons privata rum - du vill inte
         gå in oinbjuden. "
 
@@ -239,12 +239,12 @@ class StackDoor: AlleyDoor
     cannotEnter()
     {
         if (isSolved)
-            "Även om du lyckades lösa stacken, skulle du inte
+            "Även om du lyckades lösa stapeln, skulle du inte
             känna dig rätt att förstöra det för studenterna. Dessutom,
             <q>mutorna</q> som de flesta seniorer lämnar som belöning för att bryta
             deras stacks är bara en massa skräpmat. ";
         else
-            "Du kan inte gå in förrän stacken är löst. ";
+            "Du kan inte gå in förrän stapeln är löst. ";
     }
     
     dobjFor(Knock) { action() { "Du knackar, men det kommer inget svar.
@@ -851,13 +851,13 @@ dabneyDining: Room 'Matsal' 'matsalen'
                 "Du tillbringar ungefär en timme i lugn och ro med att 
                 äta lunch och prata med Aaron och Erin. Så småningom 
                 börjar matsalen att tömmas, och Aaron nämner att han 
-                och Erin behöver gå tillbaka till sin stack. Du äter 
+                och Erin behöver gå tillbaka till sin stapel. Du äter 
                 upp de ätbara delarna av din lunch och lämnar din 
                 bricka.";
             else
                 "Lunchen har hållit på att avslutas ett tag nu, och
                 matsalen har börjat tömmas. Aaron nämner
-                att han och Erin behöver återvända till sin stack, så
+                att han och Erin behöver återvända till sin stapel, så
                 du äter upp de ätbara delarna av din lunch och lämnar
                 in din bricka. ";
 
@@ -1142,7 +1142,7 @@ dabneyCourtyardAlcove: Room 'Flipperspelsrum' 'flipperspelsrummet'
     {
         if (gRevealed('need-ee-practice') && practiceNoteCount++ == 0)
             "<.p>Det här kan vara precis den sortens sak du behöver
-            för att komma i form igen för att arbeta på Brians stack. Dessa
+            för att komma i form igen för att arbeta på Brians stapel. Dessa
             gamla videospel är ganska lågteknologiska, så du borde inte ha
             för mycket problem att hitta runt i det. ";
     }
@@ -1496,7 +1496,7 @@ class PosElectricalPart: TestGearAttachable
             "Eftersom spelets display inte visar något,
             bestämmer du dig för att börja med videoförstärkarna. Det skulle
             vara trevligt att ha ett schema, men du tänker att
-            det faktiskt är bättre övning för Stamers stack utan
+            det faktiskt är bättre övning för Stamers stapel utan
             dem.<.p> ";
 
             /* advance to the video amp trace level */
@@ -1670,7 +1670,7 @@ class PosElectricalPart: TestGearAttachable
         med de blandade reservdelarna. '; }
 
     lookInDesc = "Påsen är full av slumpmässiga reservdelar. Om du
-        behövde en specifik del, kanske du skulle kunna hitta den om
+        behövde en specifik del, du kanske skulle kunna hitta den om
         du letade efter den. "
 
     /* GET X FROM BAG -> SEARCH BAG FOR X */
@@ -1697,7 +1697,7 @@ class PosElectricalPart: TestGearAttachable
                 /* we don't even know what we need yet */
                 "Påsen är full av slumpmässiga reservdelar. Om du lyckas
                 spåra problemet med Positron till en specifik
-                dålig del, kanske du kan hitta en ersättning här. ";
+                dålig del, du kanske kan hitta en ersättning här. ";
             }
             else if (goodXtal.location == nil)
             {
@@ -1723,7 +1723,7 @@ class PosElectricalPart: TestGearAttachable
 
     cannotTakeMsg = 'Det finns många delar här, så det är bättre
         att hålla dem tillsammans i påsen. Om du behövde en specifik
-        del, kanske du skulle kunna hitta den om du letade efter den. '
+        del, du kanske skulle kunna hitta den om du letade efter den. '
 
     /* show a special description in our immediate container only */
     useSpecialDescInRoom(room) { return nil; }
@@ -1940,7 +1940,7 @@ alley3E: AlleyRoom 'Gränd Tre Öst' 'östra änden av Gränd Tre'
         Jorden, och Under mitt Välvilliga Styre kommer vi att skapa ett
         Sant paradis för Människa och Kyckling alike.&rdquo;
         </i>
-        <.p>Det fortsätter så här och lägger fram reglerna för stacken.
+        <.p>Det fortsätter så här och lägger fram reglerna för stapeln.
         Det verkar som att stackdeltagarna måste <q>bli</q> jätte-
         kycklingar med hjälp av Chickenatorn, och sedan utföra ett antal
         uppdrag som en del av Super-Kyckling Armén---i princip en
@@ -2013,7 +2013,7 @@ class ChickenActorState: ActorState
 ;
 +++ AskTellShowTopic, StopEventList
     [stackTopic, chickenSuit, chickenator, chickenNotebook, superChickens]
-    ['<q>Så hur fungerar den här stacken?</q> frågar du genom dräkten.
+    ['<q>Så hur fungerar den här stapeln?</q> frågar du genom dräkten.
     <.p><q>Vi är super-kyckling armén!</q> säger en av kycklingarna.
     <q>Vi är på ett uppdrag från Dr. von Geflügel!</q> ',
 
@@ -2021,7 +2021,7 @@ class ChickenActorState: ActorState
      <.p><q>Det fanns ungefär åtta fjäderfäformiga matrixerare när vi
      började,</q> säger en av kycklingarna. ',
 
-     '<q>Hur går det med stacken?</q> frågar du.
+     '<q>Hur går det med stapeln?</q> frågar du.
      <.p>Kycklingarna rådgör. <q>Super-kyckling armén gör
      utmärkta framsteg!</q> säger en av dem. ']
 ;
@@ -2126,9 +2126,9 @@ class ChickenActorState: ActorState
     isActive = gRevealed('positron-repaired')
 ;
 ++ DefaultAnyTopic, ShuffledEventList
-    ['<q>Jag är lite upptagen med stacken,</q> säger Scott. ',
+    ['<q>Jag är lite upptagen med stapeln,</q> säger Scott. ',
      'Scott bara kacklar. ',
-     'Han verkar upptagen med stacken. ']
+     'Han verkar upptagen med stapeln. ']
 ;
 ++ ConvNode 'repair-positron';
 +++ SpecialTopic 'fråga vad som är fel med den'
@@ -2171,7 +2171,7 @@ class ChickenActorState: ActorState
     <<location.commonReply>> "
 ;
 ++ ConvNode 'why-repair'
-    commonReply = "<q>Jag jobbar med Brian Stamers stack,</q> säger du.
+    commonReply = "<q>Jag jobbar med Brian Stamers stapel,</q> säger du.
         <q>Det är någon sorts elektronisk felsökningspussel, och jag behöver
         verkligen öva på något enklare innan jag tar mig an det.</q>
         <.p><q>Öva?</q> Han låter lite irriterad. <q>Du vill
@@ -2179,8 +2179,8 @@ class ChickenActorState: ActorState
         och allt, men hur vet jag att du inte kommer att göra det värre?</q>
         <.convnode why-not-worse> "
 ;
-+++ SpecialTopic 'förklara Stamers stack'
-    ['förklara','om','hur','brian','stamers','stack', 'stacken','fungerar']
++++ SpecialTopic 'förklara Stamers stapel'
+    ['förklara','om','hur','brian','stamers','stack', 'stapeln','fungerar']
     "<<location.commonReply>> "
 ;
 +++ SpecialTopic 'säg att du behöver öva'
@@ -2358,7 +2358,7 @@ class HookContentsLister: object
             {
                 "Det är för svårt att se vart du går i
                 kycklingdräkten. Om du skulle lämna gränden
-                kanske du inte kan hitta tillbaka. ";
+                du kanske inte kan hitta tillbaka. ";
                 exit;
             }
             else
@@ -2375,7 +2375,7 @@ class HookContentsLister: object
         {
             if (!isIn(insideChickenator))
             {
-                "Du borde verkligen följa med i stacken och
+                "Du borde verkligen följa med i stapeln och
                 använda Chickenatorn för att göra transformationen. ";
                 exit;
             }
@@ -2425,7 +2425,7 @@ class HookContentsLister: object
         {
             if (!isIn(insideChickenator))
             {
-                "Du borde verkligen följa med i stacken och använda
+                "Du borde verkligen följa med i stapeln och använda
                 Chickenatorn för att transformera tillbaka till människa. ";
                 exit;
             }
@@ -2607,7 +2607,7 @@ class TurboPowerAnimal: Thing
         /* don't allow these to be taken when on the alley 4 table */
         if (isIn(a4Table))
         {
-            "Actionfiguren är viktig för stacken; du vill inte
+            "Actionfiguren är viktig för stapeln; du vill inte
             störa. ";
             exit;
         }
@@ -2703,14 +2703,14 @@ class TurboPowerAnimal: Thing
 
 ++ AskTellShowTopic
     [stackTopic, a4Materials, a4Envelopes, a4Map, turboTopic]
-    "<q>Vilken stack arbetar ni med?</q> frågar du.
+    "<q>Vilken stapel arbetar ni med?</q> frågar du.
     <.p>En av dem pekar ner i korridoren västerut. <q>
-    Turbo Power Animals-stacken. Du bör läsa skylten nere i
+    Turbo Power Animals-stapeln. Du bör läsa skylten nere i
     korridoren om du vill hjälpa till.</q> "
 ;
 
 +++ AltTopic, StopEventList
-    ['<q>Arbetar ni med Turbo Power Animals-stacken?</q>
+    ['<q>Arbetar ni med Turbo Power Animals-stapeln?</q>
     frågar du.
     <.p>En av dem vänder sig om och gör en elaborerad serie
     ryckiga armgester, först korsar han armarna, sedan håller han en arm
@@ -2720,13 +2720,13 @@ class TurboPowerAnimal: Thing
     huvudet åt uppvisningen. Han avslutar slutligen hälsningen och
     återvänder till bordet. ',
 
-     '<q>Hur fungerar den här stacken?</q> frågar du.
+     '<q>Hur fungerar den här stapeln?</q> frågar du.
      <.p>En av studenterna tittar upp från papperen. <q>Vi har
      dessa ledtrådar,</q> säger han och pekar på kuverten, <q>som antyder
      var de fem Power Animals är gömda. Ledtrådarna är alla
      ganska oklara, så vi försöker pussla ihop bitarna.</q> ',
 
-     '<q>Hur går det med stacken?</q>
+     '<q>Hur går det med stapeln?</q>
      <.p>Ett par av studenterna tittar bara upp på dig och rycker på axlarna. ']
 
     isActive = gRevealed('tpa-stack')
@@ -2787,8 +2787,8 @@ class TurboPowerAnimal: Thing
 ++ DefaultAnyTopic, ShuffledEventList
     ['Du försöker få någons uppmärksamhet, men de är alla för
     involverade i andra samtal. ',
-     'Alla verkar för fokuserade på stacken för att svara. ',
-     'De är förmodligen mest intresserade av stacken just nu. ']
+     'Alla verkar för fokuserade på stapeln för att svara. ',
+     'De är förmodligen mest intresserade av stapeln just nu. ']
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -2863,7 +2863,7 @@ alley4W: AlleyRoom 'Gränd Fyra Väst' 'västra änden av Gränd Fyra'
     kan öppnas endast vid den angivna timmen.
     </i></b></font>
     <./blockquote>
-    Skylten fortsätter med några ytterligare regler för stacken;
+    Skylten fortsätter med några ytterligare regler för stapeln;
     det ser ut som en skattjakt-typ av stack. <<extraComment>>
     <.reveal tpa-stack> "
 
@@ -3220,9 +3220,9 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
 ++ CustomImmovable, Readable 'blå+a pappersskylt+en' 'blå skylt'
     "Skylten är handtextad på blått papper:
     <.p><.blockquote>
-    Jacobs Honolulu 10-4 Surfin' Marbles Stack
+    Jacobs Honolulu 10-4 Surfin' Marbles-stapel
     <.p>Detta är din chans till ett sista försök på mitt Surfin' Marbles
-    spel. Allt du behöver göra för att besegra min stack är att lösa den
+    spel. Allt du behöver göra för att besegra min stapel är att lösa den
     fullständigt---du behöver bara få en kula till varje hörn. Du har
     sett mig lösa det, så du vet att det är möjligt. För att hjälpa dig
     komma i stämning har jag ställt in min stereo att spela <q>Honolulu 10-4</q>
@@ -3281,7 +3281,7 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
     även om den är något sliten efter lång användning. "
     
     cannotTakeMsg = 'Studenterna skulle definitivt inte vilja att du
-        springer iväg med huvudattraktionen i stacken medan de
+        springer iväg med huvudattraktionen i stapeln medan de
         fortfarande arbetar med den. '
 
     dobjFor(Play)
@@ -3607,7 +3607,7 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
 
     /* show the initial description the first time only */
     isInInitState = (!described)
-    initDesc = "Det ser ut som om någon arbetar på stacken, även om
+    initDesc = "Det ser ut som om någon arbetar på stapeln, även om
         de inte är här just nu. <<desc>> "
 
     cannotTakeMsg = 'Du vill inte ha frukten tillräckligt mycket för att
@@ -3690,7 +3690,7 @@ alley6E: AlleyRoom 'Gränd Sex Öst' 'östra änden av Gränd Sex'
     är för smutsigt för att städas. Det stämmer, det är rummet så smutsigt
     att det inte kan städas. Så säger de. Jag säger att deras problem är mitt
     mycket framgångsrika drosophila-avelsprogram.
-    <.p>Min stack är detta: du måste befria de ungefär
+    <.p>Min stapel är detta: du måste befria de ungefär
     femtiotusen bananflugorna i mitt rum. Observera att nyckelordet är
     befria, inte utrota. Hjälp till att visa dem vägen ut i
     det fria. Du vet att du är klar när Flugdensitometern visar
@@ -3969,7 +3969,7 @@ lower7W: AlleyRoom 'Nedre Sju Väst' 'västra änden av Nedre Sju'
     /* show the initial description the first time only */
     isInInitState = (!described)
     initDesc = "Detta är ett utmärkt exempel på den klassiska Råstyrke-
-        stacken: inte den sortens sofistikerade intellektuella pussel som är så
+        stapeln: inte den sortens sofistikerade intellektuella pussel som är så
         populära nuförtiden, utan ett faktiskt fysiskt hinder.
         Poängen är bara att spränga sig igenom det med rå fysisk kraft.
         Det behövs inga regler; de enda reglerna är fysikens lagar.
@@ -4118,7 +4118,7 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
             if (aaron.isIn(location))
                 "<.p>Aaron tittar över. <q>Om du letar efter
                 Scott tror jag han arbetar med den gigantiska kyckling-
-                stacken i gränd 3.</q> ";
+                stapeln i gränd 3.</q> ";
         }
     }
 ;
@@ -4135,7 +4135,7 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
 ;
 ++ CustomImmovable, Readable 'blå+a papper:et^s+skylt+en' 'skylt'
     "<font face='tads-sans'>Välkommen till Pauls Ditch Day Stack!
-    Min stack består av
+    Min stapel består av
     bara ett pussel, som finns i Commandant 64 nedan. Allt du behöver
     göra är att skriva in rätt <q>lösenord.</q> Du vet
     att du har skrivit rätt sak när utmatningen är exakt samma sträng
@@ -4164,7 +4164,7 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
     ovanpå.
     <.p><<readDesc>> "
     
-    cannotTakeMsg = 'Du bör inte störa stacken. '
+    cannotTakeMsg = 'Du bör inte störa stapeln. '
     readDesc()
     {
         "Monitorn visar för närvarande:\b
@@ -4268,13 +4268,13 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
                     "<.p>Du hittade lösenordet! Du känner dig orimligt
                     nöjd med dig själv, men det dämpas av
                     vetskapen att detta inte för dig någon vart
-                    med Stamers stack. ";
+                    med Stamers stapel. ";
 
                     if (aaron.isIn(location))
                         "<.p>Det verkar inte som om Erin eller Aaron
                         uppmärksammade det. Hur gärna du än vill skryta
                         med din lösning, tänker du att de förmodligen
-                        skulle bli gladare av att lösa stacken på egen hand, så
+                        skulle bli gladare av att lösa stapeln på egen hand, så
                         du skriver tyst in en slumpmässig sträng för att rensa
                         lösningen från monitorn. ";
                     else
@@ -4311,7 +4311,7 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
 
     /* an extra-credit achievement for solving the stack */
     extraCreditMarker: ExtraCreditAchievement { +50 "lösa
-        Commandant 64-stacken" }
+        Commandant 64-stapeln" }
 
     timeWasterWarning: StopEventList { [
         nil, nil, nil,
@@ -4319,9 +4319,9 @@ upper7N: AlleyRoom 'Övre Sju Nord' 'norra änden av Övre Sju'
         beroendeframkallande; bäst att vara försiktig så du inte fastnar för mycket här. ',
         nil, nil, nil, nil, nil,
         '<.p>Hur intressant det än är, vet du att du verkligen borde
-        återgå till Stamers stack inom kort. ',
+        återgå till Stamers stapel inom kort. ',
         '<.p>Du påminner dig själv om att inte bli för uppslukad av
-        den här stacken, eftersom du har viktigare saker du borde
+        den här stapeln, eftersom du har viktigare saker du borde
         arbeta med. ',
         nil] }
 

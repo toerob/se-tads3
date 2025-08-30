@@ -986,7 +986,7 @@ basementLab: Room 'Labb 022' 'labbet' 'labb'
             if (gotStackNum)
             {
                 "<.p>Förutsatt att Jays programmering fungerade, borde det vara
-                numret för stacken. Nu måste du bara gå och mata in
+                numret för stapeln. Nu måste du bara gå och mata in
                 det i den svarta lådan. Lyckligtvis borde det vara
                 relativt enkelt: tidigare, när du tittade på den
                 svarta lådan med oscilloskopet, märkte du att en del
@@ -4258,7 +4258,7 @@ netAnInstructions: PresentLater, Readable
     KONTAKT STRÖM AV!!! Men när öppnad är, knapptryckning insatt vara
     måste. Sida 52 instruktion fortsättning referera till också.
 
-    <br><br><u>PAKETLUKT</u><br>
+    <br><br><u>PAKETLUKTNING</u><br>
     För övervakning datapaket gå till och från. Om vet trevlig IP
     adress till källa, då användare hittade IP också destination. MÅSTE
     ATT SKRIVA IP I HEXADECIMAL. Användare till knappsatsinmatning FUNKTIONSKOD 71
@@ -4769,7 +4769,7 @@ steamTunnel8: SteamTunnelRoom 'Återvändsgränd' 'återvändsgränden'
     kameran, åtminstone inte förrän du har en bättre uppfattning om vad som pågår.
     Och dessa killar ser inte ens ut som Caltech-personal, trots allt.
     <q>...öh, överhettade ångröret...</q>
-    <.p><q>Tja, kanske du borde ringa B-and-G och rapportera det. 
+    <.p><q>Tja, du kanske borde ringa B-and-G och rapportera det. 
     Här, låt mig hjälpa dig att hitta en telefon.</q>
     <<st8Workers.escortLater>> "
 ;

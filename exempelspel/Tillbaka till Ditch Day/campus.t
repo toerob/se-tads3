@@ -108,87 +108,87 @@ campusInit()
  */
 
 ddTopic: Topic 'ditch day';
-nicTopic: Topic 'nätverksinstallatörsföretag/nic/n.i.c.';
-stackTopic: Topic 'ditch day stack/stackar';
-stamerStackTopic: Topic '(brians) (brians) (stamers) ditch day stack';
-paulStackTopic: Topic '(pauls) (pauls) ditch day stack/lösenord'; 
+nicTopic: Topic 'nätverksinstallatörsföretag+et/nic/n.i.c.';
+stackTopic: Topic 'ditch day stapel+n/staplar+na/stack+en/stackar+na';
+stamerStackTopic: Topic '(brians) (brians) (stamers) ditch day stapel+n/stack+en';
+paulStackTopic: Topic '(pauls) (pauls) ditch day stapel+n/stack+en/lösenord+et'; 
 caltechTopic: Topic '(cal) caltech/tech';
 stamerLabTopic: Topic
-    '(brians) (brians) (stamers) 022 lab/laboratorium/bro';
+    '(brians) (brians) (stamers) 022 lab+bet/laboratorium+et/bro+n';
 stamerTopic: Topic 'brian stamer';
-ratTopic: Topic 'råtta/råttor';
+ratTopic: Topic 'råtta+n/råttor+na';
 plisnikTopic: Topic 'plisnik';
 scottTopic: Topic 'scott';
 jayTopic: Topic 'jay santoshnimoorthy';
-turboTopic: Topic 'turbo kraftdjur';
-windTunnelTopic: Topic 'guggenheim vind hyperhastighetschocktunnel';
+turboTopic: Topic 'turbo kraftdjur+et';
+windTunnelTopic: Topic 'guggenheim vind hyperhastighetschock|tunnel+n/hyperhastighets|tunnel+n';
 guggenheimTopic: Topic 'guggenheim';
 galvaniTopic: Topic 'projekt 2 galvani/galvani-2';
 explosionTopic: Topic 'explosion';
 jobNumberTopic: Topic 'jobbnummer';
-ipAddressesTopic: Topic 'ip-adress/adresser';
+ipAddressesTopic: Topic 'ip-adress+en/adresser+na';
 
-jobTopic: Topic 'mitt ditt jobb';
+jobTopic: Topic 'mitt ditt jobb+et';
 bossTopic: Topic 'min din vice chef/vd/president/v.d.';
 productsTopic: Topic
-    'omegatron omegatrons företagets min din produkt/produkter';
+    'omegatron omegatrons företagets min din produkt+en/produkter+na';
 bureaucracyTopic: Topic
     'omegatron omegatrons företagets byråkrati';
-otherJobOffersTopic: Topic 'andra jobberbjudande/erbjudanden';
-startupsTopic: Topic 'start-up startup företag/företag/start-ups/startups';
+otherJobOffersTopic: Topic 'andra jobberbjudande+t/erbjudanden+a';
+startupsTopic: Topic 'start-up startup+en företag´+et/företag+en/start-ups/startups';
 
-supplyRoomTopic: Topic 'förråd förrådsrum knappsats rum/dörr/lås';
+supplyRoomTopic: Topic 'förråd+et förrådsrum+met knappsats+en rum+met/dörr+en/lås+et';
 
 eeTextbookRecTopic: Topic
-    '(ee) (elektroteknik) bok böcker läroböcker (rekommendationer)';
+    '(ee) (elektroteknik+en) bok+en böcker+na läroböcker+na (rekommendationer+na)';
 eeLabRecTopic: Topic
-    '(ee) (elektroteknik) lab laboratorium manual (rekommendationer)';
+    '(ee) (elektroteknik+en) lab+bet laboratorium+et manual+en (rekommendationer+na)';
 
 physicsTextTopic: Topic
-    'kvantfysik text bok/böcker/text/texter/lärobok/läroböcker';
+    'kvantfysik+en text+en bok+en/böcker+na/text+ten/texter+na/lärobok+en/läroböcker+na';
 eeTextTopic: Topic
-    'ee elektroteknik text bok/böcker/text/texter/lärobok/läroböcker';
+    'ee elektroteknik+en text bok+en/böcker+na/text+ten/texter+na/lärobok+en/läroböcker+na';
 labManualTopic: Topic 'ee elektroteknik labbmanual+en';
 drdTopic: Topic
-    'drd matte matematik matematiska funktioner/tabell/tabeller/handbok/bok'
+    'drd matte matematik+en matematiska funktioner+na/tabell+en/tabeller+na/handbok+en/bok+en'
 ;
 
-quantumComputingTopic: Topic 'kvantdatorer/kvantdator/kvantdatorer';
-qubitsTopic: Topic 'qubits programmeringsspråk/qubit/qubits';
+quantumComputingTopic: Topic 'kvantdatorer+na/kvantdator+n';
+qubitsTopic: Topic 'qubits programmeringsspråk+et/qubit/qubits';
 
-videoAmpTopic: Topic 'videoförstärkare/förstärkare';
-waveformTopic: Topic 'vågformer';
+videoAmpTopic: Topic 'videoförstärkare+n/förstärkare+n';
+waveformTopic: Topic 'vågformer+na';
 the1a80Topic: Topic '1a80 cpu';
-hovarthTopic: Topic 'hovarth tal/tal/funktion/funktioner';
+hovarthTopic: Topic 'hovarth tal+et/tal+en/funktion+en/funktioner+na';
 programmingHovarthTopic: Topic
-    'programmering (hovarth) (tal)/(tal)/(funktion)/(funktioner)';
+    'programmering (hovarth) (tal+en)/(tal+et)/(funktion+en)/(funktioner+na)';
 
-lostQuarterTopic: Topic 'förlorat mynt';
+lostQuarterTopic: Topic 'förlora:t+de mynt+et';
 
-lunchTopic: Topic 'lunch';
+lunchTopic: Topic 'lunch+en';
 
 bloemnerTopic: Topic
     'av blomner bloemner bl\u00F6mner blomners bloemners bl\u00F6mners
     introduktion till kvantfysik
-    text bok/böcker/text/texter/lärobok/läroböcker';
+    text+en bok+en/böcker+na/text+en/texter+na/lärobok+en/läroböcker+na';
 sAndP3Topic: Topic
-    'science&progress s&p science & progress tidskrift
-    nummer xlvi-3';
+    'science&progress s&p science & progress tidskrift+en
+    num:mer+ret xlvi-3';
 sAndPTopic: Topic
     'science&progress s&p science & progress tidskrift nummer -';
 qrlTopic: Topic
-    'quantum review letters qrl nummer utgåva volym tidskrift/brev/qrl';
+    'quantum review letters qrl nummer utgåva+n volym+en tidskrift+en/brev+et/qrl';
 qrlVolumeTopic: Topic
-    'quantum review letters qrl nummer utgåva 70 73 volym
-    tidskrift/brev/qrl';
-qrl7011cTopic: Topic 'quantum review letters qrl nummer utgåva 70:11c';
-qrl739aTopic: Topic 'quantum review letters qrl nummer utgåva 73:9a';
+    'quantum review letters qrl nummer utgåva+n 70 73 volym+en
+    tidskrift+en/brev+et/qrl';
+qrl7011cTopic: Topic 'quantum review letters qrl nummer utgåva+n 70:11c';
+qrl739aTopic: Topic 'quantum review letters qrl nummer utgåva+n 73:9a';
 morgenTopic: Topic
-    'yves morgen elektronikföreläsningar text
-    bok/böcker/text/texter/lärobok/läroböcker';
-townsendTopic: Topic 'e.j. townsend lab laboratorium manual';
+    'yves morgen elektronikföreläsningar text+en
+    bok+en/böcker+na/text+en/texter+na/lärobok+en/läroböcker+na';
+townsendTopic: Topic 'e.j. townsend lab+bet laboratorium+et manual+en';
 
-efficiencyStudy37Topic: Topic '37 effektivitetsstudie';
+efficiencyStudy37Topic: Topic '37 effektivitetsstudie+n';
 
 /* ------------------------------------------------------------------------ */
 /*
@@ -2135,7 +2135,7 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
 ;
 ++++ TellTopic [ddTopic, stamerStackTopic, stackTopic, stamerTopic,
                stamerLabTopic]
-    "<q>Det är för en Ditch Day-stack,</q> säger du.
+    "<q>Det är för en Ditch Day-stapel,</q> säger du.
     <.p>Han ler. <q>Ah, jag förstår,</q> säger han. <q>Glad att kunna hjälpa till.</q>
     <<location.genericSearch>> "
 ;
@@ -3467,7 +3467,7 @@ oliveWalk: CampusOutdoorRoom
     west = olwWestWalk
     east = olwEastWalk
     north: NoTravelMessage { "Det skulle säkert vara underhållande att
-        gå genom alla husen och se de olika stackarna i år,
+        gå genom alla husen och se de olika staplarna i år,
         men du borde förmodligen försöka hålla fokus just nu. " }
     south: NoTravelMessage { "Hur gärna du än skulle vilja undersöka alla
         stackar i de andra husen, bör du förmodligen försöka hålla
@@ -3899,7 +3899,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
 ;
 
 + Enterable ->(location.east)
-    'stor+a stuck dabney byggnad+en/hus+et/house/ord+en' 'Dabney House'
+    'stor+a stuck dabney byggnad+en/hus+et/house/hovse/ord+en' 'Dabney House'
     "Det är en stor stuckbyggnad designad för att likna klassisk
     medelhavs-arkitektur. Orden <q>DABNEY HOVSE</q> är
     inskrivna ovanför passagen österut. "

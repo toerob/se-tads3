@@ -38,7 +38,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
     crowdBlock: FakeConnector { "Det står för många människor 
         i hallen; Du kan inte komma igenom. "; }
 
-    vocabWords = '1 gränd ett'
+    vocabWords = '1 gränd+en ett'
 
     roomParts = static (inherited + [alleyWestWall, alleyEastWall])
 
@@ -55,7 +55,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
         if (traveler == me)
             scoreMarker.awardPointsOnce();
     }
-    scoreMarker: Achievement { +1 "hitta Stamers hög" }
+    scoreMarker: Achievement { +1 "hitta Stamers stapel" }
 
     /* end the big blowout that happens around lunchtime */
     endBlowout()
@@ -95,7 +95,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
 ;
 
 + Graffiti
-    'psykedelisk+a slumpmässig+a vibration
+    'psykedelisk+a slumpmässig+a vibration+en
     konst+en/klotter/klottret/kladd+et/partikel+n/(låda+n)/film+en/prick+en*linjer+na stillbilder+na kvadrater+na'
     'graffiti'
     "Det är den typiska blandningen av psykedelisk konst och slumpmässigt klotter.
@@ -130,7 +130,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
         {
             if (!isSolved)
             {
-                "Du kan inte gå in förrän stacken är löst. ";
+                "Du kan inte gå in förrän stapeln är löst. ";
                 exit;
             }
             else
@@ -143,7 +143,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
         {
             if (!isSolved)
             {
-                "Du kan inte gå in förrän stacken är löst. ";
+                "Du kan inte gå in förrän stapeln är löst. ";
                 exit;
             }
             else
@@ -159,7 +159,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
         action()
         {
             if (isSolved)
-                "Inget behov av att knacka; som den rättmätiga lösaren av stacken
+                "Inget behov av att knacka; som den rättmätiga lösaren av stapeln
                 kan du gå rakt in. ";
             else
                 "Du knackar, men det kommer inget svar.
@@ -169,7 +169,7 @@ alley1N: AlleyRoom 'Gränd Ett Nord' 'norra änden av Gränd Ett'
 ;
 
 class StackFixture: CustomFixture
-    cannotTakeMsg = 'Det strider mot reglerna för stacken att flytta
+    cannotTakeMsg = 'Det strider mot stapelreglerna att flytta
         runt på de här sakerna. '
 ;
 
@@ -181,19 +181,19 @@ class StackFixture: CustomFixture
 ;
 
 /* the stack as a generic object */
-+ Decoration 'brian brians stamers ditch day stack+en'
-    'Ditch Day-stack'
++ Decoration 'brian brians stamers ditch day stapel+n'
+    'Ditch Day-stapel'
     "<<room4Sign.described
-      ? "Brians stack består av den svarta lådan på bordet. Skylten
-        på dörren har detaljer om reglerna för stacken."
-      : "Du bör förmodligen läsa skylten på dörren för att få detaljer
-        om stacken.">> "
+      ? "Brians stapel består av den svarta lådan på bordet. Skylten
+        på dörren innehåller detaljerade regler för stapeln."
+      : "Du bör förmodligen läsa skylten på dörren för att få mer information
+        om stapeln.">> "
 
-    notImportantMsg = 'Stacken består av den svarta lådan, så allt
-        du vill göra med stacken bör du göra med den svarta lådan. '
+    notImportantMsg = 'Stapeln består av den svarta lådan, så allt
+        du vill göra med stapeln bör du göra med den svarta lådan. '
 ;
 /* make the table a fixture, because it's obvious that we can't move it */
-+ StackFixture, Surface 'gammalt gamla lilla litet trä+bord+et/kort+bord+et' 'litet bord'
++ StackFixture, Surface 'gam+malt+la li:lla+tet träkorts|bord+et/träbord+et/kortbord+et' 'litet bord'
     "Det är ett gammalt träkortbord. "
 
     dobjFor(LookUnder) { action() { "Allt du ser är bunten av
@@ -203,10 +203,10 @@ class StackFixture: CustomFixture
 ++ blackBox: TestGearAttachable, CustomFixture
     'svart+a plåt+låda+n/låd-kontakt+en' 'svart låda'
     "Lådan ser lite improviserad ut; den kan ha varit en mikrovågsugn
-    vid något tillfälle, men om det fanns en dörr har den ersatts av
-    plåt, och hela saken har målats svart.
-    <.p>Visuell inspektion ger inte mycket i form av ledtrådar.
-    En bunt kablar löper ut från baksidan och under dörren. På
+    en gång i tiden, men om det förut fanns en dörr har den ersatts av
+    plåt, och hela saken är målad i svart.
+    <.p>En visuell inspektion ger inte mycket i form av ledtrådar.
+    En bunt kablar löper ut från baksidan och in under dörren. På
     framsidan finns en ovanlig elektrisk kontakt. I övrigt är
     det bara svart plåt.
     <<extraInfo>> "
@@ -247,10 +247,10 @@ class StackFixture: CustomFixture
         /* if we have the hovarth number, explain how to enter it */
         if (gRevealed('hovarth-solved') && !gRevealed('black-box-solved'))
             "<.p>När du undersökte lådan tidigare märkte du
-            att den har en tio-nivåers spänningsdigitaliserare kopplad till en
-            av kontaktstiften. Du skulle gissa att det är sättet du
-            ska använda för att mata in Hovarth-numret. Signalgeneratorn
-            borde fungera som spänningskälla. ";
+            att den har en tio-nivåers spänningsdigitaliserare kopplad till 
+            en av kontaktstiften. Du skulle gissa på att det är sättet du
+            ska mata in Hovarth-numret på. Signalgeneratorn borde fungera 
+            som spänningskälla. ";
     }
 
     /* 
@@ -261,19 +261,19 @@ class StackFixture: CustomFixture
     equipGathered = (oscilloscope.moved && signalGen.moved)
 
     specialDesc = "Bredvid dörren till rum 4 finns ett litet bord, på
-        vilket det står en svart metallåda som ser ut som om den en gång
-        kan ha varit en mikrovågsugn. En skylt (egentligen bara ett pappersark)
-        är fäst på dörren ovanför lådan. "
+        vilket det står en svart metallåda, vilken ser ut som om den en gång i 
+        tiden kan ha varit en mikrovågsugn. En skylt (som egentligen bara 
+        är ett pappersark) är fäst på dörren ovanför lådan. "
 
     /* put this early among the specialDesc's */
     specialDescOrder = 90
 
     showSpecialDescInContents(actor, cont)
-        { "På bordet finns en svart metallåda som ser ut lite som
-            en mikrovågsugn. "; }
+        { "På bordet står en svart metallåda som ser lite ut 
+           som en mikrovågsugn. "; }
 
-    cannotTakeMsg = 'Det strider mot reglerna för stacken att flytta lådan. '
-    cannotOpenMsg = 'Det strider mot reglerna för stacken. '
+    cannotTakeMsg = 'Det strider mot reglerna för stapeln att flytta lådan. '
+    cannotOpenMsg = 'Det strider mot reglerna för stapeln. '
 
     /* handle connecting the test equipment */
     probeWithScope()
@@ -281,10 +281,9 @@ class StackFixture: CustomFixture
         /* if we've solved the Hovarth puzzle, explain how to proceed */
         if (gRevealed('hovarth-solved') && !gRevealed('black-box-solved'))
         {
-            "Du behöver inte oscilloskopet vid det här tillfället, eftersom din tidigare
-            omvända ingenjörskonst redan berättade för dig vad du behöver veta:
-            du behöver bara använda signalgeneratorn som spänningskälla
-            för den svarta lådans digitaliseringskrets. ";
+            "Du behöver inte oscilloskopet i det här skedet, eftersom 
+            din tidigare omvända ingenjörskonst redan har gett dig den information du behöver: du behöver bara använda signalgeneratorn
+            som spänningskälla för svarta lådans digitaliseringskrets. ";
             return;
         }
         
@@ -317,12 +316,11 @@ class StackFixture: CustomFixture
                     if (timesRead++ == 0)
                     {
                         "Du gör några justeringar på oscilloskopet och börjar
-                        sonda kontakterna. Mönstren hoppar fram för dig
-                        nu: detta är en enkel seriell data-
-                        kommunikationskrets, men den är förklädd
-                        tillräckligt väl med konstiga spänningar och vågmönster
-                        att du inte kände igen den tidigare.
-                        <.p>Idealt sett skulle du bygga ett kompatibelt gränssnitt,
+                        prova kontakterna. Mönstren framträder tydligt nu: 
+                        detta är en enkel seriell datakommunikationskrets, 
+                        men den är förklädd tillräckligt väl med konstiga 
+                        spänningar och vågmönster att du inte kände igen 
+                        den tidigare. <.p>Idealt sett skulle du bygga ett kompatibelt gränssnitt,
                         sedan koppla in en terminal för att se vad meddelandet är.
                         Men det finns ingen tid för det; du måste bara
                         försöka läsa av datan direkt från oscilloskopet. Det är
@@ -337,17 +335,15 @@ class StackFixture: CustomFixture
                         övertygad om att det verkligen upprepar samma 
                         meddelande varje gång:
                         <.p>\tHOVARTH(<<infoKeys.hovarthIn>>)
-                        <.p>Detta är nästan trivialt! <q>Hovarth</q> är
-                        en av de där obskyra matematiska funktionerna; lösningen
-                        på stacken måste helt enkelt vara att beräkna
+                        <.p>Detta är nästan trivialt! <q>Hovarth</q> är en av de där obskyra matematiska funktionerna; lösningen
+                        på stapeln måste helt enkelt vara att beräkna
                         resultatet och mata in numret. Allt du behöver göra
                         är att hitta en kopia av DRD-mattabellerna och slå
                         upp detta Hovarth-nummer.
                         <.p>Du lägger ner oscilloskopproben och plötsligt
                         inser du att Belker svävar bakom dig.
                         <q>Jag antar att du har upptäckt ett dolt
-                        meddelande,</q> säger han. <q>Kanske kommer du
-                        att vara mer effektiv än mina underordnade när det gäller
+                        meddelande,</q> säger han. <q>Kanske kommer du att vara mer effektiv än mina underordnade när det gäller
                         att formulera ett svar.</q> Han skrockar och
                         går tillbaka för att övervaka teknikerna.
                         <.reveal hovarth> ";
@@ -357,8 +353,7 @@ class StackFixture: CustomFixture
                     }
                     else
                     {                       
-                        "Du hittar rätt uppsättning kontakter att röra vid
-                        med oscilloskopproben och tittar på
+                        "Du hittar rätt uppsättning kontakter att röra vid med oscilloskopets sond och tittar på
                         meddelandets bitar på displayen.
                         Det ser ut som samma meddelande som tidigare:
                         <.p>
@@ -378,9 +373,8 @@ class StackFixture: CustomFixture
                     /* trigger the lunchtime blowout */
                     "Du är ivrig att ta en ny titt på den svarta lådan nu
                     när du har haft en chans att bekanta dig med
-                    det här materialet igen. Du gör några justeringar på oscilloskopet och
-                    plockar upp proben.
-                    <.p>Precis när du ska ansluta proben fylls hela
+                    det här materialet igen. Du gör några justeringar på oscilloskopet och plockar upp sonden.
+                    <.p>Precis när du ska ansluta sonden fylls hela
                     gränden med ett bländande blåvitt ljus
                     och en öronbedövande krasch. En tryckvåg träffar dig
                     och slår dig mot väggen. Du sträcker ut handen efter
@@ -729,7 +723,7 @@ class StackFixture: CustomFixture
     }
 
     /* points for solving the stack */
-    solveScoreMarker: Achievement { +10 "lösa Brian Stamers hög" }
+    solveScoreMarker: Achievement { +10 "lösa Brian Stamers stapel" }
 
     /* solving the stack is a clock-significant plot event */
     solvePlotEvent: ClockEvent { eventTime = [2, 16, 53] }
@@ -754,14 +748,14 @@ class StackFixture: CustomFixture
 ;
 
 ++ room4Sign: CustomImmovable, Readable 'ark+et/papper+et/pappret/skylt+en' 'skylt'
-    "Det är en lasertryckt uppsättning instruktioner för stacken:
+    "Det är en lasertryckt uppsättning instruktioner för stapeln:
     <.p><.blockquote>
     <font face=tads-sans><b>Brians Svarta Låda av Mysterium</b>
-    <.p>Min stack är den svarta låda du ser framför dig. Den kontrollerar
+    <.p>Min stapel är den svarta låda du ser framför dig. Den kontrollerar
     dörren till mitt rum. Allt du behöver göra är att lista ut hur du får
     lådan att öppna dörren.
-    <.p>Detta är en <q>finess</q>-stack, vilket betyder att du inte får
-    använda fysisk kraft för att bryta stacken---så inget nedbrytande av min
+    <.p>Detta är en <q>finess</q>-stapel, vilket betyder att du inte får
+    använda fysisk kraft för att bryta stapeln---så inget nedbrytande av min
     dörr. Du får inte heller tvinga upp den svarta lådan, eller flytta
     den, eller störa dess externa ledningar. Bortsett från allt detta kan du
     använda i princip vilka medel som helst för att lista ut hur lådan fungerar.
@@ -769,7 +763,7 @@ class StackFixture: CustomFixture
     till hjälp. För din bekvämlighet har jag lämnat en massa utrustning
     i mitt labb (022 Bridge). Du kan hjälpa dig själv till vad som helst på
     hyllorna på bakre väggen. Nyckeln till labbet ligger ovanpå lådan.
-    <.p>P.S.\ Om det finns ett par icke-Techers som arbetar på stacken,
+    <.p>P.S.\ Om det finns ett par icke-Techers som arbetar på stapeln,
     så är det okej. De är rekryterare som kom hit för att intervjua mig,
     och jag bjöd in dem att delta i Ditch Day-kul. En särskild regel
     för dem: ni får ha så många hjälpare ni vill och vilken
@@ -896,15 +890,15 @@ class AaronErinConvList: object
  */
 +++ AskTellShowTopic, SuggestedAskTopic, ShuffledEventList
     [blackBox, ddTopic, stackTopic, stamerStackTopic]
-    ['<q>Har ni kommit på något om stacken än?</q> frågar du.
+    ['<q>Har ni kommit på något om stapeln än?</q> frågar du.
     <.p>Aaron skakar på huvudet. <q>Inte riktigt.</q> ',
-     '<q>Är det stacken ni ska arbeta med idag?</q>
+     '<q>Är det stapeln ni ska arbeta med idag?</q>
      <.p><q>Kanske,</q> säger Aaron. <q>Den ser tillräckligt dunkel ut.</q> ',
      '<q>Några idéer om hur man ska närma sig detta?</q> frågar du.
      <.p>Aaron bedömer den svarta lådan en stund. <q>Jag vet inte.
      Visuell inspektion ger inte mycket att arbeta med.</q> ']
 
-    name = 'stacken'
+    name = 'stapeln'
 ;
 
 +++ AskTellShowTopic [aaron, erin]
@@ -913,7 +907,7 @@ class AaronErinConvList: object
     elektroteknik.</q><.reveal aaron-erin-major> "
 ;
 ++++ AltTopic
-    "<q>Den här stacken verkar perfekt för en double-E.</q>
+    "<q>Den här stapeln verkar perfekt för en double-E.</q>
     <.p><q>Kanske,</q> säger Aaron. <q>Det kan dock vara för likt
     riktigt arbete.</q> "
     isActive = (gRevealed('aaron-erin-major') && room4Sign.described)
@@ -926,7 +920,7 @@ class AaronErinConvList: object
 ;
 
 +++ DefaultAnyTopic
-    "Han verkar ganska fokuserad på stacken just nu. Du tvivlar på att han skulle
+    "Han verkar ganska fokuserad på stapeln just nu. Du tvivlar på att han skulle
     vara särskilt intresserad av att prata om mycket annat. "
     isConversational = nil
 ;
@@ -970,7 +964,7 @@ class AaronErinConvList: object
 +++ AskTellTopic @scottTopic
     "<q>Jag letar efter Scott,</q> säger du. <q>Ägaren till Positron-
     maskinen på nedervåningen. Har du sett honom i närheten?</q>
-    <.p><q>Jag tror han arbetar med den gigantiska kycklingsstacken
+    <.p><q>Jag tror han arbetar med den gigantiska kycklingsstapeln
     i gränd 3,</q> säger han. "
 ;
 +++ AskForTopic @scottTopic
@@ -987,7 +981,7 @@ class AaronErinConvList: object
     "<q>Vet du var Jay Santoshnimoorthy är?</q> frågar du.
     <p>Han sätter armarna i kors och tänker en minut. <q>Ja,</q>
     säger han till slut. <q>Mer exakt, jag vet var han var
-    tidigare idag: han funderade stacken i Gränd Fyra,</q> 
+    tidigare idag: han funderade stapeln i Gränd Fyra,</q> 
     säger han."
 ;
 
@@ -998,11 +992,11 @@ class AaronErinConvList: object
 ;
     
 +++ AskTellShowTopic, StopEventList [ddTopic, paulStackTopic, commandant64]
-    ['<q>Det ser ut som om ni har hittat en annan stack,</q> säger du.
+    ['<q>Det ser ut som om ni har hittat en annan stapel,</q> säger du.
     <.p>Aaron nickar. <q>Den här är bättre ändå.</q> ',
-     '<q>Hur går det med stacken?</q> frågar du.
+     '<q>Hur går det med stapeln?</q> frågar du.
      <.p>Aaron rycker på axlarna. <q>Framsteg görs, tror jag.</q> ',
-     '<q>Några idéer om hur den här stacken fungerar?</q> frågar du.
+     '<q>Några idéer om hur den här stapeln fungerar?</q> frågar du.
      <.p><q>Några,</q> säger Aaron och nickar. <q>Vi tror att det är någon
      form av kod.</q> ']
 ;
@@ -1044,7 +1038,7 @@ class AaronErinConvList: object
 ;
     
 +++ DefaultAnyTopic
-    "Han verkar mest intresserad av stacken just nu. "
+    "Han verkar mest intresserad av stapeln just nu. "
     isConversational = nil
 ;
 
@@ -1109,7 +1103,7 @@ class AaronErinConvList: object
 ;
 +++ TellTopic [ddTopic, stackTopic, blackBox, stamerStackTopic]
     "Aaron och Erin lyssnar uppmärksamt när du förklarar dina
-    äventyr med att lösa Stamers stack. "
+    äventyr med att lösa Stamers stapel. "
 ;
 
 +++ DefaultAnyTopic
@@ -1265,7 +1259,7 @@ class AaronErinConvList: object
     båda double-E's.</q><.reveal aaron-erin-major> "
 ;
 ++++ AltTopic
-    "<q>Den här stacken verkar perfekt för en double-E,</q> säger du.
+    "<q>Den här stapeln verkar perfekt för en double-E,</q> säger du.
     <.p><q>Kanske, men Brian är fysiker. De tänker inte som
     ingenjörer. Det är förmodligen något elaborerat skämt där det ser
     elektroniskt ut men det egentligen är en Maxwell-snurra inuti eller något.</q> "
@@ -1275,10 +1269,10 @@ class AaronErinConvList: object
 /* a master stack-related topic for Erin */
 +++ AskTellShowTopic, SuggestedAskTopic
     [blackBox, ddTopic, stackTopic, stamerStackTopic]
-    "<q>Några idéer om hur man löser stacken än?</q> frågar du.
+    "<q>Några idéer om hur man löser stapeln än?</q> frågar du.
     <.p><q>Inte än,</q> säger Erin. "
 
-    name = 'stacken'
+    name = 'stapeln'
 ;
 
 +++ AskTellAboutForTopic @labKey
@@ -1304,7 +1298,7 @@ class AaronErinConvList: object
 
 +++ DefaultAnyTopic
     "Du tvivlar på att hon skulle vara särskilt intresserad av att prata om något
-    annat än stacken just nu. "
+    annat än stapeln just nu. "
     isConversational = nil
 ;
 
@@ -1327,7 +1321,7 @@ class AaronErinConvList: object
     showGroupMsg(lst)
     {
         if (aaron.introduced)
-            "Aaron och Erin är här och pratar tyst om stacken. ";
+            "Aaron och Erin är här och pratar tyst om stapeln. ";
         else
             "Två studenter tittar på den svarta lådan och pratar tyst
             med varandra. En är en lång, smal kille med krulligt rött hår;
@@ -1354,7 +1348,7 @@ class AaronErinConvList: object
 +++ AskTellTopic @scottTopic
     "<q>Har du sett Scott i närheten?</q> frågar du. <q>Killen som äger
     Positron-maskinen på nedervåningen?</q>
-    <.p><q>Jag tror han håller på med den gigantiska kycklingsstacken,</q> säger
+    <.p><q>Jag tror han håller på med den gigantiska kycklingsstapeln,</q> säger
     hon. <q>Gränd 3.</q> "
 ;
 +++ AskForTopic @scottTopic
@@ -1362,7 +1356,7 @@ class AaronErinConvList: object
 ;
 +++ AskTellTopic @jayTopic
     "<q>Har du sett Jay Santoshnimoorthy idag?</q> frågar du.
-    <.p><q>Jag tror han arbetade med stacken i Gränd Fyra,</q> säger hon. "
+    <.p><q>Jag tror han arbetade med stapeln i Gränd Fyra,</q> säger hon. "
 ;
 +++ GiveShowTopic @calculator
     "Hon tittar snabbt på miniräknaren och lämnar tillbaka den. <q>Om du
@@ -1370,7 +1364,7 @@ class AaronErinConvList: object
     se vilka trick han kan göra med den.</q> "
 ;
 +++ AskTellShowTopic [ddTopic, paulStackTopic, commandant64]
-    "<q>Hur går det med stacken?</q> frågar du.
+    "<q>Hur går det med stapeln?</q> frågar du.
     <.p><q>För tidigt att säga,</q> säger hon. <q>Vi är inte riktigt säkra
     på vad som pågår än.</q> "
 ;
@@ -1415,7 +1409,7 @@ class AaronErinConvList: object
     <q>men jag har inte tittat så mycket på det.</q> "
 ;
 +++ DefaultAnyTopic
-    "Hon verkar ganska fokuserad på stacken just nu. "
+    "Hon verkar ganska fokuserad på stapeln just nu. "
     isConversational = nil
 ;
     
@@ -1470,7 +1464,7 @@ class AaronErinConvList: object
                 "<q>Vi var precis på väg till lunch. Du borde
                 följa med. ";
 
-            "Du kan berätta för oss om Brians stack.</q><.convnode> ";
+            "Du kan berätta för oss om Brians stapel.</q><.convnode> ";
             erin.goToLunch();
         }
     }
@@ -1543,7 +1537,7 @@ class AaronErinConvList: object
 
 /* BYE depends on whether we've seen the whole lunch conversation yet */
 +++ ByeTopic, StopEventList
-    ['<q>Jag borde återgå till min stack,</q> säger du.
+    ['<q>Jag borde återgå till min stapel,</q> säger du.
     <.p><q>Redan?</q> frågar Erin. <q>Kom igen nu, stanna en stund. De
     har förmodligen inte ens släckt branden än.</q> ',
 
@@ -1572,15 +1566,15 @@ class AaronErinConvList: object
 ;
 
 +++ AskTellTopic, SuggestedTellTopic [blackBox, ddTopic, stamerStackTopic]
-    "Du berättar för Erin lite om dina försök att lösa stacken,
+    "Du berättar för Erin lite om dina försök att lösa stapeln,
     och hur du har fått lära dig mycket grundläggande elektroteknik på nytt.
     Du nämner också utrustningen och personalen som Belker har
     tagit in.
     <.p><q>Det verkar inte rättvist,</q> påpekar Erin. Du
     måste hålla med, det <i>verkar</i> inte rättvist; men det
-    verkar tekniskt sett inte bryta mot reglerna för stacken. "
+    verkar tekniskt sett inte bryta mot reglerna för stapeln. "
 
-    name = 'stacken'
+    name = 'stapeln'
 ;
 
 +++ TellTopic, StopEventList @omegatronTopic
@@ -1774,7 +1768,7 @@ class AaronErinConvList: object
 ;
 +++ TellTopic [stackTopic, ddTopic, blackBox, stamerStackTopic]
     "Aaron och Erin lyssnar uppmärksamt när du förklarar dina
-    äventyr med att lösa Stamers stack. "
+    äventyr med att lösa Stamers stapel. "
 ;
 
 +++ DefaultAnyTopic
@@ -1785,7 +1779,7 @@ class AaronErinConvList: object
 +++ InitiateTopic @stackTopic
     "Aaron och Erin tar sig in i rummet. De ser dig
     och kommer över för att hälsa.
-    <.p><q>Grattis till att du löste stacken,</q> säger Erin.
+    <.p><q>Grattis till att du löste stapeln,</q> säger Erin.
     Hon och Aaron vandrar sedan över till snacksen. "
 ;
 
@@ -2256,9 +2250,9 @@ bribeStudents: DelayedAgendaItem
         eftersom det verkar som om vi har vår egen uteslutningsprincip av något slag.
         I vårt fall är det inte elektroner som intresserar oss utan vi
         flera personer, som snart kommer att finna det svårt att
-        uppta samma utrymme medan vi arbetar på samma...\ stack. Detta
+        uppta samma utrymme medan vi arbetar på samma...\ stapel. Detta
         är anledningen till att jag skulle vilja erbjuda er en viss summa, endast för
-        att hitta en annan stack att ägna er åt. Det finns många, förstår jag.</q>
+        att hitta en annan stapel att ägna er åt. Det finns många, förstår jag.</q>
         <.p>Erin ser förolämpad ut. <q>Tror du att du bara kan muta oss?</q>
         <.p>Belker använder sin axel för att hålla fast mobiltelefonen mot örat
         och sträcker sig ner i fickan, tar fram en bunt sedlar.
@@ -2520,8 +2514,8 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
     'fest+liga muta+n/mat+en/bricka+n/choklad+en/godis+et/kaka+n/kex+et/druva+n/jordgubbe+n/
     frukt+en/ost+en/godbit+en/godbitar+na snacks+en frukter+na jordgubbar+na druvor+na kex+en kakor+na maträtter+na choklader+na godisar+na'
     'festbricka'
-    "Mutan är en väsentlig del av varje Ditch Day-stack; när
-    underklassarna har löst huvuddelen av stacken, är mutan
+    "Mutan är en väsentlig del av varje Ditch Day-stapel; när
+    underklassarna har löst huvuddelen av stapeln, är mutan
     den sista försvarslinjen mot att rummet vandaliseras. Mutor
     är vanligtvis i form av ätbara godsaker som detta. Regeln är
     att om mutan accepteras, är rummet säkert från vandalisering. "
@@ -2682,7 +2676,7 @@ stamer: Person
         medan han banar sig väg genom folkmassan. Han kommer slutligen
         fram till dig och stannar.
         <.p><q>Hej,</q> säger han. <q>Jag är Brian Stamer. Jag gissar
-        att du är den som löste min stack?</q> "
+        att du är den som löste min stapel?</q> "
 
     /* stay here until we explicitly move on */
     isSticky = true
@@ -2698,7 +2692,7 @@ stamer: Person
         dig. "
 
     nextMsg = "<q>Jag är Doug Mittling, från Omegatron.</q> Ni skakar hand.
-        <.p><q>Så,</q> säger Brian, <q>vad tyckte du om stacken?</q>
+        <.p><q>Så,</q> säger Brian, <q>vad tyckte du om stapeln?</q>
         <.convnode stamer-stack> "
 ;
 
@@ -2726,21 +2720,21 @@ stamer: Person
     /* don't allow terminating the conversation just yet */
     canEndConversation(actor, reason)
     {
-        "Du borde berätta för Brian om stacken först. ";
+        "Du borde berätta för Brian om stapeln först. ";
         return nil;
     }
 
     npcContinueMsg = "Brian får din uppmärksamhet igen. <q>Vad tyckte
-        du om stacken?</q> "
+        du om stapeln?</q> "
 
     nextMsg = "<.p><q>Du sa att du jobbar för Omegatron?</q> frågar Brian.
         <.convnode stamer-omegatron> "
 ;
 
 ++ AskTellTopic, SuggestedTellTopic [stackTopic, ddTopic, stamerStackTopic]
-    "<q>Din stack var definitivt en lärorik upplevelse,</q> säger du.
+    "<q>Din stapel var definitivt en lärorik upplevelse,</q> säger du.
     <q>Ditt experiment är verkligen något.</q><<location.nextMsg>> "
-    name = 'stacken'
+    name = 'stapeln'
 ;
 
 ++ AskTellTopic, SuggestedTellTopic [blackBox]
@@ -2756,7 +2750,7 @@ stamer: Person
 ;
 
 ++ DefaultAnyTopic
-    "Du borde berätta för Brian om stacken först.<.convstay> "
+    "Du borde berätta för Brian om stapeln först.<.convstay> "
     isConversational = nil
 
     deferToEntry(entry) { return !entry.ofKind(DefaultTopic); }
@@ -2885,7 +2879,7 @@ stamer: Person
         labb. Saken är den att vi behöver några personer med branscherfarenhet,
         för att hålla investerarna nöjda. Vi vill dock inte ha vem som helst.</q>
         Han kastar en sidoblick på Belker. <q>Det är
-        den verkliga anledningen till att jag satte ihop den här stacken---jag tänkte att vem som helst
+        den verkliga anledningen till att jag satte ihop den här stapeln---jag tänkte att vem som helst
         som kunde lösa den måste vara ganska bra på teknik.
         Poängen är att jag skulle vilja anställa dig som vår VP för teknik.
         Intresserad?</q>
@@ -2967,7 +2961,7 @@ stamer: Person
         till tråkig men bekväm normalitet.
         <.p>Allt som allt var det ingen dålig resa. Du lyckades inte
         anställa Brian, men du gav det åtminstone ditt bästa försök. Och du
-        känner dig väldigt nöjd med att ha löst stacken. ";
+        känner dig väldigt nöjd med att ha löst stapeln. ";
 
         /* award the points for at least trying to hire Brian */
         scoreMarker.awardPointsOnce();
@@ -3014,7 +3008,7 @@ stamer: Person
         faktiskt att du skulle komma och jobba för vinnarens företag. Så, vad säger du?
         Vill du komma och jobba för mitt nya företag?</q>
         <.p><q>Ja, absolut,</q> säger Brian. <q>Jag skulle bli överlycklig. Ledsen,
-        herr Belker, men ett avtal är ett avtal, och han vann faktiskt stacken.</q>
+        herr Belker, men ett avtal är ett avtal, och han vann faktiskt stapeln.</q>
         <.p>Frosst står där och ser ut som om ånga är på väg att skjuta ut ur öronen på honom.
         Han börjar vifta vilt med armarna.
         <q>Nej! Nej, nej, nej! Det här är oacceptabelt!</q> Ett par

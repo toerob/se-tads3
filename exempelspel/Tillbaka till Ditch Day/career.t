@@ -545,7 +545,7 @@ class AcceptStackNo: SpecialTopic, StopEventList
     {
         "Du vill verkligen avböja och komma tillbaka senare för
         en normal intervju, men du tvekar. Om Belker bestämmer sig för att
-        stanna här idag, kanske du inte får en annan chans till en
+        stanna här idag, du kanske inte får en annan chans till en
         intervju. Och Rudy verkade verkligen fast besluten att anställa
         Stamer.<.convstay> ";
     }

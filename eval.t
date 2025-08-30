@@ -1,15 +1,19 @@
 #charset "utf-8"
 #include <adv3.h>
 #include <sv_se.h> 
+
+// Attention: requires "-source dynfunc" in your Makefile.
+
+
 /*
  *   ************************************************************************
- *   eval.t 
+ *   eval.t (copy-pasted from debug.t and modified quite a bit)
  *  
  *   (c) 2012-13 Eric Eve (but based partly on code borrowed from the Mercury
  *   library (c) Michael J. Roberts).
  *   
  *   Inspired from the the code in adv3Lite/Mercury library by Eric Eve and 
- *   Michael J. Roberts and adapted to adv3 by Tomas Öberg
+ *   Michael J. Roberts, and adapted to adv3 by Tomas Öberg
  *
  */
 
@@ -89,8 +93,7 @@ DefineLiteralAction(Evaluate)
 VerbRule(Evaluate)
     'eval' singleLiteral  // literalPhrase->literalMatch
     : EvaluateAction
-    verbPhrase = 'evaluera/evaluering (what)'
-    //missingQ = 'which sequence do you want to test'
+    verbPhrase = 'evaluera/evaluering (vad)'
 ;
 
 #endif // __DEBUG

@@ -373,7 +373,7 @@ powerControl: PowerPlantRoom 'Kontrollrum' 'kontrollrummet'
     ['<q>Min överordnade, Guanmgon, skulle vara bättre kvalificerad än
     jag att hjälpa dig i denna fråga,</q> säger Xojo. ',
     '<q>Jag måste överlåta sådana frågor till mina överordnade,</q> säger Xojo. ',
-    'Xojo tänker ett ögonblick. <q>Kanske du borde rådfråga min överordnade,
+    'Xojo tänker ett ögonblick. <q>Du kanske borde rådfråga min överordnade,
     Guanmgon,</q> säger han. '
     ]
 
@@ -4763,9 +4763,9 @@ adminEmail: Readable 'papper^s+utskrift+en/papper^s+bit+en/utskrift+en/email+et/
 
     <.p><.blockquote>
     <tt>doug- hoppas du är klar med demon nu.....när du kommer tillbaka
-    behöver jag att du åker ner till la för att rekrytera en cal tech-student som heter
-    brian stamer.\ rudyb såg en artikel om honom någonstans han är helt
-    het på att anställa honom.\ känner du honom....i alla fall vill rudyb att du
+    vill jag att du åker ner till la för att rekrytera en cal tech-student som heter
+    brian stamer.\ rudyb såg en artikel om honom någonstans han är helt i
+    eld och lågor om att anställa honom.\ känner du honom....i alla fall vill rudyb att du
     åker eftersom du gick på cal tech.
 
     <.p>tack carl

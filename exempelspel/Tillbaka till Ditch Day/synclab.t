@@ -28,7 +28,7 @@ syncLabRoof: RoofRoom
     up = slrLadderUp
     down = (slrDoor.isOpen ? slrLadderDown : inherited)
 
-    vocabWords = 'sync synkrotron lab/laboratorium/byggnad/tak'
+    vocabWords = 'sync synkrotron lab+bet/laboratorium+et/byggnad+en/tak+et'
 ;
 
 + Floor
@@ -42,7 +42,7 @@ syncLabRoof: RoofRoom
     "Marken är två våningar nedanför. "
 ;
 
-+ Fixture 'bak+re blank+a betong firestone vägg+en/lab/labb+et/laboratorium+et/byggnad+en'
++ Fixture 'bak+re blank+a firestone betong|vägg+en/lab/labb+et/laboratorium+et/byggnad+en'
     'Firestones bakvägg'
     "Firestone är bara en blank betongvägg på denna sida. En stege
     är fäst vid väggen och leder upp längs byggnadens sida. "
@@ -121,7 +121,7 @@ syncLabRoof: RoofRoom
 ;
 
 ++++ slrLadderDown: TravelWithMessage, StairwayDown
-    'järn smide^s+järn^s+stege' 'smidesjärnsstege'
+    'järn smide smidesjärns|stege+n*' 'smidesjärnsstege'
     "Stegen är fäst vid schaktets vägg. Den går ner i schaktet
     in i mörkret. "
 
@@ -217,7 +217,7 @@ syncCatwalkSouthWest: SyncCatwalkRoom
 ;
 
 + scswLadderUp: StairwayUp ->slrLadderDown
-    'smide^s+järn+stege+en' 'smidessjärnsstege'
+    'smides|järnsstege+en/smidesstege+en' 'smidessjärnsstege'
     "Stegen går uppför väggen<< slrDoor.isOpen
       ? " till en liten öppning ovanför" : "" >>. "
     
@@ -254,13 +254,13 @@ syncCatwalkSouthWest: SyncCatwalkRoom
 + Fixture, BasicContainer
     isOpen = (slrDoor.isOpen)
 ;
-++ Distant 'liten lilla öppning+en' 'liten öppning'
+++ Distant 'li:ten+lla öppning+en' 'liten öppning'
     "En flik av himlen är synlig genom öppningen. "
 
     dobjFor(LookIn) remapTo(Examine, scswSky)
     dobjFor(LookThrough) remapTo(Examine, scswSky)
 ; 
-++ scswSky: Distant 'synlig+a flik+en/himmel/himlen' 'himmel'
+++ scswSky: Distant 'synlig+a flik+en/him:mel+len' 'himmel'
     "Endast en liten flik av himlen är synlig härifrån. "
 ;
 
@@ -279,7 +279,7 @@ syncCatwalkNorth: SyncCatwalkRoom
     east = syncCatwalkGapWest
 ;
 
-+ Fixture 'väst v betong+vägg+en*väggar+na' 'västra väggen'
++ Fixture 'väst+ra v betong|vägg+en*betong|väggar+na' 'västra väggen'
     "Väggen verkar vara gjord av betong. Den sträcker sig uppåt och
     nedåt in i mörkret. "
 ;
@@ -293,10 +293,10 @@ syncCatwalkNorth: SyncCatwalkRoom
 MultiFaceted
     locationList = [syncCatwalkGapWest, syncCatwalkGapEast, syncOnCrate]
     instanceObject: Distant {
-        'överhängande bro/undersida/vindbrygga' 'bro'
-        "Den är för långt borta för att se några detaljer, särskilt i
-        den svaga belysningen, men det ser ut som en sektion av gångbron
-        som skulle passa precis över gapet. "
+        'överhängande bro+n/undersida+n/vindbrygga+n' 'bro'
+        "Den är för långt borta för att du ska kunna utgöra några detaljer, 
+        särskilt i den svaga belysningen, men det ser ut som en sektion av 
+        gångbron som skulle passa precis över gapet. "
 
         disambigName = 'överhängande bro'
     }
@@ -322,7 +322,7 @@ syncCatwalkGapFloor: catwalkFloor
 metalCrateTop: MultiFaceted
     instanceObject: Enterable {
         -> syncOnCrate
-        'särskilt stor+a enorm+a polerad+e aluminium metall+låda+n/topp+en/bro+n'
+        'särskilt stor+a enorm+a polerad+e aluminium metall|låda+n/topp+en/bro+n'
         'metallåda'
         "Lådans topp är ungefär i nivå med gångbron,
         vilket skapar en bro över gapet. "
@@ -366,13 +366,13 @@ syncCatwalkGapWest: SyncCatwalkRoom
     "Panelen har två stora svampknappar, en röd och en grön.
     En handskriven skylt är fäst: <q>Ur funktion---Fastnat.</q> "
 ;
-++ Button, Fixture 'stor+a röd+a svamp+knapp+en/knapp+en' 'röd svampknapp'
+++ Button, Fixture 'stor+a röd+a svamp+knapp+en' 'röd svampknapp'
     "Det är en stor röd knapp med rundad topp. "
     okayPushButtonMsg = 'Knappen klickar, men inget annat verkar
         hända. '
     dobjFor(Switch) asDobjFor(Push)
 ;
-++ Button, Fixture 'stor+a grön+a svamp+knapp+en/knapp+en' 'grön svampknapp'
+++ Button, Fixture 'stor+a grön+a svamp+knapp+en' 'grön svampknapp'
     "Det är en stor grön knapp med rundad topp. "
     okayPushButtonMsg = 'Knappen klickar, men inget annat verkar
         hända. '
@@ -380,7 +380,7 @@ syncCatwalkGapWest: SyncCatwalkRoom
 ;
 // TODO: du kan inte ändra den
 
-++ CustomImmovable 'handskriven handskrivna skylt+en' 'handskriven skylt'
+++ CustomImmovable 'handskriv:en+na skylt+en' 'handskriven skylt'
     "<q>Ur funktion---Fastnat.</q> "
     cannotTakeMsg = 'Att ta bort skylten kan skapa en säkerhetsrisk;
         bättre att låta den vara. '
@@ -416,7 +416,7 @@ syncOnCrate: SyncCatwalkRoom
     }
 ;
 
-+ Distant '(öst+ra) (väst+liga) (ö) (v) sektion+en gångbro+n/gångväg+en' 'gångbro'
++ Distant '(öst+ra) (väst+liga) (ö) (v) sektion+en gång|bro+n/gång|väg+en' 'gångbro'
     "Sektioner av gångbron ligger österut och västerut. "
 ;
 
@@ -599,7 +599,7 @@ syncCatwalkEast: SyncCatwalkRoom
 ;
 
 
-+ Enterable ->(location.north) 'trä+ig träaktig liten lilla struktur+en/hus+et/kontor+et'
++ Enterable ->(location.north) 'träig+a träaktig+a li:ten+lla struktur+en/hus+et/kontor+et'
     'trästruktur'
     "Strukturen är gjord av trä och ser ut som ett litet hus.
     En dörr märkt <q>Kontor</q> leder in. "
@@ -641,14 +641,14 @@ syncLabOffice: Room
 ;
 
 + Fixture
-    'television statisk+a liten lilla rad+en video monitor+n/skärm+en/
-    bild+en/tv/tvs/television*bilder+na monitorer+na skärmar+na'
+    'statisk+a li:ten+lla rad+en video monitor+n/skärm+en/
+    bild+en/tv+n/television+en*tvs bilder+na monitorer+na skärmar+na'
     'rad av monitorer'
     "De ser ut som övervakningsmonitorer man skulle se i
     en närbutik: små skärmar som visar statiska bilder
     tagna genom fiskögonlinser. Bilderna ser ut att vara från inomhusmiljöer
     ---några ser ut som kontor, andra som laboratorier. Du
-    skannar monitorerna och inser att en av dem
+    skannar igenom monitorerna och inser att en av dem
     visar en bild av Stamers labb. "
     isPlural = true
 ;
@@ -662,7 +662,7 @@ syncLabOffice: Room
     dobjFor(Examine) { verify() { inherited(); } }
 ;
 
-+ Heavy, Chair 'aeleron kontors (skrivbords) stol+en' 'kontorsstol'
++ Heavy, Chair 'aeleron (skrivbords) kontors|stol+en' 'kontorsstol'
     "Det är en av de där fancy Aeleron-stolarna, den typ som alla
     VP:s har på Omegatron. "
 ;
@@ -674,7 +674,7 @@ syncLabOffice: Room
 ;
 
 ++ Keypad, CustomImmovable
-    'mitamail+en e-post epost dator+n/terminal+en' 'dator'
+    'mita+mail e-post epost email dator+n/mita+mail+en/e-post|terminal+en' 'dator'
     "Det är faktiskt inte en dator; det är egentligen en av de där
     hemska MitaMail e-postterminalerna. Ingen påstår sig gilla
     dem, men Mitachron har på något sätt sålt miljoner av dem;
@@ -731,8 +731,8 @@ syncLabOffice: Room
         \nTill: normf@mitachron.com
         \nÄmne: Sv:\ forskningsledtrådar
         \bJag har etablerat mitt kontor här i Pasadena, i ett oanvänt
-        utrymme som säkert kommer att gå obemärkt förbi. Detta kommer att påskynda vårt
-        arbete här avsevärt.
+        utrymme som säkert kommer att gå obemärkt förbi. Detta kommer att 
+        påskynda vårt arbete här avsevärt.
         \bEnligt vår diskussion i måndags har vi slutfört vår lista över
         intressanta projekt och har påbörjat installation av video-
         utrustning på de identifierade platserna. Vi samlar redan in data
@@ -808,11 +808,12 @@ syncLabOffice: Room
         \nÄmne: anti-dekoherensdata
         \bFrosst - Norm instruera att kontakta dig angående
         anti-dekoherensexperiment du utför. Mitt team har
-        utfört första Galvani-2 fältutplaceringtest. Framgång
-        endast delvis, på grund av samma lokaliseringsbegränsningar som påträffades i
+        utfört första Galvani-2 fältutplaceringtest. 
+        Endast delvis framgång, på grund av samma 
+        lokaliseringsbegränsningar som påträffades i
         G-1. Är nu övertygade om anti-dekoherensteknologi
-        för att lösa problem.
-        \bHar skickat över natten (DefEx) rapport om experiment till dig i
+        för att lösa problemet.
+        \bHar över natten skickat (DefEx) rapport om experiment till dig i
         Pasadena-plats. Av säkerhetsskäl är den i svart status-
         rapportpärm med titeln Effektivitetsstudie #37. Granska
         vänligen.
@@ -830,13 +831,13 @@ syncLabOffice: Room
 
         'Från: normf@mitachron.com
         \nTill: frosstb@mitachron.com
-        \nÄmne: avledning
+        \nÄmne: förströelse
         \bBra jobb hittills i Pasadena. Izru berättar för mig att Galvani-2
         kommer att dra stor nytta.
-        \bIntresserad av att ta en dag eller två för en rolig avledning?
+        \bIntresserad av att ta en dag eller två för en rolig förströelse?
         Vi hörde just att O. lägger bud på ett stort kraftverkskontrakt i Asien.
-        Vi vill egentligen inte ha det, men jag vet hur du tycker om att leka med
-        de killarna. Om du är intresserad, ta företagsplanet och åk
+        Vi vill egentligen inte ha det, men jag vet hur mycket du tycker om att 
+        leka med de killarna. Om du är intresserad, ta företagsplanet och åk
         och gör din vin-och-mat-grej. Sarah har detaljerna.
         \b-Norm',
 
@@ -844,7 +845,7 @@ syncLabOffice: Room
         \nTill: frosstb@mitachron.com
         \nKopia: normf@mitachron.com
         \nÄmne: sv:\ anti-dekoherensdata
-        \bFrosst - översvallande tack för datakalkylblad. Mest intressant.
+        \bFrosst - översvallande tack för datakalkylblad. Mycket intressant.
         Alla nu övertygade om relevans. Tyvärr, nuvarande expertis
         inom området nu otillräcklig. Att rekommendera anställning av medlem från
         experimentteam från Caltech. Norm har godkänt headcount;
@@ -858,7 +859,7 @@ syncLabOffice: Room
         \bIzru - enligt din begäran har vi identifierat kandidater i
         anti-dekoherensexperimentteamet. Toppkandidaten är en
         herr B. Stamer. Han är en avgångsstudent, så vi kommer lätt att
-        få honom genom de vanliga kanalerna för högskolrekrytering.
+        få honom genom de vanliga högskolerekryteringskanalerna.
         \b-fb',
 
         'Från: normf@mitachron.com
@@ -875,7 +876,7 @@ syncLabOffice: Room
 ;
 
 +++ mitaMailDisplay: Component, Readable
-    'mitamail+en e-post epost datorns terminal+ens bärnstensfärgad+e text+en display+en/datordisplay+en/skärm+en'
+    'mitamail+en e-post epost email datorns terminal+ens bärnstensfärgad+e text+en dator|display+en/dator|skärm+en'
     'datordisplay'
     "Displayen visar för närvarande ett meddelande i bärnstensfärgad text:
     <.p><<location.showMessage>> "
@@ -888,11 +889,11 @@ syncLabOffice: Room
  *   they'll just refer to the overall keyboard object. 
  */
 +++ Component
-    'mitamail+en e-post epost datorns terminal+ens tangentbord+et/tangent+er*tangenter+na' 'tangentbord'
+    'mitamail+en e-post epost email datorns terminal+ens tangentbord+et/tangent+er*tangenter+na' 'tangentbord'
     "Tangentbordet har en rad funktionstangenter ovanför de vanliga
-    tangenterna. Du har använt dessa precis tillräckligt för att veta att du trycker
-    på F7-tangenten för att gå till nästa meddelande, och F13 för att gå till
-    föregående meddelande. "
+    tangenterna. Du har använt dessa precis tillräckligt för att veta 
+    att du trycker på F7-tangenten för att gå till nästa meddelande, 
+    och F13 för att gå till föregående meddelande. "
 
     dobjFor(TypeOn) remapTo(TypeOn, location)
     dobjFor(TypeLiteralOn) remapTo(TypeLiteralOn, location, IndirectObject)
@@ -903,7 +904,7 @@ class MitaMailFKey: Button, Component
 ;
 ++++ MitaMailFKey
     'f1 f2 f3 f4 f5 f6 f8 f9 f10 f11 f12 f14 f15 f16 f17
-    (funktion^s+tangent+en)*(funktion^s+tangenter+na) rader+na'
+    (funktions|tangent+en)*(funktions|tangenter+na) rader+na'
     'rad av funktionstangenter'
 
     dobjFor(Push) { action() { "Du trycker på tangenten, och displayen
@@ -918,17 +919,17 @@ class MitaMailFKey: Button, Component
 ;
 
 + Fixture, Consultable 'hylla+n/bokhylla+n*bokhyllor+na hyllor+na' 'hyllor'
-    "Hyllorna är fulla av svarta pärmar, uppradade i prydliga rader. "
+    "Hyllorna är fulla med svarta pärmar, uppradade i prydliga rader. "
     isPlural = true
 
-    iobjFor(PutOn) { verify() { illogical('Hyllorna är för fulla;
+    iobjFor(PutOn) { verify() { illogical('Hyllorna är för fyllda;
         det finns inget utrymme att lägga till något. '); } }
     iobjFor(PutIn) asIobjFor(PutOn)
 
     dobjFor(Search) asDobjFor(LookIn)
     lookInDesc = "Det finns för många pärmar för att titta igenom alla.
         Många är dock märkta, så du skulle förmodligen kunna
-        hitta en specifik om du visste vad du letade efter. "
+        hitta en specifik en om du vet vad du letar efter. "
 ;
 /* use LibBookTopic for this, as it works the same way */
 ++ LibBookTopic @efficiencyStudy37Topic
@@ -942,14 +943,14 @@ class MitaMailFKey: Button, Component
 ++ LibUnbook '37 effektivitetsstudie+n'
     notHereMsg = 'Du ser inte den ligga framme, men den kan vara
         begravd bland de andra pärmarna; du kanske kan
-        hitta den om du letar efter den. '
+        finna den om du letar efter den. '
 ;
 
 ++ DefaultConsultTopic
     "Du skannar hyllorna, men du hittar inte det du letar efter. "
 ;
 ++ efficiencyStudy37: PresentLater, Readable, Consultable
-    '37 svart+a effektivitet^s+studie/pärm+en' 'Effektivitetsstudie #37'
+    '37 svart+a effektivitets|studie+n/effektivitets|pärm+en' 'Effektivitetsstudie #37'
     "Den svarta pärmen är märkt <q>Effektivitetsstudie #37</q> på
     ryggen. "
 
@@ -968,43 +969,43 @@ class MitaMailFKey: Button, Component
     dobjFor(Open) asDobjFor(Read)
 ;
 +++ es37Overview: Component, Readable 'översikt:en^s+avsnitt+et' 'Översiktsavsnitt'
-    "Du bläddrar till Översiktsavsnittet. Som du förväntade dig är detta inte
+    "Du bläddrar till Översiktsavsnittet. Som du förväntade dig är inte detta 
     en <q>effektivitetsstudie</q> alls, utan information om något
     som kallas Projekt Galvani-2. Det finns inget specifikt om vad
     projektet är tänkt att göra; istället ligger fokus på hur Galvani-2
     planerar att övervinna problemen från sin föregångare, Projekt Galvani-1.
     <.p>Den primära begränsningen för Galvani-1, enligt rapporten,
-    var att det krävde att användarna bar otymplig huvudbonad. Det finns
+    var att det krävde att användarna bar en otymplig huvudbonad. Det finns
     en illustration av en man som bär något som ser ut som en
     tidig dykhjälm, eller en av de gamla skönhetssalongens hårtorkar.
     Galvani-2 är tänkt att lösa detta problem genom att fungera på avstånd
-    från användaren (faktiskt är ordet som rapporten fortsätter att använda
-    <q>försöksperson</q>), vilket eliminerar behovet av huvudbonaden.
+    från användaren (egentligen använder rapporten ordet <q>försöksperson</q> 
+    hela tiden), vilket eliminerar behovet av huvudbonaden.
     <.reveal galvani-2-overview> "
 ;
-+++ es37Budget: Component, Readable 'budget+avsnitt+et' 'Budgetavsnitt'
++++ es37Budget: Component, Readable 'budget:en+avsnitt+et' 'Budgetavsnitt'
     "Du läser över budgetavsnittet med förvåning. Detta enskilda
     projekt har en finansiering som är mer än fem gånger större än hela
     din avdelnings årliga budget. Det konstiga är att du
-    inte kan komma på några Mitachron-produkter som verkar relaterade till
-    detta projekt; de verkar finansiera detta som en ren forsknings-
+    inte kan komma på några Mitachron-produkter som verkar vara relaterade 
+    till detta projekt; de verkar finansiera detta som en ren forsknings-
     insats. "
 ;
-+++ es37Test: Component, Readable 'fältutplacering:en^s+test+et/avsnitt+et'
++++ es37Test: Component, Readable 'fältutplacering:en^s+test:et+sektion+en/testsektion+en/fälttest+et/avsnitt+et'
     'Fältutplaceringstestsektion'
     "Detta avsnitt beskriver ett fälttest av Galvani-2. Utplaceringen
-    var vid en nylig rättegång. Du kommer ihåg det---en
+    var vid en nylig rättegång. Du minns det---en
     av de mellanvästliga staterna stämde Mitachron för påstådda
-    antitrustvåldationer. Det verkade uppenbart för alla att
-    Mitachron var skyldiga, men de vann på något sätt frikännande. Till och med
-    domaren sa i en intervju senare att hon var förvånad
-    över sitt eget beslut.
+    antitrustöverträdelser. Det verkade uppenbart för alla att
+    Mitachron var skyldiga, men de vann på något sätt frikännande. 
+    Till och med domaren sa i en intervju senare att hon var 
+    förvånad över sitt eget beslut.
     <.p><q>Detta bevisar effektiviteten i
     tillvägagångssättet,</q> säger rapporten. <q>Det krävde exceptionell
     kreativitet att lura en försöksperson att bära Galvani-1-huvudbonaden
     medan dess syfte doldes. Galvani-2-designen kommer
-    däremot att vara nästan trivialt att placera ut i hemlighet,
-    när vi väl övervinner de nuvarande räckviddsbegränsningarna. Även med
+    däremot att vara nästan trivial att placera ut i hemlighet,
+    när vi väl överkommer de nuvarande räckviddsbegränsningarna. Även med
     dagens räckviddsgränser är utplacering fortfarande möjlig under
     tillräckligt kontrollerade förhållanden, som detta test demonstrerade:
     tekniker kunde dölja kontroll- och strömförsörjnings-
@@ -1038,16 +1039,17 @@ class MitaMailFKey: Button, Component
     beteende är enorm. Föreställ dig effekten av fältsändare uppsatta
     i stora köpcentrum, inställda på att sända meddelanden som
     <q>Köp fler Mitachron-produkter nu</q> eller <q>Mitachron-produkter
-    får mig att känna mig bra om mig själv</q>... Inom tre år
+    får mig att må gott om mig själv</q>... Inom tre år
     bör komponentkostnaderna vara tillräckligt låga för att vi ska kunna 
     inkludera
     miniatyriserade fältsändare i våra företags- och konsumentterminal-
     produkter (MitaMail, MitaMon, etc). Med måttliga e-handels-
-    partnerinitiativ skulle vi direkt kunna kontrollera online-
-    shoppingbeteende... Även när Galvani-2-regeringens
+    partnerinitiativ skulle vi kunna direkt kontrollera online-
+    shoppingbeteende... 
+    Även när Galvani-2-regeringens
     utrullning är slutförd kan vi inte förvänta oss full kontroll över
-    variabler, eftersom dagens första världens regeringar är ett komplex
-    av sammanflätade system som kan trotsa viljan hos varje enskild
+    variablerna, eftersom dagens regeringar i den första världen är komplexa
+    system som är sammanlänkade och kan trotsa viljan hos varje enskild
     komponent. Lyckligtvis skapar företagets tysta engagemang i
     elektroniska röstningssystem (FairVote, e-TrustSafe, etc) ett idealt 
     tillfälle att kringgå
@@ -1071,15 +1073,15 @@ class ES37Topic: ConsultTopic
 /* a generic object for the binders */
 ++ GenericObject, CustomImmovable
     'identisk+a svart+a pärm+en/pärmar+na' 'svarta pärmar'
-    "Pärmarna är uppradade i prydliga rader och fyller helt
-    hyllorna. De är alla identiska, förutom att många är märkta.
-    Du kanske kan hitta en specifik om du visste vad du
+    "Pärmarna är uppradade i prydliga rader och fyller upp
+    hyllorna helt. De är alla identiska, förutom att många är märkta.
+    Du kanske kan hitta en specifik pärm om du visste vad du
     letade efter. "
     
     isPlural = true
-    cannotTakeMsg = 'Det finns för många pärmar för att ta dem alla.
+    cannotTakeMsg = 'Det är alldeles för många pärmar för att ta dem alla.
         Många är dock märkta, så du kanske kan hitta en
-        specifik om du visste vad du letade efter. '
+        specifik om du vet vad du letar efter. '
 
 
     /* remap searches/consults to the shelves */
@@ -1096,7 +1098,7 @@ class ES37Topic: ConsultTopic
  */
 class SyncLabRoom: Room
     /* all of these locations can be called "sync lab" */
-    vocabWords = 'sync synkrotron synchrotron lab labb+et/laboratorium+et'
+    vocabWords = 'sync synkrotron synchrotron lab synchrotron|labb+et/synchrotron|laboratorium+et'
     name = 'Synkrotronlaboratoriet'
     /* 
      *   these locations use a special set of room parts, as walls are not
@@ -1135,24 +1137,23 @@ class SyncLabRoom: Room
 ;
 
 syncFloor: Floor
-    '(sync) (synkrotron) (lab) (labb+ets) (laboratorium+ets) grovt grtova betong+golv+et/betong+platta+n'
+    '(sync) (synkrotron) (lab) (labb+ets) (laboratorium+ets) grov:t+a betong+golv+et/betong+platta+n'
     'golv'
     "Golvet är en platta av grov betong. "
 ;
 
 syncCrates: CustomImmovable, RoomPart
-    'kartong
-    trä+låda+n/kista+n/stapel+n/behållare+n*behållar+na lådor+na trälådor+na kistor+na staplar+na'
+    'kartong+en trä|låda+n/kista+n/stapel+n/behållare+n*behållar+na trä|lådor+na kistor+na staplar+na'
     'trälådor'
     "Det finns en blandning av trälådor och kartonger i varierande
     storlekar, mestadels stora. Några är märkta med några slumpmässiga bokstäver
     eller siffror, men ingen av markeringarna betyder något för dig.
-    Behållarna är tätt staplade och verkar slumpmässigt placerade.
+    Behållarna är tätt staplade och verkar slumpmässigt utplacerade.
     Många av staplarna når långt över din egen höjd. "
 
     isPlural = true
 
-    cannotTakeMsg = 'Du skulle behöva en gaffeltruck för att göra någon betydande
+    cannotTakeMsg = 'Du skulle behöva en gaffeltruck för att kunna göra någon betydande
         omorganisation. '
 
     dobjFor(Open)
@@ -1190,7 +1191,7 @@ syncCrates: CustomImmovable, RoomPart
  *   use this by default for any directions not otherwise set.  
  */
 noTravelCrates: NoTravelMessage
-    "Lådorna är packade för tätt; det finns ingen väg igenom. "
+    "Lådorna är för tätt packade; det finns ingen väg igenom. "
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -1202,8 +1203,8 @@ syncLab1: SyncLabRoom
     "Detta hörn av Synkrotronlaboratoriets golv är inneslutet av lådor och
     kistor staplade högt runt omkring, med precis tillräckligt utrymme lämnat
     öppet för att bilda en gångväg. Området längs den västra väggen är mestadels
-    fritt, vilket ger tillgång till en metalltrappa som leder upp
-    mot norr. En väg är också öppen mot nordost. "
+    fritt, vilket ger tillgång till en uppåtledande metalltrappa 
+    mot norr. En väg mot nordost är också öppen. "
 
     vocabWords = 'hörn+et/gångväg+en'
 
@@ -1227,7 +1228,7 @@ syncLab1: SyncLabRoom
 ;
 
 + sl1Stairs: StairwayUp ->scswStairDown
-    'metall+trappa+n/trappuppgång+en*trappor+na' 'metalltrappa'
+    'metall|trappa+n/metall|trapp+uppgång+en*trappor+na' 'metalltrappa'
     "Trappan leder upp längs den västra väggen och försvinner in i
     skuggan. "
 ;
@@ -1273,7 +1274,7 @@ metalCrate: MultiFaceted
             
             /* if the casters haven't been seen, mention the space below */
             if (!metalCrateWheels.discovered)
-                "<.p>Vid närmare inspektion verkar lådan vara upphöjd
+                "<.p>Vid en närmare inspektion verkar lådan vara upphöjd
                 något från golvet; det måste finnas något under den. ";
         }
 
@@ -1404,14 +1405,14 @@ metalCrate: MultiFaceted
             if (isIn(syncLab4))
             {
                 "Du lutar dig mot den enorma lådan och ger den en ordentlig,
-                stadig knuff. Den börjar långsamt rulla, och du
-                kliver framåt, gräver in hälarna, och fortsätter att putta den.
-                Efter några meter märker du att de andra lådorna och boxarna
-                staplade längs sidorna börjar vackla oroväckande.
-                Du puttar brådskande aluminiumväggen framåt,
-                och du lyckas precis komma undan när högar
-                av lådor kommer ramlande från alla håll för att
-                fylla gapet. ";
+                stadig knuff. Den börjar sakta rulla, och du
+                kliver framåt, trycker ifrån med hälarna, och fortsätter att knuffa.
+                Efter några meter märker du att de andra lådorna och kartongerna
+                som är staplade bredvid börjar vackla farligt. 
+                Du skjuter snabbt aluminiumväggen framåt,
+                och hinner precis undan när högar av lådor
+                välter in från alla håll för att
+                fylla tomrummet. ";
 
                 /* 
                  *   eliminate the existing syncLab2 facet, as we're
@@ -1426,12 +1427,12 @@ metalCrate: MultiFaceted
             else if (isIn(syncLab2))
             {
                 "Du ger lådan en kraftig knuff, och den börjar
-                rulla norrut. Du fortsätter att putta den, ökar
-                farten, när den plötsligt stannar
-                med en hög metall-mot-metall-krasch som ekar
-                ovanifrån. Du tittar upp och inser
-                att lådan har kilat fast sig mellan
-                de två ändarna av gångbron, och fyller gapet. ";
+                rulla norrut. Du fortsätter att knuffa den och ökar
+                farten, till den plötsligt stannar tvärt 
+                med en hög metallisk smäll som ekar
+                från taket. Du tittar upp och inser
+                att lådan har kilats fast mellan
+                de två ändarna av catwalken och fyller ut mellanrummet. ";
 
                 /* fill in the gap in the catwalk above */
                 metalCrateTop.moveIntoAdd(syncCatwalkGapWest);
@@ -1461,10 +1462,10 @@ metalCrate: MultiFaceted
 ;
 
 + metalCrateWheels: Component, Hidden
-    '(uppsättning+en) hjulställ+et/hjul+et*hjulställen+a hjulen+a' 'hjulställ'
-    "Det är för mörkt under lådan för att se mycket detaljer, men det
-    ser ut som om det finns ett hjul i varje hörn, förmodligen för att
-    göra det möjligt att flytta lådan genom att putta den. "
+    '(uppsättning+en) hjul+ställ+et*hjulställen+a hjulen+a' 'hjulställ'
+    "Det är för mörkt under lådan för att se några detaljer, men det
+    ser ut som om det finns ett hjul i varje hörn, antagligen för att
+    göra det möjligt att flytta lådan genom att skjuta på den."
 
     /* use the special description only in contents, not in the room */
     useSpecialDescInRoom(room) { return nil; }
@@ -1510,8 +1511,8 @@ syncLab2: SyncLabRoom
     "Passagen leder sydväst mellan staplar av lådor. "
 ;
 
-+ EntryPortal ->(location.southeast) 'liten lilla öppning+en' 'liten öppning'
-    "Det finns precis tillräckligt med utrymme mellan lådorna för att gå sydost. "
++ EntryPortal ->(location.southeast) 'li:ten+lla öppning+en' 'liten öppning'
+    "Det finns precis tillräckligt med utrymme mellan lådorna för att gå sydöst. "
 ;
 
 
@@ -1522,10 +1523,10 @@ syncLab2: SyncLabRoom
 syncLab3: SyncLabRoom
     'Under gångbron' 'området under gångbron' 'öppet område'
     "Detta är ett öppet område bland lådorna. Öppningen sträcker sig
-    söderut; täta staplar av lådor och kistor avgränsar de andra
-    riktningarna, även om en passage har lämnats fri österut,
+    mot söder; täta staplar av lådor och kistor avgränsar de andra
+    riktningarna, även om en passage har lämnats fri mot öster,
     och en smal öppning kan vara passerbar mot sydväst.
-    <.p>Ovanför, ungefär en våning upp, är undersidan av en metall-
+    <.p>Ovanför, ungefär en våning upp, syns undersidan av en metall-
     gångbro knappt synlig i det svaga ljuset. Gångbron löper öster
     och väster, men den avbryts direkt ovanför av ett brett gap på
     ungefär tre meter. "
@@ -1549,8 +1550,9 @@ syncLab3: SyncLabRoom
 
 + EntryPortal ->(location.southwest)
     'smal+a sydväst+ra sv öppning+en' 'smal öppning'
-    "Öppningen ser precis tillräckligt stor ut för att ta sig igenom. Den leder
-    sydväst genom staplarna av lådor. "
+    "Öppningen ser precis tillräckligt stor ut för att man ska 
+    kunna ta sig igenom.  Den leder sydväst genom staplarna 
+    av lådor."
 ;
 
 /* ------------------------------------------------------------------------ */
@@ -1583,7 +1585,7 @@ syncLab4: SyncLabRoom
     sluttar nedåt tills den når golvet i den södra änden
     av området. Lådor och kistor är instoppade i det sluttande
     utrymmet, vilket lämnar lite plats att röra sig på. En smal öppning
-    genom lådorna leder nordost. "
+    genom lådorna leder nordöst. "
 
     vocabWords = 'trång+a mörk+a vrå+n'
 
@@ -1617,8 +1619,8 @@ syncLab4: SyncLabRoom
 ;
 
 + EntryPortal ->(location.northeast)
-    'smal+a nordost nordöstra no nö passage+n/öppning+en' 'smal öppning'
-    "Passagen leder nordost. Den ser knappt passerbar ut. "
+    'smal+a nordost nordöst+ra no nö passage+n/öppning+en' 'smal öppning'
+    "Passagen leder nordöst. Den ser knappt passerbar ut. "
 ;
 
 + SyncStairUnderside 'trappa+n/undersida+n*trappor+na' 'trappor'
@@ -1679,7 +1681,7 @@ syncLab5: SyncLabRoom
 ;
 
 + sl5Stairs: SyncStairUnderside
-    'metall:en+trappa+n/undersida*metalltrappor+na' 'metalltrappa'
+    'metall:en+trappa+n/undersida+n*metalltrappor+na' 'metalltrappa'
     "Trappan sluttar ner från gångbron till golvet.
     Endast undersidan är synlig härifrån. "
 ;
@@ -1740,12 +1742,12 @@ syncLab6N: SyncLabRoom
 ;
 
 + sl6nStairs: StairwayUp ->sceStairs
-    '(fot) metall trappa+n*trappor+na' 'trappa'
+    '(fot) metall|trappa+n*trappor+na' 'trappa'
     "Metalltrappan leder uppåt mot norr. "
 ;
 
 + sl6Door: Lockable, Door ->syncDoor
-    'matt+a metalldörr+en' 'matt metalldörr'
+    'matt+a metall|dörr+en' 'matt metalldörr'
     "Dörren är gjord av en matt metall. "
 ;
 
@@ -1753,7 +1755,7 @@ syncLab6N: SyncLabRoom
     "Väggen är gjord av betong. Skylten <q>Kontor,</q> med
     en pil som pekar uppåt, är målad vid trappan. "
 ;
-++ Decoration 'målad+e "kontor" kontor^s+skylt+en/pil+en' '<q>Kontor</q>-skylt'
+++ Decoration 'målad+e "kontor" kontors|skylt+en/pil+en' '<q>Kontor</q>-skylt'
     "Skylten lyder <q>Kontor,</q> med en pil som pekar
     upp för trappan. "
 ;
@@ -1811,7 +1813,7 @@ class SyncLab6Crate: CustomImmovable
         action() { "Det finns inget uppenbart sätt att öppna den. "; }
     }
 
-    nothingBehindMsg = 'Lådan är så stor att den nästan skymmer all din sikt. '
+    nothingBehindMsg = 'Lådan är så stor att den nästan skymmer hela din sikt. '
 ;
 
 + SyncLab6Crate
@@ -1867,14 +1869,13 @@ syncLab6S: SyncLabRoom
       : "Passagen verkar fortsätta längre norrut, men
         vägen blockeras av en trälåda, något
         högre än du och nästan för bred för passagen. "
-    >> Det ser också ut som om det finns tillräckligt med utrymme för att ta sig igenom
-    en öppning mellan lådorna västerut.
-    <<syncLab6N.isCrateAtNorth
+    >> Det ser också ut som om det finns tillräckligt med 
+    utrymme för att ta sig igenom en öppning mellan 
+    lådorna västerut. <<syncLab6N.isCrateAtNorth
       ? "En stor trälåda, något högre än du,
         blockerar vägen norrut; i den svaga belysningen kan
         du precis urskilja en trappa som leder uppåt på
-        andra sidan lådan. " : ""
-    >> "
+        andra sidan lådan. " : "" >> "
 
     west = syncLab2
     northwest asExit(west)
@@ -1895,8 +1896,7 @@ syncLab6S: SyncLabRoom
 ;
 
 + sl6sStairs: PresentLater, Distant 'metall trappa+n*trappor+na' 'trappa'
-    "Du kan precis se trappan på andra sidan
-    lådan. "
+    "Du kan skymta trappan på andra sidan lådan. "
 ;
 
 + SyncLab6Crate
@@ -1911,10 +1911,10 @@ syncLab6S: SyncLabRoom
                 loppet av åtskilliga sekunder, men till slut lyckas 
                 du få loss den.
                 Den gnisslar fruktansvärt när den skrapar längs golvet.
-                Efter att ha puttat några meter upptäcker du en dörr 
-                i den östra väggen som var dold bakom lådan. Du
+                Efter att ha knuffat den några meter upptäcker du en dörr 
+                i den östra väggen som var gömd bakom lådan. Du
                 fortsätter tills dörren är tillgänglig, men sedan
-                stöter lådan på något fast och vägrar att röra sig
+                stöter lådan på något hårt och vägrar att röra sig
                 längre. I den svaga belysningen kan du precis
                 urskilja en trappa som leder uppåt på andra sidan
                 lådan. ";

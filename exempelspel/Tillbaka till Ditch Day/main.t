@@ -433,14 +433,14 @@ finishOptionAfterword: FinishOption
         <q>mysteriet</q>. Det finns ledtrådar gömda här och där som du
         kan följa för att lista ut vad vissa tvivelaktiga karaktärer
         i berättelsen egentligen har för sig. Du kan lösa Ditch
-        Day-stacken och vinna spelet utan att följa mysteriet alls,
+        Day-stapeln och vinna spelet utan att följa mysteriet alls,
         så om mina försök att väcka din nyfikenhet misslyckades, har du
         förmodligen inte missat så mycket förutom poäng. Om du
         undrade varför det fanns en spionkamera gömd i Stamers labb,
         låt mig försäkra dig om att svaret kan hittas på
         samma ställen som de saknade poängen.
 
-        <.p>Dessutom kan stacken i Upper Seven (rum 42) lösas.
+        <.p>Dessutom kan stapeln i Upper Seven (rum 42) lösas.
         Den är irrelevant för spelet, så det finns egentlig ingen belöning
         i spelet för att lösa den, men vissa personer kanske tycker det är en
         trevlig fristående problemlösning.
@@ -506,11 +506,11 @@ modify finishOptionAmusing
         \n<li>Undersök överste Magnxis hatt.
         \n<li>Läs broschyrerna på karriärcentret.
         \n<li>Fråga bibliotekarien om hans bok flera gånger.
-        \n<li>Fråga studenterna i Gränd 4 om stacken.
+        \n<li>Fråga studenterna i Gränd 4 om stapeln.
         \n<li>Spela kullabyrintspelet i Gränd 5 flera gånger.
         \n<li>Ta eller ät frukten i Gränd 6.
-        \n<li>Lös Commandant 64-stacken i Upper 7.
-        \n<li>Titta in i kanonröret från den höjda skyliftaren.
+        \n<li>Lös Commandant 64-stapeln i Upper 7.
+        \n<li>Titta in i kanonröret från den höjda skyliften.
         \n<li>Visa Plisnik råttdockan.
         \n<li>Visa Plisnik råttdockan medan du bär den.
         \n<li>Fråga Dave (på nätverkskontoret) om Network
