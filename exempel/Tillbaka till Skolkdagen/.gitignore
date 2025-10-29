@@ -1,0 +1,6 @@
+*.t3
+obj
+Scripts
+.clj-kondo/
+.lsp/
+.vscode

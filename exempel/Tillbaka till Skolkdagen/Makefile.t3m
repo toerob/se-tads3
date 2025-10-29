@@ -1,0 +1,63 @@
+# TADS 3 makefile
+# Tillbaka till Skolkdagen - tads 3 makefile
+#
+
+-o ditch-se.t3
+-pre
+-nodef
+-D LANGUAGE=sv_se
+-D __DEBUG
+-D MESSAGESTYLE=neu
+-D INSTRUCTIONS_MENU
+-FI /usr/local/share/frobtads/tads3/include
+-Fs /usr/local/share/frobtads/tads3/lib
+
+
+-D
+-d
+
+-Fy obj
+-Fo obj
+-w1
+-we
+
+##sources
+-lib system
+
+# Extra during translation. Remove later
+-source dynfunc
+
+-source ../../lib/eval
+-source tests2/tests2
+
+# TODO: borttag möjligt?
+-source reflect
+-lib adv3/adv3
+  -x footnote
+
+
+-source main
+-source me
+-source intro
+-source campus
+-source dabney
+-source jay
+-source stack
+-source bridge
+-source library
+-source bookstore
+-source career
+-source synclab
+-source frosst
+-source about
+-source hints
+-source mods
+-source pathfind
+-source elev
+-source subtime
+
+## TODO: kommentera bort
+-source gametests
+
+-res
+gameinfo.txt
