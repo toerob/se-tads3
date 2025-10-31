@@ -1190,7 +1190,7 @@ class PosElectricalPart: TestGearAttachable
         if (posInterior.isOpen)
             "Du behöver inte ansluta signalgeneratorn där;
             en snabb undersökning med oscilloskopet borde vara tillräckligt för
-            att kontrollera <<itObj>>. "; // TODO: testa av itObj istf thatOBj
+            att kontrollera <<itObj>>. "; 
         else
             "Du måste öppna skåpet innan du kan komma åt
             någon av komponenternas ledningar. ";
@@ -1211,7 +1211,7 @@ class PosElectricalPart: TestGearAttachable
 ;
 
 ++ posSwitch: PosElectricalPart, Switch, Component
-    '(positron) (video) (spel) strömbrytare+n/spel+et' 'strömbrytare'
+    '(positron) (video) (positron|spelets) ström|brytare+n' 'strömbrytare'
     disambigName = 'videospelets strömbrytare'
 
     /* coordinate our on/off state with our parent */
@@ -1292,7 +1292,6 @@ class PosElectricalPart: TestGearAttachable
     cannotTakeMsg = 'Instruktionskortet är permanent fäst på
         konsolen. '
 ;
-// TODO: Fixa språket ovan
 
 
 ++ posButtons: PosElectricalPart, Component
@@ -1421,7 +1420,7 @@ class PosElectricalPart: TestGearAttachable
     }
 ;
 +++ posCircuits: TestGearAttachable, CustomImmovable
-    'krets+en huvudlogik+en stort stor+a krets:en+kort+et/video:+förstärkare+n/kort+et/kretssystem+et*kretsar+na'
+    'krets+en huvudlogik+en stort stor+a krets|kort+et/video|förstärkare+n/kretssystem+et*kretsar+na'
     'kretskort'
     "Dessa gamla spel byggdes på primitiva chips enligt dagens
     standarder, så istället för några få stora integrerade kretsar har dessa
@@ -1898,7 +1897,7 @@ alley3E: AlleyRoom 'Gränd Tre Öst' 'östra änden av Gränd Tre'
     "Dörren är märkt med <q>12.</q> "
 ;
 ++ chickenNotebook: CustomImmovable, Readable
-    'grå+a anteckningsbok+en/snöre+t' 'anteckningsbok'
+    'grå+a antecknings|bok+en/snöre+t' 'anteckningsbok'
     "Anteckningsboken hänger i ett snöre. Eleganta kalligrafiska
     bokstäver pryder omslaget: <q><i>Laboratorieanteckningar och
     Filosofiskt Manifest av Dr. Klaus W.D. von Geflügel,
@@ -1952,8 +1951,8 @@ alley3E: AlleyRoom 'Gränd Tre Öst' 'östra änden av Gränd Tre'
 ;
 
 + chickenator: Immovable, EntryPortal -> insideChickenator
-    'färgad+e stor+a dekorerad+e kartong smal+a
-    låda+n/bås+et/chickenator+n/ljus+et/öppning+en*ljusen+a'
+    'färgad+e stor+a dekorerad+e smal+a ljusförsedd+a
+    låda+n/bås+et/chickenator+n/kartong+en/ljus+et/öppning+en*ljusen+a'
     'kartongbox'
     "Lådan måste ursprungligen ha innehållit ett kylskåp eller en stor
     möbel: den är över två meter hög och nästan lika bred
@@ -2244,7 +2243,7 @@ insideChickenator: Room 'Chickenator' 'Chickenatorn' 'Chickenator'
     längs en vägg, nära taket. En smal öppning i sidan av
     lådan leder tillbaka ut. "
     
-    vocabName_ = 'chickenator+n/kartong+låda+n'
+    vocabName_ = 'chickenator+n/kartong+en/kartong|låda+n'
 
     out = alley3E
 
@@ -3211,7 +3210,7 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
     cannotTakeMsg = 'Den är inte din; du bör lämna den där den är. '
 ;
 
-++ CustomImmovable, Readable 'blå+a pappersskylt+en' 'blå skylt'
+++ CustomImmovable, Readable 'blå+a pappers|skylt+en' 'blå skylt'
     "Skylten är handtextad på blått papper:
     <.p><.blockquote>
     Jacobs Honolulu 10-4 Surfin' Marbles-stapel

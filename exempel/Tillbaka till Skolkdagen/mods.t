@@ -102,6 +102,21 @@ VerbRule(PowerOn)
     : TurnOnAction
     verbPhrase = 'power/powering on (vad)'
 ;
+
+
+VerbRule(Pack)
+    ('packa' | 'stoppa') ('ned'|'ner'|) dobjList ('i') singleIobj
+    : PutInAction
+    verbPhrase = 'packa/packar ner (vad) (i vad)'
+    askIobjResponseProd = inSingleNoun
+;
+
+VerbRule(SteerTo)
+    ('styr') dobjList ('till'|'mot'|) singleDir
+    : PushTravelDirAction
+    verbPhrase = ('styra/styr (vad) ' + dirMatch.dir.name)
+;
+
 VerbRule(PowerOff)
     'stäng' ('av' | 'ner') dobjList 
     | 'stäng' dobjList ('av' | 'ner')
@@ -130,14 +145,16 @@ VerbRule(Swat) 'slå' 'ihjäl' singleDobj : AttackAction
     verbPhrase = 'slå/slår ihjäl (vad)'
 ;
 
+
 /* we might want to test things with the tester in the introduction */
 DefineTAction(TestObj);
-VerbRule(TestObj) ('testa' | 'sondera') singleDobj : TestAction
+VerbRule(TestObj) ('testa' | 'sondera') singleDobj : TestObjAction
     verbPhrase = 'testa/testa (vad)'
 ;
+
 DefineTIAction(TestWith);
 VerbRule(TestWith)
-    ('testa'|'proba') singleDobj 'med' singleIobj : TestWithAction
+    ('testa'|'proba'|'mät') singleDobj 'med' singleIobj : TestWithAction
     verbPhrase = 'testa/testar (vad) (med vad)'
 ;
 
@@ -170,8 +187,9 @@ VerbRule(ConsultMapAbout)
     //| 'look' singleTopic 'up' 'on' singleDobj
     //| 'find' singleTopic 'on' singleDobj
     
-    'slå' 'upp' singleTopic ('i'|'på') singleDobj
-    | ('se'|'hitta'|'leta'|'sök') ('upp'|) singleTopic ('i'|'på') singleDobj
+    ('slå' 'upp' singleTopic ('i'|'på') singleDobj)
+    | 
+    (('se'|'hitta'|'leta'|'sök') ('upp'|) singleTopic ('i'|'på') singleDobj)
     : ConsultAboutAction
     verbPhrase = 'slå/slår upp (vad) (i vad)'
     whichMessageTopic = DirectObject
@@ -204,10 +222,10 @@ VerbRule(PushDownOn) ('tryck'|'pressa') 'ner' 'på' singleDobj : PushAction
  *   We want to be able to hang the chicken suit on the hooks. 
  */
 DefineTIAction(HangOn);
-VerbRule(HangOn) 'häng' dobjList 'på' singleIobj : HangOnAction
+VerbRule(HangOn) 'häng' ('upp'|) dobjList 'på' singleIobj : HangOnAction
     verbPhrase = 'hänga/hänger (vad) (på vad)'
 ;
-VerbRule(HangOnWhat) 'häng' dobjList : HangOnAction
+VerbRule(HangOnWhat) 'häng' ('upp'|) dobjList : HangOnAction
     verbPhrase = 'hänga/hänger (vad) (på vad)'
     construct()
     {

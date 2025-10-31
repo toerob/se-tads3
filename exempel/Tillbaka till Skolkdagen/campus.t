@@ -3185,7 +3185,7 @@ quad: CampusOutdoorRoom
             if (projectile_ == ratPuppet)
                 "Han tittar på leksaksråttan och skrattar, sedan viftar
                 han med den runt brunnens öppning och ropar ner i
-                schaktet. <q>Hej, Plisnik! Kolla vad jag har här!</q>
+                schaktet. <q>Hördu, Plisnik! Kolla vad jag har här!</q>
                 Det hörs några arga rop från schaktet.<.p>";
 
             "Arbetaren kastar tillbaka {ref projectile/honom} till dig.
@@ -3200,14 +3200,14 @@ quad: CampusOutdoorRoom
 
 
             if (projectile_ == ratPuppet)
-                "<q>Hej, Plisnik!</q> ropar han ner i tunneln.
+                "<q>Hördu, Plisnik!</q> ropar han ner i tunneln.
                 <q>Den här idioten här uppe tror att du kommer bli rädd
                 för råttor som faller från himlen! Väldigt skrämmande---flygande
                 råttor! Oooh!</q> Han kastar tillbaka råttan till dig.
                 <q>Hörru, kan du sluta kasta skräp på oss? Det är
                 farligt!</q> ";
             else
-                "<q>Hej!</q> skriker han och kastar tillbaka {den/honom} till dig.
+                "<q>Hallå där!</q> skriker han och kastar tillbaka {den/honom} till dig.
                 <q>Sluta kasta skräp på oss! Det är
                 farligt!</q> ";
         }
@@ -3969,7 +3969,7 @@ syncLot: CampusOutdoorRoom 'Sync-parkeringen' 'Sync-parkeringen' 'parkeringsplat
 ;
 
 + syncDoor: LockableWithKey, Door
-    'matt+a (sync) (synkrotron) (lab+bet) (laboratorium+ets) metall+dörr+en'
+    'matt+a  (synkrotron) (sync|labbets) (laboratorium+ets) metall+dörr+en'
     'matt metalldörr'
     "Dörren är gjord av en matt metall. "
 ;

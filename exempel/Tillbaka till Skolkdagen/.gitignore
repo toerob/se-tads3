@@ -1,6 +1,7 @@
 *.t3
 obj
-Scripts
 .clj-kondo/
 .lsp/
 .vscode
+gametests2.t
+script

@@ -73,13 +73,17 @@ versionInfo: GameID
      */
     showCredit()
     {
-        "<i>Tillbaka till Skolkdagen</i> skrevs ursprungligen av Michael J.\ Roberts och denna 
-         översättning av mig Tomas Öberg har publicerades med hans vänliga godkännande.
-         Översättningen är till stor del genomförd med hjälp av Tabnine/Claude och ChatGpt. 
-         Därefter har jag själv sett över textöversättningarna efteråt för att se till att 
-         formuleringar och uttryckssätt låter svenska. 
+        "<i>Tillbaka till Skolkdagen</i> skrevs ursprungligen av Michael J.\ 
+        Roberts och denna översättning av mig, Tomas Öberg, har publicerats 
+        med hans vänliga godkännande. Vid översättningen har jag tagit 
+        hjälp av Tabnine/Claude/ChatGPT för att i ett första svep översätta 
+        alla textsträngar i kodmassan.  Därefter har jag själv noggrant gått 
+        igenom allting och ändrat texter där det behövts så att formuleringar 
+        och uttryckssätt låter svenska rakt igenom. 
+
         <br><br>
-         Här nedan följer originaltexten från Michael J.\ Roberts själv: <br><br>
+        Nedan följer den översatta originaltexten från Michael J.\ Roberts själv:
+        <br><br>
 
         <i>Return to Ditch day</i> skrevs och programmerades av
         Michael J.\ Roberts, med hjälp av <font size=-1>TADS</font> 3

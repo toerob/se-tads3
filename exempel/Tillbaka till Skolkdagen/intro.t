@@ -1718,7 +1718,6 @@ class GuanmgonAgendaItem: ConvAgendaItem
     owner = powerPlant6
 ;
 
-//TODO: + 
 + Decoration 'säkringspanel+en/brytarpanel+en/paneler+na/ström|brytare+n*ström|brytar+na säkringar+na' 'säkringspaneler'
     "Det finns dussintals strömbrytare som styr distributionen
     av ström från generatorerna och ger skydd mot
@@ -4488,7 +4487,7 @@ adminLobby: Room 'Lobby' 'lobbyn'
     dobjFor(Examine) { verify() { inherited Thing(); } }
 ;
 
-+ Decoration 'bricka+n*servitörer+na servitriser+na brickor+na' 'servitörer'
++ Decoration 'bricka+n/kypare+n/servitör+en/servitris+en*servitörer+na servitriser+na brickor+na kyparna' 'servitörer'
     "Servitörerna rör sig genom folkmassan bärande på drycker."
     isPlural = true
 ;
@@ -4541,14 +4540,14 @@ adminLobby: Room 'Lobby' 'lobbyn'
     isPlural = true
 ;
 
-+ Decoration 'mat|bord+et' 'bord med mat'
++ Decoration 'mat|bord+et/mat+en' 'bord med mat'
     "Bord fyllda med mat kantar väggarna."
     notImportantMsg = 'Du tror att du väntar med att ansluta dig till festen
                        tills du har haft en chans att prata med Översten.'
     isPlural = true
 ;
 
-+ Decoration 'liveband+et/scen+en' 'band'
++ Decoration 'live|band+et/scen+en/storband:et^s+orkester+n' 'band'
     "De spelar storbandsmusik. De verkar ganska bra."
     dobjFor(ListenTo) { verify() { logicalRank(50, 'x decoration'); } }
 ;

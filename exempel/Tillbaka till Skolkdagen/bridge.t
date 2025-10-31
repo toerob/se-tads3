@@ -1148,6 +1148,7 @@ class ExperimentPart: CustomImmovable
     den andra utrustningen med en av samma tjocka svarta kablar
     som förbinder elektromagneterna. "
 
+    dobjFor(TurnOn) asDobjFor(Push)
     dobjFor(Push)
     {
         verify() { }
@@ -1754,7 +1755,7 @@ class TestGearAttachable: NearbyAttachable
 ;
 
 +++ oscilloscope: LabShelfItem, TestGear, OnOffControl
-    'portabelt portabla solid-state oscillo+skop+et/skop+et' 'oscilloskop'
+    'portab:elt+la solid-state oscillo|skop+et/skop+et' 'oscilloskop'
     "Detta är en relativt liten solid-state modell, lätt att bära med sig.
     På ovansidan finns en displayskärm och kontrollerna, och en sond
     är ansluten med en koaxialkabel. <<screenDesc>> "
@@ -1846,7 +1847,8 @@ class TestGearAttachable: NearbyAttachable
     }
 ;
 ++++ Component
-    '(oscilloskopets) (skopets) oscilloskops|kontroll+en*oscilloskops|kontroller+na'
+    //'(oscilloskopets) (skopets) oscilloskops|kontroll+en*oscilloskops|kontroller+na'
+    '(oscillo|skopets) kontroll+en*kontroller+na'
     'oscilloskopkontroller'
     "Kontrollerna låter dig slå på och stänga av oscilloskopet, och göra
     olika justeringar av displayen, såsom tids- och spänningsskalor
@@ -3530,7 +3532,7 @@ class JobOrderTopic: ConsultTopic
     isActive = (plisnik.inOrigLocation)
 ;
 ++++ DefaultAnyTopic, ShuffledEventList
-    ['<q>Hej, Plisnik,</q> ropar en av arbetarna ovanför,
+    ['<q>Hördu, Plisnik,</q> ropar en av arbetarna ovanför,
     <q>har du någon där nere med dig? Se till att det inte är
     en jättestor talande råtta! Ha! Ha!</q> ',
 
@@ -3574,7 +3576,7 @@ class JobOrderTopic: ConsultTopic
 ++++ AskTellAboutForTopic @quadAnalyzer
     topicResponse()
     {
-        "<q>Hej, kan ni skicka ner Netbiscon?</q> ropar du upp
+        "<q>Hallå, kan ni skicka ner Netbiscon?</q> ropar du upp
         till arbetarna ovanför.
         <.p>En av dem sträcker sig ner i schaktet och sänker ner
         nätverkslådan. <q>Se upp, Plisnik,</q> säger han. <q>Jag tror
@@ -3667,7 +3669,7 @@ class JobOrderTopic: ConsultTopic
         /* if they're trying to get my binder or spools, don't let them */
         if (gActionIs(Take) && gDobj is in(st10Spools, workOrders))
         {
-            "<q>Hej,</q> ropar {den plisnik/han} och ställer sig i din
+            "<q>Hallå där,</q> ropar {den plisnik/han} och ställer sig i din
             väg, <q>det där är mina grejer!</q> ";
             exit;
         }
