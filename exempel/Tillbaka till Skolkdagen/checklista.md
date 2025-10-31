@@ -90,9 +90,11 @@
 
 [X] Ta in senaste sv_se
 [X] Behåll alla hovse  - KLAR?
-[] jmf mail i synclab en gång till.
-[] gå igenom main-filens texter
+[X] jmf mail i synclab en gång till.
+[X] gå igenom main-filens texter
+
 [] möjligen test allt2
+
 [] Se om reflect går att ta bort (ökar kompatibilitet) jmf med originalet
 [] Koppla bort debug-möjligheter och skapa riktig version
 [] alla TODOs

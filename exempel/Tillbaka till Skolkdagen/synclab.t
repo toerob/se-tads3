@@ -806,16 +806,17 @@ syncLabOffice: Room
         'Från: izrum@mitachron.com
         \nTill: frosstb@mitachron.com
         \nÄmne: anti-dekoherensdata
-        \bFrosst - Norm instruera att kontakta dig angående
-        anti-dekoherensexperiment du utför. Mitt team har
-        utfört första Galvani-2 fältutplaceringtest. 
-        Endast delvis framgång, på grund av samma 
-        lokaliseringsbegränsningar som påträffades i
-        G-1. Är nu övertygade om anti-dekoherensteknologi
-        för att lösa problemet.
-        \bHar över natten skickat (DefEx) rapport om experiment till dig i
-        Pasadena-plats. Av säkerhetsskäl är den i svart status-
-        rapportpärm med titeln Effektivitetsstudie #37. Granska
+        \bFrosst - Norm fått i uppdrag att kontakta 
+        dig angående det anti-dekohärensexperiment du är
+        utför. Mitt team har utför första Galvani-2 
+        fältutplaceringtest. 
+        Framgång endast delvis, på grund av samma 
+        lokaliseringsbegränsningar som påträffats i
+        G-1. Är nu övertygad om anti-dekoherensteknologi
+        för att lösa problem.
+        \bHar över natten skickat (DefEx) rapport om experiment hos 
+        dig i Pasadena-plats. Av säkerhetsskäl är i svart status-
+        rapportpärm med titel Effektivitetsstudie #37. Granska
         vänligen.
         \b/IhM.',
 
@@ -837,7 +838,7 @@ syncLabOffice: Room
         \bIntresserad av att ta en dag eller två för en rolig förströelse?
         Vi hörde just att O. lägger bud på ett stort kraftverkskontrakt i Asien.
         Vi vill egentligen inte ha det, men jag vet hur mycket du tycker om att 
-        leka med de killarna. Om du är intresserad, ta företagsplanet och åk
+        leka med dem. Om du är intresserad, ta företagsplanet och åk
         och gör din vin-och-mat-grej. Sarah har detaljerna.
         \b-Norm',
 
@@ -848,8 +849,8 @@ syncLabOffice: Room
         \bFrosst - översvallande tack för datakalkylblad. Mycket intressant.
         Alla nu övertygade om relevans. Tyvärr, nuvarande expertis
         inom området nu otillräcklig. Att rekommendera anställning av medlem från
-        experimentteam från Caltech. Norm har godkänt headcount;
-        välj vänligen kandidat och rekrytera.
+        experimentteam från Caltech. Norm har godkänn personalstyrka;
+        välja vänligen kandidat och rekrytera.
         \b/IhM.',
 
         'Från: frosstb@mitachron.com

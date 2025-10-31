@@ -426,35 +426,36 @@ finishOptionCopyright: FinishOption
 finishOptionAfterword: FinishOption
     doOption()
     {
-        "<.p>Om du klarade spelet utan att få alla poäng, och
-        särskilt om det verkar som att det finns många fler poäng att
-        få, så kanske du undrat vad du missat. Det mest
+        "<.p>Om du klarade av spelet utan att få alla poäng, och
+        i synnerhet om det verkade som att det fanns många fler poäng att
+        få, så kanske du undrar vad du har missat. Det mest
         sannolika svaret är att du hoppade över den valfria sidohandlingen 
         <q>mysteriet</q>. Det finns ledtrådar gömda här och där som du
         kan följa för att lista ut vad vissa tvivelaktiga karaktärer
         i berättelsen egentligen har för sig. Du kan lösa
         Skolkdagsstapeln och vinna spelet utan att följa mysteriet alls,
         så om mina försök att väcka din nyfikenhet misslyckades, har du
-        förmodligen inte missat så mycket förutom poäng. Om du
-        undrade varför det fanns en spionkamera gömd i Stamers labb,
-        låt mig försäkra dig om att svaret kan hittas på
+        förmodligen inte missat så mycket mer än poäng. Om du
+        undrar varför det fanns en spionkamera gömd i Stamer's 
+        laboratorium, kan jag försäkra dig om att svaret finns på
         samma ställen som de saknade poängen.
 
         <.p>Dessutom kan stapeln i Upper Seven (rum 42) lösas.
-        Den är irrelevant för spelet, så det finns egentlig ingen belöning
-        i spelet för att lösa den, men vissa personer kanske tycker det är en
-        trevlig fristående problemlösning.
+        Den är irrelevant för själva spelet, så det finns egentlig 
+        ingen belöning för att lösa den, men vissa personer kanske 
+        tycker det är en trevlig fristående problemlösning.
 
         <.p>Vissa spelare av originalet <i>Ditch Day Drifter</i>
-        frågade varifrån termen <q>stapel</q> kommer.
-        För att svara måste jag ge er en kort historik om Ditch Day. 
-        De första Ditch Days var enkla tillställningar där
-        sistaårsstudenterna verkligen bara skolkade för dagen. De
-        yngre studenterna blev uppenbarligen irriterade över att lämnas kvar,
-        och de uttryckte detta genom att bryta sig in i sistaårsstudenternas rum
-        och vandalisera dem. Vid någon tidpunkt började sistaårsstudenterna försöka
-        barrikadera sina rum innan de gav sig av, genom att stapla skrivbord och
-        andra tunga föremål mot sina dörrar.
+        har frågat varifrån termen <q>stapel</q> kommer.
+        För att svara på det behöver jag ge en kort historik 
+        om Ditch Day. De första Ditch Days var enkla tillställningar 
+        där sistaårsstudenterna helt enkelt bara skolkade för dagen. De
+        yngre studenterna blev uppenbarligen irriterade över att lämnas 
+        kvar själva, och de uttryckte detta genom att bryta sig in i 
+        sistaårsstudenternas rum och vandalisera dem. Vid någon tidpunkt 
+        började därför sistaårsstudenterna försöka barrikadera sina rum 
+        innan de  gav sig av, genom att stapla skrivbord och andra tunga 
+        föremål mot sina dörrar.
 
         <.p>Det är därifrån termen kommer: sistaårsstudenterna byggde bokstavligen
         staplar av tunga föremål för att blockera tillträde till sina rum.
