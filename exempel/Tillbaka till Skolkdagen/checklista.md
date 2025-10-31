@@ -89,7 +89,7 @@
 ### TODO:
 
 [X] Ta in senaste sv_se
-[] Behåll alla hovse  - KLAR?
+[X] Behåll alla hovse  - KLAR?
 [] jmf mail i synclab en gång till.
 [] gå igenom main-filens texter
 [] möjligen test allt2

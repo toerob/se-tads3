@@ -3483,11 +3483,11 @@ oliveWalk: CampusOutdoorRoom
 
 + CampusMapEntry 'södra s studentbostäder+na' 'de Södra Husen' 'sydost';
 + CampusMapEntry 'norra n studentbostäder+na' 'de Norra Husen' 'sydost';
-+ CampusMapEntry 'fleming house/hovse hus+et' 'Fleming House' 'sydost';
-+ CampusMapEntry 'page house/hovse hus+et' 'Page House' 'sydost';
-+ CampusMapEntry 'lloyd house/hovse hus+et' 'Lloyd House' 'sydost';
-+ CampusMapEntry 'ruddock house/hovse hus+et' 'Ruddock House' 'sydost';
-+ CampusMapEntry 'ricketts house/hovse huse+et' 'Ricketts House' 'sydost';
++ CampusMapEntry 'fleming+s house/hovse hus+et' 'Fleming House' 'sydost';
++ CampusMapEntry 'page+s house/hovse hus+et' 'Page House' 'sydost';
++ CampusMapEntry 'lloyd+s house/hovse hus+et' 'Lloyd House' 'sydost';
++ CampusMapEntry 'ruddock+s house/hovse hus+et' 'Ruddock House' 'sydost';
++ CampusMapEntry 'ricketts house/hovse hus+et' 'Ricketts House' 'sydost';
 
 + owTrees: TreeDecoration
     '(lång+a) rad+en rader+na *oliv|träd+en träden+a grenar+na' 'olivträden'
@@ -3690,7 +3690,7 @@ oliveWalk: CampusOutdoorRoom
 + EntryPortal ->(location.south)
     'gamla äldre södra s grundutbildning+en student hus lertegel
     stuck främre fleming ricketts båge+n/bågar+na/tak+et/
-    hus+et/husen/houses/komplex+et/studenthem+met/vägg+en*väggar+na ingångar+na studenthemmen+a'
+    hus+et/husen/houses/hovse/hovses/komplex+et/studenthem+met/vägg+en*väggar+na ingångar+na studenthemmen+a'
     'Södra Husen'
     "Södra Husen byggdes på 1930-talet och designades i
     medelhavsstil: bågar, lertegeltak, stuckväggar,
@@ -3700,7 +3700,7 @@ oliveWalk: CampusOutdoorRoom
     isPlural = true
 ;
 
-+ Distant 'blacker dabney hus+et/house*houses husen+a' 'Blacker och Dabney'
++ Distant 'blacker dabney hus+et/house/hovse*houses hovses husen+a' 'Blacker och Dabney'
     "Blacker och Dabney är inte synliga härifrån; de ligger på södra sidan
     av byggnadsgruppen. "
     isPlural = true
@@ -3846,7 +3846,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
 ;
 
 + CampusMapEntry 'apelsin|gång+en/apelsin|ingång+en' 'Apelsingången' 'sydost';
-+ CampusMapEntry 'dabney hus/house' 'Dabney House' 'sydost'
++ CampusMapEntry 'dabney+s hus+et/house/hovse' 'Dabney House' 'sydost'
     altLocations = [dabneyCourtyard]
 
     /* detta är det viktigaste "dabney" och "hus" vi kan söka efter */
@@ -3898,7 +3898,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
 ;
 
 + Enterable ->(location.east)
-    'stor+a stuck dabney byggnad+en/hus+et/house/hovse/ord+en' 'Dabney House'
+    'stor+a stuck dabney+s byggnad+en/hus+et/house/hovse/hovses/ord+en' 'Dabney House'
     "Det är en stor stuckbyggnad designad för att likna klassisk
     medelhavs-arkitektur. Orden <q>DABNEY HOVSE</q> är
     inskrivna ovanför passagen österut. "

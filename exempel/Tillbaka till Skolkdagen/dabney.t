@@ -610,7 +610,7 @@ dabneyLounge: Room 'Sällskapsrum' 'sällskapsrummet'
     Innergården är utanför dörrarna västerut, och en bred
     passage leder norrut in i matsalen. "
 
-    vocabWords = '(dabney) (hus+et) (hovse) sällskapsrum+met'
+    vocabWords = '(dabney+s) (hus+et) (hovse) sällskapsrum+met'
 
     west = dlDoors
     north = dlPassage
@@ -690,7 +690,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
     sidor av varje bord. En bred passage leder söderut, till sällskapsrummet,
     och ett par svängdörrar österut leder till köket. "
 
-    vocabWords = '(dabney) (hovse) (hus+et) matsal+en'
+    vocabWords = '(dabney) (hovse) (house) (hus+et) matsal+en'
 
     south = ddPassage
     out asExit(south)
@@ -3068,7 +3068,7 @@ class LibUnderBooks: object
 ;
 
 + libCourtyard: Distant
-    'dabney hus+et hovse papier-mache papier-mâché
+    'dabney hus+et hovse house papier-mache papier-mâché
     papier-mâché innergård+en/berg+et/topp+en' 'innergård'
     "Fönstret har utsikt över innergården från en våning upp. 
     Modellberget i innergården reser sig lite högre än
