@@ -23,10 +23,10 @@
 -source testunit.t
 
 #-source present-tense
--source past-tense
+#-source past-tense
 #-source satsdelar
 #-source initialize-tests
-#-source additional-tests
+-source additional-tests
 
 #-source parser-tests
 

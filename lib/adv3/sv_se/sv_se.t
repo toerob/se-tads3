@@ -9798,7 +9798,8 @@ modify TopicTAction
  */
 
 VerbRule(Take)
-    (('ta'|'tag') ('ner'|'ned'|) | ('ta'|'tag'|'plocka'|'hämta') ('upp'|)) dobjList
+    (('ta'|'tag') ('ner'|'ned'|) 
+    | ('ta'|'tag'|'plocka'|'hämta') ('upp'|'med'|)) dobjList
     | 'införskaffa' dobjList
     : TakeAction
     verbPhrase = 'ta/tar (vad)'
@@ -9834,7 +9835,7 @@ VerbRule(Examine)
 ;
 
 VerbRule(Read)
-    ('läs'|'tolka'|'tyd'|'studera') dobjList
+    ('läs'|'tolka'|'tyd'|'studera') ('igenom'|) dobjList
     : ReadAction
     verbPhrase = 'läsa/läser (vad)'
 ;
@@ -9922,7 +9923,7 @@ VerbRule(ListenImplicit)
 VerbRule(PutIn)
     ('lägg' | 'placera' | 'sätt' | 'stoppa') ('in'|'i') dobjList ('i'|'inuti') singleIobj
     | ('lägg' | 'placera' | 'sätt' | 'stoppa'  ) dobjList singleIobj
-    | ('lägg' | 'placera' | 'sätt' | 'stoppa' | 'infoga') dobjList
+    | ('lägg' | 'placera' | 'sätt' | 'stoppa' | 'infoga') ('ned'|'ner'|) dobjList
     ('i' | 'in' | 'in' 'i' | 'in' 'till' | 'insidan' | 'insidan' 'av') singleIobj
     : PutInAction
     verbPhrase = 'sätta/sätter (vad) (in i vad)'
@@ -10004,7 +10005,7 @@ VerbRule(AskAbout)
 ;
 
 VerbRule(AskAboutImplicit)
-    'f' singleTopic
+    ('f'|'prata') ('om'|) singleTopic
     : AskAboutAction
     verbPhrase = 'fråga/frågar (vem) (om vad)'
     omitIobjInDobjQuery = true
@@ -10140,7 +10141,7 @@ VerbRule(Yell)
 ;
 
 VerbRule(GiveTo)
-    ('ge' | 'erbjud') dobjList 'till' singleIobj
+    ('ge' | 'erbjud' | 'överlämna') dobjList 'till' singleIobj
     : GiveToAction
     verbPhrase = 'ge/ger (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
@@ -10169,7 +10170,7 @@ VerbRule(GiveToWhom)
 ;
 
 VerbRule(ShowTo)
-    'visa' dobjList 'för' singleIobj
+    'visa' ('upp'|) dobjList 'för' singleIobj
     : ShowToAction
     verbPhrase = 'visa/visar (vad) (till vem)'
     askIobjResponseProd = toSingleNoun
@@ -10665,7 +10666,8 @@ VerbRule(JumpOver)
 
 VerbRule(Push)
     ///('tryck' |'knuffa' | 'pressa') dobjList
-    ('flytta' |'knuffa' | 'pressa' | 'tryck') 'på' dobjList
+    (('flytta' |'knuffa' | 'pressa' | 'tryck') 'på' dobjList)
+    | (('förflytta') dobjList)
     : PushAction
     verbPhrase = 'trycka/trycker (vad)'
 ;
@@ -10684,7 +10686,7 @@ VerbRule(Move)
 
 VerbRule(MoveTo)
     //('flytta' ) dobjList ('till' | 'under') singleIobj
-    ('flytta'|'tryck' ) dobjList ('till' | 'under') singleIobj
+    ('flytta'|'tryck') dobjList ('till' | 'under') singleIobj
     : MoveToAction
     verbPhrase = 'flytta/flyttar (vad) (till vad)'
     askIobjResponseProd = toSingleNoun
@@ -10879,14 +10881,14 @@ VerbRule(TurnOn)
     ('aktivera' | ('vrid' | 'slå') 'på' | 'starta') dobjList
     | ('vrid' | 'slå') dobjList 'på'
     : TurnOnAction
-    verbPhrase = 'vrida/vrider på (vad)'
+    verbPhrase = 'slå/slår på (vad)'
 ;
 
 VerbRule(TurnOff)
     ('deaktivera' | ('vrid' | 'stäng' | 'slå') 'av') dobjList
     | ('vrid' | 'slå') dobjList 'av'
     : TurnOffAction
-    verbPhrase = 'vrida/vrider av (vad)'
+    verbPhrase = 'stänga/stänger av (vad)'
 ;
 
 VerbRule(Light)
@@ -11044,8 +11046,8 @@ VerbRule(CleanWith)
 
 VerbRule(AttachTo)
     (
-      ('koppla'|'sätt') ('ihop'|'fast'|'fast'|'samman'|'in') 
-      | ('sammansätt') 
+      (('koppla'|'sätt') ('ihop'|'fast'|'fast'|'samman'|'in'))
+      | ('sammansätt'|'anslut') 
     )
     dobjList ('med'|'till'|'i') singleIobj
     : AttachToAction
@@ -11932,7 +11934,6 @@ VerbRule(Ord)
     verbPhrase = 'ordgranska/ordgranskar (vad)'
 ; 
 
-/*
 DefineLiteralAction(ObjOrd)
     execAction() { 
         tadsSay('Visar ord definierade i cmdDict för objekt: <<gLiteral>>\n');
@@ -11946,7 +11947,6 @@ VerbRule(ObjOrd)
     :ObjOrdAction 
     verbPhrase = 'objektgranska/objektgranskar (vad)'
 ; 
-*/
 
 function displayGrammarInfo(o) {
     local str = new StringBuffer();
