@@ -673,7 +673,7 @@ topHintMenu: TopHintMenu
     closeWhenTrue = (blackBox.timesRead != 0)
 ;
 
-++ Goal 'Var skulle jag hitta en <q>bra EE-lärobok</q>?'
+++ Goal 'Var skulle jag hitta en <q>bra ET-lärobok</q>?'
     ['Vilket är ett bra ställe att hitta böcker i allmänhet?',
      'Kanske en stor byggnad ägnad åt att hysa massor av böcker...',
      'Biblioteket, till exempel.',
@@ -686,11 +686,11 @@ topHintMenu: TopHintMenu
     closeWhenSeen = morgenBook
 ;
 
-++ Goal 'Var kan jag få en rekommendation för en bra EE-lärobok?'
+++ Goal 'Var kan jag få en rekommendation för en bra ET-lärobok?'
     ['Det kanske finns någon på campus som kan hjälpa.',
      'Kanske en student.',
      'Har du träffat några elektroteknikstudenter?',
-     'Erin och Aaron nämnde att de var EE-studenter. Gå och fråga dem.',
+     'Erin och Aaron nämnde att de var ET-studenter. Gå och fråga dem.',
      'Om du inte är säker på var de är, vandra bara runt i Dabney
     lite.',
      'De arbetar med en stapel i Alley 7.',
@@ -740,7 +740,7 @@ topHintMenu: TopHintMenu
     closeWhenTrue = (blackBox.equipGathered)
 ;
 
-++ Goal 'Oscilloskop? Signalgeneratorer? Jag är inte en EE-student!'
+++ Goal 'Oscilloskop? Signalgeneratorer? Jag är inte en ET-student!'
     ['Ta det lugnt---du behöver inte veta något om elektronik
     för att spela spelet. Din <i>karaktär</i> kanske måste kunna
     lite elektronik, men inte du.',

@@ -1,4 +1,6 @@
-# ÖVERSATTA FILER
+# CHECKLISTA
+
+## ÖVERSATTA FILER
 
 [X] campus
 [X] bridge
@@ -20,8 +22,7 @@
 [X] pathfind
 [X] subtime
 
-
-# TEMPLATE {the } {a }
+## TEMPLATE {the } {a }
 
 [X] campus
 [X] bridge
@@ -43,7 +44,8 @@
 [X] pathfind
 [X] subtime
 
-# HUMOR/ORDLEKAR, TEKNISKA TERMER, DIALOGFLYT OCH BESKRIVNINGAR GENTEMOT ORGINALETS
+## HUMOR/ORDLEKAR, TEKNISKA TERMER, DIALOGFLYT OCH BESKRIVNINGAR GENTEMOT ORGINALETS
+
 [X] campus
 [X] bridge
 [X] intro
@@ -64,7 +66,8 @@
 [X] pathfind
 [X] subtime
 
-# "Ditch day" till "Skolkdagen"
+## "Ditch day" till "Skolkdagen"
+
 [X] campus
 [X] bridge
 [X] intro
@@ -86,13 +89,11 @@
 [X] subtime
 [X] main
 
-### TODO:
+## ÖVRIGT
 
 [X] Ta in senaste sv_se
 [X] Behåll alla hovse  - KLAR?
 [X] jmf mail i synclab en gång till.
 [X] gå igenom main-filens texter
-
-[X] Se om reflect går att ta bort (ökar kompatibilitet) jmf med originalet
 [X] Koppla bort debug-möjligheter och skapa riktig version
 [] alla TODOs

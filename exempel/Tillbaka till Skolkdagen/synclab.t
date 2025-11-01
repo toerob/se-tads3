@@ -378,8 +378,6 @@ syncCatwalkGapWest: SyncCatwalkRoom
         hända. '
     dobjFor(Switch) asDobjFor(Push)
 ;
-// TODO: du kan inte ändra den
-
 ++ CustomImmovable 'handskriv:en+na skylt+en' 'handskriven skylt'
     "<q>Ur funktion---Fastnat.</q> "
     cannotTakeMsg = 'Att ta bort skylten kan skapa en säkerhetsrisk;
@@ -1640,7 +1638,6 @@ sl4CrateConnector: OneWayRoomConnector
     destination = syncLab2
 ;
 
-// TODO: stuck at ending of part 10
 /* ------------------------------------------------------------------------ */
 /*
  *   Sync Lab 5 - tunnel under office 

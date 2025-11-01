@@ -745,7 +745,9 @@ class XojoEscortState: GuidedTourState
     escortDest = (plantElevatorGate.isOpen ? powerHallWest.west : nil)
     stateAfterEscort = xojoElevator
 ;
-+++ AskTellShowTopic @plantHallElevatorDoor 'trapp(a|or)?' // TODO: testa
+
+// NOTE: bug in the original game where the level is +++
+++ AskTellShowTopic @plantHallElevatorDoor 'trapp(a|or)?' // TODO: testa
     "<q>Kan vi inte ta trapporna istället?</q> frågar du, orolig
     över tiden.
     <.p>Xojo skrattar nervöst. <q>Trappor, nej,</q> säger han. <q>Av brandsäkerhetsskäl

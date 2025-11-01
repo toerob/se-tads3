@@ -2810,8 +2810,6 @@ stamer: Person
 
     canEndConversation(actor, reason)
     {
-        //"You can't very well walk out now. ";
-        // TODO: eller "Du kan knappast backa ur nu."
         "Du kan inte bara gå härifrån nu.";
 
         return nil;
@@ -3027,7 +3025,6 @@ stamer: Person
     scoreMarker: Achievement { +5 "undkomma Belkers övertagandeförsök" }
 ;
 
-//TODO: "säg till Belker att jag slutar"
 ++ SpecialTopic 'berätta för Belker att du slutar'
     ['säg','berätta','till','för','frosst','belker','att','jag','du','slutar']
     topicResponse() { location.nextMsg; }

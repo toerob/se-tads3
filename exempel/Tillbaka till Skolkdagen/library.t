@@ -1066,7 +1066,7 @@ millikan3: LibRoom
 + LibElevatorUpButton;
 + LibElevatorDownButton;
 + LibShelves;
-++ LibShelfBooks 'elektroteknikiska elektroteknik+en ee et-'; // TODO: lägg till akronymen ET  men se över detta överallt i så fall.
+++ LibShelfBooks 'elektroteknikiska elektroteknik+en ee et-'; 
 
 /* 
  *   A topic for "ee textbooks" in general - score this higher than default
@@ -1175,10 +1175,10 @@ millikan3: LibRoom
     floorNum = 3
 
     /* a score marker for getting the recommendation for this book */
-    recMarker: Achievement { +2 "få en rekommendation av en EE-bok" }
+    recMarker: Achievement { +2 "få en rekommendation av en ET-bok" }
 
     /* a score marker for finding the book */
-    readMarker: Achievement { +1 "läst EE-läroboken" }
+    readMarker: Achievement { +1 "läst ET-läroboken" }
 ;
 
 /* 
@@ -1186,7 +1186,7 @@ millikan3: LibRoom
  *   overshadow a more specific match when only the vague terms are entered
  */
 ++ ConsultTopic +110 @labManualTopic
-    "Det finns många EE-labbmanualer blandade med läroböckerna;
+    "Det finns många ET-labbmanualer blandade med läroböckerna;
     det skulle ta för lång tid att bläddra igenom alla, men du kan förmodligen
     hitta en specifik om du vet författaren."
 ;
@@ -1217,7 +1217,7 @@ millikan3: LibRoom
     floorNum = 3
 
     /* points for finding the Townsend book */
-    foundMarker: Achievement { +2 "hittat en EE-labbmanual" }
+    foundMarker: Achievement { +2 "hittat en ET-labbmanual" }
 ;
 +++ ConsultTopic @waveformTopic
     "Boken har många vågformsdiagram, men du hittar inget

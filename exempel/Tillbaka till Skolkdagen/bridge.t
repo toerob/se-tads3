@@ -1461,7 +1461,7 @@ class QuantumItem: object;
             "Du kommer ungefär halvvägs in i sammanfattningen innan du
             inser att du inte har någon aning om vad det handlar om. Du bläddrar
             igenom artikeln lite, men det enda du verkligen kommer ihåg om
-            kvantfysik är lite om halvledarens bandgap från EE 11.
+            kvantfysik är lite om halvledarens bandgap från ET 11.
             <.p>I slutet finns en massa bibliografiska referenser som
             mestadels ser lika skrämmande ut som själva artikeln, även om
             ett par kallas <q>introducerande</q>: ";

@@ -140,15 +140,15 @@ startupsTopic: Topic 'start-up startup+en företag´+et/företag+en/start-ups/st
 supplyRoomTopic: Topic 'förråd+et förrådsrum+met knappsats+en rum+met/dörr+en/lås+et';
 
 eeTextbookRecTopic: Topic
-    '(ee) (elektroteknik+en) bok+en böcker+na läroböcker+na (rekommendationer+na)';
+    '(ee) (et) (elektroteknik+en) bok+en böcker+na läroböcker+na (rekommendationer+na)';
 eeLabRecTopic: Topic
-    '(ee) (elektroteknik+en) lab+bet laboratorium+et manual+en (rekommendationer+na)';
+    '(ee) (et) (elektroteknik+en) lab+bet laboratorium+et manual+en (rekommendationer+na)';
 
 physicsTextTopic: Topic
     'kvantfysik+en text+en bok+en/böcker+na/text+ten/texter+na/lärobok+en/läroböcker+na';
 eeTextTopic: Topic
-    'ee elektroteknik+en text bok+en/böcker+na/text+ten/texter+na/lärobok+en/läroböcker+na';
-labManualTopic: Topic 'ee elektroteknik elektroteknisk labb|manual+en';
+    'ee et elektroteknik+en text bok+en/böcker+na/text+ten/texter+na/lärobok+en/läroböcker+na';
+labManualTopic: Topic 'ee et elektroteknik elektroteknisk labb|manual+en';
 drdTopic: Topic
     'drd matte matematik+en matematiska funktioner+na/tabell+en/tabeller+na/handbok+en/bok+en'
 ;

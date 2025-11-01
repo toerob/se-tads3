@@ -78,7 +78,6 @@ VerbRule(KnockWhat) 'knacka' : KnockAction
     }
 ;
 
-// TODO: testa
 /* add a grammar rule for using either 'on' or 'at' to answer a question */
 grammar atOnSingleNoun(main):
    ( | 'vid' | 'på' ) singleNoun->np_ : PrepSingleNounProd
@@ -94,13 +93,12 @@ VerbRule(Repair) ('reparera' | 'laga') singleDobj : RepairAction
     verbPhrase = 'reparera/reparerar (vad)'
 ;
 
-// TODO: kontrollera om dessa behövs eller om vokabulären ska utökas i biblioteket
 /* make 'power on/up/off/down' equivalent to 'turn on/off'  */
 VerbRule(PowerOn)
     'sätt' 'på' dobjList 
     | 'sätt' 'igång' dobjList 
     : TurnOnAction
-    verbPhrase = 'power/powering on (vad)'
+    verbPhrase = 'sätta/sätter igång (vad)'
 ;
 
 
