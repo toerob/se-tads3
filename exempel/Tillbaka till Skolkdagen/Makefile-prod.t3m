@@ -1,0 +1,47 @@
+# TADS 3 makefile
+# Tillbaka till Skolkdagen - tads 3 makefile
+#
+
+-o skolkdagen.t3
+-pre
+-nodef
+-D LANGUAGE=sv_se
+
+-D MESSAGESTYLE=neu
+-D INSTRUCTIONS_MENU
+-FI /usr/local/share/frobtads/tads3/include
+-Fs /usr/local/share/frobtads/tads3/lib
+
+-Fy obj
+-Fo obj
+-w1
+-we
+
+##sources
+-lib system
+
+-lib adv3/adv3
+  -x footnote
+
+-source main
+-source me
+-source intro
+-source campus
+-source dabney
+-source jay
+-source stack
+-source bridge
+-source library
+-source bookstore
+-source career
+-source synclab
+-source frosst
+-source about
+-source hints
+-source mods
+-source pathfind
+-source elev
+-source subtime
+
+-res
+gameinfo.txt

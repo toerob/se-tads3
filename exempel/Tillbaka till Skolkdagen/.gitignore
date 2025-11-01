@@ -1,0 +1,7 @@
+*.t3
+obj
+.clj-kondo/
+.lsp/
+.vscode
+gametests2.t
+script

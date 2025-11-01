@@ -238,7 +238,7 @@ class Treasure: Thing 'skatt+en*skatter+na'
 //===============================================================
 
 forest: OutdoorRoom '<q>STORA TORGET</q>' 'det stora torget'
-  "Det är åtminstone vad dina anteckningar kallar denna låga kalkstensås, men nu har regnskogen återtagit den. Mörkt olivfärgad växtlighet tränger in från alla håll, luften är mättad av dimman efter ett nyligen passerat regn, knotten svävar stilla i regnets eftervärme. Struktur 10 är ett sönderfallet murverk, som kanske en gång utgjorde en gravpyramid. Litet finns kvar, annat än de stenhuggna trappstegen som leder ner i mörkret nedanför."
+  "Det är åtminstone vad dina anteckningar kallar denna låga kalkstensås, men nu har regnskogen återtagit den. Mörk olivfärgad växtlighet tränger in från alla håll, luften är mättad av dimman efter ett nyligen passerat regn, knotten svävar stilla i regnets eftervärme. Struktur 10 är ett sönderfallet murverk, som kanske en gång utgjorde en gravpyramid. Litet finns kvar, annat än de stenhuggna trappstegen som leder ner i mörkret nedanför."
 
     up: NoTravelMessage {
         "Träden är taggbeväxta och du skulle skära upp dina händer fullständigt om du försökte klättra i dem. "

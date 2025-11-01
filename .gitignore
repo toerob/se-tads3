@@ -8,3 +8,7 @@ tester/GameInfo.txt
 tester/run-parser-tests.sh 
 tester/parser.t3m
 tester/parser-tests.t
+
+.lsp
+.vscode
+.clj-kondo
