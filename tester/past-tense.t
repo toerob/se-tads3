@@ -715,6 +715,14 @@ TestUnit 'sayDepartingViaPath' run {
   assertThat(o).startsWith('\^en pirat lämnade baren via valvgången');
 };
 
+TestUnit 'sayDepartingViaPath2' run {
+  //mainOutputStream.hideOutput = nil;
+  hobbit.location = fylke; 
+  hobbit.travelerRemoteLocName = nil;
+  libMessages.sayDepartingViaPath(hobbit, valvgangPathPassage);
+  assertThat(o).startsWith('\^en hobbit gick iväg via valvgången');
+};
+
 
 TestUnit 'sayArrivingViaPath' run {
   //mainOutputStream.hideOutput = nil;
@@ -2258,8 +2266,8 @@ TestUnit 'askMissingLiteral(actor, action, which)' run {
     TypeLiteralOnAction -> 'vad vill du skriva',
     ConsultAction -> 'vad vill du konsultera',
     FlipAction -> 'vad vill du vända',
-    TurnOnAction -> 'vad vill du vrida på',
-    TurnOffAction -> 'vad vill du vrida av',
+    TurnOnAction -> 'vad vill du slå på',
+    TurnOffAction -> 'vad vill du stänga av',
     LightAction -> 'vad vill du tända',
     StrikeAction -> 'vad vill du slå',
     BurnAction -> 'vad vill du tända',

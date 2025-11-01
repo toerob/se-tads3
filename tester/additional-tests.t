@@ -187,3 +187,57 @@ TestUnit 'splitWithDelimiterPattern' run {
     assertThat(result[2]).isEqualTo(['krona', '+']);
     assertThat(result[3]).isEqualTo(['n', nil]);
 };
+
+
+
+TestUnit 'objectLister.makeSimpleList' run {
+    local result = objectLister.makeSimpleList([ljuskrona, ljus, hatt, jacka, tingest, skapet]);
+    //tadsSay(result);
+    assertThat(result).isEqualTo('en ljuskrona (avger ljus), ett ljus, en hatt (påklädd), en jacka (påklädd), en tingest, och ett skåp');
+};
+
+TestUnit 'stringLister.makeSimpleList' run {
+    local result = stringLister.makeSimpleList(['ljuskrona', 'ljus', 'hatt', 'jacka', 'tingest', 'skåpet']);
+    //tadsSay(result);
+    assertThat(result).isEqualTo('ljuskrona, ljus, hatt, jacka, tingest, och skåpet');
+};
+
+
+TestUnit 'plainLister.showListAll' run {
+    local lst = [ljuskrona, ljus, hatt, jacka, tingest, skapet];
+    local result = mainOutputStream.captureOutput({: 
+      plainLister.showListAll(lst,0, 0)
+    }); 
+    assertThat(result).isEqualTo('en ljuskrona (avger ljus), ett ljus, en hatt (påklädd), en jacka (påklädd), en tingest, och ett skåp');
+};
+
+/*
+TestUnit 'specialDescLister.showListAll' run {
+    //ljuskrona.specialDesc = {: "sdfadf" };
+    gActor = spelare2aPerspektiv;
+
+    local infoTab = new LookupTable();
+    infoTab[ljuskrona] = new SenseInfo(ljuskrona, opaque, nil, 0);
+    
+    //local result = mainOutputStream.captureOutput({: 
+      specialDescLister.showListItem(ljuskrona, nil, gActor, infoTab);
+    //}); 
+    //assertThat(result).isEqualTo('en ljuskrona (avger ljus), ett ljus, en hatt (påklädd), en jacka (påklädd), en tingest, och ett skåp');
+};
+*/
+/*
+specialDescLister.showList()
+
+actorCarryingSublister.showList();
+actorWearingSublister.showList();
+
+roomListenLister.showList();
+plainActorLister.showList();
+actorInventoryLister.showList();
+
+listenActionLister.showList();
+roomSmellLister.showList();
+smellActionLister.showList();
+inventoryListenLister.showList();
+inventorySmellLister.showList();
+*/

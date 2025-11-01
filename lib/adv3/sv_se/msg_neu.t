@@ -907,14 +907,14 @@ libMessages: MessageHelper
     scriptingOkay()
     {
         "<.parser>Transkriberingen kommer att sparas till filen.
-        Skriv <<aHref('script av', 'SCRIPT AV', 'Stäng av scripting')>> för 
+        Skriv <<aHref('skript av', 'SKRIPT AV', 'Stäng av transkribering')>> för 
         att avsluta transkriberingen.<./parser> ";
     }
 
     scriptingOkayWebTemp()
     {
         "<.parser>Transkriberingen kommer att sparas.
-        Skriv <<aHref('script av', 'SCRIPT AV', 'Stäng av scripting')>> för 
+        Skriv <<aHref('skript av', 'SKRIPT AV', 'Stäng av transkribering')>> för 
         att avsluta transkriberingen och ladda ner den sparade transkribering.
         <./parser> ";
     }
@@ -996,7 +996,7 @@ libMessages: MessageHelper
 
     /* on the first comment without transcript recording, warn about it */
     noteWithoutScriptWarning = "<.parser>Kommentar <b>ej</b> inspelad.
-        Använd <<aHref('script', 'SCRIPT', 'Börja transkribering ')
+        Använd <<aHref('skript', 'SKRIPT', 'Börja transkribering ')
           >> om du vill starta transkribering.<./parser> "
 
     /* invalid finishGame response */
@@ -1563,7 +1563,11 @@ libMessages: MessageHelper
     /* a traveler is leaving via a path */
     sayDepartingViaPath(traveler, passage)
     {
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<traveler.travelerRemoteLocName>> via <<passage.theNameObj>>. ";
+        if(traveler.travelerRemoteLocName == nil || traveler.travelerRemoteLocName == '') {
+            "\^<<traveler.travelerName(nil)>> <<traveler.verbToGo>> iväg via <<passage.theNameObj>>. ";
+        } else {
+            "\^<<traveler.travelerName(nil)>> <<traveler.verbToLeave>> <<traveler.travelerRemoteLocName>> via <<passage.theNameObj>>. ";
+        }
     }
 
     /* a traveler is arriving via a path */
