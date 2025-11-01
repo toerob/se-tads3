@@ -4,7 +4,6 @@
 #-we
 -D LANGUAGE=sv_se
 -D MESSAGESTYLE=neu
--D __DEBUG
 -Fy obj
 -Fo obj
 -v
@@ -13,7 +12,7 @@
 -FI /usr/local/share/frobtads/tads3/include
 -Fs /usr/local/share/frobtads/tads3/lib
 -I ../../extensions
--o ruiner-dbg.t3
+-o ruiner.t3
 
 ##sources
 
@@ -22,8 +21,6 @@
   -x footnote
   -x hintsys
 
--source dynfunc
--source ../../extensions/tests2
 -source ../../extensions/cquotes
 
 -source ruiner
