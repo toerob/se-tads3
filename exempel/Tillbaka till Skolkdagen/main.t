@@ -49,7 +49,7 @@ gameMain: GameMainDef
     /* show our "goodbye" message */
     showGoodbye()
     {
-        "<.p>Tack för att du spelade <i>Tillbaka till Skoldagen</i>!\b";
+        "<.p>Tack för att du spelade <i>Tillbaka till Skolkdagen</i>!\b";
     }
     
     /* 

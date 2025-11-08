@@ -47,7 +47,7 @@ frosst: Person 'frosst belker/man+nen*män+nen' 'Belker'
     isListedInInventory = nil
 ;
 
-+ InitiallyWorn 'vit+a byxor+na' 'vita byxor'
++ InitiallyWorn 'vit+a *byxor+na' 'vita byxor'
     "Det är ett par välskräddade vita kostymbyxor. "
     isPlural = true
     isListedInInventory = nil

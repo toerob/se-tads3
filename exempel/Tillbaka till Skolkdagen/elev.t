@@ -788,7 +788,7 @@ class ElevatorCallButton: Button, Fixture
 /* an "up" call button */
 class ElevatorUpButton: ElevatorCallButton '"upp" -' '<q>upp</q>-knapp'
     "Den visar en pil som pekar uppåt. "
-    aDesc = "an <q>up</q> button"
+    aDesc = "en <q>upp</q> knapp"
     buttonDir = 1
 ;
 

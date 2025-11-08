@@ -331,6 +331,7 @@ property knownFollowDest;
     'par bruna läderskor'
     "Dina skor är av brunt läder, i en stil som är vardaglig men ändå inte för vardaglig.
     De är tillverkade av ett av de där märkena som befinner sig på gränsen mellan sneakers och riktiga skor."
+    isPlural = true
 ;
 + myLeftShoe: PresentLater, AlwaysWorn 'brun+a vänster läder+sko+n'
     'vänster sko'
@@ -338,13 +339,13 @@ property knownFollowDest;
 ;
 ++ Decoration 'läder+sko+n' 'sko'
     "Sko, singular. Du verkar bara ha en vänstersko nu. "
-    isPlural = true
+    isPlural = nil
     notImportantMsg = 'Du verkar inte ha <q>skor</q> längre,
                        bara <q>sko.</q> '
 ;
 
 /* ge oss några myggbett från början */
-+ mosquitoBites: Decoration 'myggbett+en/bett+en' 'myggbett'
++ mosquitoBites: Decoration 'mygg|bett+en*mygg|betten+a' 'myggbett'
     "Du har varit en riktig myggmagnet här; för myggorna måste du
     vara exotisk utländsk mat. "
     isPlural = true

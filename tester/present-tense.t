@@ -764,7 +764,7 @@ TestUnit 'sayArrivingDownStairs' run {
 TestUnit 'sayDepartingWith' run {
   //mainOutputStream.hideOutput = nil;
   libMessages.sayDepartingWith(pirat, hobbit);
-  assertThat(o).contains('\^en pirat anländer med hobbiten.');
+  assertThat(o).contains('\^en pirat följer med hobbiten.');
 };
 
 
@@ -878,6 +878,33 @@ TestUnit 'inputFileScriptWarning' run {
 // --------------
 // playerMessages
 // --------------
+TestUnit 'noMatchCannotSee neuter' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  playerMessages.noMatchCannotSee(spelare2aPerspektiv, 'äpple');
+  assertThat(o).startsWith('Något sådant ser du inte till.');
+};
+
+TestUnit 'noMatchCannotSee uter' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  playerMessages.noMatchCannotSee(spelare2aPerspektiv, 'jordgubbe');
+  assertThat(o).startsWith('Någon sådan ser du inte till.');
+};
+
+TestUnit 'noMatchCannotSee plural' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  playerMessages.noMatchCannotSee(spelare2aPerspektiv, 'vindruvor');
+  assertThat(o).startsWith('Några sådana ser du inte till.');
+};
+
+TestUnit 'noMatchCannotSee (no match)' run {
+  //mainOutputStream.hideOutput = nil;
+  gActor = spelare2aPerspektiv;
+  playerMessages.noMatchCannotSee(spelare2aPerspektiv, 'yyyyyy');
+  assertThat(o).startsWith('Något sådant ser du inte till.');
+};
 
 TestUnit 'commandNotUnderstood' run {
   //mainOutputStream.hideOutput = nil;

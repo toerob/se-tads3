@@ -21,7 +21,7 @@
  */
 versionInfo: GameID
     name = 'Tillbaka till Skolkdagen'
-    version = '2-sv1'
+    version = '2-sv1.1'
     byline = 'av Michael J.\ Roberts'
     htmlByline = 'av <a href="mailto:mjr_@hotmail.com">'
                  + 'Michael J.\ Roberts</a>'

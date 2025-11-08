@@ -12,7 +12,6 @@
 -d
 -FI /usr/local/share/frobtads/tads3/include
 -Fs /usr/local/share/frobtads/tads3/lib
--I ../../extensions
 -o ruiner-dbg.t3
 
 ##sources
@@ -23,9 +22,9 @@
   -x hintsys
 
 -source dynfunc
--source ../../extensions/tests2
--source ../../extensions/cquotes
+-source tests2 
 
+-source cquotes
 -source ruiner
 
 -res

@@ -1608,7 +1608,7 @@ libMessages: MessageHelper
     /* acompanying another actor on travel */
     sayDepartingWith(traveler, lead)
     {
-        "\^<<traveler.travelerName(nil)>> <<traveler.verbToCome2>> med <<lead.theNameObj>>. ";
+        "\^<<traveler.travelerName(nil)>> {följer|följde} med <<lead.theNameObj>>. ";
     }
 
     /*
@@ -1779,10 +1779,9 @@ playerMessages: libMessages
 
 
     noMatchCannotSee(actor, txt) { 
-        local match, pronoun;
+        local match;
         local target = txt.toLower();
         match = cmdDict.findWord(target);
-
         if(match != nil && match.length > 0) {
             match = match[1];
         } else {
@@ -1793,18 +1792,21 @@ playerMessages: libMessages
                 }        
             });
         }
+        local rest = '{ser|såg} {du/han} inte till. ';
+        if(!match || match.length == 0 || match.isMassNoun) {
+            "Något sådant <<rest>>"; 
+            return;
+        }
+        if(match.isPlural) {
+            "Några sådana <<rest>>"; 
+            return;
+        } 
 
-        if(match) {
-            if(match.definiteForm == txt) {
-                "{Du/han} {ser} inte <<txt>> {här}. "; 
-            } else {
-                pronoun = match.isPlural ? 'inga' : match.isNeuter ? 'inget' : 'ingen';                
-                "{Du/han} {ser} <<pronoun>> <<txt>> {här}. "; 
-            }
+        if(match.isNeuter) {
+            "Något sådant <<rest>>"; 
+            return;
         } else {
-            pronoun = rexMatch(uterPattern, txt) ? 'ingen' : 'inget';
-            "{Du/han} {ser} <<pronoun>> sådant {här}. "; 
-
+            "Någon sådan <<rest>>";
         }
     }
 

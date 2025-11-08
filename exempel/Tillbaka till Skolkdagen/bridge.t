@@ -299,7 +299,7 @@ basementLab: Room 'Labb 022' 'labbet' 'labb'
 
 + Fixture 'lågt låga tak+et' 'tak' "Taket är obehagligt lågt. "
 ;
-+ Decoration 'betong^s+yta+n/betong^s+ytor+na' 'betongytor'
++ Decoration 'betong^s+yta+n*betong^s+ytor+na' 'betongytor'
     "Allt är gjort av betong, vilket ger labbet en stark känsla av 
     ett parkeringsgarage. "
     isPlural = true
@@ -2218,7 +2218,7 @@ bridgeSubHall: Room 'Undre källarhall' 'den undre källarhallen' 'korridor'
     dobjFor(Search) asDobjFor(Take)
 ;
 
-+ bsubStair: StairwayUp 'mycket smal brant ojämn betong|trappa+n/betong|trappor+na'
++ bsubStair: StairwayUp 'mycket smal+a brant+a ojämn+a betong|trappa+n*betong|trappor+na'
     'trappor'
     "De ojämna betongtrapporna leder uppåt. "
     isPlural = true
@@ -2249,7 +2249,7 @@ bridgeSubHall: Room 'Undre källarhall' 'den undre källarhallen' 'korridor'
 /*
  *   Bridge sub-basement wiring closet 
  */
-bridgeWiringCloset: Room 'Kopplingsskåp+et' 'kopplingsskåpet'
+bridgeWiringCloset: Room 'Kopplingsskåpet' 'kopplingsskåpet'
     "När du var student hjälpte du till att dra kablar i ett par av Bridge-
     labben för ett primitivt datornätverk, vilket innebar att dra en
     massa kablar i trädgårdsslangs-storlek genom väggarna och ansluta
@@ -2558,7 +2558,7 @@ bridgeStorage: Room 'Förrådsrum' 'förrådsrummet'
 ;
 
 + Decoration
-    'kartong^s+låda+n/kartong:erna^s+lådor+na' 'kartonger'
+    'kartong^s+låda+n*kartong:erna^s+lådor+na kartonger+na' 'kartonger'
     "De ser ut som om de har varit här ganska länge. De är alla
     förseglade, och det finns ingen indikation på vad som finns inuti. "
     

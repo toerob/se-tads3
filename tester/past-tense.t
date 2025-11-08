@@ -762,7 +762,7 @@ TestUnit 'sayArrivingDownStairs' run {
 TestUnit 'sayDepartingWith' run {
   //mainOutputStream.hideOutput = nil;
   libMessages.sayDepartingWith(pirat, hobbit);
-  assertThat(o).contains('\^en pirat anlände med hobbiten.');
+  assertThat(o).contains('\^en pirat följde med hobbiten.');
 };
 
 
@@ -913,6 +913,31 @@ TestUnit 'noMatchForPronoun' run {
   playerMessages.noMatchForPronoun(gActor, nil, 'den');
   assertThat(o).contains('Ordet <q>den</q> refererade inte till någonting just nu.');
 };
+
+TestUnit 'noMatchCannotSee neuter' run {
+  //mainOutputStream.hideOutput = nil;
+  playerMessages.noMatchCannotSee(spelare2aPerspektiv, 'äpple');
+  assertThat(o).startsWith('Något sådant såg du inte till.');
+};
+
+TestUnit 'noMatchCannotSee uter' run {
+  //mainOutputStream.hideOutput = nil;
+  playerMessages.noMatchCannotSee(spelare2aPerspektiv, 'jordgubbe');
+  assertThat(o).startsWith('Någon sådan såg du inte till.');
+};
+
+TestUnit 'noMatchCannotSee plural' run {
+  //mainOutputStream.hideOutput = nil;
+  playerMessages.noMatchCannotSee(spelare2aPerspektiv, 'vindruvor');
+  assertThat(o).startsWith('Några sådana såg du inte till.');
+};
+
+TestUnit 'noMatchCannotSee (no match)' run {
+  //mainOutputStream.hideOutput = nil;
+  playerMessages.noMatchCannotSee(spelare2aPerspektiv, 'yyyyyy');
+  assertThat(o).startsWith('Något sådant såg du inte till.');
+};
+
 
 // --------------------
 // playerActionMessages

@@ -1173,7 +1173,7 @@ sanPasqual: Street, CampusOutdoorRoom 'San Pasqual St.' 'San Pasqual'
 
 + CampusMapEntry 'san pasqual st./gata+n' 'San Pasqual St.' 'nordost';
 
-+ Decoration 'parkera+e bil+en/bilar+na' 'parkerade bilar'
++ Decoration 'parkera+e bil+en*bilar+na' 'parkerade bilar'
     "San Pasqual är en av de närmaste platserna till campus där det är
     möjligt att parkera en bil, men gatan är för kort för att rymma
     mer än ett tjugotal bilar. Bilarna tillhör förmodligen mestadels
@@ -1266,7 +1266,7 @@ holliston: Street, CampusOutdoorRoom
     rullportar är stängda. "
 ;
 ++ Decoration 'lastkaj+en kajer+na (physical) (plant) (verkstad)
-    rull|port+en/rull|portar+na/lastkajs|port+en/lastkajs|portar+na' 'lastkajsportar'
+    rull|port+en/rull|portar+na/lastkajs|port+en*lastkajs|portar+na' 'lastkajsportar'
     "Lastkajsportarna är alla stängda. "
     isPlural = true
 ;
@@ -1397,7 +1397,7 @@ sanPasqualWalkway: CampusOutdoorRoom 'San Pasqual Gångväg'
 ;
 
 + EntryPortal ->(location.north)
-    'b&g physical plant plants kontor+et/byggnad+en/dörr+en/dörr+öppning+en'
+    'b&g physical plant plants kontor+et/byggnad+en/dörr+en/dörr+öppning+en*kontoren+a'
     'Physical Plants kontor'
     "Physical Plant, även känt som Buildings and Grounds, även känt som B&amp;G, är
     avdelningen som underhåller campusinfrastrukturen. Denna
@@ -1439,7 +1439,7 @@ sanPasqualWalkway: CampusOutdoorRoom 'San Pasqual Gångväg'
     öster. "
 ;
 
-+ Decoration 'välskött+a gräsig+a stor+a gräsmatta+n/gräs+et' 'gräsmattor'
++ Decoration 'välskött+a gräsig+a stor+a gräsmatta+n/gräs+et*gräsmattor+na' 'gräsmattor'
     "Gräsmattorna är täckta med friskt grönt gräs. "
     isPlural = true
 ;
@@ -2168,7 +2168,7 @@ networkOffice: Room 'Nätverkskontor' 'Nätverkskontoret' 'kontor'
     <q>Routerkonfiguration för södra campus.</q> "
     isPlural = true
 ;
-++++ Component 'pärmetikett+en/etiketter+na' 'pärmetiketter'
+++++ Component 'pärmetikett+en*etiketter+na' 'pärmetiketter'
     desc = (location.desc)
     isPlural = true
 ;
@@ -3243,7 +3243,7 @@ quad: CampusOutdoorRoom
      */
     iobjFor(GiveTo) { preCond = (inherited - touchObj); }
 ;
-+++ InitiallyWorn 'ljusgrön+a hård+a overaller+na/skydds|hjälmar+na/uniformer+na'
++++ InitiallyWorn 'ljusgrön+a hård+a overaller+na/skydds|hjälmar+na*uniformer+na'
     'uniformer'
     "Arbetarna bär ljusgröna overaller och matchande skyddshjälmar,
     märkta med <q>Nätverksinstallatörsföretaget</q> i kantiga vita bokstäver.
@@ -3648,13 +3648,13 @@ oliveWalk: CampusOutdoorRoom
     tryMakingTravelReady(conn) { return tryImplicitAction(GetOffOf, self); }
     notTravelReadyMsg = 'Du måste kliva av kanonen först. '
 ;
-++ Component '(kanon+en) stor+a röd+a kanon+vagn^s+hjul+en'
+++ Component '(kanonens) stor+a röd+a *kanonvagn^s+hjul+en kanon|hjul+en kanon|hjulen+a'
     'kanonhjul'
     "De har runt fem fot i diameter, och de ser ut precis som 
     vagnshjul. "
     isPlural = true
 ;
-++ Component '(kanon+en) motvikt+en/kärra+n' 'kärra'
+++ Component '(kanonens)  motvikt+en/kärra+n' 'kärra'
     "Det är mestadels en enda stor motvikt för kärran.
     Den är målad i standard Fleming klarröd. "
 ;
@@ -3733,7 +3733,7 @@ athLawn: CampusOutdoorRoom 'Athenaeum-gräsmattan' 'Ath-gräsmattan' 'gräsmatta
     får den att likna många av SoCals filmstjärnemansioner. Den
     öppna matsalen blickar ut över gräsmattan. "
 ;
-++ Decoration 'vit+a röd+a tak+et tegel+tak+struktur arketektonisk+a detalj+er/tak+et/stuck/pelare+n/tegel*takpannor+na pelarna'
+++ Decoration 'vit+a röd+a tak+et tegel+tak+struktur arketektonisk+a detalj+er/tak+et/stuck/pelare+n/tegel*takpannor+na pelar:e+na'
     'arkitektoniska detaljer'
     "Ath har den medelhavsstil som är allestädes närvarande här
     på campus. "
@@ -3785,7 +3785,7 @@ athDiningRoom: Room 'Athenaeum Matsal' 'Ath-matsalen'
     isPlural = true
 ;
 
-+ Decoration 'enorm+a rund+a pelare+n*pelarna' 'pelare'
++ Decoration 'enorm+a rund+a pelare+n*pelar:e+na' 'pelare'
     "Pelarna håller upp taket och ger rummet en
     formell atmosfär. "
     isPlural = true
@@ -3872,7 +3872,7 @@ orangeWalk: CampusOutdoorRoom 'Apelsingången' 'Apelsingången' 'Apelsingången'
 ;
 
 + orwNorthWalk: PathPassage
-    'norra n asfalterad+e stig+en/trapp|steg+en/trappa+n/trappor+na' 'trappsteg'
+    'norra n asfalterad+e stig+en/trapp|steg+en/trappa+n*trappor+na stegen+a' 'trappsteg'
     "Gångvägen stiger några trappsteg norrut. "
     isPlural = true
 
@@ -3953,7 +3953,7 @@ syncLot: CampusOutdoorRoom 'Sync-parkeringen' 'Sync-parkeringen' 'parkeringsplat
     "Stigen leder österut genom en rad apelsinträd. "
 ;
 
-+ TreeDecoration 'stor:t+a tät:t+a apelsin|träd+et/lövverk+et' 'apelsinträd'
++ TreeDecoration 'stor:t+a tät:t+a apelsin|träd+et/lövverk+et*apelsinträden+a' 'apelsinträd'
     "De är stora träd med tätt lövverk och massor av apelsiner. "
     isPlural = true
 
@@ -4090,7 +4090,7 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
     "Gångvägen leder söderut, under bron på andra våningen. "
 ;
 
-+ TreeDecoration 'olivträd+en/grenar+na' 'olivträd'
++ TreeDecoration '*olivträd+en grenar+na' 'olivträd'
     "Olivträden här är planterade slumpmässigt runt gräsmattan. "
     isPlural = true
 ;
@@ -4241,7 +4241,8 @@ westOliveWalk: CampusOutdoorRoom 'Västra Olivgången' 'västra Olivgången'
 ;
 
 ++ Distant
-    '(thomas) smidesjärn^s+fönster+et/fönstret/rutnät+et/ruta+n/rutor+na/ram+en*ramar'
+    '(thomas) smidesjärnsfönster/smidesjärnsfönstret/fönst:er+ret/rutnät+et/
+    ram+en/smidesjärnsfönstren+a ruta+n*rutor+na ramar+na fönstren+a'
     'fönstren på Thomas'
     "Fönstren är arrangerade i ett regelbundet rutnät, och varje fönster
     är i sig ett rutnät av rutor i en smidesjärnsram. "
@@ -4888,7 +4889,7 @@ class ObstacleItem: CustomImmovable
     i miniatyr, ungefär i rätt skala för chihuahuas. "
 
 ;
-+ ObstacleItem 'små orange trafik|koner+na' 'trafikkoner'
++ ObstacleItem 'små orange *trafik|koner+na' 'trafikkoner'
     "Konerna är miniatyrversioner av vad du skulle se på motorvägen,
     ungefär 30 centimeter höga. "
     isPlural = true
@@ -5414,7 +5415,7 @@ ldCourtyard: CampusOutdoorRoom 'Lauritsen-Downs Innergård'
         gunther.setCurState(guntherFightingState);
     }
 ;
-++ InitiallyWorn 'jeans hängselbyxor+na' 'jeans hängselbyxor'
+++ InitiallyWorn '*jeans hängselbyxor+na' 'jeans hängselbyxor'
     "En broderad namnskylt på hängselbyxorna lyder <q>Ernst.</q> "
     isPlural = true
     isListedInInventory = nil
@@ -5735,7 +5736,7 @@ rockGarden: CampusOutdoorRoom 'Stenträdgård' 'stenträdgården'
     }
 ;
 
-++ Decoration 'näckros+en/näckrosor+na' 'näckrosor'
+++ Decoration 'näckros+en*näckrosor+na' 'näckrosor'
     "Näckrosorna guppar på vattnets krusiga yta. "
     isPlural = true
 ;

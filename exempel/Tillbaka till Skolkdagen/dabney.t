@@ -116,6 +116,7 @@ dabneyBreezeway: Room 'Pelargång' 'pelargången'
 MultiInstance
     initialLocationClass = MitaMovers
     instanceObject: Decoration {
+        vocabWords = '*flytt|arbetar:e+na'
         name = 'flyttarbetare'
         isPlural = true
     }
@@ -147,7 +148,7 @@ MultiInstance
  *   make the PresentLater objects. 
  */
 class MitaMovers: PresentLater, Person
-    'mitachron+s flyttkarl+en/flyttarbetare+n/man+nen/kvinna+n*flyttkarlar-na män+nen kvinnor+na' 'flyttarbetare'
+    'mitachron+s flyttkarl+en/flyttarbetare+n/man+nen/kvinna+n*flytt|arbetar:e+na flyttkarlar+na män+nen kvinnor+na' 'flyttarbetare'
     isPlural = true
     isHim = true
     isHer = true
@@ -525,7 +526,7 @@ dabneyCourtyard: DabneyOutdoorRoom 'Innergård' 'innergården'
     "Väggarna är kantade med fönster som vetter ut mot innergården från studentrummen. "
     isPlural = true
 ;
-++ Distant 'spröjsat spröjsad+e fönst:er+ret*fönstren' 'fönster'
+++ Distant 'spröjsat spröjsad+e fönst:er+ret*fönstren+a' 'fönster'
     "Väggarna är kantade med fönster som vetter mot innergården. "
     isPlural = true
     tooDistantMsg = 'Fönstren är alla för högt upp för att nå. '
@@ -656,7 +657,7 @@ dabneyLounge: Room 'Sällskapsrum' 'sällskapsrummet'
     lookInDesc = "Det finns inget annat än sot där uppe. "
 ;
 
-++ Heavy 'svart+a simulerad+e betong ved:en+trä+n' 'simulerade vedträn'
+++ Heavy 'svart+a simulerad+e betong ved:en+trä+n*ved|trän+a' 'simulerade vedträn'
     "Vedträna är gjorda av betong eller något liknande, formade
     för att likna de riktiga. De är svarta efter lång exponering för
     en gaslåga. "
@@ -898,7 +899,7 @@ dabneyDining: Room 'Matsal' 'matsalen'
     "Den välvda passagen leder söderut, ut till sällskapsrummet. "
 ;
 
-+ ddKitchenDoors: Door 'svängande svängd+a sväng+dörr+en/svängdörrar+na' 'svängdörrar'
++ ddKitchenDoors: Door 'svängande svängd+a sväng+dörr+en*svängdörrar+na' 'svängdörrar'
     "Dörrarna leder in i köket, österut. "
     isPlural = true
 
@@ -1107,7 +1108,7 @@ dabneyCourtyardAlcove: Room 'Flipperspelsrum' 'flipperspelsrummet'
     Positron-spelet. "
 ;
 + posGame: Heavy, ComplexContainer
-    'positron klassisk+a svart+a video+spel+et/positron-spel+et/maskin+en/skåp+et/bokstäver+na'
+    'positron klassisk+a svart+a video|spel+et/positron-spel+et/maskin+en/skåp+et/bokstäver+na'
     'Positron-spel'
     "Du kommer ihåg Positron: det är ett av de klassiska 80-tals-videospelen,
     från generationen direkt efter vektorgrafik-maskinerna.
@@ -2627,7 +2628,7 @@ class TurboPowerAnimal: Thing
 ;
 
 ++ a4Envelopes: A4TableImmovable, Readable
-    'index+kort+en/kuvert+en/handstil+en'
+    'index+kort+en/handstil+en*kuvert kuverten+a korten+a'
     'kuvert och kort'
     "Några av kuverten har öppnats, andra är förseglade.
     De flesta indexkorten är täckta med handskrift. "
@@ -3323,14 +3324,14 @@ alley5S: AlleyRoom 'Gränd Fem Syd' 'södra änden av Gränd Fem'
     }
 ;
 ++ Component 'slit:en+na (spelplan+en) (honolulu) (10-4)
-    illustration+en/karaktär+en/karaktärer+na/spelplan+en'
+    spelplan^s+illustration+en/karaktär+en/karaktärer+na/spelplan+en'
     'spelplanillustration'
     "Spelplanen är illustrerad med karaktärer från
     <i>Honolulu 10-4</i> TV-serien. Illustrationen är något
     sliten efter att kulor har rullat över den. "
 ;
 ++ Component
-    'stål stål|kula+n/lag:er+ret/kullag:er+ret*/kulor+na stålkulor+na'
+    'stål stål|kula+n/lag:er+ret/kullag:er+ret*kulor+na stålkulor+na'
     'kulor'
     "Kulorna ser ut att vara gjorda av stål; de är förmodligen
     bara kullager. "

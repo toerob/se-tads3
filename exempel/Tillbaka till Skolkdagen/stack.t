@@ -1850,14 +1850,14 @@ class AaronErinConvList: object
         sysselsatta med att manövrera den. "
 ;
 ++ Component
-    '(megatestare+ns) (3000) MegaTester|skärm+en|MegaTestare|skärm+en/skärmar+na'
+    '(megatestarens) (3000) MegaTester|skärm+en|MegaTestare|skärm+en*skärmar+na'
     'MegaTestare-skärmar'
     "MegaTestaren har många skärmar, men du vet inte hur man
     ska tolka den visade informationen. "
     isPlural = true
 ;
 ++ Component
-    '(megatestare) (3000) kontroller+n/MegaTestare|kontroller+n/MegaTestare-kontroller+n' 'MegaTestare-kontroller'
+    '(megatestarens) (3000) kontroller+n/MegaTestare|kontroller+n*MegaTestare-|kontroller+na' 'MegaTestare-kontroller'
     "MegaTestaren är lika fullproppad med kontroller som cockpiten på
     ett passagerarflygplan, och de är lika obegripliga för dig. "
     isPlural = true
@@ -2498,8 +2498,8 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
 ;
 
 ++ CustomImmovable, Food
-    'fest+liga muta+n/mat+en/bricka+n/choklad+en/godis+et/kaka+n/kex+et/druva+n/jordgubbe+n/
-    frukt+en/ost+en/godbit+en/godbitar+na snacks+en frukter+na jordgubbar+na druvor+na kex+en kakor+na maträtter+na choklader+na godisar+na'
+    'fest+liga muta+n/mat+en/fest|bricka+n/choklad+en/godis+et/kaka+n/kex+et/druva+n/jordgubbe+n/
+    frukt+en/ost+en/godbit+en/*godbitar+na snacks+en frukter+na jordgubbar+na druvor+na kex+en kakor+na maträtter+na choklader+na godisar+na'
     'festbricka'
     "Mutan är en väsentlig del av varje Skoldagsstapel; när
     underklassarna har löst huvuddelen av stapeln, är mutan
@@ -2554,7 +2554,7 @@ room4: Room 'Rum 4' 'rum 4' 'rum'
 ++ Decoration
     'referens+en fysik+en matematik+en kemi+n astronomi+n biologi+n teknik+en
     ekonomi+n seriös+a litteratur+en science fiction
-    lärobok+en/bok+en/text+en läroböcker+na texter+na böcker+na'
+    lärobok+en/bok+en/text+en*läroböcker+na texter+na böcker+na'
     'böcker'
     "Det ser ut som den vanliga samlingen böcker en Techer samlar på sig
     under en studentkarriär: läroböcker i fysik, matematik, kemi,

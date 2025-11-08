@@ -18,7 +18,7 @@
  *   slightly to add vocabulary and a description.  
  */
 class LibElevatorDoor: ElevatorDoor
-    'skinande metall+iska glidande hissens hiss+dörr+en/hissdörrar+na' 'hiss'
+    'skinande metall+iska glidande hissens hiss+dörr+en*hissdörrar+na' 'hiss'
     "Hissens skjutdörrar är gjorda av skinande metall. <<buttonDesc>> "
 
     isPlural = true
@@ -133,7 +133,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
                 if (cnt == 1)
                 {
                     /* we have just one, so use its singular name */
-                    it = 'den';
+                    it = lst[1].isNeuter ? 'det' : 'den';
                     aBook = lst[1].coName;
                 }
                 else
@@ -152,8 +152,8 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
                 /* complain about it */
                 "Du börjar gå, men du inser att du har <<aBook>>
                 som du inte har lånat. Du ger <<it>> till
-                bibliotekarien; han stämplar <<it>> och ger <<it>>
-                tillbaka. <q>Ska lämnas tillbaka om två veckor,</q> säger han. ";
+                bibliotekarien; han stämplar <<it>> och lämnar 
+                tillbaka <<it>>. <q>Ska lämnas tillbaka om två veckor,</q> säger han. ";
 
                 /* mark them all as checked out */
                 foreach (local cur in lst)
@@ -226,7 +226,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
      <.p><q>Vet du vad som gör det skämtet riktigt roligt? Att göra små
      citattecken i luften med fingrarna medan du säger <q>tungt.</q></q> ',
      '<q>Intressant bok?</q> frågar du.
-     <.p><q>Nästan intressant nog för att dränka ut alla distraktioner
+     <.p><q>Nästan intressant nog för att dämpa alla distraktioner
      här omkring,</q> säger han och sätter ansiktet ännu närmare boken. ']
 
     name = 'hans bok'
@@ -237,7 +237,7 @@ millikanLobby: Room 'Millikan Entré' 'entrén till Millikan' 'entré'
     omedelbart att det kanske var en okänslig fråga.
     <.p><q>För att killen som <i>borde</i> vara här är en
     grundstudent,</q> säger han. ',
-     'Han verkade lite känslig för ämnet, så du kanske inte borde 
+     'Han verkade lite känslig kring ämnet, så du kanske inte borde 
      pressa honom. ']
 ;
 
@@ -1199,7 +1199,7 @@ millikan3: LibRoom
 ;
 ++ townsendBook: PresentLater, LibBook, Consultable
     'e.j. townsend lab labb+et laboratorium+et stor+a mjukpärm+en manual+en/bok+en*böcker+na*manualer+na'
-    'labb+manual+en'
+    'labbmanual'
     "Det är en stor bok med mjuk pärm. Den här typen av bok innehåller
     labbövningar som demonstrerar olika elektronikprinciper."
 

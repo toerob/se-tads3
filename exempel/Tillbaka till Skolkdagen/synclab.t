@@ -1071,7 +1071,7 @@ class ES37Topic: ConsultTopic
 
 /* a generic object for the binders */
 ++ GenericObject, CustomImmovable
-    'identisk+a svart+a pärm+en/pärmar+na' 'svarta pärmar'
+    'identisk+a svart+a pärm+en*pärmar+na' 'svarta pärmar'
     "Pärmarna är uppradade i prydliga rader och fyller upp
     hyllorna helt. De är alla identiska, förutom att många är märkta.
     Du kanske kan hitta en specifik pärm om du visste vad du

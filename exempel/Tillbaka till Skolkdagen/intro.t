@@ -603,7 +603,7 @@ class XojoErrandState: ActorState
 
 ++ koffee: Food
     'koffee brand business (man\'s) aluminum+burk+en 340-gram 340 gram
-    dryck+n/beverage/koffee+t/kaffe+t/burk+en'
+    dryck+en/koffee+t/kaffe+t/burk+en'
     'burk med Koffee'
 
     "Ja, det är Koffee med K: Koffee brand Business Man's Beverage,
@@ -1728,8 +1728,8 @@ class GuanmgonAgendaItem: ConvAgendaItem
     notImportantMsg = 'Det är inte din domän; bäst att låta det vara. '
 ;
 
-+ Decoration 'kraft|mätar+na/kraft|nivåer+na/effekt|nivåer+na/mätare+n/spänningar+na/strömstyrkor+na/volt+en/ampere+n'
-    'gauges'
++ Decoration 'mätare+n/volt+en/ampere+n*kraft|mätar+na kraft|nivåer+na effekt|nivåer+na spänningar+na strömstyrkor+na'
+    'mätare'
     "Mätarna visar spänningar, strömstyrkor och effektnivåer för de många
     kretsarna. "
     notImportantMsg = 'Du borde nog låta mätarna vara. '
@@ -1737,7 +1737,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
 ;
 
 //+ Decoration 'load control board/boards/panel/panels' 'load control boards'
-+ Decoration 'laststyrkort+et/kort+et/panel+en/paneler+na/kontroller+na' 'laststyrkort'
++ Decoration 'laststyrkort+et/kort+et/panel+en*last|styrkorten+a paneler+na kontroller+na' 'laststyrkort'
     "Dessa kontroller justerar kraftgenereringskapaciteten för att matcha
     belastningen. Varje dag du har varit här har tekniker avbrutit dig
     flera gånger för att justera dessa inställningar. "
@@ -1757,11 +1757,11 @@ class GuanmgonAgendaItem: ConvAgendaItem
  *   models all of the plant's systems.  
  */
 
-+ Decoration 'intern+a kommunikation^s|system+et/(system+en)' 'kommunikationssystem'
++ Decoration 'intern+a kommunikation^s|system+et*(system+en) ' 'kommunikationssystem'
     "Kommunikationssystemet låter operatörerna prata med tekniker i andra
     delar av kraftverket. "
     notImportantMsg = 'Bäst att låta kommunikationssystemen vara. '
-    isPlural = true
+    isPlural = nil
 ;
 
 /* 
@@ -1913,7 +1913,7 @@ class GuanmgonAgendaItem: ConvAgendaItem
 ;
 
 ++ scuSlot: TestableCircuit, Component, RestrictedContainer
-    'tom+ma modul:en+lucka+n/plats+en/lucka+n/fack+et' 'tom lucka'
+    '(modulens) tom+ma modul|lucka+n/plats+en/fack+et' 'tom lucka'
     "Det är luckan där CT-22 diagnostikmodulen ska vara. "
 
    /* only allow the CT-22 to go in the slot */
@@ -1972,14 +1972,14 @@ class GuanmgonAgendaItem: ConvAgendaItem
 ;
 
 ++ moduleStack: TestableCircuit, Immovable
-    'staplad+e installerad+e elektroni:sk+k elektronik|modul+en/elektronik|moduler+na/stack+en' 'elektronikmoduler'
+    'staplad+e installerad+e elektroni:sk+k stack+en/elektronik|modul+en*elektronik|moduler+na' 'elektronikmoduler'
     "Varje modul är formad ungefär som en pizzakartong, och modulerna
     är staplade på varandra inuti 1100DX.
     << scu1100dx.isWorking
     ? "Den reparerade CT-22 är tillbaka på plats. "
     : "Det finns en tom plats där CT-22-modulen ska sitta. " >> "
     isPlural = true
-
+    theName = 'elektronikmoduler'
     dobjFor(Take)
     {
         /* this is slightly less likely for 'take' than portable modules */
@@ -2531,7 +2531,7 @@ MultiInstance
     "Den är bara midjehög, vilket lämnar korridoren öppen mot anläggningens
     interiör. "
 ;
-+ Fixture 'betong vitt-placerade placerade pelare' 'pelare'
++ Fixture 'betong vitt-placerade placerade *pelar:e+na' 'pelare'
     "De är bara betongpelare som håller upp taket. "
     isPlural = true
 ;
@@ -3329,7 +3329,7 @@ atopPlantElevator: Room 'Hisschakt' 'hisschaktet'
     roomFloor = apeFloor
 ;
 
-+ Fixture 'betong+schakt+vägg+en/vägg+en/väggar+na' 'schaktväggar'
++ Fixture 'betong+schakt+vägg+en/vägg+en*schakt|väggar+na' 'schaktväggar'
     "Schaktväggarna är av bar betong. Skenor "
     isPlural = true
 ;
@@ -4399,7 +4399,7 @@ plantCourtyard: OutdoorRoom 'Innergård' 'innergården'
     connector = adminDoorExt
 ;
 + adminDoorExt: Door ->adminDoorInt
-    'administrativa huvudbyggnaden+s dörr+en/dörrar+na/uppsättning+en'
+    'administrativa huvudbyggnaden+s dörr+en/uppsättning+en*administrations|dörrar+na'
     'administrationsdörrar'
     "Dörrarna leder in i byggnaden åt öster. "
 
@@ -4462,7 +4462,7 @@ adminLobby: Room 'Lobby' 'lobbyn'
     }
 ;
 
-+ adminDoorInt: Door 'dörr+en/dörrar+na/uppsättning+en' 'dörrar'
++ adminDoorInt: Door 'uppsättning+en dörr+en*dörrar+na' 'dörrar'
     "Dörrarna leder ut västerut."
     isPlural = true
 
@@ -4481,7 +4481,7 @@ adminLobby: Room 'Lobby' 'lobbyn'
 ;
 
 + Decoration
-    'festande anläggning+en mitachron arbetarn+a/publik+en/anställda/folk+massa+n*folk' 'folkmassa'
+    'festande anläggning+en mitachron arbetarn+a/publik+en/anställda/folk+massa+n*folk folkmassor+na' 'folkmassa'
     "Det ser ut som om de mestadels är anläggningsanställda, men många
     Mitachron-personer är också här."
     isPlural = true
@@ -4494,7 +4494,7 @@ adminLobby: Room 'Lobby' 'lobbyn'
     isPlural = true
 ;
 
-+ Decoration 'dryck+en/drycker+na/cocktail+en/cocktails/glas+en' 'drycker'
++ Decoration 'dryck+en/cocktail+en/cocktails/glas+en*drycker+na' 'drycker'
     "Servitörerna rör sig så snabbt att du inte kan se exakt vilka
     drycker de har, men det ser ut att vara ett brett utbud av cocktails."
     isPlural = true
@@ -4537,12 +4537,12 @@ adminLobby: Room 'Lobby' 'lobbyn'
     }
 ;
 
-+ Decoration 'ballonger+na/konfetti+n/dekorationer+na' 'dekorationer'
++ Decoration 'ballonger+na/konfetti+n*dekorationer+na' 'dekorationer'
     "Dekorationerna får den normalt spartanska lobbyn att se festlig ut."
     isPlural = true
 ;
 
-+ Decoration 'mat|bord+et/mat+en' 'bord med mat'
++ Decoration 'mat|bord+et/mat+en*borden+a' 'bord med mat'
     "Bord fyllda med mat kantar väggarna."
     notImportantMsg = 'Du tror att du väntar med att ansluta dig till festen
                        tills du har haft en chans att prata med Översten.'

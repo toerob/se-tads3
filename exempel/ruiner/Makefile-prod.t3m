@@ -21,8 +21,7 @@
   -x footnote
   -x hintsys
 
--source ../../extensions/cquotes
-
+-source cquotes
 -source ruiner
 
 -res
