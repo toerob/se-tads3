@@ -2826,7 +2826,7 @@ modify standing
     active() {
         return gameMain.usePastTense ? self.msgVerbTPast : self.msgVerbTPresent;
     }  
-    //participle = 'ståendes' // används inte
+    participle = 'ståendes'
 ;
 
 modify sitting
@@ -2839,7 +2839,7 @@ modify sitting
     active() {
         return gameMain.usePastTense ? msgVerbTPast : msgVerbTPresent;
     }  
-    // participle = 'sittande' // används inte
+    participle = 'sittandes'
 ;
 
 modify lying
@@ -2849,6 +2849,7 @@ modify lying
     msgVerbTPast = 'låg' // 'lay'
     // active motsvarar engelskans participle (t ex = 'lying'),
     // men vi skriver inte i participform i svenskan då det låter konstigt.
+    participle = 'liggandes'
     active() {
         return gameMain.usePastTense ? msgVerbTPast : msgVerbTPresent;
     }  
@@ -5521,9 +5522,7 @@ grammar firstCommandPhrase(withActor):
 ;
 
 grammar firstCommandPhrase(askTellActorTo):
-    ('fråga' | 'berätta' | 'f') singleNounOnly->actor_
-    //('fråga' | 'berätta' | 'f'| 'säg') singleNounOnly->actor_
-    ('om'|'till'|'för') commandPhrase->cmd_
+    (('säg' ('åt'|'till')) | 'be' | 'kommendera') singleNounOnly->actor_ ('att'|) commandPhrase->cmd_
     : FirstCommandProdWithActor
 
     /* "execute" the target actor phrase */
@@ -5563,8 +5562,7 @@ grammar firstCommandPhrase(askTellActorTo):
  */
 grammar actorBadCommandPhrase(main):
     singleNounOnly->actor_ ',' miscWordList
-    | ('fråga' | 'berätta' | 'f' | 'b') singleNounOnly->actor_ ('om'|'till'|'för')  miscWordList
-    //| ('fråga' | 'berätta' | 'säg' | 'f' | 'b') singleNounOnly->actor_ ('om'|'till'|'för')  miscWordList
+    | (('säg' ('åt'|'till')) | 'be' | 'kommendera') singleNounOnly->actor_ ('att'|) miscWordList
     : FirstCommandProdWithActor
 
     /* to resolve nouns, we merely resolve the actor */
@@ -10032,7 +10030,7 @@ VerbRule(AskAboutWhat)
 
 
 VerbRule(TellAbout)
-    ('berätta' | 'informera' | 'säg' | 'b') ('för'|) singleDobj 'om' singleTopic
+    ('berätta' | 'informera' | 'säg' | 'b') ('för'|) singleDobj ('om'|) singleTopic
     : TellAboutAction
     verbPhrase = 'berätta/berättar för (vem) (om vad)'
     askDobjResponseProd = singleNoun
