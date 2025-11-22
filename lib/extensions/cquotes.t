@@ -1,4 +1,4 @@
-#charset "utf-8" // OBS: enda ändringen för att fungera med svenska
+#charset "utf-8"
 
 /*
 ** cquotes: a TADS 3 output filter for making single curly quotes
@@ -100,3 +100,4 @@ PreinitObject
 	mainOutputStream.addOutputFilter(cquoteOutputFilter);
     }
 ;
+

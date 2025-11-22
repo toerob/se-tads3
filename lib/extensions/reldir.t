@@ -383,7 +383,7 @@ grammar directionName(root): dirNames: DirectionProd \
 ; \
 
 DefineLangRelativeDir(ahead, 'framåt' | 'fram' | 'f' );
-DefineLangRelativeDir(back, 'bakåt' | 'backa' |'back' | 'tillbaka' | 'b');
+DefineLangRelativeDir(back, 'bakåt' | 'backa' | 'back' | 'tillbaka' | 'b');
 DefineLangRelativeDir(left, 'vänster' | 'v' );
 DefineLangRelativeDir(right, 'höger' | 'h');
 
@@ -444,7 +444,7 @@ DefineAction(TurnBy, IAction)
     {
         if (gActor.absDirMode)
         {
-            "{You/he} behöv{er|de} inte oroa dig om riktningen som {jag} {står|stod} vänd mot just nu. ";
+            "{Du/han} behöv{er|de} inte oroa dig om riktningen som {jag} {står|stod} vänd mot just nu. ";
         }
         else
         {
@@ -465,30 +465,30 @@ DefineAction(TurnBy, IAction)
 ;
 
 DefineAction(TurnAround, TurnByAction)
-    okayMsg = '{You/he} vänd{er|e} {dig} om. '
+    okayMsg = '{Du/han} vänd{er|e} {dig} om. '
     turnIncrement = 180/45
 ;
 
 DefineAction(TurnLeft, TurnByAction)
-    okayMsg = '{You/he} vänd{er|e} {dig} en kvart till vänster. '
+    okayMsg = '{Du/han} vänd{er|e} {dig} en kvart till vänster. '
     turnIncrement = -90/45
 ;
 
 DefineAction(TurnRight, TurnByAction)
-    okayMsg = '{You/he} vänd{er|e} {dig} en kvart till höger. '
+    okayMsg = '{Du/han} vänd{er|e} {dig} en kvart till höger. '
     turnIncrement = 90/45
 ;
 
 VerbRule(TurnAround) ('vänd'|'ställ') ('mig'|'dig') ('helt'|) 'om' : TurnAroundAction
-    verbPhrase = 'vända/vända om'
+    verbPhrase = 'vända/vänder (sig) om'
 ;
 
 VerbRule(TurnLeft) ('vänd'|'ställ') ('mig'|'dig') ('mot'|) 'vänster' : TurnLeftAction
-    verbPhrase = 'vrida/vrida mot vänster'
+    verbPhrase = 'vända/vänder (sig) mot vänster'
 ;
 
 VerbRule(TurnRight) ('vänd'|'ställ') ('mig'|'dig') ('mot'|) 'höger' : TurnRightAction
-    verbPhrase = 'turn/turning right'
+    verbPhrase = 'vända/vänder (sig) mot höger'
 ;
 
 /* ------------------------------------------------------------------------ */
