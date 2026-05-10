@@ -7,8 +7,8 @@
 "{din} hand" är en beskrivning av ett objekt (handen),
  alltså används itPossAdj (possessivt adjektiv).
 
-→ Det är din hand → "din" beskriver "hand".
- "Handen är {din}" → då används itPossNoun, eftersom "din" står för sig själv.
+ "Det är din hand"  -> "din" beskriver "hand".
+ "Handen är {din}" -> då används itPossNoun, eftersom "din" står för sig själv.
 */
 
 versionInfo: GameID
@@ -133,7 +133,7 @@ TestUnit '2:a person plural (ni)' run {
   //mainOutputStream.hideOutput = nil;
   gMessageParams(hund, hus, spelare2aPerspektivNi);
   [
-    '{Ref dobj/den} {är} {din/erat}.' -> ['Huset var erat.']  // itPossNoun (plural)
+    '{Ref dobj/den} {är} {din/erat}.' -> ['Huset var ert.']  // itPossNoun (neutrum)
 
   ].forEachAssoc(function(msg, msgPlusResult) {
     //gActor = spelare2aPerspektivNi;
@@ -154,7 +154,7 @@ TestUnit 'satsdelar' run {
   setPlayer(spelare2aPerspektivDu);
   "{Du/han actor} går hem till {ditt}";
   assertThat(o).isEqualTo('Du går hem till ditt');
-} skip=true; // TODO
+};
 
 TestUnit 'satsdelar' run {
   gMessageParams(luta);
@@ -185,7 +185,6 @@ TestUnit 'satsdelar' run {
     spelare3dePerspektivDen -> ['{Du/han} spelar på {min} luta', 'Astronauten spelar på sin luta'],
     spelare3dePerspektivDen -> ['{Du/hon} spelar på {min} luta', 'Astronauten spelar på sin luta'],
 
-  // TODO: LAGA
     spelare3dePerspektivDet -> ['{Du} spelar på {sin luta} luta', 'Trädet spelar på sin luta'],
     spelare3dePerspektivDet -> ['{Jag} spelar på {sin luta} luta', 'Trädet spelar på sin luta'],
     spelare3dePerspektivDet -> ['{Du/han} spelar på {sin luta} luta', 'Trädet spelar på sin luta'],
@@ -348,6 +347,88 @@ TestUnit '3:e person plural (de)' run {
     mainOutputStream.capturedOutputBuffer = new StringBuffer();
     "<<msg>>";
     assertThat(o).isEqualTo(msgPlusResult[1]);
+  });
+};
+
+TestUnit 'reflexivt possessivt adjektiv (sin/sitt/sina)' run {
+  // 3:e person ska alltid ge sin/sitt/sina oavsett ägarens genus (han/hon/det/de).
+  // 1:a och 2:a person ger sin vanliga form (min/mitt/mina, din/ditt/dina).
+  [
+    // {sin actor} -> utrum singular ägt substantiv
+    spelare3dePerspektivHan -> ['{sin actor}', 'sin'],
+    spelare3dePerspektivHon -> ['{sin actor}', 'sin'],
+    spelare3dePerspektivDet -> ['{sin actor}', 'sin'],
+    spelare3dePerspektivDe  -> ['{sin actor}', 'sin'],
+    spelare1aPerspektiv     -> ['{sin actor}', 'min'],
+    spelare2aPerspektivDu   -> ['{sin actor}', 'din'],
+
+    // {mitt actor} -> neutrum singular ägt substantiv
+    spelare3dePerspektivHan -> ['{sitt actor}', 'sitt'],
+    spelare3dePerspektivHon -> ['{sitt actor}', 'sitt'],
+    spelare3dePerspektivDet -> ['{sitt actor}', 'sitt'],
+    spelare3dePerspektivDe  -> ['{sitt actor}', 'sitt'],
+    spelare1aPerspektiv     -> ['{sitt actor}', 'mitt'],
+    spelare2aPerspektivDu   -> ['{sitt actor}', 'ditt'],
+
+    // {sina actor} -> plural ägt substantiv
+    spelare3dePerspektivHan -> ['{sina actor}', 'sina'],
+    spelare3dePerspektivHon -> ['{sina actor}', 'sina'],
+    spelare3dePerspektivDet -> ['{sina actor}', 'sina'],
+    spelare3dePerspektivDe  -> ['{sina actor}', 'sina'],
+    spelare1aPerspektiv     -> ['{sina actor}', 'mina'],
+    spelare2aPerspektivDu   -> ['{sina actor}', 'dina']
+  ].forEachAssoc(function(player, msgPlusResult) {
+    setPlayer(player);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "<<msgPlusResult[1]>>";
+    assertThat(o).isEqualTo(msgPlusResult[2]);
+  });
+};
+
+TestUnit 'icke-reflexivt possessivt adjektiv (hans/hennes/dess/deras)' run {
+  // {hans}/{hennes}/{deras} ger icke-reflexiv form baserat på ägarens genus.
+  [
+    spelare3dePerspektivHan -> ['{hans actor}',   'hans'],
+    spelare3dePerspektivHon -> ['{hennes actor}', 'hennes'],
+    spelare3dePerspektivDe  -> ['{deras actor}',  'deras'],
+    // 1:a och 2:a person: itPossAdj returnerar min/din (ingen reflexiv distinktion)
+    spelare1aPerspektiv     -> ['{hans actor}',   'min'],
+    spelare2aPerspektivDu   -> ['{hans actor}',   'din']
+  ].forEachAssoc(function(player, msgPlusResult) {
+    setPlayer(player);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "<<msgPlusResult[1]>>";
+    assertThat(o).isEqualTo(msgPlusResult[2]);
+  });
+};
+
+TestUnit 'meningar med sin/sina vs hans/hennes' run {
+  // Konkreta exempelmeningar som visar skillnaden reflexivt/icke-reflexivt.
+  [
+    // Reflexivt: ägaren är subjektet -> sin/sina
+    spelare3dePerspektivHan ->
+      ['{Du} {såg} inte {sina actor} saker.', 'Bob såg inte sina saker.'],
+    spelare3dePerspektivHon ->
+      ['{Du} {såg} inte {sin actor} bok.', 'Alice såg inte sin bok.'],
+    spelare3dePerspektivHan ->
+      ['{Du} {såg} inte {sitt actor} hus.', 'Bob såg inte sitt hus.'],
+
+    // Icke-reflexivt: ägaren är INTE subjektet -> hans/hennes
+    spelare3dePerspektivHan ->
+      ['Det var inte {hans actor} saker.', 'Det var inte hans saker.'],
+    spelare3dePerspektivHon ->
+      ['Det var inte {hennes actor} saker.', 'Det var inte hennes saker.'],
+
+    // 1:a och 2:a person (ingen distinktion i svenska)
+    spelare1aPerspektiv ->
+      ['{Jag} {såg} inte {sina actor} saker.', 'Jag såg inte mina saker.'],
+    spelare2aPerspektivDu ->
+      ['{Du} {såg} inte {sina actor} saker.', 'Du såg inte dina saker.']
+  ].forEachAssoc(function(player, msgPlusResult) {
+    setPlayer(player);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "<<msgPlusResult[1]>>";
+    assertThat(o).isEqualTo(msgPlusResult[2]);
   });
 };
 

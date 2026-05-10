@@ -17,7 +17,7 @@
 -lib system.tl
 -lib adv3/adv3
 -source dynfunc
--source ../extensions/tests2
+-source ../lib/extensions/tests2
 
 # TESTER 
 -source testunit.t

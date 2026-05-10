@@ -1303,15 +1303,30 @@ modify Thing
 
     definiteForm = nil
 
-    theNameFrom(str) { 
+    // English version:
+    //theNameFrom(str) { return (isQualifiedName ? '' : 'the ') + str; }
+    //
+    // Returnerar den bestämda formen av substantivet.
+    // Normalfallet: definitiv form sätts av vokabulärparsern via +-notation
+    //   (t ex 'katt+en' → definiteForm='katten').
+    // Reservfall (definiteForm är nil, ingen +-notation använd):
+    //   - singular: "den/det X" — analytisk bestämd form, ej standardsvenska
+    //   - plural:   "de X"     — approximation; korrekt form kräver böjningsändelse
+    // Använd alltid +-notation för korrekt svenska utdata.
+    theNameFrom(str) {
         if(isQualifiedName) {
             return str;
         }
         if(definiteForm) {
             return definiteForm;
         }
-        //tadsSay('theNameFrom <<definiteForm>>');
-        return (isPlural ? 'de ' : (isNeuter? 'det ' : 'den ')) + str; 
+        if(isPlural) {
+            return 'de ' + str;
+        }
+        if(isNeuter) {
+            return 'det ' + str;
+        }
+        return 'den ' + str;
     }
 
     swedishVocals = static ['a','e','i','o','u','y','å','ä','ö']
@@ -1658,66 +1673,28 @@ modify Thing
      *   but this will have to be overridden when the 'u' sounds like 'y'.
      */
 
-     /**
-      * Artikel+namn i svenska
-      */
+    // Returnerar obestämd form med artikel.
+    // Svenska artiklar beror på genus/antal, aldrig på första bokstaven.
+    //   utrum singular  → "en X"
+    //   neutrum singular → "ett X"
+    //   plural          → "några X"
+    //   massnoun        → "X"  (ingen artikel: "vatten", "virke")
+    //   egennamn        → "X"  (isQualifiedName)
     aNameFrom(str)
     {
-        /* remember the original source string */
-        local inStr = str;
-
-        /* if the name is already qualified, don't add an article at all */
         if (isQualifiedName) {
             return str;
         }
-        // För odelbara saker så som vatten, trä, popcorn etc, kan vi antingen skriva 
-        // "lite" eller skippa artikeln helt och hållet
         if (isMassNoun) {
             return str;
-            //return 'lite ' + str;
-        } 
-        // Använd några som artikel för plural-objekt
-        if(isPlural) {        
-            return 'några ' + str; 
-        } 
-
-        // The rest is unneccessary in swedish
-        local firstChar;
-
-        /* if it's empty, just use "a" */
-        if (inStr == '')
-            return 'ett';
-
-        /* get the first character of the name */
-        firstChar = inStr.substr(1, 1);
-
-        /* skip any leading HTML tags */
-        if (rexMatch(patTagOrQuoteChar, firstChar) != nil)
-        {
-            /*
-                *   Scan for tags.  Note that this pattern isn't quite
-                *   perfect, as it won't properly ignore close-brackets
-                *   that are inside quoted material, but it should be good
-                *   enough for nearly all cases in practice.  In cases too
-                *   complex for this pattern, the object will simply have
-                *   to override aDesc.
-                */
-            local len = rexMatch(patLeadingTagOrQuote, inStr);
-
-            /* if we got a match, strip out the leading tags */
-            if (len != nil)
-            {
-                /* strip off the leading tags */
-                inStr = inStr.substr(len + 1);
-
-                /* re-fetch the first character */
-                firstChar = inStr.substr(1, 1);
-            }
         }
-        local aName = (isNeuter?'ett':'en') + ' ' + str;
-        //tadsSay('<<aName>>\n');
-        return aName;
-        
+        if (isPlural) {
+            return 'några ' + str;
+        }
+        if (str == '') {
+            return 'ett';
+        }
+        return (isNeuter ? 'ett' : 'en') + ' ' + str;
     }
 
     /* pre-compile some regular expressions for aName */
@@ -2355,65 +2332,70 @@ modify Actor
     
 
 
-    // defaultar till neutrum för att matcha mot ditt/mitt etc om detta 
-    // objekt är huvudkaraktären. De flesta levande ting är utrum
-    isNeuter = nil 
+    // nil = utrum (standardvärde). De flesta levande ting är utrum.
+    // Sätt isNeuter = true för saker som "trädet", "huset" etc.
+    isNeuter = nil
 
+    // Icke-reflexivt possessivt adjektiv. Används när ägaren INTE är subjekt.
+    // 3:e person baseras på ägarens genus: hans/hennes/dess/deras.
+    // Exempel: "Det var inte {hans actor} bok." → "Det var inte hans bok."
     itPossAdj
-    {    
-        //   [1/s/n, 1/s/m, 1/s/f, 1/p, 
-        //    2/s/n, 2/s/m, 2/s/f, 2/p,
-        //    3/s/n, 3/s/m, 3/s/f, 3/p]
-        if (isNeuter) {
-            return ['mitt', 'mitt', 'mitt', 'vårt',
-                    'ditt', 'ditt', 'ditt', 'ert',
-                    'sitt', 'hans', 'hennes', 'deras'][pronounSelector];
-        }
+    {
         return ['min', 'min', 'min', 'vår',
                 'din', 'din', 'din', 'er',
-                'sin', 'hans', 'hennes', 'deras'][pronounSelector];
+                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
     }
 
-    itPossAdjPlural 
+    // Reflexivt possessivt adjektiv, utrum singular ägt substantiv.
+    // 3:e person ger alltid 'sin' oavsett ägarens genus.
+    // Exempel: "Han hittade {sin actor} bok." → "Han hittade sin bok."
+    itPossAdjSg
+    {
+        return ['min', 'min', 'min', 'vår',
+                'din', 'din', 'din', 'er',
+                'sin', 'sin', 'sin', 'sin'][pronounSelector];
+    }
+
+    // Reflexivt possessivt adjektiv, neutrum singular ägt substantiv.
+    // 3:e person ger alltid 'sitt' oavsett ägarens genus.
+    // Exempel: "Han hittade {sitt actor} hus." → "Han hittade sitt hus."
+    itPossAdjNt
+    {
+        return ['mitt', 'mitt', 'mitt', 'vårt',
+                'ditt', 'ditt', 'ditt', 'ert',
+                'sitt', 'sitt', 'sitt', 'sitt'][pronounSelector];
+    }
+
+    // Reflexivt possessivt adjektiv, plural ägt substantiv.
+    // 3:e person ger alltid 'sina' oavsett ägarens genus.
+    // Exempel: "Han såg inte {sina actor} saker." → "Han såg inte sina saker."
+    itPossAdjPl
     {
         return ['mina', 'mina', 'mina', 'våra',
-               'dina', 'dina', 'dina', 'dina',
-               'dessas', 'deras', 'deras', 'deras'][pronounSelector];
+                'dina', 'dina', 'dina', 'era',
+                'sina', 'sina', 'sina', 'sina'][pronounSelector];
     }
 
+    // Behålls för bakåtkompatibilitet; används via theNamePossAdjPlural.
+    itPossAdjPlural = (itPossAdjPl)
+
+    // Possessivt pronomen (fristående form). Ägaren är INTE subjektet.
+    // Väljer form baserat på gDobj:s genus för 1:a/2:a person.
+    // 3:e person ger alltid icke-reflexiv form: hans/hennes/dess/deras.
     itPossNoun
     {
-        if(gDobj) {
-        if (gDobj.isPlural) {
-                return ['mina', 'mina', 'mina', 'våra',
-                        'dina', 'dina', 'dina', 'era',
-                        'deras', 'hans', 'hennes', 'deras'][pronounSelector];
-            }
-            if (gDobj.isNeuter) {
-                return ['mitt', 'mitt', 'mitt', 'vårat',
-                        'ditt', 'ditt', 'ditt', 'erat',
-                        'dess', 'hans', 'hennes', 'deras'][pronounSelector];
-            }
-                    //1a,   han,   hon,   plural
-            return ['min', 'min',  'min', 'vår',    // 1a perspektiv
-                    'din', 'din',  'din', 'er',     // 2a perspektiv
-                    'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e perspektiv
-        }
-
-        if (isPlural) {
+        local obj = gDobj;
+        if (obj != nil && obj.isPlural)
             return ['mina', 'mina', 'mina', 'våra',
                     'dina', 'dina', 'dina', 'era',
-                    'deras', 'hans', 'hennes', 'deras'][pronounSelector];
-        }
-        if (isNeuter) {
-            return ['mitt', 'mitt', 'mitt', 'vårat',
-                    'ditt', 'ditt', 'ditt', 'erat',
-                    'dess', 'hans', 'hennes', 'deras'][pronounSelector];        
-        }
-                //1a,   han,   hon,   plural
-        return ['min', 'min',  'min', 'vår',    // 1a perspektiv
-                'din', 'din',  'din', 'er',     // 2a perspektiv
-                'sin', 'hans', 'hennes', 'deras'][pronounSelector]; //3e perspektiv
+                    'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+        if (obj != nil && obj.isNeuter)
+            return ['mitt', 'mitt', 'mitt', 'vårt',
+                    'ditt', 'ditt', 'ditt', 'ert',
+                    'dess', 'hans', 'hennes', 'deras'][pronounSelector];
+        return ['min', 'min', 'min', 'vår',
+                'din', 'din', 'din', 'er',
+                'dess', 'hans', 'hennes', 'deras'][pronounSelector];
     }
     
     itReflexiveSimple
@@ -4135,20 +4117,30 @@ langMessageBuilder: MessageBuilder
         ['dess/hennes', &itPossNoun, 'actor', nil, nil],
         ['vår/hennes',  &itPossNoun, 'actor', nil, nil],    
 
-        ['min',     &itPossAdj, 'actor', nil, nil],
-        ['mitt',    &itPossAdj, 'actor', nil, nil],
-        ['din',     &itPossAdj, 'actor', nil, nil],
-        ['ditt',    &itPossAdj, 'actor', nil, nil],
-        ['sin',     &itPossAdj, 'actor', nil, nil],
-        ['sitt',     &itPossAdj, 'actor', nil, nil],
-        ['deras',   &itPossAdj, 'actor', nil, nil],
-        ['dess',    &itPossAdj, 'actor', nil, nil],
-        ['vår',     &itPossAdj, 'actor', nil, nil],
-        ['vårt',     &itPossAdj, 'actor', nil, nil],
+        // Reflexiva possessiva adjektiv — välj utifrån det ägda substantivets genus:
+        //   utrum sg  → {sin}/{min}/{din}
+        //   neutrum sg → {sitt}/{mitt}/{ditt}
+        //   plural     → {sina}/{mina}/{dina}
+        // 3:e person ger alltid sin/sitt/sina oavsett ägarens genus.
+        ['sin',  &itPossAdjSg, 'actor', nil, nil],
+        ['sitt', &itPossAdjNt, 'actor', nil, nil],
+        ['sina', &itPossAdjPl, 'actor', nil, nil],
+        ['min',  &itPossAdjSg, 'actor', nil, nil],
+        ['mitt', &itPossAdjNt, 'actor', nil, nil],
+        ['mina', &itPossAdjPl, 'actor', nil, nil],
+        ['din',  &itPossAdjSg, 'actor', nil, nil],
+        ['ditt', &itPossAdjNt, 'actor', nil, nil],
+        ['dina', &itPossAdjPl, 'actor', nil, nil],
+        ['vår',  &itPossAdjSg, 'actor', nil, nil],
+        ['vårt', &itPossAdjNt, 'actor', nil, nil],
+        ['våra', &itPossAdjPl, 'actor', nil, nil],
 
-        ['mina', &theNamePossAdjPlural, 'actor', nil, nil],
-        ['dina', &theNamePossAdjPlural, 'actor', nil, nil],
-        ['våra', &theNamePossAdjPlural, 'actor', nil, nil],
+        // Icke-reflexiva possessiva adjektiv — ägaren är INTE subjektet.
+        // 3:e person baseras på ägarens genus: hans/hennes/dess/deras.
+        ['hans',   &itPossAdj, 'actor', nil, nil],
+        ['hennes', &itPossAdj, 'actor', nil, nil],
+        ['deras',  &itPossAdj, 'actor', nil, nil],
+        ['dess',   &itPossAdj, 'actor', nil, nil],
 
         ['själv', &itReflexive, 'actor', nil, nil],
         ['själva', &itReflexive, 'actor', nil, nil],
@@ -5523,6 +5515,7 @@ grammar firstCommandPhrase(withActor):
 
 grammar firstCommandPhrase(askTellActorTo):
     (('säg' ('åt'|'till')) | 'be' | 'kommendera') singleNounOnly->actor_ ('att'|) commandPhrase->cmd_
+    //(('säg' ('åt'|'till')) | 'be' | 'kommendera') singleNounOnly->actor_ ('att'|) verbPhrase
     : FirstCommandProdWithActor
 
     /* "execute" the target actor phrase */

@@ -206,10 +206,11 @@ OBS: `ref */honom` används i sista exemplet. Den tar hänsyn till egennamn till
 | `{oss artister}` | "oss"    | `isPlural = true, referralPerson = FirstPerson`   |
 | `{er artister}`  | "er"     | `isPlural = true, referralPerson = SecondPerson`  |
 
-### Förslag till vidare läsning
+### Fullständig referens
 
-Detta är inte en helt utförlig instruktion. Tids nog kanske det kommer vara det.
-Jag rekommenderar därför att titta närmare i filen `msg_neu.t` och kanske även testerna i `satsdelar.t` för mer inspiration.
+Se **[SUBSTITUTIONSSTRÄNGAR.md](SUBSTITUTIONSSTRÄNGAR.md)** för en komplett guide med alla parametrar, possessiva former (`sin`/`sitt`/`sina` vs `hans`/`hennes`/`deras`), verbparametrar och artikelformer — med realistiska exempelmeningar för varje fall.
+
+Jag rekommenderar även att titta i filen `msg_neu.t` och testerna i `tester/satsdelar.t` för mer inspiration.
 
 # Tester och bidrag
 

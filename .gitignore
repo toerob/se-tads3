@@ -9,6 +9,7 @@ tester/run-parser-tests.sh
 tester/parser.t3m
 tester/parser-tests.t
 
+lib/en_us
 .lsp
 .vscode
 .clj-kondo

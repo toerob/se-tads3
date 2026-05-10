@@ -5,10 +5,12 @@
 -D LANGUAGE=sv_se
 -D MESSAGESTYLE=neu
 -D __DEBUG
+
+-D DEBUG__
+
 -Fy obj
 -Fo obj
 -v
--D
 -d
 -FI /usr/local/share/frobtads/tads3/include
 -Fs /usr/local/share/frobtads/tads3/lib
@@ -23,6 +25,9 @@
 
 -source dynfunc
 -source tests2 
+-source ../../lib/eval
+-source reflect
+
 
 -source cquotes
 -source ruiner

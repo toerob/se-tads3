@@ -4,7 +4,6 @@
 #include "testunit.h"
 
 // TODO: testa aNameFrom
-// TODO: testa theNameFrom
 // TODO: getQuestionInf(which)
 // TODO: testa av Resolver.resolvePronounAntecedent
 
@@ -39,6 +38,17 @@ lab: Room 'labbet' 'labbet';
 
 +tingest: Thing 'tingest+en';
 +skapet: Thing 'skåp+et';
+
+// Objekt med +-notation — definiteForm sätts automatiskt av parsern
++stol: Thing 'stol+en';               // utrum singular
++bord: Thing 'bord+et' isNeuter = true;  // neutrum singular
++stolar: Thing 'stol+ar+na' isPlural = true;  // plural
+
+// Objekt UTAN +-notation — definiteForm förblir nil, testar reservfall
++kattFallback: Thing 'katt' 'katt';
++husFallback: Thing 'hus' 'hus' isNeuter = true;
++katternFallback: Thing 'katter' 'katter' isPlural = true;
++bobProper: Thing 'bob' 'bob' isProperName = true isQualifiedName = true;
 
 +ljus: LightSource 'ljus+et*ljus';
 +ljuskrona: LightSource 'ljus+krona+n*ljuskronor';
@@ -241,3 +251,63 @@ smellActionLister.showList();
 inventoryListenLister.showList();
 inventorySmellLister.showList();
 */
+
+// -----------------------------------------------------------------------
+// theNameFrom
+// -----------------------------------------------------------------------
+
+TestUnit 'theNameFrom - +-notation ger korrekt bestämd form' run {
+  // Normalfallet: +-notation → definiteForm sätts av vokabulärparsern.
+  assertThat(stol.theName).isEqualTo('stolen');        // utrum: 'stol+en'
+  assertThat(bord.theName).isEqualTo('bordet');        // neutrum: 'bord+et'
+  assertThat(stolar.theName).isEqualTo('stolarna');    // plural: 'stol+ar+na'
+
+  // Befintliga objekt i testfilen:
+  assertThat(tingest.theName).isEqualTo('tingesten');  // 'tingest+en'
+  assertThat(skapet.theName).isEqualTo('skåpet');      // 'skåp+et'
+  assertThat(gatulyktor.theName).isEqualTo('gatulyktorna'); // 'gatu+lyktor+na'
+};
+
+TestUnit 'theNameFrom - egennamn returneras utan artikel' run {
+  // isQualifiedName = true → returnera str oförändrat.
+  assertThat(bobProper.theName).isEqualTo('bob');
+};
+
+TestUnit 'theNameFrom - reservfall utan +-notation' run {
+  // Utan +-notation är definiteForm nil.
+  // Korrekt svenska kräver böjningsändelse; reservfallet ger analytisk form.
+  // Notera: dessa fall genererar en __DEBUG-varning i konsolen.
+  assertThat(kattFallback.theName).isEqualTo('den katt');    // utrum → "den X"
+  assertThat(husFallback.theName).isEqualTo('det hus');      // neutrum → "det X"
+  assertThat(katternFallback.theName).isEqualTo('de katter'); // plural → "de X"
+};
+
+// -----------------------------------------------------------------------
+// aNameFrom
+// -----------------------------------------------------------------------
+
+TestUnit 'aNameFrom - utrum singular' run {
+  assertThat(stol.aName).isEqualTo('en stol');         // 'stol+en'
+  assertThat(tingest.aName).isEqualTo('en tingest');   // 'tingest+en'
+  assertThat(ljuskrona.aName).isEqualTo('en ljuskrona'); // 'ljus+krona+n'
+};
+
+TestUnit 'aNameFrom - neutrum singular' run {
+  assertThat(bord.aName).isEqualTo('ett bord');        // 'bord+et'
+  assertThat(skapet.aName).isEqualTo('ett skåp');      // 'skåp+et'
+  assertThat(ljus.aName).isEqualTo('ett ljus');        // 'ljus+et'
+};
+
+TestUnit 'aNameFrom - plural' run {
+  assertThat(stolar.aName).isEqualTo('några stolar');         // 'stol+ar+na'
+  assertThat(gatulyktor.aName).isEqualTo('några gatulyktor'); // 'gatu+lyktor+na'
+};
+
+TestUnit 'aNameFrom - massnoun (ingen artikel)' run {
+  assertThat(virke.aName).isEqualTo('virke');
+  assertThat(olja.aName).isEqualTo('olja');
+};
+
+TestUnit 'aNameFrom - egennamn returneras utan artikel' run {
+  assertThat(bobProper.aName).isEqualTo('bob');
+};

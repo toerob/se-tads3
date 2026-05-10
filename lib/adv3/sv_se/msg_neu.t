@@ -1423,6 +1423,7 @@ libMessages: MessageHelper
     actorHereGroupSuffix(posture, lst)
     {
         // e.g "Bob och Bill står här"
+        
         " <<posture.active>> <<tSel('här', 'där')>>. ";
     }
 
@@ -3070,8 +3071,8 @@ playerActionMessages: MessageHelper
     /* cannot move obj because cont is closed */
     cannotMoveThroughClosedMsg(obj, cont)
     {
-        gMessageParams(cont);
-        return '{Du/han} {kan} inte göra det då {ref cont/den} {är} ' + 'stäng{d/t/da iobj}. ';
+        gMessageParams(obj, cont);
+        return '{Du/han actor} {kan} inte göra det då {ref cont/den} {är} ' + 'stäng{d/t/da obj}. '; 
     }
 
     /* cannot fit obj into cont through cont's opening */
