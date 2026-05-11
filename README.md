@@ -112,7 +112,7 @@ Den särskilda notationen för vocabWords fungerar när `combineVocabWords = tru
 
 ```tads3
   fonster: Thing '+tecknet/+tecken/+-tecken/+-tecknet/plustecken/plustecknet'
-    combineVocabWords = true
+    combineVocabWords = nil
   ;
 ```
 
