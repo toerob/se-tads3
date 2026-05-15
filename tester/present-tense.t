@@ -98,6 +98,7 @@ skapenObjNeuterPlural: Thing 'skåp+et*skåpen' 'skåpen' isPlural = true theNam
 
 tandsticka: Thing 'tändsticka+n' 'tändsticka';
 ljuset: Thing 'stearinljus+et' 'stearinljus';
+ljusen: Thing 'stearinljusen+a' 'stearinljus' isPlural=true;
 prassel: SimpleNoise 'prassel/prasslet/prasslande+t' 'prassel' 
   theName = 'prasslet'
   
@@ -2949,6 +2950,41 @@ TestUnit 'playerActionMessages' run {
   });
 };
 
+
+TestUnit 'playerActionMessages verbändelser' run {
+    gAction = OpenAction.createActionInstance();
+    local pairs = [
+
+      [&okayLockMsg, dorrenObjUtrumSingular] -> 'Låst.',
+      [&okayLockMsg, skapetObjNeutrumSingular] -> 'Låst.',
+      [&okayLockMsg, skapenObjNeuterPlural] -> 'Låsta.',
+
+      [&okayOpenMsg, dorrenObjUtrumSingular] -> 'Öppnad.',
+      [&okayOpenMsg, skapetObjNeutrumSingular] -> 'Öppnat.',
+      [&okayOpenMsg, skapenObjNeuterPlural] -> 'Öppnade.',
+
+      [&okayCloseMsg, dorrenObjUtrumSingular] -> 'Stängd.',
+      [&okayCloseMsg, skapetObjNeutrumSingular] -> 'Stängt.',
+      [&okayCloseMsg, skapenObjNeuterPlural] -> 'Stängda.',
+
+      [&candleOutOfFuelMsg, ljuset] -> 'Stearinljuset är för nedbrunnet; det kan inte tändas.',
+      [&candleOutOfFuelMsg, tandsticka] -> 'Tändstickan är för nedbrunnen; den kan inte tändas.',
+      [&candleOutOfFuelMsg, ljusen] -> 'Stearinljusena är för nedbrunna; de kan inte tändas.'
+    ];
+    pairs.forEachAssoc(function(propAndItem, expectedOutput) {
+      local prop = propAndItem[1];
+      local item = propAndItem[2];
+      gAction.setCurrentObjects([item]);
+
+      mainOutputStream.capturedOutputBuffer = new StringBuffer();
+      "<<playerActionMessages.(prop)>>";
+      
+      local str = o.findReplace('  ', ' ', ReplaceAll);
+      
+      assertThat(str).startsWith(expectedOutput);
+    });
+}
+;
 
 TestUnit 'npcActionMessages' run {
     //mainOutputStream.hideOutput = nil;

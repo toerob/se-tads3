@@ -2892,9 +2892,9 @@ playerActionMessages: MessageHelper
 
     /* default response to open/close */
     okayOpenMsg = shortTMsg(
-        'Öppn{ad/at/na}. ', '{Du/han} öppna{r|de} {ref dobj/honom}. ')
+        'Öppn{ad/at/ade dobj}. ', '{Du/han} öppna{r|de} {ref dobj/honom}. ')
     okayCloseMsg = shortTMsg(
-        'Stäng{d/t/da}. ', '{Du/han} stäng{er|de} {ref dobj/honom}. ')
+        'Stäng{d/t/da dobj}. ', '{Du/han} stäng{er|de} {ref dobj/honom}. ')
 
     /* default response to lock/unlock */
     okayLockMsg = shortTMsg(
@@ -3737,7 +3737,7 @@ playerActionMessages: MessageHelper
 
     /* trying to light a candle with no fuel */
     candleOutOfFuelMsg =
-        '{Ref dobj/den} {är} för nedbrunn{en/et/na dobj}; {det dobj/han} {kan} inte tändas. '
+        '{Ref dobj/den} {är} för nedbrunn{en/et/a dobj}; {det dobj/han} {kan} inte tändas. '
 
     /* lighting a candle */
     okayBurnCandleMsg = '{Du/han} tänd{er/e} {ref dobj/honom}. '

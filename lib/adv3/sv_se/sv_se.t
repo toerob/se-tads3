@@ -1984,9 +1984,9 @@ modify Thing
         return ''; // ingen förändring
     }
 
-    endingForNounAdAtNa {
+    endingForNounAdAtAde {
         if(self.isPlural) {
-            return 'na'; // plural / bestämd form
+            return 'ade'; // plural / bestämd form
         }
         if(self.isNeuter) {
             return 'at'; // ett-genus
@@ -2002,6 +2002,16 @@ modify Thing
             return 't'; // ett-genus
         }
         return 'd'; // en-genus
+    }
+
+    endingForNounEnEtA {
+        if(self.isPlural) {
+            return 'a'; // plural / bestämd form
+        }
+        if(self.isNeuter) {
+            return 'et'; // ett-genus
+        }
+        return 'en'; // en-genus
     }
 
     endingForNounEnEtNa {
@@ -4192,14 +4202,16 @@ langMessageBuilder: MessageBuilder
         /*
          *  Verbändelser
          */
-        ['er/te', &verbEndingEr, nil, nil, true],  // t ex: trycker/tryckte
-        ['er/e', &verbEndingErE, nil, nil, true],  // t ex: tänder/tände
-        ['a/t', &endingForNounTA, nil, nil, nil],
-        ['a', &endingForNounA, nil, nil, nil],
-        ['d/t/da', &endingForNounDTDa, nil, nil, nil],
-        ['ad/at/na', &endingForNounAdAtNa, nil, nil, nil],
-        ['en/et/na', &endingForNounEnEtNa, nil, nil, nil],
+        ['a', &endingForNounA, nil, nil, nil],     // t ex: låst/låsta 
 
+        ['a/t', &endingForNounTA, nil, nil, nil],  // t ex: stor/stora/stort
+        ['er/e', &verbEndingErE, nil, nil, true],  // t ex: tänder/tände
+        ['er/te', &verbEndingEr, nil, nil, true],  // t ex: trycker/tryckte
+
+        ['d/t/da', &endingForNounDTDa, nil, nil, nil], // T ex: stängd, Stängt, Stängda
+        ['en/et/a', &endingForNounEnEtA, nil, nil, nil], // T ex: Nedbrunnen, Nedbrunnet, Nedbrunna
+        ['en/et/na', &endingForNounEnEtNa, nil, nil, nil], // T ex: Öppen, Öppet, Öppna
+        ['ad/at/ade', &endingForNounAdAtAde, nil, nil, nil], // T ex: Öppnad, Öppnat, Öppnade
 
 
         /*
