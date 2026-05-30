@@ -11482,11 +11482,15 @@ class WordPart: object {
     ending = nil
     jointS = nil
     useIndividually = nil
-    construct(word, ending, jointS, useIndividually) {
+    // Alternativ obestämd ändelse: när stammens obestämda form inte är
+    // stammen ensam. T ex 'fönst:er+ret' → altEnding='er', fönster/fönstret.
+    altEnding = nil
+    construct(word, ending, jointS, useIndividually, altEnding = nil) {
         self.word = word;
         self.ending = ending;
         self.jointS = jointS;
         self.useIndividually = useIndividually;
+        self.altEnding = altEnding;
     }
 }
 
@@ -11530,11 +11534,6 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
     // som är avskiljda med '+', '|'-tecken, eller ingen avskiljare alls (nil)
     local parts = splitWithDelimiterPattern(cur, VocabObject.wordPartDelPat);
     
-    // Utgå från att minst två komponenter finns i parts eftersom 
-    // det reguljära uttrycket identifierat det mönstret med "abc+def" 
-    // innan metodanropet in hit.
-    local wordCount = parts.length;
-
     // Håll reda på sista ändelsen för ordet. Den definitiva formen går att 
     // använda för att härleda neutrum/utrum.
     local ending = parts[parts.length][1]; 
@@ -11578,33 +11577,25 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
         local genderMod = rexGroup(2);      // Plocka grammatisk genus-moddning som boolesk
         local genderModContent = genderMod ? rexGroup(2)[3] : nil; // Plocka ut alternativ ändelse, annars nil
 
-        // Börja med att kontrollera följande villkor: 
-        // 2 delar, inget foge-S MEN en variant av ändelse efter ett kolon.
+        // Den sista ordkomponenten (steget precis innan globaländelsen) hanteras separat.
+        // Globaländelsen används alltid för bestämd form. Om komponenten har ':suffix'
+        // utan foge-s sparas suffixet som altEnding och används för obestämd form
+        // i stället för den nakna stammen.
         //
-        // Användningsfallet här är för att stödja alternativa ändelser
-        // där ändelsen inte enkelt kan läggas på efter standardformen
-        // T ex: 'fönst:er+ret' ger oss 'fönster' & 'fönstret'
-
-        // I detta fallet kommer kolon inte stå för en genusvariant som den 
-        // gör när den används ihop med foge-S utan snarare obestämd+bestämd form. 
-        // Ändelsen efter (+) kommer att bli den bestämda formen.
-        if(parts.length == 2 && !jointS && genderMod) {
-            genderModContent = genderModContent.findReplace(':', '', ReplaceAll);
-            local wordWithoutEnding = word + genderModContent;
-            local wordWithEnding = word + ending;
-            cmdDict.addWord(obj, wordWithoutEnding, sectPart);  
-            cmdDict.addWord(obj, wordWithEnding, sectPart);  
-            return object {
-                standardForm = wordWithoutEnding
-                definiteForm = wordWithEnding
-            };
-        }
-
-        // Kontrollera om vi är på sista ordet i iterationen, använd bara definierade 
-        // ändelsen i ending rakt av och bryt tidigt. Det finns ingen anledning att 
-        // härleda där då användaren specificerat ändelsen som sista del av ordet redan.
+        // Exempel: 'fönst:er+ret' → word='fönst', ending='ret', altEnding='er'
+        //   obestämd: fönster  (fönst + er)
+        //   bestämd:  fönstret (fönst + ret)
+        //
+        // Exempel: 'tak+fönst:er+ret' → samma mekanism, nu i ett längre sammansatt ord
+        //   tak/taket, takfönster/takfönstret, fönster/fönstret
         if(i == parts.length-1) {
-            wordParts.append(new WordPart(word, ending, nil, useIndividually));
+            local altEnding = nil;
+            if(genderMod && genderModContent && !jointS) {
+                local suffix = genderModContent.findReplace(':', '', ReplaceAll);
+                if(suffix.length() > 0)
+                    altEnding = suffix;
+            }
+            wordParts.append(new WordPart(word, ending, nil, useIndividually, altEnding));
             break;
         } 
 
@@ -11670,98 +11661,37 @@ function createCompoundWordVariations(obj, cur, sectPart, enableShortenRepeating
         wordParts.append(new WordPart(word,partEnding,jointS, useIndividually));
     }
 
-    for(local part in wordParts) {
-        if(part.useIndividually) {
-            wordVariations.append(part.word);
-            wordVariations.append(part.word + part.ending);
-        } else {
-            //tadsSay('Skippar enskild ordkomponent: <<part.word>>\n');
+    local wordPartsList = wordParts.toList();
+    local nParts = wordPartsList.length;
+
+    local longestCompoundWord = wordPartsList
+        .mapAll({x: '<<x.word>><<x.jointS?'s':''>>'})
+        .join('');
+    if(wordPartsList[nParts].jointS)
+        longestCompoundWord = longestCompoundWord.substr(1, -1);
+
+    for(local start = 1; start <= nParts; start++) {
+        for(local len = 1; start + len - 1 <= nParts; len++) {
+            local sub = wordPartsList.sublist(start, len);
+            local lastPart = sub[sub.length];
+
+            local compound = sub.mapAll({x: '<<x.word>><<x.jointS?'s':''>>'}).join('');
+            if(lastPart.jointS) compound = compound.substr(1, -1);
+
+            if(lastPart.useIndividually) {
+                wordVariations.append(lastPart.altEnding != nil
+                    ? compound + lastPart.altEnding
+                    : compound);
+                wordVariations.append(compound + lastPart.ending);
+            }
         }
     }
 
-    local longestCompoundWord = '';
-
-    // Bygg upp längre sammansatta ord, genom att addera ett i taget
-    local wordPartsList = wordParts.toList(); // Skapa en lista av de ord som ska användas individuellt
-
-    for(local nr = 1; nr <= wordPartsList.length; nr++) {
-        local w = wordPartsList.sublist(1, nr); // Bygg upp en lista med allt längre sammansatta ord
-
-        // Sätt ihop orden med foge-s om det behövs
-        local compoundWord = w.mapAll({x: '<<x.word>><<x.jointS?'s':''>>' }).join('');
-
-        // Om sista sammansatta ordet har foge-s tillagt, ta bort det
-        local lastWordHasJointS = w[w.length].jointS;
-
-        if(lastWordHasJointS) {
-            compoundWord = compoundWord.substr(1,-1);
-        }
-
-        // Håll koll det hittills längst sammansatta ordet för bestämd form 
-        longestCompoundWord = max(compoundWord, longestCompoundWord); 
-        
-        // Om det sista ordet i en sammansättning ska få användas indidivuellt, lägg till det.
-        // Annars inte, t ex: i fallet | används, så som i fallet 'vatten|slang+en', här ska inte vatten
-        // ensamt läggas till, vatten+slang+en, ska dock göra det.
-        if(wordPartsList[nr].useIndividually)  {
-            wordVariations.append(compoundWord);
-        }
-    }
-
-    // Använd det längst sammansatta ordet för att skapa upp namn utan ändelse och med,
-    // detta blir standardform respektive bestämd form för just detta specifika ord i mängden.
-    local wordWithoutEnding = longestCompoundWord; 
+    local lastWordPart = wordPartsList[nParts];
+    local wordWithoutEnding = lastWordPart.altEnding != nil
+        ? longestCompoundWord + lastWordPart.altEnding
+        : longestCompoundWord;
     local wordWithEnding = longestCompoundWord + ending;
-
-    if(parts.length == 3) {
-        for(local i=1; i<=wordCount-2; i++) {
-            for(local j=2; j<=wordCount-1; j++) {
-                if(i == j) continue; // Kombinera inte samma ord
-                local firstWord = wordParts[i];
-                local secondWord = wordParts[j];
-                local word = firstWord.word + (firstWord.jointS?'s':'') + secondWord.word;
-                local wordWithEnding = word + secondWord.ending;
-
-                // Lägg bara till det sammansatta ordet om det sista sammansatt ordet får 
-                // användas individuellt
-                if(secondWord.useIndividually)  {
-                    wordVariations.append(word);
-                    wordVariations.append(wordWithEnding);
-                }
-            }
-        }
-    } else if(parts.length > 3) {        
-
-        // OBS: En gräns nu är vid 3 inre komponenter för olika permutationer med förskjuten offset.
-        // (Förskjuten offset för att vi inte kombinerar med omkastad ordföljd, bara framåtriktad)
-        // 
-        // Detta skulle bör vara dynamiskt men får vara en förbättringspunkt till senare
-        // Just nu är det frågan om rent praktiskt gör någon större skillnad.
-         // För även om vi i svenskan har en stor mängder sammansatta ord så är 
-        // det troliga att man som spelare hellre använder en fåordig synonym än den längsta 
-        // sammanssättningen om kontext kan guida vad man avser.
-
-        for(local i=1; i<=wordCount-3; i++) {
-            for(local j=2; j<=wordCount-2; j++) {
-                for(local k=3; k<=wordCount-1; k++) {
-                    if(i == j || j == k) {continue;} // Kombinera inte samma ord flera gånger
-                    local firstWord = wordParts[i];
-                    local secondWord = wordParts[j];
-                    local thirdWord = wordParts[k];
-                    local word = firstWord.word + (firstWord.jointS?'s':'') + secondWord.word + (secondWord.jointS?'s':'') + thirdWord.word;
-                    local wordWithEnding = word + thirdWord.ending;
-                    //tadsSay('[<<i>>,<<j>>,<<k>>] = [<<firstWord.word>>,<<secondWord.word>>,<<thirdWord.word>>] = <<word>> <<wordWithEnding>>\n');
-
-                    // Lägg bara till det sammansatta ordet om det sista sammansatt ordet får 
-                    // användas individuellt
-                    if(thirdWord.useIndividually)  {
-                        wordVariations.append(word);
-                        wordVariations.append(wordWithEnding);
-                    }
-                }
-            }
-        }
-    }
 
     if(enableShortenRepeatingCharacters) {
         wordVariations = wordVariations.mapAll(shortenRepeatingCharacters);

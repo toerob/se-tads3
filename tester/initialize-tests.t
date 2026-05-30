@@ -192,18 +192,21 @@ TestUnit 'initialize neutrum substantiv med +notation och foge-S' run {
     assertThat(cmdDict.findWord('papperet', &noun)[1]).isEqualTo(obj);
     
     assertThat(cmdDict.findWord('pappersflyg', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('pappersflyget', &noun)[1]).isEqualTo(obj);
     assertThat(cmdDict.findWord('pappersflygplan', &noun)[1]).isEqualTo(obj);
     assertThat(cmdDict.findWord('pappersflygplanet', &noun)[1]).isEqualTo(obj);
 
     assertThat(cmdDict.findWord('flyg', &noun)[1]).isEqualTo(obj);
     assertThat(cmdDict.findWord('flyget', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('flygplan', &noun)[1]).isEqualTo(obj);
+    assertThat(cmdDict.findWord('flygplanet', &noun)[1]).isEqualTo(obj);
 
     assertThat(cmdDict.findWord('plan', &noun)[1]).isEqualTo(obj);
     assertThat(cmdDict.findWord('planet', &noun)[1]).isEqualTo(obj);
 
     // Räkna antalet _förväntade_ förekomster som finns i cmdDict för detta objekt (oavsett grammatisk form)
     local count = getGrammarPartsFromCmdDict(obj);
-    assertThat(count).isEqualTo(9);
+    assertThat(count).isEqualTo(12);
 
     assertThat(obj.isNeuter).isNil();   
     assertThat(obj.isPlural).isNil(); 
@@ -641,17 +644,29 @@ TestUnit 'createCompoundWordVariations, hantera "n"-ändelse' run {
 };
 
 
-TestUnit 'createCompoundWordVariations, hantera "er/ret"-ändelser' run {
+TestUnit 'createCompoundWordVariations, fönst:er+ret (altEnding, enkel form)' run {
     local dummy = new Thing();
     local forms = createCompoundWordVariations(dummy, 'fönst:er+ret', &noun);
-    //tadsSay(getGrammarInfoFromCmdDict(dummy));
     assertThat(forms.standardForm).isEqualTo('fönster');
     assertThat(forms.definiteForm).isEqualTo('fönstret');
     assertThat(cmdDict.findWord('fönster', &noun)[1]).isEqualTo(dummy);
     assertThat(cmdDict.findWord('fönstret', &noun)[1]).isEqualTo(dummy);
     cleanUp(dummy);
-}
-;
+};
+
+TestUnit 'createCompoundWordVariations, glas+fönst:er+ret (altEnding i sammansatt ord)' run {
+    local dummy = new Thing();
+    local forms = createCompoundWordVariations(dummy, 'glas+fönst:er+ret', &noun);
+    assertThat(forms.standardForm).isEqualTo('glasfönster');
+    assertThat(forms.definiteForm).isEqualTo('glasfönstret');
+    assertThat(cmdDict.findWord('glas', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('glaset', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('glasfönster', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('glasfönstret', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('fönster', &noun)[1]).isEqualTo(dummy);
+    assertThat(cmdDict.findWord('fönstret', &noun)[1]).isEqualTo(dummy);
+    cleanUp(dummy);
+};
 
 
 TestUnit 'createCompoundWordVariations, hantera ": utan foge-S " ger en ändelsefri variant' run {

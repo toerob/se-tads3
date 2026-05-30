@@ -1,38 +1,32 @@
 #charset "us-ascii"
 #include <tads.h>
 
-TestUnit template 'name';
-
 class BeforeEach: object
     group = nil
     run() {
-        throw new Exception('BeforeEach each missing implementation');
+        throw new Exception('BeforeEach saknar implementation');
     }
 ;
 
 class AfterEach: object
     group = nil
     run() {
-        throw new Exception('AfterEach each missing implementation');
+        throw new Exception('AfterEach saknar implementation');
     }
 ;
-
 
 class TestUnit: object
     group = nil
     skip = nil
     only = nil
     run() {
-        throw new Exception('Test missing implementation');
+        throw new Exception('Test saknar implementation');
     }
 ;
 
+/* assertEquals kvar för bakåtkompatibilitet — delegerar till assertThat */
 function assertEquals(expected, receivedValue) {
-    if(expected != receivedValue) {
-        reportFailure(expected, receivedValue);
-        tadsSay('\bassertEquals *failed* \nreceived: <font color=red>[<<receivedValue>>]</font>\nexpected: [<<expected>>]\b');
-        throw new RuntimeError('\bassertEquals *failed* \nreceived: [<<receivedValue>>]\nexpected: [<<expected>>]\b');
-    }
+    assertThat(receivedValue).isEqualTo(expected);
 }
 
 function assertThat(expressionOrValue) {
@@ -41,159 +35,231 @@ function assertThat(expressionOrValue) {
 
 class Assertions: object
     receivedValue = nil
-    assertThatValueOrExpression(receivedValue) {
-        self.receivedValue = dataTypeXlat(receivedValue) == TypeFuncPtr? receivedValue() : receivedValue;
-        //tadsSay('\n*<<receivedValue>>*\n');
+    assertionIndex = 0
+
+    assertThatValueOrExpression(val) {
+        self.receivedValue = dataTypeXlat(val) == TypeFuncPtr ? val() : val;
         return self;
     }
 
-    /**
-     * strings starts with ...
-     */
     startsWith(expectedValue) {
+        self.assertionIndex++;
+        /*if(expectedValue == 'TODO') {
+            tadsSay('\nTODO_VALUE[' + self.receivedValue + ']\n');
+            return self;
+        }*/
         if(!self.receivedValue.startsWith(expectedValue)) {
-            reportFailure(expectedValue, receivedValue, ['START-WITH ASSERTION FAILED', 'RECEIVED STRING', '\ \ \ SHOULD START']);
+            reportFailure(expectedValue, self.receivedValue,
+                assertionIndex,
+                ['START-WITH ASSERTION FAILED', 'RECEIVED STRING', '   SHOULD START']);
         }
         return self;
     }
-    /**
-     * Contains a substring ...
-     */
+
     contains(expectedValue) {
-        if(!receivedValue.find(expectedValue)) {
-            reportFailure(expectedValue, receivedValue, ['CONTAINS ASSERTION FAILED', 'RECEIVED STRING', '\ SHOULD CONTAIN']);
+        self.assertionIndex++;
+        if(!self.receivedValue.find(expectedValue)) {
+            reportFailure(expectedValue, self.receivedValue,
+                assertionIndex,
+                ['CONTAINS ASSERTION FAILED', 'RECEIVED STRING', ' SHOULD CONTAIN']);
         }
         return self;
     }
 
     isEqualTo(expectedValue) {
-        local expected = dataTypeXlat(expectedValue) == TypeFuncPtr? expectedValue() : expectedValue;
+        self.assertionIndex++;
+        local expected = dataTypeXlat(expectedValue) == TypeFuncPtr
+            ? expectedValue() : expectedValue;
         if(self.receivedValue != expected) {
-            reportFailure(expected,receivedValue);
+            reportFailure(expected, self.receivedValue, assertionIndex);
         }
         return self;
     }
-    is(expectedValue) {
-        local expected = dataTypeXlat(expectedValue) == TypeFuncPtr? expectedValue() : expectedValue;
-        if(self.receivedValue != expected) {
-            reportFailure(expected,receivedValue);
+
+    /* Alias för isEqualTo */
+    is(expectedValue) { return isEqualTo(expectedValue); }
+
+    isNotEqualTo(expectedValue) {
+        self.assertionIndex++;
+        local expected = dataTypeXlat(expectedValue) == TypeFuncPtr
+            ? expectedValue() : expectedValue;
+        if(self.receivedValue == expected) {
+            reportFailure(expected, self.receivedValue,
+                assertionIndex,
+                ['NOT-EQUAL ASSERTION FAILED', 'RECEIVED', 'SHOULD NOT EQUAL']);
         }
         return self;
     }
+
+    hasLength(expected) {
+        self.assertionIndex++;
+        if(self.receivedValue.length() != expected) {
+            reportFailure(expected, self.receivedValue.length(), assertionIndex);
+        }
+        return self;
+    }
+
     isTrue() {
-        if(receivedValue != true) {
-            reportFailure(true, receivedValue, ['TRUE ASSERTION FAILED', 'RECEIVED', 'NOT TRUE']);
+        self.assertionIndex++;
+        if(self.receivedValue != true) {
+            reportFailure(true, self.receivedValue,
+                assertionIndex,
+                ['TRUE ASSERTION FAILED', 'RECEIVED', 'NOT TRUE']);
         }
         return self;
     }
+
     isNil() {
-        if(receivedValue != nil) {
-            reportFailure(nil, receivedValue, ['NIL ASSERTION FAILED', '\ RECEIVED', 'NOT FALSE']);
+        self.assertionIndex++;
+        if(self.receivedValue != nil) {
+            reportFailure(nil, self.receivedValue,
+                assertionIndex,
+                ['NIL ASSERTION FAILED', 'RECEIVED', 'EXPECTED NIL']);
         }
         return self;
     }
+
     isNotNil() {
-        if(receivedValue == nil) {
-            reportFailure(nil, receivedValue, ['NON-NIL ASSERTION FAILED', '\ \ \ \ \ RECEIVED', 'NOT-FALSE/TRUE']);
+        self.assertionIndex++;
+        if(self.receivedValue == nil) {
+            reportFailure('(not nil)', self.receivedValue,
+                assertionIndex,
+                ['NON-NIL ASSERTION FAILED', 'RECEIVED', 'EXPECTED NON-NIL']);
         }
+        return self;
+    }
+
+    /**
+     * assertThat(obj).extractingProps([&name, &plural]).isEqualTo(['dörr', nil])
+     */
+    extractingProps(properties) {
+        if(dataType(properties) != TypeList)
+            properties = [properties];
+        self.receivedValue = properties.mapAll({prop: self.receivedValue.(prop)});
+        return self;
+    }
+
+    /**
+     * assertThat([a, b]).extracting({x: x.name}).isEqualTo(['A', 'B'])
+     */
+    extract(lambda) {
+        self.receivedValue = self.receivedValue.mapAll({x: lambda(x)});
+        return self;
+    }
+
+    /**
+     * assertThat([a, b]).extracting({x: x.name}, {x: x.age}).isEqualTo([...])
+     */
+    extracting([lambdas]) {
+        local result = new Vector();
+        for(local val in self.receivedValue)
+            result.append(lambdas.mapAll({fn: fn(val)}));
+        self.receivedValue = result;
         return self;
     }
 ;
 
-function reportFailure(expected, receivedValue, assertionMsgs=['ASSERTION FAILED', 'RECEIVED', 'EXPECTED']) {
+function reportFailure(expected, received, assertionIdx,
+        assertionMsgs=['ASSERTION FAILED', 'RECEIVED', 'EXPECTED']) {
     divider('-');
-    local stringLengths = dataTypeXlat(receivedValue) == TypeSString? '(expected/received string lengths: <<expected.length>>/<<receivedValue.length>>)':'';
-    local msg = '\n<font color=red><<assertionMsgs[1]>></font> \n<<assertionMsgs[2]>>: <font color=red>[<<receivedValue>>]</font>\n<<assertionMsgs[3]>>: <font color=green>[<<expected>>] <<stringLengths>></font>\b';
+    local idxTag = assertionIdx != nil ? ' [assertion #<<assertionIdx>>]' : '';
+    local bothStrings = dataTypeXlat(received) == TypeSString
+        && dataTypeXlat(expected) == TypeSString;
+    local lenInfo = bothStrings
+        ? ' (lengths: <<expected.length>>/<<received.length>>)' : '';
+    local msg = '\n<font color=red><<assertionMsgs[1]>><<idxTag>></font>'
+        + '\n<<assertionMsgs[2]>>: <font color=red>[<<received>>]</font>'
+        + '\n<<assertionMsgs[3]>>: <font color=green>[<<expected>>]<<lenInfo>></font>\b';
     tadsSay(msg);
     throw new RuntimeError(msg);
 }
 
 function divider(ch?) {
-    ch = (ch == nil)? '=' : ch;
+    ch = (ch == nil) ? '=' : ch;
     tadsSay('\n<<makeString(ch, 64)>>\n');
 }
-
 
 
 testRunner: InitObject
     currentTest = nil
     succeeded = 0
     failed = 0
+    skipped = 0
     pauseWhenDone = nil
     quitWhenDone = true
     verboseAboutSuccessfulTests = true
+
     execute() {
         try {
             beforeAll();
-            //"Test runner starting\n";
             local beforeEachCollection = [];
             local testCollection = [];
+            local allTests = [];
             local afterEachCollection = [];
 
-            forEachInstance(BeforeEach, {pt: beforeEachCollection += pt });
-            forEachInstance(TestUnit, {test:testCollection += test });
-            forEachInstance(AfterEach, {pt: afterEachCollection += pt });
+            forEachInstance(BeforeEach, {pt: beforeEachCollection += pt});
+            forEachInstance(TestUnit, {t: allTests += t});
+            forEachInstance(AfterEach, {pt: afterEachCollection += pt});
 
-            testCollection = testCollection.subset({t: !t.skip});
-            local onlyOneTest = testCollection.subset({t: t.only == true });
+            local skippedTests = allTests.subset({t: t.skip});
+            skipped = skippedTests.length();
+            testCollection = allTests.subset({t: !t.skip});
 
-
-            if(onlyOneTest.length>0) {
-                tadsSay('\nTesting only:\n');
-                runCollection(beforeEachCollection, onlyOneTest, afterEachCollection);
-                return;
-            } 
-
-            tadsSay('\nTotal tests to run: <<testCollection.length>>\n');
-            divider();
-            runCollection(beforeEachCollection, testCollection, afterEachCollection);
+            local onlyTests = testCollection.subset({t: t.only == true});
+            if(onlyTests.length() > 0) {
+                tadsSay('\nKör endast markerade tester (only = true):\n');
+                runCollection(beforeEachCollection, onlyTests, afterEachCollection);
+            } else {
+                if(skipped > 0)
+                    tadsSay('\nHoppar över <<skipped>> test(er) (skip = true).\n');
+                tadsSay('\nTotal tests to run: <<testCollection.length()>>\n');
+                divider();
+                runCollection(beforeEachCollection, testCollection, afterEachCollection);
+            }
             afterAll();
-        } catch(Exception e) {
-            failed++;
-            tadsSay('\ \ <font color=red><<currentTest.name>>  -- ** TEST FAILED **</font>\n');
-            tadsSay('\ \ [<<e>>: <<e.exceptionMessage>>]\n');
-
-            e.displayException();
         } finally {
-            //divider();
-            tadsSay('\bAll tests have run: \n');
-            divider('*');            
-            tadsSay('* succeeded: \t <<succeeded>>\n');
-            tadsSay('* failed: \t\t <<failed>>\n');
+            tadsSay('\bAll tests have run:\n');
+            divider('*');
+            tadsSay('* succeeded:  <<succeeded>>\n');
+            tadsSay('* failed:     <<failed>>\n');
+            if(skipped > 0)
+                tadsSay('* skipped:    <<skipped>>\n');
             divider('*');
             if(pauseWhenDone) {
-                tadsSay('\b[Press any key to continue]\b');
+                tadsSay('\b[Hit any key to exit]\b');
                 yesOrNo();
             }
-            if(quitWhenDone) {
+            if(quitWhenDone)
                 throw new Exception('Tests completed');
-            }
-
         }
     }
+
     beforeAll() {}
     afterAll() {}
 
     counter = static 0
     runTest(test) {
         currentTest = test;
+        local testName = test.name == nil ? toString(test) : test.name;
         try {
-            currentTest.run(); 
+            currentTest.run();
+            succeeded++;
+            if(verboseAboutSuccessfulTests)
+                tadsSay('\n  <font color=green>[OK] Test <<++counter>>: <<testName>></font>\n');
         } catch(Exception e) {
-            throw e;
-        }
-        succeeded++;
-        local currentTestName = currentTest.name == nil ? currentTest : currentTest.name;
-        if(verboseAboutSuccessfulTests) {
-            tadsSay('\n\ \ <font color=green>[OK] Test <<++counter>>: <<currentTestName>></font>\n');
+            failed++;
+            tadsSay('  <font color=red><<testName>>  -- ** TEST FAILED **</font>\n');
+            tadsSay('  [<<e.exceptionMessage>>]\n');
         }
     }
+
     runCollection(beforeEachCollection, testCollection, afterEachCollection) {
         testCollection.forEach(function(test) {
-            beforeEachCollection.subset({z: z.group == test.group}).forEach({pt: pt.run()});
+            beforeEachCollection.subset({z: z.group == test.group})
+                .forEach({pt: pt.run()});
             runTest(test);
-            afterEachCollection.subset({z: z.group == test.group}).forEach({pt: pt.run()});
+            afterEachCollection.subset({z: z.group == test.group})
+                .forEach({pt: pt.run()});
         });
     }
 ;
-

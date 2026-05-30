@@ -150,7 +150,7 @@ TestUnit '2:a person plural (ni)' run {
 
 // Test Assertions
 TestUnit 'satsdelar' run {
-  mainOutputStream.hideOutput = nil;
+  //mainOutputStream.hideOutput = nil;
   setPlayer(spelare2aPerspektivDu);
   "{Du/han actor} går hem till {ditt}";
   assertThat(o).isEqualTo('Du går hem till ditt');
