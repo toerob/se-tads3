@@ -1970,7 +1970,7 @@ playerMessages: libMessages
     /* insufficient quantity to meet a command request ('take five books') */
     insufficientQuantity(actor, txt, matchList, requiredNum)
     {
-        "<.parser>\^<<actor.theName>> ser inte särskilt många <<txt>> <<tSel('här', 'där')>>.<./parser> ";
+        "<.parser>\^<<actor.theName>> ser inte så många <<txt>> <<tSel('här', 'där')>>.<./parser> ";
     }
 
     /* a unique object is required, but multiple objects were specified */
@@ -2194,7 +2194,7 @@ npcMessages: playerMessages
     /* no match for 'all' */
     noMatchForAll(actor)
     {
-        "<.parser>\^<<actor.nameDoes>> {ser} inget passande.<./parser> ";
+        "<.parser>\^<<actor.theName>> {ser} inget passande.<./parser> ";
     }
 
     /* nothing left for 'all' after removing 'except' items */
@@ -2206,7 +2206,7 @@ npcMessages: playerMessages
     /* insufficient quantity to meet a command request ('take five books') */
     insufficientQuantity(actor, txt, matchList, requiredNum)
     {
-            "<.parser>\^<<actor.nameDoes>> ser inte särskilt många <<txt>>.<./parser> ";
+            "<.parser>\^<<actor.theName>> ser inte så många <<txt>>.<./parser> ";
     }
 
     /*
@@ -2220,9 +2220,9 @@ npcMessages: playerMessages
         if(match != nil && match.length > 0) {
             match = match[1];
             local which = match.isPlural ? 'vilka' : (match.isNeuter ? 'vilket' : 'vilken');
-            "<.parser>\^<<actor.theName>> {förstår|förstod} inte <<which>> <<originalText>> du mena{r|de}.<./parser> ";
+            "<.parser>\^<<actor.theName>> för<<tSel('står', 'stod')>> inte <<which>> <<originalText>> du mena<<tSel('r', 'de')>>.<./parser> ";
         } else {
-            "<.parser>\^<<actor.theName>> {förstår|förstod} inte vad du mena{r|de} med det.<./parser> ";
+            "<.parser>\^<<actor.theName>> för<<tSel('står', 'stod')>> inte vad du mena<<tSel('r', 'de')>> med det.<./parser> ";
         }
     }
 
@@ -2323,7 +2323,7 @@ npcMessagesDirect: npcMessages
     insufficientQuantity(actor, txt, matchList, requiredNum)
     {
         "\^<<actor.nameSays>>,
-        <q>Jag ser inte särskilt många <<txt>> här.</q> ";
+        <q>Jag ser inte så många <<txt>> här.</q> ";
     }
 
     /* a unique object is required, but multiple objects were specified */
@@ -2537,7 +2537,7 @@ npcDeferredMessagesDirect: npcDeferredMessages
     insufficientQuantity(actor, txt, matchList, requiredNum)
     {
         "\^<<actor.nameSays>>,
-        <q>Jag såg inte tillräckligt <<txt>>.</q> ";
+        <q>Jag såg inte tillräckligt många <<txt>>.</q> ";
     }
 
     /* a unique object is required, but multiple objects were specified */
@@ -5190,12 +5190,12 @@ property destName_, destIsBack_, others_, enableHyperlinks;
  *   The items to be listed are DestInfo objects.  
  */
 class ExitLister: Lister
-    showListPrefixWide(cnt, pov, parent)
+   showListPrefixWide(cnt, pov, parent)
     {
         if (cnt == 1)
-            "Den enda uppenbara utgången {leder|ledde} ";
+            "Den enda uppenbara utgången led<<tSel('er', 'de')>> ";
         else
-            "Uppenbara utgångar {leder|ledde} ";
+            "Uppenbara utgångar led<<tSel('er', 'de')>> ";
     }
     showListSuffixWide(cnt, pov, parent) { ". "; }
 

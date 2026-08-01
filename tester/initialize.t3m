@@ -15,6 +15,7 @@
 -o tester.t3
 
 ##sources
+-source reflect
 -lib system.tl
 -lib adv3/adv3
 -source dynfunc

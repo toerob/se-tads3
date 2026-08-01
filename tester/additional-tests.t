@@ -22,7 +22,11 @@ gameMain: GameMainDef
     usePastTense = true
 ;
 
-lab: Room 'labbet' 'labbet';
+lab: Room 'labbet' 'labbet'
+  east = korridor
+;
+korridor: Room 'korridor' 'korridor';
+
 +spelare2aPerspektiv: Actor 'du' 'du'
   pcReferralPerson = SecondPerson
   isProperName = true
@@ -61,8 +65,6 @@ lab: Room 'labbet' 'labbet';
 +virke: LightSource 'virke+t*virke' isMassNoun = true;
 +olja: LightSource 'olja+n*olja' isMassNoun = true;
 
-
-#define __DEBUG
 
 modify testRunner 
   verboseAboutSuccessfulTests = nil // Visa inte varje testutfall om det är OK
@@ -220,6 +222,22 @@ TestUnit 'plainLister.showListAll' run {
     }); 
     assertThat(result).isEqualTo('en ljuskrona (avger ljus), ett ljus, en hatt (påklädd), en jacka (påklädd), en tingest, och ett skåp');
 };
+
+
+TestUnit 'explicitExitLister.showListAll' run {
+    local lst = [lab];
+
+    lab.dir_ = eastDirection; // (Used in showListItem)
+
+    local result = mainOutputStream.captureOutput({: 
+      explicitExitLister.showListAll(lst, 0, 0) //lst, options, indent)
+    });
+    //say(result);
+    assertThat(result).isEqualTo('Den enda uppenbara utgången ledde öster. ');
+} 
+//only=true
+;
+
 
 /*
 TestUnit 'specialDescLister.showListAll' run {
