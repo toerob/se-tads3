@@ -5,13 +5,13 @@
 -D LANGUAGE=sv_se
 -D MESSAGESTYLE=neu
 -D __DEBUG
--Fy obj
--Fo obj
+-Fy additional-obj
+-Fo additional-obj
 -v
 -d
 -FI /usr/local/share/frobtads/tads3/include
 -Fs /usr/local/share/frobtads/tads3/lib
--o tester.t3
+-o additional-tests.t3
 
 ##sources
 -source reflect

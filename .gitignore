@@ -9,6 +9,13 @@ tester/run-parser-tests.sh
 tester/parser.t3m
 tester/parser-tests.t
 
+tester/init-obj
+tester/additional-obj
+tester/past-obj
+tester/present-obj
+tester/satsdelar-obj
+tester/obj
+
 lib/en_us
 .lsp
 .vscode
