@@ -2389,9 +2389,53 @@ modify Actor
     // Behålls för bakåtkompatibilitet; används via theNamePossAdjPlural.
     itPossAdjPlural = (itPossAdjPl)
 
-    // Possessivt pronomen (fristående form). Ägaren är INTE subjektet.
-    // Väljer form baserat på gDobj:s genus för 1:a/2:a person.
-    // 3:e person ger alltid icke-reflexiv form: hans/hennes/dess/deras.
+    /*
+     *   Possessivt pronomen — OCH attributivt adjektiv (se längre ned).
+     *   Ägaren är INTE subjektet (jämför itPossAdjSg/Nt/Pl ovan, som
+     *   används för REFLEXIVA possessiver, dvs. när ägaren ÄR subjektet:
+     *   "Han tog {sin actor} bok").
+     *
+     *   Till skillnad från itPossAdj (som alltid ger den invarianta
+     *   utrum-formen "min"/"din"/"vår" oavsett vad som ägs) läser den här
+     *   metoden av genus/numerus på det GLOBALA gDobj (den aktuella
+     *   kommandots direkta objekt) och väljer rätt kongruensform för
+     *   1:a/2:a person: min/mitt/mina, din/ditt/dina eller vår/vårt/våra.
+     *
+     *   3:e person ger alltid den invarianta icke-reflexiva formen
+     *   hans/hennes/dess/deras, oavsett gDobj:s genus/numerus — dessa ord
+     *   böjs aldrig efter det ägda substantivet i svenskan (jämför
+     *   engelskans "his"/"her", som också är oböjliga, till skillnad från
+     *   "my"/"mine" som blir "min"/"mitt"/"mina" här).
+     *
+     *   Namnet itPossNoun är ärvt från adv3:s engelska originalstruktur,
+     *   där possAdj ("my", attributivt: "my book") och possNoun ("mine",
+     *   fristående: "the book is mine") är olika ord. På svenska är
+     *   formerna identiska i båda rollerna ("min bok" / "boken är min"),
+     *   så samma metod, itPossNoun, återanvänds här även för den
+     *   attributiva possessiven — se {poss}-parametern i paramList_
+     *   nedan, som just utnyttjar detta.
+     *
+     *   VIKTIGT — implicit koppling till gDobj: eftersom metoden läser
+     *   gDobj direkt (istället för att ta emot det ägda objektet som
+     *   parameter) ger den bara rätt kongruens när det ägda objektet
+     *   faktiskt är kommandots aktuella direkta objekt. Behövs kongruens
+     *   mot ett GODTYCKLIGT objekt (t.ex. i en beskrivande text som inte
+     *   har med det aktuella kommandot att göra), använd istället den
+     *   fristående funktionen poss(ägare, ägtObjekt) — se dess
+     *   dokumentation vid definitionen (efter withTense()) nedan i filen.
+     *
+     *   Exempel (gDobj = det aktuella kommandots direkta objekt):
+     *     - actor = spelaren (2:a person), gDobj = "bollen" (utrum)
+     *         -> "din"     ("Bollen är din.")
+     *     - actor = spelaren, gDobj = "huset" (neutrum)
+     *         -> "ditt"    ("Huset är ditt.")
+     *     - actor = spelaren, gDobj = "böckerna" (plural)
+     *         -> "dina"    ("Böckerna är dina.")
+     *     - actor = Bob (3:e person, isHim), gDobj = "huset" (neutrum)
+     *         -> "hans"    (INTE "hanst" — invariant oavsett genus)
+     *     - actor = Anna (3:e person, isHer), gDobj = "böckerna" (plural)
+     *         -> "hennes"  (INTE "hänness" — invariant oavsett numerus)
+     */
     itPossNoun
     {
         local obj = gDobj;
@@ -4152,6 +4196,57 @@ langMessageBuilder: MessageBuilder
         ['deras',  &itPossAdj, 'actor', nil, nil],
         ['dess',   &itPossAdj, 'actor', nil, nil],
 
+        /*
+         *   {poss} / {poss ägare} — possessivt adjektiv/pronomen, kongruent
+         *   med det ägda objektets genus/numerus, för en ägare som INTE är
+         *   subjektet. Ägaren är "actor" som standard (precis som för
+         *   {hans}/{min} m.fl. ovan), men kan anges explicit: {poss dobj}.
+         *
+         *   Bakgrund: en tagg som tar emot BÅDE ägare och ägt objekt som
+         *   två separata ord i samma parameter (t.ex. "{poss ägare ägt}")
+         *   går inte att bygga med den vanliga {}-syntaxen. adv3:s
+         *   meddelandemotor (MessageBuilder.generateMessage() i output.t)
+         *   tillåter bara EN målobjekt-referens per {}-parameter — dess
+         *   reguljära uttryck känner bara igen formerna "id", "obj",
+         *   "id obj", "id1/id2", "id1/id2 obj" och "id1 obj/id2", och den
+         *   matchade egenskapen anropas alltid utan argument
+         *   (targetObj.(prop)). Ett tredje ord (det ägda objektet) skulle
+         *   helt enkelt tystas bort av tolkningen.
+         *
+         *   Lösningen här återanvänder samma mönster som redan finns för
+         *   {din/hans} m.fl.: egenskapen itPossNoun (se dess fullständiga
+         *   dokumentation vid definitionen ovan) läser av det ägda
+         *   objektets genus/numerus implicit från det GLOBALA gDobj,
+         *   istället för att ta emot det som en egen parameter. Det gör
+         *   att:
+         *
+         *       "Det är inte {poss} <<gDobj.name>>."
+         *
+         *   får korrekt kongruens automatiskt — men ENDAST när det ägda
+         *   objektet verkligen är kommandots aktuella gDobj.
+         *
+         *   Begränsning och alternativ: behövs en godtycklig kombination
+         *   av ägare och ägt objekt (t.ex. "Görans äpple", där varken
+         *   ägaren eller det ägda objektet behöver vara actor/gDobj),
+         *   räcker inte {}-parametrar till. Använd då den fristående
+         *   funktionen poss(ägare, ägtObjekt) — definierad efter
+         *   withTense() nedan i filen — direkt i meddelandetexten med
+         *   TADS <<...>>-syntax:
+         *
+         *       "Det är inte <<poss(goran, apple)>> äpple."
+         *
+         *   Exempel ({poss}, ägare = actor, ägt objekt = gDobj):
+         *     - actor = spelaren (2:a person), gDobj = "bollen" (utrum)
+         *         -> "din"    ("din boll")
+         *     - actor = spelaren, gDobj = "huset" (neutrum)
+         *         -> "ditt"   ("ditt hus")
+         *     - actor = spelaren, gDobj = "böckerna" (plural)
+         *         -> "dina"   ("dina böcker")
+         *     - actor = Bob (3:e person, isHim), gDobj = valfritt objekt
+         *         -> "hans"   (alltid, oavsett gDobj:s genus/numerus)
+         */
+        ['poss', &itPossNoun, 'actor', nil, nil],
+
         ['själv', &itReflexive, 'actor', nil, nil],
         ['själva', &itReflexive, 'actor', nil, nil],
         ['mig_själv', &itReflexive, 'actor', nil, nil],
@@ -4612,6 +4707,85 @@ withTense(usePastTense, callback)
      *   Return the result.
      */
     return ret;
+}
+
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   poss(ägare, ägtObjekt) — returnerar det possessiva adjektivet som
+ *   korrekt kongruerar med det ägda objektets genus/numerus, för en
+ *   godtycklig ägare. Varken ägaren eller det ägda objektet behöver vara
+ *   den aktuella actor:n eller det aktuella gDobj:et.
+ *
+ *   Bakgrund: {}-parametrarna i langMessageBuilder.paramList_ (se
+ *   {poss}-parametern ovan) kan bara referera till ETT målobjekt per
+ *   parameter, så en tagg som tar emot både ägare och ägt objekt som två
+ *   separata ord går inte att bygga med den syntaxen. {poss}-parametern
+ *   löser det vanliga specialfallet (ägaren är actor, det ägda objektet
+ *   är gDobj) genom att återanvända itPossNoun, som redan läser gDobj
+ *   implicit.
+ *
+ *   Den här funktionen täcker istället det GENERELLA fallet. Den anropas
+ *   direkt som TADS-kod inuti en meddelandesträng med <<...>>-syntax,
+ *   t.ex.:
+ *
+ *       "Det är inte <<poss(goran, apple)>> äpple, det är {poss}."
+ *
+ *   där "poss(goran, apple)" ger "hans" (Göran är 3:e person, invariant
+ *   oavsett vad han äger), och "{poss}" (utan explicit ägare/ägt objekt)
+ *   faller tillbaka på actor/gDobj som vanligt.
+ *
+ *   Logik:
+ *     - Om ägaren är i 3:e person (referralPerson == ThirdPerson) ges
+ *       alltid den invarianta formen hans/hennes/dess/deras (itPossAdj)
+ *       — dessa böjs aldrig efter det ägda objektets genus i svenskan.
+ *     - Annars (1:a/2:a person: jag/du/vi/ni) väljs mellan
+ *       itPossAdjSg/itPossAdjNt/itPossAdjPl på ägaren, beroende på om
+ *       ägtObjekt är plural, neutrum eller utrum singular.
+ *
+ *   OBS: precis som resten av adv3:s pronomensystem (itNom, theName osv.)
+ *   avgörs 1:a/2:a person via ägarens referralPerson, som i sin tur bara
+ *   ger FirstPerson/SecondPerson när ägaren faktiskt ÄR den aktuella
+ *   gPlayerChar — varje annan actor är alltid ThirdPerson, eftersom bara
+ *   en actor åt gången kan vara "jag"/"du" i spelet. poss() ändrar inget
+ *   i den regeln; den läser bara av vad referralPerson redan ger.
+ *
+ *   Parametrar:
+ *     ägare      — ett Actor-objekt (måste ha referralPerson och
+ *                  itPossAdjSg/Nt/Pl, dvs. de egenskaper som definieras
+ *                  under "modify Actor" ovan). Om nil returneras en tom
+ *                  sträng.
+ *     ägtObjekt  — valfritt Thing-objekt (används för isNeuter/isPlural).
+ *                  Om nil (eller utelämnas) antas utrum singular, dvs.
+ *                  samma resultat som ägare.itPossAdjSg ger.
+ *
+ *   Exempel:
+ *     poss(goran, apple)          där apple är utrum
+ *         -> "hans"
+ *     poss(goran, huset)          där huset är neutrum
+ *         -> "hans"   (3:e person, fortfarande invariant)
+ *     poss(gPlayerChar, huset)    spelaren äger, huset är neutrum
+ *         -> "ditt"
+ *     poss(gPlayerChar, bollen)   spelaren äger, bollen är utrum
+ *         -> "din"
+ *     poss(gPlayerChar, bockerna) spelaren äger, plural
+ *         -> "dina"
+ */
+poss(owner, ownedObj)
+{
+    if (owner == nil)
+        return '';
+
+    if (owner.referralPerson == ThirdPerson)
+        return owner.itPossAdj;
+
+    if (ownedObj != nil && ownedObj.isPlural)
+        return owner.itPossAdjPl;
+
+    if (ownedObj != nil && ownedObj.isNeuter)
+        return owner.itPossAdjNt;
+
+    return owner.itPossAdjSg;
 }
 
 

@@ -402,6 +402,79 @@ TestUnit 'icke-reflexivt possessivt adjektiv (hans/hennes/dess/deras)' run {
   });
 };
 
+TestUnit '{poss} - implicit gDobj-baserad kongruens' run {
+  // {poss} = ägaren är "actor" (default), det ägda objektet läses
+  // implicit från gDobj (via itPossNoun). 1:a/2:a person ska böjas
+  // efter gDobj:s genus/numerus; 3:e person är alltid invariant.
+  [
+    [spelare2aPerspektivDu,   juvel,     'din'],   // utrum singular
+    [spelare2aPerspektivDu,   hus,       'ditt'],  // neutrum singular
+    [spelare2aPerspektivDu,   smyckena,  'dina'],  // plural
+
+    [spelare1aPerspektiv,     juvel,     'min'],
+    [spelare1aPerspektiv,     hus,       'mitt'],
+    [spelare1aPerspektiv,     smyckena,  'mina'],
+
+    [spelare3dePerspektivHan, juvel,     'hans'],
+    [spelare3dePerspektivHan, hus,       'hans'],
+    [spelare3dePerspektivHan, smyckena,  'hans'],
+    [spelare3dePerspektivHon, hus,       'hennes'],
+    [spelare3dePerspektivHon, smyckena,  'hennes']
+  ].forEach(function(t) {
+    setPlayer(t[1]);
+    gAction = ExamineAction.createActionInstance();
+    gAction.setCurrentObjects([t[2]]);
+    mainOutputStream.capturedOutputBuffer = new StringBuffer();
+    "{poss}";
+    assertThat(o).isEqualTo(t[3]);
+  });
+};
+
+TestUnit 'poss() - explicit ägare och ägt objekt' run {
+  // poss(ägare, ägtObjekt) tar emot BÅDA objekten explicit och beror
+  // varken på gDobj eller på den aktuella actor:n - till skillnad från
+  // {poss}. Anropas som vanlig TADS-kod, t.ex. i <<...>>.
+  //
+  // OBS: referralPerson (definierad i adv3:s Actor-klass) rapporterar
+  // bara FirstPerson/SecondPerson för den actor som just nu ÄR
+  // gPlayerChar - varje annan actor är alltid ThirdPerson, eftersom
+  // bara en actor åt gången kan vara "jag"/"du" i spelet. 1:a/2:a
+  // person-fallen nedan sätter därför spelaren via setPlayer() innan
+  // anropet, precis som för {poss} ovan; 3:e person-fallen är
+  // invarianta och kräver ingen setPlayer()-uppsättning alls.
+  [
+    [spelare1aPerspektiv,     juvel,     'min'],
+    [spelare1aPerspektiv,     hus,       'mitt'],
+    [spelare1aPerspektiv,     smyckena,  'mina'],
+
+    [spelare2aPerspektivDu,   juvel,     'din'],
+    [spelare2aPerspektivDu,   hus,       'ditt'],
+    [spelare2aPerspektivDu,   smyckena,  'dina']
+  ].forEach(function(t) {
+    setPlayer(t[1]);
+    assertThat(poss(t[1], t[2])).isEqualTo(t[3]);
+  });
+
+  [
+    [spelare3dePerspektivHan, juvel,     'hans'],
+    [spelare3dePerspektivHan, hus,       'hans'],
+    [spelare3dePerspektivHan, smyckena,  'hans'],
+    [spelare3dePerspektivHon, juvel,     'hennes'],
+    [spelare3dePerspektivHon, hus,       'hennes'],
+    [spelare3dePerspektivHon, smyckena,  'hennes']
+  ].forEach(function(t) {
+    assertThat(poss(t[1], t[2])).isEqualTo(t[3]);
+  });
+
+  // Om ägaren är nil finns inget att böja - returnera tom sträng.
+  assertThat(poss(nil, juvel)).isEqualTo('');
+
+  // Om det ägda objektet är okänt (nil) antas utrum singular.
+  setPlayer(spelare2aPerspektivDu);
+  assertThat(poss(spelare2aPerspektivDu, nil)).isEqualTo('din');
+  assertThat(poss(spelare3dePerspektivHan, nil)).isEqualTo('hans');
+};
+
 TestUnit 'meningar med sin/sina vs hans/hennes' run {
   // Konkreta exempelmeningar som visar skillnaden reflexivt/icke-reflexivt.
   [
